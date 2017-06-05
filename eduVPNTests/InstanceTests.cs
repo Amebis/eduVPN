@@ -29,32 +29,32 @@ namespace eduVPN.Tests
         [TestMethod()]
         public void InstanceTest()
         {
-            Instance obj;
+            Instance inst;
 
-            obj = new Instance("https://surf.eduvpn.nl/");
-            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
-            Assert.AreEqual("surf.eduvpn.nl", obj.DisplayName, "Display name incorrect");
-            Assert.AreEqual(null, obj.LogoURI, "Logo URI incorrect");
+            inst = new Instance("https://surf.eduvpn.nl/");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), inst.BaseURI, "Base URI incorrect");
+            Assert.AreEqual("surf.eduvpn.nl", inst.DisplayName, "Display name incorrect");
+            Assert.AreEqual(null, inst.LogoURI, "Logo URI incorrect");
 
-            obj = new Instance("https://surf.eduvpn.nl/", "SURF");
-            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
-            Assert.AreEqual("SURF", obj.DisplayName, "Display name incorrect");
-            Assert.AreEqual(null, obj.LogoURI, "Logo URI incorrect");
+            inst = new Instance("https://surf.eduvpn.nl/", "SURF");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), inst.BaseURI, "Base URI incorrect");
+            Assert.AreEqual("SURF", inst.DisplayName, "Display name incorrect");
+            Assert.AreEqual(null, inst.LogoURI, "Logo URI incorrect");
 
-            obj = new Instance(new Dictionary<string, object>
+            inst = new Instance(new Dictionary<string, object>
                 {
                     { "base_uri", "https://surf.eduvpn.nl/" },
                     { "display_name", "SURF" },
                     { "logo_uri", "https://static.eduvpn.nl/img/surfnet.png" }
                 });
-            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
-            Assert.AreEqual("SURF", obj.DisplayName, "Display name incorrect");
-            Assert.AreEqual(new Uri("https://static.eduvpn.nl/img/surfnet.png"), obj.LogoURI, "Logo URI incorrect");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), inst.BaseURI, "Base URI incorrect");
+            Assert.AreEqual("SURF", inst.DisplayName, "Display name incorrect");
+            Assert.AreEqual(new Uri("https://static.eduvpn.nl/img/surfnet.png"), inst.LogoURI, "Logo URI incorrect");
 
             // Test issues.
             try
             {
-                obj = new Instance(new Dictionary<string, object>
+                inst = new Instance(new Dictionary<string, object>
                     {
                         { "display_name", "SURF" },
                         { "logo_uri", "https://static.eduvpn.nl/img/surfnet.png" }
