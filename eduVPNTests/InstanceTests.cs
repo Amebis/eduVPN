@@ -32,12 +32,12 @@ namespace eduVPN.Tests
             Instance obj;
 
             obj = new Instance("https://surf.eduvpn.nl/");
-            Assert.AreEqual(new System.Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
             Assert.AreEqual("surf.eduvpn.nl", obj.DisplayName, "Display name incorrect");
             Assert.AreEqual(null, obj.LogoURI, "Logo URI incorrect");
 
             obj = new Instance("https://surf.eduvpn.nl/", "SURF");
-            Assert.AreEqual(new System.Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
             Assert.AreEqual("SURF", obj.DisplayName, "Display name incorrect");
             Assert.AreEqual(null, obj.LogoURI, "Logo URI incorrect");
 
@@ -47,9 +47,9 @@ namespace eduVPN.Tests
                     { "display_name", "SURF" },
                     { "logo_uri", "https://static.eduvpn.nl/img/surfnet.png" }
                 });
-            Assert.AreEqual(new System.Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), obj.BaseURI, "Base URI incorrect");
             Assert.AreEqual("SURF", obj.DisplayName, "Display name incorrect");
-            Assert.AreEqual(new System.Uri("https://static.eduvpn.nl/img/surfnet.png"), obj.LogoURI, "Logo URI incorrect");
+            Assert.AreEqual(new Uri("https://static.eduvpn.nl/img/surfnet.png"), obj.LogoURI, "Logo URI incorrect");
 
             // Test issues.
             try

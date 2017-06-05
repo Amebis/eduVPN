@@ -33,7 +33,7 @@ namespace eduVPN
         /// <param name="base_uri">Instance base URI</param>
         public Instance(string base_uri)
         {
-            BaseURI = new System.Uri(base_uri);
+            BaseURI = new Uri(base_uri);
             DisplayName = BaseURI.Host; // Deduce display name from the base URL hostname.
         }
 
@@ -44,7 +44,7 @@ namespace eduVPN
         /// <param name="display_name">Instance display name</param>
         public Instance(string base_uri, string display_name)
         {
-            BaseURI = new System.Uri(base_uri);
+            BaseURI = new Uri(base_uri);
             DisplayName = display_name;
         }
 
@@ -57,7 +57,7 @@ namespace eduVPN
             // Set base URI.
             object base_uri;
             if (obj.TryGetValue("base_uri", out base_uri) && base_uri.GetType() == typeof(string))
-                BaseURI = new System.Uri((string)base_uri);
+                BaseURI = new Uri((string)base_uri);
             else
                 throw new ArgumentException(Resources.ErrorMissingBaseURI, "obj");
 
@@ -71,13 +71,13 @@ namespace eduVPN
             // Set logo URI.
             object logo_uri;
             if (obj.TryGetValue("logo_uri", out logo_uri) && logo_uri.GetType() == typeof(string))
-                LogoURI = new System.Uri((string)logo_uri);
+                LogoURI = new Uri((string)logo_uri);
         }
 
         /// <summary>
         /// Instance base URI
         /// </summary>
-        public System.Uri BaseURI { get; }
+        public Uri BaseURI { get; }
 
         /// <summary>
         /// Instance name to display in GUI
@@ -87,6 +87,6 @@ namespace eduVPN
         /// <summary>
         /// Instance logo URI
         /// </summary>
-        public System.Uri LogoURI { get; }
+        public Uri LogoURI { get; }
     }
 }
