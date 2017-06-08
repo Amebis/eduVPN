@@ -19,8 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
+using System.Text;
 
 namespace eduVPN
 {
@@ -33,24 +33,27 @@ namespace eduVPN
         {
             // Load instances data.
             var client = new WebClient();
-            string data = client.DownloadString(uri);
+            var data = client.DownloadData(uri);
 
             if (pub_key != null)
             {
                 // Generate signature URI.
                 var builder_sig = new UriBuilder(uri);
                 builder_sig.Path += ".sig";
-                try
-                {
-                    // Load signature.
-                    byte[] signature = Convert.FromBase64String(client.DownloadString(builder_sig.Uri));
 
+                // Load signature.
+                byte[] signature = Convert.FromBase64String(client.DownloadString(builder_sig.Uri));
+
+                // Verify signature.
+                using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
+                {
+                    if (!key.VerifyDetached(data, signature))
+                        throw new System.Security.SecurityException(String.Format(Resources.ErrorInvalidSignature, uri));
                 }
-                catch { }
             }
 
             // Parse data.
-            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(data);
+            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data));
 
             // Parse all instances listed.
             object instances;

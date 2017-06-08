@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPNTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Net;
@@ -23,8 +24,10 @@ namespace eduVPN.Tests
             // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
-            insts = new Instances(new Uri("https://static.eduvpn.nl/instances.json"));
+            insts = new Instances(new Uri("https://static.eduvpn.nl/instances.json"), Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
         }
+
+        private static bool is_resolver_active = MultiplatformDllLoader.Enable = true;
     }
 }

@@ -61,6 +61,15 @@ namespace eduVPN {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verifying signature failed. Integrity of {0} is not valid..
+        /// </summary>
+        internal static string ErrorInvalidSignature {
+            get {
+                return ResourceManager.GetString("ErrorInvalidSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Instance descriptor is missing &quot;base_uri&quot; member, or &quot;base_uri&quot; member is not a string..
         /// </summary>
         internal static string ErrorMissingBaseURI {

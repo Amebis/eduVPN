@@ -66,7 +66,7 @@
     </ProjectReference>
     <ProjectReference Include="..\eduJSON\eduJSON\eduJSON-net35.csproj">
       <Project>{e94da1fc-9542-474a-bc20-78a02b961e11}</Project>
-      <Name>eduJSON</Name>
+      <Name>eduJSON-net35</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

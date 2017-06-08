@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="InstancesTests.cs" />
     <Compile Include="InstanceTests.cs" />
+    <Compile Include="MultiplatformDllLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
