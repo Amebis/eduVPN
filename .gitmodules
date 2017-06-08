@@ -1,0 +1,6 @@
+[submodule "eduJSON"]
+	path = eduJSON
+	url = git@github.com:Amebis/eduJSON.git
+[submodule "eduEd25519"]
+	path = eduEd25519
+	url = git@github.com:Amebis/eduEd25519.git
