@@ -120,7 +120,7 @@
   <data name="ErrorInvalidSignature" xml:space="preserve">
     <value>Verifying signature failed. Integrity of {0} is not valid.</value>
   </data>
-  <data name="ErrorMissingBaseURI" xml:space="preserve">
-    <value>Instance descriptor is missing "base_uri" member, or "base_uri" member is not a string.</value>
+  <data name="ErrorMissingDataValue" xml:space="preserve">
+    <value>Data is missing "{0}" member, or "{0}" member is not a string.</value>
   </data>
 </root>

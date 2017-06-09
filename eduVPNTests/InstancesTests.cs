@@ -26,6 +26,10 @@ namespace eduVPN.Tests
 
             insts = new Instances(new Uri("https://static.eduvpn.nl/instances.json"), Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
+            foreach (var i in insts)
+            {
+                var i_api = new API(i.BaseURI);
+            }
         }
 
 #if PLATFORM_AnyCPU

@@ -1,24 +1,13 @@
 ﻿/*
-    Copyright 2017 Amebis
+    eduVPN - End-user friendly VPN
 
-    This file is part of eduVPN.
-
-    eduVPN is free software: you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    eduVPN is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with eduVPN. If not, see <http://www.gnu.org/licenses/>.
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
 */
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Net.Cache;
@@ -31,6 +20,12 @@ namespace eduVPN
     /// </summary>
     public class Instances : List<Instance>
     {
+        /// <summary>
+        /// Loads instance list from the given URI
+        /// </summary>
+        /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
+        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         public Instances(Uri uri, byte[] pub_key = null)
         {
             // Load instances data.

@@ -70,11 +70,11 @@ namespace eduVPN {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Instance descriptor is missing &quot;base_uri&quot; member, or &quot;base_uri&quot; member is not a string..
+        ///   Looks up a localized string similar to Data is missing &quot;{0}&quot; member, or &quot;{0}&quot; member is not a string..
         /// </summary>
-        internal static string ErrorMissingBaseURI {
+        internal static string ErrorMissingDataValue {
             get {
-                return ResourceManager.GetString("ErrorMissingBaseURI", resourceCulture);
+                return ResourceManager.GetString("ErrorMissingDataValue", resourceCulture);
             }
         }
     }

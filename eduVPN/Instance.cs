@@ -47,7 +47,7 @@ namespace eduVPN
             if (obj.TryGetValue("base_uri", out base_uri) && base_uri.GetType() == typeof(string))
                 BaseURI = new Uri((string)base_uri);
             else
-                throw new ArgumentException(Resources.ErrorMissingBaseURI, "obj");
+                throw new ArgumentException(String.Format(Resources.ErrorMissingDataValue, "base_uri"), "obj");
 
             // Set display name.
             object display_name;
