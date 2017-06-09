@@ -54,9 +54,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eduVPN\eduVPN-net45.csproj">
-      <Project>{ea6e81c8-429e-4670-9983-071744d274b7}</Project>
-      <Name>eduVPN-net45</Name>
+    <ProjectReference Include="..\eduVPN\eduVPN.csproj">
+      <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>
+      <Name>eduVPN</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

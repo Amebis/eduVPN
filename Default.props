@@ -11,8 +11,7 @@
     Global settings - applied to all configurations and platforms
   -->
   <PropertyGroup>
-    <BaseIntermediateOutputPath>obj\$(TargetFrameworkVersion)\$(Platform)\</BaseIntermediateOutputPath>
-    <OutputPath>$(SolutionDir)bin\$(Configuration)\$(TargetFrameworkVersion)\$(Platform)\</OutputPath>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutputPath>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <ErrorReport>prompt</ErrorReport>
@@ -38,7 +37,7 @@
     Platform specific settings
   -->
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <OutputPath>$(SolutionDir)bin\$(Configuration)\$(TargetFrameworkVersion)\</OutputPath>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>

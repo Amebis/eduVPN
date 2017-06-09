@@ -10,12 +10,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DD3C8CFD-A160-4F8A-9D53-DA6FD1BA55B2}</ProjectGuid>
+    <ProjectGuid>{2E6427E4-0C1A-49B9-A80D-886035995CBE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>eduVPN</RootNamespace>
     <AssemblyName>eduVPN</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -40,14 +40,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519-net35.vcxproj">
-      <Project>{75c812df-3130-4b2a-8fc3-2e274e3a548f}</Project>
-      <Name>eduEd25519-net35</Name>
+    <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">
+      <Project>{a25c3684-302e-4c4d-96e9-176c12fe7423}</Project>
+      <Name>eduEd25519-net40</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\eduJSON\eduJSON\eduJSON-net35.csproj">
-      <Project>{e94da1fc-9542-474a-bc20-78a02b961e11}</Project>
-      <Name>eduJSON-net35</Name>
+    <ProjectReference Include="..\eduJSON\eduJSON\eduJSON.csproj">
+      <Project>{8f4c3f22-1988-4077-9220-ed2512fc0248}</Project>
+      <Name>eduJSON-net40</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
