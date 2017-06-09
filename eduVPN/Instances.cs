@@ -19,7 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Net.Cache;
 using System.Text;
 
 namespace eduVPN
@@ -32,8 +34,14 @@ namespace eduVPN
         public Instances(Uri uri, byte[] pub_key = null)
         {
             // Load instances data.
-            var client = new WebClient();
-            var data = client.DownloadData(uri);
+            byte[] data;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+            request.CachePolicy = noCachePolicy;
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (BinaryReader reader = new BinaryReader(stream))
+                data = reader.ReadBytes(1048576); // Limit to 1MiB
 
             if (pub_key != null)
             {
@@ -42,7 +50,13 @@ namespace eduVPN
                 builder_sig.Path += ".sig";
 
                 // Load signature.
-                byte[] signature = Convert.FromBase64String(client.DownloadString(builder_sig.Uri));
+                byte[] signature;
+                request = (HttpWebRequest)WebRequest.Create(builder_sig.Uri);
+                request.CachePolicy = noCachePolicy;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                    signature = Convert.FromBase64String(reader.ReadToEnd());
 
                 // Verify signature.
                 using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
