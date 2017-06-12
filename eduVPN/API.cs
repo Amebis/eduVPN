@@ -98,12 +98,12 @@ namespace eduVPN
         }
 
         /// <summary>
-        /// URI used to obtain an access token
+        /// Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.
         /// </summary>
         public Uri AuthorizationEndpoint { get; }
 
         /// <summary>
-        /// Token endpoint URI
+        /// Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.
         /// </summary>
         public Uri TokenEndpoint { get; }
 
