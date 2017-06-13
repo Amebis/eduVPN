@@ -1,0 +1,21 @@
+﻿<Page x:Class="eduVPNClient.InstanceSelectionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="298" d:DesignWidth="373"
+      Title="InstanceSelectionPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="&lt;" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Style="{DynamicResource eduVPNNavigationButtonStyle}" Click="Back_Click" />
+        <Label Content="Choose your Provider" Margin="10" VerticalAlignment="Top" Style="{DynamicResource eduVPNPageTitleStyle}" Grid.Column="1" />
+    </Grid>
+</Page>

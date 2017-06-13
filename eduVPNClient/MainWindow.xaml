@@ -10,10 +10,10 @@
             <RowDefinition Height="17*"/>
             <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
-        <Border Background="{StaticResource eduVPNHeaderBrushKey}"/>
-        <Label Content="eduVPN" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Button Content="×" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" Width="22" Height="22" IsCancel="True" Background="{x:Null}" Foreground="{DynamicResource eduVPNHeaderTextBrushKey}" BorderBrush="{x:Null}" Click="CloseClick"/>
-        <Grid HorizontalAlignment="Center" Height="30" Margin="10,41,10,0" VerticalAlignment="Top" Width="280">
+        <Border Background="{DynamicResource eduVPNHeaderBrushKey}"/>
+        <Label Content="eduVPN" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Foreground="White"/>
+        <Button Content="×" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Top" Width="22" Height="22" IsCancel="True" Style="{DynamicResource eduVPNHeaderButtonBaseStyle}" Click="CloseClick"/>
+        <Grid HorizontalAlignment="Center" Height="30" Margin="10,41,10,10" VerticalAlignment="Top" Width="280">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -22,12 +22,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Button Content="Instances" Width="60" Background="{x:Null}" Foreground="{DynamicResource eduVPNHeaderTextBrushKey}" BorderBrush="{x:Null}" Grid.Column="0"/>
-            <Button Content="Connect" Width="60" Background="{x:Null}" Foreground="{DynamicResource eduVPNHeaderTextBrushKey}" BorderBrush="{x:Null}" Grid.Column="1"/>
-            <Button Content="Settings" Width="60" Background="{x:Null}" Foreground="{DynamicResource eduVPNHeaderTextBrushKey}" BorderBrush="{x:Null}" Grid.Column="2"/>
+            <Button Content="Instances" Style="{DynamicResource eduVPNHeaderButtonStyle}" Grid.Column="0"/>
+            <Button Content="Connect" Style="{DynamicResource eduVPNHeaderButtonStyle}"  Grid.Column="1"/>
+            <Button Content="Settings" Style="{DynamicResource eduVPNHeaderButtonStyle}" Grid.Column="2"/>
         </Grid>
         <DockPanel Grid.Row="1">
-            <Frame Source="/eduVPNClient;component/AccessTypePage.xaml" />
+            <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" />
         </DockPanel>
     </Grid>
 </Window>

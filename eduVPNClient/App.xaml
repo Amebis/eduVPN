@@ -4,14 +4,42 @@
              xmlns:local="clr-namespace:eduVPNClient"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
+        <!-- eduVPN Colors -->
         <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
         <Color x:Key="eduVPNWhite">#FFFFFFFF</Color>
         <Color x:Key="eduVPNBlack">#FF000000</Color>
         <Color x:Key="eduVPNGray">#FF646464</Color>
+
+        <!-- eduVPN Brushes -->
         <SolidColorBrush x:Key="eduVPNHeaderBrushKey" Color="{StaticResource eduVPNBlue}" />
         <SolidColorBrush x:Key="eduVPNHeaderTextBrushKey" Color="{StaticResource eduVPNWhite}" />
         <SolidColorBrush x:Key="eduVPNWindowBrushKey" Color="{StaticResource eduVPNWhite}" />
         <SolidColorBrush x:Key="eduVPNWindowTextBrushKey" Color="{StaticResource eduVPNBlack}" />
         <SolidColorBrush x:Key="eduVPNWindowBorderKey" Color="{StaticResource eduVPNGray}" />
+
+        <!-- eduVPN Buttons -->
+        <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderTextBrushKey}"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+        </Style>
+        <Style x:Key="eduVPNHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNHeaderButtonBaseStyle}">
+            <Setter Property="Width" Value="60"/>
+        </Style>
+        <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
+        </Style>
+
+        <!-- eduVPN Labels -->
+        <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
     </Application.Resources>
 </Application>

@@ -26,6 +26,7 @@ namespace eduVPNClient
 
         private void InstituteAccess_Click(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(((MainWindow)Window.GetWindow(this)).InstanceSelection);
         }
     }
 }

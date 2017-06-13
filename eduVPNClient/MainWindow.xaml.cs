@@ -17,12 +17,20 @@ namespace eduVPNClient
     {
         public MainWindow()
         {
+            AccessType = new AccessTypePage();
+            InstanceSelection = new InstanceSelectionPage();
+
             InitializeComponent();
+
+            NavigationFrame.Navigate(AccessType);
         }
 
         private void CloseClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
+
+        public AccessTypePage AccessType { get; }
+        public InstanceSelectionPage InstanceSelection { get; }
     }
 }
