@@ -9,6 +9,12 @@
 
   <PropertyGroup Condition="'$(ManifestCertificateThumbprint)' != ''">
     <BuildDependsOn>$(BuildDependsOn);Sign</BuildDependsOn>
+
+    <!--
+        Fixes "ALINK : warning AL1073: Referenced assembly 'mscorlib.dll' targets a different processor" warning.
+        https://stackoverflow.com/a/41945190/2071884
+    -->
+    <TargetFrameworkSDKToolsDirectory Condition="'$(PlatformTarget)' == 'x64'">$(TargetFrameworkSDKToolsDirectory)$(PlatformTarget)\</TargetFrameworkSDKToolsDirectory>
   </PropertyGroup>
 
   <Target Name="Sign" Inputs="$(OutDir)$(TargetName)$(TargetExt)" Outputs="$(OutDir)$(TargetName).sign">
