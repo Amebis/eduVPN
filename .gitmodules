@@ -4,3 +4,6 @@
 [submodule "eduEd25519"]
 	path = eduEd25519
 	url = git@github.com:Amebis/eduEd25519.git
+[submodule "eduOAuth"]
+	path = eduOAuth
+	url = git@github.com:Amebis/eduOAuth.git
