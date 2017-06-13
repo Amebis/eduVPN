@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System.Net;
 using System.Windows;
 
 namespace eduVPNClient
@@ -14,5 +15,11 @@ namespace eduVPNClient
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            // .NET 3.5 allows Schannel to use SSL 3 and TLS 1.0 by default. Instead of hacking user computer's registry, extend it in runtime.
+            // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
+        }
     }
 }
