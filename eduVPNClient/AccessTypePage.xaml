@@ -4,16 +4,34 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d" 
-      d:DesignWidth="298" d:DesignHeight="373"
-      Title="AccessTypePage">
+      d:DesignWidth="298"
+      d:DesignHeight="373"
+      Title="Access Type">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Content="Secure Internet" Margin="10" Width="120" Height="90" Click="SecureInternet_Click" />
-        <TextBlock TextWrapping="Wrap" Text="Connect to the internet securely,&#xD;&#xA;for example when using public WiFi." Margin="0,120,0,0" VerticalAlignment="Center" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" />
-        <Button Content="Institute Access" Margin="10" Width="120" Height="90" Grid.Row="1" Click="InstituteAccess_Click" />
-        <TextBlock TextWrapping="Wrap" Text="Access your organization network" Margin="0,120,0,0" VerticalAlignment="Center" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Grid.Row="1" />
+
+        <Button
+            Grid.Row="0"
+            Style="{DynamicResource eduVPNChoiceButtonStyle}"
+            IsEnabled="False">Secure Internet</Button>
+
+        <TextBlock
+            Grid.Row="0"
+            Style="{DynamicResource eduVPNChoiceLabelStyle}">Connect to the internet securely, <LineBreak/>
+            for example when using public WiFi.</TextBlock>
+
+        <Button
+            Grid.Row="1"
+            Style="{DynamicResource eduVPNChoiceButtonStyle}"
+            Command="NavigationCommands.GoToPage"
+            CommandTarget="{Binding ElementName=NavigationFrame}"
+            CommandParameter="InstanceSelectionPage.xaml">Institute Access</Button>
+
+        <TextBlock
+            Grid.Row="1"
+            Style="{DynamicResource eduVPNChoiceLabelStyle}">Access your organization network</TextBlock>
     </Grid>
 </Page>

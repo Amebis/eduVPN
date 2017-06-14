@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Windows;
 using System.Windows.Controls;
 
 namespace eduVPNClient
@@ -18,15 +17,6 @@ namespace eduVPNClient
         public AccessTypePage()
         {
             InitializeComponent();
-        }
-
-        private void SecureInternet_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void InstituteAccess_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(((MainWindow)Window.GetWindow(this)).InstanceSelection);
         }
     }
 }

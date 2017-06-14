@@ -19,10 +19,5 @@ namespace eduVPNClient
         {
             InitializeComponent();
         }
-
-        private void Back_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            NavigationService.Navigate(((MainWindow)Window.GetWindow(this)).AccessType);
-        }
     }
 }

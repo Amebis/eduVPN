@@ -1,13 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<!--
-    eduVPN - End-user friendly VPN
-
-    Copyright: 2017, The Commons Conservancy eduVPN Programme
-    SPDX-License-Identifier: GPL-3.0+
--->
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPNClient.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WindowTop" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">NaN</Value>
+    </Setting>
+    <Setting Name="WindowLeft" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">NaN</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

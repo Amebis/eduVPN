@@ -28,18 +28,44 @@
             <Setter Property="Width" Value="60"/>
         </Style>
         <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="10"/>
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
         </Style>
+        <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="90"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+        </Style>
 
         <!-- eduVPN Labels -->
+        <Style x:Key="eduVPNHeaderStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderTextBrushKey}"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
         <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="10"/>
             <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
+        <!-- eduVPN TextBlocks -->
+        <Style x:Key="eduVPNChoiceLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,130,10,10"/>
+            <Setter Property="FontSize" Value="11"/>
+        </Style>
     </Application.Resources>
 </Application>
