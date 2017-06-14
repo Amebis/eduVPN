@@ -29,40 +29,47 @@ namespace eduVPN
         public Instances(Uri uri, byte[] pub_key = null)
         {
             // Load instances data.
-            byte[] data;
+            var data = new byte[1048576]; // Limit to 1MiB
+            int data_size;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             request.CachePolicy = noCachePolicy;
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-                data = reader.ReadBytes(1048576); // Limit to 1MiB
-
-            if (pub_key != null)
             {
-                // Generate signature URI.
-                var builder_sig = new UriBuilder(uri);
-                builder_sig.Path += ".sig";
+                // Spawn data read in the background, to allow loading signature in parallel.
+                var read = stream.BeginRead(data, 0, data.Length, null, null);
 
-                // Load signature.
-                byte[] signature;
-                request = (HttpWebRequest)WebRequest.Create(builder_sig.Uri);
-                request.CachePolicy = noCachePolicy;
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                    signature = Convert.FromBase64String(reader.ReadToEnd());
-
-                // Verify signature.
-                using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
+                if (pub_key != null)
                 {
-                    if (!key.VerifyDetached(data, signature))
-                        throw new System.Security.SecurityException(String.Format(Resources.ErrorInvalidSignature, uri));
+                    // Generate signature URI.
+                    var builder_sig = new UriBuilder(uri);
+                    builder_sig.Path += ".sig";
+
+                    // Load signature.
+                    byte[] signature;
+                    request = (HttpWebRequest)WebRequest.Create(builder_sig.Uri);
+                    request.CachePolicy = noCachePolicy;
+                    using (HttpWebResponse signature_response = (HttpWebResponse)request.GetResponse())
+                    using (Stream signature_stream = signature_response.GetResponseStream())
+                    using (StreamReader reader = new StreamReader(signature_stream))
+                        signature = Convert.FromBase64String(reader.ReadToEnd());
+
+                    // Wait for the data to arrive.
+                    data_size = stream.EndRead(read);
+
+                    // Verify signature.
+                    using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
+                        if (!key.VerifyDetached(data, 0, data_size, signature))
+                            throw new System.Security.SecurityException(String.Format(Resources.ErrorInvalidSignature, uri));
+                } else {
+                    // Wait for the data to arrive.
+                    data_size = stream.EndRead(read);
                 }
             }
 
             // Parse data.
-            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data));
+            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size));
 
             // Parse all instances listed.
             object instances;
