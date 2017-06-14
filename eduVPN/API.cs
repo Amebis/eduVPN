@@ -41,60 +41,33 @@ namespace eduVPN
             using (BinaryReader reader = new BinaryReader(stream))
                 data = reader.ReadBytes(1048576); // Limit to 1MiB
 
-            // Parse data.
-            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data));
+            // Parse the API/APIv2.
+            var apiv2 =
+                eduJSON.Parser.GetValue< Dictionary<string, object> >(
+                    eduJSON.Parser.GetValue< Dictionary<string, object> >(
+                        (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data)),
+                        "api"),
+                    "http://eduvpn.org/api#2");
 
-            // Parse the API.
-            object api;
-            if (obj.TryGetValue("api", out api) && api.GetType() == typeof(Dictionary<string, object>))
-            {
-                // Parse APIv2.
-                object apiv2;
-                if (((Dictionary<string, object>)api).TryGetValue("http://eduvpn.org/api#2", out apiv2) && apiv2.GetType() == typeof(Dictionary<string, object>))
-                {
-                    object obj2;
+            // Set authorization endpoint.
+            AuthorizationEndpoint = new Uri(eduJSON.Parser.GetValue<string>(apiv2, "authorization_endpoint"));
 
-                    // Set authorization endpoint.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("authorization_endpoint", out obj2) && obj2.GetType() == typeof(string))
-                        AuthorizationEndpoint = new Uri((string)obj2);
-                    else
-                        throw new ArgumentException(String.Format(Resources.ErrorMissingDataValue, "authorization_endpoint"), "uri");
+            // Set token endpoint.
+            TokenEndpoint = new Uri(eduJSON.Parser.GetValue<string>(apiv2, "token_endpoint"));
 
-                    // Set token endpoint.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("token_endpoint", out obj2) && obj2.GetType() == typeof(string))
-                        TokenEndpoint = new Uri((string)obj2);
-                    else
-                        throw new ArgumentException(String.Format(Resources.ErrorMissingDataValue, "token_endpoint"), "uri");
-
-                    // Set base URI.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("api_base_uri", out obj2) && obj2.GetType() == typeof(string))
-                        BaseURI = new Uri((string)obj2);
-
-                    // Set base URI.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("create_certificate", out obj2) && obj2.GetType() == typeof(string))
-                        CreateCertificate = new Uri((string)obj2);
-
-                    // Set base URI.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("profile_config", out obj2) && obj2.GetType() == typeof(string))
-                        ProfileConfig = new Uri((string)obj2);
-
-                    // Set base URI.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("profile_list", out obj2) && obj2.GetType() == typeof(string))
-                        ProfileList = new Uri((string)obj2);
-
-                    // Set base URI.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("system_messages", out obj2) && obj2.GetType() == typeof(string))
-                        SystemMessages = new Uri((string)obj2);
-
-                    // Set base URI.
-                    if (((Dictionary<string, object>)apiv2).TryGetValue("user_messages", out obj2) && obj2.GetType() == typeof(string))
-                        UserMessages = new Uri((string)obj2);
-                }
-                else
-                    throw new ArgumentException(String.Format(Resources.ErrorMissingDataValue, "http://eduvpn.org/api#2"), "uri");
-            }
-            else
-                throw new ArgumentException(String.Format(Resources.ErrorMissingDataValue, "api"), "uri");
+            // Set other URI(s).
+            if (eduJSON.Parser.GetValue(apiv2, "api_base_uri", out string api_base_uri))
+                BaseURI = new Uri(api_base_uri);
+            if (eduJSON.Parser.GetValue(apiv2, "create_certificate", out string create_certificate))
+                CreateCertificate = new Uri(create_certificate);
+            if (eduJSON.Parser.GetValue(apiv2, "profile_config", out string profile_config))
+                ProfileConfig = new Uri(profile_config);
+            if (eduJSON.Parser.GetValue(apiv2, "profile_list", out string profile_list))
+                ProfileList = new Uri(profile_list);
+            if (eduJSON.Parser.GetValue(apiv2, "system_messages", out string system_messages))
+                SystemMessages = new Uri(system_messages);
+            if (eduJSON.Parser.GetValue(apiv2, "user_messages", out string user_messages))
+                UserMessages = new Uri(user_messages);
         }
 
         /// <summary>

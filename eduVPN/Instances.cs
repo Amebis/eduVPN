@@ -72,23 +72,17 @@ namespace eduVPN
             var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size));
 
             // Parse all instances listed.
-            object instances;
-            if (obj.TryGetValue("instances", out instances) && instances.GetType() == typeof(List<object>))
-            {
-                foreach (var el in (List<object>)instances)
-                    if (el.GetType() == typeof(Dictionary<string, object>))
-                        Add(new Instance((Dictionary<string, object>)el));
-            }
+            foreach (var el in eduJSON.Parser.GetValue< List<object> >(obj, "instances"))
+                if (el.GetType() == typeof(Dictionary<string, object>))
+                    Add(new Instance((Dictionary<string, object>)el));
 
             // Parse sequence.
-            object seq;
-            Sequence = obj.TryGetValue("seq", out seq) && seq.GetType() == typeof(int) ? (uint)(int)seq : 0;
+            Sequence = eduJSON.Parser.GetValue(obj, "seq", out int seq) ? (uint)seq : 0;
 
             // Parse authorization data.
-            object authorization_type;
-            if (obj.TryGetValue("authorization_type", out authorization_type) && authorization_type.GetType() == typeof(string))
+            if (eduJSON.Parser.GetValue(obj, "authorization_type", out string authorization_type))
             {
-                switch (((string)authorization_type).ToLower())
+                switch (authorization_type.ToLower())
                 {
                     case "federated": AuthType = AuthorizationType.Federated; break;
                     case "distributed": AuthType = AuthorizationType.Distributed; break;
@@ -102,13 +96,8 @@ namespace eduVPN
             if (pub_key != null)
             {
                 // Parse signed date.
-                object signed_at;
-                if (obj.TryGetValue("signed_at", out signed_at) && signed_at.GetType() == typeof(string))
-                {
-                    DateTime result;
-                    if (DateTime.TryParse((string)signed_at, out result))
-                        SignedAt = result;
-                }
+                if (eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime result))
+                    SignedAt = result;
             }
         }
 

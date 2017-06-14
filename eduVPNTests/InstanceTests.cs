@@ -48,7 +48,7 @@ namespace eduVPN.Tests
                         { "logo_uri", "https://static.eduvpn.nl/img/surfnet.png" }
                     });
                 Assert.Fail("Missing base URL tolerated");
-            } catch (ArgumentException) {}
+            } catch (eduJSON.MissingParameterException) {}
         }
     }
 }

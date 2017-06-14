@@ -43,23 +43,17 @@ namespace eduVPN
         public Instance(Dictionary<string, object> obj)
         {
             // Set base URI.
-            object base_uri;
-            if (obj.TryGetValue("base_uri", out base_uri) && base_uri.GetType() == typeof(string))
-                BaseURI = new Uri((string)base_uri);
-            else
-                throw new ArgumentException(String.Format(Resources.ErrorMissingDataValue, "base_uri"), "obj");
+            BaseURI = new Uri(eduJSON.Parser.GetValue<string>(obj, "base_uri"));
 
             // Set display name.
-            object display_name;
-            if (obj.TryGetValue("display_name", out display_name) && display_name.GetType() == typeof(string))
-                DisplayName = (string)display_name;
+            if (eduJSON.Parser.GetValue(obj, "display_name", out string display_name))
+                DisplayName = display_name;
             else
                 DisplayName = BaseURI.Host;
 
             // Set logo URI.
-            object logo_uri;
-            if (obj.TryGetValue("logo_uri", out logo_uri) && logo_uri.GetType() == typeof(string))
-                LogoURI = new Uri((string)logo_uri);
+            if (eduJSON.Parser.GetValue(obj, "logo_uri", out string logo_uri))
+                LogoURI = new Uri(logo_uri);
         }
 
         /// <summary>
