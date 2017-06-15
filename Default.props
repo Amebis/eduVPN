@@ -16,7 +16,8 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <ErrorReport>prompt</ErrorReport>
     <DefineConstants>TRACE;PLATFORM_$(Platform)</DefineConstants>
-	<UICulture>en-US</UICulture>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UICulture>en-US</UICulture>
   </PropertyGroup>
 
   <!--

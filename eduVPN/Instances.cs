@@ -12,6 +12,8 @@ using System.IO;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace eduVPN
 {
@@ -67,60 +69,17 @@ namespace eduVPN
         #region Constructors
 
         /// <summary>
-        /// Loads instance list from the given URI
+        /// Constructs a new instance list from a dictionary object (provided by JSON)
         /// </summary>
-        /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
-        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-        public Instances(Uri uri, byte[] pub_key = null)
+        /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
+        public Instances(Dictionary<string, object> obj)
         {
-            // Load instances data.
-            var data = new byte[1048576]; // Limit to 1MiB
-            int data_size;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
-            request.CachePolicy = noCachePolicy;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            {
-                // Spawn data read in the background, to allow loading signature in parallel.
-                var read = stream.BeginRead(data, 0, data.Length, null, null);
-
-                if (pub_key != null)
-                {
-                    // Generate signature URI.
-                    var builder_sig = new UriBuilder(uri);
-                    builder_sig.Path += ".sig";
-
-                    // Load signature.
-                    byte[] signature;
-                    request = (HttpWebRequest)WebRequest.Create(builder_sig.Uri);
-                    request.CachePolicy = noCachePolicy;
-                    using (HttpWebResponse signature_response = (HttpWebResponse)request.GetResponse())
-                    using (Stream signature_stream = signature_response.GetResponseStream())
-                    using (StreamReader reader = new StreamReader(signature_stream))
-                        signature = Convert.FromBase64String(reader.ReadToEnd());
-
-                    // Wait for the data to arrive.
-                    data_size = stream.EndRead(read);
-
-                    // Verify signature.
-                    using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
-                        if (!key.VerifyDetached(data, 0, data_size, signature))
-                            throw new System.Security.SecurityException(String.Format(Resources.ErrorInvalidSignature, uri));
-                } else {
-                    // Wait for the data to arrive.
-                    data_size = stream.EndRead(read);
-                }
-            }
-
-            // Parse data.
-            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size));
-
             // Parse all instances listed.
-            foreach (var el in eduJSON.Parser.GetValue< List<object> >(obj, "instances"))
+            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj, "instances"))
+            {
                 if (el.GetType() == typeof(Dictionary<string, object>))
                     Add(new Instance((Dictionary<string, object>)el));
+            }
 
             // Parse sequence.
             Sequence = eduJSON.Parser.GetValue(obj, "seq", out int seq) ? (uint)seq : 0;
@@ -138,13 +97,79 @@ namespace eduVPN
             else
                 AuthType = AuthorizationType.Local;
 
-            SignedAt = null;
+            // Parse signed date.
+            SignedAt = eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Loads instance list from the given URI
+        /// </summary>
+        /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
+        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
+        /// <param name="ct">The token to monitor for cancellation requests.</param>
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+        public static async Task<Instances> LoadAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        {
+            // Spawn data loading.
+            var data = new byte[1048576]; // Limit to 1MiB
+            int data_size;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+            request.CachePolicy = noCachePolicy;
+            var response_task = request.GetResponseAsync();
+
+            byte[] signature = null;
+            Task<WebResponse> response_sig_task = null;
             if (pub_key != null)
             {
-                // Parse signed date.
-                if (eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime result))
-                    SignedAt = result;
+                // Generate signature URI.
+                var builder_sig = new UriBuilder(uri);
+                builder_sig.Path += ".sig";
+
+                // Spawn signature loading.
+                request = (HttpWebRequest)WebRequest.Create(builder_sig.Uri);
+                request.CachePolicy = noCachePolicy;
+                response_sig_task = request.GetResponseAsync();
             }
+
+            // Wait for data to start comming in.
+            using (var response = (HttpWebResponse)(await response_task))
+            using (var stream = response.GetResponseStream())
+            {
+                // Spawn data read.
+                var read_task = stream.ReadAsync(data, 0, data.Length, ct);
+
+                if (pub_key != null)
+                {
+                    // Read the signature.
+                    using (var response_sig = (HttpWebResponse)(await response_sig_task))
+                    using (var stream_sig = response_sig.GetResponseStream())
+                    using (var reader_sig = new StreamReader(stream_sig))
+                        signature = Convert.FromBase64String(await reader_sig.ReadToEndAsync());
+                }
+
+                // Wait for the data to arrive.
+                data_size = await read_task;
+                if (read_task.IsCanceled)
+                    throw new OperationCanceledException(ct);
+            }
+
+            if (pub_key != null)
+            {
+                ct.ThrowIfCancellationRequested();
+
+                // Verify signature.
+                using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
+                    if (!key.VerifyDetached(data, 0, data_size, signature))
+                        throw new System.Security.SecurityException(String.Format(Resources.ErrorInvalidSignature, uri));
+            }
+
+            // Parse data.
+            return new Instances((Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct));
         }
 
         #endregion
