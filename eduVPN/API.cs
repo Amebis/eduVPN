@@ -20,6 +20,52 @@ namespace eduVPN
     /// </summary>
     public class API
     {
+        #region Properties
+
+        /// <summary>
+        /// Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.
+        /// </summary>
+        public Uri AuthorizationEndpoint { get; }
+
+        /// <summary>
+        /// Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.
+        /// </summary>
+        public Uri TokenEndpoint { get; }
+
+        /// <summary>
+        /// API base URI
+        /// </summary>
+        public Uri BaseURI { get; }
+
+        /// <summary>
+        /// Create client certificate URI
+        /// </summary>
+        public Uri CreateCertificate { get; }
+
+        /// <summary>
+        /// Profile configuration URI
+        /// </summary>
+        public Uri ProfileConfig { get; }
+
+        /// <summary>
+        /// Profile list URI
+        /// </summary>
+        public Uri ProfileList { get; }
+
+        /// <summary>
+        /// System messages URI
+        /// </summary>
+        public Uri SystemMessages { get; }
+
+        /// <summary>
+        /// User messages URI
+        /// </summary>
+        public Uri UserMessages { get; }
+
+        #endregion
+
+        #region Constructors
+
         /// <summary>
         /// Loads API URIs from the given instance base URI
         /// </summary>
@@ -70,44 +116,6 @@ namespace eduVPN
                 UserMessages = new Uri(user_messages);
         }
 
-        /// <summary>
-        /// Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.
-        /// </summary>
-        public Uri AuthorizationEndpoint { get; }
-
-        /// <summary>
-        /// Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.
-        /// </summary>
-        public Uri TokenEndpoint { get; }
-
-        /// <summary>
-        /// API base URI
-        /// </summary>
-        public Uri BaseURI { get; }
-
-        /// <summary>
-        /// Create client certificate URI
-        /// </summary>
-        public Uri CreateCertificate { get; }
-
-        /// <summary>
-        /// Profile configuration URI
-        /// </summary>
-        public Uri ProfileConfig { get; }
-
-        /// <summary>
-        /// Profile list URI
-        /// </summary>
-        public Uri ProfileList { get; }
-
-        /// <summary>
-        /// System messages URI
-        /// </summary>
-        public Uri SystemMessages { get; }
-
-        /// <summary>
-        /// User messages URI
-        /// </summary>
-        public Uri UserMessages { get; }
+        #endregion
     }
 }

@@ -20,6 +20,52 @@ namespace eduVPN
     /// </summary>
     public class Instances : List<Instance>
     {
+        #region Data Types
+
+        /// <summary>
+        /// Authorization type
+        /// </summary>
+        public enum AuthorizationType
+        {
+            /// <summary>
+            /// Access token is specific to each instance and cannot be used by other instances.
+            /// </summary>
+            Local,
+
+            /// <summary>
+            /// Access token is issued by a central OAuth server; all instances accept this token.
+            /// </summary>
+            Federated,
+
+            /// <summary>
+            /// Access token from any instance can be used by any other instance.
+            /// </summary>
+            Distributed
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Authorization type
+        /// </summary>
+        public AuthorizationType AuthType { get; }
+
+        /// <summary>
+        /// Version sequence
+        /// </summary>
+        public uint Sequence { get; }
+
+        /// <summary>
+        /// Signature timestamp
+        /// </summary>
+        public DateTime? SignedAt { get; }
+
+        #endregion
+
+        #region Constructors
+
         /// <summary>
         /// Loads instance list from the given URI
         /// </summary>
@@ -101,40 +147,6 @@ namespace eduVPN
             }
         }
 
-        /// <summary>
-        /// Authorization type
-        /// </summary>
-        public enum AuthorizationType
-        {
-            /// <summary>
-            /// Access token is specific to each instance and cannot be used by other instances.
-            /// </summary>
-            Local,
-
-            /// <summary>
-            /// Access token is issued by a central OAuth server; all instances accept this token.
-            /// </summary>
-            Federated,
-
-            /// <summary>
-            /// Access token from any instance can be used by any other instance.
-            /// </summary>
-            Distributed
-        }
-
-        /// <summary>
-        /// Authorization type
-        /// </summary>
-        public AuthorizationType AuthType { get; }
-
-        /// <summary>
-        /// Version sequence
-        /// </summary>
-        public uint Sequence { get; }
-
-        /// <summary>
-        /// Signature timestamp
-        /// </summary>
-        public DateTime? SignedAt { get; }
+        #endregion
     }
 }

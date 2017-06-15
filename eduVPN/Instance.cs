@@ -15,6 +15,27 @@ namespace eduVPN
     /// </summary>
     public class Instance
     {
+        #region Properties
+
+        /// <summary>
+        /// Instance base URI
+        /// </summary>
+        public Uri BaseURI { get; }
+
+        /// <summary>
+        /// Instance name to display in GUI
+        /// </summary>
+        public string DisplayName { get; }
+
+        /// <summary>
+        /// Instance logo URI
+        /// </summary>
+        public Uri LogoURI { get; }
+
+        #endregion
+
+        #region Constructors
+
         /// <summary>
         /// Constructs a new instance with given base URI
         /// </summary>
@@ -56,19 +77,6 @@ namespace eduVPN
                 LogoURI = new Uri(logo_uri);
         }
 
-        /// <summary>
-        /// Instance base URI
-        /// </summary>
-        public Uri BaseURI { get; }
-
-        /// <summary>
-        /// Instance name to display in GUI
-        /// </summary>
-        public string DisplayName { get; }
-
-        /// <summary>
-        /// Instance logo URI
-        /// </summary>
-        public Uri LogoURI { get; }
+        #endregion
     }
 }
