@@ -37,30 +37,9 @@ namespace eduVPN
         #region Constructors
 
         /// <summary>
-        /// Constructs a new instance with given base URI
-        /// </summary>
-        /// <param name="base_uri">Instance base URI</param>
-        public Instance(string base_uri)
-        {
-            BaseURI = new Uri(base_uri);
-            DisplayName = BaseURI.Host; // Deduce display name from the base URL hostname.
-        }
-
-        /// <summary>
-        /// Constructs a new instance with given base URI and display name
-        /// </summary>
-        /// <param name="base_uri">Instance base URI</param>
-        /// <param name="display_name">Instance display name</param>
-        public Instance(string base_uri, string display_name)
-        {
-            BaseURI = new Uri(base_uri);
-            DisplayName = display_name;
-        }
-
-        /// <summary>
         /// Constructs a new instance from a dictionary object (provided by JSON)
         /// </summary>
-        /// <param name="obj">Key/value dictionary with "base_uri", "logo_uri" and "display_name" elements. "base_uri" is required. All elements should be strings.</param>
+        /// <param name="obj">Key/value dictionary with <c>base_uri</c>, <c>logo_uri</c> and <c>display_name</c> elements. <c>base_uri</c> is required. All elements should be strings.</param>
         public Instance(Dictionary<string, object> obj)
         {
             // Set base URI.
