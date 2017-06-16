@@ -26,7 +26,8 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Instance.cs" />
-    <Compile Include="Instances.cs" />
+    <Compile Include="InstanceList.cs" />
+    <Compile Include="ObservableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

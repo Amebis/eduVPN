@@ -45,7 +45,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="InstancesTests.cs" />
+    <Compile Include="InstanceListTests.cs" />
     <Compile Include="InstanceTests.cs" />
     <Compile Include="MultiplatformDllLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

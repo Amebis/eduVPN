@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
@@ -20,7 +22,7 @@ namespace eduVPN
     /// <summary>
     /// An eduVPN list of instances = VPN service providers
     /// </summary>
-    public class Instances : List<Instance>
+    public class InstanceList : ObservableCollection<Instance>
     {
         #region Data Types
 
@@ -47,72 +49,103 @@ namespace eduVPN
 
         #endregion
 
+        #region Fields
+
+        private AuthorizationType _auth_type;
+        private uint _sequence;
+        private DateTime? _signed_at;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
         /// Authorization type
         /// </summary>
-        public AuthorizationType AuthType { get; }
+        public AuthorizationType AuthType { get => _auth_type; }
 
         /// <summary>
         /// Version sequence
         /// </summary>
-        public uint Sequence { get; }
+        public uint Sequence { get => _sequence; }
 
         /// <summary>
         /// Signature timestamp
         /// </summary>
-        public DateTime? SignedAt { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Constructs a new instance list from a dictionary object (provided by JSON)
-        /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
-        public Instances(Dictionary<string, object> obj)
-        {
-            // Parse all instances listed.
-            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj, "instances"))
-            {
-                if (el.GetType() == typeof(Dictionary<string, object>))
-                    Add(new Instance((Dictionary<string, object>)el));
-            }
-
-            // Parse sequence.
-            Sequence = eduJSON.Parser.GetValue(obj, "seq", out int seq) ? (uint)seq : 0;
-
-            // Parse authorization data.
-            if (eduJSON.Parser.GetValue(obj, "authorization_type", out string authorization_type))
-            {
-                switch (authorization_type.ToLower())
-                {
-                    case "federated": AuthType = AuthorizationType.Federated; break;
-                    case "distributed": AuthType = AuthorizationType.Distributed; break;
-                    default: AuthType = AuthorizationType.Local; break; // Assume local authorization type on all other values.
-                }
-            }
-            else
-                AuthType = AuthorizationType.Local;
-
-            // Parse signed date.
-            SignedAt = eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
-        }
+        public DateTime? SignedAt { get => _signed_at; }
 
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Loads instance list from the given URI
+        /// Loads instance list from a dictionary object (provided by JSON)
+        /// </summary>
+        /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
+        public void Load(Dictionary<string, object> obj)
+        {
+            // Parse all instances listed. Don't do it in parallel to preserve the sort order.
+            Clear();
+            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj, "instances"))
+            {
+                if (el.GetType() == typeof(Dictionary<string, object>))
+                {
+                    var instance = new Instance();
+                    instance.Load((Dictionary<string, object>)el);
+                    Add(instance);
+                }
+            }
+
+            // Parse sequence.
+            _sequence = eduJSON.Parser.GetValue(obj, "seq", out int seq) ? (uint)seq : 0;
+            OnPropertyChanged(new PropertyChangedEventArgs("Sequence"));
+
+            // Parse authorization data.
+            if (eduJSON.Parser.GetValue(obj, "authorization_type", out string authorization_type))
+            {
+                switch (authorization_type.ToLower())
+                {
+                    case "federated": _auth_type = AuthorizationType.Federated; break;
+                    case "distributed": _auth_type = AuthorizationType.Distributed; break;
+                    default: _auth_type = AuthorizationType.Local; break; // Assume local authorization type on all other values.
+                }
+            }
+            else
+                _auth_type = AuthorizationType.Local;
+            OnPropertyChanged(new PropertyChangedEventArgs("AuthType"));
+
+            // Parse signed date.
+            _signed_at = eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
+            OnPropertyChanged(new PropertyChangedEventArgs("SignedAt"));
+        }
+
+        /// <summary>
+        /// Loads instance list from the given URI.
+        /// </summary>
+        /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
+        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
+        /// <param name="ct">The token to monitor for cancellation requests.</param>
+        public void Load(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        {
+            var task = LoadAsync(uri, pub_key, ct);
+            try
+            {
+                task.Wait(ct);
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Loads instance list from the given URI asynchronously.
         /// </summary>
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-        public static async Task<Instances> LoadAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        public async Task LoadAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {
             // Spawn data loading.
             var data = new byte[1048576]; // Limit to 1MiB
@@ -169,7 +202,7 @@ namespace eduVPN
             }
 
             // Parse data.
-            return new Instances((Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct));
+            Load((Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct));
         }
 
         #endregion
