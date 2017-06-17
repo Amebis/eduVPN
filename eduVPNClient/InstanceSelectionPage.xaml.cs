@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Windows;
 using System.Windows.Controls;
 
 namespace eduVPNClient
@@ -18,6 +17,7 @@ namespace eduVPNClient
         public InstanceSelectionPage()
         {
             InitializeComponent();
+            InstanceList.ItemsSource = App.Instances;
         }
     }
 }

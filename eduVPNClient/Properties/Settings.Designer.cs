@@ -46,5 +46,24 @@ namespace eduVPNClient.Properties {
                 this["WindowLeft"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/instances.json")]
+        public string InstanceDirectory {
+            get {
+                return ((string)(this["InstanceDirectory"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
+        public string InstanceDirectoryPubKey {
+            get {
+                return ((string)(this["InstanceDirectoryPubKey"]));
+            }
+        }
     }
 }

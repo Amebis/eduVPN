@@ -67,5 +67,63 @@
             <Setter Property="Margin" Value="10,130,10,10"/>
             <Setter Property="FontSize" Value="11"/>
         </Style>
+
+        <!-- eduVPN ListBoxes -->
+        <Style x:Key="eduVPNListStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <!-- eduVPN Lists -->
+        <DataTemplate x:Key="eduVPNInstanceSelectionItemTemplate">
+            <Grid
+                Margin="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Separator
+                    Grid.ColumnSpan="2"
+                    Margin="0"
+                    Background="{DynamicResource eduVPNHeaderBrushKey}">
+                    <Separator.Style>
+                        <Style TargetType="Separator">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Separator.Style>
+                </Separator>
+
+                <Image
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Source="{Binding Logo}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,10,5,10"
+                    RenderOptions.BitmapScalingMode="Fant"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Text="{Binding DisplayName}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    Margin="5,10,0,10"
+                    FontSize="14"/>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="eduVPNInstanceSelectionItemContainerStyle" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
     </Application.Resources>
 </Application>

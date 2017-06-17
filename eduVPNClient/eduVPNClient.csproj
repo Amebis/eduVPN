@@ -14,7 +14,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>eduVPNClient</RootNamespace>
     <AssemblyName>eduVPNClient</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -93,6 +93,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">
+      <Project>{a25c3684-302e-4c4d-96e9-176c12fe7423}</Project>
+      <Name>eduEd25519</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eduJSON\eduJSON\eduJSON.csproj">
+      <Project>{8f4c3f22-1988-4077-9220-ed2512fc0248}</Project>
+      <Name>eduJSON</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
+      <Project>{44ea054c-0c39-4aac-9e40-253e919c1e2f}</Project>
+      <Name>eduOAuth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eduVPN\eduVPN.csproj">
+      <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>
+      <Name>eduVPN</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />

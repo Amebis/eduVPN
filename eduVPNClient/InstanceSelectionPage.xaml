@@ -29,8 +29,10 @@
 
         <ListBox
             Grid.Row="1"
-            x:Name="Providers"
             Grid.ColumnSpan="2"
-            Margin="10"/>
+            x:Name="InstanceList"
+            Style="{StaticResource eduVPNListStyle}"
+            ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource eduVPNInstanceSelectionItemContainerStyle}"/>
     </Grid>
 </Page>
