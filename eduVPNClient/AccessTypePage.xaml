@@ -15,23 +15,23 @@
 
         <Button
             Grid.Row="0"
-            Style="{DynamicResource eduVPNChoiceButtonStyle}"
+            Style="{StaticResource eduVPNChoiceButtonStyle}"
             IsEnabled="False">Secure Internet</Button>
 
         <TextBlock
             Grid.Row="0"
-            Style="{DynamicResource eduVPNChoiceLabelStyle}">Connect to the internet securely, <LineBreak/>
+            Style="{StaticResource eduVPNChoiceLabelStyle}">Connect to the internet securely, <LineBreak/>
             for example when using public WiFi.</TextBlock>
 
         <Button
             Grid.Row="1"
-            Style="{DynamicResource eduVPNChoiceButtonStyle}"
+            Style="{StaticResource eduVPNChoiceButtonStyle}"
             Command="NavigationCommands.GoToPage"
             CommandTarget="{Binding ElementName=NavigationFrame}"
             CommandParameter="InstanceSelectionPage.xaml">Institute Access</Button>
 
         <TextBlock
             Grid.Row="1"
-            Style="{DynamicResource eduVPNChoiceLabelStyle}">Access your organization network</TextBlock>
+            Style="{StaticResource eduVPNChoiceLabelStyle}">Access your organization network</TextBlock>
     </Grid>
 </Page>

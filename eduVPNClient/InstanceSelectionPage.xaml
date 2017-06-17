@@ -18,14 +18,14 @@
         </Grid.RowDefinitions>
 
         <Button
-            Style="{DynamicResource eduVPNNavigationButtonStyle}"
+            Style="{StaticResource eduVPNNavigationButtonStyle}"
             Command="NavigationCommands.GoToPage"
             CommandTarget="{Binding ElementName=NavigationFrame}"
             CommandParameter="AccessTypePage.xaml">&lt;</Button>
 
         <Label
             Grid.Column="1"
-            Style="{DynamicResource eduVPNPageTitleStyle}">Choose your Provider</Label>
+            Style="{StaticResource eduVPNPageTitleStyle}">Choose your Provider</Label>
 
         <ListBox
             Grid.Row="1"

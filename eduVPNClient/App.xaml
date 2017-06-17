@@ -21,7 +21,7 @@
         <!-- eduVPN Buttons -->
         <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderTextBrushKey}"/>
+            <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
             <Setter Property="BorderBrush" Value="{x:Null}"/>
         </Style>
         <Style x:Key="eduVPNHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNHeaderButtonBaseStyle}">
@@ -34,8 +34,8 @@
             <Setter Property="Height" Value="30"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
+            <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource eduVPNHeaderBrushKey}"/>
         </Style>
         <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -48,13 +48,13 @@
 
         <!-- eduVPN Labels -->
         <Style x:Key="eduVPNHeaderStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderTextBrushKey}"/>
+            <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
             <Setter Property="FontSize" Value="12"/>
         </Style>
         <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Margin" Value="10"/>
-            <Setter Property="Foreground" Value="{DynamicResource eduVPNHeaderBrushKey}"/>
+            <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>
 

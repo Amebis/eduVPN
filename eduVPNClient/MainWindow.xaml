@@ -9,9 +9,9 @@
         Width="300"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Background="{DynamicResource eduVPNWindowBrushKey}"
-        Foreground="{DynamicResource eduVPNWindowTextBrushKey}"
-        BorderBrush="{DynamicResource eduVPNWindowBorderKey}"
+        Background="{StaticResource eduVPNWindowBrushKey}"
+        Foreground="{StaticResource eduVPNWindowTextBrushKey}"
+        BorderBrush="{StaticResource eduVPNWindowBorderKey}"
         BorderThickness="1"
         MouseDown="Window_MouseDown"
         Closing="Window_Closing">
@@ -22,13 +22,13 @@
         </Grid.RowDefinitions>
 
         <Border
-            Background="{DynamicResource eduVPNHeaderBrushKey}"/>
+            Background="{StaticResource eduVPNHeaderBrushKey}"/>
 
         <Label
             HorizontalAlignment="Left"
             VerticalAlignment="Top" 
             Margin="5"
-            Style="{DynamicResource eduVPNHeaderStyle}">eduVPN</Label>
+            Style="{StaticResource eduVPNHeaderStyle}">eduVPN</Label>
 
         <Button
             HorizontalAlignment="Right"
@@ -37,7 +37,7 @@
             Width="22"
             Height="22"
             IsCancel="True"
-            Style="{DynamicResource eduVPNHeaderButtonBaseStyle}"
+            Style="{StaticResource eduVPNHeaderButtonBaseStyle}"
             Click="Close_Click">×</Button>
 
         <Grid
@@ -57,13 +57,13 @@
 
             <Button
                 Grid.Column="0"
-                Style="{DynamicResource eduVPNHeaderButtonStyle}">Instances</Button>
+                Style="{StaticResource eduVPNHeaderButtonStyle}">Instances</Button>
             <Button
                 Grid.Column="1"
-                Style="{DynamicResource eduVPNHeaderButtonStyle}">Connect</Button>
+                Style="{StaticResource eduVPNHeaderButtonStyle}">Connect</Button>
             <Button
                 Grid.Column="2"
-                Style="{DynamicResource eduVPNHeaderButtonStyle}">Settings</Button>
+                Style="{StaticResource eduVPNHeaderButtonStyle}">Settings</Button>
         </Grid>
 
         <DockPanel
