@@ -128,8 +128,8 @@ namespace eduVPN
 
             // Parse the API/APIv2.
             return new API(
-                eduJSON.Parser.GetValue< Dictionary<string, object> >(
-                    eduJSON.Parser.GetValue< Dictionary<string, object> >(
+                eduJSON.Parser.GetValue<Dictionary<string, object>>(
+                    eduJSON.Parser.GetValue<Dictionary<string, object>>(
                         (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct),
                         "api"),
                     "http://eduvpn.org/api#2"));

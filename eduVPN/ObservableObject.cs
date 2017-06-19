@@ -24,7 +24,7 @@ namespace eduVPN
         /// </summary>
         /// <param name="propertyName">The name of the property that was changed.</param>
         /// <remarks>
-        /// The <c>CallerMemberName</c> attribute that is applied to the optional propertyName 
+        /// The <c>CallerMemberName</c> attribute that is applied to the optional <paramref name="propertyName"/> 
         /// parameter causes the property name of the caller to be substituted as an argument.
         /// </remarks>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
