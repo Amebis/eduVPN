@@ -17,7 +17,6 @@ namespace eduVPNClient
         public InstanceSelectionPage()
         {
             InitializeComponent();
-            InstanceList.ItemsSource = App.Instances;
         }
     }
 }

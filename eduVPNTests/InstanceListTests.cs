@@ -24,11 +24,11 @@ namespace eduVPN.Tests
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
             // Load list of instances.
-            var instances = new InstanceList();
-            instances.Load(new Uri("https://static.eduvpn.nl/instances.json"), Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
+            var instance_list = new InstanceList();
+            instance_list.Load(InstanceList.Get(new Uri("https://static.eduvpn.nl/instances.json"), Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")));
 
             // Load all instance API(s) in parallel.
-            Task.WhenAll(instances.Select(i => API.LoadAsync(i.Base))).Wait();
+            Task.WhenAll(instance_list.Select(i => API.LoadAsync(i.Base))).Wait();
         }
 
 #if PLATFORM_AnyCPU

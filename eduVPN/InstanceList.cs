@@ -84,8 +84,9 @@ namespace eduVPN
         /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
         public void Load(Dictionary<string, object> obj)
         {
-            // Parse all instances listed. Don't do it in parallel to preserve the sort order.
             Clear();
+
+            // Parse all instances listed. Don't do it in parallel to preserve the sort order.
             foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj, "instances"))
             {
                 if (el.GetType() == typeof(Dictionary<string, object>))
@@ -120,17 +121,18 @@ namespace eduVPN
         }
 
         /// <summary>
-        /// Loads instance list from the given URI.
+        /// Gets instance list from the given URI.
         /// </summary>
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
-        public void Load(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        public static Dictionary<string, object> Get(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {
-            var task = LoadAsync(uri, pub_key, ct);
+            var task = GetAsync(uri, pub_key, ct);
             try
             {
                 task.Wait(ct);
+                return task.Result;
             }
             catch (AggregateException ex)
             {
@@ -139,13 +141,13 @@ namespace eduVPN
         }
 
         /// <summary>
-        /// Loads instance list from the given URI asynchronously.
+        /// Gets instance list from the given URI asynchronously.
         /// </summary>
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-        public async Task LoadAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        public static async Task<Dictionary<string, object>> GetAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {
             // Spawn data loading.
             var data = new byte[1048576]; // Limit to 1MiB
@@ -202,7 +204,7 @@ namespace eduVPN
             }
 
             // Parse data.
-            Load((Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct));
+            return (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct);
         }
 
         #endregion
