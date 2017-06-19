@@ -29,6 +29,11 @@ for example when using public WiFi.</clr:String>
         <clr:String x:Key="OtherInstancePageTitle">Other Provider</clr:String>
         <clr:String x:Key="OtherInstanceURINote">Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/info.json</clr:String>
 
+        <clr:String x:Key="AuthenticationWaitPageTitle">Waiting for Authentication</clr:String>
+        <clr:String x:Key="AuthenticationWaitPageMessage">The process will continue after you complete the authentication in your browser.</clr:String>
+        <clr:String x:Key="AuthenticationWaitPageRetry">Retry</clr:String>
+        <clr:String x:Key="AuthenticationWaitPageRetryNote">In case you accidentaly closed the authentication page in your browser or something else went wrong, please click this button to start a new client authentication request.</clr:String>
+
         <!-- eduVPN Colors -->
         <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
         <Color x:Key="eduVPNOrange">#FFED6B06</Color>
@@ -129,10 +134,12 @@ for example when using public WiFi.</clr:String>
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
-        <!-- eduVPN TextBlocks -->
-        <Style x:Key="eduVPNNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <!-- eduVPN Text Blocks -->
+        <Style x:Key="eduVPNTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style x:Key="eduVPNNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
             <Setter Property="FontSize" Value="11"/>
         </Style>
         <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNNoteStyle}">

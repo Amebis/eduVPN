@@ -1,0 +1,50 @@
+﻿<Page x:Class="eduVPNClient.AuthenticationWaitPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:eduVPNClient"
+      mc:Ignorable="d" 
+      d:DesignWidth="298"
+      d:DesignHeight="373"
+      Title="{StaticResource AuthenticationWaitPageTitle}">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Style="{StaticResource eduVPNNavigationButtonStyle}">&lt;</Button>
+
+                <Label
+                    Grid.Column="1"
+                    Style="{StaticResource eduVPNPageTitleStyle}"
+                    Content="{StaticResource AuthenticationWaitPageTitle}"/>
+            </Grid>
+
+            <StackPanel
+                Grid.Row="1">
+                <TextBlock
+                    Style="{StaticResource eduVPNTextBlockStyle}"
+                    Text="{DynamicResource AuthenticationWaitPageMessage}"/>
+
+                <Button
+                    Margin="10,10,10,2"
+                    Content="{DynamicResource AuthenticationWaitPageRetry}"/>
+
+                <TextBlock
+                    Margin="10,2,10,10"
+                    Style="{StaticResource eduVPNNoteStyle}"
+                    Text="{DynamicResource AuthenticationWaitPageRetryNote}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

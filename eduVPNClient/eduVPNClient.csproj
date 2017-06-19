@@ -46,6 +46,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AuthenticationWaitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InstanceSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -60,6 +64,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuthenticationWaitPage.xaml.cs">
+      <DependentUpon>AuthenticationWaitPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="InstanceSelectionPage.xaml.cs">
       <DependentUpon>InstanceSelectionPage.xaml</DependentUpon>
