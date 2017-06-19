@@ -107,14 +107,10 @@ namespace eduVPN
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         public static async Task<API> LoadAsync(Uri uri, CancellationToken ct = default(CancellationToken))
         {
-            // Generate API info URI.
-            var builder_info = new UriBuilder(uri);
-            builder_info.Path += "info.json";
-
             // Load API data.
             var data = new byte[1048576]; // Limit to 1MiB
             int data_size;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(builder_info.Uri);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             request.CachePolicy = noCachePolicy;
             using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())

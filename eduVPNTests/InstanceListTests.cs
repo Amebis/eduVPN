@@ -28,7 +28,11 @@ namespace eduVPN.Tests
             instance_list.Load(InstanceList.Get(new Uri("https://static.eduvpn.nl/instances.json"), Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")));
 
             // Load all instance API(s) in parallel.
-            Task.WhenAll(instance_list.Select(i => API.LoadAsync(i.Base))).Wait();
+            Task.WhenAll(instance_list.Select(async i => {
+                var uri_builder = new UriBuilder(i.Base);
+                uri_builder.Path += "info.json";
+                await API.LoadAsync(uri_builder.Uri);
+            })).Wait();
         }
 
 #if PLATFORM_AnyCPU
