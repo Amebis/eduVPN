@@ -31,7 +31,7 @@ namespace eduVPN
         public Uri Base
         {
             get { return _base; }
-            set { _base = value; OnPropertyChanged(); }
+            set { if (value != _base) { _base = value; OnPropertyChanged(); } }
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace eduVPN
         public string DisplayName
         {
             get { return _display_name; }
-            set { _display_name = value; OnPropertyChanged(); }
+            set { if (value != _display_name) { _display_name = value; OnPropertyChanged(); } }
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace eduVPN
         public Uri Logo
         {
             get { return _logo; }
-            set { _logo = value; OnPropertyChanged(); }
+            set { if (value != _logo) { _logo = value; OnPropertyChanged(); } }
         }
 
         #endregion
