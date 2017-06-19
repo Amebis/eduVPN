@@ -114,7 +114,7 @@ for example when using public WiFi.</clr:String>
                 <Separator
                     Grid.ColumnSpan="2"
                     Margin="0"
-                    Background="{DynamicResource eduVPNHeaderBrushKey}">
+                    Background="{StaticResource eduVPNHeaderBrushKey}">
                     <Separator.Style>
                         <Style TargetType="Separator">
                             <Style.Triggers>
