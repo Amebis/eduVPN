@@ -7,6 +7,7 @@
 
         <!-- eduVPN Colors -->
         <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
+        <Color x:Key="eduVPNOrange">#FFED6B06</Color>
         <Color x:Key="eduVPNWhite">#FFFFFFFF</Color>
         <Color x:Key="eduVPNBlack">#FF000000</Color>
         <Color x:Key="eduVPNGray">#FF646464</Color>
@@ -17,6 +18,9 @@
         <SolidColorBrush x:Key="eduVPNWindowBrushKey" Color="{StaticResource eduVPNWhite}" />
         <SolidColorBrush x:Key="eduVPNWindowTextBrushKey" Color="{StaticResource eduVPNBlack}" />
         <SolidColorBrush x:Key="eduVPNWindowBorderKey" Color="{StaticResource eduVPNGray}" />
+        <SolidColorBrush x:Key="eduVPNLogoOrangeKey" Color="{StaticResource eduVPNOrange}" />
+        <SolidColorBrush x:Key="eduVPNLogoWhiteKey" Color="{StaticResource eduVPNWhite}" />
+        <SolidColorBrush x:Key="eduVPNLogoBlackKey" Color="{StaticResource eduVPNBlack}" />
 
         <!-- eduVPN Buttons -->
         <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">

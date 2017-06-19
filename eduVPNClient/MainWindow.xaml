@@ -16,17 +16,52 @@
         MouseDown="Window_MouseDown"
         Closing="Window_Closing">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="75*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Border
-            Background="{StaticResource eduVPNHeaderBrushKey}"/>
+            Background="{StaticResource eduVPNHeaderBrushKey}" Grid.ColumnSpan="3"/>
+
+        <Canvas
+            Margin="5"
+            RenderTransformOrigin="0,0">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="0.075" ScaleY="0.075"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Path
+                    Fill="{StaticResource eduVPNLogoOrangeKey}"
+                    Data="M242.64,160.76a66.47,66.47,0,0,1-38-11.94,65.81,65.81,0,0,1-37.83,11.94,66.87,66.87,0,0,1-8.59-.55,97.32,97.32,0,0,1-37.88-15.75v27.12h0v84.17c25,56.37,84.06,79.75,84.06,79.75s57.94-23.38,83.94-79.75V182.23h0V145a99.71,99.71,0,0,1-37.11,15.2A67.1,67.1,0,0,1,242.64,160.76Zm31.72,96.54c-28,40.85-70,62-70,62V164.5A66.61,66.61,0,0,0,251,176a91.32,91.32,0,0,0,23.38-7.51Z"/>
+            <Path
+                    Fill="{StaticResource eduVPNLogoOrangeKey}"
+                    Data="M204.41,18.47,71.13,49.12l49.23,14.4v29.3a121.34,121.34,0,0,1,24.2-2.65c19.22,0,40,5.55,60.11,22.7,19.34-16.51,41.22-21,59.81-21a140.86,140.86,0,0,1,23.88,2.2V63.52l49.18-14.4Z"/>
+            <Path
+                    Fill="{StaticResource eduVPNLogoWhiteKey}"
+                    Data="M204.36,164.5V319.29s42-21.14,70-62V168.44A91.32,91.32,0,0,1,251,176,66.61,66.61,0,0,1,204.36,164.5Z"/>
+            <Path
+                    Fill="{StaticResource eduVPNLogoBlackKey}"
+                    Data="M341.43,31.58,208.45.93l-4-.93-4,.93L67.23,31.58,0,47.06,61.36,65V99.89l32,10V74.32l9,2.7V259.58l1.7,3.5c27.79,62.33,90.95,88.07,93.62,89.14l6.71,2.66,6.69-2.67c2.67-1.07,65.79-26.81,93.57-89.13l1.72-3.5V77L342.58,66.4l66.13-19.33ZM108.18,113.82l0,0-.17-.16.23.16,16-3.37a98.29,98.29,0,0,1,20.37-2.27c18,0,33.87,6,48.36,18.33l4.95,4.16h0l-4.41,3.91a48.89,48.89,0,0,1-26.75,8.16,47.06,47.06,0,0,1-6-.37A78.81,78.81,0,0,1,131,129.72L108.28,113.8Zm180.18,68.4h0v73.52c-26,56.37-83.94,79.75-83.94,79.75s-59.06-23.38-84.06-79.75V171.58h0V144.45a97.32,97.32,0,0,0,37.88,15.75,66,66,0,0,0,46.39-11.39,66.55,66.55,0,0,0,38,11.94,67.23,67.23,0,0,0,8.62-.55A99.72,99.72,0,0,0,288.36,145Zm12.51-67.65-23,15.58a79.65,79.65,0,0,1-29.3,12.23,47.07,47.07,0,0,1-5.95.38,49.57,49.57,0,0,1-27-8.19L211.26,131h0l5.17-4.41c13.14-11.22,28.82-16.68,47.94-16.68a117.91,117.91,0,0,1,20.58,1.93l15.92,2.76h0ZM288.36,63.52V94.08a140.43,140.43,0,0,0-23.85-2.2c-18.59,0-40.36,4.48-59.7,21-20.09-17.15-41-22.7-60.22-22.7a121.71,121.71,0,0,0-24.24,2.65V63.52L71.13,49.12,204.34,18.47,337.5,49.12Z"/>
+            <Path
+                    Fill="{StaticResource eduVPNLogoWhiteKey}"
+                    Data="M300.87,114.57l-23,15.58a79.52,79.52,0,0,1-29.3,12.23,47.42,47.42,0,0,1-5.95.38,49.5,49.5,0,0,1-27-8.19l-4.41-3.6,5.17-4.42c13.14-11.22,28.82-16.67,47.93-16.67A117.76,117.76,0,0,1,285,111.81Z"/>
+            <Path
+                    Fill="{StaticResource eduVPNLogoWhiteKey}"
+                    Data="M198,130.66l-4.41,3.91a48.89,48.89,0,0,1-26.75,8.16,45.74,45.74,0,0,1-6-.37A78.55,78.55,0,0,1,131,129.72L108.28,113.8l16-3.37a98.65,98.65,0,0,1,20.37-2.26c18.05,0,33.87,6,48.36,18.33Z"/>
+        </Canvas>
 
         <Label
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" 
+            Grid.Column="1"
             Margin="5"
             Style="{StaticResource eduVPNHeaderStyle}">eduVPN</Label>
 
@@ -34,40 +69,14 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Margin="5"
-            Width="22"
-            Height="22"
+            Width="20"
+            Height="20"
             IsCancel="True"
             Style="{StaticResource eduVPNHeaderButtonBaseStyle}"
-            Click="Close_Click">×</Button>
-
-        <Grid
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Height="30"
-            Width="280"
-            Margin="10,41,10,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <Button
-                Grid.Column="0"
-                Style="{StaticResource eduVPNHeaderButtonStyle}">Instances</Button>
-            <Button
-                Grid.Column="1"
-                Style="{StaticResource eduVPNHeaderButtonStyle}">Connect</Button>
-            <Button
-                Grid.Column="2"
-                Style="{StaticResource eduVPNHeaderButtonStyle}">Settings</Button>
-        </Grid>
+            Click="Close_Click" Grid.Column="2">×</Button>
 
         <DockPanel
-            Grid.Row="1">
+            Grid.Row="1" Grid.ColumnSpan="3">
             <Frame
                 x:Name="NavigationFrame"
                 NavigationUIVisibility="Hidden"
