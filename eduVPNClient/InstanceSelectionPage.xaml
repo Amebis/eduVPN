@@ -8,29 +8,31 @@
       d:DesignHeight="373"
       Title="{StaticResource InstanceSelectionPageTitle}">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button
-            Style="{StaticResource eduVPNNavigationButtonStyle}"
-            Command="NavigationCommands.GoToPage"
-            CommandTarget="{Binding ElementName=NavigationFrame}"
-            CommandParameter="AccessTypePage.xaml">&lt;</Button>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label
-            Grid.Column="1"
-            Style="{StaticResource eduVPNPageTitleStyle}"
-            Content="{StaticResource InstanceSelectionPageTitle}"/>
+            <Button
+                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                Command="NavigationCommands.GoToPage"
+                CommandTarget="{Binding ElementName=NavigationFrame}"
+                CommandParameter="AccessTypePage.xaml">&lt;</Button>
+
+            <Label
+                Grid.Column="1"
+                Style="{StaticResource eduVPNPageTitleStyle}"
+                Content="{StaticResource InstanceSelectionPageTitle}"/>
+        </Grid>
 
         <ListBox
             Grid.Row="1"
-            Grid.ColumnSpan="2"
             x:Name="InstanceList"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"

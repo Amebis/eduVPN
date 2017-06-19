@@ -73,9 +73,6 @@
             Grid.Column="2"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Margin="5"
-            Width="20"
-            Height="20"
             IsCancel="True"
             Style="{StaticResource eduVPNHeaderButtonBaseStyle}"
             Click="Close_Click">×</Button>

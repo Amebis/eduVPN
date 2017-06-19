@@ -48,6 +48,9 @@ for example when using public WiFi.</clr:String>
 
         <!-- eduVPN Buttons -->
         <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="5"/>
             <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Style.Triggers>
@@ -61,7 +64,9 @@ for example when using public WiFi.</clr:String>
                                     BorderBrush="{x:Null}"
                                     BorderThickness="0"
                                     CornerRadius="4">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <ContentPresenter
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
@@ -69,18 +74,40 @@ for example when using public WiFi.</clr:String>
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="eduVPNHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNHeaderButtonBaseStyle}">
-            <Setter Property="Width" Value="60"/>
-        </Style>
         <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
             <Setter Property="Margin" Value="10"/>
-            <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Ellipse
+                                x:Name="Border"
+                                Fill="{x:Null}"
+                                Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Fill" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -97,8 +124,7 @@ for example when using public WiFi.</clr:String>
             <Setter Property="FontSize" Value="12"/>
         </Style>
         <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Margin" Value="10"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>
@@ -186,6 +212,11 @@ for example when using public WiFi.</clr:String>
 
         <!-- eduVPN Grids -->
         <Style x:Key="eduVPNCombinedControlGridStyle" TargetType="{x:Type Grid}">
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <!-- eduVPN Stack Panels -->
+        <Style x:Key="eduVPNCombinedControlStackPanelStyle" TargetType="{x:Type StackPanel}">
             <Setter Property="Margin" Value="10"/>
         </Style>
 
