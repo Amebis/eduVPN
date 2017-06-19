@@ -1,9 +1,22 @@
-﻿<Application x:Class="eduVPNClient.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:eduVPNClient"
-             StartupUri="MainWindow.xaml">
+﻿<Application
+    x:Class="eduVPNClient.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:clr="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:eduVPNClient"
+    StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!-- eduVPN Strings -->
+        <clr:String x:Key="MainWindowTitle">eduVPN</clr:String>
+
+        <clr:String x:Key="AccessTypePageTitle">Access Type</clr:String>
+        <clr:String x:Key="SecureInternetTitle">Secure Internet</clr:String>
+        <clr:String x:Key="SecureInternetNote" xml:space="preserve">Connect to the internet securely,
+for example when using public WiFi.</clr:String>
+        <clr:String x:Key="InstituteAccessTitle">Institute Access</clr:String>
+        <clr:String x:Key="InstituteAccessNote">Access your organization network</clr:String>
+
+        <clr:String x:Key="InstanceSelectionPageTitle">Choose your Provider</clr:String>
 
         <!-- eduVPN Colors -->
         <Color x:Key="eduVPNBlue">#FF02B4D2</Color>

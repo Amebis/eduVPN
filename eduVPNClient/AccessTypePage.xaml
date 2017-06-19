@@ -3,10 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignWidth="298"
       d:DesignHeight="373"
-      Title="Access Type">
+      Title="{StaticResource AccessTypePageTitle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -16,22 +16,25 @@
         <Button
             Grid.Row="0"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
-            IsEnabled="False">Secure Internet</Button>
+            IsEnabled="False"
+            Content="{StaticResource SecureInternetTitle}"/>
 
         <TextBlock
             Grid.Row="0"
-            Style="{StaticResource eduVPNChoiceLabelStyle}">Connect to the internet securely, <LineBreak/>
-            for example when using public WiFi.</TextBlock>
+            Style="{StaticResource eduVPNChoiceLabelStyle}"
+            Text="{StaticResource SecureInternetNote}"/>
 
         <Button
             Grid.Row="1"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
             Command="NavigationCommands.GoToPage"
             CommandTarget="{Binding ElementName=NavigationFrame}"
-            CommandParameter="InstanceSelectionPage.xaml">Institute Access</Button>
+            CommandParameter="InstanceSelectionPage.xaml"
+            Content="{StaticResource InstituteAccessTitle}"/>
 
         <TextBlock
             Grid.Row="1"
-            Style="{StaticResource eduVPNChoiceLabelStyle}">Access your organization network</TextBlock>
+            Style="{StaticResource eduVPNChoiceLabelStyle}"
+            Text="{StaticResource InstituteAccessNote}"/>
     </Grid>
 </Page>

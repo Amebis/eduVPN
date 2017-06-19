@@ -6,7 +6,7 @@
       mc:Ignorable="d" 
       d:DesignWidth="298"
       d:DesignHeight="373"
-      Title="Instance Selection">
+      Title="{StaticResource InstanceSelectionPageTitle}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -25,7 +25,8 @@
 
         <Label
             Grid.Column="1"
-            Style="{StaticResource eduVPNPageTitleStyle}">Choose your Provider</Label>
+            Style="{StaticResource eduVPNPageTitleStyle}"
+            Content="{StaticResource InstanceSelectionPageTitle}"/>
 
         <ListBox
             Grid.Row="1"
@@ -33,6 +34,7 @@
             x:Name="InstanceList"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource eduVPNInstanceSelectionItemContainerStyle}"/>
+            ItemContainerStyle="{StaticResource eduVPNInstanceSelectionItemContainerStyle}"
+            ItemsSource="{StaticResource InstanceList}"/>
     </Grid>
 </Page>
