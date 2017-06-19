@@ -13,7 +13,7 @@ namespace eduVPNClient.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -63,6 +63,17 @@ namespace eduVPNClient.Properties {
         public string InstanceDirectoryPubKey {
             get {
                 return ((string)(this["InstanceDirectoryPubKey"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection OtherInstanceHistory {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["OtherInstanceHistory"]));
+            }
+            set {
+                this["OtherInstanceHistory"] = value;
             }
         }
     }

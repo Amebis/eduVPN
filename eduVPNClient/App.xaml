@@ -26,6 +26,9 @@ for example when using public WiFi.</clr:String>
         <clr:String x:Key="InstanceSelectionPageTitle">Choose your Provider</clr:String>
         <clr:String x:Key="OtherInstance">Other (not listed)</clr:String>
 
+        <clr:String x:Key="OtherInstancePageTitle">Other Provider</clr:String>
+        <clr:String x:Key="OtherInstanceURINote">Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/info.json</clr:String>
+
         <!-- eduVPN Colors -->
         <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
         <Color x:Key="eduVPNOrange">#FFED6B06</Color>
@@ -169,6 +172,21 @@ for example when using public WiFi.</clr:String>
         </DataTemplate>
         <Style x:Key="eduVPNInstanceSelectionItemContainerStyle" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+
+        <!-- eduVPN Text Boxes -->
+        <Style x:Key="eduVPNTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <!-- eduVPN Combo Boxes -->
+        <Style x:Key="eduVPNComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <!-- eduVPN Grids -->
+        <Style x:Key="eduVPNCombinedControlGridStyle" TargetType="{x:Type Grid}">
+            <Setter Property="Margin" Value="10"/>
         </Style>
 
         <!-- Global Fields -->

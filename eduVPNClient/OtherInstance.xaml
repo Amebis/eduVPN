@@ -1,0 +1,56 @@
+﻿<Page x:Class="eduVPNClient.OtherInstance"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:properties="clr-namespace:eduVPNClient.Properties"
+      mc:Ignorable="d" 
+      d:DesignWidth="298"
+      d:DesignHeight="373"
+      Title="{StaticResource OtherInstancePageTitle}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button
+            Style="{StaticResource eduVPNNavigationButtonStyle}"
+            Command="NavigationCommands.GoToPage"
+            CommandTarget="{Binding ElementName=NavigationFrame}"
+            CommandParameter="InstanceSelectionPage.xaml">&lt;</Button>
+
+        <Label
+            Grid.Column="1"
+            Style="{StaticResource eduVPNPageTitleStyle}"
+            Content="{StaticResource OtherInstancePageTitle}"/>
+
+        <Grid
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Style="{StaticResource eduVPNCombinedControlGridStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ComboBox
+                x:Name="InstanceURI"
+                Margin="0,0,0,2"
+                TextSearch.TextPath=""
+                ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=OtherInstanceHistory}"
+                IsSynchronizedWithCurrentItem="True"
+                IsEditable="True"/>
+
+            <TextBlock
+                Grid.Row="1"
+                Margin="0,2,0,0"
+                Style="{StaticResource eduVPNNoteStyle}"
+                Text="{StaticResource OtherInstanceURINote}"/>
+        </Grid>
+    </Grid>
+</Page>

@@ -35,6 +35,7 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNInstanceSelectionItemContainerStyle}"
-            ItemsSource="{StaticResource InstanceList}"/>
+            ItemsSource="{StaticResource InstanceList}"
+            SelectionChanged="InstanceList_SelectionChanged"/>
     </Grid>
 </Page>
