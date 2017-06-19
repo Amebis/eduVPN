@@ -21,7 +21,7 @@
 
         <TextBlock
             Grid.Row="0"
-            Style="{StaticResource eduVPNChoiceLabelStyle}"
+            Style="{StaticResource eduVPNChoiceNoteStyle}"
             Text="{StaticResource SecureInternetNote}"/>
 
         <Button
@@ -34,7 +34,7 @@
 
         <TextBlock
             Grid.Row="1"
-            Style="{StaticResource eduVPNChoiceLabelStyle}"
+            Style="{StaticResource eduVPNChoiceNoteStyle}"
             Text="{StaticResource InstituteAccessNote}"/>
     </Grid>
 </Page>

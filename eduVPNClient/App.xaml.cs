@@ -20,10 +20,16 @@ namespace eduVPNClient
     /// </summary>
     public partial class App : Application
     {
+        #region Fields
+
         /// <summary>
         /// Token used to abort unfinished background processes in case of application shutdown.
         /// </summary>
         private static CancellationTokenSource _abort = new CancellationTokenSource();
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Constructs the application
@@ -40,6 +46,10 @@ namespace eduVPNClient
             // Register ShutdownStarted callback.
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
+
+        #endregion
+
+        #region InstanceList Background Load
 
         /// <summary>
         /// Loads instance list from web service.
@@ -100,10 +110,16 @@ namespace eduVPNClient
                 MessageBoxImage.Warning);
         }
 
+        #endregion
+
+        #region Handlers
+
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
             // Raise the abort flag to gracefully shutdown all background threads.
             _abort.Cancel();
         }
+
+        #endregion
     }
 }

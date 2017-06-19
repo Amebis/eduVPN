@@ -101,13 +101,16 @@ for example when using public WiFi.</clr:String>
         </Style>
 
         <!-- eduVPN TextBlocks -->
-        <Style x:Key="eduVPNChoiceLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Style x:Key="eduVPNNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontSize" Value="11"/>
+        </Style>
+        <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNNoteStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="Margin" Value="10,130,10,10"/>
-            <Setter Property="FontSize" Value="11"/>
         </Style>
 
         <!-- eduVPN ListBoxes -->
@@ -168,6 +171,7 @@ for example when using public WiFi.</clr:String>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         </Style>
 
+        <!-- Global Fields -->
         <eduVPN:InstanceList x:Key="InstanceList">
             <eduVPN:Instance
                 Base="nl.eduvpn.app.windows:other"
