@@ -19,6 +19,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <ApplicationIcon>eduVPN.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\Default.props" />
   <ItemGroup>
@@ -111,6 +112,9 @@
       <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>
       <Name>eduVPN</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="eduVPN.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />
