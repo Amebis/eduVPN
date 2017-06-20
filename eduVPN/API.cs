@@ -104,17 +104,17 @@ namespace eduVPN
         /// </summary>
         /// <param name="uri">Instance URI</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse and Stream tolerate multiple disposes.")]
         public static async Task<API> LoadAsync(Uri uri, CancellationToken ct = default(CancellationToken))
         {
             // Load API data.
             var data = new byte[1048576]; // Limit to 1MiB
             int data_size;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+            var request = (HttpWebRequest)WebRequest.Create(uri);
+            var noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             request.CachePolicy = noCachePolicy;
-            using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-            using (Stream stream = response.GetResponseStream())
+            using (var response = (HttpWebResponse)await request.GetResponseAsync())
+            using (var stream = response.GetResponseStream())
             {
                 var read_task = stream.ReadAsync(data, 0, data.Length, ct);
                 data_size = await read_task;

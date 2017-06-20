@@ -15,14 +15,6 @@ namespace eduVPN
     /// </summary>
     public class Instance : ObservableObject
     {
-        #region Fields
-
-        private Uri _base;
-        private string _display_name;
-        private Uri _logo;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -33,6 +25,7 @@ namespace eduVPN
             get { return _base; }
             set { if (value != _base) { _base = value; OnPropertyChanged(); } }
         }
+        private Uri _base;
 
         /// <summary>
         /// Instance name to display in GUI
@@ -42,6 +35,7 @@ namespace eduVPN
             get { return _display_name; }
             set { if (value != _display_name) { _display_name = value; OnPropertyChanged(); } }
         }
+        private string _display_name;
 
         /// <summary>
         /// Instance logo URI
@@ -51,6 +45,7 @@ namespace eduVPN
             get { return _logo; }
             set { if (value != _logo) { _logo = value; OnPropertyChanged(); } }
         }
+        private Uri _logo;
 
         #endregion
 

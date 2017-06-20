@@ -146,14 +146,14 @@ namespace eduVPN
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
         public static async Task<Dictionary<string, object>> GetAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {
             // Spawn data loading.
             var data = new byte[1048576]; // Limit to 1MiB
             int data_size;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+            var request = (HttpWebRequest)WebRequest.Create(uri);
+            var noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             request.CachePolicy = noCachePolicy;
             var response_task = request.GetResponseAsync();
 
