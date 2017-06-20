@@ -31,7 +31,7 @@ namespace eduVPN.Tests
             Task.WhenAll(instance_list.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
-                await API.LoadAsync(uri_builder.Uri);
+                new API().Load(await API.GetAsync(uri_builder.Uri));
             })).Wait();
         }
 

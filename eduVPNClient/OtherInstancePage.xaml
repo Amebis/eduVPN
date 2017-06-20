@@ -1,13 +1,20 @@
-﻿<Page x:Class="eduVPNClient.OtherInstance"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:properties="clr-namespace:eduVPNClient.Properties"
-      mc:Ignorable="d" 
-      d:DesignWidth="298"
-      d:DesignHeight="373"
-      Title="{StaticResource OtherInstancePageTitle}">
+﻿<Page
+    x:Class="eduVPNClient.OtherInstancePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:eduVPN="clr-namespace:eduVPN;assembly=eduVPN"
+    xmlns:properties="clr-namespace:eduVPNClient.Properties"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Title="{StaticResource OtherInstancePageTitle}">
+
+    <Page.DataContext>
+        <eduVPN:InstanceViewModel/>
+    </Page.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -35,7 +42,7 @@
             <Button
                 Grid.Column="2"
                 Style="{StaticResource eduVPNNavigationButtonStyle}"
-                IsEnabled="False">&gt;</Button>
+                Command="{Binding Path=AuthorizeOtherInstanceCommand}">&gt;</Button>
         </Grid>
 
         <StackPanel
@@ -44,6 +51,7 @@
             <ComboBox
                 x:Name="InstanceURI"
                 Margin="0,0,0,2"
+                Text="{Binding Path=InstanceURI}"
                 TextSearch.TextPath=""
                 ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=OtherInstanceHistory}"
                 IsSynchronizedWithCurrentItem="True"

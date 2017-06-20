@@ -27,72 +27,74 @@ namespace eduVPN
         /// <summary>
         /// Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.
         /// </summary>
-        public Uri AuthorizationEndpoint { get; }
+        public Uri AuthorizationEndpoint { get => _authorization_endpoint; }
+        private Uri _authorization_endpoint;
 
         /// <summary>
         /// Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.
         /// </summary>
-        public Uri TokenEndpoint { get; }
+        public Uri TokenEndpoint { get => _token_endpoint; }
+        private Uri _token_endpoint;
 
         /// <summary>
         /// API base URI
         /// </summary>
-        public Uri BaseURI { get; }
+        public Uri BaseURI { get => _base_uri; }
+        private Uri _base_uri;
 
         /// <summary>
         /// Create client certificate URI
         /// </summary>
-        public Uri CreateCertificate { get; }
+        public Uri CreateCertificate { get => _create_certificate; }
+        private Uri _create_certificate;
 
         /// <summary>
         /// Profile configuration URI
         /// </summary>
-        public Uri ProfileConfig { get; }
+        public Uri ProfileConfig { get => _profile_config; }
+        private Uri _profile_config;
 
         /// <summary>
         /// Profile list URI
         /// </summary>
-        public Uri ProfileList { get; }
+        public Uri ProfileList { get => _profile_list; }
+        private Uri _profile_list;
 
         /// <summary>
         /// System messages URI
         /// </summary>
-        public Uri SystemMessages { get; }
+        public Uri SystemMessages { get => _system_messages; }
+        private Uri _system_messages;
 
         /// <summary>
         /// User messages URI
         /// </summary>
-        public Uri UserMessages { get; }
+        public Uri UserMessages { get => _user_messages; }
+        private Uri _user_messages;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs a new APIv2 from a dictionary object (provided by JSON)
+        /// Loads APIv2 from a dictionary object (provided by JSON)
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
-        public API(Dictionary<string, object> obj)
+        public void Load(Dictionary<string, object> obj)
         {
             // Set authorization endpoint.
-            AuthorizationEndpoint = new Uri(eduJSON.Parser.GetValue<string>(obj, "authorization_endpoint"));
+            _authorization_endpoint = new Uri(eduJSON.Parser.GetValue<string>(obj, "authorization_endpoint"));
 
             // Set token endpoint.
-            TokenEndpoint = new Uri(eduJSON.Parser.GetValue<string>(obj, "token_endpoint"));
+            _token_endpoint = new Uri(eduJSON.Parser.GetValue<string>(obj, "token_endpoint"));
 
             // Set other URI(s).
-            if (eduJSON.Parser.GetValue(obj, "api_base_uri", out string api_base_uri))
-                BaseURI = new Uri(api_base_uri);
-            if (eduJSON.Parser.GetValue(obj, "create_certificate", out string create_certificate))
-                CreateCertificate = new Uri(create_certificate);
-            if (eduJSON.Parser.GetValue(obj, "profile_config", out string profile_config))
-                ProfileConfig = new Uri(profile_config);
-            if (eduJSON.Parser.GetValue(obj, "profile_list", out string profile_list))
-                ProfileList  = new Uri(profile_list);
-            if (eduJSON.Parser.GetValue(obj, "system_messages", out string system_messages))
-                SystemMessages = new Uri(system_messages);
-            if (eduJSON.Parser.GetValue(obj, "user_messages", out string user_messages))
-                UserMessages = new Uri(user_messages);
+            _base_uri = eduJSON.Parser.GetValue(obj, "api_base_uri", out string api_base_uri) ? new Uri(api_base_uri) : null;
+            _create_certificate = eduJSON.Parser.GetValue(obj, "create_certificate", out string create_certificate) ? new Uri(create_certificate) : null;
+            _profile_config = eduJSON.Parser.GetValue(obj, "profile_config", out string profile_config) ? new Uri(profile_config) : null;
+            _profile_list = eduJSON.Parser.GetValue(obj, "profile_list", out string profile_list) ? new Uri(profile_list) : null;
+            _system_messages = eduJSON.Parser.GetValue(obj, "system_messages", out string system_messages) ? new Uri(system_messages) : null;
+            _user_messages = eduJSON.Parser.GetValue(obj, "user_messages", out string user_messages) ? new Uri(user_messages) : null;
         }
 
         #endregion
@@ -100,12 +102,33 @@ namespace eduVPN
         #region Methods
 
         /// <summary>
-        /// Loads API URIs from the given instance base URI
+        /// Gets API URIs from the given instance base URI.
         /// </summary>
         /// <param name="uri">Instance URI</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
+        /// <returns>Dictionary object</returns>
+        public static Dictionary<string, object> Get(Uri uri, CancellationToken ct = default(CancellationToken))
+        {
+            var task = GetAsync(uri, ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Gets API URIs from the given instance base URI asynchronously.
+        /// </summary>
+        /// <param name="uri">Instance URI</param>
+        /// <param name="ct">The token to monitor for cancellation requests.</param>
+        /// <returns>Asynchronous operation with expected dictionary object</returns>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse and Stream tolerate multiple disposes.")]
-        public static async Task<API> LoadAsync(Uri uri, CancellationToken ct = default(CancellationToken))
+        public static async Task<Dictionary<string, object>> GetAsync(Uri uri, CancellationToken ct = default(CancellationToken))
         {
             // Load API data.
             var data = new byte[1048576]; // Limit to 1MiB
@@ -123,12 +146,11 @@ namespace eduVPN
             }
 
             // Parse the API/APIv2.
-            return new API(
+            return eduJSON.Parser.GetValue<Dictionary<string, object>>(
                 eduJSON.Parser.GetValue<Dictionary<string, object>>(
-                    eduJSON.Parser.GetValue<Dictionary<string, object>>(
-                        (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct),
-                        "api"),
-                    "http://eduvpn.org/api#2"));
+                    (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct),
+                    "api"),
+                "http://eduvpn.org/api#2");
         }
 
         #endregion

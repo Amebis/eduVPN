@@ -49,30 +49,25 @@ namespace eduVPN
 
         #endregion
 
-        #region Fields
-
-        private AuthorizationType _auth_type;
-        private uint _sequence;
-        private DateTime? _signed_at;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
         /// Authorization type
         /// </summary>
         public AuthorizationType AuthType { get => _auth_type; }
+        private AuthorizationType _auth_type;
 
         /// <summary>
         /// Version sequence
         /// </summary>
         public uint Sequence { get => _sequence; }
+        private uint _sequence;
 
         /// <summary>
         /// Signature timestamp
         /// </summary>
         public DateTime? SignedAt { get => _signed_at; }
+        private DateTime? _signed_at;
 
         #endregion
 
@@ -126,6 +121,7 @@ namespace eduVPN
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
+        /// <returns>Dictionary object</returns>
         public static Dictionary<string, object> Get(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {
             var task = GetAsync(uri, pub_key, ct);
@@ -146,6 +142,7 @@ namespace eduVPN
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
+        /// <returns>Asynchronous operation with expected dictionary object</returns>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
         public static async Task<Dictionary<string, object>> GetAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {

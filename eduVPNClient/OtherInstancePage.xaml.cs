@@ -10,13 +10,16 @@ using System.Windows.Controls;
 namespace eduVPNClient
 {
     /// <summary>
-    /// Interaction logic for OtherInstance.xaml
+    /// Interaction logic for OtherInstancePage.xaml
     /// </summary>
-    public partial class OtherInstance : Page
+    public partial class OtherInstancePage : Page
     {
         #region Constructors
 
-        public OtherInstance()
+        /// <summary>
+        /// Constructs a page.
+        /// </summary>
+        public OtherInstancePage()
         {
             InitializeComponent();
         }

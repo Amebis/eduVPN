@@ -19,6 +19,9 @@ namespace eduVPNClient
     {
         #region Constructors
 
+        /// <summary>
+        /// Constructs a page.
+        /// </summary>
         public InstanceSelectionPage()
         {
             InitializeComponent();
@@ -31,21 +34,18 @@ namespace eduVPNClient
         private void InstanceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // User selected an instance.
-            var instance_list = (InstanceList)FindResource("InstanceList");
+            var viewmodel = (InstanceViewModel)DataContext;
 
-            foreach (var i in e.AddedItems)
+            if (viewmodel.SelectedInstance.Base == new Uri("nl.eduvpn.app.windows:other"))
             {
-                var instance = (Instance)i;
-                if (instance.Base == new Uri("nl.eduvpn.app.windows:other"))
-                {
-                    // User selected "Other instance".
-                    NavigationCommands.GoToPage.Execute("OtherInstance.xaml", this);
-                }
-                else
-                {
-                    // A known instance was selected.
-                    // TODO: Start OAuth authentication and navigate client to the waiting page.
-                }
+                // User selected "Other instance".
+                NavigationCommands.GoToPage.Execute("OtherInstancePage.xaml", this);
+            }
+            else
+            {
+                // A known instance was selected. Proceed to authentication.
+                if (viewmodel.AuthorizeSelectedInstanceCommand.CanExecute(null))
+                    viewmodel.AuthorizeSelectedInstanceCommand.Execute(null);
             }
         }
 

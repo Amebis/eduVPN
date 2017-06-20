@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace eduVPN
     /// <summary>
     /// An eduVPN instance = VPN service provider
     /// </summary>
-    public class Instance : ObservableObject
+    public class Instance : BindableBase
     {
         #region Properties
 
@@ -23,7 +24,7 @@ namespace eduVPN
         public Uri Base
         {
             get { return _base; }
-            set { if (value != _base) { _base = value; OnPropertyChanged(); } }
+            set { if (value != _base) { _base = value; RaisePropertyChanged(); } }
         }
         private Uri _base;
 
@@ -33,7 +34,7 @@ namespace eduVPN
         public string DisplayName
         {
             get { return _display_name; }
-            set { if (value != _display_name) { _display_name = value; OnPropertyChanged(); } }
+            set { if (value != _display_name) { _display_name = value; RaisePropertyChanged(); } }
         }
         private string _display_name;
 
@@ -43,7 +44,7 @@ namespace eduVPN
         public Uri Logo
         {
             get { return _logo; }
-            set { if (value != _logo) { _logo = value; OnPropertyChanged(); } }
+            set { if (value != _logo) { _logo = value; RaisePropertyChanged(); } }
         }
         private Uri _logo;
 
