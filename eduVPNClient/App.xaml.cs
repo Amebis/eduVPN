@@ -41,7 +41,7 @@ namespace eduVPNClient
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
             // Launch instance list load in the background.
-            ThreadPool.QueueUserWorkItem(new WaitCallback(GetInstanceList), this);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(GetInstanceList));
 
             // Register ShutdownStarted callback.
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
@@ -54,11 +54,8 @@ namespace eduVPNClient
         /// <summary>
         /// Loads instance list from web service.
         /// </summary>
-        /// <param name="sender">Sender object</param>
-        private static void GetInstanceList(object sender)
+        private void GetInstanceList(object param)
         {
-            var app = sender as App;
-
             try
             {
                 // Load instance list.
@@ -67,9 +64,9 @@ namespace eduVPNClient
                     Convert.FromBase64String(eduVPNClient.Properties.Settings.Default.InstanceDirectoryPubKey),
                     _abort.Token);
 
-                // Notify the sender the instance list was loaded.
-                app.Dispatcher.Invoke(DispatcherPriority.Normal,
-                    new SetInstanceListDelegate(app.SetInstanceList),
+                // Send the loaded instance list back to UI thread.
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    new SetInstanceListDelegate(SetInstanceList),
                     obj);
             }
             catch (OperationCanceledException)
@@ -79,8 +76,8 @@ namespace eduVPNClient
             catch (Exception ex)
             {
                 // Notify the sender the instance list loading failed.
-                app.Dispatcher.Invoke(DispatcherPriority.Normal,
-                    new SetInstanceListFailedDelegate(app.SetInstanceListFailed),
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    new SetInstanceListFailedDelegate(SetInstanceListFailed),
                     ex);
             }
         }

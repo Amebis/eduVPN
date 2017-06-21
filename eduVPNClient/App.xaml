@@ -6,6 +6,7 @@
     xmlns:eduVPN="clr-namespace:eduVPN;assembly=eduVPN"
     xmlns:local="clr-namespace:eduVPNClient"
     StartupUri="MainWindow.xaml">
+
     <Application.Resources>
         <!-- eduVPN Strings -->
         <clr:String x:Key="MainWindowTitle">eduVPN</clr:String>
