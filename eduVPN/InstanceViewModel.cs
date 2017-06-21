@@ -32,7 +32,12 @@ namespace eduVPN
         public Instance SelectedInstance
         {
             get { return _selected_instance; }
-            set { _selected_instance = value; RaisePropertyChanged(); }
+            set
+            {
+                _selected_instance = value;
+                RaisePropertyChanged();
+                ((DelegateCommand<object>)AuthorizeSelectedInstanceCommand).RaiseCanExecuteChanged();
+            }
         }
         private Instance _selected_instance;
 
@@ -42,7 +47,15 @@ namespace eduVPN
         public string InstanceURI
         {
             get { return _instance_uri; }
-            set { if (value != _instance_uri) { _instance_uri = value; RaisePropertyChanged(); } }
+            set
+            {
+                if (value != _instance_uri)
+                {
+                    _instance_uri = value;
+                    RaisePropertyChanged();
+                    ((DelegateCommand<object>)AuthorizeOtherInstanceCommand).RaiseCanExecuteChanged();
+                }
+            }
         }
         private string _instance_uri;
 
