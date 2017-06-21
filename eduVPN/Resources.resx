@@ -123,4 +123,7 @@
   <data name="ErrorMissingDataValue" xml:space="preserve">
     <value>Data is missing "{0}" member, or "{0}" member is not a string.</value>
   </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>eduVPN Error</value>
+  </data>
 </root>

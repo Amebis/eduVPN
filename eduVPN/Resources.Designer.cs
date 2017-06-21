@@ -77,5 +77,14 @@ namespace eduVPN {
                 return ResourceManager.GetString("ErrorMissingDataValue", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to eduVPN Error.
+        /// </summary>
+        internal static string ErrorTitle {
+            get {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
     }
 }

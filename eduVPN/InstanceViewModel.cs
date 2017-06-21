@@ -7,11 +7,13 @@
 
 using eduOAuth;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace eduVPN
 {
@@ -19,7 +21,15 @@ namespace eduVPN
     {
         #region Fields
 
+        /// <summary>
+        /// OAuth pending authorization grant.
+        /// </summary>
         private AuthorizationGrant _authorization_grant;
+
+        /// <summary>
+        /// UI thread's dispatcher
+        /// </summary>
+        private Dispatcher _dispatcher;
 
         #endregion
 
@@ -68,12 +78,16 @@ namespace eduVPN
         /// </summary>
         public InstanceViewModel()
         {
+            // Default model values.
             InstanceURI = "https://";
+
+            // Save UI thread's dispatcher.
+            _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         #endregion
 
-        #region Commands
+        #region Authorization
 
         /// <summary>
         /// Authorize Selected Instance Command
@@ -132,35 +146,56 @@ namespace eduVPN
         }
         private ICommand _authenticate_other_instance_command;
 
-        #endregion
-
-        #region Methods
-
         private void Authorize(object api_uri)
         {
-            // Get and load API endpoints.
-            var api = new API();
             try
             {
-                api.Load(API.Get(api_uri as Uri));
+                // Get and load API endpoints.
+                var api = new API();
+                api.Load(API.Get((Uri)api_uri));
+
+                // Opens authorization request in the browser.
+                _authorization_grant = new AuthorizationGrant()
+                {
+                    AuthorizationEndpoint = api.AuthorizationEndpoint,
+                    RedirectEndpoint = new Uri("nl.eduvpn.app.windows:/api/callback"),
+                    ClientID = "nl.eduvpn.app.windows",
+                    Scope = new List<string>() { "config" },
+                    CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
+                };
+                System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
             }
             catch (Exception ex)
             {
-                // TODO: Pass exception to the View.
-                return;
+                // Dispatch any exception back to the UI thread.
+                _dispatcher.Invoke(DispatcherPriority.Normal,
+                    new AuthorizeFailedDelegate(AuthorizeFailed),
+                    ex);
             }
-
-            // Opens authorization request in the browser.
-            _authorization_grant = new AuthorizationGrant()
-            {
-                AuthorizationEndpoint = api.AuthorizationEndpoint,
-                RedirectEndpoint = new Uri("nl.eduvpn.app.windows:/api/callback"),
-                ClientID = "nl.eduvpn.app.windows",
-                Scope = new List<string>(){ "config" },
-                CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
-            };
-            System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
         }
+
+        private delegate void AuthorizeFailedDelegate(Exception ex);
+        private void AuthorizeFailed(Exception ex)
+        {
+            // Notify view of the problem.
+            NotificationRequest.Raise(
+               new Notification
+               {
+                   Content = ex.Message,
+                   Title = Resources.ErrorTitle
+               });
+        }
+
+        public InteractionRequest<INotification> NotificationRequest
+        {
+            get
+            {
+                if (_notification_request == null)
+                    _notification_request = new InteractionRequest<INotification>();
+                return _notification_request;
+            }
+        }
+        private InteractionRequest<INotification> _notification_request;
 
         #endregion
     }
