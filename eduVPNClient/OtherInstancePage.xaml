@@ -53,7 +53,8 @@
             <Button
                 Grid.Column="2"
                 Style="{StaticResource eduVPNNavigationButtonStyle}"
-                Command="{Binding Path=AuthorizeOtherInstanceCommand}">&gt;</Button>
+                Command="{Binding Path=AuthorizeOtherInstanceCommand}"
+                IsDefault="True">&gt;</Button>
         </Grid>
 
         <StackPanel
