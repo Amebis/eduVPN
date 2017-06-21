@@ -17,6 +17,7 @@
     Icon="eduVPN.ico"
     MouseDown="Window_MouseDown"
     Closing="Window_Closing">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40"/>

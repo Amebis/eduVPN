@@ -5,6 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:eduVPN="clr-namespace:eduVPN;assembly=eduVPN"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:prism="http://prismlibrary.com/"
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
@@ -13,6 +15,25 @@
     <Page.DataContext>
         <eduVPN:InstanceViewModel/>
     </Page.DataContext>
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger
+            SourceObject="{Binding NotificationRequest}">
+            <prism:PopupWindowAction
+                IsModal="True"
+                CenterOverAssociatedObject="True"/>
+            <!--
+                <prism:PopupWindowAction.WindowStyle>
+                    <Style TargetType="Window">
+                        <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+                    </Style>
+                </prism:PopupWindowAction.WindowStyle>
+                <prism:PopupWindowAction.WindowContent>
+                    <local:CustomConfirmation/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>-->
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
