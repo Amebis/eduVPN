@@ -46,7 +46,7 @@ namespace eduVPN
             {
                 _selected_instance = value;
                 RaisePropertyChanged();
-                ((DelegateCommand<object>)AuthorizeSelectedInstanceCommand).RaiseCanExecuteChanged();
+                ((DelegateCommandBase)AuthorizeSelectedInstanceCommand).RaiseCanExecuteChanged();
             }
         }
         private Instance _selected_instance;
@@ -63,7 +63,7 @@ namespace eduVPN
                 {
                     _instance_uri = value;
                     RaisePropertyChanged();
-                    ((DelegateCommand<object>)AuthorizeOtherInstanceCommand).RaiseCanExecuteChanged();
+                    ((DelegateCommandBase)AuthorizeOtherInstanceCommand).RaiseCanExecuteChanged();
                 }
             }
         }
@@ -98,9 +98,9 @@ namespace eduVPN
             {
                 if (_authenticate_selected_instance_command == null)
                 {
-                    _authenticate_selected_instance_command = new DelegateCommand<object>(
+                    _authenticate_selected_instance_command = new DelegateCommand(
                         // execute
-                        param =>
+                        () =>
                         {
                             var uri_builder = new UriBuilder(SelectedInstance.Base);
                             uri_builder.Path += "info.json";
@@ -108,7 +108,7 @@ namespace eduVPN
                         },
 
                         // canExecute
-                        param => SelectedInstance != null);
+                        () => SelectedInstance != null);
                 }
                 return _authenticate_selected_instance_command;
             }
@@ -124,12 +124,12 @@ namespace eduVPN
             {
                 if (_authenticate_other_instance_command == null)
                 {
-                    _authenticate_other_instance_command = new DelegateCommand<object>(
+                    _authenticate_other_instance_command = new DelegateCommand(
                         // execute
-                        param => ThreadPool.QueueUserWorkItem(new WaitCallback(Authorize), new Uri(InstanceURI)),
+                        () => ThreadPool.QueueUserWorkItem(new WaitCallback(Authorize), new Uri(InstanceURI)),
 
                         // canExecute
-                        param => {
+                        () => {
                             try
                             {
                                 var uri = new Uri(InstanceURI);
