@@ -11,7 +11,7 @@ using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -25,11 +25,6 @@ namespace eduVPN
         /// OAuth pending authorization grant.
         /// </summary>
         private AuthorizationGrant _authorization_grant;
-
-        /// <summary>
-        /// UI thread's dispatcher
-        /// </summary>
-        private Dispatcher _dispatcher;
 
         #endregion
 
@@ -80,9 +75,6 @@ namespace eduVPN
         {
             // Default model values.
             InstanceURI = "https://";
-
-            // Save UI thread's dispatcher.
-            _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         #endregion
@@ -100,11 +92,11 @@ namespace eduVPN
                 {
                     _authenticate_selected_instance_command = new DelegateCommand(
                         // execute
-                        () =>
+                        async () =>
                         {
                             var uri_builder = new UriBuilder(SelectedInstance.Base);
                             uri_builder.Path += "info.json";
-                            ThreadPool.QueueUserWorkItem(new WaitCallback(Authorize), uri_builder.Uri);
+                            await Authorize(uri_builder.Uri);
                         },
 
                         // canExecute
@@ -126,7 +118,7 @@ namespace eduVPN
                 {
                     _authenticate_other_instance_command = new DelegateCommand(
                         // execute
-                        () => ThreadPool.QueueUserWorkItem(new WaitCallback(Authorize), new Uri(InstanceURI)),
+                        async () => await Authorize(new Uri(InstanceURI)),
 
                         // canExecute
                         () => {
@@ -146,13 +138,13 @@ namespace eduVPN
         }
         private ICommand _authenticate_other_instance_command;
 
-        private void Authorize(object api_uri)
+        private async Task Authorize(Uri api_uri)
         {
             try
             {
                 // Get and load API endpoints.
                 var api = new API();
-                api.Load(API.Get((Uri)api_uri));
+                api.Load(await API.GetAsync(api_uri));
 
                 // Opens authorization request in the browser.
                 _authorization_grant = new AuthorizationGrant()
@@ -167,23 +159,14 @@ namespace eduVPN
             }
             catch (Exception ex)
             {
-                // Dispatch any exception back to the UI thread.
-                _dispatcher.Invoke(DispatcherPriority.Normal,
-                    new AuthorizeFailedDelegate(AuthorizeFailed),
-                    ex);
+                // Notify view of the problem.
+                NotificationRequest.Raise(
+                    new Notification
+                    {
+                        Content = ex.Message,
+                        Title = Resources.ErrorTitle
+                    });
             }
-        }
-
-        private delegate void AuthorizeFailedDelegate(Exception ex);
-        private void AuthorizeFailed(Exception ex)
-        {
-            // Notify view of the problem.
-            NotificationRequest.Raise(
-               new Notification
-               {
-                   Content = ex.Message,
-                   Title = Resources.ErrorTitle
-               });
         }
 
         public InteractionRequest<INotification> NotificationRequest
