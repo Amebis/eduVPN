@@ -124,7 +124,7 @@ namespace eduVPN
             catch (Exception ex)
             {
                 // Notify the sender the instance list loading failed.
-                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceListErrorMessage = ex.Message));
+                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceListErrorMessage = String.Format(Properties.Resources.ErrorInstanceList, ex.Message)));
             }
         }
 

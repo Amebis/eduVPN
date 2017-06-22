@@ -254,6 +254,14 @@ for example when using public WiFi.</clr:String>
             <Setter Property="Margin" Value="10"/>
         </Style>
 
+        <!-- eduVPN Status Bars StatusBar -->
+        <Style x:Key="eduVPNInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource {x:Type StatusBar}}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+        </Style>
+
         <!-- Global Fields -->
         <eduVPN:AppViewModel x:Key="AppViewModel"/>
     </Application.Resources>

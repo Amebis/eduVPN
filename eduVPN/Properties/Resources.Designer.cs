@@ -61,6 +61,16 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}
+        ///The list of providers will not be complete or up-to-date..
+        /// </summary>
+        internal static string ErrorInstanceList {
+            get {
+                return ResourceManager.GetString("ErrorInstanceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verifying signature failed. Integrity of {0} is not valid..
         /// </summary>
         internal static string ErrorInvalidSignature {

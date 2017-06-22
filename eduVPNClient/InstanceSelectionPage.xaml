@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:eduVPN="clr-namespace:eduVPN;assembly=eduVPN"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:localconv="clr-namespace:eduVPNClient.Converters"
     xmlns:prism="http://prismlibrary.com/"
     mc:Ignorable="d"
     d:DesignWidth="298"
@@ -15,6 +16,9 @@
     <Page.DataContext>
         <eduVPN:InstanceViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <localconv:IsNullOrEmptyStringConverter x:Key="IsNullOrEmptyStringConverter" />
+    </Page.Resources>
 
     <i:Interaction.Triggers>
         <prism:InteractionRequestTrigger
@@ -39,6 +43,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid>
@@ -69,5 +74,14 @@
             ItemsSource="{Binding InstanceList, Source={StaticResource AppViewModel}}"
             SelectedItem="{Binding SelectedInstance}"
             SelectionChanged="InstanceList_SelectionChanged"/>
+
+        <StatusBar
+            Grid.Row="2"
+            Style="{StaticResource eduVPNInfoBarStyle}"
+            Visibility="{Binding InstanceListErrorMessage, Source={StaticResource AppViewModel}, Converter={StaticResource IsNullOrEmptyStringConverter}}">
+            <StatusBarItem>
+                <TextBlock Text="{Binding InstanceListErrorMessage, Source={StaticResource AppViewModel}}"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Page>
