@@ -66,7 +66,7 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNInstanceSelectionItemContainerStyle}"
-            ItemsSource="{StaticResource InstanceList}"
+            ItemsSource="{Binding InstanceList, Source={StaticResource AppViewModel}}"
             SelectedItem="{Binding SelectedInstance}"
             SelectionChanged="InstanceList_SelectionChanged"/>
     </Grid>

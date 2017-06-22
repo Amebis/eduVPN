@@ -28,7 +28,6 @@ for example when using public WiFi.</clr:String>
         <clr:String x:Key="InstituteAccessNote">Access your organization network</clr:String>
 
         <clr:String x:Key="InstanceSelectionPageTitle">Choose your Provider</clr:String>
-        <clr:String x:Key="OtherInstance">Other (not listed)</clr:String>
 
         <clr:String x:Key="OtherInstancePageTitle">Other Provider</clr:String>
         <clr:String x:Key="OtherInstanceURINote">Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/info.json</clr:String>
@@ -256,10 +255,6 @@ for example when using public WiFi.</clr:String>
         </Style>
 
         <!-- Global Fields -->
-        <eduVPN:InstanceList x:Key="InstanceList">
-            <eduVPN:Instance
-                Base="nl.eduvpn.app.windows:other"
-                DisplayName="{StaticResource OtherInstance}"/>
-        </eduVPN:InstanceList>
+        <eduVPN:AppViewModel x:Key="AppViewModel"/>
     </Application.Resources>
 </Application>

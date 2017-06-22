@@ -77,5 +77,14 @@ namespace eduVPN.Properties {
                 return ResourceManager.GetString("ErrorTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other (not listed).
+        /// </summary>
+        internal static string OtherInstance {
+            get {
+                return ResourceManager.GetString("OtherInstance", resourceCulture);
+            }
+        }
     }
 }

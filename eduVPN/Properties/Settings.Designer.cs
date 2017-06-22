@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace eduVPNClient.Properties {
+namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -23,38 +23,22 @@ namespace eduVPNClient.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
-        public double WindowTop {
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/instances.json")]
+        public string InstanceDirectory {
             get {
-                return ((double)(this["WindowTop"]));
-            }
-            set {
-                this["WindowTop"] = value;
+                return ((string)(this["InstanceDirectory"]));
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
-        public double WindowLeft {
+        [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
+        public string InstanceDirectoryPubKey {
             get {
-                return ((double)(this["WindowLeft"]));
-            }
-            set {
-                this["WindowLeft"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection OtherInstanceHistory {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["OtherInstanceHistory"]));
-            }
-            set {
-                this["OtherInstanceHistory"] = value;
+                return ((string)(this["InstanceDirectoryPubKey"]));
             }
         }
     }

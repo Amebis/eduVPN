@@ -8,12 +8,6 @@
     <Setting Name="WindowLeft" Type="System.Double" Scope="User">
       <Value Profile="(Default)">NaN</Value>
     </Setting>
-    <Setting Name="InstanceDirectory" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://static.eduvpn.nl/instances.json</Value>
-    </Setting>
-    <Setting Name="InstanceDirectoryPubKey" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
-    </Setting>
     <Setting Name="OtherInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

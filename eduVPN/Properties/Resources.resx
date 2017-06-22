@@ -123,4 +123,7 @@
   <data name="ErrorTitle" xml:space="preserve">
     <value>eduVPN Error</value>
   </data>
+  <data name="OtherInstance" xml:space="preserve">
+    <value>Other (not listed)</value>
+  </data>
 </root>
