@@ -62,7 +62,8 @@ namespace eduVPN.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {0}
-        ///The list of providers will not be complete or up-to-date..
+        ///
+        ///The list of providers is not up-to-date..
         /// </summary>
         internal static string ErrorInstanceList {
             get {

@@ -260,6 +260,11 @@ for example when using public WiFi.</clr:String>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
             <Setter Property="BorderThickness" Value="0,1,0,0"/>
+            <Style.Resources>
+                <Style TargetType="StatusBarItem">
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                </Style>
+            </Style.Resources>
         </Style>
 
         <!-- Global Fields -->

@@ -119,7 +119,8 @@
   </resheader>
   <data name="ErrorInstanceList" xml:space="preserve">
     <value>{0}
-The list of providers will not be complete or up-to-date.</value>
+
+The list of providers is not up-to-date.</value>
   </data>
   <data name="ErrorInvalidSignature" xml:space="preserve">
     <value>Verifying signature failed. Integrity of {0} is not valid.</value>
