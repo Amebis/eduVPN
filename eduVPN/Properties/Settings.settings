@@ -8,5 +8,8 @@
     <Setting Name="InstanceDirectoryPubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
     </Setting>
+    <Setting Name="InstanceListCache" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

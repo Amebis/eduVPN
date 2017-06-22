@@ -41,5 +41,17 @@ namespace eduVPN.Properties {
                 return ((string)(this["InstanceDirectoryPubKey"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string InstanceListCache {
+            get {
+                return ((string)(this["InstanceListCache"]));
+            }
+            set {
+                this["InstanceListCache"] = value;
+            }
+        }
     }
 }
