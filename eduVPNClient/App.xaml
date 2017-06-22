@@ -37,6 +37,7 @@ for example when using public WiFi.</clr:String>
 
         <!-- eduVPN Colors -->
         <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
+        <Color x:Key="eduVPNBlueLight">#4402B4D2</Color>
         <Color x:Key="eduVPNOrange">#FFED6B06</Color>
         <Color x:Key="eduVPNWhite">#FFFFFFFF</Color>
         <Color x:Key="eduVPNBlack">#FF000000</Color>
@@ -51,6 +52,7 @@ for example when using public WiFi.</clr:String>
         <SolidColorBrush x:Key="eduVPNLogoOrangeKey" Color="{StaticResource eduVPNOrange}" />
         <SolidColorBrush x:Key="eduVPNLogoWhiteKey" Color="{StaticResource eduVPNWhite}" />
         <SolidColorBrush x:Key="eduVPNLogoBlackKey" Color="{StaticResource eduVPNBlack}" />
+        <SolidColorBrush x:Key="eduVPNChoiceButtonHoverBrushKey" Color="{StaticResource eduVPNBlueLight}" />
 
         <!-- eduVPN Buttons -->
         <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
@@ -121,7 +123,29 @@ for example when using public WiFi.</clr:String>
             <Setter Property="Width" Value="120"/>
             <Setter Property="Height" Value="90"/>
             <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border
+                                    Background="{StaticResource eduVPNChoiceButtonHoverBrushKey}"
+                                    CornerRadius="4">
+                                    <ContentPresenter
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <!-- eduVPN Labels -->
