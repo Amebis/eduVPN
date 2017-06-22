@@ -22,7 +22,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Button
-                    Style="{StaticResource eduVPNNavigationButtonStyle}">&lt;</Button>
+                    Style="{StaticResource eduVPNNavigationButtonStyle}"
+                    AutomationProperties.Name="{StaticResource ButtonBackTitle}">&lt;</Button>
 
                 <Label
                     Grid.Column="1"

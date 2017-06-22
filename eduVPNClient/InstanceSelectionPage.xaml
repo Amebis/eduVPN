@@ -49,6 +49,7 @@
 
             <Button
                 Style="{StaticResource eduVPNNavigationButtonStyle}"
+                AutomationProperties.Name="{StaticResource ButtonBackTitle}"
                 Command="NavigationCommands.GoToPage"
                 CommandTarget="{Binding ElementName=NavigationFrame}"
                 CommandParameter="AccessTypePage.xaml">&lt;</Button>

@@ -72,6 +72,7 @@
             VerticalAlignment="Top"
             IsCancel="True"
             Style="{StaticResource eduVPNHeaderButtonBaseStyle}"
+            AutomationProperties.Name="{StaticResource ButtonCloseTitle}"
             Click="Close_Click">×</Button>
 
         <DockPanel

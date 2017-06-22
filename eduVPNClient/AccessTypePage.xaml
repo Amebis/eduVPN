@@ -16,6 +16,7 @@
         <Button
             Grid.Row="0"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
+            AutomationProperties.Name="{StaticResource SecureInternetTitle}"
             IsEnabled="False">
             <Canvas
                 Margin="5">
@@ -49,6 +50,7 @@
         <Button
             Grid.Row="1"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
+            AutomationProperties.Name="{StaticResource InstituteAccessTitle}"
             Command="NavigationCommands.GoToPage"
             CommandTarget="{Binding ElementName=NavigationFrame}"
             CommandParameter="InstanceSelectionPage.xaml">

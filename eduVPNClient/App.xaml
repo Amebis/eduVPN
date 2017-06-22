@@ -10,6 +10,9 @@
     <Application.Resources>
         <!-- eduVPN Strings -->
         <clr:String x:Key="MainWindowTitle">eduVPN</clr:String>
+        <clr:String x:Key="ButtonCloseTitle">Close</clr:String>
+        <clr:String x:Key="ButtonBackTitle">Back</clr:String>
+        <clr:String x:Key="ButtonNextTitle">Next</clr:String>
         <clr:String x:Key="MessageBoxTitleWarning">Warning</clr:String>
         <clr:String x:Key="ErrorInstanceListLoadingFailed" xml:space="preserve">Provider list loading failed with the following error:
 
