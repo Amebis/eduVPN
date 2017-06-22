@@ -116,13 +116,23 @@ namespace eduVPN
         }
 
         /// <summary>
+        /// Loads instance list from a JSON string
+        /// </summary>
+        /// <param name="json">JSON string</param>
+        /// <param name="ct">The token to monitor for cancellation requests.</param>
+        public void Load(string json, CancellationToken ct = default(CancellationToken))
+        {
+            Load((Dictionary<string, object>)eduJSON.Parser.Parse(json, ct));
+        }
+
+        /// <summary>
         /// Gets instance list from the given URI.
         /// </summary>
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
-        /// <returns>Dictionary object</returns>
-        public static Dictionary<string, object> Get(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        /// <returns>JSON string</returns>
+        public static string Get(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {
             var task = GetAsync(uri, pub_key, ct);
             try
@@ -142,9 +152,9 @@ namespace eduVPN
         /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
         /// <param name="ct">The token to monitor for cancellation requests.</param>
-        /// <returns>Asynchronous operation with expected dictionary object</returns>
+        /// <returns>Asynchronous operation with expected JSON string</returns>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
-        public static async Task<Dictionary<string, object>> GetAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        public static async Task<string> GetAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
         {
             // Spawn data loading.
             var data = new byte[1048576]; // Limit to 1MiB
@@ -201,7 +211,7 @@ namespace eduVPN
             }
 
             // Parse data.
-            return (Dictionary<string, object>)eduJSON.Parser.Parse(Encoding.UTF8.GetString(data, 0, data_size), ct);
+            return Encoding.UTF8.GetString(data, 0, data_size);
         }
 
         #endregion
