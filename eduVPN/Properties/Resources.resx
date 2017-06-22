@@ -120,9 +120,6 @@
   <data name="ErrorInvalidSignature" xml:space="preserve">
     <value>Verifying signature failed. Integrity of {0} is not valid.</value>
   </data>
-  <data name="ErrorMissingDataValue" xml:space="preserve">
-    <value>Data is missing "{0}" member, or "{0}" member is not a string.</value>
-  </data>
   <data name="ErrorTitle" xml:space="preserve">
     <value>eduVPN Error</value>
   </data>

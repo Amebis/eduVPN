@@ -164,7 +164,7 @@ namespace eduVPN
                     new Notification
                     {
                         Content = ex.Message,
-                        Title = Resources.ErrorTitle
+                        Title = Properties.Resources.ErrorTitle
                     });
             }
         }

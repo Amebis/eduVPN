@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace eduVPN {
+namespace eduVPN.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace eduVPN {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("eduVPN.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("eduVPN.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,15 +66,6 @@ namespace eduVPN {
         internal static string ErrorInvalidSignature {
             get {
                 return ResourceManager.GetString("ErrorInvalidSignature", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data is missing &quot;{0}&quot; member, or &quot;{0}&quot; member is not a string..
-        /// </summary>
-        internal static string ErrorMissingDataValue {
-            get {
-                return ResourceManager.GetString("ErrorMissingDataValue", resourceCulture);
             }
         }
         

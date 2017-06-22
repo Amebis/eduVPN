@@ -197,7 +197,7 @@ namespace eduVPN
                 // Verify signature.
                 using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
                     if (!key.VerifyDetached(data, 0, data_size, signature))
-                        throw new System.Security.SecurityException(String.Format(Resources.ErrorInvalidSignature, uri));
+                        throw new System.Security.SecurityException(String.Format(Properties.Resources.ErrorInvalidSignature, uri));
             }
 
             // Parse data.
