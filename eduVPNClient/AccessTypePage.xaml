@@ -52,7 +52,6 @@
             Style="{StaticResource eduVPNChoiceButtonStyle}"
             AutomationProperties.Name="{StaticResource InstituteAccessTitle}"
             Command="NavigationCommands.GoToPage"
-            CommandTarget="{Binding ElementName=NavigationFrame}"
             CommandParameter="InstanceSelectionPage.xaml">
             <Canvas
                 Margin="5">

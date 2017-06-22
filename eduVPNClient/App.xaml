@@ -209,6 +209,7 @@ for example when using public WiFi.</clr:String>
                     </Separator.Style>
                 </Separator>
 
+                <!-- TODO: Provide alternative Source for instances with Logo==null. -->
                 <Image
                     Grid.Column="0"
                     Grid.Row="1"
