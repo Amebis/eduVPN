@@ -93,7 +93,7 @@ namespace eduVPN
             _dispatcher = Dispatcher.CurrentDispatcher;
 
             // Launch instance list load in the background.
-            ThreadPool.QueueUserWorkItem(new WaitCallback(GetInstanceList));
+            ThreadPool.QueueUserWorkItem(new WaitCallback(InstanceListLoader));
 
             _dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
                 // Raise the abort flag to gracefully shutdown all background threads.
@@ -111,21 +111,21 @@ namespace eduVPN
         /// <summary>
         /// Loads instance list from web service.
         /// </summary>
-        private void GetInstanceList(object param)
+        private void InstanceListLoader(object param)
         {
-            string json = null;
+            JSONContents json = null;
             Dictionary<string, object> obj = null;
 
             try
             {
                 // Get instance list.
-                json = InstanceList.Get(
+                json = JSONContents.Get(
                     new Uri(Properties.Settings.Default.InstanceDirectory),
                     Convert.FromBase64String(Properties.Settings.Default.InstanceDirectoryPubKey),
                     _abort.Token);
 
                 // Parse instance list.
-                obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json, _abort.Token);
+                obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
 
                 // Load instance list.
                 var instance_list = new InstanceList();
@@ -139,7 +139,11 @@ namespace eduVPN
                 });
 
                 // Send the loaded instance list back to the UI thread.
-                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceList = instance_list));
+                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                {
+                    InstanceList = instance_list;
+                    InstanceListErrorMessage = null;
+                }));
             }
             catch (OperationCanceledException)
             {
@@ -161,7 +165,7 @@ namespace eduVPN
             {
                 // Update cache.
                 _instance_list_cache = obj;
-                Properties.Settings.Default.InstanceListCache = json;
+                Properties.Settings.Default.InstanceListCache = json.Value;
             }
         }
 

@@ -9,13 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Net;
-using System.Net.Cache;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace eduVPN
 {
@@ -123,95 +117,6 @@ namespace eduVPN
         public void Load(string json, CancellationToken ct = default(CancellationToken))
         {
             Load((Dictionary<string, object>)eduJSON.Parser.Parse(json, ct));
-        }
-
-        /// <summary>
-        /// Gets instance list from the given URI.
-        /// </summary>
-        /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
-        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
-        /// <param name="ct">The token to monitor for cancellation requests.</param>
-        /// <returns>JSON string</returns>
-        public static string Get(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
-        {
-            var task = GetAsync(uri, pub_key, ct);
-            try
-            {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-
-        /// <summary>
-        /// Gets instance list from the given URI asynchronously.
-        /// </summary>
-        /// <param name="uri">Typically <c>&quot;https://static.eduvpn.nl/instances.json&quot;</c></param>
-        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required.</param>
-        /// <param name="ct">The token to monitor for cancellation requests.</param>
-        /// <returns>Asynchronous operation with expected JSON string</returns>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
-        public static async Task<string> GetAsync(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
-        {
-            // Spawn data loading.
-            var data = new byte[1048576]; // Limit to 1MiB
-            int data_size;
-            var request = (HttpWebRequest)WebRequest.Create(uri);
-            var noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
-            request.CachePolicy = noCachePolicy;
-            var response_task = request.GetResponseAsync();
-
-            byte[] signature = null;
-            Task<WebResponse> response_sig_task = null;
-            if (pub_key != null)
-            {
-                // Generate signature URI.
-                var builder_sig = new UriBuilder(uri);
-                builder_sig.Path += ".sig";
-
-                // Spawn signature loading.
-                request = (HttpWebRequest)WebRequest.Create(builder_sig.Uri);
-                request.CachePolicy = noCachePolicy;
-                response_sig_task = request.GetResponseAsync();
-            }
-
-            // Wait for data to start comming in.
-            using (var response = (HttpWebResponse)(await response_task))
-            using (var stream = response.GetResponseStream())
-            {
-                // Spawn data read.
-                var read_task = stream.ReadAsync(data, 0, data.Length, ct);
-
-                if (pub_key != null)
-                {
-                    // Read the signature.
-                    using (var response_sig = (HttpWebResponse)(await response_sig_task))
-                    using (var stream_sig = response_sig.GetResponseStream())
-                    using (var reader_sig = new StreamReader(stream_sig))
-                        signature = Convert.FromBase64String(await reader_sig.ReadToEndAsync());
-                }
-
-                // Wait for the data to arrive.
-                data_size = await read_task;
-                if (read_task.IsCanceled)
-                    throw new OperationCanceledException(ct);
-            }
-
-            if (pub_key != null)
-            {
-                ct.ThrowIfCancellationRequested();
-
-                // Verify signature.
-                using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
-                    if (!key.VerifyDetached(data, 0, data_size, signature))
-                        throw new System.Security.SecurityException(String.Format(Properties.Resources.ErrorInvalidSignature, uri));
-            }
-
-            // Parse data.
-            return Encoding.UTF8.GetString(data, 0, data_size);
         }
 
         #endregion

@@ -143,7 +143,7 @@ namespace eduVPN
             {
                 // Get and load API endpoints.
                 var api = new API();
-                api.Load(await API.GetAsync(api_uri));
+                api.Load((await JSONContents.GetAsync(api_uri)).Value);
 
                 // Opens authorization request in the browser.
                 _authorization_grant = new AuthorizationGrant()

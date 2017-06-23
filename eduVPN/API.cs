@@ -7,13 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Net;
-using System.Net.Cache;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace eduVPN
 {
@@ -74,7 +68,7 @@ namespace eduVPN
 
         #endregion
 
-        #region Constructors
+        #region Methods
 
         /// <summary>
         /// Loads APIv2 from a dictionary object (provided by JSON)
@@ -109,58 +103,6 @@ namespace eduVPN
                     (Dictionary<string, object>)eduJSON.Parser.Parse(json, ct),
                     "api"),
                 "http://eduvpn.org/api#2"));
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Gets API URIs from the given instance base URI.
-        /// </summary>
-        /// <param name="uri">Instance URI</param>
-        /// <param name="ct">The token to monitor for cancellation requests.</param>
-        /// <returns>JSON string</returns>
-        public static string Get(Uri uri, CancellationToken ct = default(CancellationToken))
-        {
-            var task = GetAsync(uri, ct);
-            try
-            {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-
-        /// <summary>
-        /// Gets API URIs from the given instance base URI asynchronously.
-        /// </summary>
-        /// <param name="uri">Instance URI</param>
-        /// <param name="ct">The token to monitor for cancellation requests.</param>
-        /// <returns>Asynchronous operation with expected JSON string</returns>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse and Stream tolerate multiple disposes.")]
-        public static async Task<string> GetAsync(Uri uri, CancellationToken ct = default(CancellationToken))
-        {
-            // Load API data.
-            var data = new byte[1048576]; // Limit to 1MiB
-            int data_size;
-            var request = (HttpWebRequest)WebRequest.Create(uri);
-            var noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
-            request.CachePolicy = noCachePolicy;
-            using (var response = (HttpWebResponse)await request.GetResponseAsync())
-            using (var stream = response.GetResponseStream())
-            {
-                var read_task = stream.ReadAsync(data, 0, data.Length, ct);
-                data_size = await read_task;
-                if (read_task.IsCanceled)
-                    throw new OperationCanceledException(ct);
-            }
-
-            // Parse the API/APIv2.
-            return Encoding.UTF8.GetString(data, 0, data_size);
         }
 
         #endregion
