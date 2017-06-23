@@ -233,6 +233,14 @@ for example when using public WiFi.</clr:String>
         </DataTemplate>
         <Style x:Key="eduVPNInstanceSelectionItemContainerStyle" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <!-- eduVPN Text Boxes -->
