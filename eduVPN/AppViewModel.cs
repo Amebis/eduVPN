@@ -114,58 +114,79 @@ namespace eduVPN
         private void InstanceListLoader(object param)
         {
             JSONContents json = null;
-            Dictionary<string, object> obj = null;
 
-            try
+            for (;;)
             {
-                // Get instance list.
-                json = JSONContents.Get(
-                    new Uri(Properties.Settings.Default.InstanceDirectory),
-                    Convert.FromBase64String(Properties.Settings.Default.InstanceDirectoryPubKey),
-                    _abort.Token);
-
-                // Parse instance list.
-                obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
-
-                // Load instance list.
-                var instance_list = new InstanceList();
-                instance_list.Load(obj);
-
-                // Append "Other instance" entry.
-                instance_list.Add(new Instance()
+                try
                 {
-                    Base = new Uri("nl.eduvpn.app.windows:other"),
-                    DisplayName = Properties.Resources.OtherInstance
-                });
+                    // Get instance list.
+                    json = JSONContents.Get(
+                        new Uri(Properties.Settings.Default.InstanceDirectory),
+                        Convert.FromBase64String(Properties.Settings.Default.InstanceDirectoryPubKey),
+                        _abort.Token,
+                        json);
 
-                // Send the loaded instance list back to the UI thread.
-                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                    if (json.IsFresh)
+                    {
+                        // Parse instance list.
+                        var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
+
+                        // Load instance list.
+                        var instance_list = new InstanceList();
+                        instance_list.Load(obj);
+
+                        // Append "Other instance" entry.
+                        instance_list.Add(new Instance()
+                        {
+                            Base = new Uri("nl.eduvpn.app.windows:other"),
+                            DisplayName = Properties.Resources.OtherInstance
+                        });
+
+                        // Send the loaded instance list back to the UI thread.
+                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        {
+                            InstanceList = instance_list;
+                            InstanceListErrorMessage = null;
+                        }));
+
+                        try
+                        {
+                            // If we got here, the loaded instance list is (probably) OK.
+                            bool update_cache = false;
+                            try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_instance_list_cache, "seq"); }
+                            catch (Exception) { update_cache = true; }
+                            if (update_cache)
+                            {
+                                // Update cache.
+                                _instance_list_cache = obj;
+                                Properties.Settings.Default.InstanceListCache = json.Value;
+                            }
+                        }
+                        catch (Exception) { }
+                    }
+
+                    // Wait for five minutes.
+                    if (_abort.Token.WaitHandle.WaitOne(1000 * 60 * 5))
+                        break;
+                }
+                catch (OperationCanceledException)
                 {
-                    InstanceList = instance_list;
-                    InstanceListErrorMessage = null;
-                }));
-            }
-            catch (OperationCanceledException)
-            {
-                // The load was aborted.
-                return;
-            }
-            catch (Exception ex)
-            {
-                // Notify the sender the instance list loading failed.
-                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceListErrorMessage = String.Format(Properties.Resources.ErrorInstanceList, ex.Message)));
-            }
+                    // The load was aborted.
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    // Notify the sender the instance list loading failed.
+                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceListErrorMessage = String.Format(Properties.Resources.ErrorInstanceList, ex.Message)));
 
-            // If we got here, the loaded instance list is (probably) OK.
-            // It is only now that we are confident enough to cache it.
-            bool update_cache = false;
-            try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_instance_list_cache, "seq"); }
-            catch (Exception) { update_cache = true; }
-            if (update_cache)
-            {
-                // Update cache.
-                _instance_list_cache = obj;
-                Properties.Settings.Default.InstanceListCache = json.Value;
+                    // Wait for ten seconds.
+                    if (_abort.Token.WaitHandle.WaitOne(1000 * 10))
+                        break;
+
+                    // Make it a clean start.
+                    json = null;
+                    continue;
+                }
             }
         }
 

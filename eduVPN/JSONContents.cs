@@ -39,6 +39,11 @@ namespace eduVPN
         /// </summary>
         public DateTime Timestamp { get; set; }
 
+        /// <summary>
+        /// <c>true</c> - the content was freshly loaded, <c>false</c> - Content not modified
+        /// </summary>
+        public bool IsFresh { get; set; }
+
         #endregion
 
         #region Methods
@@ -94,7 +99,10 @@ namespace eduVPN
             {
                 // When the content was not modified, return the previous one.
                 if (ex.Response != null && ((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotModified)
+                {
+                    previous.IsFresh = false;
                     return previous;
+                }
                 else
                     throw;
             }
@@ -151,7 +159,8 @@ namespace eduVPN
                 return new JSONContents()
                 {
                     Value = Encoding.UTF8.GetString(data, 0, data_size),
-                    Timestamp = DateTime.TryParse(response.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime)
+                    Timestamp = DateTime.TryParse(response.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
+                    IsFresh = true
                 };
             }
         }
