@@ -149,8 +149,8 @@ namespace eduVPN
                 _authorization_grant = new AuthorizationGrant()
                 {
                     AuthorizationEndpoint = api.AuthorizationEndpoint,
-                    RedirectEndpoint = new Uri("nl.eduvpn.app.windows:/api/callback"),
-                    ClientID = "nl.eduvpn.app.windows",
+                    RedirectEndpoint = new Uri("org.eduvpn.app:/api/callback"),
+                    ClientID = "org.eduvpn.app",
                     Scope = new List<string>() { "config" },
                     CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
                 };
