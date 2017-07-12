@@ -1,0 +1,287 @@
+﻿<?xml version="1.0"?>
+<!--
+    MkLnk - Helper script for generating Start Menu shortcuts
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<package>
+	<job id="MkLnk">
+		<runtime>
+			<description>Creates shortcut to a program - Amebis, Copyright © 2015-2017</description>
+			<unnamed name="&lt;Shortcut.lnk&gt;" required="true"  helpstring="Shortcut file to create"/>
+			<unnamed name="&lt;Target&gt;"       required="true"  helpstring="Target file the shortcut invokes"/>
+			<named name="A" type="string"        required="false" helpstring="Command line arguments"/>
+			<named name="F" type="string"        required="false" helpstring="Start in folder"/>
+			<named name="S" type="string"        required="false" helpstring="Shortcut key (Example: &quot;ALT+CTRL+F&quot;)"/>
+			<named name="R" type="string"        required="false" helpstring="Run (Valid values: 1=Normal Window, 3=Maximized, 7=Minimized)"/>
+			<named name="C" type="string"        required="false" helpstring="Comment"/>
+			<named name="I" type="string"        required="false" helpstring="Icon (Example: &quot;SHELL32.DLL,1&quot;)"/>
+			<example>
+Example:
+MkLnk.wsf &quot;%USERPROFILE%\Desktop\My shortcut.lnk&quot; &quot;%windir%\notepad.exe&quot; /R:3 /C:&quot;Starts the Notepad Maximized&quot;
+</example>
+		</runtime>
+		<script language="JScript"><![CDATA[
+			if (WScript.Arguments.Unnamed.Length < 2) {
+				WScript.Arguments.ShowUsage();
+				WScript.Quit(1);
+			}
+
+			var
+				wsh = WScript.CreateObject("WScript.Shell");
+
+			try {
+				var link = wsh.CreateShortcut(WScript.Arguments.Unnamed(0));
+	
+				// Set shortcut's target.
+				link.TargetPath = WScript.Arguments.Unnamed(1);
+
+				if (WScript.Arguments.Named.Exists("A"))
+					link.Arguments = WScript.Arguments.Named("A");
+
+				if (WScript.Arguments.Named.Exists("F"))
+					link.WorkingDirectory = WScript.Arguments.Named("F");
+
+				if (WScript.Arguments.Named.Exists("S"))
+					link.HotKey = WScript.Arguments.Named("S");
+
+				if (WScript.Arguments.Named.Exists("R"))
+					link.WindowStyle = parseInt(WScript.Arguments.Named("R"), 10);
+
+				if (WScript.Arguments.Named.Exists("C"))
+					link.Description = WScript.Arguments.Named("C");
+
+				if (WScript.Arguments.Named.Exists("I"))
+					link.IconLocation = WScript.Arguments.Named("I");
+
+				link.Save();
+			} catch (err) {
+				// Clean-up!
+				try {
+					// Delete LNK file.
+					var fso = WScript.CreateObject("Scripting.FileSystemObject");
+					fso.DeleteFile(WScript.Arguments.Unnamed(0), true);
+				} catch (err2) {}
+
+				throw err;
+			}
+
+			WScript.Quit(0);
+		]]></script>
+	</job>
+
+<signature>
+** SIG ** MIIbIAYJKoZIhvcNAQcCoIIbETCCGw0CAQExCzAJBgUr
+** SIG ** DgMCGgUAMGcGCisGAQQBgjcCAQSgWTBXMDIGCisGAQQB
+** SIG ** gjcCAR4wJAIBAQQQcAVhGs441BGiowAQS9NQkAIBAAIB
+** SIG ** AAIBAAIBAAIBADAhMAkGBSsOAwIaBQAEFFGiUKmbVHrW
+** SIG ** odX8k7KjWrc6+DeYoIIKLzCCBM4wggO2oAMCAQICEDB6
+** SIG ** NnqqPmiBpvlPCMs7OWQwDQYJKoZIhvcNAQELBQAwfzEL
+** SIG ** MAkGA1UEBhMCVVMxHTAbBgNVBAoTFFN5bWFudGVjIENv
+** SIG ** cnBvcmF0aW9uMR8wHQYDVQQLExZTeW1hbnRlYyBUcnVz
+** SIG ** dCBOZXR3b3JrMTAwLgYDVQQDEydTeW1hbnRlYyBDbGFz
+** SIG ** cyAzIFNIQTI1NiBDb2RlIFNpZ25pbmcgQ0EwHhcNMTUx
+** SIG ** MDA5MDAwMDAwWhcNMTgxMTA3MjM1OTU5WjBhMQswCQYD
+** SIG ** VQQGEwJTSTERMA8GA1UECBMIU2xvdmVuaWExDzANBgNV
+** SIG ** BAcTBkthbW5pazEWMBQGA1UEChQNQW1lYmlzIGQuby5v
+** SIG ** LjEWMBQGA1UEAxQNQW1lYmlzIGQuby5vLjCCASIwDQYJ
+** SIG ** KoZIhvcNAQEBBQADggEPADCCAQoCggEBAJfy6Bdwx2kq
+** SIG ** yGhtaYAZgcA8pWLe7EbyLqBHRq/8jIVfUX1CH7fsbEz1
+** SIG ** UDgIq74BvilG3BNyjJxh/lbiu2Pr2M0ad3WEy4p0kM9T
+** SIG ** SmABC8k3Vc5pmJlNy1++uMpNwAbUmbGcD6Igsvk1xPWb
+** SIG ** ApLoAdnO0KfTfzvRI40A0cGZVGt5y6GPemN6jT8JAp9O
+** SIG ** KaWIqj3iF00c/FwS7ODZf2w/cMphLjUle+b86GyewVGE
+** SIG ** MEVO5ZjS9ksEWBDWn9A6XYshSwbDWnx4xmIl0B4DcWVA
+** SIG ** aY+zqEQzQbzEGC/izPDq44RiCtbhi+QqgQ/6fNXm3hbA
+** SIG ** GVcYPYa4J5D1UMO+1NC2cPMCAwEAAaOCAWIwggFeMAkG
+** SIG ** A1UdEwQCMAAwDgYDVR0PAQH/BAQDAgeAMCsGA1UdHwQk
+** SIG ** MCIwIKAeoByGGmh0dHA6Ly9zdi5zeW1jYi5jb20vc3Yu
+** SIG ** Y3JsMGYGA1UdIARfMF0wWwYLYIZIAYb4RQEHFwMwTDAj
+** SIG ** BggrBgEFBQcCARYXaHR0cHM6Ly9kLnN5bWNiLmNvbS9j
+** SIG ** cHMwJQYIKwYBBQUHAgIwGQwXaHR0cHM6Ly9kLnN5bWNi
+** SIG ** LmNvbS9ycGEwEwYDVR0lBAwwCgYIKwYBBQUHAwMwVwYI
+** SIG ** KwYBBQUHAQEESzBJMB8GCCsGAQUFBzABhhNodHRwOi8v
+** SIG ** c3Yuc3ltY2QuY29tMCYGCCsGAQUFBzAChhpodHRwOi8v
+** SIG ** c3Yuc3ltY2IuY29tL3N2LmNydDAfBgNVHSMEGDAWgBSW
+** SIG ** O1PweTOXr32D7y4rzMq3hh5yZjAdBgNVHQ4EFgQU9we9
+** SIG ** loCaLXTEfww9PSfd1JAKn8wwDQYJKoZIhvcNAQELBQAD
+** SIG ** ggEBAIpxL0AvtcrbShLKgI7dmLn6WJbpdzkB9e2Cm1Mu
+** SIG ** AAIiogLFF1n07l0VXZE+gqxGHB8ji2h33t+o1R8PLyyI
+** SIG ** kdnMhHAd78HsqyZzabfmWuCP12TKBv77wiZkpbTo/Av+
+** SIG ** z0SlpJRoMpzzXhyPPtHdby80bSu+4RXlewiDCH56aGE4
+** SIG ** SSk0i8Xa9JJ/ozPKLX3Szdmg6J58XtDH/tq5K1/ABSCB
+** SIG ** z6SF2Y9l9lRJpGXchSDYCPipSVUGP0WPQRTDNobSwCJD
+** SIG ** XAz9UFcxWo4Rh8o/gvlLWUH+T3HhmLSRzXqt3JuqJo5x
+** SIG ** H8s4vPzcGBZZFob8yRB98KD6ioFK2pjRRSw9FucwggVZ
+** SIG ** MIIEQaADAgECAhA9eNf5dklgsmF99PAeyoYqMA0GCSqG
+** SIG ** SIb3DQEBCwUAMIHKMQswCQYDVQQGEwJVUzEXMBUGA1UE
+** SIG ** ChMOVmVyaVNpZ24sIEluYy4xHzAdBgNVBAsTFlZlcmlT
+** SIG ** aWduIFRydXN0IE5ldHdvcmsxOjA4BgNVBAsTMShjKSAy
+** SIG ** MDA2IFZlcmlTaWduLCBJbmMuIC0gRm9yIGF1dGhvcml6
+** SIG ** ZWQgdXNlIG9ubHkxRTBDBgNVBAMTPFZlcmlTaWduIENs
+** SIG ** YXNzIDMgUHVibGljIFByaW1hcnkgQ2VydGlmaWNhdGlv
+** SIG ** biBBdXRob3JpdHkgLSBHNTAeFw0xMzEyMTAwMDAwMDBa
+** SIG ** Fw0yMzEyMDkyMzU5NTlaMH8xCzAJBgNVBAYTAlVTMR0w
+** SIG ** GwYDVQQKExRTeW1hbnRlYyBDb3Jwb3JhdGlvbjEfMB0G
+** SIG ** A1UECxMWU3ltYW50ZWMgVHJ1c3QgTmV0d29yazEwMC4G
+** SIG ** A1UEAxMnU3ltYW50ZWMgQ2xhc3MgMyBTSEEyNTYgQ29k
+** SIG ** ZSBTaWduaW5nIENBMIIBIjANBgkqhkiG9w0BAQEFAAOC
+** SIG ** AQ8AMIIBCgKCAQEAl4MeABavLLHSCMTXaJNRYB5x9uJH
+** SIG ** tNtYTSNiarS/WhtR96MNGHdou9g2qy8hUNqe8+dfJ04L
+** SIG ** wpfICXCTqdpcDU6kDZGgtOwUzpFyVC7Oo9tE6VIbP0E8
+** SIG ** ykrkqsDoOatTzCHQzM9/m+bCzFhqghXuPTbPHMWXBySO
+** SIG ** 8Xu+MS09bty1mUKfS2GVXxxw7hd924vlYYl4x2gbrxF4
+** SIG ** GpiuxFVHU9mzMtahDkZAxZeSitFTp5lbhTVX0+qTYmEg
+** SIG ** CscwdyQRTWKDtrp7aIIx7mXK3/nVjbI13Iwrb2pyXGCE
+** SIG ** nPIMlF7AVlIASMzT+KV93i/XE+Q4qITVRrgThsIbnepa
+** SIG ** ON2b2wIDAQABo4IBgzCCAX8wLwYIKwYBBQUHAQEEIzAh
+** SIG ** MB8GCCsGAQUFBzABhhNodHRwOi8vczIuc3ltY2IuY29t
+** SIG ** MBIGA1UdEwEB/wQIMAYBAf8CAQAwbAYDVR0gBGUwYzBh
+** SIG ** BgtghkgBhvhFAQcXAzBSMCYGCCsGAQUFBwIBFhpodHRw
+** SIG ** Oi8vd3d3LnN5bWF1dGguY29tL2NwczAoBggrBgEFBQcC
+** SIG ** AjAcGhpodHRwOi8vd3d3LnN5bWF1dGguY29tL3JwYTAw
+** SIG ** BgNVHR8EKTAnMCWgI6Ahhh9odHRwOi8vczEuc3ltY2Iu
+** SIG ** Y29tL3BjYTMtZzUuY3JsMB0GA1UdJQQWMBQGCCsGAQUF
+** SIG ** BwMCBggrBgEFBQcDAzAOBgNVHQ8BAf8EBAMCAQYwKQYD
+** SIG ** VR0RBCIwIKQeMBwxGjAYBgNVBAMTEVN5bWFudGVjUEtJ
+** SIG ** LTEtNTY3MB0GA1UdDgQWBBSWO1PweTOXr32D7y4rzMq3
+** SIG ** hh5yZjAfBgNVHSMEGDAWgBR/02Wnwt3su/AwCfNDOfoC
+** SIG ** rzMxMzANBgkqhkiG9w0BAQsFAAOCAQEAE4UaHmmpN/eg
+** SIG ** vaSvfh1hU/6djF4MpnUeeBcj3f3sGgNVOftxlcdlWqeO
+** SIG ** MNJEWmHbcG/aIQXCLnO6SfHRk/5dyc1eA+CJnj90Htf3
+** SIG ** OIup1s+7NS8zWKiSVtHITTuC5nmEFvwosLFH8x2iPu6H
+** SIG ** 2aZ/pFalP62ELinefLyoqqM9BAHqupOiDlAiKRdMh+Q6
+** SIG ** EV/WpCWJmwVrL7TJAUwnewusGQUioGAVP9rJ+01Mj/ty
+** SIG ** Z3f9J5THujUOiEn+jf0or0oSvQ2zlwXeRAwV+jYrA9zB
+** SIG ** UAHxoRFdFOXivSdLVL4rhF4PpsN0BQrvl8OJIrEfd/O9
+** SIG ** zUPU8UypP7WLhK9k8tAUITGCEF0wghBZAgEBMIGTMH8x
+** SIG ** CzAJBgNVBAYTAlVTMR0wGwYDVQQKExRTeW1hbnRlYyBD
+** SIG ** b3Jwb3JhdGlvbjEfMB0GA1UECxMWU3ltYW50ZWMgVHJ1
+** SIG ** c3QgTmV0d29yazEwMC4GA1UEAxMnU3ltYW50ZWMgQ2xh
+** SIG ** c3MgMyBTSEEyNTYgQ29kZSBTaWduaW5nIENBAhAwejZ6
+** SIG ** qj5ogab5TwjLOzlkMAkGBSsOAwIaBQCgcDAQBgorBgEE
+** SIG ** AYI3AgEMMQIwADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGC
+** SIG ** NwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIB
+** SIG ** FTAjBgkqhkiG9w0BCQQxFgQUGG8dGcnPQfzO3x6FE4n+
+** SIG ** YNHdAQswDQYJKoZIhvcNAQEBBQAEggEAgLgTdTqkGWZ7
+** SIG ** xglEOegf1bYBqxyr91ezyGr6Chq0SOeoQPeA8XNKi/EU
+** SIG ** f75ZDouViwTtwCkIo6WQcZ1TUJRz7+lcMXS7IIXcL7t0
+** SIG ** g/bVgGJ/y3EhEFbQt26p+1EjLcSeQgXWNNP0gKZQ1pEr
+** SIG ** 5grADKX4fJPlfJd6nGk+jC6DQiqdOTXDsfhgO6YpZ23B
+** SIG ** LTSa2py+DB7tUmNcMKl9DfPekcVkT5JkzsOEU6MJo73t
+** SIG ** 2oD+82LQ8OEEn8DayORifTM40FrsGSYkCBNgFTSEJ5aY
+** SIG ** 4R9ucMofIDkdcHHnxxyEML0doFutJNQ4tUFRiuo3N1FX
+** SIG ** R9swzUm8hNwpUP31Wij/gaGCDiwwgg4oBgorBgEEAYI3
+** SIG ** AwMBMYIOGDCCDhQGCSqGSIb3DQEHAqCCDgUwgg4BAgED
+** SIG ** MQ0wCwYJYIZIAWUDBAIBMIH/BgsqhkiG9w0BCRABBKCB
+** SIG ** 7wSB7DCB6QIBAQYLYIZIAYb4RQEHFwMwITAJBgUrDgMC
+** SIG ** GgUABBQ2Bf9auN+Kw2UcjSmWMUFN7Eq1MQIVAOFAfpvr
+** SIG ** TJWMEWRutOho45MlHlAoGA8yMDE3MDcxMjA4NDYyNVow
+** SIG ** AwIBHqCBhqSBgzCBgDELMAkGA1UEBhMCVVMxHTAbBgNV
+** SIG ** BAoTFFN5bWFudGVjIENvcnBvcmF0aW9uMR8wHQYDVQQL
+** SIG ** ExZTeW1hbnRlYyBUcnVzdCBOZXR3b3JrMTEwLwYDVQQD
+** SIG ** EyhTeW1hbnRlYyBTSEEyNTYgVGltZVN0YW1waW5nIFNp
+** SIG ** Z25lciAtIEcyoIIKizCCBTgwggQgoAMCAQICEHsFsdRJ
+** SIG ** aFFE98mJ0pwZnRIwDQYJKoZIhvcNAQELBQAwgb0xCzAJ
+** SIG ** BgNVBAYTAlVTMRcwFQYDVQQKEw5WZXJpU2lnbiwgSW5j
+** SIG ** LjEfMB0GA1UECxMWVmVyaVNpZ24gVHJ1c3QgTmV0d29y
+** SIG ** azE6MDgGA1UECxMxKGMpIDIwMDggVmVyaVNpZ24sIElu
+** SIG ** Yy4gLSBGb3IgYXV0aG9yaXplZCB1c2Ugb25seTE4MDYG
+** SIG ** A1UEAxMvVmVyaVNpZ24gVW5pdmVyc2FsIFJvb3QgQ2Vy
+** SIG ** dGlmaWNhdGlvbiBBdXRob3JpdHkwHhcNMTYwMTEyMDAw
+** SIG ** MDAwWhcNMzEwMTExMjM1OTU5WjB3MQswCQYDVQQGEwJV
+** SIG ** UzEdMBsGA1UEChMUU3ltYW50ZWMgQ29ycG9yYXRpb24x
+** SIG ** HzAdBgNVBAsTFlN5bWFudGVjIFRydXN0IE5ldHdvcmsx
+** SIG ** KDAmBgNVBAMTH1N5bWFudGVjIFNIQTI1NiBUaW1lU3Rh
+** SIG ** bXBpbmcgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+** SIG ** ggEKAoIBAQC7WZ1ZVU+djHJdGoGi61XzsAGtPHGsMo8F
+** SIG ** a4aaJwAyl2pNyWQUSym7wtkpuS7sY7Phzz8LVpD4Yht+
+** SIG ** 66YH4t5/Xm1AONSRBudBfHkcy8utG7/YlZHz8O5s+K2W
+** SIG ** OS5/wSe4eDnFhKXt7a+Hjs6Nx23q0pi1Oh8eOZ3D9Jqo
+** SIG ** 9IThxNF8ccYGKbQ/5IMNJsN7CD5N+Qq3M0n/yjvU9bKb
+** SIG ** S+GImRr1wOkzFNbfx4Dbke7+vJJXcnf0zajM/gn1kze+
+** SIG ** lYhqxdz0sUvUzugJkV+1hHk1inisGTKPI8EyQRtZDqk+
+** SIG ** scz51ivvt9jk1R1tETqS9pPJnONI7rtTDtQ2l4Z4xaE3
+** SIG ** AgMBAAGjggF3MIIBczAOBgNVHQ8BAf8EBAMCAQYwEgYD
+** SIG ** VR0TAQH/BAgwBgEB/wIBADBmBgNVHSAEXzBdMFsGC2CG
+** SIG ** SAGG+EUBBxcDMEwwIwYIKwYBBQUHAgEWF2h0dHBzOi8v
+** SIG ** ZC5zeW1jYi5jb20vY3BzMCUGCCsGAQUFBwICMBkaF2h0
+** SIG ** dHBzOi8vZC5zeW1jYi5jb20vcnBhMC4GCCsGAQUFBwEB
+** SIG ** BCIwIDAeBggrBgEFBQcwAYYSaHR0cDovL3Muc3ltY2Qu
+** SIG ** Y29tMDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6Ly9zLnN5
+** SIG ** bWNiLmNvbS91bml2ZXJzYWwtcm9vdC5jcmwwEwYDVR0l
+** SIG ** BAwwCgYIKwYBBQUHAwgwKAYDVR0RBCEwH6QdMBsxGTAX
+** SIG ** BgNVBAMTEFRpbWVTdGFtcC0yMDQ4LTMwHQYDVR0OBBYE
+** SIG ** FK9j1sqjToVy4Ke8QfMpojh/gHViMB8GA1UdIwQYMBaA
+** SIG ** FLZ3+mlIR59TEtXC6gcydgfRlwcZMA0GCSqGSIb3DQEB
+** SIG ** CwUAA4IBAQB16rAt1TQZXDJF/g7h1E+meMFv1+rd3E/z
+** SIG ** ociBiPenjxXmQCmt5l30otlWZIRxMCrdHmEXZiBWBpgZ
+** SIG ** jV1x8viXvAn9HJFHyeLojQP7zJAv1gpsTjPs1rSTyEyQ
+** SIG ** Y0g5QCHE3dZuiZg8tZiX6KkGtwnJj1NXQZAv4R5NTtzK
+** SIG ** EHhsQm7wtsX4YVxS9U72a433Snq+8839A9fZ9gOoD+NT
+** SIG ** 9wp17MZ1LqpmhQSZt/gGV+HGDvbor9rsmxgfqrnjOgC/
+** SIG ** zoqUywHbnsc4uw9Sq9HjlANgCk2g/idtFDL8P5dA4b+Z
+** SIG ** idvkORS92uTTw+orWrOVWFUEfcea7CMDjYUq0v+uqWGB
+** SIG ** MIIFSzCCBDOgAwIBAgIQVFjyqtdB1kS8hKl7oJZS5jAN
+** SIG ** BgkqhkiG9w0BAQsFADB3MQswCQYDVQQGEwJVUzEdMBsG
+** SIG ** A1UEChMUU3ltYW50ZWMgQ29ycG9yYXRpb24xHzAdBgNV
+** SIG ** BAsTFlN5bWFudGVjIFRydXN0IE5ldHdvcmsxKDAmBgNV
+** SIG ** BAMTH1N5bWFudGVjIFNIQTI1NiBUaW1lU3RhbXBpbmcg
+** SIG ** Q0EwHhcNMTcwMTAyMDAwMDAwWhcNMjgwNDAxMjM1OTU5
+** SIG ** WjCBgDELMAkGA1UEBhMCVVMxHTAbBgNVBAoTFFN5bWFu
+** SIG ** dGVjIENvcnBvcmF0aW9uMR8wHQYDVQQLExZTeW1hbnRl
+** SIG ** YyBUcnVzdCBOZXR3b3JrMTEwLwYDVQQDEyhTeW1hbnRl
+** SIG ** YyBTSEEyNTYgVGltZVN0YW1waW5nIFNpZ25lciAtIEcy
+** SIG ** MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+** SIG ** mfP82AQJA4b511ymk8BCfOp8Y89dAOKO88CQ348p9Rjq
+** SIG ** lLeS5dewoHOB6OkKm0p8Af+dj6Q5pw7qRfQiDDpw7TlF
+** SIG ** i+TFG1zwRWhGJAVjdpsc/J5sKrFW5Yp/UnGu8jXVRiMG
+** SIG ** HM9ILR20zbjZdiOOHP8+v7sGXGkHpmUO+F6ufS7tTa41
+** SIG ** 78nXAEL9KJUOn11yQgm8w9pE0u3MR4Tk/MotrFi+rveu
+** SIG ** 2UQNCLfCd9YaQ3DRbgPeUpLEEAhx2boiVfIfvO2bnTvi
+** SIG ** Xh1Mg/+XD3sL51WDTtIN677X7K5uR7mf36XWUbwEVe3/
+** SIG ** J3BMye0qSxPhsblMD8kB7lVlX2kCeGbLPwIDAQABo4IB
+** SIG ** xzCCAcMwDAYDVR0TAQH/BAIwADBmBgNVHSAEXzBdMFsG
+** SIG ** C2CGSAGG+EUBBxcDMEwwIwYIKwYBBQUHAgEWF2h0dHBz
+** SIG ** Oi8vZC5zeW1jYi5jb20vY3BzMCUGCCsGAQUFBwICMBka
+** SIG ** F2h0dHBzOi8vZC5zeW1jYi5jb20vcnBhMEAGA1UdHwQ5
+** SIG ** MDcwNaAzoDGGL2h0dHA6Ly90cy1jcmwud3Muc3ltYW50
+** SIG ** ZWMuY29tL3NoYTI1Ni10c3MtY2EuY3JsMBYGA1UdJQEB
+** SIG ** /wQMMAoGCCsGAQUFBwMIMA4GA1UdDwEB/wQEAwIHgDB3
+** SIG ** BggrBgEFBQcBAQRrMGkwKgYIKwYBBQUHMAGGHmh0dHA6
+** SIG ** Ly90cy1vY3NwLndzLnN5bWFudGVjLmNvbTA7BggrBgEF
+** SIG ** BQcwAoYvaHR0cDovL3RzLWFpYS53cy5zeW1hbnRlYy5j
+** SIG ** b20vc2hhMjU2LXRzcy1jYS5jZXIwKAYDVR0RBCEwH6Qd
+** SIG ** MBsxGTAXBgNVBAMTEFRpbWVTdGFtcC0yMDQ4LTUwHQYD
+** SIG ** VR0OBBYEFAm1wf6WcpcpQ5rJ4AK6rvj9L7r2MB8GA1Ud
+** SIG ** IwQYMBaAFK9j1sqjToVy4Ke8QfMpojh/gHViMA0GCSqG
+** SIG ** SIb3DQEBCwUAA4IBAQAXswqI6VxaXiBrOwoVsmzFqYoy
+** SIG ** h9Ox9BxTroW+P5v/17y3lIW0x1J+lOi97WGy1KeZ5MPJ
+** SIG ** k8E1PQvoaApdVpi9sSI70UR617/wbVEyitUj3zgBN/bi
+** SIG ** Uyt6KxGPt01sejMDG3xrCZQXu+TbWNQhE2Xn7NElyix1
+** SIG ** mpx//Mm7KmirxH20z6PJbKfZxACciQp3kfRNovsxO4Zu
+** SIG ** 9uYfUAOGm7/LQqvmdptyWhEBisbvpW+V592uuuYiZfAY
+** SIG ** WRsRyc2At9iXRx9CCPiscR+wRlOz1LLVo6tQdUgSF4Kt
+** SIG ** z+BBTzJ+zZUcv5GKCD2kp2cClt8kTKXQQcCCYKOKFzJL
+** SIG ** 07zPpLSMMYICWjCCAlYCAQEwgYswdzELMAkGA1UEBhMC
+** SIG ** VVMxHTAbBgNVBAoTFFN5bWFudGVjIENvcnBvcmF0aW9u
+** SIG ** MR8wHQYDVQQLExZTeW1hbnRlYyBUcnVzdCBOZXR3b3Jr
+** SIG ** MSgwJgYDVQQDEx9TeW1hbnRlYyBTSEEyNTYgVGltZVN0
+** SIG ** YW1waW5nIENBAhBUWPKq10HWRLyEqXugllLmMAsGCWCG
+** SIG ** SAFlAwQCAaCBpDAaBgkqhkiG9w0BCQMxDQYLKoZIhvcN
+** SIG ** AQkQAQQwHAYJKoZIhvcNAQkFMQ8XDTE3MDcxMjA4NDYy
+** SIG ** NVowLwYJKoZIhvcNAQkEMSIEILB9inbg1PBbcpxlBblr
+** SIG ** u0ULNfUMPR21yFyYyzBAAPX3MDcGCyqGSIb3DQEJEAIv
+** SIG ** MSgwJjAkMCIEIM96wXrQR+zV/cNoIgMbEtTvB4tvK0xe
+** SIG ** a6Qfj/LPS61nMAsGCSqGSIb3DQEBAQSCAQBVK57bF6pI
+** SIG ** +bKt+VwsJcFx6HNl9CVLbKTv+cGDa6u0138d2iXT1CaI
+** SIG ** GSp6g+aJclnxFNlr5GxDIPDqPT4GdgLcNt39sQpl5/Yw
+** SIG ** 59U6kkhgw1cjlqgIbGaYHhe1kJliQwR93tAR8lXrN8Eg
+** SIG ** m1GV05iLnb2MgteUde3+uYoIAMPmCJti6oqpahNVdTi7
+** SIG ** NmK9MW6YyDtir2FsK8gSOyri3RvPCIRvb728A/12aIDW
+** SIG ** mYQA862yG451ybP/WjQhhKbZwS5KoJlmKRcT46/ayyyP
+** SIG ** zOBdkHqujsiPlo5NUSwKavqZDsbQAbUX8UQ6Vq0zNgqt
+** SIG ** mAgz63Qz4xlsrmQBpjnU0tOV
+</signature>
+</package>

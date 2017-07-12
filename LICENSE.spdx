@@ -17,4 +17,6 @@ PackageDownloadLocation: git+https://github.com/Amebis/eduVPN.git
 PackageDownloadLocation: git+ssh://github.com/Amebis/eduVPN.git
 Creator: Person: Simon Rozman (simon.rozman@amebis.si)
 Creator: Organization: Amebis
-Relationship: Prism.Core
+Relationship: Prism.Core - Apache License 2.0
+Relationship: Prism.Wpf - Apache License 2.0
+Relationship: SingleInstance.cs - Microsoft Public License (Ms-PL)
