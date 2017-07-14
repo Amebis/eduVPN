@@ -1,12 +1,15 @@
-﻿<Page x:Class="eduVPNClient.AccessTypePage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      mc:Ignorable="d"
-      d:DesignWidth="298"
-      d:DesignHeight="373"
-      Title="{StaticResource AccessTypePageTitle}">
+﻿<Page
+    x:Class="eduVPNClient.View.AccessTypePageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:res="clr-namespace:eduVPNClient.Resources"
+    xmlns:viewModel="clr-namespace:eduVPN.ViewModel;assembly=eduVPN"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Title="{x:Static res:Strings.AccessTypePageTitle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -16,8 +19,9 @@
         <Button
             Grid.Row="0"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
-            AutomationProperties.Name="{StaticResource SecureInternetTitle}"
-            IsEnabled="False">
+            AutomationProperties.Name="{x:Static res:Strings.SecureInternetTitle}"
+            Command="{Binding Path=SetAccessType}"
+            CommandParameter="{x:Static viewModel:AccessTypeType.SecureInternet}">
             <Canvas
                 Margin="5">
                 <Canvas.RenderTransform>
@@ -45,14 +49,14 @@
         <TextBlock
             Grid.Row="0"
             Style="{StaticResource eduVPNChoiceNoteStyle}"
-            Text="{StaticResource SecureInternetNote}"/>
+            Text="{x:Static res:Strings.SecureInternetNote}"/>
 
         <Button
             Grid.Row="1"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
-            AutomationProperties.Name="{StaticResource InstituteAccessTitle}"
-            Command="NavigationCommands.GoToPage"
-            CommandParameter="InstanceSelectionPage.xaml">
+            AutomationProperties.Name="{x:Static res:Strings.InstituteAccessTitle}"
+            Command="{Binding Path=SetAccessType}"
+            CommandParameter="{x:Static viewModel:AccessTypeType.InstituteAccess}">
             <Canvas
                 Margin="5">
                 <Canvas.RenderTransform>
@@ -74,6 +78,6 @@
         <TextBlock
             Grid.Row="1"
             Style="{StaticResource eduVPNChoiceNoteStyle}"
-            Text="{StaticResource InstituteAccessNote}"/>
+            Text="{x:Static res:Strings.InstituteAccessNote}"/>
     </Grid>
 </Page>

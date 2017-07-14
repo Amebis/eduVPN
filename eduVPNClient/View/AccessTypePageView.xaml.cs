@@ -7,16 +7,20 @@
 
 using System.Windows.Controls;
 
-namespace eduVPNClient
+namespace eduVPNClient.View
 {
     /// <summary>
-    /// Interaction logic for AccessTypePage.xaml
+    /// Interaction logic for AccessTypePageView.xaml
     /// </summary>
-    public partial class AccessTypePage : Page
+    public partial class AccessTypePageView : Page
     {
-        public AccessTypePage()
+        #region Constructors
+
+        public AccessTypePageView()
         {
             InitializeComponent();
         }
+
+        #endregion
     }
 }

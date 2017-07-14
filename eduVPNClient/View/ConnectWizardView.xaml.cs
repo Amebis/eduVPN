@@ -9,14 +9,16 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace eduVPNClient
+namespace eduVPNClient.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ConnectWizardView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ConnectWizardView : Window
     {
-        public MainWindow()
+        #region Constructors
+
+        public ConnectWizardView()
         {
             InitializeComponent();
 
@@ -27,19 +29,13 @@ namespace eduVPNClient
                 Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
         }
 
+        #endregion
+
+        #region Methods
+
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void GoToPage_ExecuteHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            NavigationFrame.NavigationService.Navigate(new Uri((string)e.Parameter, UriKind.Relative));
-        }
-
-        private void GoToPage_CanExecuteHandler(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -54,7 +50,8 @@ namespace eduVPNClient
             // Save window position on closing.
             Properties.Settings.Default.WindowTop = Top;
             Properties.Settings.Default.WindowLeft = Left;
-            Properties.Settings.Default.Save();
         }
+
+        #endregion
     }
 }

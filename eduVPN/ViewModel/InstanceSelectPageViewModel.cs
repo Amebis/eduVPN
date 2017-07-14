@@ -5,27 +5,21 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Mvvm;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace eduVPN
+namespace eduVPN.ViewModel
 {
-    public class AppViewModel : BindableBase
+    /// <summary>
+    /// Instance selection wizard page
+    /// </summary>
+    public class InstanceSelectPageViewModel : ConnectWizardPageViewModel
     {
         #region Fields
-
-        /// <summary>
-        /// UI thread's dispatcher
-        /// </summary>
-        private Dispatcher _dispatcher;
-
-        /// <summary>
-        /// Token used to abort unfinished background processes in case of application shutdown.
-        /// </summary>
-        private static CancellationTokenSource _abort = new CancellationTokenSource();
 
         /// <summary>
         /// Cached instance list
@@ -47,24 +41,73 @@ namespace eduVPN
         private InstanceList _instance_list;
 
         /// <summary>
-        /// The error message of the instance (re)load attempt; <c>null</c> when no error condition.
+        /// Selected Instance
         /// </summary>
-        public string InstanceListErrorMessage
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public Instance SelectedInstance
         {
-            get { return _instance_list_error_message; }
-            set { _instance_list_error_message = value; RaisePropertyChanged(); }
+            get { return _selected_instance; }
+            set
+            {
+                _selected_instance = value;
+                RaisePropertyChanged();
+                ((DelegateCommandBase)AuthorizeSelectedInstance).RaiseCanExecuteChanged();
+            }
         }
-        private string _instance_list_error_message;
+        private Instance _selected_instance;
+
+        /// <summary>
+        /// Authorize Selected Instance Command
+        /// </summary>
+        public ICommand AuthorizeSelectedInstance
+        {
+            get
+            {
+                if (_authorize_instance == null)
+                {
+                    _authorize_instance = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            if (SelectedInstance.Base == new Uri("org.eduvpn.app:other"))
+                            {
+                                // User selected "Other instance".
+                                Parent.CurrentPage = Parent.CustomInstancePage;
+                            }
+                            else
+                            {
+                                // A known instance was selected. Proceed to authentication.
+                                var uri_builder = new UriBuilder(SelectedInstance.Base);
+                                uri_builder.Path += "info.json";
+                                Parent.InstanceURI = uri_builder.Uri;
+                                Parent.CurrentPage = Parent.AuthorizationPage;
+                            }
+                        },
+
+                        // canExecute
+                        () => SelectedInstance != null);
+                }
+                return _authorize_instance;
+            }
+        }
+        private ICommand _authorize_instance;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs a view model.
+        /// Constructs an instance selection wizard page.
         /// </summary>
-        public AppViewModel()
+        /// <param name="parent">The page parent</param>
+        public InstanceSelectPageViewModel(ConnectWizardViewModel parent) :
+            base(parent)
         {
+            _dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
+                // Persist settings (instance cache) to disk.
+                Properties.Settings.Default.Save();
+            };
+
             try
             {
                 // Restore instance list cache.
@@ -84,29 +127,18 @@ namespace eduVPN
             InstanceList = new InstanceList();
             InstanceList.Load(_instance_list_cache);
             InstanceList.Add(new Instance()
-                {
-                    Base = new Uri("nl.eduvpn.app.windows:other"),
-                    DisplayName = Properties.Resources.OtherInstance
-                });
-
-            // Save UI thread's dispatcher.
-            _dispatcher = Dispatcher.CurrentDispatcher;
+            {
+                Base = new Uri("org.eduvpn.app:other"),
+                DisplayName = Properties.Resources.CustomInstance
+            });
 
             // Launch instance list load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(InstanceListLoader));
-
-            _dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
-                // Raise the abort flag to gracefully shutdown all background threads.
-                _abort.Cancel();
-
-                // Persist settings (instance cache) to disk.
-                Properties.Settings.Default.Save();
-            };
         }
 
         #endregion
 
-        #region InstanceList Background Load
+        #region Methods
 
         /// <summary>
         /// Loads instance list from web service.
@@ -138,15 +170,15 @@ namespace eduVPN
                         // Append "Other instance" entry.
                         instance_list.Add(new Instance()
                         {
-                            Base = new Uri("nl.eduvpn.app.windows:other"),
-                            DisplayName = Properties.Resources.OtherInstance
+                            Base = new Uri("org.eduvpn.app:other"),
+                            DisplayName = Properties.Resources.CustomInstance
                         });
 
                         // Send the loaded instance list back to the UI thread.
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                         {
                             InstanceList = instance_list;
-                            InstanceListErrorMessage = null;
+                            ErrorMessage = null;
                         }));
 
                         try
@@ -177,7 +209,7 @@ namespace eduVPN
                 catch (Exception ex)
                 {
                     // Notify the sender the instance list loading failed.
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceListErrorMessage = String.Format(Properties.Resources.ErrorInstanceList, ex.Message)));
+                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
 
                     // Wait for ten seconds.
                     if (_abort.Token.WaitHandle.WaitOne(1000 * 10))
@@ -188,6 +220,25 @@ namespace eduVPN
                     continue;
                 }
             }
+        }
+
+        protected override void DoNavigateBack()
+        {
+            Parent.CurrentPage = Parent.AccessTypePage;
+        }
+
+        protected override bool CanNavigateBack()
+        {
+            return true;
+        }
+
+        public override void OnActivate()
+        {
+            // Reset selected instance, to prevent automatic continuation to
+            // CustomInstance/Authorization page.
+            SelectedInstance = null;
+
+            base.OnActivate();
         }
 
         #endregion

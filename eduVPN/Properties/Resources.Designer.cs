@@ -61,13 +61,11 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}
-        ///
-        ///The list of providers is not up-to-date..
+        ///   Looks up a localized string similar to Other (not listed).
         /// </summary>
-        internal static string ErrorInstanceList {
+        internal static string CustomInstance {
             get {
-                return ResourceManager.GetString("ErrorInstanceList", resourceCulture);
+                return ResourceManager.GetString("CustomInstance", resourceCulture);
             }
         }
         
@@ -86,15 +84,6 @@ namespace eduVPN.Properties {
         internal static string ErrorTitle {
             get {
                 return ResourceManager.GetString("ErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Other (not listed).
-        /// </summary>
-        internal static string OtherInstance {
-            get {
-                return ResourceManager.GetString("OtherInstance", resourceCulture);
             }
         }
     }

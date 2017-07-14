@@ -7,19 +7,16 @@
 
 using System.Windows.Controls;
 
-namespace eduVPNClient
+namespace eduVPNClient.View
 {
     /// <summary>
-    /// Interaction logic for OtherInstancePage.xaml
+    /// Interaction logic for AuthorizationPageView.xaml
     /// </summary>
-    public partial class OtherInstancePage : Page
+    public partial class AuthorizationPageView : Page
     {
-        #region Constructors
+        #region Contructors
 
-        /// <summary>
-        /// Constructs a page.
-        /// </summary>
-        public OtherInstancePage()
+        public AuthorizationPageView()
         {
             InitializeComponent();
         }

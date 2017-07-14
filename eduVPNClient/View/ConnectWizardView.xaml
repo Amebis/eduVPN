@@ -1,11 +1,14 @@
 ﻿<Window
-    x:Class="eduVPNClient.MainWindow"
+    x:Class="eduVPNClient.View.ConnectWizardView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPNClient.Resources"
+    xmlns:view="clr-namespace:eduVPNClient.View"
+    xmlns:viewModel="clr-namespace:eduVPN.ViewModel;assembly=eduVPN"
     mc:Ignorable="d"
-    Title="{StaticResource MainWindowTitle}"
+    Title="{x:Static res:Strings.MainWindowTitle}"
     Height="460"
     Width="300"
     WindowStyle="None"
@@ -14,9 +17,28 @@
     Foreground="{StaticResource eduVPNWindowTextBrushKey}"
     BorderBrush="{StaticResource eduVPNWindowBorderKey}"
     BorderThickness="1"
-    Icon="eduVPN.ico"
+    Icon="pack://application:,,,/Resources/eduVPN.ico"
     MouseDown="Window_MouseDown"
     Closing="Window_Closing">
+
+    <Window.DataContext>
+        <viewModel:ConnectWizardViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:AccessTypePageViewModel}">
+            <view:AccessTypePageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:InstanceSelectPageViewModel}">
+            <view:InstanceSelectPageView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CustomInstancePageViewModel}">
+            <view:CustomInstancePage />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AuthorizationPageViewModel}">
+            <view:AuthorizationPageView />
+        </DataTemplate>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -64,7 +86,7 @@
             Grid.Column="1"
             Margin="5"
             Style="{StaticResource eduVPNHeaderStyle}"
-            Content="{StaticResource MainWindowTitle}"/>
+            Content="{x:Static res:Strings.MainWindowTitle}"/>
 
         <Button
             Grid.Column="2"
@@ -72,21 +94,14 @@
             VerticalAlignment="Top"
             IsCancel="True"
             Style="{StaticResource eduVPNHeaderButtonBaseStyle}"
-            AutomationProperties.Name="{StaticResource ButtonCloseTitle}"
+            AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}"
             Click="Close_Click">×</Button>
 
         <DockPanel
             Grid.Row="1" Grid.ColumnSpan="3">
             <Frame
-                x:Name="NavigationFrame"
                 NavigationUIVisibility="Hidden"
-                Source="AccessTypePage.xaml">
-                <Frame.CommandBindings>
-                    <CommandBinding
-                        Command="NavigationCommands.GoToPage"
-                        Executed="GoToPage_ExecuteHandler"
-                        CanExecute="GoToPage_CanExecuteHandler" />
-                </Frame.CommandBindings>
+                Content="{Binding Path=CurrentPage}">
             </Frame>
         </DockPanel>
     </Grid>

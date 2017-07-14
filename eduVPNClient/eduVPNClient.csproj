@@ -19,7 +19,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
-    <ApplicationIcon>eduVPN.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\eduVPN.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>eduVPNClient.App</StartupObject>
@@ -60,64 +60,65 @@
     </Page>
     <Compile Include="Converters\IsNullOrEmptyStringConverter.cs" />
     <Compile Include="SingleInstance.cs" />
-    <Page Include="AccessTypePage.xaml">
+    <Page Include="View\AccessTypePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AuthenticationWaitPage.xaml">
+    <Page Include="View\AuthorizationPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InstanceSelectionPage.xaml">
+    <Page Include="View\InstanceSelectPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\ConnectWizardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AccessTypePage.xaml.cs">
-      <DependentUpon>AccessTypePage.xaml</DependentUpon>
+    <Compile Include="View\AccessTypePageView.xaml.cs">
+      <DependentUpon>AccessTypePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AuthenticationWaitPage.xaml.cs">
-      <DependentUpon>AuthenticationWaitPage.xaml</DependentUpon>
+    <Compile Include="View\AuthorizationPageView.xaml.cs">
+      <DependentUpon>AuthorizationPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InstanceSelectionPage.xaml.cs">
-      <DependentUpon>InstanceSelectionPage.xaml</DependentUpon>
+    <Compile Include="View\InstanceSelectPageView.xaml.cs">
+      <DependentUpon>InstanceSelectPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\ConnectWizardView.xaml.cs">
+      <DependentUpon>ConnectWizardView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OtherInstancePage.xaml">
+    <Page Include="View\CustomInstancePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OtherInstancePage.xaml.cs">
-      <DependentUpon>OtherInstancePage.xaml</DependentUpon>
+    <Compile Include="View\CustomInstancePageView.xaml.cs">
+      <DependentUpon>CustomInstancePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="Resources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -147,7 +148,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="eduVPN.ico" />
+    <Resource Include="Resources\eduVPN.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />

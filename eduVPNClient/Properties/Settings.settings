@@ -8,7 +8,7 @@
     <Setting Name="WindowLeft" Type="System.Double" Scope="User">
       <Value Profile="(Default)">NaN</Value>
     </Setting>
-    <Setting Name="OtherInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="CustomInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

@@ -49,12 +49,12 @@ namespace eduVPNClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection OtherInstanceHistory {
+        public global::System.Collections.Specialized.StringCollection CustomInstanceHistory {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["OtherInstanceHistory"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["CustomInstanceHistory"]));
             }
             set {
-                this["OtherInstanceHistory"] = value;
+                this["CustomInstanceHistory"] = value;
             }
         }
     }

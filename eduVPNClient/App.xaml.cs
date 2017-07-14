@@ -10,6 +10,8 @@ using System.Net;
 using System.Windows;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Windows.Markup;
 
 namespace eduVPNClient
 {
@@ -25,9 +27,6 @@ namespace eduVPNClient
         /// </summary>
         public App()
         {
-            // .NET 3.5 allows Schannel to use SSL 3 and TLS 1.0 by default. Instead of hacking user computer's registry, extend it in runtime.
-            // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
-            ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
         }
 
         #endregion
@@ -50,6 +49,29 @@ namespace eduVPNClient
                 // Allow single instance code to perform cleanup operations.
                 SingleInstance<App>.Cleanup();
             }
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            // .NET 3.5 allows Schannel to use SSL 3 and TLS 1.0 by default. Instead of hacking user computer's registry, extend it in runtime.
+            // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
+
+            // Ensure the current culture passed into bindings is the OS culture.
+            // By default, WPF uses en-US as the culture, regardless of the system settings.
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+
+            base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            eduVPNClient.Properties.Settings.Default.Save();
+
+            base.OnExit(e);
         }
 
         #endregion

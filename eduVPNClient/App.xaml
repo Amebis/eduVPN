@@ -2,41 +2,9 @@
     x:Class="eduVPNClient.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:clr="clr-namespace:System;assembly=mscorlib"
-    xmlns:eduVPN="clr-namespace:eduVPN;assembly=eduVPN"
-    xmlns:local="clr-namespace:eduVPNClient"
-    StartupUri="MainWindow.xaml">
+    StartupUri="View/ConnectWizardView.xaml">
 
     <Application.Resources>
-        <!-- eduVPN Strings -->
-        <clr:String x:Key="MainWindowTitle">eduVPN</clr:String>
-        <clr:String x:Key="ButtonCloseTitle">Close</clr:String>
-        <clr:String x:Key="ButtonBackTitle">Back</clr:String>
-        <clr:String x:Key="ButtonNextTitle">Next</clr:String>
-        <clr:String x:Key="MessageBoxTitleWarning">Warning</clr:String>
-        <clr:String x:Key="ErrorInstanceListLoadingFailed" xml:space="preserve">Provider list loading failed with the following error:
-
-{0}
-
-You will have to enter your provider URI manually.</clr:String>
-
-        <clr:String x:Key="AccessTypePageTitle">Access Type</clr:String>
-        <clr:String x:Key="SecureInternetTitle">Secure Internet</clr:String>
-        <clr:String x:Key="SecureInternetNote" xml:space="preserve">Connect to the internet securely,
-for example when using public WiFi.</clr:String>
-        <clr:String x:Key="InstituteAccessTitle">Institute Access</clr:String>
-        <clr:String x:Key="InstituteAccessNote">Access your organization network</clr:String>
-
-        <clr:String x:Key="InstanceSelectionPageTitle">Choose your Provider</clr:String>
-
-        <clr:String x:Key="OtherInstancePageTitle">Other Provider</clr:String>
-        <clr:String x:Key="OtherInstanceURINote">Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/info.json</clr:String>
-
-        <clr:String x:Key="AuthenticationWaitPageTitle">Waiting for Authentication</clr:String>
-        <clr:String x:Key="AuthenticationWaitPageMessage">The process will continue after you complete the authentication in your browser.</clr:String>
-        <clr:String x:Key="AuthenticationWaitPageRetry">Retry</clr:String>
-        <clr:String x:Key="AuthenticationWaitPageRetryNote">In case you accidentaly closed the authentication page in your browser or something else went wrong, please click this button to start a new client authentication request.</clr:String>
-
         <!-- eduVPN Colors -->
         <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
         <Color x:Key="eduVPNBlueLight">#4402B4D2</Color>
@@ -275,8 +243,5 @@ for example when using public WiFi.</clr:String>
                 </Style>
             </Style.Resources>
         </Style>
-
-        <!-- Global Fields -->
-        <eduVPN:AppViewModel x:Key="AppViewModel"/>
     </Application.Resources>
 </Application>
