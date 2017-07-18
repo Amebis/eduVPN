@@ -18,7 +18,7 @@ namespace eduVPN.ViewModel
     /// <summary>
     /// Authorization wizard page
     /// </summary>
-    public class AuthorizationPageViewModel : ConnectWizardPageViewModel
+    public class AuthorizationPageViewModel : ConnectWizardPageViewModel, IDisposable
     {
         #region Fields
 
@@ -26,6 +26,11 @@ namespace eduVPN.ViewModel
         /// Authorization worker thread
         /// </summary>
         private Thread _worker;
+
+        /// <summary>
+        /// Token used to cancel unfinished authorizaton processes in case of user cancel or retry.
+        /// </summary>
+        private CancellationTokenSource _cancel;
 
         /// <summary>
         /// OAuth pending authorization grant
@@ -81,22 +86,24 @@ namespace eduVPN.ViewModel
             if (_worker != null)
             {
                 // Abort pending authorization.
-                _worker.Abort();
-                _worker.Join();
+                _cancel.Cancel();
             }
 
             // Reset error message.
             ErrorMessage = null;
 
             // Launch authorization thread.
+            _cancel = new CancellationTokenSource();
             _worker = new Thread(
                 () =>
                 {
                     try
                     {
+                        var abort = CancellationTokenSource.CreateLinkedTokenSource(_abort.Token, _cancel.Token);
+
                         // Get and load API endpoints.
                         var api = new API();
-                        api.Load(JSONContents.Get(Parent.InstanceURI, null, _abort.Token).Value);
+                        api.Load(JSONContents.Get(Parent.InstanceURI, null, abort.Token).Value);
 
                         // Opens authorization request in the browser.
                         _authorization_grant = new AuthorizationGrant()
@@ -124,8 +131,7 @@ namespace eduVPN.ViewModel
             if (_worker != null)
             {
                 // Abort pending authorization.
-                _worker.Abort();
-                _worker.Join();
+                _cancel.Cancel();
                 _worker = null;
             }
 
@@ -140,6 +146,31 @@ namespace eduVPN.ViewModel
             return true;
         }
 
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (_cancel != null)
+                        _cancel.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
         #endregion
     }
 }
