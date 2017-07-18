@@ -80,12 +80,12 @@
   <ItemGroup>
     <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">
       <Project>{a25c3684-302e-4c4d-96e9-176c12fe7423}</Project>
-      <Name>eduEd25519-net40</Name>
+      <Name>eduEd25519</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\eduJSON\eduJSON\eduJSON.csproj">
       <Project>{8f4c3f22-1988-4077-9220-ed2512fc0248}</Project>
-      <Name>eduJSON-net40</Name>
+      <Name>eduJSON</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
