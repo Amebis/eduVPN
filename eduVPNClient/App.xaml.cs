@@ -94,7 +94,10 @@ namespace eduVPNClient
                 var wizard = (ConnectWizardViewModel)(((ConnectWizardView)MainWindow).DataContext);
 
                 if (wizard.AuthorizationPage.Authorize.CanExecute(uri))
+                {
                     wizard.AuthorizationPage.Authorize.Execute(uri);
+                    MainWindow.Activate();
+                }
             }
 
             return true;
