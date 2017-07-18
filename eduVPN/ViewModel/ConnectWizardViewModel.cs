@@ -88,6 +88,16 @@ namespace eduVPN.ViewModel
         private Uri _instance_uri;
 
         /// <summary>
+        /// Is the instance custom (user-provided)?
+        /// </summary>
+        public bool IsCustomInstance
+        {
+            get { return _is_custom_instance; }
+            set { if (value != _is_custom_instance) { _is_custom_instance = value; RaisePropertyChanged(); } }
+        }
+        private bool _is_custom_instance;
+
+        /// <summary>
         /// Authorization wizard page
         /// </summary>
         public AuthorizationPageViewModel AuthorizationPage

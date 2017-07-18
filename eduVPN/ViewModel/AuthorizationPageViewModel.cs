@@ -119,6 +119,27 @@ namespace eduVPN.ViewModel
             _worker.Start();
         }
 
+        protected override void DoNavigateBack()
+        {
+            if (_worker != null)
+            {
+                // Abort pending authorization.
+                _worker.Abort();
+                _worker.Join();
+                _worker = null;
+            }
+
+            if (Parent.IsCustomInstance)
+                Parent.CurrentPage = Parent.CustomInstancePage;
+            else
+                Parent.CurrentPage = Parent.InstanceSelectPage;
+        }
+
+        protected override bool CanNavigateBack()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

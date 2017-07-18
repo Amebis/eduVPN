@@ -49,6 +49,7 @@ namespace eduVPN.ViewModel
                         // execute
                         () => {
                             Parent.InstanceURI = new Uri(InstanceURI);
+                            Parent.IsCustomInstance = true;
                             Parent.CurrentPage = Parent.AuthorizationPage;
                         },
 

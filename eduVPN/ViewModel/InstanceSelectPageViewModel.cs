@@ -80,6 +80,7 @@ namespace eduVPN.ViewModel
                                 var uri_builder = new UriBuilder(SelectedInstance.Base);
                                 uri_builder.Path += "info.json";
                                 Parent.InstanceURI = uri_builder.Uri;
+                                Parent.IsCustomInstance = false;
                                 Parent.CurrentPage = Parent.AuthorizationPage;
                             }
                         },
