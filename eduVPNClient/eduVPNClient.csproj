@@ -44,7 +44,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Converters\IsNullOrEmptyStringConverter.cs" />
-    <Compile Include="SingleInstance.cs" />
+    <Compile Include="Microsoft\Shell\SingleInstance.cs" />
     <Page Include="View\AccessTypePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
