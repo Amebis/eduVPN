@@ -28,16 +28,16 @@
     <Window.Resources>
         <!-- Page view model to view mapping -->
         <DataTemplate DataType="{x:Type viewModel:AccessTypePageViewModel}">
-            <view:AccessTypePageView />
+            <view:AccessTypePageView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:InstanceSelectPageViewModel}">
-            <view:InstanceSelectPageView />
+            <view:InstanceSelectPageView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CustomInstancePageViewModel}">
-            <view:CustomInstancePage />
+            <view:CustomInstancePage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:AuthorizationPageViewModel}">
-            <view:AuthorizationPageView />
+            <view:AuthorizationPageView/>
         </DataTemplate>
     </Window.Resources>
 
