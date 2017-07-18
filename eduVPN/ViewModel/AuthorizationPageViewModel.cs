@@ -10,6 +10,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Web;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -37,6 +38,11 @@ namespace eduVPN.ViewModel
         /// </summary>
         private AuthorizationGrant _authorization_grant;
 
+        /// <summary>
+        /// Registered client redirect callback URI (endpoint)
+        /// </summary>
+        private const string _redirect_endpoint = "org.eduvpn.app:/api/callback";
+
         #endregion
 
         #region Properties
@@ -49,11 +55,54 @@ namespace eduVPN.ViewModel
             get
             {
                 if (_retry == null)
-                    _retry = new DelegateCommand(Authorize);
+                    _retry = new DelegateCommand(TriggerAuthorization);
                 return _retry;
             }
         }
         private ICommand _retry;
+
+        public ICommand Authorize
+        {
+            get
+            {
+                if (_authorize == null)
+                    _authorize = new DelegateCommand<string>(
+                        // execute
+                        async param =>
+                        {
+                            try {
+                                // Process response and get access token.
+                                Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
+                                    HttpUtility.ParseQueryString(new Uri(param).Query),
+                                    Parent.Endpoints.TokenEndpoint,
+                                    _abort.Token);
+                            }
+                            catch (Exception ex)
+                            {
+                                ErrorMessage = ex.Message;
+                            }
+                        },
+
+                        // canExecute
+                        param =>
+                        {
+                            Uri uri;
+
+                            // URI must be:
+                            // - non-NULL
+                            if (param == null) return false;
+                            // - Valid URI (parsable)
+                            try { uri = new Uri(param); }
+                            catch (Exception) { return false; }
+                            // - Must match the redirect endpoint provided in request.
+                            if (uri.Scheme + ":" + uri.AbsolutePath != _redirect_endpoint) return false;
+
+                            return true;
+                        });
+                return _authorize;
+            }
+        }
+        private ICommand _authorize;
 
         #endregion
 
@@ -74,14 +123,14 @@ namespace eduVPN.ViewModel
 
         public override void OnActivate()
         {
-            Authorize();
+            TriggerAuthorization();
             base.OnActivate();
         }
 
         /// <summary>
         /// Invokes client authorization process
         /// </summary>
-        private void Authorize()
+        private void TriggerAuthorization()
         {
             if (_worker != null)
             {
@@ -109,12 +158,15 @@ namespace eduVPN.ViewModel
                         _authorization_grant = new AuthorizationGrant()
                         {
                             AuthorizationEndpoint = api.AuthorizationEndpoint,
-                            RedirectEndpoint = new Uri("org.eduvpn.app:/api/callback"),
+                            RedirectEndpoint = new Uri(_redirect_endpoint),
                             ClientID = "org.eduvpn.app",
                             Scope = new List<string>() { "config" },
                             CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
                         };
                         System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
+
+                        // Save API endpoints.
+                        Parent.Endpoints = api;
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex)

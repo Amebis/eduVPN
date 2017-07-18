@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Markup;
+using eduVPNClient.View;
+using eduVPN.ViewModel;
 
 namespace eduVPNClient
 {
@@ -85,6 +87,16 @@ namespace eduVPNClient
         /// <returns><c>true</c></returns>
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
+            if (args.Count >= 2)
+            {
+                // Forward redirect URI to the wizard.
+                var uri = args[1];
+                var wizard = (ConnectWizardViewModel)(((ConnectWizardView)MainWindow).DataContext);
+
+                if (wizard.AuthorizationPage.Authorize.CanExecute(uri))
+                    wizard.AuthorizationPage.Authorize.Execute(uri);
+            }
+
             return true;
         }
 

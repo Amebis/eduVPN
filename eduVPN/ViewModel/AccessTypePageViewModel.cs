@@ -30,7 +30,6 @@ namespace eduVPN.ViewModel
                         // execute
                         param =>
                         {
-                            if (!param.HasValue) return;
                             Parent.AccessType = param.Value;
                             switch (param)
                             {

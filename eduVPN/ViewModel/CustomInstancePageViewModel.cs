@@ -55,15 +55,9 @@ namespace eduVPN.ViewModel
 
                         // canExecute
                         () => {
-                            try
-                            {
-                                var uri = new Uri(InstanceURI);
-                                return true;
-                            }
-                            catch (Exception)
-                            {
-                                return false;
-                            }
+                            try { new Uri(InstanceURI); }
+                            catch (Exception) { return false; }
+                            return true;
                         });
                 }
                 return _authorize_instance;
