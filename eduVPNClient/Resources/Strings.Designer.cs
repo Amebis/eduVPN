@@ -70,7 +70,7 @@ namespace eduVPNClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The process will continue after you complete the authentication in your browser..
+        ///   Looks up a localized string similar to The process will continue after you complete the authorization in your browser..
         /// </summary>
         public static string AuthorizationPageMessage {
             get {
@@ -88,7 +88,7 @@ namespace eduVPNClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In case you accidentaly closed the authentication page in your browser or something else went wrong, please click this button to start a new client authentication request..
+        ///   Looks up a localized string similar to In case you accidentaly closed the authorization page in your browser or something else went wrong, please click this button to start a new client autorization request..
         /// </summary>
         public static string AuthorizationPageRetryNote {
             get {
@@ -97,7 +97,7 @@ namespace eduVPNClient.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting for Authentication.
+        ///   Looks up a localized string similar to Waiting for Authorization.
         /// </summary>
         public static string AuthorizationPageTitle {
             get {

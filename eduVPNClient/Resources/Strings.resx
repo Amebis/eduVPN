@@ -121,16 +121,16 @@
     <value>Access Type</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
-    <value>The process will continue after you complete the authentication in your browser.</value>
+    <value>The process will continue after you complete the authorization in your browser.</value>
   </data>
   <data name="AuthorizationPageRetry" xml:space="preserve">
     <value>Retry</value>
   </data>
   <data name="AuthorizationPageRetryNote" xml:space="preserve">
-    <value>In case you accidentaly closed the authentication page in your browser or something else went wrong, please click this button to start a new client authentication request.</value>
+    <value>In case you accidentaly closed the authorization page in your browser or something else went wrong, please click this button to start a new client autorization request.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Waiting for Authentication</value>
+    <value>Waiting for Authorization</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">
     <value>Back</value>
