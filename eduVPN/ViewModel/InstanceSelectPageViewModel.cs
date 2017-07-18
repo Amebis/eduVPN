@@ -130,7 +130,7 @@ namespace eduVPN.ViewModel
             InstanceList.Add(new Instance()
             {
                 Base = new Uri("org.eduvpn.app:other"),
-                DisplayName = Properties.Resources.CustomInstance
+                DisplayName = Resources.Strings.CustomInstance
             });
 
             // Launch instance list load in the background.
@@ -172,7 +172,7 @@ namespace eduVPN.ViewModel
                         instance_list.Add(new Instance()
                         {
                             Base = new Uri("org.eduvpn.app:other"),
-                            DisplayName = Properties.Resources.CustomInstance
+                            DisplayName = Resources.Strings.CustomInstance
                         });
 
                         // Send the loaded instance list back to the UI thread.
