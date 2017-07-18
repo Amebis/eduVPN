@@ -9,56 +9,30 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.CustomInstancePageTitle}">
+    Title="{x:Static res:Strings.CustomInstancePageTitle}"
+    Template="{StaticResource eduVPNConnectWizardPageWithBack}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="45"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <StackPanel
+        Style="{StaticResource eduVPNCombinedControlStackPanelStyle}">
+        <ComboBox
+            x:Name="InstanceURI"
+            Margin="0,0,0,2"
+            Text="{Binding Path=InstanceURI}"
+            TextSearch.TextPath=""
+            ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=CustomInstanceHistory}"
+            IsSynchronizedWithCurrentItem="True"
+            IsEditable="True"/>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="45"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="45"/>
-            </Grid.ColumnDefinitions>
+        <TextBlock
+            Margin="0,2,0,0"
+            Style="{StaticResource eduVPNNoteStyle}"
+            Text="{x:Static res:Strings.CustomInstancePageURINote}"/>
 
-            <Button
-                Style="{StaticResource eduVPNNavigationButtonStyle}"
-                AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                Command="{Binding Path=NavigateBack}">&lt;</Button>
-
-            <Label
-                Grid.Column="1"
-                Style="{StaticResource eduVPNPageTitleStyle}"
-                Content="{x:Static res:Strings.CustomInstancePageTitle}"/>
-
-            <Button
-                Grid.Column="2"
-                Style="{StaticResource eduVPNNavigationButtonStyle}"
-                AutomationProperties.Name="{x:Static res:Strings.ButtonNextTitle}"
-                Command="{Binding Path=AuthorizeCustomInstance}"
-                Click="Button_Click"
-                IsDefault="True">&gt;</Button>
-        </Grid>
-
-        <StackPanel
-            Grid.Row="1"
-            Style="{StaticResource eduVPNCombinedControlStackPanelStyle}">
-            <ComboBox
-                x:Name="InstanceURI"
-                Margin="0,0,0,2"
-                Text="{Binding Path=InstanceURI}"
-                TextSearch.TextPath=""
-                ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=CustomInstanceHistory}"
-                IsSynchronizedWithCurrentItem="True"
-                IsEditable="True"/>
-
-            <TextBlock
-                Margin="0,2,0,0"
-                Style="{StaticResource eduVPNNoteStyle}"
-                Text="{x:Static res:Strings.CustomInstancePageURINote}"/>
-        </StackPanel>
-    </Grid>
+        <Button
+            Margin="0,10,0,0"
+            Content="{x:Static res:Strings.ButtonNextTitle}"
+            Command="{Binding Path=AuthorizeCustomInstance}"
+            Click="Button_Click"
+            IsDefault="True"/>
+    </StackPanel>
 </Page>

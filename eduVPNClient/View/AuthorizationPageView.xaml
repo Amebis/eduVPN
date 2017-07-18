@@ -8,47 +8,24 @@
     mc:Ignorable="d" 
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.AuthorizationPageTitle}">
-    <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    Title="{x:Static res:Strings.AuthorizationPageTitle}"
+    Template="{StaticResource eduVPNConnectWizardPageWithBack}">
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="45"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+    <StackPanel
+        Style="{StaticResource eduVPNCombinedControlStackPanelStyle}">
+        <TextBlock
+            Margin="0,0,0,10"
+            Style="{StaticResource eduVPNTextBlockStyle}"
+            Text="{x:Static res:Strings.AuthorizationPageMessage}"/>
 
-                <Button
-                    Style="{StaticResource eduVPNNavigationButtonStyle}"
-                    AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                    Command="{Binding Path=NavigateBack}">&lt;</Button>
+        <Button
+            Margin="0,10,0,2"
+            Content="{x:Static res:Strings.AuthorizationPageRetry}"
+            Command="{Binding Path=Retry}"/>
 
-                <Label
-                    Grid.Column="1"
-                    Style="{StaticResource eduVPNPageTitleStyle}"
-                    Content="{x:Static res:Strings.AuthorizationPageTitle}"/>
-            </Grid>
-
-            <StackPanel
-                Grid.Row="1">
-                <TextBlock
-                    Style="{StaticResource eduVPNTextBlockStyle}"
-                    Text="{x:Static res:Strings.AuthorizationPageMessage}"/>
-
-                <Button
-                    Margin="10,10,10,2"
-                    Content="{x:Static res:Strings.AuthorizationPageRetry}"
-                    Command="{Binding Path=Retry}"/>
-
-                <TextBlock
-                    Margin="10,2,10,10"
-                    Style="{StaticResource eduVPNNoteStyle}"
-                    Text="{x:Static res:Strings.AuthorizationPageRetryNote}"/>
-            </StackPanel>
-        </Grid>
-    </Grid>
+        <TextBlock
+            Margin="0,2,0,0"
+            Style="{StaticResource eduVPNNoteStyle}"
+            Text="{x:Static res:Strings.AuthorizationPageRetryNote}"/>
+    </StackPanel>
 </Page>

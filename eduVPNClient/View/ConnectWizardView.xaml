@@ -26,6 +26,7 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <!-- Page view model to view mapping -->
         <DataTemplate DataType="{x:Type viewModel:AccessTypePageViewModel}">
             <view:AccessTypePageView />
         </DataTemplate>
