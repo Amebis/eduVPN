@@ -71,6 +71,8 @@ namespace eduVPN.ViewModel
                         async param =>
                         {
                             try {
+                                ErrorMessage = null;
+
                                 // Process response and get access token.
                                 Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
