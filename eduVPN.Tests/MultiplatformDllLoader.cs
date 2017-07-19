@@ -9,7 +9,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace eduVPNTests
+namespace eduVPN.Tests
 {
     /// <summary>
     /// A helper class to register our custom assembly resolver
