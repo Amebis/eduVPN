@@ -30,6 +30,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileList.cs" />
     <Compile Include="ViewModels\AccessTypeType.cs" />
     <Compile Include="ViewModels\AccessTypePageViewModel.cs" />
     <Compile Include="API.cs" />
