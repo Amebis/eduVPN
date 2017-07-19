@@ -1,5 +1,4 @@
-﻿using System.Resources;
-/*
+﻿/*
 eduVPN - End-user friendly VPN
 
 Copyright: 2017, The Commons Conservancy eduVPN Programme
@@ -7,6 +6,7 @@ SPDX-License-Identifier: GPL-3.0+
 */
 
 using System.Reflection;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("eduVPN")]
-[assembly: AssemblyDescription("An eduVPN API Client Library")]
+[assembly: AssemblyDescription("An eduVPN View Model Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Amebis")]
 [assembly: AssemblyProduct("eduVPN")]
