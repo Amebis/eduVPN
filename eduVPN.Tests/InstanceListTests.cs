@@ -25,13 +25,17 @@ namespace eduVPN.Tests
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
             // Get instance list.
-            var instance_list_json = JSONContents.Get(
+            var instance_list_json = JSON.Response.Get(
                 new Uri("https://static.eduvpn.nl/instances.json"),
+                null,
+                null,
                 Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
             // Re-get instance list.
-            instance_list_json = JSONContents.Get(
+            instance_list_json = JSON.Response.Get(
                 new Uri("https://static.eduvpn.nl/instances.json"),
+                null,
+                null,
                 Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="),
                 default(CancellationToken),
                 instance_list_json);
@@ -44,7 +48,7 @@ namespace eduVPN.Tests
             Task.WhenAll(instance_list.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
-                new API().Load((await JSONContents.GetAsync(uri_builder.Uri)).Value);
+                new API().Load((await JSON.Response.GetAsync(uri_builder.Uri)).Value);
             })).Wait();
         }
 

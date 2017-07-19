@@ -154,7 +154,7 @@ namespace eduVPN.ViewModels
 
                         // Get and load API endpoints.
                         var api = new API();
-                        api.Load(JSONContents.Get(Parent.InstanceURI, null, abort.Token).Value);
+                        api.Load(JSON.Response.Get(Parent.InstanceURI, null, null, null, abort.Token).Value);
 
                         // Opens authorization request in the browser.
                         _authorization_grant = new AuthorizationGrant()

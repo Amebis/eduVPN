@@ -61,6 +61,10 @@
       <Project>{8f4c3f22-1988-4077-9220-ed2512fc0248}</Project>
       <Name>eduJSON</Name>
     </ProjectReference>
+    <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
+      <Project>{44EA054C-0C39-4AAC-9E40-253E919C1E2F}</Project>
+      <Name>eduOAuth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\eduVPN\eduVPN.csproj">
       <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>
       <Name>eduVPN</Name>

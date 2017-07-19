@@ -146,15 +146,17 @@ namespace eduVPN.ViewModels
         /// </summary>
         private void InstanceListLoader(object param)
         {
-            JSONContents json = null;
+            JSON.Response json = null;
 
             for (;;)
             {
                 try
                 {
                     // Get instance list.
-                    json = JSONContents.Get(
+                    json = JSON.Response.Get(
                         new Uri(Properties.Settings.Default.InstanceDirectory),
+                        null,
+                        null,
                         Convert.FromBase64String(Properties.Settings.Default.InstanceDirectoryPubKey),
                         _abort.Token,
                         json);
