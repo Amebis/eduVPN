@@ -70,7 +70,8 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The process will continue after you complete the authorization in your browser..
+        ///   Looks up a localized string similar to eduVPN client has opened selected organization authorization web page in your browser.
+        ///The client will continue after you complete the authorization..
         /// </summary>
         public static string AuthorizationPageMessage {
             get {

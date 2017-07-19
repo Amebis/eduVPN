@@ -121,7 +121,8 @@
     <value>Vrsta dostopa</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
-    <value>Postopek se bo nadaljeval, ko boste dokončali avtorizacijo v svojem brskalniku.</value>
+    <value>Odjemalec eduVPN je odprl avtorizacijsko spletno stran izbrane organizacije v vašem brskalniku.
+Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo.</value>
   </data>
   <data name="AuthorizationPageRetry" xml:space="preserve">
     <value>Ponovi</value>
