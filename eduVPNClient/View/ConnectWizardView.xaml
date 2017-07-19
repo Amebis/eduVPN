@@ -17,7 +17,6 @@
     Foreground="{StaticResource eduVPNWindowTextBrushKey}"
     BorderBrush="{StaticResource eduVPNWindowBorderKey}"
     BorderThickness="1"
-    Icon="pack://application:,,,/Resources/eduVPN.ico"
     MouseDown="Window_MouseDown"
     Closing="Window_Closing">
 

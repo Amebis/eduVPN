@@ -145,13 +145,13 @@
     <value>Drugi ponudnik</value>
   </data>
   <data name="CustomInstancePageURINote" xml:space="preserve">
-    <value>Vnesite URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/info.json</value>
+    <value>Vnesite naslov URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/info.json</value>
   </data>
   <data name="InstanceSelectPageTitle" xml:space="preserve">
     <value>Izberite svojega ponudnika</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Dostopajte omrežje svoje ustanove</value>
+    <value>Dostopajte do omrežja svoje ustanove</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Dostop do ustanove</value>

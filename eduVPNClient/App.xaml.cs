@@ -5,15 +5,15 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModel;
+using eduVPNClient.View;
 using Microsoft.Shell;
-using System.Net;
-using System.Windows;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Windows.Markup;
-using eduVPNClient.View;
-using eduVPN.ViewModel;
+using System.Net;
+//using System.Threading;
+using System.Windows;
 
 namespace eduVPNClient
 {
@@ -59,12 +59,12 @@ namespace eduVPNClient
             // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
-            // Ensure the current culture passed into bindings is the OS culture.
-            // By default, WPF uses en-US as the culture, regardless of the system settings.
-            FrameworkElement.LanguageProperty.OverrideMetadata(
-                typeof(FrameworkElement),
-                new FrameworkPropertyMetadata(
-                    XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            //// Set language preference.
+            //var culture = new CultureInfo("sl-SI");
+            //CultureInfo.DefaultThreadCurrentCulture = culture;
+            //CultureInfo.DefaultThreadCurrentUICulture = culture;
+            //Thread.CurrentThread.CurrentCulture = culture;
+            //Thread.CurrentThread.CurrentUICulture = culture;
 
             base.OnStartup(e);
         }
