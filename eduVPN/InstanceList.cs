@@ -48,19 +48,31 @@ namespace eduVPN
         /// <summary>
         /// Authorization type
         /// </summary>
-        public AuthorizationType AuthType { get => _auth_type; }
+        public AuthorizationType AuthType
+        {
+            get { return _auth_type; }
+            set { if (value != _auth_type) { _auth_type = value; OnPropertyChanged(new PropertyChangedEventArgs("AuthType")); } }
+        }
         private AuthorizationType _auth_type;
 
         /// <summary>
         /// Version sequence
         /// </summary>
-        public uint Sequence { get => _sequence; }
+        public uint Sequence
+        {
+            get { return _sequence; }
+            set { if (value != _sequence) { _sequence = value; OnPropertyChanged(new PropertyChangedEventArgs("Sequence")); } }
+        }
         private uint _sequence;
 
         /// <summary>
         /// Signature timestamp
         /// </summary>
-        public DateTime? SignedAt { get => _signed_at; }
+        public DateTime? SignedAt
+        {
+            get { return _signed_at; }
+            set { if (value != _signed_at) { _signed_at = value; OnPropertyChanged(new PropertyChangedEventArgs("SignedAt")); } }
+        }
         private DateTime? _signed_at;
 
         #endregion
@@ -70,7 +82,7 @@ namespace eduVPN
         /// <summary>
         /// Loads instance list from a dictionary object (provided by JSON)
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
+        /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements.</param>
         public void Load(Dictionary<string, object> obj)
         {
             Clear();
@@ -87,26 +99,23 @@ namespace eduVPN
             }
 
             // Parse sequence.
-            _sequence = eduJSON.Parser.GetValue(obj, "seq", out int seq) ? (uint)seq : 0;
-            OnPropertyChanged(new PropertyChangedEventArgs("Sequence"));
+            Sequence = eduJSON.Parser.GetValue(obj, "seq", out int seq) ? (uint)seq : 0;
 
             // Parse authorization data.
             if (eduJSON.Parser.GetValue(obj, "authorization_type", out string authorization_type))
             {
                 switch (authorization_type.ToLower())
                 {
-                    case "federated": _auth_type = AuthorizationType.Federated; break;
-                    case "distributed": _auth_type = AuthorizationType.Distributed; break;
-                    default: _auth_type = AuthorizationType.Local; break; // Assume local authorization type on all other values.
+                    case "federated": AuthType = AuthorizationType.Federated; break;
+                    case "distributed": AuthType = AuthorizationType.Distributed; break;
+                    default: AuthType = AuthorizationType.Local; break; // Assume local authorization type on all other values.
                 }
             }
             else
-                _auth_type = AuthorizationType.Local;
-            OnPropertyChanged(new PropertyChangedEventArgs("AuthType"));
+                AuthType = AuthorizationType.Local;
 
             // Parse signed date.
-            _signed_at = eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
-            OnPropertyChanged(new PropertyChangedEventArgs("SignedAt"));
+            SignedAt = eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
         }
 
         /// <summary>
