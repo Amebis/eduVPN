@@ -9,7 +9,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace eduVPNClient.View
+namespace eduVPN.View
 {
     /// <summary>
     /// Interaction logic for ConnectWizardView.xaml
@@ -23,10 +23,10 @@ namespace eduVPNClient.View
             InitializeComponent();
 
             // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
-            if (!double.IsNaN(Properties.Settings.Default.WindowLeft))
-                Left = Math.Min(Math.Max(Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
-            if (!double.IsNaN(Properties.Settings.Default.WindowTop))
-                Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
+            if (!double.IsNaN(eduVPN.Client.Properties.Settings.Default.WindowLeft))
+                Left = Math.Min(Math.Max(eduVPN.Client.Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
+            if (!double.IsNaN(eduVPN.Client.Properties.Settings.Default.WindowTop))
+                Top = Math.Min(Math.Max(eduVPN.Client.Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
         }
 
         #endregion
@@ -48,8 +48,8 @@ namespace eduVPNClient.View
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Save window position on closing.
-            Properties.Settings.Default.WindowTop = Top;
-            Properties.Settings.Default.WindowLeft = Left;
+            eduVPN.Client.Properties.Settings.Default.WindowTop = Top;
+            eduVPN.Client.Properties.Settings.Default.WindowLeft = Left;
         }
 
         #endregion

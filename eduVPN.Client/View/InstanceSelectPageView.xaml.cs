@@ -8,7 +8,7 @@
 using eduVPN.ViewModel;
 using System.Windows.Controls;
 
-namespace eduVPNClient.View
+namespace eduVPN.View
 {
     /// <summary>
     /// Interaction logic for InstanceSelectPageView.xaml

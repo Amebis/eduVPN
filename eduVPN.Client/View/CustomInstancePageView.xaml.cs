@@ -8,7 +8,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace eduVPNClient.View
+namespace eduVPN.View
 {
     /// <summary>
     /// Interaction logic for CustomInstancePage.xaml
@@ -22,8 +22,8 @@ namespace eduVPNClient.View
         /// </summary>
         public CustomInstancePage()
         {
-            if (Properties.Settings.Default.CustomInstanceHistory == null)
-                Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
+            if (eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory == null)
+                eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
 
             InitializeComponent();
         }
@@ -34,8 +34,8 @@ namespace eduVPNClient.View
         {
             var instance_uri = InstanceURI.Text;
 
-            if (!Properties.Settings.Default.CustomInstanceHistory.Contains(instance_uri))
-                Properties.Settings.Default.CustomInstanceHistory.Insert(0, instance_uri);
+            if (!eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Contains(instance_uri))
+                eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, instance_uri);
         }
     }
 }

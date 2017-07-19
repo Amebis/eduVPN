@@ -7,16 +7,16 @@
 
 using System.Windows.Controls;
 
-namespace eduVPNClient.View
+namespace eduVPN.View
 {
     /// <summary>
-    /// Interaction logic for AccessTypePageView.xaml
+    /// Interaction logic for AuthorizationPageView.xaml
     /// </summary>
-    public partial class AccessTypePageView : Page
+    public partial class AuthorizationPageView : Page
     {
-        #region Constructors
+        #region Contructors
 
-        public AccessTypePageView()
+        public AuthorizationPageView()
         {
             InitializeComponent();
         }

@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPNClient.Converters
+namespace eduVPN.Converters
 {
     public class IsNullOrEmptyStringConverter : IValueConverter
     {

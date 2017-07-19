@@ -12,8 +12,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F8DEF292-A494-49ED-B9AB-AFAD100481A9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>eduVPNClient</RootNamespace>
-    <AssemblyName>eduVPNClient</AssemblyName>
+    <RootNamespace>eduVPN.Client</RootNamespace>
+    <AssemblyName>eduVPN.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -22,7 +22,7 @@
     <ApplicationIcon>Resources\eduVPN.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>eduVPNClient.App</StartupObject>
+    <StartupObject>eduVPN.Client.App</StartupObject>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\Default.props" />
   <ItemGroup>

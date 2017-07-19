@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}"
 	ProjectSection(SolutionItems) = preProject
@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPNTests", "eduVPNTests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOAuth", "eduOAuth\eduOAuth\eduOAuth.csproj", "{44EA054C-0C39-4AAC-9E40-253E919C1E2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPNClient", "eduVPNClient\eduVPNClient.csproj", "{F8DEF292-A494-49ED-B9AB-AFAD100481A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPN.Client", "eduVPN.Client\eduVPN.Client.csproj", "{F8DEF292-A494-49ED-B9AB-AFAD100481A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

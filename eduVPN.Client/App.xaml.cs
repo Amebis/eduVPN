@@ -6,7 +6,7 @@
 */
 
 using eduVPN.ViewModel;
-using eduVPNClient.View;
+using eduVPN.View;
 using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using System.Net;
 //using System.Threading;
 using System.Windows;
 
-namespace eduVPNClient
+namespace eduVPN.Client
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -71,7 +71,7 @@ namespace eduVPNClient
 
         protected override void OnExit(ExitEventArgs e)
         {
-            eduVPNClient.Properties.Settings.Default.Save();
+            eduVPN.Client.Properties.Settings.Default.Save();
 
             base.OnExit(e);
         }
