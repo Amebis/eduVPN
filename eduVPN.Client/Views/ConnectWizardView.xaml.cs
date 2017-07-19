@@ -9,7 +9,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace eduVPN.View
+namespace eduVPN.Views
 {
     /// <summary>
     /// Interaction logic for ConnectWizardView.xaml

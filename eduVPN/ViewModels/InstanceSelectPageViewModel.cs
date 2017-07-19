@@ -12,7 +12,7 @@ using System.Threading;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace eduVPN.ViewModel
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// Instance selection wizard page

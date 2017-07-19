@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.ViewModel
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// User required VPN access type type

@@ -45,46 +45,46 @@
     </Page>
     <Compile Include="Converters\IsNullOrEmptyStringConverter.cs" />
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
-    <Page Include="View\AccessTypePageView.xaml">
+    <Page Include="Views\AccessTypePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AuthorizationPageView.xaml">
+    <Page Include="Views\AuthorizationPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\InstanceSelectPageView.xaml">
+    <Page Include="Views\InstanceSelectPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ConnectWizardView.xaml">
+    <Page Include="Views\ConnectWizardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="View\AccessTypePageView.xaml.cs">
+    <Compile Include="Views\AccessTypePageView.xaml.cs">
       <DependentUpon>AccessTypePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\AuthorizationPageView.xaml.cs">
+    <Compile Include="Views\AuthorizationPageView.xaml.cs">
       <DependentUpon>AuthorizationPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InstanceSelectPageView.xaml.cs">
+    <Compile Include="Views\InstanceSelectPageView.xaml.cs">
       <DependentUpon>InstanceSelectPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ConnectWizardView.xaml.cs">
+    <Compile Include="Views\ConnectWizardView.xaml.cs">
       <DependentUpon>ConnectWizardView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\CustomInstancePageView.xaml">
+    <Page Include="Views\CustomInstancePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="View\CustomInstancePageView.xaml.cs">
+    <Compile Include="Views\CustomInstancePageView.xaml.cs">
       <DependentUpon>CustomInstancePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

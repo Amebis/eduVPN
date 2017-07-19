@@ -9,7 +9,7 @@ using Prism.Commands;
 using System;
 using System.Windows.Input;
 
-namespace eduVPN.ViewModel
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// Custom instance entry wizard page

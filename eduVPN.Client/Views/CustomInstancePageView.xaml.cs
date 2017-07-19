@@ -8,7 +8,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace eduVPN.View
+namespace eduVPN.Views
 {
     /// <summary>
     /// Interaction logic for CustomInstancePage.xaml

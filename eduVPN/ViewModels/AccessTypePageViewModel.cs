@@ -8,7 +8,7 @@
 using Prism.Commands;
 using System.Windows.Input;
 
-namespace eduVPN.ViewModel
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// Access type selection wizard page

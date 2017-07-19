@@ -9,7 +9,7 @@ using eduOAuth;
 using Prism.Mvvm;
 using System;
 
-namespace eduVPN.ViewModel
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// Connect wizard

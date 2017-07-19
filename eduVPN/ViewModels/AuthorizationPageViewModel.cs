@@ -14,7 +14,7 @@ using System.Web;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace eduVPN.ViewModel
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// Authorization wizard page

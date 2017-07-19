@@ -30,16 +30,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewModel\AccessTypeType.cs" />
-    <Compile Include="ViewModel\AccessTypePageViewModel.cs" />
+    <Compile Include="ViewModels\AccessTypeType.cs" />
+    <Compile Include="ViewModels\AccessTypePageViewModel.cs" />
     <Compile Include="API.cs" />
-    <Compile Include="ViewModel\AuthorizationPageViewModel.cs" />
-    <Compile Include="ViewModel\ConnectWizardPageViewModel.cs" />
-    <Compile Include="ViewModel\ConnectWizardViewModel.cs" />
+    <Compile Include="ViewModels\AuthorizationPageViewModel.cs" />
+    <Compile Include="ViewModels\ConnectWizardPageViewModel.cs" />
+    <Compile Include="ViewModels\ConnectWizardViewModel.cs" />
     <Compile Include="Instance.cs" />
     <Compile Include="InstanceList.cs" />
-    <Compile Include="ViewModel\CustomInstancePageViewModel.cs" />
-    <Compile Include="ViewModel\InstanceSelectPageViewModel.cs" />
+    <Compile Include="ViewModels\CustomInstancePageViewModel.cs" />
+    <Compile Include="ViewModels\InstanceSelectPageViewModel.cs" />
     <Compile Include="JSONContents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
