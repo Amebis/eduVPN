@@ -49,7 +49,7 @@ namespace eduVPN.Tests
         }
 
 #if PLATFORM_AnyCPU
-        private static bool is_resolver_active = MultiplatformDllLoader.Enable = true;
+        private static bool is_resolver_active = eduBase.MultiplatformDllLoader.Enable = true;
 #endif
     }
 }
