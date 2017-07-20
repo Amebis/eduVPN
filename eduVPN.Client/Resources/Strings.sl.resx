@@ -170,4 +170,7 @@ npr. kadar uporabljate javni WiFi.</value>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Varovani splet</value>
   </data>
+  <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
+    <value>Zahteva dvojno preverjanje pristnosti</value>
+  </data>
 </root>

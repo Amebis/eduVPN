@@ -170,4 +170,7 @@ for example when using public WiFi.</value>
   <data name="ProfileSelectPageTitle" xml:space="preserve">
     <value>Connect</value>
   </data>
+  <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
+    <value>Requires two-factor authentication</value>
+  </data>
 </root>

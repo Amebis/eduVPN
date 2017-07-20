@@ -214,5 +214,14 @@ namespace eduVPN.Client.Resources {
                 return ResourceManager.GetString("SecureInternetTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requires two-factor authentication.
+        /// </summary>
+        public static string TwoFactorAuthenticationRequired {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthenticationRequired", resourceCulture);
+            }
+        }
     }
 }

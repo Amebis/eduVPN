@@ -39,6 +39,8 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
+    <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Views\ProfileSelectPage.xaml.cs">
       <DependentUpon>ProfileSelectPage.xaml</DependentUpon>
     </Compile>
@@ -46,7 +48,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Converters\IsNullOrEmptyStringConverter.cs" />
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
     <Page Include="Views\AccessTypePage.xaml">
       <SubType>Designer</SubType>

@@ -10,20 +10,16 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Converters
+namespace eduVPN.Client.Converters
 {
-    public class IsNullOrEmptyStringConverter : IValueConverter
+    /// <summary>
+    /// Returns <c>Visibility.Visible</c> if input value is true; or <c>Visibility.Collapsed</c> otherwise.
+    /// </summary>
+    public class TwoFactorAuthenticationIconVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || value.ToString().Length == 0)
-            {
-                return Visibility.Collapsed;
-            }
-            else
-            {
-                return Visibility.Visible;
-            }
+            return value != null && (bool)value ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
