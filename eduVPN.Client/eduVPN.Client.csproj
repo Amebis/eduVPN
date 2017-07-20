@@ -39,6 +39,9 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\ProfileSelectPage.xaml.cs">
+      <DependentUpon>ProfileSelectPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,6 +82,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CustomInstancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfileSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

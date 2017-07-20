@@ -229,6 +229,23 @@
                     Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="eduVPNProfileSelectionItemTemplate">
+            <Grid
+                Margin="10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Separator
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+                <TextBlock
+                    Grid.Row="1"
+                    Text="{Binding DisplayName}"
+                    Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
+            </Grid>
+        </DataTemplate>
 
         <!-- eduVPN Text Boxes -->
         <Style x:Key="eduVPNTextBoxStyle" TargetType="{x:Type TextBox}">

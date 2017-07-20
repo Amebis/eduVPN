@@ -79,6 +79,11 @@ namespace eduVPN.ViewModels
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
                                     Parent.Endpoints.TokenEndpoint,
                                     _abort.Token);
+
+                                // TODO: Verify if user is allowed to connect.
+
+                                // Go to profile selection page.
+                                Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
                             catch (Exception ex)
                             {

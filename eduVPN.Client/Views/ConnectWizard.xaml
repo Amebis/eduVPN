@@ -38,6 +38,9 @@
         <DataTemplate DataType="{x:Type viewModel:AuthorizationPage}">
             <view:AuthorizationPage/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ProfileSelectPage}">
+            <view:ProfileSelectPage/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>

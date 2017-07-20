@@ -167,4 +167,7 @@ for example when using public WiFi.</value>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
+  <data name="ProfileSelectPageTitle" xml:space="preserve">
+    <value>Connect</value>
+  </data>
 </root>

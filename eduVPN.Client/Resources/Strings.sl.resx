@@ -160,6 +160,9 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo.</value>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
+  <data name="ProfileSelectPageTitle" xml:space="preserve">
+    <value>Poveži</value>
+  </data>
   <data name="SecureInternetNote" xml:space="preserve">
     <value>Varno se povežite se na splet,
 npr. kadar uporabljate javni WiFi.</value>

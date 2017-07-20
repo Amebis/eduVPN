@@ -132,6 +132,20 @@ namespace eduVPN.ViewModels
         }
         private AccessToken _access_token;
 
+        /// <summary>
+        /// Profile selection wizard page
+        /// </summary>
+        public ProfileSelectPage ProfileSelectPage
+        {
+            get
+            {
+                if (_profile_select_page == null)
+                    _profile_select_page = new ProfileSelectPage(this);
+                return _profile_select_page;
+            }
+        }
+        private ProfileSelectPage _profile_select_page;
+
         #endregion
 
         #region Constructors

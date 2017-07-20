@@ -14,7 +14,7 @@ namespace eduVPN.JSON
     /// Collection of loadable JSON items
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class Collection<T> : ObservableCollection<T>, ILoadableItem where T : ILoadableItem, new()
+    public class Collection<T> : ObservableCollection<T>, ILoadableItem where T : ILoadableItem, new()
     {
         #region Methods
 

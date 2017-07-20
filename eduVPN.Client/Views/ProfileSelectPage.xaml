@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="eduVPN.Views.InstanceSelectPage"
+    x:Class="eduVPN.Views.ProfileSelectPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,15 +8,15 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.InstanceSelectPageTitle}"
+    Title="{x:Static res:Strings.ProfileSelectPageTitle}"
     Template="{StaticResource eduVPNConnectWizardPageWithBack}">
 
     <ListBox
         Grid.Row="1"
         Style="{StaticResource eduVPNListStyle}"
-        ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
+        ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
         ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-        ItemsSource="{Binding InstanceList}"
-        SelectedItem="{Binding SelectedInstance}"
-        SelectionChanged="InstanceList_SelectionChanged"/>
+        ItemsSource="{Binding ProfileList}"
+        SelectedItem="{Binding SelectedProfile}"
+        SelectionChanged="ProfileList_SelectionChanged"/>
 </Page>
