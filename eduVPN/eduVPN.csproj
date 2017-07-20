@@ -30,6 +30,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JSON\APIErrorException.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
