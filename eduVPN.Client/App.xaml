@@ -159,6 +159,25 @@
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="Margin" Value="10,130,10,10"/>
         </Style>
+        <Style x:Key="eduVPNListBoxItemTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,10,0,10"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- eduVPN Separator styles -->
+        <Style x:Key="eduVPNListBoxItemSeparatorStyle" TargetType="{x:Type Separator}">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Background" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
 
         <!-- eduVPN ListBoxes -->
         <Style x:Key="eduVPNListStyle" TargetType="{x:Type ListBox}">
@@ -166,6 +185,17 @@
         </Style>
 
         <!-- eduVPN Lists -->
+        <Style x:Key="eduVPNListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <DataTemplate x:Key="eduVPNInstanceSelectionItemTemplate">
             <Grid
                 Margin="10,0">
@@ -180,18 +210,7 @@
 
                 <Separator
                     Grid.ColumnSpan="2"
-                    Margin="0"
-                    Background="{StaticResource eduVPNHeaderBrushKey}">
-                    <Separator.Style>
-                        <Style TargetType="{x:Type Separator}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Separator.Style>
-                </Separator>
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
 
                 <!-- TODO: Provide alternative Source for instances with Logo==null. -->
                 <Image
@@ -207,25 +226,9 @@
                     Grid.Column="1"
                     Grid.Row="1"
                     Text="{Binding DisplayName}"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    TextWrapping="Wrap"
-                    TextAlignment="Center"
-                    Margin="5,10,0,10"
-                    FontSize="14"/>
+                    Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
             </Grid>
         </DataTemplate>
-        <Style x:Key="eduVPNInstanceSelectionItemContainerStyle" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.25"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
 
         <!-- eduVPN Text Boxes -->
         <Style x:Key="eduVPNTextBoxStyle" TargetType="{x:Type TextBox}">

@@ -31,7 +31,7 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// The list of available instances
+        /// List of available instances
         /// </summary>
         public InstanceList InstanceList
         {
@@ -41,7 +41,7 @@ namespace eduVPN.ViewModels
         private InstanceList _instance_list;
 
         /// <summary>
-        /// Selected Instance
+        /// Selected instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
         public Instance SelectedInstance
@@ -57,7 +57,7 @@ namespace eduVPN.ViewModels
         private Instance _selected_instance;
 
         /// <summary>
-        /// Authorize Selected Instance Command
+        /// Authorize selected instance command
         /// </summary>
         public ICommand AuthorizeSelectedInstance
         {
