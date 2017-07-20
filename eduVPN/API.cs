@@ -92,12 +92,42 @@ namespace eduVPN
             _token_endpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "token_endpoint"));
 
             // Set other URI(s).
-            _base_uri = eduJSON.Parser.GetValue(api, "api_base_uri", out string api_base_uri) ? new Uri(api_base_uri) : null;
-            _create_certificate = eduJSON.Parser.GetValue(api, "create_certificate", out string create_certificate) ? new Uri(create_certificate) : null;
-            _profile_config = eduJSON.Parser.GetValue(api, "profile_config", out string profile_config) ? new Uri(profile_config) : null;
-            _profile_list = eduJSON.Parser.GetValue(api, "profile_list", out string profile_list) ? new Uri(profile_list) : null;
-            _system_messages = eduJSON.Parser.GetValue(api, "system_messages", out string system_messages) ? new Uri(system_messages) : null;
-            _user_messages = eduJSON.Parser.GetValue(api, "user_messages", out string user_messages) ? new Uri(user_messages) : null;
+            _base_uri = eduJSON.Parser.GetValue(api, "api_base_uri", out string api_base_uri) ?
+                new Uri(api_base_uri) :
+                null;
+
+            _create_certificate = eduJSON.Parser.GetValue(api, "create_certificate", out string create_certificate) ?
+                new Uri(create_certificate) :
+                _base_uri != null ? AppendPath(_base_uri, "/create_keypair") : null;
+
+            _profile_config = eduJSON.Parser.GetValue(api, "profile_config", out string profile_config) ?
+                new Uri(profile_config) :
+                _base_uri != null ? AppendPath(_base_uri, "/profile_config") : null;
+
+            _profile_list = eduJSON.Parser.GetValue(api, "profile_list", out string profile_list) ?
+                new Uri(profile_list) :
+                _base_uri != null ? AppendPath(_base_uri, "/profile_list") : null;
+
+            _system_messages = eduJSON.Parser.GetValue(api, "system_messages", out string system_messages) ?
+                new Uri(system_messages) :
+                _base_uri != null ? AppendPath(_base_uri, "/system_messages") : null;
+
+            _user_messages = eduJSON.Parser.GetValue(api, "user_messages", out string user_messages) ?
+                new Uri(user_messages) :
+                _base_uri != null ? AppendPath(_base_uri, "/user_messages") : null;
+        }
+
+        /// <summary>
+        /// Appends path to base URI
+        /// </summary>
+        /// <param name="uri">Base URI</param>
+        /// <param name="path">Path to append to</param>
+        /// <returns></returns>
+        private static Uri AppendPath(Uri uri, string path)
+        {
+            var uri_builder = new UriBuilder(uri);
+            uri_builder.Path += path;
+            return uri_builder.Uri;
         }
 
         #endregion
