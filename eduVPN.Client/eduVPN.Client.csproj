@@ -45,47 +45,47 @@
     </Page>
     <Compile Include="Converters\IsNullOrEmptyStringConverter.cs" />
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
-    <Page Include="Views\AccessTypePageView.xaml">
+    <Page Include="Views\AccessTypePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AuthorizationPageView.xaml">
+    <Page Include="Views\AuthorizationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\InstanceSelectPageView.xaml">
+    <Page Include="Views\InstanceSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ConnectWizardView.xaml">
+    <Page Include="Views\ConnectWizard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Views\AccessTypePageView.xaml.cs">
-      <DependentUpon>AccessTypePageView.xaml</DependentUpon>
+    <Compile Include="Views\AccessTypePage.xaml.cs">
+      <DependentUpon>AccessTypePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\AuthorizationPageView.xaml.cs">
-      <DependentUpon>AuthorizationPageView.xaml</DependentUpon>
+    <Compile Include="Views\AuthorizationPage.xaml.cs">
+      <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InstanceSelectPageView.xaml.cs">
-      <DependentUpon>InstanceSelectPageView.xaml</DependentUpon>
+    <Compile Include="Views\InstanceSelectPage.xaml.cs">
+      <DependentUpon>InstanceSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectWizardView.xaml.cs">
-      <DependentUpon>ConnectWizardView.xaml</DependentUpon>
+    <Compile Include="Views\ConnectWizard.xaml.cs">
+      <DependentUpon>ConnectWizard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\CustomInstancePageView.xaml">
+    <Page Include="Views\CustomInstancePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\CustomInstancePageView.xaml.cs">
-      <DependentUpon>CustomInstancePageView.xaml</DependentUpon>
+    <Compile Include="Views\CustomInstancePage.xaml.cs">
+      <DependentUpon>CustomInstancePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

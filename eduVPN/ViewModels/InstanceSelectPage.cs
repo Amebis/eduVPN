@@ -17,7 +17,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Instance selection wizard page
     /// </summary>
-    public class InstanceSelectPageViewModel : ConnectWizardPageViewModel
+    public class InstanceSelectPage : ConnectWizardPage
     {
         #region Fields
 
@@ -101,7 +101,7 @@ namespace eduVPN.ViewModels
         /// Constructs an instance selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public InstanceSelectPageViewModel(ConnectWizardViewModel parent) :
+        public InstanceSelectPage(ConnectWizard parent) :
             base(parent)
         {
             _dispatcher.ShutdownStarted += (object sender, EventArgs e) => {

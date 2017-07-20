@@ -10,7 +10,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Profile selection wizard page
     /// </summary>
-    class ProfileSelectViewModel : ConnectWizardPageViewModel
+    class ProfileSelectPage : ConnectWizardPage
     {
         #region Constructors
 
@@ -18,7 +18,7 @@ namespace eduVPN.ViewModels
         /// Constructs an profile selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public ProfileSelectViewModel(ConnectWizardViewModel parent) :
+        public ProfileSelectPage(ConnectWizard parent) :
             base(parent)
         {
         }

@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="eduVPN.Views.ConnectWizardView"
+    x:Class="eduVPN.Views.ConnectWizard"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -21,22 +21,22 @@
     Closing="Window_Closing">
 
     <Window.DataContext>
-        <viewModel:ConnectWizardViewModel/>
+        <viewModel:ConnectWizard/>
     </Window.DataContext>
 
     <Window.Resources>
         <!-- Page view model to view mapping -->
-        <DataTemplate DataType="{x:Type viewModel:AccessTypePageViewModel}">
-            <view:AccessTypePageView/>
+        <DataTemplate DataType="{x:Type viewModel:AccessTypePage}">
+            <view:AccessTypePage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:InstanceSelectPageViewModel}">
-            <view:InstanceSelectPageView/>
+        <DataTemplate DataType="{x:Type viewModel:InstanceSelectPage}">
+            <view:InstanceSelectPage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:CustomInstancePageViewModel}">
+        <DataTemplate DataType="{x:Type viewModel:CustomInstancePage}">
             <view:CustomInstancePage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:AuthorizationPageViewModel}">
-            <view:AuthorizationPageView/>
+        <DataTemplate DataType="{x:Type viewModel:AuthorizationPage}">
+            <view:AuthorizationPage/>
         </DataTemplate>
     </Window.Resources>
 

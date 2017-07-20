@@ -14,14 +14,14 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Connect wizard
     /// </summary>
-    public class ConnectWizardViewModel : BindableBase, IDisposable
+    public class ConnectWizard : BindableBase, IDisposable
     {
         #region Properties
 
         /// <summary>
         /// The page the wizard is currently displaying
         /// </summary>
-        public ConnectWizardPageViewModel CurrentPage
+        public ConnectWizardPage CurrentPage
         {
             get { return _current_page; }
             set
@@ -31,52 +31,52 @@ namespace eduVPN.ViewModels
                 _current_page.OnActivate();
             }
         }
-        private ConnectWizardPageViewModel _current_page;
+        private ConnectWizardPage _current_page;
 
         /// <summary>
         /// Access type page
         /// </summary>
-        public AccessTypePageViewModel AccessTypePage
+        public AccessTypePage AccessTypePage
         {
             get
             {
                 if (_access_type_page == null)
-                    _access_type_page = new AccessTypePageViewModel(this);
+                    _access_type_page = new AccessTypePage(this);
                 return _access_type_page;
             }
         }
-        private AccessTypePageViewModel _access_type_page;
+        private AccessTypePage _access_type_page;
 
         /// <summary>
         /// User required VPN access type
         /// </summary>
-        public AccessTypeType AccessType
+        public AccessType AccessType
         {
             get { return _access_type; }
             set { if (value != _access_type) { _access_type = value; RaisePropertyChanged(); } }
         }
-        private AccessTypeType _access_type;
+        private AccessType _access_type;
 
         /// <summary>
         /// Instance selection page
         /// </summary>
         /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
-        public InstanceSelectPageViewModel InstanceSelectPage { get => _instance_select_page; }
-        private InstanceSelectPageViewModel _instance_select_page;
+        public InstanceSelectPage InstanceSelectPage { get => _instance_select_page; }
+        private InstanceSelectPage _instance_select_page;
 
         /// <summary>
         /// Custom instance page
         /// </summary>
-        public CustomInstancePageViewModel CustomInstancePage
+        public CustomInstancePage CustomInstancePage
         {
             get
             {
                 if (_custom_instance_page == null)
-                    _custom_instance_page = new CustomInstancePageViewModel(this);
+                    _custom_instance_page = new CustomInstancePage(this);
                 return _custom_instance_page;
             }
         }
-        private CustomInstancePageViewModel _custom_instance_page;
+        private CustomInstancePage _custom_instance_page;
 
         /// <summary>
         /// Selected instance base URI.
@@ -101,16 +101,16 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authorization wizard page
         /// </summary>
-        public AuthorizationPageViewModel AuthorizationPage
+        public AuthorizationPage AuthorizationPage
         {
             get
             {
                 if (_authorization_page == null)
-                    _authorization_page = new AuthorizationPageViewModel(this);
+                    _authorization_page = new AuthorizationPage(this);
                 return _authorization_page;
             }
         }
-        private AuthorizationPageViewModel _authorization_page;
+        private AuthorizationPage _authorization_page;
 
         /// <summary>
         /// Instance API endpoints
@@ -139,10 +139,10 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Constructs the wizard
         /// </summary>
-        public ConnectWizardViewModel()
+        public ConnectWizard()
         {
             // Pre-create instance select page to allow instance list population in advance.
-            _instance_select_page = new InstanceSelectPageViewModel(this);
+            _instance_select_page = new InstanceSelectPage(this);
 
             CurrentPage = AccessTypePage;
         }

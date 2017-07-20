@@ -91,7 +91,7 @@ namespace eduVPN.Client
             {
                 // Forward redirect URI to the wizard.
                 var uri = args[1];
-                var wizard = (ConnectWizardViewModel)(((ConnectWizardView)MainWindow).DataContext);
+                var wizard = (ViewModels.ConnectWizard)(((Views.ConnectWizard)MainWindow).DataContext);
 
                 if (wizard.AuthorizationPage.Authorize.CanExecute(uri))
                 {

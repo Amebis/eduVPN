@@ -17,7 +17,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Base class for all wizard pages
     /// </summary>
-    public class ConnectWizardPageViewModel : BindableBase
+    public class ConnectWizardPage : BindableBase
     {
         #region Fields
 
@@ -41,7 +41,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// The page parent
         /// </summary>
-        public ConnectWizardViewModel Parent { get; }
+        public ConnectWizard Parent { get; }
 
         /// <summary>
         /// Navigate back
@@ -75,7 +75,7 @@ namespace eduVPN.ViewModels
         /// Constructs a wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public ConnectWizardPageViewModel(ConnectWizardViewModel parent)
+        public ConnectWizardPage(ConnectWizard parent)
         {
             Parent = parent;
 

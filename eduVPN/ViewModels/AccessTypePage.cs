@@ -13,7 +13,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Access type selection wizard page
     /// </summary>
-    public class AccessTypePageViewModel : ConnectWizardPageViewModel
+    public class AccessTypePage : ConnectWizardPage
     {
         #region Properties
 
@@ -26,14 +26,14 @@ namespace eduVPN.ViewModels
             {
                 if (_set_access_type == null)
                 {
-                    _set_access_type = new DelegateCommand<AccessTypeType?>(
+                    _set_access_type = new DelegateCommand<AccessType?>(
                         // execute
                         param =>
                         {
                             Parent.AccessType = param.Value;
                             switch (param)
                             {
-                                case AccessTypeType.InstituteAccess: Parent.CurrentPage = Parent.InstanceSelectPage; break;
+                                case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstanceSelectPage; break;
                             }
                         },
 
@@ -43,7 +43,7 @@ namespace eduVPN.ViewModels
                             if (!param.HasValue) return false;
                             switch (param.Value)
                             {
-                                case AccessTypeType.InstituteAccess: return true;
+                                case AccessType.InstituteAccess: return true;
                                 default: return false;
                             }
                         });
@@ -61,7 +61,7 @@ namespace eduVPN.ViewModels
         /// Constructs an access type selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public AccessTypePageViewModel(ConnectWizardViewModel parent) :
+        public AccessTypePage(ConnectWizard parent) :
             base(parent)
         {
         }

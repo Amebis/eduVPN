@@ -20,7 +20,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Authorization wizard page
     /// </summary>
-    public class AuthorizationPageViewModel : ConnectWizardPageViewModel, IDisposable
+    public class AuthorizationPage : ConnectWizardPage, IDisposable
     {
         #region Fields
 
@@ -115,7 +115,7 @@ namespace eduVPN.ViewModels
         /// Constructs an authorization wizard page
         /// </summary>
         /// <param name="parent"></param>
-        public AuthorizationPageViewModel(ConnectWizardViewModel parent) :
+        public AuthorizationPage(ConnectWizard parent) :
             base(parent)
         {
         }

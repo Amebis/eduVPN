@@ -11,16 +11,16 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for InstanceSelectPageView.xaml
+    /// Interaction logic for InstanceSelectPage.xaml
     /// </summary>
-    public partial class InstanceSelectPageView : Page
+    public partial class InstanceSelectPage : Page
     {
         #region Constructors
 
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public InstanceSelectPageView()
+        public InstanceSelectPage()
         {
             InitializeComponent();
         }
@@ -37,7 +37,7 @@ namespace eduVPN.Views
             // 2. Change the list of instances to a stack of buttons of instances
 
             // User selected an instance.
-            var viewmodel = (InstanceSelectPageViewModel)DataContext;
+            var viewmodel = (ViewModels.InstanceSelectPage)DataContext;
             if (viewmodel != null && // Sometimes this event gets called with null view model.
                 viewmodel.AuthorizeSelectedInstance.CanExecute(null))
             {

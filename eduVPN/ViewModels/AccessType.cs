@@ -10,7 +10,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// User required VPN access type type
     /// </summary>
-    public enum AccessTypeType
+    public enum AccessType
     {
         /// <summary>
         /// The requested access type is unknown (default).

@@ -14,7 +14,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Custom instance entry wizard page
     /// </summary>
-    public class CustomInstancePageViewModel : ConnectWizardPageViewModel
+    public class CustomInstancePage : ConnectWizardPage
     {
         #region Properties
 
@@ -72,7 +72,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Constructs a view model.
         /// </summary>
-        public CustomInstancePageViewModel(ConnectWizardViewModel parent) :
+        public CustomInstancePage(ConnectWizard parent) :
             base(parent)
         {
             InstanceURI = "https://";

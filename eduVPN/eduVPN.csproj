@@ -34,16 +34,16 @@
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
     <Compile Include="Profile.cs" />
-    <Compile Include="ViewModels\AccessTypeType.cs" />
-    <Compile Include="ViewModels\AccessTypePageViewModel.cs" />
+    <Compile Include="ViewModels\AccessType.cs" />
+    <Compile Include="ViewModels\AccessTypePage.cs" />
     <Compile Include="API.cs" />
-    <Compile Include="ViewModels\AuthorizationPageViewModel.cs" />
-    <Compile Include="ViewModels\ConnectWizardPageViewModel.cs" />
-    <Compile Include="ViewModels\ConnectWizardViewModel.cs" />
+    <Compile Include="ViewModels\AuthorizationPage.cs" />
+    <Compile Include="ViewModels\ConnectWizardPage.cs" />
+    <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="Instance.cs" />
     <Compile Include="InstanceList.cs" />
-    <Compile Include="ViewModels\CustomInstancePageViewModel.cs" />
-    <Compile Include="ViewModels\InstanceSelectPageViewModel.cs" />
+    <Compile Include="ViewModels\CustomInstancePage.cs" />
+    <Compile Include="ViewModels\InstanceSelectPage.cs" />
     <Compile Include="JSON\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
@@ -56,7 +56,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ProfileSelectViewModel.cs" />
+    <Compile Include="ViewModels\ProfileSelectPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx">

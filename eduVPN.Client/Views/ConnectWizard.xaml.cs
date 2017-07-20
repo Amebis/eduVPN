@@ -12,13 +12,13 @@ using System.Windows.Input;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for ConnectWizardView.xaml
+    /// Interaction logic for ConnectWizard.xaml
     /// </summary>
-    public partial class ConnectWizardView : Window
+    public partial class ConnectWizard : Window
     {
         #region Constructors
 
-        public ConnectWizardView()
+        public ConnectWizard()
         {
             InitializeComponent();
 
