@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace eduVPN
 {
     /// <summary>
     /// An eduVPN API endpoint
     /// </summary>
-    public class API
+    public class API : JSON.ILoadableItem
     {
         #region Properties
 
@@ -74,35 +73,31 @@ namespace eduVPN
         /// Loads APIv2 from a dictionary object (provided by JSON)
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
-        public void Load(Dictionary<string, object> obj)
+        /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
+        public void Load(object obj)
         {
+            var obj2 = obj as Dictionary<string, object>;
+            if (obj2 == null)
+                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+
+            // Get api object.
+            var api = eduJSON.Parser.GetValue<Dictionary<string, object>>(
+                eduJSON.Parser.GetValue<Dictionary<string, object>>(obj2, "api"),
+                "http://eduvpn.org/api#2");
+
             // Set authorization endpoint.
-            _authorization_endpoint = new Uri(eduJSON.Parser.GetValue<string>(obj, "authorization_endpoint"));
+            _authorization_endpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "authorization_endpoint"));
 
             // Set token endpoint.
-            _token_endpoint = new Uri(eduJSON.Parser.GetValue<string>(obj, "token_endpoint"));
+            _token_endpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "token_endpoint"));
 
             // Set other URI(s).
-            _base_uri = eduJSON.Parser.GetValue(obj, "api_base_uri", out string api_base_uri) ? new Uri(api_base_uri) : null;
-            _create_certificate = eduJSON.Parser.GetValue(obj, "create_certificate", out string create_certificate) ? new Uri(create_certificate) : null;
-            _profile_config = eduJSON.Parser.GetValue(obj, "profile_config", out string profile_config) ? new Uri(profile_config) : null;
-            _profile_list = eduJSON.Parser.GetValue(obj, "profile_list", out string profile_list) ? new Uri(profile_list) : null;
-            _system_messages = eduJSON.Parser.GetValue(obj, "system_messages", out string system_messages) ? new Uri(system_messages) : null;
-            _user_messages = eduJSON.Parser.GetValue(obj, "user_messages", out string user_messages) ? new Uri(user_messages) : null;
-        }
-
-        /// <summary>
-        /// Loads APIv2 from a JSON string
-        /// </summary>
-        /// <param name="json">JSON string</param>
-        /// <param name="ct">The token to monitor for cancellation requests.</param>
-        public void Load(string json, CancellationToken ct = default(CancellationToken))
-        {
-            Load(eduJSON.Parser.GetValue<Dictionary<string, object>>(
-                eduJSON.Parser.GetValue<Dictionary<string, object>>(
-                    (Dictionary<string, object>)eduJSON.Parser.Parse(json, ct),
-                    "api"),
-                "http://eduvpn.org/api#2"));
+            _base_uri = eduJSON.Parser.GetValue(api, "api_base_uri", out string api_base_uri) ? new Uri(api_base_uri) : null;
+            _create_certificate = eduJSON.Parser.GetValue(api, "create_certificate", out string create_certificate) ? new Uri(create_certificate) : null;
+            _profile_config = eduJSON.Parser.GetValue(api, "profile_config", out string profile_config) ? new Uri(profile_config) : null;
+            _profile_list = eduJSON.Parser.GetValue(api, "profile_list", out string profile_list) ? new Uri(profile_list) : null;
+            _system_messages = eduJSON.Parser.GetValue(api, "system_messages", out string system_messages) ? new Uri(system_messages) : null;
+            _user_messages = eduJSON.Parser.GetValue(api, "user_messages", out string user_messages) ? new Uri(user_messages) : null;
         }
 
         #endregion

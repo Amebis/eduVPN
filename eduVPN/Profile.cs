@@ -13,7 +13,7 @@ namespace eduVPN
     /// <summary>
     /// An eduVPN profile
     /// </summary>
-    public class Profile : BindableBase
+    public class Profile : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 
@@ -60,19 +60,24 @@ namespace eduVPN
         /// Loads profile from a dictionary object (provided by JSON)
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>display_name</c>, <c>profile_id</c> and <c>two_factor</c> elements. <c>profile_id</c> is required. <c>display_name</c> and <c>profile_id</c> elements should be strings; <c>two_factor</c> should be boolean.</param>
-        public void Load(Dictionary<string, object> obj)
+        /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
+        public void Load(object obj)
         {
+            var obj2 = obj as Dictionary<string, object>;
+            if (obj2 == null)
+                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+
             // Set ID.
-            ID = eduJSON.Parser.GetValue<string>(obj, "profile_id");
+            ID = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
 
             // Set display name.
-            if (eduJSON.Parser.GetValue(obj, "display_name", out string display_name))
+            if (eduJSON.Parser.GetValue(obj2, "display_name", out string display_name))
                 DisplayName = display_name;
             else
                 DisplayName = ID;
 
             // Set two-factor authentication.
-            if (eduJSON.Parser.GetValue(obj, "two_factor", out bool two_factor))
+            if (eduJSON.Parser.GetValue(obj2, "two_factor", out bool two_factor))
                 IsTwoFactorAuthentication = two_factor;
         }
 

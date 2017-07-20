@@ -16,7 +16,7 @@ namespace eduVPN
     /// <summary>
     /// An eduVPN list of instances = VPN service providers
     /// </summary>
-    public class InstanceList : ObservableCollection<Instance>
+    public class InstanceList : ObservableCollection<Instance>, JSON.ILoadableItem
     {
         #region Data Types
 
@@ -83,26 +83,28 @@ namespace eduVPN
         /// Loads instance list from a dictionary object (provided by JSON)
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements.</param>
-        public void Load(Dictionary<string, object> obj)
+        /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
+        public void Load(object obj)
         {
+            var obj2 = obj as Dictionary<string, object>;
+            if (obj2 == null)
+                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+
             Clear();
 
             // Parse all instances listed. Don't do it in parallel to preserve the sort order.
-            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj, "instances"))
+            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "instances"))
             {
-                if (el.GetType() == typeof(Dictionary<string, object>))
-                {
-                    var instance = new Instance();
-                    instance.Load((Dictionary<string, object>)el);
-                    Add(instance);
-                }
+                var instance = new Instance();
+                instance.Load(el);
+                Add(instance);
             }
 
             // Parse sequence.
-            Sequence = eduJSON.Parser.GetValue(obj, "seq", out int seq) ? (uint)seq : 0;
+            Sequence = eduJSON.Parser.GetValue(obj2, "seq", out int seq) ? (uint)seq : 0;
 
             // Parse authorization data.
-            if (eduJSON.Parser.GetValue(obj, "authorization_type", out string authorization_type))
+            if (eduJSON.Parser.GetValue(obj2, "authorization_type", out string authorization_type))
             {
                 switch (authorization_type.ToLower())
                 {
@@ -115,17 +117,7 @@ namespace eduVPN
                 AuthType = AuthorizationType.Local;
 
             // Parse signed date.
-            SignedAt = eduJSON.Parser.GetValue(obj, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
-        }
-
-        /// <summary>
-        /// Loads instance list from a JSON string
-        /// </summary>
-        /// <param name="json">JSON string</param>
-        /// <param name="ct">The token to monitor for cancellation requests.</param>
-        public void Load(string json, CancellationToken ct = default(CancellationToken))
-        {
-            Load((Dictionary<string, object>)eduJSON.Parser.Parse(json, ct));
+            SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
         }
 
         #endregion
