@@ -70,6 +70,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API server replied with an error..
+        /// </summary>
+        internal static string ErrorAPIServerReply {
+            get {
+                return ResourceManager.GetString("ErrorAPIServerReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verifying signature failed. Integrity of {0} is not valid..
         /// </summary>
         internal static string ErrorInvalidSignature {

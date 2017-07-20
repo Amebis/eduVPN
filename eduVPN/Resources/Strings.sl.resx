@@ -123,4 +123,7 @@
   <data name="CustomInstance" xml:space="preserve">
     <value>Drugo (ni našteto)</value>
   </data>
+  <data name="ErrorAPIServerReply" xml:space="preserve">
+    <value>Strežnik API je sporočil napako.</value>
+  </data>
 </root>

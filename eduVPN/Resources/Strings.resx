@@ -123,4 +123,7 @@
   <data name="CustomInstance" xml:space="preserve">
     <value>Other (not listed)</value>
   </data>
+  <data name="ErrorAPIServerReply" xml:space="preserve">
+    <value>API server replied with an error.</value>
+  </data>
 </root>
