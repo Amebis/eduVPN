@@ -134,15 +134,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the Country.
-        /// </summary>
-        public static string SecureInternetSelectPageTitle {
-            get {
-                return ResourceManager.GetString("SecureInternetSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Other Provider.
         /// </summary>
         public static string CustomInstancePageTitle {
@@ -161,11 +152,20 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Access your organization network.
+        ///   Looks up a localized string similar to Institute Access.
         /// </summary>
         public static string InstituteAccessNote {
             get {
                 return ResourceManager.GetString("InstituteAccessNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Institute.
+        /// </summary>
+        public static string InstituteAccessSelectPageTitle {
+            get {
+                return ResourceManager.GetString("InstituteAccessSelectPageTitle", resourceCulture);
             }
         }
         
@@ -175,15 +175,6 @@ namespace eduVPN.Client.Resources {
         public static string InstituteAccessTitle {
             get {
                 return ResourceManager.GetString("InstituteAccessTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose your Provider.
-        /// </summary>
-        public static string InstituteAccessSelectPageTitle {
-            get {
-                return ResourceManager.GetString("InstituteAccessSelectPageTitle", resourceCulture);
             }
         }
         
@@ -212,6 +203,15 @@ namespace eduVPN.Client.Resources {
         public static string SecureInternetNote {
             get {
                 return ResourceManager.GetString("SecureInternetNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Provider.
+        /// </summary>
+        public static string SecureInternetSelectPageTitle {
+            get {
+                return ResourceManager.GetString("SecureInternetSelectPageTitle", resourceCulture);
             }
         }
         

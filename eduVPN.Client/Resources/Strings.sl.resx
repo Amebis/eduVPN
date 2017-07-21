@@ -149,10 +149,10 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo.</value>
     <value>Vnesite naslov URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/</value>
   </data>
   <data name="InstituteAccessSelectPageTitle" xml:space="preserve">
-    <value>Izberite svojega ponudnika</value>
+    <value>Izberite ustanovo</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Dostopajte do omrežja svoje ustanove</value>
+    <value>Dostop do ustanove</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Dostop do ustanove</value>
@@ -174,6 +174,6 @@ npr. kadar uporabljate javni WiFi.</value>
     <value>Zahteva dvojno preverjanje pristnosti</value>
   </data>
   <data name="SecureInternetSelectPageTitle" xml:space="preserve">
-    <value>Izberite državo</value>
+    <value>Izberite ponudnika</value>
   </data>
 </root>
