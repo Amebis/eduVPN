@@ -48,8 +48,7 @@ namespace eduVPN.ViewModels
                     _authorize_instance = new DelegateCommand(
                         // execute
                         () => {
-                            Parent.InstanceURI = new Uri(InstanceURI);
-                            Parent.IsCustomInstance = true;
+                            Parent.Instance.Base = new Uri(InstanceURI);
                             Parent.CurrentPage = Parent.AuthorizationPage;
                         },
 

@@ -158,7 +158,7 @@ The client will continue after you complete the authorization.</value>
     <value>Other Provider</value>
   </data>
   <data name="CustomInstancePageURINote" xml:space="preserve">
-    <value>Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/info.json</value>
+    <value>Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/</value>
   </data>
   <data name="SecureInternetNote" xml:space="preserve">
     <value>Connect to the internet securely,

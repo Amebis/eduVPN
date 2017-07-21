@@ -143,7 +143,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/info.json.
+        ///   Looks up a localized string similar to Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/.
         /// </summary>
         public static string CustomInstancePageURINote {
             get {

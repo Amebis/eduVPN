@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using Prism.Mvvm;
 using System;
 
@@ -17,6 +16,33 @@ namespace eduVPN.ViewModels
     public class ConnectWizard : BindableBase, IDisposable
     {
         #region Properties
+
+        /// <summary>
+        /// User required VPN access type
+        /// </summary>
+        public AccessType AccessType
+        {
+            get { return _access_type; }
+            set { if (value != _access_type) { _access_type = value; RaisePropertyChanged(); } }
+        }
+        private AccessType _access_type;
+
+        /// <summary>
+        /// eduVPN instance selected
+        /// </summary>
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public Instance Instance
+        {
+            get { return _instance; }
+            set
+            {
+                _instance = value;
+                RaisePropertyChanged();
+            }
+        }
+        private Instance _instance;
+
+        #region Pages
 
         /// <summary>
         /// The page the wizard is currently displaying
@@ -48,16 +74,6 @@ namespace eduVPN.ViewModels
         private AccessTypePage _access_type_page;
 
         /// <summary>
-        /// User required VPN access type
-        /// </summary>
-        public AccessType AccessType
-        {
-            get { return _access_type; }
-            set { if (value != _access_type) { _access_type = value; RaisePropertyChanged(); } }
-        }
-        private AccessType _access_type;
-
-        /// <summary>
         /// Instance selection page
         /// </summary>
         /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
@@ -79,26 +95,6 @@ namespace eduVPN.ViewModels
         private CustomInstancePage _custom_instance_page;
 
         /// <summary>
-        /// Selected instance base URI.
-        /// </summary>
-        public Uri InstanceURI
-        {
-            get { return _instance_uri; }
-            set { if (value != _instance_uri) { _instance_uri = value; RaisePropertyChanged(); } }
-        }
-        private Uri _instance_uri;
-
-        /// <summary>
-        /// Is the instance custom (user-provided)?
-        /// </summary>
-        public bool IsCustomInstance
-        {
-            get { return _is_custom_instance; }
-            set { if (value != _is_custom_instance) { _is_custom_instance = value; RaisePropertyChanged(); } }
-        }
-        private bool _is_custom_instance;
-
-        /// <summary>
         /// Authorization wizard page
         /// </summary>
         public AuthorizationPage AuthorizationPage
@@ -113,26 +109,6 @@ namespace eduVPN.ViewModels
         private AuthorizationPage _authorization_page;
 
         /// <summary>
-        /// Instance API endpoints
-        /// </summary>
-        public API Endpoints
-        {
-            get { return _endpoints; }
-            set { _endpoints = value; RaisePropertyChanged(); }
-        }
-        private API _endpoints;
-
-        /// <summary>
-        /// OAuth access token
-        /// </summary>
-        public AccessToken AccessToken
-        {
-            get { return _access_token; }
-            set { _access_token = value; RaisePropertyChanged(); }
-        }
-        private AccessToken _access_token;
-
-        /// <summary>
         /// Profile selection wizard page
         /// </summary>
         public ProfileSelectPage ProfileSelectPage
@@ -145,6 +121,8 @@ namespace eduVPN.ViewModels
             }
         }
         private ProfileSelectPage _profile_select_page;
+
+        #endregion
 
         #endregion
 

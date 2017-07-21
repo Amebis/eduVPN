@@ -75,9 +75,9 @@ namespace eduVPN.ViewModels
                                 ErrorMessage = null;
 
                                 // Process response and get access token.
-                                Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
+                                Parent.Instance.AccessToken = await _authorization_grant.ProcessResponseAsync(
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
-                                    Parent.Endpoints.TokenEndpoint,
+                                    Parent.Instance.Endpoints.TokenEndpoint,
                                     _abort.Token);
 
                                 // TODO: Verify if user is allowed to connect.
@@ -160,7 +160,9 @@ namespace eduVPN.ViewModels
 
                         // Get and load API endpoints.
                         var api = new API();
-                        api.LoadJSON(JSON.Response.Get(Parent.InstanceURI, null, null, null, abort.Token).Value);
+                        var uri_builder = new UriBuilder(Parent.Instance.Base);
+                        uri_builder.Path += "info.json";
+                        api.LoadJSON(JSON.Response.Get(uri_builder.Uri, null, null, null, abort.Token).Value);
 
                         // Opens authorization request in the browser.
                         _authorization_grant = new AuthorizationGrant()
@@ -174,7 +176,7 @@ namespace eduVPN.ViewModels
                         System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
 
                         // Save API endpoints.
-                        Parent.Endpoints = api;
+                        Parent.Instance.Endpoints = api;
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex)
@@ -195,7 +197,7 @@ namespace eduVPN.ViewModels
                 _worker = null;
             }
 
-            if (Parent.IsCustomInstance)
+            if (Parent.InstanceSelectPage.SelectedInstance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;
             else
                 Parent.CurrentPage = Parent.InstanceSelectPage;

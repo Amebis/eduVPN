@@ -146,7 +146,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo.</value>
     <value>Drugi ponudnik</value>
   </data>
   <data name="CustomInstancePageURINote" xml:space="preserve">
-    <value>Vnesite naslov URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/info.json</value>
+    <value>Vnesite naslov URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/</value>
   </data>
   <data name="InstanceSelectPageTitle" xml:space="preserve">
     <value>Izberite svojega ponudnika</value>

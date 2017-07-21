@@ -69,20 +69,11 @@ namespace eduVPN.ViewModels
                         // execute
                         () =>
                         {
-                            if (SelectedInstance.Base == new Uri("org.eduvpn.app:other"))
-                            {
-                                // User selected "Other instance".
+                            Parent.Instance = SelectedInstance;
+                            if (SelectedInstance.IsCustom)
                                 Parent.CurrentPage = Parent.CustomInstancePage;
-                            }
                             else
-                            {
-                                // A known instance was selected. Proceed to authentication.
-                                var uri_builder = new UriBuilder(SelectedInstance.Base);
-                                uri_builder.Path += "info.json";
-                                Parent.InstanceURI = uri_builder.Uri;
-                                Parent.IsCustomInstance = false;
                                 Parent.CurrentPage = Parent.AuthorizationPage;
-                            }
                         },
 
                         // canExecute
@@ -129,8 +120,8 @@ namespace eduVPN.ViewModels
             InstanceList.Load(_instance_list_cache);
             InstanceList.Add(new Instance()
             {
-                Base = new Uri("org.eduvpn.app:other"),
-                DisplayName = Resources.Strings.CustomInstance
+                DisplayName = Resources.Strings.CustomInstance,
+                IsCustom = true,
             });
 
             // Launch instance list load in the background.
@@ -173,8 +164,8 @@ namespace eduVPN.ViewModels
                         // Append "Other instance" entry.
                         instance_list.Add(new Instance()
                         {
-                            Base = new Uri("org.eduvpn.app:other"),
-                            DisplayName = Resources.Strings.CustomInstance
+                            DisplayName = Resources.Strings.CustomInstance,
+                            IsCustom = true,
                         });
 
                         // Send the loaded instance list back to the UI thread.

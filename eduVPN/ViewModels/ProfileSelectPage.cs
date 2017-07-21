@@ -93,9 +93,9 @@ namespace eduVPN.ViewModels
                         // Get and load profile list.
                         var profile_list = new Collection<Profile>();
                         profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                            Parent.Endpoints.ProfileList,
+                            Parent.Instance.Endpoints.ProfileList,
                             null,
-                            Parent.AccessToken,
+                            Parent.Instance.AccessToken,
                             null,
                             _abort.Token).Value,
                             "profile_list");
@@ -122,7 +122,7 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            if (Parent.IsCustomInstance)
+            if (Parent.Instance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;
             else
                 Parent.CurrentPage = Parent.InstanceSelectPage;

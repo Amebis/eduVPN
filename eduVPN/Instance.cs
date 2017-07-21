@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,36 @@ namespace eduVPN
             set { if (value != _logo) { _logo = value; RaisePropertyChanged(); } }
         }
         private Uri _logo;
+
+        /// <summary>
+        /// Is this instance manually entered by user
+        /// </summary>
+        public bool IsCustom
+        {
+            get { return _is_custom; }
+            set { if (value != _is_custom) { _is_custom = value; RaisePropertyChanged(); } }
+        }
+        private bool _is_custom;
+
+        /// <summary>
+        /// Instance API endpoints
+        /// </summary>
+        public API Endpoints
+        {
+            get { return _endpoints; }
+            set { _endpoints = value; RaisePropertyChanged(); }
+        }
+        private API _endpoints;
+
+        /// <summary>
+        /// OAuth access token
+        /// </summary>
+        public AccessToken AccessToken
+        {
+            get { return _access_token; }
+            set { _access_token = value; RaisePropertyChanged(); }
+        }
+        private AccessToken _access_token;
 
         #endregion
 
