@@ -176,7 +176,7 @@ namespace eduVPN.ViewModels
                             uri_builder.Uri,
                             null,
                             null,
-                            Parent.Instance.PublicKey,
+                            /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
                             abort.Token).Value);
 
                         // Opens authorization request in the browser.
