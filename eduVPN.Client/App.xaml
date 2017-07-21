@@ -247,73 +247,85 @@
         </Style>
 
         <!-- ConnectWizard page templates -->
-        <ControlTemplate x:Key="eduVPNConnectWizardPage" TargetType="{x:Type Page}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <Style x:Key="eduVPNConnectWizardPage" TargetType="{x:Type Page}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Page}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                <StatusBar
-                    Style="{StaticResource eduVPNInfoBarStyle}"
-                    Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}}">
-                    <StatusBarItem>
-                        <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
-                    </StatusBarItem>
-                    <StatusBarItem>
-                        <TextBlock
-                            TextWrapping="Wrap"
-                            Text="{Binding ErrorMessage}"/>
-                    </StatusBarItem>
-                </StatusBar>
+                            <StatusBar
+                            Style="{StaticResource eduVPNInfoBarStyle}"
+                            Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}}">
+                                <StatusBarItem>
+                                    <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
+                                </StatusBarItem>
+                                <StatusBarItem>
+                                    <TextBlock
+                                    TextWrapping="Wrap"
+                                    Text="{Binding ErrorMessage}"/>
+                                </StatusBarItem>
+                            </StatusBar>
 
-                <ContentPresenter
-                    Grid.Row="1"/>
-            </Grid>
-        </ControlTemplate>
+                            <ContentPresenter
+                                Grid.Row="1"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-        <ControlTemplate x:Key="eduVPNConnectWizardPageWithBack" TargetType="{x:Type Page}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <Style x:Key="eduVPNConnectWizardPageWithBack" TargetType="{x:Type Page}" BasedOn="{StaticResource eduVPNConnectWizardPage}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Page}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="45"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                <StatusBar
-                    Style="{StaticResource eduVPNInfoBarStyle}"
-                    Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}}">
-                    <StatusBarItem>
-                        <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
-                    </StatusBarItem>
-                    <StatusBarItem>
-                        <TextBlock
-                            TextWrapping="Wrap"
-                            Text="{Binding ErrorMessage}"/>
-                    </StatusBarItem>
-                </StatusBar>
+                            <StatusBar
+                                Style="{StaticResource eduVPNInfoBarStyle}"
+                                Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}}">
+                                <StatusBarItem>
+                                    <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
+                                </StatusBarItem>
+                                <StatusBarItem>
+                                    <TextBlock
+                                        TextWrapping="Wrap"
+                                        Text="{Binding ErrorMessage}"/>
+                                </StatusBarItem>
+                            </StatusBar>
 
-                <Grid
-                    Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="45"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                            <Grid
+                                Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                    <Button
-                        Style="{StaticResource eduVPNNavigationButtonStyle}"
-                        AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                        Command="{Binding Path=NavigateBack}">&lt;</Button>
+                                <Button
+                                    Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                    AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
+                                    Command="{Binding Path=NavigateBack}">&lt;</Button>
 
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource eduVPNPageTitleStyle}"
-                        Content="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"/>
-                </Grid>
+                                <Label
+                                    Grid.Column="1"
+                                    Style="{StaticResource eduVPNPageTitleStyle}"
+                                    Content="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Grid>
 
-                <ContentPresenter
-                    Grid.Row="2"/>
-            </Grid>
-        </ControlTemplate>
+                            <ContentPresenter
+                                Grid.Row="2"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>
