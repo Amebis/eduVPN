@@ -20,6 +20,17 @@
     MouseDown="Window_MouseDown"
     Closing="Window_Closing">
 
+    <Window.Style>
+        <!-- Change mouse cursor when wizard page reports doing background task. -->
+        <Style TargetType="{x:Type Window}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=CurrentPage.IsBusy}" Value="True">
+                    <Setter Property="Cursor" Value="AppStarting"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+
     <Window.DataContext>
         <viewModel:ConnectWizard/>
     </Window.DataContext>

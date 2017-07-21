@@ -90,6 +90,9 @@ namespace eduVPN.ViewModels
                 {
                     try
                     {
+                        // Set busy flag (in the UI thread).
+                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = true));
+
                         // Get and load profile list.
                         var profile_list = new Collection<Profile>();
                         profile_list.LoadJSONAPIResponse(JSON.Response.Get(
@@ -112,6 +115,11 @@ namespace eduVPN.ViewModels
                     {
                         // Notify the sender the profile list loading failed.
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                    }
+                    finally
+                    {
+                        // Clear busy flag (in the UI thread).
+                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = false));
                     }
                 }));
         }

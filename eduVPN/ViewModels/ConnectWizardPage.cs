@@ -67,6 +67,16 @@ namespace eduVPN.ViewModels
         }
         private string _error_message;
 
+        /// <summary>
+        /// Is wizard page performing background tasks?
+        /// </summary>
+        public bool IsBusy
+        {
+            get { return _is_busy; }
+            set { if (value != _is_busy) { _is_busy = value; RaisePropertyChanged(); } }
+        }
+        private bool _is_busy;
+
         #endregion
 
         #region Constructors

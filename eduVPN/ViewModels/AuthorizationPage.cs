@@ -71,7 +71,11 @@ namespace eduVPN.ViewModels
                         // execute
                         async param =>
                         {
-                            try {
+                            // Set busy flag.
+                            IsBusy = true;
+
+                            try
+                            {
                                 ErrorMessage = null;
 
                                 // Process response and get access token.
@@ -88,6 +92,11 @@ namespace eduVPN.ViewModels
                             catch (Exception ex)
                             {
                                 ErrorMessage = ex.Message;
+                            }
+                            finally
+                            {
+                                // Clear busy flag.
+                                IsBusy = false;
                             }
                         },
 
@@ -154,6 +163,9 @@ namespace eduVPN.ViewModels
             _worker = new Thread(
                 () =>
                 {
+                    // Set busy flag (in the UI thread).
+                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = true));
+
                     try
                     {
                         var abort = CancellationTokenSource.CreateLinkedTokenSource(_abort.Token, _cancel.Token);
@@ -183,6 +195,11 @@ namespace eduVPN.ViewModels
                     {
                         // Notify the sender the authorization failed.
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                    }
+                    finally
+                    {
+                        // Clear busy flag (in the UI thread).
+                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = false));
                     }
                 });
             _worker.Start();

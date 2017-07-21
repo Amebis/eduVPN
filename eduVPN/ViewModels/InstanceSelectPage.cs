@@ -143,52 +143,63 @@ namespace eduVPN.ViewModels
             {
                 try
                 {
-                    // Get instance list.
-                    json = JSON.Response.Get(
-                        new Uri(Properties.Settings.Default.InstanceDirectory),
-                        null,
-                        null,
-                        Convert.FromBase64String(Properties.Settings.Default.InstanceDirectoryPubKey),
-                        _abort.Token,
-                        json);
+                    // Set busy flag (in the UI thread).
+                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = true));
 
-                    if (json.IsFresh)
+                    try
                     {
-                        // Parse instance list.
-                        var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
+                        // Get instance list.
+                        json = JSON.Response.Get(
+                            new Uri(Properties.Settings.Default.InstanceDirectory),
+                            null,
+                            null,
+                            Convert.FromBase64String(Properties.Settings.Default.InstanceDirectoryPubKey),
+                            _abort.Token,
+                            json);
 
-                        // Load instance list.
-                        var instance_list = new InstanceList();
-                        instance_list.Load(obj);
-
-                        // Append "Other instance" entry.
-                        instance_list.Add(new Instance()
+                        if (json.IsFresh)
                         {
-                            DisplayName = Resources.Strings.CustomInstance,
-                            IsCustom = true,
-                        });
+                            // Parse instance list.
+                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
 
-                        // Send the loaded instance list back to the UI thread.
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                        {
-                            InstanceList = instance_list;
-                            ErrorMessage = null;
-                        }));
+                            // Load instance list.
+                            var instance_list = new InstanceList();
+                            instance_list.Load(obj);
 
-                        try
-                        {
-                            // If we got here, the loaded instance list is (probably) OK.
-                            bool update_cache = false;
-                            try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_instance_list_cache, "seq"); }
-                            catch (Exception) { update_cache = true; }
-                            if (update_cache)
+                            // Append "Other instance" entry.
+                            instance_list.Add(new Instance()
                             {
-                                // Update cache.
-                                _instance_list_cache = obj;
-                                Properties.Settings.Default.InstanceListCache = json.Value;
+                                DisplayName = Resources.Strings.CustomInstance,
+                                IsCustom = true,
+                            });
+
+                            // Send the loaded instance list back to the UI thread.
+                            _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                            {
+                                InstanceList = instance_list;
+                                ErrorMessage = null;
+                            }));
+
+                            try
+                            {
+                                // If we got here, the loaded instance list is (probably) OK.
+                                bool update_cache = false;
+                                try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_instance_list_cache, "seq"); }
+                                catch (Exception) { update_cache = true; }
+                                if (update_cache)
+                                {
+                                    // Update cache.
+                                    _instance_list_cache = obj;
+                                    Properties.Settings.Default.InstanceListCache = json.Value;
+                                }
                             }
+                            catch (Exception) { }
                         }
-                        catch (Exception) { }
+                    }
+                    finally
+                    {
+                        // Clear busy flag (in the UI thread).
+                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = false));
                     }
 
                     // Wait for five minutes.
