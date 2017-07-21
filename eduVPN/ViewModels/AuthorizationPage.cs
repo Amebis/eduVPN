@@ -79,12 +79,10 @@ namespace eduVPN.ViewModels
                                 ErrorMessage = null;
 
                                 // Process response and get access token.
-                                Parent.Instance.AccessToken = await _authorization_grant.ProcessResponseAsync(
+                                Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
-                                    Parent.Instance.Endpoints.TokenEndpoint,
+                                    Parent.Endpoints.TokenEndpoint,
                                     _abort.Token);
-
-                                // TODO: Verify if user is allowed to connect.
 
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ProfileSelectPage;
@@ -188,7 +186,7 @@ namespace eduVPN.ViewModels
                         System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
 
                         // Save API endpoints.
-                        Parent.Instance.Endpoints = api;
+                        Parent.Endpoints = api;
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex)

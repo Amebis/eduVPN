@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace eduVPN
+namespace eduVPN.JSON
 {
     /// <summary>
     /// An eduVPN API endpoint
     /// </summary>
-    public class API : JSON.ILoadableItem
+    public class API : ILoadableItem
     {
         #region Properties
 
@@ -65,6 +65,12 @@ namespace eduVPN
         public Uri UserMessages { get => _user_messages; }
         private Uri _user_messages;
 
+        /// <summary>
+        /// User info URI
+        /// </summary>
+        public Uri UserInfo { get => _user_info; }
+        private Uri _user_info;
+
         #endregion
 
         #region Methods
@@ -115,6 +121,10 @@ namespace eduVPN
             _user_messages = eduJSON.Parser.GetValue(api, "user_messages", out string user_messages) ?
                 new Uri(user_messages) :
                 _base_uri != null ? AppendPath(_base_uri, "/user_messages") : null;
+
+            _user_info = eduJSON.Parser.GetValue(api, "user_info", out string user_info) ?
+                new Uri(user_info) :
+                _base_uri != null ? AppendPath(_base_uri, "/user_info") : null;
         }
 
         /// <summary>

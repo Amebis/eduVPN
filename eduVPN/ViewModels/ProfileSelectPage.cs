@@ -24,19 +24,18 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available profiles
         /// </summary>
-        public JSON.Collection<Profile> ProfileList
+        public JSON.Collection<JSON.Profile> ProfileList
         {
             get { return _profile_list; }
             set { _profile_list = value; RaisePropertyChanged(); }
         }
-        private JSON.Collection<Profile> _profile_list;
-
+        private JSON.Collection<JSON.Profile> _profile_list;
 
         /// <summary>
         /// Selected profile
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Profile SelectedProfile
+        public JSON.Profile SelectedProfile
         {
             get { return _selected_profile; }
             set
@@ -46,7 +45,7 @@ namespace eduVPN.ViewModels
                 ((DelegateCommandBase)ConnectSelectedProfile).RaiseCanExecuteChanged();
             }
         }
-        private Profile _selected_profile;
+        private JSON.Profile _selected_profile;
 
         /// <summary>
         /// Connect selected profile command
@@ -71,19 +70,28 @@ namespace eduVPN.ViewModels
         }
         private ICommand _connect_profile;
 
+        /// <summary>
+        /// User info
+        /// </summary>
+        public JSON.UserInfo UserInfo
+        {
+            get { return _user_info; }
+            set { _user_info = value; RaisePropertyChanged(); }
+        }
+        private JSON.UserInfo _user_info;
+
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs an profile selection wizard page.
+        /// Constructs a profile selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
         public ProfileSelectPage(ConnectWizard parent) :
             base(parent)
         {
-            ProfileList = new Collection<Profile>();
-
+            ProfileList = new JSON.Collection<JSON.Profile>();
             // Launch profile list load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
                 param =>
@@ -93,15 +101,29 @@ namespace eduVPN.ViewModels
                         // Set busy flag (in the UI thread).
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = true));
 
-                        // Get and load profile list.
-                        var profile_list = new Collection<Profile>();
-                        profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                            Parent.Instance.Endpoints.ProfileList,
+                        // Trigger profile list loading.
+                        var profile_list_load_task = JSON.Response.GetAsync(
+                            Parent.Endpoints.ProfileList,
                             null,
-                            Parent.Instance.AccessToken,
+                            Parent.AccessToken,
                             null,
-                            _abort.Token).Value,
-                            "profile_list");
+                            _abort.Token);
+
+                        // Trigger user info loading.
+                        var user_info_load_task = JSON.Response.GetAsync(
+                            Parent.Endpoints.UserInfo,
+                            null,
+                            Parent.AccessToken,
+                            null,
+                            _abort.Token);
+
+                        // Wait for profile list.
+                        try { profile_list_load_task.Wait(_abort.Token); }
+                        catch (AggregateException ex) { throw ex.InnerException; }
+
+                        // Load profile list.
+                        var profile_list = new JSON.Collection<JSON.Profile>();
+                        profile_list.LoadJSONAPIResponse(profile_list_load_task.Result.Value, "profile_list", _abort.Token);
 
                         // Send the loaded profile list back to the UI thread.
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
@@ -109,6 +131,16 @@ namespace eduVPN.ViewModels
                             ProfileList = profile_list;
                             ErrorMessage = null;
                         }));
+
+                        // Wait for and process user info.
+                        try
+                        {
+                            user_info_load_task.Wait(_abort.Token);
+                            var user_info = new JSON.UserInfo();
+                            user_info.LoadJSONAPIResponse(user_info_load_task.Result.Value, "user_info", _abort.Token);
+                            _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
+                        }
+                        catch (Exception) { }
                     }
                     catch (OperationCanceledException) {}
                     catch (Exception ex)

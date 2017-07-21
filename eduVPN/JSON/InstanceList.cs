@@ -9,14 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading;
 
-namespace eduVPN
+namespace eduVPN.JSON
 {
     /// <summary>
     /// An eduVPN list of instances = VPN service providers
     /// </summary>
-    public class InstanceList : ObservableCollection<Instance>, JSON.ILoadableItem
+    public class InstanceList : ObservableCollection<Instance>, ILoadableItem
     {
         #region Data Types
 

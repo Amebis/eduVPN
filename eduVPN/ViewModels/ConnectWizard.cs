@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using Prism.Mvvm;
 using System;
 
@@ -31,7 +32,7 @@ namespace eduVPN.ViewModels
         /// eduVPN instance selected
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Instance Instance
+        public JSON.Instance Instance
         {
             get { return _instance; }
             set
@@ -40,7 +41,27 @@ namespace eduVPN.ViewModels
                 RaisePropertyChanged();
             }
         }
-        private Instance _instance;
+        private JSON.Instance _instance;
+
+        /// <summary>
+        /// Instance API endpoints
+        /// </summary>
+        public JSON.API Endpoints
+        {
+            get { return _endpoints; }
+            set { _endpoints = value; RaisePropertyChanged(); }
+        }
+        private JSON.API _endpoints;
+
+        /// <summary>
+        /// OAuth access token
+        /// </summary>
+        public AccessToken AccessToken
+        {
+            get { return _access_token; }
+            set { _access_token = value; RaisePropertyChanged(); }
+        }
+        private AccessToken _access_token;
 
         #region Pages
 

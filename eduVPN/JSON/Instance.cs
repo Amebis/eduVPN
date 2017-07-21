@@ -5,17 +5,16 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 
-namespace eduVPN
+namespace eduVPN.JSON
 {
     /// <summary>
     /// An eduVPN instance = VPN service provider
     /// </summary>
-    public class Instance : BindableBase, JSON.ILoadableItem
+    public class Instance : BindableBase, ILoadableItem
     {
         #region Properties
 
@@ -50,7 +49,7 @@ namespace eduVPN
         private Uri _logo;
 
         /// <summary>
-        /// Is this instance manually entered by user
+        /// Is this instance manually entered by user?
         /// </summary>
         public bool IsCustom
         {
@@ -58,26 +57,6 @@ namespace eduVPN
             set { if (value != _is_custom) { _is_custom = value; RaisePropertyChanged(); } }
         }
         private bool _is_custom;
-
-        /// <summary>
-        /// Instance API endpoints
-        /// </summary>
-        public API Endpoints
-        {
-            get { return _endpoints; }
-            set { _endpoints = value; RaisePropertyChanged(); }
-        }
-        private API _endpoints;
-
-        /// <summary>
-        /// OAuth access token
-        /// </summary>
-        public AccessToken AccessToken
-        {
-            get { return _access_token; }
-            set { _access_token = value; RaisePropertyChanged(); }
-        }
-        private AccessToken _access_token;
 
         #endregion
 
