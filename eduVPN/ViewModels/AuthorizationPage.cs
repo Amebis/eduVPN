@@ -169,7 +169,7 @@ namespace eduVPN.ViewModels
                         var abort = CancellationTokenSource.CreateLinkedTokenSource(_abort.Token, _cancel.Token);
 
                         // Get and load API endpoints.
-                        var api = new API();
+                        var api = new JSON.API();
                         var uri_builder = new UriBuilder(Parent.Instance.Base);
                         uri_builder.Path += "info.json";
                         api.LoadJSON(JSON.Response.Get(uri_builder.Uri, null, null, null, abort.Token).Value);
