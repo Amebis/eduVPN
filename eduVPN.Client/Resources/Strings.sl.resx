@@ -148,7 +148,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo.</value>
   <data name="CustomInstancePageURINote" xml:space="preserve">
     <value>Vnesite naslov URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/</value>
   </data>
-  <data name="InstanceSelectPageTitle" xml:space="preserve">
+  <data name="InstituteAccessSelectPageTitle" xml:space="preserve">
     <value>Izberite svojega ponudnika</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
@@ -172,5 +172,8 @@ npr. kadar uporabljate javni WiFi.</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Zahteva dvojno preverjanje pristnosti</value>
+  </data>
+  <data name="SecureInternetSelectPageTitle" xml:space="preserve">
+    <value>Izberite državo</value>
   </data>
 </root>

@@ -217,15 +217,27 @@ namespace eduVPN.ViewModels
                 _worker = null;
             }
 
-            if (Parent.InstanceSelectPage.SelectedInstance.IsCustom)
+            if (Parent.Instance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;
             else
-                Parent.CurrentPage = Parent.InstanceSelectPage;
+                switch (Parent.AccessType)
+                {
+                    case AccessType.SecureInternet: Parent.CurrentPage = Parent.SecureInternetSelectPage; break;
+                    case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstituteAccessSelectPage; break;
+                }
         }
 
         protected override bool CanNavigateBack()
         {
-            return true;
+            if (Parent.Instance.IsCustom)
+                return true;
+            else
+                switch (Parent.AccessType)
+                {
+                    case AccessType.SecureInternet: return true;
+                    case AccessType.InstituteAccess: return true;
+                    default: return false;
+                }
         }
 
         #endregion

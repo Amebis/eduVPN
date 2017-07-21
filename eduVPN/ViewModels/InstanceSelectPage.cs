@@ -15,16 +15,26 @@ using System.Windows.Threading;
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Instance selection wizard page
+    /// Instance selection base wizard page
     /// </summary>
     public class InstanceSelectPage : ConnectWizardPage
     {
         #region Fields
 
         /// <summary>
+        /// Instance directory URI ID as used in <c>Properties.Settings.Default</c> collection
+        /// </summary>
+        private string _instance_directory_id;
+
+        /// <summary>
         /// Cached instance list
         /// </summary>
-        private Dictionary<string, object> _instance_list_cache;
+        private Dictionary<string, object> _cache;
+
+        /// <summary>
+        /// Should the list of instances have "Other (not listed)" entry appended?
+        /// </summary>
+        private bool _has_custom;
 
         #endregion
 
@@ -92,9 +102,12 @@ namespace eduVPN.ViewModels
         /// Constructs an instance selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public InstanceSelectPage(ConnectWizard parent) :
+        public InstanceSelectPage(ConnectWizard parent, string instance_directory_id, bool has_custom) :
             base(parent)
         {
+            _instance_directory_id = instance_directory_id;
+            _has_custom = has_custom;
+
             _dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
                 // Persist settings (instance cache) to disk.
                 Properties.Settings.Default.Save();
@@ -103,12 +116,12 @@ namespace eduVPN.ViewModels
             try
             {
                 // Restore instance list cache.
-                _instance_list_cache = (Dictionary<string, object>)eduJSON.Parser.Parse(Properties.Settings.Default.InstanceListCache);
+                _cache = (Dictionary<string, object>)eduJSON.Parser.Parse((string)Properties.Settings.Default[_instance_directory_id + "Cache"]);
             }
             catch (Exception)
             {
                 // Revert cache to default initial value.
-                _instance_list_cache = new Dictionary<string, object>
+                _cache = new Dictionary<string, object>()
                 {
                     { "instances", new List<object>() },
                     { "seq", 0 }
@@ -117,12 +130,16 @@ namespace eduVPN.ViewModels
 
             // Initialize instance list.
             InstanceList = new JSON.InstanceList();
-            InstanceList.Load(_instance_list_cache);
-            InstanceList.Add(new JSON.Instance()
+            InstanceList.Load(_cache);
+            if (_has_custom)
             {
-                DisplayName = Resources.Strings.CustomInstance,
-                IsCustom = true,
-            });
+                // Append "Other instance" entry.
+                InstanceList.Add(new JSON.Instance()
+                {
+                    DisplayName = Resources.Strings.CustomInstance,
+                    IsCustom = true,
+                });
+            }
 
             // Launch instance list load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(InstanceListLoader));
@@ -150,10 +167,10 @@ namespace eduVPN.ViewModels
                     {
                         // Get instance list.
                         json = JSON.Response.Get(
-                            new Uri(Properties.Settings.Default.InstanceDirectory),
+                            new Uri((string)Properties.Settings.Default[_instance_directory_id]),
                             null,
                             null,
-                            Convert.FromBase64String(Properties.Settings.Default.InstanceDirectoryPubKey),
+                            Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id + "PubKey"]),
                             _abort.Token,
                             json);
 
@@ -166,12 +183,15 @@ namespace eduVPN.ViewModels
                             var instance_list = new JSON.InstanceList();
                             instance_list.Load(obj);
 
-                            // Append "Other instance" entry.
-                            instance_list.Add(new JSON.Instance()
+                            if (_has_custom)
                             {
-                                DisplayName = Resources.Strings.CustomInstance,
-                                IsCustom = true,
-                            });
+                                // Append "Other instance" entry.
+                                instance_list.Add(new JSON.Instance()
+                                {
+                                    DisplayName = Resources.Strings.CustomInstance,
+                                    IsCustom = true,
+                                });
+                            }
 
                             // Send the loaded instance list back to the UI thread.
                             _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
@@ -184,13 +204,13 @@ namespace eduVPN.ViewModels
                             {
                                 // If we got here, the loaded instance list is (probably) OK.
                                 bool update_cache = false;
-                                try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_instance_list_cache, "seq"); }
+                                try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_cache, "seq"); }
                                 catch (Exception) { update_cache = true; }
                                 if (update_cache)
                                 {
                                     // Update cache.
-                                    _instance_list_cache = obj;
-                                    Properties.Settings.Default.InstanceListCache = json.Value;
+                                    _cache = obj;
+                                    Properties.Settings.Default[_instance_directory_id + "Cache"] = json.Value;
                                 }
                             }
                             catch (Exception) { }

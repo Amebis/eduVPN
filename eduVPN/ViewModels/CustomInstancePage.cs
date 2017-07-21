@@ -83,12 +83,21 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            Parent.CurrentPage = Parent.InstanceSelectPage;
+            switch (Parent.AccessType)
+            {
+                case AccessType.SecureInternet: Parent.CurrentPage = Parent.SecureInternetSelectPage; break;
+                case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstituteAccessSelectPage; break;
+            }
         }
 
         protected override bool CanNavigateBack()
         {
-            return true;
+            switch (Parent.AccessType)
+            {
+                case AccessType.SecureInternet: return true;
+                case AccessType.InstituteAccess: return true;
+                default: return false;
+            }
         }
 
         #endregion

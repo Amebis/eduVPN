@@ -27,30 +27,61 @@ namespace eduVPN.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/instances.json")]
-        public string InstanceDirectory {
+        public string InstituteAccessDirectory {
             get {
-                return ((string)(this["InstanceDirectory"]));
+                return ((string)(this["InstituteAccessDirectory"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
-        public string InstanceDirectoryPubKey {
+        public string InstituteAccessDirectoryPubKey {
             get {
-                return ((string)(this["InstanceDirectoryPubKey"]));
+                return ((string)(this["InstituteAccessDirectoryPubKey"]));
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string InstanceListCache {
+        public string InstituteAccessDirectoryCache {
             get {
-                return ((string)(this["InstanceListCache"]));
+                return ((string)(this["InstituteAccessDirectoryCache"]));
             }
             set {
-                this["InstanceListCache"] = value;
+                this["InstituteAccessDirectoryCache"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/federation.json")]
+        public string SecureInternetDirectory {
+            get {
+                return ((string)(this["SecureInternetDirectory"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
+        public string SecureInternetDirectoryPubKey {
+            get {
+                return ((string)(this["SecureInternetDirectoryPubKey"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SecureInternetDirectoryCache {
+            get {
+                return ((string)(this["SecureInternetDirectoryCache"]));
+            }
+            set {
+                this["SecureInternetDirectoryCache"] = value;
             }
         }
     }

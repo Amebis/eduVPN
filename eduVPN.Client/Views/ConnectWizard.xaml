@@ -40,8 +40,11 @@
         <DataTemplate DataType="{x:Type viewModel:AccessTypePage}">
             <view:AccessTypePage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:InstanceSelectPage}">
-            <view:InstanceSelectPage/>
+        <DataTemplate DataType="{x:Type viewModel:SecureInternetSelectPage}">
+            <view:SecureInternetSelectPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:InstituteAccessSelectPage}">
+            <view:InstituteAccessSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CustomInstancePage}">
             <view:CustomInstancePage/>

@@ -44,6 +44,7 @@
     <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="JSON\Instance.cs" />
     <Compile Include="JSON\InstanceList.cs" />
+    <Compile Include="ViewModels\SecureInternetSelectPage.cs" />
     <Compile Include="ViewModels\CustomInstancePage.cs" />
     <Compile Include="ViewModels\InstanceSelectPage.cs" />
     <Compile Include="JSON\Response.cs" />
@@ -58,6 +59,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\InstituteAccessSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectPage.cs" />
   </ItemGroup>
   <ItemGroup>

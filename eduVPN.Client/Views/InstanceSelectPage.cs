@@ -5,31 +5,18 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.ViewModels;
 using System.Windows.Controls;
 
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for InstanceSelectPage.xaml
+    /// Interaction logic for SecureInternetSelectPage.xaml and InstituteAccessSelectPage.xaml
     /// </summary>
-    public partial class InstanceSelectPage : Page
+    public class InstanceSelectPage : Page
     {
-        #region Constructors
-
-        /// <summary>
-        /// Constructs a page.
-        /// </summary>
-        public InstanceSelectPage()
-        {
-            InitializeComponent();
-        }
-
-        #endregion
-
         #region Methods
 
-        private void InstanceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected void InstanceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // TODO: Using SelectionChanged of a ListBox renders the UI accessibility unfriendly.
             // Either:

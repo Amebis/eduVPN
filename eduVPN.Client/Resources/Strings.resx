@@ -142,7 +142,7 @@ The client will continue after you complete the authorization.</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Next</value>
   </data>
-  <data name="InstanceSelectPageTitle" xml:space="preserve">
+  <data name="InstituteAccessSelectPageTitle" xml:space="preserve">
     <value>Choose your Provider</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
@@ -172,5 +172,8 @@ for example when using public WiFi.</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Requires two-factor authentication</value>
+  </data>
+  <data name="SecureInternetSelectPageTitle" xml:space="preserve">
+    <value>Choose the Country</value>
   </data>
 </root>

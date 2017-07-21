@@ -33,7 +33,8 @@ namespace eduVPN.ViewModels
                             Parent.AccessType = param.Value;
                             switch (param)
                             {
-                                case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstanceSelectPage; break;
+                                case AccessType.SecureInternet: Parent.CurrentPage = Parent.SecureInternetSelectPage; break;
+                                case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstituteAccessSelectPage; break;
                             }
                         },
 
@@ -43,6 +44,7 @@ namespace eduVPN.ViewModels
                             if (!param.HasValue) return false;
                             switch (param.Value)
                             {
+                                case AccessType.SecureInternet: return true;
                                 case AccessType.InstituteAccess: return true;
                                 default: return false;
                             }

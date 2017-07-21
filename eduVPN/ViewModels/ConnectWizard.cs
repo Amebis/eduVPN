@@ -95,11 +95,18 @@ namespace eduVPN.ViewModels
         private AccessTypePage _access_type_page;
 
         /// <summary>
-        /// Instance selection page
+        /// Secure internet selection page
         /// </summary>
         /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
-        public InstanceSelectPage InstanceSelectPage { get => _instance_select_page; }
-        private InstanceSelectPage _instance_select_page;
+        public SecureInternetSelectPage SecureInternetSelectPage { get => _secure_internet_select_page; }
+        private SecureInternetSelectPage _secure_internet_select_page;
+
+        /// <summary>
+        /// Institute access selection page
+        /// </summary>
+        /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
+        public InstituteAccessSelectPage InstituteAccessSelectPage { get => _institute_access_select_page; }
+        private InstituteAccessSelectPage _institute_access_select_page;
 
         /// <summary>
         /// Custom instance page
@@ -154,8 +161,9 @@ namespace eduVPN.ViewModels
         /// </summary>
         public ConnectWizard()
         {
-            // Pre-create instance select page to allow instance list population in advance.
-            _instance_select_page = new InstanceSelectPage(this);
+            // Pre-create instance select pages to allow instance list population in advance.
+            _secure_internet_select_page = new SecureInternetSelectPage(this);
+            _institute_access_select_page = new InstituteAccessSelectPage(this);
 
             CurrentPage = AccessTypePage;
         }
