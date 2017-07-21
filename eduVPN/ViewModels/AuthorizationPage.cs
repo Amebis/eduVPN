@@ -172,7 +172,12 @@ namespace eduVPN.ViewModels
                         var api = new JSON.API();
                         var uri_builder = new UriBuilder(Parent.Instance.Base);
                         uri_builder.Path += "info.json";
-                        api.LoadJSON(JSON.Response.Get(uri_builder.Uri, null, null, null, abort.Token).Value);
+                        api.LoadJSON(JSON.Response.Get(
+                            uri_builder.Uri,
+                            null,
+                            null,
+                            Parent.Instance.PublicKey,
+                            abort.Token).Value);
 
                         // Opens authorization request in the browser.
                         _authorization_grant = new AuthorizationGrant()

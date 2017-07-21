@@ -49,6 +49,16 @@ namespace eduVPN.JSON
         private Uri _logo;
 
         /// <summary>
+        /// Public key used for signing (<c>null</c> if none)
+        /// </summary>
+        public byte[] PublicKey
+        {
+            get { return _public_key; }
+            set { _public_key = value; RaisePropertyChanged(); }
+        }
+        private byte[] _public_key;
+
+        /// <summary>
         /// Is this instance manually entered by user?
         /// </summary>
         public bool IsCustom
@@ -82,14 +92,13 @@ namespace eduVPN.JSON
             Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_uri"));
 
             // Set display name.
-            if (eduJSON.Parser.GetValue(obj2, "display_name", out string display_name))
-                DisplayName = display_name;
-            else
-                DisplayName = Base.Host;
+            DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : Base.Host;
 
             // Set logo URI.
-            if (eduJSON.Parser.GetValue(obj2, "logo_uri", out string logo_uri))
-                Logo = new Uri(logo_uri);
+            Logo = eduJSON.Parser.GetValue(obj2, "logo_uri", out string logo_uri) ? new Uri(logo_uri) : null;
+
+            // Set public key.
+            PublicKey = eduJSON.Parser.GetValue(obj2, "public_key", out string pub_key) ? Convert.FromBase64String(pub_key) : null;
         }
 
         #endregion
