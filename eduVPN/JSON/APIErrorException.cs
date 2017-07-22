@@ -15,7 +15,7 @@ namespace eduVPN.JSON
     /// API server replied with an error.
     /// </summary>
     [Serializable]
-    public class APIErrorException : ApplicationException
+    public class APIErrorException : ApplicationException, ISerializable
     {
         #region Constructors
 
