@@ -91,40 +91,43 @@ namespace eduVPN.ViewModels
                                 // Save selected instance.
                                 Parent.Instance = SelectedInstance;
 
-                                // Get and load API endpoints.
-                                var api = new JSON.API();
-                                var uri_builder = new UriBuilder(Parent.Instance.Base);
-                                uri_builder.Path += "info.json";
-                                api.LoadJSON((await JSON.Response.GetAsync(
-                                    uri_builder.Uri,
-                                    null,
-                                    null,
-                                    /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
-                                    _abort.Token)).Value);
-                                Parent.Endpoints = api;
-
-                                // Try to restore the access token from the settings.
-                                Parent.AccessToken = null;
-                                try
-                                {
-                                    var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
-                                    if (at != null)
-                                    {
-                                        using (var stream = new MemoryStream(Convert.FromBase64String(at)))
-                                        {
-                                            var formatter = new BinaryFormatter();
-                                            Parent.AccessToken = (AccessToken)formatter.Deserialize(stream);
-                                        }
-                                    }
-                                }
-                                catch (Exception) { }
-
-                                if (Parent.AccessToken != null)
-                                    Parent.CurrentPage = Parent.ProfileSelectPage;
-                                else if (SelectedInstance.IsCustom)
+                                if (SelectedInstance.IsCustom)
                                     Parent.CurrentPage = Parent.CustomInstancePage;
                                 else
-                                    Parent.CurrentPage = Parent.AuthorizationPage;
+                                {
+                                    // Get and load API endpoints.
+                                    var api = new JSON.API();
+                                    var uri_builder = new UriBuilder(Parent.Instance.Base);
+                                    uri_builder.Path += "info.json";
+                                    api.LoadJSON((await JSON.Response.GetAsync(
+                                        uri_builder.Uri,
+                                        null,
+                                        null,
+                                        /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
+                                        _abort.Token)).Value);
+                                    Parent.Endpoints = api;
+
+                                    // Try to restore the access token from the settings.
+                                    Parent.AccessToken = null;
+                                    try
+                                    {
+                                        var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
+                                        if (at != null)
+                                        {
+                                            using (var stream = new MemoryStream(Convert.FromBase64String(at)))
+                                            {
+                                                var formatter = new BinaryFormatter();
+                                                Parent.AccessToken = (AccessToken)formatter.Deserialize(stream);
+                                            }
+                                        }
+                                    }
+                                    catch (Exception) { }
+
+                                    if (Parent.AccessToken != null)
+                                        Parent.CurrentPage = Parent.ProfileSelectPage;
+                                    else
+                                        Parent.CurrentPage = Parent.AuthorizationPage;
+                                }
                             }
                             catch (Exception ex)
                             {

@@ -6,11 +6,9 @@
 */
 
 using eduOAuth;
-using eduVPN.JSON;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
