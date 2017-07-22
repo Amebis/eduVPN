@@ -74,7 +74,7 @@ namespace eduVPN.ViewModels
 
                                 // Try to restore the access token from the settings.
                                 Parent.AccessToken = null;
-                                if (Properties.Settings.Default.AccessTokens != null)
+                                try
                                 {
                                     var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
                                     if (at != null)
@@ -85,7 +85,7 @@ namespace eduVPN.ViewModels
                                             Parent.AccessToken = (AccessToken)formatter.Deserialize(stream);
                                         }
                                     }
-                                }
+                                } catch (Exception) { }
 
                                 if (Parent.AccessToken != null)
                                     Parent.CurrentPage = Parent.ProfileSelectPage;
