@@ -25,9 +25,9 @@ namespace eduVPN.JSON
         public enum AuthorizationType
         {
             /// <summary>
-            /// Access token is specific to each instance and cannot be used by other instances.
+            /// Access token is specific to each instance and cannot be used by other instances (default).
             /// </summary>
-            Local,
+            Local = 0,
 
             /// <summary>
             /// Access token is issued by a central OAuth server; all instances accept this token.
