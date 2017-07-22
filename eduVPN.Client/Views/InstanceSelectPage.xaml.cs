@@ -12,11 +12,23 @@ namespace eduVPN.Views
     /// <summary>
     /// Interaction logic for SecureInternetSelectPage.xaml and InstituteAccessSelectPage.xaml
     /// </summary>
-    public class InstanceSelectPage : Page
+    public partial class InstanceSelectPage : Page
     {
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a page.
+        /// </summary>
+        public InstanceSelectPage()
+        {
+            InitializeComponent();
+        }
+
+        #endregion
+
         #region Methods
 
-        protected void InstanceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void InstanceList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // TODO: Using SelectionChanged of a ListBox renders the UI accessibility unfriendly.
             // Either:

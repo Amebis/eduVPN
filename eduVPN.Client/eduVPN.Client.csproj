@@ -41,10 +41,6 @@
   <ItemGroup>
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
-    <Compile Include="Views\InstanceSelectPage.cs" />
-    <Compile Include="Views\SecureInternetSelectPage.xaml.cs">
-      <DependentUpon>SecureInternetSelectPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ProfileSelectPage.xaml.cs">
       <DependentUpon>ProfileSelectPage.xaml</DependentUpon>
     </Compile>
@@ -61,11 +57,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SecureInternetSelectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\InstituteAccessSelectPage.xaml">
+    <Page Include="Views\InstanceSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -83,8 +75,8 @@
     <Compile Include="Views\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InstituteAccessSelectPage.xaml.cs">
-      <DependentUpon>InstituteAccessSelectPage.xaml</DependentUpon>
+    <Compile Include="Views\InstanceSelectPage.xaml.cs">
+      <DependentUpon>InstanceSelectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectWizard.xaml.cs">
       <DependentUpon>ConnectWizard.xaml</DependentUpon>
