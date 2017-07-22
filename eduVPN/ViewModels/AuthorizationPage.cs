@@ -10,6 +10,9 @@ using eduVPN.JSON;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Web;
 using System.Windows.Input;
@@ -83,6 +86,16 @@ namespace eduVPN.ViewModels
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
                                     Parent.Endpoints.TokenEndpoint,
                                     _abort.Token);
+
+                                // Save the access token.
+                                using (var stream = new MemoryStream())
+                                {
+                                    var formatter = new BinaryFormatter();
+                                    formatter.Serialize(stream, Parent.AccessToken);
+                                    if (Properties.Settings.Default.AccessTokens == null)
+                                        Properties.Settings.Default.AccessTokens = new SerializableStringDictionary();
+                                    Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri] = Convert.ToBase64String(stream.ToArray());
+                                }
 
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ProfileSelectPage;
@@ -168,30 +181,16 @@ namespace eduVPN.ViewModels
                     {
                         var abort = CancellationTokenSource.CreateLinkedTokenSource(_abort.Token, _cancel.Token);
 
-                        // Get and load API endpoints.
-                        var api = new JSON.API();
-                        var uri_builder = new UriBuilder(Parent.Instance.Base);
-                        uri_builder.Path += "info.json";
-                        api.LoadJSON(JSON.Response.Get(
-                            uri_builder.Uri,
-                            null,
-                            null,
-                            /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
-                            abort.Token).Value);
-
                         // Opens authorization request in the browser.
                         _authorization_grant = new AuthorizationGrant()
                         {
-                            AuthorizationEndpoint = api.AuthorizationEndpoint,
+                            AuthorizationEndpoint = Parent.Endpoints.AuthorizationEndpoint,
                             RedirectEndpoint = new Uri(_redirect_endpoint),
                             ClientID = "org.eduvpn.app",
                             Scope = new List<string>() { "config" },
                             CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
                         };
                         System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
-
-                        // Save API endpoints.
-                        Parent.Endpoints = api;
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex)

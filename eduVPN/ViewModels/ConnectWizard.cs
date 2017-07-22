@@ -8,6 +8,7 @@
 using eduOAuth;
 using Prism.Mvvm;
 using System;
+using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
 {
@@ -166,6 +167,11 @@ namespace eduVPN.ViewModels
             _institute_access_select_page = new InstituteAccessSelectPage(this);
 
             CurrentPage = AccessTypePage;
+
+            Dispatcher.CurrentDispatcher.ShutdownStarted += (object sender, EventArgs e) => {
+                // Persist settings to disk.
+                Properties.Settings.Default.Save();
+            };
         }
 
         #endregion

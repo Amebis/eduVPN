@@ -20,5 +20,8 @@
     <Setting Name="SecureInternetDirectoryCache" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="AccessTokens" Type="eduVPN.SerializableStringDictionary" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

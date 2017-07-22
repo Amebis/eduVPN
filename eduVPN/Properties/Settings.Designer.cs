@@ -84,5 +84,16 @@ namespace eduVPN.Properties {
                 this["SecureInternetDirectoryCache"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::eduVPN.SerializableStringDictionary AccessTokens {
+            get {
+                return ((global::eduVPN.SerializableStringDictionary)(this["AccessTokens"]));
+            }
+            set {
+                this["AccessTokens"] = value;
+            }
+        }
     }
 }

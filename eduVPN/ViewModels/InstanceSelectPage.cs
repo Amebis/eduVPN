@@ -5,9 +5,13 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
+using eduVPN.JSON;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -77,13 +81,59 @@ namespace eduVPN.ViewModels
                 {
                     _authorize_instance = new DelegateCommand(
                         // execute
-                        () =>
+                        async () =>
                         {
-                            Parent.Instance = SelectedInstance;
-                            if (SelectedInstance.IsCustom)
-                                Parent.CurrentPage = Parent.CustomInstancePage;
-                            else
-                                Parent.CurrentPage = Parent.AuthorizationPage;
+                            // Set busy flag.
+                            IsBusy = true;
+
+                            try
+                            {
+                                // Save selected instance.
+                                Parent.Instance = SelectedInstance;
+
+                                // Get and load API endpoints.
+                                var api = new JSON.API();
+                                var uri_builder = new UriBuilder(Parent.Instance.Base);
+                                uri_builder.Path += "info.json";
+                                api.LoadJSON((await JSON.Response.GetAsync(
+                                    uri_builder.Uri,
+                                    null,
+                                    null,
+                                    /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
+                                    _abort.Token)).Value);
+                                Parent.Endpoints = api;
+
+                                // Try to restore the access token from the settings.
+                                Parent.AccessToken = null;
+                                if (Properties.Settings.Default.AccessTokens != null)
+                                {
+                                    var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
+                                    if (at != null)
+                                    {
+                                        using (var stream = new MemoryStream(Convert.FromBase64String(at)))
+                                        {
+                                            var formatter = new BinaryFormatter();
+                                            Parent.AccessToken = (AccessToken)formatter.Deserialize(stream);
+                                        }
+                                    }
+                                }
+
+                                if (Parent.AccessToken != null)
+                                    Parent.CurrentPage = Parent.ProfileSelectPage;
+                                else if (SelectedInstance.IsCustom)
+                                    Parent.CurrentPage = Parent.CustomInstancePage;
+                                else
+                                    Parent.CurrentPage = Parent.AuthorizationPage;
+                            }
+                            catch (Exception ex)
+                            {
+                                ErrorMessage = ex.Message;
+                            }
+                            finally
+                            {
+                                // Clear busy flag.
+                                IsBusy = false;
+                            }
                         },
 
                         // canExecute
@@ -107,11 +157,6 @@ namespace eduVPN.ViewModels
         {
             _instance_directory_id = instance_directory_id;
             _has_custom = has_custom;
-
-            _dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
-                // Persist settings (instance cache) to disk.
-                Properties.Settings.Default.Save();
-            };
 
             try
             {

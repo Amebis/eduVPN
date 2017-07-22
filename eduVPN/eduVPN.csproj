@@ -27,6 +27,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
+    <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +37,7 @@
     <Compile Include="JSON\Collection.cs" />
     <Compile Include="JSON\Profile.cs" />
     <Compile Include="JSON\UserInfo.cs" />
+    <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="ViewModels\AccessType.cs" />
     <Compile Include="ViewModels\AccessTypePage.cs" />
     <Compile Include="JSON\API.cs" />
