@@ -102,16 +102,47 @@ namespace eduVPN.ViewModels
                                         uri_builder.Uri,
                                         null,
                                         null,
-                                        /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
+                                        null,
                                         _abort.Token);
 
                                     // Try to restore the access token from the settings.
                                     Parent.AccessToken = null;
+                                    var now = DateTime.Now;
                                     try
                                     {
                                         var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
                                         if (at != null)
                                             Parent.AccessToken = AccessToken.FromBase64String(at);
+
+                                        if (Parent.AccessToken == null && InstanceList.AuthType == InstanceList.AuthorizationType.Distributed)
+                                        {
+                                            // Try to find the most appropriate token from any instance.
+                                            foreach (var inst in InstanceList)
+                                            {
+                                                try
+                                                {
+                                                    at = Properties.Settings.Default.AccessTokens[inst.Base.AbsoluteUri];
+                                                    if (at != null)
+                                                    {
+                                                        var token = AccessToken.FromBase64String(at);
+                                                        if (Parent.AccessToken == null)
+                                                        {
+                                                            // The first token was found.
+                                                            Parent.AccessToken = token;
+                                                        }
+                                                        else if (
+                                                            Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= now &&
+                                                            !(token.Expires.HasValue && token.Expires.Value <= now))
+                                                        {
+                                                            // The previous token found has expired, but the one found now hasn't yet.
+                                                            Parent.AccessToken = token;
+                                                        }
+                                                        // else if ... If we have any other means of prioritizing tokens, we should implement them here.
+                                                    }
+                                                }
+                                                catch (Exception) { }
+                                            }
+                                        }
                                     }
                                     catch (Exception) { }
 
@@ -120,7 +151,7 @@ namespace eduVPN.ViewModels
                                     api.LoadJSON((await api_get_task).Value);
                                     Parent.Endpoints = api;
 
-                                    if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
+                                    if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= now)
                                     {
                                         // The access token expired. Try refreshing it.
                                         try

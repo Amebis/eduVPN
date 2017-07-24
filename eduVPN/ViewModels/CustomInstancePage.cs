@@ -67,7 +67,7 @@ namespace eduVPN.ViewModels
                                     uri_builder.Uri,
                                     null,
                                     null,
-                                    /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
+                                    null,
                                     _abort.Token);
 
                                 // Try to restore the access token from the settings.
