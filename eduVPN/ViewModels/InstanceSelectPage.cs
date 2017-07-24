@@ -120,6 +120,22 @@ namespace eduVPN.ViewModels
                                     api.LoadJSON((await api_get_task).Value);
                                     Parent.Endpoints = api;
 
+                                    if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
+                                    {
+                                        // The access token expired. Try refreshing it.
+                                        try
+                                        {
+                                            Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
+                                                Parent.Endpoints.TokenEndpoint,
+                                                null,
+                                                _abort.Token);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            Parent.AccessToken = null;
+                                        }
+                                    }
+
                                     if (Parent.AccessToken != null)
                                         Parent.CurrentPage = Parent.ProfileSelectPage;
                                     else
