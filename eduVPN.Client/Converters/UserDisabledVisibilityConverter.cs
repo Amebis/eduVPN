@@ -13,13 +13,13 @@ using System.Windows.Data;
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns <c>Visibility.Visible</c> if input value is <c>true</c>; or <c>Visibility.Collapsed</c> otherwise.
+    /// Returns <c>Visibility.Visible</c> if input value is <c>false</c>; or <c>Visibility.Collapsed</c> otherwise.
     /// </summary>
-    public class TwoFactorAuthenticationIconVisibilityConverter : IValueConverter
+    public class UserDisabledVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (bool)value ? Visibility.Visible : Visibility.Collapsed;
+            return value != null && !(bool)value ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

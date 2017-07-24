@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
+    <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Views\ProfileSelectPage.xaml.cs">
       <DependentUpon>ProfileSelectPage.xaml</DependentUpon>
     </Compile>

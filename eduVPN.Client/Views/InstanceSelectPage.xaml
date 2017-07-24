@@ -46,7 +46,6 @@
     </Page.Resources>
 
     <ListBox
-        Grid.Row="1"
         Style="{StaticResource eduVPNListStyle}"
         ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
         ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"

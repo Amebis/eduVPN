@@ -176,4 +176,8 @@ for example when using public WiFi.</value>
   <data name="SecureInternetSelectPageTitle" xml:space="preserve">
     <value>Choose Provider</value>
   </data>
+  <data name="UserDisabledMessage" xml:space="preserve">
+    <value>Warning! Your account is marked as disabled. You might not be able to connect.
+Please, contact your helpdesk for support.</value>
+  </data>
 </root>

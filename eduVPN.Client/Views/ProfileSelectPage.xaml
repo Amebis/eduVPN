@@ -47,12 +47,32 @@
         </DataTemplate>
     </Page.Resources>
 
-    <ListBox
-        Grid.Row="1"
-        Style="{StaticResource eduVPNListStyle}"
-        ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
-        ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-        ItemsSource="{Binding ProfileList}"
-        SelectedItem="{Binding SelectedProfile}"
-        SelectionChanged="ProfileList_SelectionChanged"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StatusBar
+            Style="{StaticResource eduVPNInlineInfoBarStyle}"
+            Visibility="{Binding UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}}">
+            <StatusBarItem>
+                <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock
+                    TextWrapping="Wrap"
+                    Text="{x:Static res:Strings.UserDisabledMessage}"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <ListBox
+            Grid.Row="1"
+            Style="{StaticResource eduVPNListStyle}"
+            ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
+            ItemsSource="{Binding ProfileList}"
+            SelectedItem="{Binding SelectedProfile}"
+            SelectionChanged="ProfileList_SelectionChanged"/>
+    </Grid>
 </Page>

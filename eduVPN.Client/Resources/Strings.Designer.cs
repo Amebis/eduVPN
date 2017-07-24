@@ -232,5 +232,15 @@ namespace eduVPN.Client.Resources {
                 return ResourceManager.GetString("TwoFactorAuthenticationRequired", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning! Your account is marked as disabled. You might not be able to connect.
+        ///Please, contact your helpdesk for support..
+        /// </summary>
+        public static string UserDisabledMessage {
+            get {
+                return ResourceManager.GetString("UserDisabledMessage", resourceCulture);
+            }
+        }
     }
 }

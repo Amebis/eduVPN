@@ -39,6 +39,18 @@ namespace eduVPN.JSON
 
         #endregion
 
+        #region Constructors
+
+        /// <summary>
+        /// Constructs user info
+        /// </summary>
+        public UserInfo()
+        {
+            IsEnabled = true;
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>

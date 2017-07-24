@@ -176,4 +176,8 @@ npr. kadar uporabljate javni WiFi.</value>
   <data name="SecureInternetSelectPageTitle" xml:space="preserve">
     <value>Izberite ponudnika</value>
   </data>
+  <data name="UserDisabledMessage" xml:space="preserve">
+    <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati.
+Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
+  </data>
 </root>
