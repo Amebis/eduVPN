@@ -36,6 +36,7 @@
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
+    <Compile Include="JSON\Message.cs" />
     <Compile Include="JSON\Profile.cs" />
     <Compile Include="JSON\UserInfo.cs" />
     <Compile Include="SerializableStringDictionary.cs" />

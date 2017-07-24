@@ -5,8 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Collections.ObjectModel;
-
 namespace eduVPN.JSON
 {
     /// <summary>

@@ -91,7 +91,7 @@ namespace eduVPN.JSON
                 AuthorizationType = AuthorizationType.Local;
 
             // Parse signed date.
-            SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
+            SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out var signed_at_date) ? signed_at_date : (DateTime?)null;
         }
 
         #endregion

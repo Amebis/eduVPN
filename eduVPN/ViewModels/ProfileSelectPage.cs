@@ -92,6 +92,7 @@ namespace eduVPN.ViewModels
             base(parent)
         {
             ProfileList = new JSON.Collection<JSON.Profile>();
+
             // Launch profile list load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
                 param =>
