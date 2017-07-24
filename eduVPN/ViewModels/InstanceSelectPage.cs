@@ -114,7 +114,7 @@ namespace eduVPN.ViewModels
                                         if (at != null)
                                             Parent.AccessToken = AccessToken.FromBase64String(at);
 
-                                        if (Parent.AccessToken == null && InstanceList.AuthType == InstanceList.AuthorizationType.Distributed)
+                                        if (Parent.AccessToken == null && InstanceList.AuthorizationType == AuthorizationType.Distributed)
                                         {
                                             // Try to find the most appropriate token from any instance.
                                             foreach (var inst in InstanceList)

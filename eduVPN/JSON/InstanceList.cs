@@ -17,42 +17,17 @@ namespace eduVPN.JSON
     /// </summary>
     public class InstanceList : ObservableCollection<Instance>, ILoadableItem
     {
-        #region Data Types
-
-        /// <summary>
-        /// Authorization type
-        /// </summary>
-        public enum AuthorizationType
-        {
-            /// <summary>
-            /// Access token is specific to each instance and cannot be used by other instances (default).
-            /// </summary>
-            Local = 0,
-
-            /// <summary>
-            /// Access token is issued by a central OAuth server; all instances accept this token.
-            /// </summary>
-            Federated,
-
-            /// <summary>
-            /// Access token from any instance can be used by any other instance.
-            /// </summary>
-            Distributed
-        }
-
-        #endregion
-
         #region Properties
 
         /// <summary>
         /// Authorization type
         /// </summary>
-        public AuthorizationType AuthType
+        public AuthorizationType AuthorizationType
         {
-            get { return _auth_type; }
-            set { if (value != _auth_type) { _auth_type = value; OnPropertyChanged(new PropertyChangedEventArgs("AuthType")); } }
+            get { return _authorization_type; }
+            set { if (value != _authorization_type) { _authorization_type = value; OnPropertyChanged(new PropertyChangedEventArgs("AuthorizationType")); } }
         }
-        private AuthorizationType _auth_type;
+        private AuthorizationType _authorization_type;
 
         /// <summary>
         /// Version sequence
@@ -107,13 +82,13 @@ namespace eduVPN.JSON
             {
                 switch (authorization_type.ToLower())
                 {
-                    case "federated": AuthType = AuthorizationType.Federated; break;
-                    case "distributed": AuthType = AuthorizationType.Distributed; break;
-                    default: AuthType = AuthorizationType.Local; break; // Assume local authorization type on all other values.
+                    case "federated": AuthorizationType = AuthorizationType.Federated; break;
+                    case "distributed": AuthorizationType = AuthorizationType.Distributed; break;
+                    default: AuthorizationType = AuthorizationType.Local; break; // Assume local authorization type on all other values.
                 }
             }
             else
-                AuthType = AuthorizationType.Local;
+                AuthorizationType = AuthorizationType.Local;
 
             // Parse signed date.
             SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out DateTime signed_at_date) ? signed_at_date : (DateTime?)null;
