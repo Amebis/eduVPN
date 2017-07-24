@@ -23,7 +23,7 @@ namespace eduVPN.JSON
         /// Constructs an exception
         /// </summary>
         /// <param name="code">JSON code</param>
-        /// <param name="start">Starting offset in <paramref name="code"/>.</param>
+        /// <param name="start">Starting offset in <paramref name="code"/></param>
         public APIErrorException() :
             this(Resources.Strings.ErrorAPIServerReply)
         {

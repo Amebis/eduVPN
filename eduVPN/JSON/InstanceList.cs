@@ -81,7 +81,7 @@ namespace eduVPN.JSON
         /// <summary>
         /// Loads instance list from a dictionary object (provided by JSON)
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements.</param>
+        /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements</param>
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {

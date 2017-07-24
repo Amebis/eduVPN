@@ -83,17 +83,13 @@ namespace eduVPN.ViewModels
                                 Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
                                     Parent.Endpoints.TokenEndpoint,
+                                    null,
                                     _abort.Token);
 
                                 // Save the access token.
-                                using (var stream = new MemoryStream())
-                                {
-                                    var formatter = new BinaryFormatter();
-                                    formatter.Serialize(stream, Parent.AccessToken);
-                                    if (Properties.Settings.Default.AccessTokens == null)
-                                        Properties.Settings.Default.AccessTokens = new SerializableStringDictionary();
-                                    Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri] = Convert.ToBase64String(stream.ToArray());
-                                }
+                                if (Properties.Settings.Default.AccessTokens == null)
+                                    Properties.Settings.Default.AccessTokens = new SerializableStringDictionary();
+                                Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri] = Parent.AccessToken.ToBase64String();
 
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ProfileSelectPage;

@@ -95,17 +95,15 @@ namespace eduVPN.ViewModels
                                     Parent.CurrentPage = Parent.CustomInstancePage;
                                 else
                                 {
-                                    // Get and load API endpoints.
-                                    var api = new JSON.API();
+                                    // Schedule get API endpoints.
                                     var uri_builder = new UriBuilder(Parent.Instance.Base);
                                     uri_builder.Path += "info.json";
-                                    api.LoadJSON((await JSON.Response.GetAsync(
+                                    var api_get_task = JSON.Response.GetAsync(
                                         uri_builder.Uri,
                                         null,
                                         null,
                                         /*Parent.Instance.PublicKey*/ null, // TODO: Ask François about the purpose of public_key record in federation.json.
-                                        _abort.Token)).Value);
-                                    Parent.Endpoints = api;
+                                        _abort.Token);
 
                                     // Try to restore the access token from the settings.
                                     Parent.AccessToken = null;
@@ -113,15 +111,14 @@ namespace eduVPN.ViewModels
                                     {
                                         var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
                                         if (at != null)
-                                        {
-                                            using (var stream = new MemoryStream(Convert.FromBase64String(at)))
-                                            {
-                                                var formatter = new BinaryFormatter();
-                                                Parent.AccessToken = (AccessToken)formatter.Deserialize(stream);
-                                            }
-                                        }
+                                            Parent.AccessToken = AccessToken.FromBase64String(at);
                                     }
                                     catch (Exception) { }
+
+                                    // Load API endpoints
+                                    var api = new JSON.API();
+                                    api.LoadJSON((await api_get_task).Value);
+                                    Parent.Endpoints = api;
 
                                     if (Parent.AccessToken != null)
                                         Parent.CurrentPage = Parent.ProfileSelectPage;

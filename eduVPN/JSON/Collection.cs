@@ -21,7 +21,7 @@ namespace eduVPN.JSON
         /// <summary>
         /// Loads item list from a dictionary object (provided by JSON)
         /// </summary>
-        /// <param name="obj">List of items.</param>
+        /// <param name="obj">List of items</param>
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>List&lt;object&gt;</c></exception>
         public void Load(object obj)
         {
