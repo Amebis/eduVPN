@@ -49,7 +49,7 @@ namespace eduVPN.JSON
         private Uri _logo;
 
         /// <summary>
-        /// Public key used for signing (<c>null</c> if none)
+        /// Public key used for access token signing (<c>null</c> if none)
         /// </summary>
         public byte[] PublicKey
         {
