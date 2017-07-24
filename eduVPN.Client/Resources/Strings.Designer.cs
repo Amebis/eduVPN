@@ -207,7 +207,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose Provider.
+        ///   Looks up a localized string similar to Choose your home country.
         /// </summary>
         public static string SecureInternetSelectPageTitle {
             get {

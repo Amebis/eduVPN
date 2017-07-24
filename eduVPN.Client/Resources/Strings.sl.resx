@@ -174,7 +174,7 @@ npr. kadar uporabljate javni WiFi.</value>
     <value>Zahteva dvojno preverjanje pristnosti</value>
   </data>
   <data name="SecureInternetSelectPageTitle" xml:space="preserve">
-    <value>Izberite ponudnika</value>
+    <value>Izberite svojo domačo državo</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
     <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati.
