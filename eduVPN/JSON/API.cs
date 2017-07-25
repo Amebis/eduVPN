@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace eduVPN.JSON
 {
     /// <summary>
-    /// An eduVPN API endpoint
+    /// An eduVPN API endpoints
     /// </summary>
     public class API : ILoadableItem
     {

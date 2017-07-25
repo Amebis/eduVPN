@@ -55,6 +55,9 @@
         <DataTemplate DataType="{x:Type viewModel:ProfileSelectPage}">
             <view:ProfileSelectPage/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:InstanceAndProfileSelectPage}">
+            <view:InstanceAndProfileSelectPage/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>

@@ -10,17 +10,16 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for ProfileSelectPage.xaml
+    /// Interaction logic for InstanceAndProfileSelectPage.xaml
     /// </summary>
-    public partial class ProfileSelectPage : ProfileSelectBasePage
+    public partial class InstanceAndProfileSelectPage : ProfileSelectBasePage
     {
         #region Constructors
 
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public ProfileSelectPage() :
-            base()
+        public InstanceAndProfileSelectPage()
         {
             InitializeComponent();
         }

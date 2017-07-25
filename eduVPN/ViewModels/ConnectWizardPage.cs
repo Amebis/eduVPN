@@ -72,10 +72,25 @@ namespace eduVPN.ViewModels
         /// </summary>
         public bool IsBusy
         {
-            get { return _is_busy; }
-            set { if (value != _is_busy) { _is_busy = value; RaisePropertyChanged(); } }
+            get { return _task_count > 0; }
         }
-        private bool _is_busy;
+
+        /// <summary>
+        /// Number of background task the wizard is performing
+        /// </summary>
+        public uint TaskCount
+        {
+            get { return _task_count; }
+            set {
+                if (value != _task_count)
+                {
+                    _task_count = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("IsBusy");
+                }
+            }
+        }
+        private uint _task_count;
 
         #endregion
 

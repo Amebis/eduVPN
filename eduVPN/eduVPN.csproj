@@ -49,6 +49,8 @@
     <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="JSON\Instance.cs" />
     <Compile Include="JSON\InstanceList.cs" />
+    <Compile Include="ViewModels\InstanceAndProfileSelectPage.cs" />
+    <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
     <Compile Include="ViewModels\SecureInternetSelectPage.cs" />
     <Compile Include="ViewModels\CustomInstancePage.cs" />
     <Compile Include="ViewModels\InstanceSelectPage.cs" />

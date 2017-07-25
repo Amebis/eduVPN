@@ -42,9 +42,13 @@
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
+    <Compile Include="Views\InstanceAndProfileSelectPage.xaml.cs">
+      <DependentUpon>InstanceAndProfileSelectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProfileSelectPage.xaml.cs">
       <DependentUpon>ProfileSelectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProfileSelectBasePage.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,6 +90,10 @@
     <Page Include="Views\CustomInstancePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InstanceAndProfileSelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ProfileSelectPage.xaml">
       <SubType>Designer</SubType>

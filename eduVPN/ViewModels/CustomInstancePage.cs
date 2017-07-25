@@ -53,15 +53,15 @@ namespace eduVPN.ViewModels
                         // execute
                         async () => {
                             // Set busy flag.
-                            IsBusy = true;
+                            TaskCount++;
 
                             try
                             {
                                 // Set instance base URI.
-                                Parent.Instance.Base = new Uri(InstanceURI);
+                                Parent.AuthenticatingInstance.Base = new Uri(InstanceURI);
 
-                                // Schedule get API endpoints.
-                                var uri_builder = new UriBuilder(Parent.Instance.Base);
+                                // Schedule API endpoints get.
+                                var uri_builder = new UriBuilder(Parent.AuthenticatingInstance.Base);
                                 uri_builder.Path += "info.json";
                                 var api_get_task = JSON.Response.GetAsync(
                                     uri_builder.Uri,
@@ -74,15 +74,15 @@ namespace eduVPN.ViewModels
                                 Parent.AccessToken = null;
                                 try
                                 {
-                                    var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
+                                    var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingInstance.Base.AbsoluteUri];
                                     if (at != null)
                                         Parent.AccessToken = AccessToken.FromBase64String(at);
                                 } catch (Exception) { }
 
-                                // Load API endpoints
+                                // Load API endpoints.
                                 var api = new JSON.API();
                                 api.LoadJSON((await api_get_task).Value);
-                                Parent.Endpoints = api;
+                                Parent.AuthenticatingEndpoints = api;
 
                                 if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
                                 {
@@ -90,7 +90,7 @@ namespace eduVPN.ViewModels
                                     try
                                     {
                                         Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
-                                            Parent.Endpoints.TokenEndpoint,
+                                            Parent.AuthenticatingEndpoints.TokenEndpoint,
                                             null,
                                             _abort.Token);
                                     }
@@ -100,10 +100,14 @@ namespace eduVPN.ViewModels
                                     }
                                 }
 
-                                if (Parent.AccessToken != null)
-                                    Parent.CurrentPage = Parent.ProfileSelectPage;
-                                else
+                                // Connecting instance will be the same as authenticating.
+                                Parent.ConnectingInstance = Parent.AuthenticatingInstance;
+                                Parent.ConnectingEndpoints = Parent.AuthenticatingEndpoints;
+
+                                if (Parent.AccessToken == null)
                                     Parent.CurrentPage = Parent.AuthorizationPage;
+                                else
+                                    Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
                             catch (Exception ex)
                             {
@@ -112,7 +116,7 @@ namespace eduVPN.ViewModels
                             finally
                             {
                                 // Clear busy flag.
-                                IsBusy = false;
+                                TaskCount--;
                             }
                         },
 

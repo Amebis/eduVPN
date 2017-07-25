@@ -10,8 +10,6 @@ using eduVPN.JSON;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -84,19 +82,19 @@ namespace eduVPN.ViewModels
                         async () =>
                         {
                             // Set busy flag.
-                            IsBusy = true;
+                            TaskCount++;
 
                             try
                             {
                                 // Save selected instance.
-                                Parent.Instance = SelectedInstance;
+                                Parent.AuthenticatingInstance = SelectedInstance;
 
                                 if (SelectedInstance.IsCustom)
                                     Parent.CurrentPage = Parent.CustomInstancePage;
                                 else
                                 {
-                                    // Schedule get API endpoints.
-                                    var uri_builder = new UriBuilder(Parent.Instance.Base);
+                                    // Schedule API endpoints get.
+                                    var uri_builder = new UriBuilder(Parent.AuthenticatingInstance.Base);
                                     uri_builder.Path += "info.json";
                                     var api_get_task = JSON.Response.GetAsync(
                                         uri_builder.Uri,
@@ -109,16 +107,16 @@ namespace eduVPN.ViewModels
                                     Parent.AccessToken = null;
                                     try
                                     {
-                                        var at = Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri];
+                                        var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingInstance.Base.AbsoluteUri];
                                         if (at != null)
                                             Parent.AccessToken = AccessToken.FromBase64String(at);
                                     }
                                     catch (Exception) { }
 
-                                    // Load API endpoints
+                                    // Load API endpoints.
                                     var api = new JSON.API();
                                     api.LoadJSON((await api_get_task).Value);
-                                    Parent.Endpoints = api;
+                                    Parent.AuthenticatingEndpoints = api;
 
                                     if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
                                     {
@@ -126,7 +124,7 @@ namespace eduVPN.ViewModels
                                         try
                                         {
                                             Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
-                                                Parent.Endpoints.TokenEndpoint,
+                                                Parent.AuthenticatingEndpoints.TokenEndpoint,
                                                 null,
                                                 _abort.Token);
                                         }
@@ -136,10 +134,25 @@ namespace eduVPN.ViewModels
                                         }
                                     }
 
-                                    if (Parent.AccessToken != null)
-                                        Parent.CurrentPage = Parent.ProfileSelectPage;
+                                    if (InstanceList.AuthorizationType == AuthorizationType.Local)
+                                    {
+                                        // Connecting instance will be the same as authenticating.
+                                        Parent.ConnectingInstance = Parent.AuthenticatingInstance;
+                                        Parent.ConnectingEndpoints = Parent.AuthenticatingEndpoints;
+                                    }
                                     else
+                                    {
+                                        // Connecting instance will not (necessarry) be the same as authenticating.
+                                        Parent.ConnectingInstance = null;
+                                        Parent.ConnectingEndpoints = null;
+                                    }
+
+                                    if (Parent.AccessToken == null)
                                         Parent.CurrentPage = Parent.AuthorizationPage;
+                                    else if (Parent.ConnectingInstance == null)
+                                        Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
+                                    else
+                                        Parent.CurrentPage = Parent.ProfileSelectPage;
                                 }
                             }
                             catch (Exception ex)
@@ -149,7 +162,7 @@ namespace eduVPN.ViewModels
                             finally
                             {
                                 // Clear busy flag.
-                                IsBusy = false;
+                                TaskCount--;
                             }
                         },
 
@@ -223,7 +236,7 @@ namespace eduVPN.ViewModels
                 try
                 {
                     // Set busy flag (in the UI thread).
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = true));
+                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
                     {
@@ -281,7 +294,7 @@ namespace eduVPN.ViewModels
                     finally
                     {
                         // Clear busy flag (in the UI thread).
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = false));
+                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
 
                     // Wait for five minutes.

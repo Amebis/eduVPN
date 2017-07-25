@@ -1,5 +1,5 @@
 ﻿<view:ProfileSelectBasePage
-    x:Class="eduVPN.Views.ProfileSelectPage"
+    x:Class="eduVPN.Views.InstanceAndProfileSelectPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -30,6 +30,13 @@
                     Text="{x:Static res:Strings.UserDisabledMessage}"/>
             </StatusBarItem>
         </StatusBar>
+
+        <ComboBox
+            Margin="10"
+            ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
+            ItemsSource="{Binding InstanceList}"
+            SelectedItem="{Binding SelectedInstance}"/>
 
         <ListBox
             Grid.Row="1"

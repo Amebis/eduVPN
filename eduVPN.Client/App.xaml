@@ -295,7 +295,7 @@
 
                             <StatusBar
                             Style="{StaticResource eduVPNInfoBarStyle}"
-                            Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}}">
+                            Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
                                 <StatusBarItem>
                                     <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
                                 </StatusBarItem>
@@ -327,7 +327,7 @@
 
                             <StatusBar
                                 Style="{StaticResource eduVPNInfoBarStyle}"
-                                Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}}">
+                                Visibility="{Binding ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
                                 <StatusBarItem>
                                     <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
                                 </StatusBarItem>
@@ -363,5 +363,73 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- eduVPN data templates -->
+        <DataTemplate x:Key="eduVPNInstanceSelectionItemTemplate">
+            <Grid
+                Margin="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Separator
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+                <!-- TODO: Provide alternative Source for instances with Logo==null. -->
+                <Image
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Source="{Binding Logo}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,10,10,10"
+                    RenderOptions.BitmapScalingMode="Fant"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Text="{Binding DisplayName}"
+                    Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="eduVPNProfileSelectionItemTemplate">
+            <Grid
+                Margin="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Separator
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="{Binding DisplayName}"
+                    Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
+
+                <ContentControl
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10,10,0,10"
+                    Content="{StaticResource eduVPNTwoFactorAuthenticationIcon}"
+                    Visibility="{Binding IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue=Visibility.Collapsed}"
+                    ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"/>
+            </Grid>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -30,29 +30,29 @@ namespace eduVPN.ViewModels
         private AccessType _access_type;
 
         /// <summary>
-        /// eduVPN instance selected
+        /// Authenticating eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public JSON.Instance Instance
+        public JSON.Instance AuthenticatingInstance
         {
-            get { return _instance; }
+            get { return _authenticating_instance; }
             set
             {
-                _instance = value;
+                _authenticating_instance = value;
                 RaisePropertyChanged();
             }
         }
-        private JSON.Instance _instance;
+        private JSON.Instance _authenticating_instance;
 
         /// <summary>
-        /// Instance API endpoints
+        /// Authenticating eduVPN instance API endpoints
         /// </summary>
-        public JSON.API Endpoints
+        public JSON.API AuthenticatingEndpoints
         {
-            get { return _endpoints; }
-            set { _endpoints = value; RaisePropertyChanged(); }
+            get { return _authenticating_endpoints; }
+            set { _authenticating_endpoints = value; RaisePropertyChanged(); }
         }
-        private JSON.API _endpoints;
+        private JSON.API _authenticating_endpoints;
 
         /// <summary>
         /// OAuth access token
@@ -63,6 +63,31 @@ namespace eduVPN.ViewModels
             set { _access_token = value; RaisePropertyChanged(); }
         }
         private AccessToken _access_token;
+
+        /// <summary>
+        /// Connecting eduVPN instance
+        /// </summary>
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public JSON.Instance ConnectingInstance
+        {
+            get { return _connecting_instance; }
+            set
+            {
+                _connecting_instance = value;
+                RaisePropertyChanged();
+            }
+        }
+        private JSON.Instance _connecting_instance;
+
+        /// <summary>
+        /// Connecting eduVPN instance API endpoints
+        /// </summary>
+        public JSON.API ConnectingEndpoints
+        {
+            get { return _connecting_endpoints; }
+            set { _connecting_endpoints = value; RaisePropertyChanged(); }
+        }
+        private JSON.API _connecting_endpoints;
 
         #region Pages
 
@@ -150,6 +175,20 @@ namespace eduVPN.ViewModels
             }
         }
         private ProfileSelectPage _profile_select_page;
+
+        /// <summary>
+        /// Instance and profile selection wizard page (for federated authentication)
+        /// </summary>
+        public InstanceAndProfileSelectPage InstanceAndProfileSelectPage
+        {
+            get
+            {
+                if (_instance_and_profile_select_page == null)
+                    _instance_and_profile_select_page = new InstanceAndProfileSelectPage(this);
+                return _instance_and_profile_select_page;
+            }
+        }
+        private InstanceAndProfileSelectPage _instance_and_profile_select_page;
 
         #endregion
 

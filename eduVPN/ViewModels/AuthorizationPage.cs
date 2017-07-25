@@ -73,7 +73,7 @@ namespace eduVPN.ViewModels
                         async param =>
                         {
                             // Set busy flag.
-                            IsBusy = true;
+                            TaskCount++;
 
                             try
                             {
@@ -82,17 +82,20 @@ namespace eduVPN.ViewModels
                                 // Process response and get access token.
                                 Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
-                                    Parent.Endpoints.TokenEndpoint,
+                                    Parent.AuthenticatingEndpoints.TokenEndpoint,
                                     null,
                                     _abort.Token);
 
                                 // Save the access token.
                                 if (Properties.Settings.Default.AccessTokens == null)
                                     Properties.Settings.Default.AccessTokens = new SerializableStringDictionary();
-                                Properties.Settings.Default.AccessTokens[Parent.Instance.Base.AbsoluteUri] = Parent.AccessToken.ToBase64String();
+                                Properties.Settings.Default.AccessTokens[Parent.AuthenticatingInstance.Base.AbsoluteUri] = Parent.AccessToken.ToBase64String();
 
                                 // Go to profile selection page.
-                                Parent.CurrentPage = Parent.ProfileSelectPage;
+                                if (Parent.ConnectingInstance == null)
+                                    Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
+                                else
+                                    Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
                             catch (Exception ex)
                             {
@@ -101,7 +104,7 @@ namespace eduVPN.ViewModels
                             finally
                             {
                                 // Clear busy flag.
-                                IsBusy = false;
+                                TaskCount--;
                             }
                         },
 
@@ -169,7 +172,7 @@ namespace eduVPN.ViewModels
                 () =>
                 {
                     // Set busy flag (in the UI thread).
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = true));
+                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
                     {
@@ -178,7 +181,7 @@ namespace eduVPN.ViewModels
                         // Opens authorization request in the browser.
                         _authorization_grant = new AuthorizationGrant()
                         {
-                            AuthorizationEndpoint = Parent.Endpoints.AuthorizationEndpoint,
+                            AuthorizationEndpoint = Parent.AuthenticatingEndpoints.AuthorizationEndpoint,
                             RedirectEndpoint = new Uri(_redirect_endpoint),
                             ClientID = "org.eduvpn.app",
                             Scope = new List<string>() { "config" },
@@ -195,7 +198,7 @@ namespace eduVPN.ViewModels
                     finally
                     {
                         // Clear busy flag (in the UI thread).
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => IsBusy = false));
+                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
                 });
             _worker.Start();
@@ -210,7 +213,7 @@ namespace eduVPN.ViewModels
                 _worker = null;
             }
 
-            if (Parent.Instance.IsCustom)
+            if (Parent.AuthenticatingInstance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;
             else
                 switch (Parent.AccessType)
@@ -222,7 +225,7 @@ namespace eduVPN.ViewModels
 
         protected override bool CanNavigateBack()
         {
-            if (Parent.Instance.IsCustom)
+            if (Parent.AuthenticatingInstance.IsCustom)
                 return true;
             else
                 switch (Parent.AccessType)
