@@ -23,7 +23,7 @@ namespace eduVPN.JSON
         /// </summary>
         /// <param name="obj">List of items</param>
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>List&lt;object&gt;</c></exception>
-        public void Load(object obj)
+        public virtual void Load(object obj)
         {
             var obj2 = obj as List<object>;
             if (obj2 == null)

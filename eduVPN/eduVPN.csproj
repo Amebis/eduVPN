@@ -37,7 +37,10 @@
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
     <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\MessageType.cs" />
+    <Compile Include="Models\MessageList.cs" />
+    <Compile Include="Models\MessageMaintenance.cs" />
+    <Compile Include="Models\MessageNotification.cs" />
+    <Compile Include="Models\MessageOfTheDay.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\StatusType.cs" />
     <Compile Include="Models\UserInfo.cs" />
