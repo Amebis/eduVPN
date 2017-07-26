@@ -20,9 +20,9 @@ namespace eduVPN.Client.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Models.StatusType)
+            if (value is Models.StatusType status_type)
             {
-                switch ((Models.StatusType)value)
+                switch (status_type)
                 {
                     case Models.StatusType.Initializing: return Application.Current.TryFindResource("eduVPNStatusTypeInitializingIcon") as Canvas;
                     case Models.StatusType.Connecting: return Application.Current.TryFindResource("eduVPNStatusTypeConnectingIcon") as Canvas;

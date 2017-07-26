@@ -18,35 +18,36 @@ namespace eduVPN.Models
 
         public override void Load(object obj)
         {
-            var obj2 = obj as List<object>;
-            if (obj2 == null)
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(List<object>), obj.GetType());
-
-            Clear();
-
-            // Parse all mesages listed. Don't do it in parallel to preserve the sort order.
-            foreach (var el in obj2)
+            if (obj is List<object> obj2)
             {
-                var el2 = (Dictionary<string, object>)el;
+                Clear();
 
-                // Parse message type.
-                Message message = null;
-                if (eduJSON.Parser.GetValue(el2, "type", out string type))
+                // Parse all mesages listed. Don't do it in parallel to preserve the sort order.
+                foreach (var el in obj2)
                 {
-                    switch (type.ToLower())
-                    {
-                        case "motd": message = new MessageOfTheDay(); break;
-                        case "maintenance": message = new MessageMaintenance(); break;
-                        default: message = new MessageNotification(); break; // Assume notification type on all other values.
-                    }
-                }
-                else
-                    message = new MessageNotification();
+                    var el2 = (Dictionary<string, object>)el;
 
-                // Load and add message.
-                message.Load(el);
-                Add(message);
+                    // Parse message type.
+                    Message message = null;
+                    if (eduJSON.Parser.GetValue(el2, "type", out string type))
+                    {
+                        switch (type.ToLower())
+                        {
+                            case "motd": message = new MessageOfTheDay(); break;
+                            case "maintenance": message = new MessageMaintenance(); break;
+                            default: message = new MessageNotification(); break; // Assume notification type on all other values.
+                        }
+                    }
+                    else
+                        message = new MessageNotification();
+
+                    // Load and add message.
+                    message.Load(el);
+                    Add(message);
+                }
             }
+            else
+                throw new eduJSON.InvalidParameterTypeException("obj", typeof(List<object>), obj.GetType());
         }
 
         #endregion

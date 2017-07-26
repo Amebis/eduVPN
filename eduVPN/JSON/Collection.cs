@@ -25,19 +25,20 @@ namespace eduVPN.JSON
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>List&lt;object&gt;</c></exception>
         public virtual void Load(object obj)
         {
-            var obj2 = obj as List<object>;
-            if (obj2 == null)
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(List<object>), obj.GetType());
-
-            Clear();
-
-            // Parse all items listed. Don't do it in parallel to preserve the sort order.
-            foreach (var el in obj2)
+            if (obj is List<object> obj2)
             {
-                var item = new T();
-                item.Load(el);
-                Add(item);
+                Clear();
+
+                // Parse all items listed. Don't do it in parallel to preserve the sort order.
+                foreach (var el in obj2)
+                {
+                    var item = new T();
+                    item.Load(el);
+                    Add(item);
+                }
             }
+            else
+                throw new eduJSON.InvalidParameterTypeException("obj", typeof(List<object>), obj.GetType());
         }
 
         #endregion

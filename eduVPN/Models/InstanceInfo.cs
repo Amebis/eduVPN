@@ -88,21 +88,22 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
-            var obj2 = obj as Dictionary<string, object>;
-            if (obj2 == null)
+            if (obj is Dictionary<string, object> obj2)
+            {
+                // Set base URI.
+                Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_uri"));
+
+                // Set display name.
+                DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : Base.Host;
+
+                // Set logo URI.
+                Logo = eduJSON.Parser.GetValue(obj2, "logo_uri", out string logo_uri) ? new Uri(logo_uri) : null;
+
+                // Set public key.
+                PublicKey = eduJSON.Parser.GetValue(obj2, "public_key", out string pub_key) ? Convert.FromBase64String(pub_key) : null;
+            }
+            else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
-
-            // Set base URI.
-            Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_uri"));
-
-            // Set display name.
-            DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : Base.Host;
-
-            // Set logo URI.
-            Logo = eduJSON.Parser.GetValue(obj2, "logo_uri", out string logo_uri) ? new Uri(logo_uri) : null;
-
-            // Set public key.
-            PublicKey = eduJSON.Parser.GetValue(obj2, "public_key", out string pub_key) ? Convert.FromBase64String(pub_key) : null;
         }
 
         #endregion

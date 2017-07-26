@@ -60,38 +60,39 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
-            var obj2 = obj as Dictionary<string, object>;
-            if (obj2 == null)
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
-
-            Clear();
-
-            // Parse all instances listed. Don't do it in parallel to preserve the sort order.
-            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "instances"))
+            if (obj is Dictionary<string, object> obj2)
             {
-                var instance = new InstanceInfo();
-                instance.Load(el);
-                Add(instance);
-            }
+                Clear();
 
-            // Parse sequence.
-            Sequence = eduJSON.Parser.GetValue(obj2, "seq", out int seq) ? (uint)seq : 0;
-
-            // Parse authorization data.
-            if (eduJSON.Parser.GetValue(obj2, "authorization_type", out string authorization_type))
-            {
-                switch (authorization_type.ToLower())
+                // Parse all instances listed. Don't do it in parallel to preserve the sort order.
+                foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "instances"))
                 {
-                    case "federated": AuthorizationType = AuthorizationType.Federated; break;
-                    case "distributed": AuthorizationType = AuthorizationType.Distributed; break;
-                    default: AuthorizationType = AuthorizationType.Local; break; // Assume local authorization type on all other values.
+                    var instance = new InstanceInfo();
+                    instance.Load(el);
+                    Add(instance);
                 }
+
+                // Parse sequence.
+                Sequence = eduJSON.Parser.GetValue(obj2, "seq", out int seq) ? (uint)seq : 0;
+
+                // Parse authorization data.
+                if (eduJSON.Parser.GetValue(obj2, "authorization_type", out string authorization_type))
+                {
+                    switch (authorization_type.ToLower())
+                    {
+                        case "federated": AuthorizationType = AuthorizationType.Federated; break;
+                        case "distributed": AuthorizationType = AuthorizationType.Distributed; break;
+                        default: AuthorizationType = AuthorizationType.Local; break; // Assume local authorization type on all other values.
+                    }
+                }
+                else
+                    AuthorizationType = AuthorizationType.Local;
+
+                // Parse signed date.
+                SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out var signed_at_date) ? signed_at_date : (DateTime?)null;
             }
             else
-                AuthorizationType = AuthorizationType.Local;
-
-            // Parse signed date.
-            SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out var signed_at_date) ? signed_at_date : (DateTime?)null;
+                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
         }
 
         #endregion

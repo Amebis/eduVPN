@@ -50,11 +50,14 @@ namespace eduVPN.Models
         {
             base.Load(obj);
 
-            var obj2 = obj as Dictionary<string, object>;
-
-            // Set message dates.
-            Begin = eduJSON.Parser.GetValue(obj2, "begin", out string begin) && DateTime.TryParse(begin, out var begin_date) ? begin_date : (DateTime?)null;
-            End = eduJSON.Parser.GetValue(obj2, "end", out string end) && DateTime.TryParse(end, out var end_date) ? end_date : (DateTime?)null;
+            if (obj is Dictionary<string, object> obj2)
+            {
+                // Set message dates.
+                Begin = eduJSON.Parser.GetValue(obj2, "begin", out string begin) && DateTime.TryParse(begin, out var begin_date) ? begin_date : (DateTime?)null;
+                End = eduJSON.Parser.GetValue(obj2, "end", out string end) && DateTime.TryParse(end, out var end_date) ? end_date : (DateTime?)null;
+            }
+            else
+                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
         }
 
         #endregion

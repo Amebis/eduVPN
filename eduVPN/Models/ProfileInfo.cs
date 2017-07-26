@@ -67,18 +67,19 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
-            var obj2 = obj as Dictionary<string, object>;
-            if (obj2 == null)
+            if (obj is Dictionary<string, object> obj2)
+            {
+                // Set ID.
+                ID = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
+
+                // Set display name.
+                DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : ID;
+
+                // Set two-factor authentication.
+                IsTwoFactorAuthentication = eduJSON.Parser.GetValue(obj2, "two_factor", out bool two_factor) ? two_factor : false;
+            }
+            else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
-
-            // Set ID.
-            ID = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
-
-            // Set display name.
-            DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : ID;
-
-            // Set two-factor authentication.
-            IsTwoFactorAuthentication = eduJSON.Parser.GetValue(obj2, "two_factor", out bool two_factor) ? two_factor : false;
         }
 
         #endregion
