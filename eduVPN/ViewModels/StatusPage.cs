@@ -82,7 +82,7 @@ namespace eduVPN.ViewModels
 
                         // Spawn system messages get.
                         var system_messages_get_task = JSON.Response.GetAsync(
-                                Parent.AuthenticatingEndpoints.SystemMessages,
+                                Parent.ConnectingEndpoints.SystemMessages,
                                 null,
                                 Parent.AccessToken,
                                 null,
