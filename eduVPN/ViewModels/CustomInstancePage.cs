@@ -52,7 +52,6 @@ namespace eduVPN.ViewModels
                     _authorize_instance = new DelegateCommand(
                         // execute
                         async () => {
-                            // Set busy flag.
                             TaskCount++;
 
                             try
@@ -115,7 +114,6 @@ namespace eduVPN.ViewModels
                             }
                             finally
                             {
-                                // Clear busy flag.
                                 TaskCount--;
                             }
                         },

@@ -76,7 +76,7 @@ namespace eduVPN.ViewModels
         }
 
         /// <summary>
-        /// Number of background task the wizard is performing
+        /// Number of background tasks the wizard is performing
         /// </summary>
         public uint TaskCount
         {

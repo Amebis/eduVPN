@@ -81,7 +81,6 @@ namespace eduVPN.ViewModels
                         // execute
                         async () =>
                         {
-                            // Set busy flag.
                             TaskCount++;
 
                             try
@@ -161,7 +160,6 @@ namespace eduVPN.ViewModels
                             }
                             finally
                             {
-                                // Clear busy flag.
                                 TaskCount--;
                             }
                         },
@@ -235,7 +233,6 @@ namespace eduVPN.ViewModels
             {
                 try
                 {
-                    // Set busy flag (in the UI thread).
                     _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
@@ -293,7 +290,6 @@ namespace eduVPN.ViewModels
                     }
                     finally
                     {
-                        // Clear busy flag (in the UI thread).
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
 

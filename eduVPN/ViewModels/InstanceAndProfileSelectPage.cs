@@ -48,7 +48,6 @@ namespace eduVPN.ViewModels
                 ThreadPool.QueueUserWorkItem(new WaitCallback(
                     param =>
                     {
-                        // Set busy flag (in the UI thread).
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                         try
@@ -91,7 +90,6 @@ namespace eduVPN.ViewModels
                         }
                         finally
                         {
-                            // Clear busy flag (in the UI thread).
                             _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                         }
                     }));

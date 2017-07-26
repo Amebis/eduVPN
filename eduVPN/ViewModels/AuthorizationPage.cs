@@ -58,7 +58,6 @@ namespace eduVPN.ViewModels
                         // execute
                         async param =>
                         {
-                            // Set busy flag.
                             TaskCount++;
 
                             try
@@ -89,7 +88,6 @@ namespace eduVPN.ViewModels
                             }
                             finally
                             {
-                                // Clear busy flag.
                                 TaskCount--;
                             }
                         },
