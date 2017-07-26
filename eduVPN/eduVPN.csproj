@@ -38,7 +38,7 @@
     <Compile Include="JSON\Collection.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageType.cs" />
-    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="ViewModels\AccessType.cs" />

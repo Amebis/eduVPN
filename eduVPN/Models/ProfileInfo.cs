@@ -11,9 +11,9 @@ using System.Collections.Generic;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN profile
+    /// An eduVPN profile info
     /// </summary>
-    public class Profile : BindableBase, JSON.ILoadableItem
+    public class ProfileInfo : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 
@@ -55,6 +55,10 @@ namespace eduVPN.Models
         {
             return DisplayName;
         }
+
+        #endregion
+
+        #region ILoadableItem Support
 
         /// <summary>
         /// Loads profile from a dictionary object (provided by JSON)

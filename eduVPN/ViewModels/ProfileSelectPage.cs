@@ -35,7 +35,7 @@ namespace eduVPN.ViewModels
                     try
                     {
                         // Get and load profile list.
-                        var profile_list = new JSON.Collection<Models.Profile>();
+                        var profile_list = new JSON.Collection<Models.ProfileInfo>();
                         profile_list.LoadJSONAPIResponse(JSON.Response.Get(
                             Parent.ConnectingEndpoints.ProfileList,
                             null,

@@ -44,7 +44,7 @@ namespace eduVPN.ViewModels
                 _selected_instance = value;
                 RaisePropertyChanged();
 
-                ProfileList = new JSON.Collection<Models.Profile>();
+                ProfileList = new JSON.Collection<Models.ProfileInfo>();
                 ThreadPool.QueueUserWorkItem(new WaitCallback(
                     param =>
                     {
@@ -68,7 +68,7 @@ namespace eduVPN.ViewModels
                             _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
 
                             // Get and load profile list.
-                            var profile_list = new JSON.Collection<Models.Profile>();
+                            var profile_list = new JSON.Collection<Models.ProfileInfo>();
                             profile_list.LoadJSONAPIResponse(JSON.Response.Get(
                                 api.ProfileList,
                                 null,

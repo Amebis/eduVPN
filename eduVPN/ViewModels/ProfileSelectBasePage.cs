@@ -24,18 +24,18 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available profiles
         /// </summary>
-        public JSON.Collection<Models.Profile> ProfileList
+        public JSON.Collection<Models.ProfileInfo> ProfileList
         {
             get { return _profile_list; }
             set { _profile_list = value; RaisePropertyChanged(); }
         }
-        private JSON.Collection<Models.Profile> _profile_list;
+        private JSON.Collection<Models.ProfileInfo> _profile_list;
 
         /// <summary>
         /// Selected profile
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.Profile SelectedProfile
+        public Models.ProfileInfo SelectedProfile
         {
             get { return _selected_profile; }
             set
@@ -45,7 +45,7 @@ namespace eduVPN.ViewModels
                 ((DelegateCommandBase)ConnectSelectedProfile).RaiseCanExecuteChanged();
             }
         }
-        private Models.Profile _selected_profile;
+        private Models.ProfileInfo _selected_profile;
 
         /// <summary>
         /// Connect selected profile command
@@ -91,7 +91,7 @@ namespace eduVPN.ViewModels
         public ProfileSelectBasePage(ConnectWizard parent) :
             base(parent)
         {
-            ProfileList = new JSON.Collection<Models.Profile>();
+            ProfileList = new JSON.Collection<Models.ProfileInfo>();
 
             // Launch user info load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
