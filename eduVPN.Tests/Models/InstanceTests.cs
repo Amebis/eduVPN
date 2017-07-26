@@ -12,10 +12,10 @@ using System.Collections.Generic;
 namespace eduVPN.Models.Tests
 {
     [TestClass()]
-    public class InstanceTests
+    public class InstanceInfoTests
     {
         [TestMethod()]
-        public void InstanceTest()
+        public void InstanceInfoTest()
         {
             InstanceInfo inst;
 

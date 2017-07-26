@@ -48,8 +48,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="JSON\InstanceListTests.cs" />
-    <Compile Include="JSON\InstanceTests.cs" />
+    <Compile Include="Models\InstanceListTests.cs" />
+    <Compile Include="Models\InstanceTests.cs" />
     <Compile Include="eduBase\MultiplatformDllLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

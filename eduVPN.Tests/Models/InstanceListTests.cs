@@ -16,10 +16,10 @@ using System.Threading.Tasks;
 namespace eduVPN.Models.Tests
 {
     [TestClass()]
-    public class InstanceListTests
+    public class InstanceInfoListTests
     {
         [TestMethod()]
-        public void InstanceListTest()
+        public void InstanceInfoListTest()
         {
             // .NET 3.5 allows Schannel to use SSL 3 and TLS 1.0 by default. Instead of hacking user computer's registry, extend it in runtime.
             // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
