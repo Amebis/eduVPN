@@ -136,8 +136,7 @@ namespace eduVPN.ViewModels
         protected virtual void DoConnectSelectedProfile()
         {
             Parent.ConnectingProfile = SelectedProfile;
-
-            // TODO: Continue to the status page.
+            Parent.CurrentPage = Parent.StatusPage;
         }
 
         /// <summary>

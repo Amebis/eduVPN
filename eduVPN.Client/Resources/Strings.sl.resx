@@ -180,4 +180,7 @@ npr. kadar uporabljate javni WiFi.</value>
     <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati.
 Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   </data>
+  <data name="StatusPageTitle" xml:space="preserve">
+    <value>Povezava VPN</value>
+  </data>
 </root>

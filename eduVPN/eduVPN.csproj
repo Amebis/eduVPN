@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="ViewModels\InstituteAccessSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectPage.cs" />
+    <Compile Include="ViewModels\StatusPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx">

@@ -201,6 +201,20 @@ namespace eduVPN.ViewModels
         }
         private InstanceAndProfileSelectPage _instance_and_profile_select_page;
 
+        /// <summary>
+        /// Status wizard page
+        /// </summary>
+        public StatusPage StatusPage
+        {
+            get
+            {
+                if (_status_page == null)
+                    _status_page = new StatusPage(this);
+                return _status_page;
+            }
+        }
+        private StatusPage _status_page;
+
         #endregion
 
         #endregion

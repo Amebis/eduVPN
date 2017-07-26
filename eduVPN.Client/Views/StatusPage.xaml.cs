@@ -10,13 +10,13 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for AuthorizationPage.xaml
+    /// Interaction logic for StatusPage.xaml
     /// </summary>
-    public partial class AuthorizationPage : Page
+    public partial class StatusPage : Page
     {
         #region Constructors
 
-        public AuthorizationPage()
+        public StatusPage()
         {
             InitializeComponent();
         }

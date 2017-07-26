@@ -225,6 +225,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VPN Connection.
+        /// </summary>
+        public static string StatusPageTitle {
+            get {
+                return ResourceManager.GetString("StatusPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requires two-factor authentication.
         /// </summary>
         public static string TwoFactorAuthenticationRequired {

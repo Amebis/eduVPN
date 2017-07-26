@@ -180,4 +180,7 @@ for example when using public WiFi.</value>
     <value>Warning! Your account is marked as disabled. You might not be able to connect.
 Please, contact your helpdesk for support.</value>
   </data>
+  <data name="StatusPageTitle" xml:space="preserve">
+    <value>VPN Connection</value>
+  </data>
 </root>
