@@ -52,6 +52,15 @@ namespace eduVPN.Models
         {
             // Parse authorization data.
             InstanceInfoList instance_list;
+        #if INSTANCE_LIST_FORCE_LOCAL
+            instance_list = new InstanceInfoLocalList();
+        #elif INSTANCE_LIST_FORCE_DISTRIBUTED
+            instance_list = new InstanceInfoDistributedList();
+        #elif INSTANCE_LIST_FORCE_FEDERATED
+            instance_list = new InstanceInfoFederatedList();
+            obj.Add("authorization_endpoint", "https://demo.eduvpn.nl/portal/_oauth/authorize");
+            obj.Add("token_endpoint"        , "https://demo.eduvpn.nl/portal/oauth.php/token");
+        #else
             if (eduJSON.Parser.GetValue(obj, "authorization_type", out string authorization_type))
             {
                 switch (authorization_type.ToLower())
@@ -63,6 +72,7 @@ namespace eduVPN.Models
             }
             else
                 instance_list = new InstanceInfoLocalList();
+        #endif
 
             instance_list.Load(obj);
             return instance_list;
