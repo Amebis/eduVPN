@@ -15,6 +15,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -32,6 +33,7 @@
         </StatusBar>
 
         <ComboBox
+            Grid.Row="1"
             Margin="10"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
@@ -39,7 +41,7 @@
             SelectedItem="{Binding SelectedInstance}"/>
 
         <ListBox
-            Grid.Row="1"
+            Grid.Row="2"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
