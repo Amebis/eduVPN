@@ -19,7 +19,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="parent">The page parent</param>
         public InstituteAccessSelectPage(ConnectWizard parent) :
-            base(parent, "InstituteAccessDirectory", true)
+            base(parent)
         {
         }
 

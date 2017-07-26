@@ -21,16 +21,6 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// List of available instances
-        /// </summary>
-        public Models.InstanceInfoList InstanceList
-        {
-            get { return _instance_list; }
-            set { _instance_list = value; RaisePropertyChanged(); }
-        }
-        private Models.InstanceInfoList _instance_list;
-
-        /// <summary>
         /// Selected instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
@@ -136,22 +126,21 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            // Attach the instance list to the instance selection page's list.
-            // By default, select the same connecting instance as authenticating instance.
-            switch (Parent.AccessType)
+            if (Parent.AccessTypePage.InstanceList[(int)Parent.AccessType] is Models.InstanceInfoFederatedList)
             {
-                case AccessType.SecureInternet:
-                    InstanceList = Parent.SecureInternetSelectPage.InstanceList;
-                    SelectedInstance = Parent.SecureInternetSelectPage.SelectedInstance;
-                    break;
+                // Federated instance list does not favour any particular instance to connect to.
+                SelectedInstance = null;
+            }
+            else
+            {
+                // By default, select the same connecting instance as authenticating instance.
+                switch (Parent.AccessType)
+                {
+                    case AccessType.SecureInternet: SelectedInstance = Parent.SecureInternetSelectPage.SelectedInstance; break;
+                    case AccessType.InstituteAccess: SelectedInstance = Parent.InstituteAccessSelectPage.SelectedInstance; break;
+                    default: throw new NotImplementedException();
+                }
 
-                case AccessType.InstituteAccess:
-                    InstanceList = Parent.InstituteAccessSelectPage.InstanceList;
-                    SelectedInstance = Parent.InstituteAccessSelectPage.SelectedInstance;
-                    break;
-
-                default:
-                    throw new NotImplementedException();
             }
         }
 

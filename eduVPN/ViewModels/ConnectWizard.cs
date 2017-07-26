@@ -45,17 +45,23 @@ namespace eduVPN.ViewModels
         private AccessType _access_type;
 
         /// <summary>
+        /// Selected instance list
+        /// </summary>
+        public Models.InstanceInfoList InstanceList
+        {
+            get { return _instance_list; }
+            set { _instance_list = value; RaisePropertyChanged(); }
+        }
+        private Models.InstanceInfoList _instance_list;
+
+        /// <summary>
         /// Authenticating eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
         public Models.InstanceInfo AuthenticatingInstance
         {
             get { return _authenticating_instance; }
-            set
-            {
-                _authenticating_instance = value;
-                RaisePropertyChanged();
-            }
+            set { _authenticating_instance = value; RaisePropertyChanged(); }
         }
         private Models.InstanceInfo _authenticating_instance;
 
@@ -86,11 +92,7 @@ namespace eduVPN.ViewModels
         public Models.InstanceInfo ConnectingInstance
         {
             get { return _connecting_instance; }
-            set
-            {
-                _connecting_instance = value;
-                RaisePropertyChanged();
-            }
+            set { _connecting_instance = value; RaisePropertyChanged(); }
         }
         private Models.InstanceInfo _connecting_instance;
 
@@ -150,14 +152,30 @@ namespace eduVPN.ViewModels
         /// Secure internet selection page
         /// </summary>
         /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
-        public SecureInternetSelectPage SecureInternetSelectPage { get => _secure_internet_select_page; }
+        public SecureInternetSelectPage SecureInternetSelectPage
+        {
+            get
+            {
+                if (_secure_internet_select_page == null)
+                    _secure_internet_select_page = new SecureInternetSelectPage(this);
+                return _secure_internet_select_page;
+            }
+        }
         private SecureInternetSelectPage _secure_internet_select_page;
 
         /// <summary>
         /// Institute access selection page
         /// </summary>
         /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
-        public InstituteAccessSelectPage InstituteAccessSelectPage { get => _institute_access_select_page; }
+        public InstituteAccessSelectPage InstituteAccessSelectPage
+        {
+            get
+            {
+                if (_institute_access_select_page == null)
+                    _institute_access_select_page = new InstituteAccessSelectPage(this);
+                return _institute_access_select_page;
+            }
+        }
         private InstituteAccessSelectPage _institute_access_select_page;
 
         /// <summary>
@@ -244,12 +262,6 @@ namespace eduVPN.ViewModels
             // Save UI thread's dispatcher.
             Dispatcher = Dispatcher.CurrentDispatcher;
 
-            // Pre-create instance select pages to allow instance list population in advance.
-            _secure_internet_select_page = new SecureInternetSelectPage(this);
-            _institute_access_select_page = new InstituteAccessSelectPage(this);
-
-            CurrentPage = AccessTypePage;
-
             Dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
                 // Raise the abort flag to gracefully shutdown all background threads.
                 Abort.Cancel();
@@ -257,6 +269,8 @@ namespace eduVPN.ViewModels
                 // Persist settings to disk.
                 Properties.Settings.Default.Save();
             };
+
+            CurrentPage = AccessTypePage;
         }
 
         #endregion

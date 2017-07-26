@@ -37,7 +37,7 @@
             Margin="10"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-            ItemsSource="{Binding Path=InstanceList}"
+            ItemsSource="{Binding Path=Parent.InstanceList}"
             SelectedItem="{Binding Path=SelectedInstance}"/>
 
         <ListBox

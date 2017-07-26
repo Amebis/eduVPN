@@ -9,10 +9,7 @@ using eduOAuth;
 using eduVPN.JSON;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
 {
@@ -21,36 +18,7 @@ namespace eduVPN.ViewModels
     /// </summary>
     public class InstanceSelectPage : ConnectWizardPage
     {
-        #region Fields
-
-        /// <summary>
-        /// Instance directory URI ID as used in <c>Properties.Settings.Default</c> collection
-        /// </summary>
-        private string _instance_directory_id;
-
-        /// <summary>
-        /// Cached instance list
-        /// </summary>
-        private Dictionary<string, object> _cache;
-
-        /// <summary>
-        /// Should the list of instances have "Other (not listed)" entry appended?
-        /// </summary>
-        private bool _has_custom;
-
-        #endregion
-
         #region Properties
-
-        /// <summary>
-        /// List of available instances
-        /// </summary>
-        public Models.InstanceInfoList InstanceList
-        {
-            get { return _instance_list; }
-            set { _instance_list = value; RaisePropertyChanged(); }
-        }
-        private Models.InstanceInfoList _instance_list;
 
         /// <summary>
         /// Selected instance
@@ -133,18 +101,19 @@ namespace eduVPN.ViewModels
                                         }
                                     }
 
-                                    if (InstanceList.AuthorizationType == Models.AuthorizationType.Local)
+                                    if (Parent.AccessTypePage.InstanceList[(int)Parent.AccessType] is Models.InstanceInfoLocalList)
                                     {
                                         // Connecting instance will be the same as authenticating.
                                         Parent.ConnectingInstance = Parent.AuthenticatingInstance;
                                         Parent.ConnectingEndpoints = Parent.AuthenticatingEndpoints;
                                     }
-                                    else
+                                    else if (Parent.AccessTypePage.InstanceList[(int)Parent.AccessType] is Models.InstanceInfoDistributedList)
                                     {
                                         // Connecting instance will not (necessarry) be the same as authenticating.
                                         Parent.ConnectingInstance = null;
                                         Parent.ConnectingEndpoints = null;
-                                    }
+                                    } else
+                                        throw new NotImplementedException();
 
                                     if (Parent.AccessToken == null)
                                         Parent.CurrentPage = Parent.AuthorizationPage;
@@ -180,143 +149,14 @@ namespace eduVPN.ViewModels
         /// Constructs an instance selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public InstanceSelectPage(ConnectWizard parent, string instance_directory_id, bool has_custom) :
+        public InstanceSelectPage(ConnectWizard parent) :
             base(parent)
         {
-            _instance_directory_id = instance_directory_id;
-            _has_custom = has_custom;
-
-            try
-            {
-                // Restore instance list cache.
-                _cache = (Dictionary<string, object>)eduJSON.Parser.Parse((string)Properties.Settings.Default[_instance_directory_id + "Cache"]);
-            }
-            catch (Exception)
-            {
-                // Revert cache to default initial value.
-                _cache = new Dictionary<string, object>()
-                {
-                    { "instances", new List<object>() },
-                    { "seq", 0 }
-                };
-            }
-
-            // Initialize instance list.
-            InstanceList = new Models.InstanceInfoList();
-            InstanceList.Load(_cache);
-            if (_has_custom)
-            {
-                // Append "Other instance" entry.
-                InstanceList.Add(new Models.InstanceInfo()
-                {
-                    DisplayName = Resources.Strings.CustomInstance,
-                    IsCustom = true,
-                });
-            }
-
-            // Launch instance list load in the background.
-            ThreadPool.QueueUserWorkItem(new WaitCallback(InstanceListLoader));
         }
 
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Loads instance list from web service.
-        /// </summary>
-        private void InstanceListLoader(object param)
-        {
-            JSON.Response json = null;
-
-            for (;;)
-            {
-                try
-                {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-
-                    try
-                    {
-                        // Get instance list.
-                        json = JSON.Response.Get(
-                            new Uri((string)Properties.Settings.Default[_instance_directory_id]),
-                            null,
-                            null,
-                            Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id + "PubKey"]),
-                            ConnectWizard.Abort.Token,
-                            json);
-
-                        if (json.IsFresh)
-                        {
-                            // Parse instance list.
-                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, ConnectWizard.Abort.Token);
-
-                            // Load instance list.
-                            var instance_list = new Models.InstanceInfoList();
-                            instance_list.Load(obj);
-
-                            if (_has_custom)
-                            {
-                                // Append "Other instance" entry.
-                                instance_list.Add(new Models.InstanceInfo()
-                                {
-                                    DisplayName = Resources.Strings.CustomInstance,
-                                    IsCustom = true,
-                                });
-                            }
-
-                            // Send the loaded instance list back to the UI thread.
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                            {
-                                InstanceList = instance_list;
-                                ErrorMessage = null;
-                            }));
-
-                            try
-                            {
-                                // If we got here, the loaded instance list is (probably) OK.
-                                bool update_cache = false;
-                                try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_cache, "seq"); }
-                                catch (Exception) { update_cache = true; }
-                                if (update_cache)
-                                {
-                                    // Update cache.
-                                    _cache = obj;
-                                    Properties.Settings.Default[_instance_directory_id + "Cache"] = json.Value;
-                                }
-                            }
-                            catch (Exception) { }
-                        }
-                    }
-                    finally
-                    {
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                    }
-
-                    // Wait for five minutes.
-                    if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(1000 * 60 * 5))
-                        break;
-                }
-                catch (OperationCanceledException)
-                {
-                    // The load was aborted.
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    // Notify the sender the instance list loading failed.
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-
-                    // Wait for ten seconds.
-                    if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(1000 * 10))
-                        break;
-
-                    // Make it a clean start.
-                    json = null;
-                    continue;
-                }
-            }
-        }
 
         public override void OnActivate()
         {

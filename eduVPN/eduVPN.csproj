@@ -32,10 +32,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JSON\APIErrorException.cs" />
-    <Compile Include="Models\AuthorizationType.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
+    <Compile Include="Models\InstanceInfoDistributedList.cs" />
+    <Compile Include="Models\InstanceInfoFederatedList.cs" />
+    <Compile Include="Models\InstanceInfoLocalList.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageList.cs" />
     <Compile Include="Models\MessageMaintenance.cs" />

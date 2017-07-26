@@ -13,21 +13,11 @@ using System.ComponentModel;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN list of instances
+    /// An eduVPN list of instances base class
     /// </summary>
     public class InstanceInfoList : ObservableCollection<InstanceInfo>, JSON.ILoadableItem
     {
         #region Properties
-
-        /// <summary>
-        /// Authorization type
-        /// </summary>
-        public AuthorizationType AuthorizationType
-        {
-            get { return _authorization_type; }
-            set { if (value != _authorization_type) { _authorization_type = value; OnPropertyChanged(new PropertyChangedEventArgs("AuthorizationType")); } }
-        }
-        private AuthorizationType _authorization_type;
 
         /// <summary>
         /// Version sequence
@@ -51,6 +41,35 @@ namespace eduVPN.Models
 
         #endregion
 
+        #region Methods
+
+        /// <summary>
+        /// Loads instance list from a dictionary object (provided by JSON)
+        /// </summary>
+        /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements</param>
+        /// <returns>Instance list</returns>
+        public static InstanceInfoList FromJSON(Dictionary<string, object> obj)
+        {
+            // Parse authorization data.
+            InstanceInfoList instance_list;
+            if (eduJSON.Parser.GetValue(obj, "authorization_type", out string authorization_type))
+            {
+                switch (authorization_type.ToLower())
+                {
+                    case "federated": instance_list = new InstanceInfoFederatedList(); break;
+                    case "distributed": instance_list = new InstanceInfoDistributedList(); break;
+                    default: instance_list = new InstanceInfoLocalList(); break; // Assume local authorization type on all other values.
+                }
+            }
+            else
+                instance_list = new InstanceInfoLocalList();
+
+            instance_list.Load(obj);
+            return instance_list;
+        }
+
+        #endregion
+
         #region ILoadableItem Support
 
         /// <summary>
@@ -58,7 +77,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements</param>
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
-        public void Load(object obj)
+        public virtual void Load(object obj)
         {
             if (obj is Dictionary<string, object> obj2)
             {
@@ -74,19 +93,6 @@ namespace eduVPN.Models
 
                 // Parse sequence.
                 Sequence = eduJSON.Parser.GetValue(obj2, "seq", out int seq) ? (uint)seq : 0;
-
-                // Parse authorization data.
-                if (eduJSON.Parser.GetValue(obj2, "authorization_type", out string authorization_type))
-                {
-                    switch (authorization_type.ToLower())
-                    {
-                        case "federated": AuthorizationType = AuthorizationType.Federated; break;
-                        case "distributed": AuthorizationType = AuthorizationType.Distributed; break;
-                        default: AuthorizationType = AuthorizationType.Local; break; // Assume local authorization type on all other values.
-                    }
-                }
-                else
-                    AuthorizationType = AuthorizationType.Local;
 
                 // Parse signed date.
                 SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out var signed_at_date) ? signed_at_date : (DateTime?)null;

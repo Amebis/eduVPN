@@ -21,11 +21,11 @@ namespace eduVPN.ViewModels
         /// Use VPN to browse internet over a secured channel
         /// (i.e. when using an untrusted public WiFi hotspot).
         /// </summary>
-        SecureInternet,
+        SecureInternet = 1,
 
         /// <summary>
         /// Use VPN to access organization's intranet resources.
         /// </summary>
-        InstituteAccess,
+        InstituteAccess = 2,
     }
 }

@@ -19,7 +19,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="parent">The page parent</param>
         public SecureInternetSelectPage(ConnectWizard parent) :
-            base(parent, "SecureInternetDirectory", false)
+            base(parent)
         {
         }
 
