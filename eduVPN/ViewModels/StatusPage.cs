@@ -66,7 +66,7 @@ namespace eduVPN.ViewModels
             ThreadPool.QueueUserWorkItem(new WaitCallback(
                 param =>
                 {
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
                     {
@@ -78,7 +78,7 @@ namespace eduVPN.ViewModels
                                 null,
                                 Parent.AccessToken,
                                 null,
-                                _abort.Token);
+                                ConnectWizard.Abort.Token);
 
                         // Spawn system messages get.
                         var system_messages_get_task = JSON.Response.GetAsync(
@@ -86,21 +86,21 @@ namespace eduVPN.ViewModels
                                 null,
                                 Parent.AccessToken,
                                 null,
-                                _abort.Token);
+                                ConnectWizard.Abort.Token);
 
                         // State >> Connecting...
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connecting));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connecting));
 
                         try
                         {
                             // Wait for and load user messages.
-                            user_messages_get_task.Wait(_abort.Token);
-                            message_list.LoadJSONAPIResponse(user_messages_get_task.Result.Value, "user_messages", _abort.Token);
+                            user_messages_get_task.Wait(ConnectWizard.Abort.Token);
+                            message_list.LoadJSONAPIResponse(user_messages_get_task.Result.Value, "user_messages", ConnectWizard.Abort.Token);
 
                             if (message_list.Count > 0)
                             {
                                 // Add user messages.
-                                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                 {
                                     foreach (var msg in message_list)
                                         MessageList.Add(msg);
@@ -108,13 +108,13 @@ namespace eduVPN.ViewModels
                             }
 
                             // Wait for and load system messages.
-                            system_messages_get_task.Wait(_abort.Token);
-                            message_list.LoadJSONAPIResponse(system_messages_get_task.Result.Value, "system_messages", _abort.Token);
+                            system_messages_get_task.Wait(ConnectWizard.Abort.Token);
+                            message_list.LoadJSONAPIResponse(system_messages_get_task.Result.Value, "system_messages", ConnectWizard.Abort.Token);
 
                             if (message_list.Count > 0)
                             {
                                 // Add system messages.
-                                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                 {
                                     foreach (var msg in message_list)
                                         MessageList.Add(msg);
@@ -122,7 +122,7 @@ namespace eduVPN.ViewModels
                             }
 
                             //// Add test messages.
-                            //_dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                            //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                             //{
                             //    MessageList.Add(new Models.MessageMaintenance()
                             //    {
@@ -137,23 +137,23 @@ namespace eduVPN.ViewModels
                         {
                             // Access token rejected (401) => Redirect back to authorization page.
                             if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
                         }
                         catch (Exception) { }
 
                         // Wait for three seconds, then switch to connected state.
-                        if (_abort.Token.WaitHandle.WaitOne(1000 * 3)) return;
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connected));
+                        if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(1000 * 3)) return;
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connected));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex)
                     {
                         // Notify the sender the profile list loading failed.
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
                     }
                     finally
                     {
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
                 }));
         }

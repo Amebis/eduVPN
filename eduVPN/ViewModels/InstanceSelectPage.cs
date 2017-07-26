@@ -100,7 +100,7 @@ namespace eduVPN.ViewModels
                                         null,
                                         null,
                                         null,
-                                        _abort.Token);
+                                        ConnectWizard.Abort.Token);
 
                                     // Try to restore the access token from the settings.
                                     Parent.AccessToken = null;
@@ -125,7 +125,7 @@ namespace eduVPN.ViewModels
                                             Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
                                                 Parent.AuthenticatingEndpoints.TokenEndpoint,
                                                 null,
-                                                _abort.Token);
+                                                ConnectWizard.Abort.Token);
                                         }
                                         catch (Exception)
                                         {
@@ -233,7 +233,7 @@ namespace eduVPN.ViewModels
             {
                 try
                 {
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
                     {
@@ -243,13 +243,13 @@ namespace eduVPN.ViewModels
                             null,
                             null,
                             Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id + "PubKey"]),
-                            _abort.Token,
+                            ConnectWizard.Abort.Token,
                             json);
 
                         if (json.IsFresh)
                         {
                             // Parse instance list.
-                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
+                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, ConnectWizard.Abort.Token);
 
                             // Load instance list.
                             var instance_list = new Models.InstanceInfoList();
@@ -266,7 +266,7 @@ namespace eduVPN.ViewModels
                             }
 
                             // Send the loaded instance list back to the UI thread.
-                            _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                             {
                                 InstanceList = instance_list;
                                 ErrorMessage = null;
@@ -290,11 +290,11 @@ namespace eduVPN.ViewModels
                     }
                     finally
                     {
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
 
                     // Wait for five minutes.
-                    if (_abort.Token.WaitHandle.WaitOne(1000 * 60 * 5))
+                    if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(1000 * 60 * 5))
                         break;
                 }
                 catch (OperationCanceledException)
@@ -305,10 +305,10 @@ namespace eduVPN.ViewModels
                 catch (Exception ex)
                 {
                     // Notify the sender the instance list loading failed.
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
 
                     // Wait for ten seconds.
-                    if (_abort.Token.WaitHandle.WaitOne(1000 * 10))
+                    if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(1000 * 10))
                         break;
 
                     // Make it a clean start.

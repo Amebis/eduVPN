@@ -40,7 +40,7 @@ namespace eduVPN.ViewModels
             // Launch profile list load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
                 param => {
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
                     {
@@ -53,19 +53,19 @@ namespace eduVPN.ViewModels
                                 null,
                                 Parent.AccessToken,
                                 null,
-                                _abort.Token).Value, "profile_list", _abort.Token);
+                                ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
                         }
                         catch (WebException ex)
                         {
                             // Access token rejected (401) => Redirect back to authorization page.
                             if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
                             else
                                 throw;
                         }
 
                         // Send the loaded profile list back to the UI thread.
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                         {
                             ProfileList = profile_list;
                             ErrorMessage = null;
@@ -75,11 +75,11 @@ namespace eduVPN.ViewModels
                     catch (Exception ex)
                     {
                         // Notify the sender the profile list loading failed.
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
                     }
                     finally
                     {
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
                 }));
         }

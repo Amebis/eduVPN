@@ -107,7 +107,7 @@ namespace eduVPN.ViewModels
             ThreadPool.QueueUserWorkItem(new WaitCallback(
                 param =>
                 {
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
                     {
@@ -118,18 +118,18 @@ namespace eduVPN.ViewModels
                             null,
                             Parent.AccessToken,
                             null,
-                            _abort.Token).Value, "user_info", _abort.Token);
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
+                            ConnectWizard.Abort.Token).Value, "user_info", ConnectWizard.Abort.Token);
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex)
                     {
                         // Notify the sender the profile list loading failed.
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
                     }
                     finally
                     {
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
                 }));
         }

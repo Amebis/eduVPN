@@ -19,23 +19,6 @@ namespace eduVPN.ViewModels
     /// </summary>
     public class ConnectWizardPage : BindableBase
     {
-        #region Fields
-
-        /// <summary>
-        /// UI thread's dispatcher
-        /// </summary>
-        /// <remarks>
-        /// Background threads must raise property change events in the UI thread.
-        /// </remarks>
-        protected Dispatcher _dispatcher;
-
-        /// <summary>
-        /// Token used to abort unfinished background processes in case of application shutdown.
-        /// </summary>
-        protected static CancellationTokenSource _abort = new CancellationTokenSource();
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -103,14 +86,6 @@ namespace eduVPN.ViewModels
         public ConnectWizardPage(ConnectWizard parent)
         {
             Parent = parent;
-
-            // Save UI thread's dispatcher.
-            _dispatcher = Dispatcher.CurrentDispatcher;
-
-            _dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
-                // Raise the abort flag to gracefully shutdown all background threads.
-                _abort.Cancel();
-            };
         }
 
         #endregion

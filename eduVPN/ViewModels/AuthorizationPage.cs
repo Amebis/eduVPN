@@ -69,7 +69,7 @@ namespace eduVPN.ViewModels
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
                                     Parent.AuthenticatingEndpoints.TokenEndpoint,
                                     null,
-                                    _abort.Token);
+                                    ConnectWizard.Abort.Token);
 
                                 // Save the access token.
                                 if (Properties.Settings.Default.AccessTokens == null)

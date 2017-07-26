@@ -8,6 +8,7 @@
 using eduOAuth;
 using Prism.Mvvm;
 using System;
+using System.Threading;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -18,6 +19,20 @@ namespace eduVPN.ViewModels
     public class ConnectWizard : BindableBase
     {
         #region Properties
+
+        /// <summary>
+        /// UI thread's dispatcher
+        /// </summary>
+        /// <remarks>
+        /// Background threads must raise property change events in the UI thread.
+        /// </remarks>
+        public Dispatcher Dispatcher { get; }
+
+        /// <summary>
+        /// Token used to abort unfinished background processes in case of application shutdown.
+        /// </summary>
+        public static CancellationTokenSource Abort { get => _abort; }
+        private static CancellationTokenSource _abort = new CancellationTokenSource();
 
         /// <summary>
         /// User required VPN access type
@@ -226,13 +241,19 @@ namespace eduVPN.ViewModels
         /// </summary>
         public ConnectWizard()
         {
+            // Save UI thread's dispatcher.
+            Dispatcher = Dispatcher.CurrentDispatcher;
+
             // Pre-create instance select pages to allow instance list population in advance.
             _secure_internet_select_page = new SecureInternetSelectPage(this);
             _institute_access_select_page = new InstituteAccessSelectPage(this);
 
             CurrentPage = AccessTypePage;
 
-            Dispatcher.CurrentDispatcher.ShutdownStarted += (object sender, EventArgs e) => {
+            Dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
+                // Raise the abort flag to gracefully shutdown all background threads.
+                Abort.Cancel();
+
                 // Persist settings to disk.
                 Properties.Settings.Default.Save();
             };

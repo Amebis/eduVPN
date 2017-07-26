@@ -65,7 +65,7 @@ namespace eduVPN.ViewModels
                                     null,
                                     null,
                                     null,
-                                    _abort.Token);
+                                    ConnectWizard.Abort.Token);
 
                                 // Try to restore the access token from the settings.
                                 Parent.AccessToken = null;
@@ -89,7 +89,7 @@ namespace eduVPN.ViewModels
                                         Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
                                             Parent.AuthenticatingEndpoints.TokenEndpoint,
                                             null,
-                                            _abort.Token);
+                                            ConnectWizard.Abort.Token);
                                     }
                                     catch (Exception)
                                     {
