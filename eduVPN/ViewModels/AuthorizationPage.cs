@@ -9,31 +9,17 @@ using eduOAuth;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
 using System.Web;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
 {
     /// <summary>
     /// Authorization wizard page
     /// </summary>
-    public class AuthorizationPage : ConnectWizardPage, IDisposable
+    public class AuthorizationPage : ConnectWizardPage
     {
         #region Fields
-
-        /// <summary>
-        /// Authorization worker thread
-        /// </summary>
-        private Thread _worker;
-
-        /// <summary>
-        /// Token used to cancel unfinished authorizaton processes in case of user cancel or retry.
-        /// </summary>
-        private CancellationTokenSource _cancel;
 
         /// <summary>
         /// OAuth pending authorization grant
@@ -146,73 +132,42 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
-        public override void OnActivate()
-        {
-            TriggerAuthorization();
-            base.OnActivate();
-        }
-
         /// <summary>
-        /// Invokes client authorization process
+        /// Invokes client authorization process in the browser.
         /// </summary>
         private void TriggerAuthorization()
         {
-            if (_worker != null)
-            {
-                // Abort pending authorization.
-                _cancel.Cancel();
-            }
-
             // Reset error message.
             ErrorMessage = null;
 
-            // Launch authorization thread.
-            _cancel = new CancellationTokenSource();
-            _worker = new Thread(
-                () =>
+            try
+            {
+                // Open authorization request in the browser.
+                _authorization_grant = new AuthorizationGrant()
                 {
-                    // Set busy flag (in the UI thread).
-                    _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    AuthorizationEndpoint = Parent.AuthenticatingEndpoints.AuthorizationEndpoint,
+                    RedirectEndpoint = new Uri(_redirect_endpoint),
+                    ClientID = "org.eduvpn.app",
+                    Scope = new List<string>() { "config" },
+                    CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
+                };
+                System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
 
-                    try
-                    {
-                        var abort = CancellationTokenSource.CreateLinkedTokenSource(_abort.Token, _cancel.Token);
+        public override void OnActivate()
+        {
+            base.OnActivate();
 
-                        // Opens authorization request in the browser.
-                        _authorization_grant = new AuthorizationGrant()
-                        {
-                            AuthorizationEndpoint = Parent.AuthenticatingEndpoints.AuthorizationEndpoint,
-                            RedirectEndpoint = new Uri(_redirect_endpoint),
-                            ClientID = "org.eduvpn.app",
-                            Scope = new List<string>() { "config" },
-                            CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
-                        };
-                        System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex)
-                    {
-                        // Notify the sender the authorization failed.
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-                    }
-                    finally
-                    {
-                        // Clear busy flag (in the UI thread).
-                        _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                    }
-                });
-            _worker.Start();
+            TriggerAuthorization();
         }
 
         protected override void DoNavigateBack()
         {
-            if (_worker != null)
-            {
-                // Abort pending authorization.
-                _cancel.Cancel();
-                _worker = null;
-            }
-
             if (Parent.AuthenticatingInstance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;
             else
@@ -236,31 +191,6 @@ namespace eduVPN.ViewModels
                 }
         }
 
-        #endregion
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    if (_cancel != null)
-                        _cancel.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
         #endregion
     }
 }

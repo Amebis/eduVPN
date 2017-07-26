@@ -15,7 +15,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Connect wizard
     /// </summary>
-    public class ConnectWizard : BindableBase, IDisposable
+    public class ConnectWizard : BindableBase
     {
         #region Properties
 
@@ -213,31 +213,6 @@ namespace eduVPN.ViewModels
             };
         }
 
-        #endregion
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    if (_authorization_page != null)
-                        _authorization_page.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
         #endregion
     }
 }
