@@ -89,6 +89,17 @@ namespace eduVPN.ViewModels
         }
         private Models.InstanceEndpoints _connecting_endpoints;
 
+        /// <summary>
+        /// Connecting eduVPN instance profile
+        /// </summary>
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public Models.ProfileInfo ConnectingProfile
+        {
+            get { return _connecting_profile; }
+            set { _connecting_profile = value; RaisePropertyChanged(); }
+        }
+        private Models.ProfileInfo _connecting_profile;
+
         #region Pages
 
         /// <summary>

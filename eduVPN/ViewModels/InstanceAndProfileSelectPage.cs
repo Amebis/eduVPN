@@ -7,12 +7,8 @@
 
 using eduVPN.JSON;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -157,6 +153,22 @@ namespace eduVPN.ViewModels
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        protected override void DoConnectSelectedProfile()
+        {
+            Parent.ConnectingInstance = SelectedInstance;
+            Parent.ConnectingEndpoints = SelectedInstanceEndpoints;
+
+            base.DoConnectSelectedProfile();
+        }
+
+        protected override bool CanConnectSelectedProfile()
+        {
+            return
+                SelectedInstance != null &&
+                SelectedInstanceEndpoints != null &&
+                base.CanConnectSelectedProfile();
         }
 
         #endregion

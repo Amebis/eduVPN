@@ -55,16 +55,7 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_connect_profile == null)
-                {
-                    _connect_profile = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                        },
-
-                        // canExecute
-                        () => ErrorMessage == null && SelectedProfile != null);
-                }
+                    _connect_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
                 return _connect_profile;
             }
         }
@@ -137,6 +128,25 @@ namespace eduVPN.ViewModels
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
                 }));
+        }
+
+        /// <summary>
+        /// Called when ConnectSelectedProfile command is invoked.
+        /// </summary>
+        protected virtual void DoConnectSelectedProfile()
+        {
+            Parent.ConnectingProfile = SelectedProfile;
+
+            // TODO: Continue to the status page.
+        }
+
+        /// <summary>
+        /// Called to test if ConnectSelectedProfile command is enabled.
+        /// </summary>
+        /// <returns><c>true</c> if enabled; <c>false</c> otherwise</returns>
+        protected virtual bool CanConnectSelectedProfile()
+        {
+            return SelectedProfile != null;
         }
 
         protected override void DoNavigateBack()
