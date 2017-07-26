@@ -106,7 +106,17 @@ namespace eduVPN.ViewModels
                                         MessageList.Add(msg);
                                 }));
                             }
+                        }
+                        catch (AggregateException ex)
+                        {
+                            // Access token rejected (401) => Redirect back to authorization page.
+                            if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
+                        }
+                        catch (Exception) { }
 
+                        try
+                        {
                             // Wait for and load system messages.
                             system_messages_get_task.Wait(ConnectWizard.Abort.Token);
                             message_list.LoadJSONAPIResponse(system_messages_get_task.Result.Value, "system_messages", ConnectWizard.Abort.Token);
@@ -120,18 +130,6 @@ namespace eduVPN.ViewModels
                                         MessageList.Add(msg);
                                 }));
                             }
-
-                            //// Add test messages.
-                            //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                            //{
-                            //    MessageList.Add(new Models.MessageMaintenance()
-                            //    {
-                            //        Text = "This is a test maintenance message.",
-                            //        Date = DateTime.Now,
-                            //        Begin = new DateTime(2017, 7, 31, 22, 00, 00),
-                            //        End = new DateTime(2017, 7, 31, 23, 59, 00)
-                            //    });
-                            //}));
                         }
                         catch (AggregateException ex)
                         {
@@ -140,6 +138,18 @@ namespace eduVPN.ViewModels
                                 Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
                         }
                         catch (Exception) { }
+
+                        //// Add test messages.
+                        //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        //{
+                        //    MessageList.Add(new Models.MessageMaintenance()
+                        //    {
+                        //        Text = "This is a test maintenance message.",
+                        //        Date = DateTime.Now,
+                        //        Begin = new DateTime(2017, 7, 31, 22, 00, 00),
+                        //        End = new DateTime(2017, 7, 31, 23, 59, 00)
+                        //    });
+                        //}));
 
                         // Wait for three seconds, then switch to connected state.
                         if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(1000 * 3)) return;
