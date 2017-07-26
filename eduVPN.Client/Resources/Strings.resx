@@ -201,4 +201,16 @@ Please, contact your helpdesk for support.</value>
   <data name="StatusTypeInitializing" xml:space="preserve">
     <value>Initializing...</value>
   </data>
+  <data name="MessageMaintenanceBegin" xml:space="preserve">
+    <value>Begin</value>
+  </data>
+  <data name="MessageMaintenanceEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="MessageMaintenanceTitle" xml:space="preserve">
+    <value>Maintenance Notification</value>
+  </data>
+  <data name="MessageNotificationTitle" xml:space="preserve">
+    <value>Notification</value>
+  </data>
 </root>

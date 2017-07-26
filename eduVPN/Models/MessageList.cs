@@ -6,17 +6,18 @@
 */
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace eduVPN.Models
 {
     /// <summary>
     /// eduVPN user/system message list
     /// </summary>
-    public class MessageList : JSON.Collection<Message>
+    public class MessageList : ObservableCollection<Message>, JSON.ILoadableItem
     {
         #region Methods
 
-        public override void Load(object obj)
+        public void Load(object obj)
         {
             if (obj is List<object> obj2)
             {

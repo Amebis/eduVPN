@@ -39,6 +39,8 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\DateTimeToUserLocaleConverter.cs" />
+    <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
     <Compile Include="Converters\StatusTypeDisplayNameConverter.cs" />
     <Compile Include="Converters\StatusTypeIconConverter.cs" />

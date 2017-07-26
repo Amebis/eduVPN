@@ -188,6 +188,42 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Begin.
+        /// </summary>
+        public static string MessageMaintenanceBegin {
+            get {
+                return ResourceManager.GetString("MessageMaintenanceBegin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        public static string MessageMaintenanceEnd {
+            get {
+                return ResourceManager.GetString("MessageMaintenanceEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maintenance Notification.
+        /// </summary>
+        public static string MessageMaintenanceTitle {
+            get {
+                return ResourceManager.GetString("MessageMaintenanceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string MessageNotificationTitle {
+            get {
+                return ResourceManager.GetString("MessageNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string ProfileSelectPageTitle {

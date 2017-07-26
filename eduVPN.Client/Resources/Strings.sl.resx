@@ -201,4 +201,16 @@ Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   <data name="StatusTypeInitializing" xml:space="preserve">
     <value>Vzopstavljam...</value>
   </data>
+  <data name="MessageMaintenanceTitle" xml:space="preserve">
+    <value>Obvestilo o vzdrževanju</value>
+  </data>
+  <data name="MessageNotificationTitle" xml:space="preserve">
+    <value>Obvestilo</value>
+  </data>
+  <data name="MessageMaintenanceBegin" xml:space="preserve">
+    <value>Začetek</value>
+  </data>
+  <data name="MessageMaintenanceEnd" xml:space="preserve">
+    <value>Konec</value>
+  </data>
 </root>
