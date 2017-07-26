@@ -21,13 +21,13 @@ namespace eduVPN.Models
         /// <summary>
         /// Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.
         /// </summary>
-        public Uri AuthorizationEndpoint { get => _authorization_endpoint; }
+        public Uri AuthorizationEndpoint { get => _authorization_endpoint; set => _authorization_endpoint = value; }
         private Uri _authorization_endpoint;
 
         /// <summary>
         /// Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.
         /// </summary>
-        public Uri TokenEndpoint { get => _token_endpoint; }
+        public Uri TokenEndpoint { get => _token_endpoint; set => _token_endpoint = value; }
         private Uri _token_endpoint;
 
         /// <summary>

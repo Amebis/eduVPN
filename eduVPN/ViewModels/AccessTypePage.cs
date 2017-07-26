@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -66,14 +67,50 @@ namespace eduVPN.ViewModels
                 {
                     _set_access_type = new DelegateCommand<AccessType?>(
                         // execute
-                        param =>
+                        async param =>
                         {
                             Parent.AccessType = param.Value;
                             Parent.InstanceList = InstanceList[(int)Parent.AccessType];
 
-                            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
+                            if (Parent.InstanceList is Models.InstanceInfoFederatedList instance_list)
                             {
-                                // TODO: Manage federated instance lists.
+                                // Set API endpoints.
+                                Parent.AuthenticatingEndpoints = new Models.InstanceEndpoints()
+                                {
+                                    AuthorizationEndpoint = instance_list.AuthorizationEndpoint,
+                                    TokenEndpoint = instance_list.TokenEndpoint
+                                };
+
+                                // Try to restore the access token from the settings.
+                                Parent.AccessToken = null;
+                                try
+                                {
+                                    var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri];
+                                    if (at != null)
+                                        Parent.AccessToken = AccessToken.FromBase64String(at);
+                                }
+                                catch (Exception) { }
+
+                                if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
+                                {
+                                    // The access token expired. Try refreshing it.
+                                    try
+                                    {
+                                        Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
+                                            Parent.AuthenticatingEndpoints.TokenEndpoint,
+                                            null,
+                                            ConnectWizard.Abort.Token);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Parent.AccessToken = null;
+                                    }
+                                }
+
+                                if (Parent.AccessToken == null)
+                                    Parent.CurrentPage = Parent.AuthorizationPage;
+                                else
+                                    Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
                             }
                             else
                             {
