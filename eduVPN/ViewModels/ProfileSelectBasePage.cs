@@ -104,34 +104,37 @@ namespace eduVPN.ViewModels
             UserInfo = new Models.UserInfo();
 
             // Launch user info load in the background.
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-
-                    try
+            if (Parent.AuthenticatingEndpoints.UserInfo != null)
+            {
+                new Thread(new ThreadStart(
+                    () =>
                     {
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+
+                        try
+                        {
                         // Get and load user info. (Don't catch the 401, loading the profile list will handle it.)
                         var user_info = new Models.UserInfo();
-                        user_info.LoadJSONAPIResponse(JSON.Response.Get(
-                            Parent.AuthenticatingEndpoints.UserInfo,
-                            null,
-                            Parent.AccessToken,
-                            null,
-                            ConnectWizard.Abort.Token).Value, "user_info", ConnectWizard.Abort.Token);
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex)
-                    {
-                        // Notify the sender the profile list loading failed.
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-                    }
-                    finally
-                    {
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                    }
-                })).Start();
+                            user_info.LoadJSONAPIResponse(JSON.Response.Get(
+                                Parent.AuthenticatingEndpoints.UserInfo,
+                                null,
+                                Parent.AccessToken,
+                                null,
+                                ConnectWizard.Abort.Token).Value, "user_info", ConnectWizard.Abort.Token);
+                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
+                        }
+                        catch (OperationCanceledException) { }
+                        catch (Exception ex)
+                        {
+                            // Notify the sender the profile list loading failed.
+                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                        }
+                        finally
+                        {
+                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
+                        }
+                    })).Start();
+            }
         }
 
         /// <summary>
