@@ -7,6 +7,7 @@
 
 using eduVPN.JSON;
 using System;
+using System.Net;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -45,12 +46,23 @@ namespace eduVPN.ViewModels
                     {
                         // Get and load profile list.
                         var profile_list = new JSON.Collection<Models.ProfileInfo>();
-                        profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                            Parent.ConnectingEndpoints.ProfileList,
-                            null,
-                            Parent.AccessToken,
-                            null,
-                            _abort.Token).Value, "profile_list", _abort.Token);
+                        try
+                        {
+                            profile_list.LoadJSONAPIResponse(JSON.Response.Get(
+                                Parent.ConnectingEndpoints.ProfileList,
+                                null,
+                                Parent.AccessToken,
+                                null,
+                                _abort.Token).Value, "profile_list", _abort.Token);
+                        }
+                        catch (WebException ex)
+                        {
+                            // Access token rejected (401) => Redirect back to authorization page.
+                            if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                                _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
+                            else
+                                throw;
+                        }
 
                         // Send the loaded profile list back to the UI thread.
                         _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>

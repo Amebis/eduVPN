@@ -121,8 +121,8 @@
     <value>Access Type</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
-    <value>eduVPN client has opened selected organization authorization web page in your browser.
-The client will continue after you complete the authorization.</value>
+    <value>eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
+The client will continue after you complete the authorization...</value>
   </data>
   <data name="AuthorizationPageRetry" xml:space="preserve">
     <value>Retry</value>
