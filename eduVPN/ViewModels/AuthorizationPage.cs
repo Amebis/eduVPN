@@ -74,7 +74,7 @@ namespace eduVPN.ViewModels
                                 // Save the access token.
                                 if (Properties.Settings.Default.AccessTokens == null)
                                     Properties.Settings.Default.AccessTokens = new SerializableStringDictionary();
-                                Properties.Settings.Default.AccessTokens[Parent.AuthenticatingInstance.Base.AbsoluteUri] = Parent.AccessToken.ToBase64String();
+                                Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri] = Parent.AccessToken.ToBase64String();
 
                                 // Go to profile selection page.
                                 if (Parent.ConnectingInstance == null)

@@ -60,30 +60,27 @@ namespace eduVPN.ViewModels
                                     Parent.CurrentPage = Parent.CustomInstancePage;
                                 else
                                 {
-                                    // Schedule API endpoints get.
+                                    // Get and load API endpoints.
+                                    var api = new Models.InstanceEndpoints();
                                     var uri_builder = new UriBuilder(Parent.AuthenticatingInstance.Base);
                                     uri_builder.Path += "info.json";
-                                    var api_get_task = JSON.Response.GetAsync(
+                                    api.LoadJSON((await JSON.Response.GetAsync(
                                         uri_builder.Uri,
                                         null,
                                         null,
                                         null,
-                                        ConnectWizard.Abort.Token);
+                                        ConnectWizard.Abort.Token)).Value, ConnectWizard.Abort.Token);
+                                    Parent.AuthenticatingEndpoints = api;
 
                                     // Try to restore the access token from the settings.
                                     Parent.AccessToken = null;
                                     try
                                     {
-                                        var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingInstance.Base.AbsoluteUri];
+                                        var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri];
                                         if (at != null)
                                             Parent.AccessToken = AccessToken.FromBase64String(at);
                                     }
                                     catch (Exception) { }
-
-                                    // Load API endpoints.
-                                    var api = new Models.InstanceEndpoints();
-                                    api.LoadJSON((await api_get_task).Value);
-                                    Parent.AuthenticatingEndpoints = api;
 
                                     if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
                                     {
