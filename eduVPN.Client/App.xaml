@@ -78,6 +78,42 @@
                 Width="53.55"
                 Height="8.5"/>
         </Canvas>
+        <Canvas x:Key="eduVPNStatusTypeInitializingIcon" Width="22" Height="22">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="0.12" ScaleX="0.12"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Path
+                Fill="{StaticResource eduVPNLogoBlackKey}"
+                Data="M138.89,62.01h-59.5v-9.13c0-19.54-15.9-35.43-35.43-35.43S8.52,33.35,8.52,52.88v10.73h14.17V52.88c0-11.72,9.54-21.26,21.26-21.26s21.26,9.54,21.26,21.26v9.13H62.4c-8.58,0-15.59,7.02-15.59,15.59v63.68c0,8.58,7.02,15.59,15.59,15.59h76.49c8.58,0,15.59-7.02,15.59-15.59V77.6C154.48,69.03,147.46,62.01,138.89,62.01z"/>
+            <Path
+                Fill="{StaticResource eduVPNLogoWhiteKey}"
+                Data="M43.95,26.52c-14.54,0-26.36,11.83-26.36,26.36v5.63h-3.97v-5.63c0-16.72,13.61-30.33,30.33-30.33s30.33,13.61,30.33,30.33v9.13h-3.97v-9.13C70.31,38.35,58.48,26.52,43.95,26.52z M148.81,141.29c0,5.47-4.45,9.92-9.92,9.92H62.4c-5.47,0-9.92-4.45-9.92-9.92V77.6c0-5.47,4.45-9.92,9.92-9.92h76.49c5.47,0,9.92,4.45,9.92,9.92V141.29z"/>
+        </Canvas>
+        <Canvas x:Key="eduVPNStatusTypeConnectingIcon" Width="22" Height="22">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="0.12" ScaleX="0.12"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Path
+                Fill="{StaticResource eduVPNLogoBlackKey}"
+                Data="M138.89,62.01h-59.5v-9.13c0-19.54-15.9-35.43-35.43-35.43S8.52,33.35,8.52,52.88v10.73h14.17V52.88c0-11.72,9.54-21.26,21.26-21.26s21.26,9.54,21.26,21.26v9.13H62.4c-8.58,0-15.59,7.02-15.59,15.59v63.68c0,8.58,7.02,15.59,15.59,15.59h76.49c8.58,0,15.59-7.02,15.59-15.59V77.6C154.48,69.03,147.46,62.01,138.89,62.01z"/>
+        </Canvas>
+        <Canvas x:Key="eduVPNStatusTypeConnectedIcon" Width="22" Height="22">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="0.12" ScaleX="0.12"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Path
+                Fill="{StaticResource eduVPNLogoBlackKey}"
+                Data="M123.28,62.01h-2.81v-9.13c0-19.54-15.9-35.43-35.43-35.43s-35.43,15.9-35.43,35.43v9.13h-2.81c-8.57,0-15.59,7.02-15.59,15.59v63.68c0,8.58,7.02,15.59,15.59,15.59h76.49c8.57,0,15.59-7.02,15.59-15.59V77.6C138.87,69.03,131.86,62.01,123.28,62.01z M63.78,52.88c0-11.72,9.54-21.26,21.26-21.26s21.26,9.54,21.26,21.26v9.13H63.78V52.88z"/>
+            <Path
+                Fill="{StaticResource eduVPNLogoWhiteKey}"
+                Data="M77.68,130.16c10.2-10.58,19.72-20,28.62-29.99c2.06-2.31,2-6.5,2.92-9.83c-3.74,0.92-8.66,0.66-10.97,2.98c-6.68,6.68-12.32,14.4-18.37,21.7c-0.88-1.25-1.77-2.5-2.65-3.76c-5.36-1.46-10.72-2.92-16.09-4.39c2.67,5.24,5.07,10.63,8.12,15.65C70.63,124.77,73.28,126.26,77.68,130.16"/>
+        </Canvas>
 
         <!-- eduVPN converters -->
         <conv:StatusBarVisibilityConverter x:Key="StatusBarVisibilityConverter"/>
@@ -233,6 +269,9 @@
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0,10,0,10"/>
             <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="eduVPNInfoTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
         <!-- eduVPN Separator styles -->

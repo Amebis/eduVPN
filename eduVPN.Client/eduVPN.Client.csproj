@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
+    <Compile Include="Converters\StatusTypeDisplayNameConverter.cs" />
+    <Compile Include="Converters\StatusTypeIconConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Views\InstanceAndProfileSelectPage.xaml.cs">

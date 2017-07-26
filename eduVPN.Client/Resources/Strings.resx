@@ -183,4 +183,22 @@ Please, contact your helpdesk for support.</value>
   <data name="StatusPageTitle" xml:space="preserve">
     <value>VPN Connection</value>
   </data>
+  <data name="StatusPageInstance" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="StatusPageProfile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="StatusPageStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StatusTypeConnected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="StatusTypeConnecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="StatusTypeInitializing" xml:space="preserve">
+    <value>Initializing...</value>
+  </data>
 </root>

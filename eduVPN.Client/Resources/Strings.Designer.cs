@@ -225,11 +225,65 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string StatusPageInstance {
+            get {
+                return ResourceManager.GetString("StatusPageInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string StatusPageProfile {
+            get {
+                return ResourceManager.GetString("StatusPageProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string StatusPageStatus {
+            get {
+                return ResourceManager.GetString("StatusPageStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to VPN Connection.
         /// </summary>
         public static string StatusPageTitle {
             get {
                 return ResourceManager.GetString("StatusPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        public static string StatusTypeConnected {
+            get {
+                return ResourceManager.GetString("StatusTypeConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        public static string StatusTypeConnecting {
+            get {
+                return ResourceManager.GetString("StatusTypeConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initializing....
+        /// </summary>
+        public static string StatusTypeInitializing {
+            get {
+                return ResourceManager.GetString("StatusTypeInitializing", resourceCulture);
             }
         }
         
