@@ -51,7 +51,7 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Methods
+        #region ILoadableItem Support
 
         /// <summary>
         /// Loads user info from a dictionary object (provided by JSON)

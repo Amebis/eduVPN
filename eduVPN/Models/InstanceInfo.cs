@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN instance = VPN service provider
+    /// An eduVPN instance (VPN service provider) basic info
     /// </summary>
     public class InstanceInfo : BindableBase, JSON.ILoadableItem
     {
@@ -76,6 +76,10 @@ namespace eduVPN.Models
         {
             return DisplayName;
         }
+
+        #endregion
+
+        #region ILoadableItem Support
 
         /// <summary>
         /// Loads instance from a dictionary object (provided by JSON)

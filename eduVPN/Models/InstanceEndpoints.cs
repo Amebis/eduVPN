@@ -13,6 +13,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN API endpoints
     /// </summary>
+    /// <remarks>This class is not bindable by MVVM, as any direct UI interaction is not planned.</remarks>
     public class InstanceEndpoints : JSON.ILoadableItem
     {
         #region Properties
@@ -73,7 +74,7 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Methods
+        #region ILoadableItem Support
 
         /// <summary>
         /// Loads APIv2 from a dictionary object (provided by JSON)

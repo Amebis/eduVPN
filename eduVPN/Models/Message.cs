@@ -77,6 +77,10 @@ namespace eduVPN.Models
             return Text;
         }
 
+        #endregion
+
+        #region ILoadableItem Support
+
         /// <summary>
         /// Loads message from a dictionary object (provided by JSON)
         /// </summary>

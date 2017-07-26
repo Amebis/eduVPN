@@ -13,7 +13,7 @@ using System.ComponentModel;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN list of instances = VPN service providers
+    /// An eduVPN list of instances
     /// </summary>
     public class InstanceInfoList : ObservableCollection<InstanceInfo>, JSON.ILoadableItem
     {
@@ -51,7 +51,7 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Methods
+        #region ILoadableItem Support
 
         /// <summary>
         /// Loads instance list from a dictionary object (provided by JSON)
