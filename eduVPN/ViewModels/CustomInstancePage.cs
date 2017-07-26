@@ -9,8 +9,6 @@ using eduOAuth;
 using eduVPN.JSON;
 using Prism.Commands;
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels
