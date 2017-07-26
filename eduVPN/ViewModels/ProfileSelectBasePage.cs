@@ -104,8 +104,8 @@ namespace eduVPN.ViewModels
             UserInfo = new Models.UserInfo();
 
             // Launch user info load in the background.
-            ThreadPool.QueueUserWorkItem(new WaitCallback(
-                param =>
+            new Thread(new ThreadStart(
+                () =>
                 {
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
@@ -131,7 +131,7 @@ namespace eduVPN.ViewModels
                     {
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
-                }));
+                })).Start();
         }
 
         /// <summary>

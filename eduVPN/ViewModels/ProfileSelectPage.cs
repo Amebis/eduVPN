@@ -38,8 +38,8 @@ namespace eduVPN.ViewModels
             base.OnActivate();
 
             // Launch profile list load in the background.
-            ThreadPool.QueueUserWorkItem(new WaitCallback(
-                param => {
+            new Thread(new ThreadStart(
+                () => {
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
                     try
@@ -81,7 +81,7 @@ namespace eduVPN.ViewModels
                     {
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
-                }));
+                })).Start();
         }
 
         #endregion

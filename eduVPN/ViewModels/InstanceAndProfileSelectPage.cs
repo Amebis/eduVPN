@@ -32,8 +32,8 @@ namespace eduVPN.ViewModels
                 RaisePropertyChanged();
 
                 ProfileList = new JSON.Collection<Models.ProfileInfo>();
-                ThreadPool.QueueUserWorkItem(new WaitCallback(
-                    param =>
+                new Thread(new ThreadStart(
+                    () =>
                     {
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
@@ -48,7 +48,7 @@ namespace eduVPN.ViewModels
                                 null,
                                 null,
                                 null,
-                                ConnectWizard.Abort.Token).Value);
+                                ConnectWizard.Abort.Token).Value, ConnectWizard.Abort.Token);
 
                             // Set selected instance API endpoints.
                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
@@ -90,7 +90,7 @@ namespace eduVPN.ViewModels
                         {
                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                         }
-                    }));
+                    })).Start();
             }
         }
         private Models.InstanceInfo _selected_instance;

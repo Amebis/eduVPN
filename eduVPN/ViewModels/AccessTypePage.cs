@@ -147,8 +147,8 @@ namespace eduVPN.ViewModels
             }
 
             // Launch instance list load in the background.
-            ThreadPool.QueueUserWorkItem(new WaitCallback(
-                param =>
+            new Thread(new ThreadStart(
+                () =>
                 {
                     var json = new JSON.Response[_instance_directory_id.Length];
 
@@ -244,7 +244,7 @@ namespace eduVPN.ViewModels
                                 }
                             }
 
-                            // Wait for five minutes.
+                            // Wait for the next refresh cycle.
                             if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(period))
                                 break;
                         }
@@ -254,7 +254,7 @@ namespace eduVPN.ViewModels
                             break;
                         }
                     }
-                }));
+                })).Start();
         }
 
         #endregion

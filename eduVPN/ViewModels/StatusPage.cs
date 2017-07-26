@@ -63,8 +63,8 @@ namespace eduVPN.ViewModels
             MessageList = new Models.MessageList();
 
             // Launch VPN connecting task in the background.
-            ThreadPool.QueueUserWorkItem(new WaitCallback(
-                param =>
+            new Thread(new ThreadStart(
+                () =>
                 {
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
 
@@ -155,7 +155,7 @@ namespace eduVPN.ViewModels
                     {
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
                     }
-                }));
+                })).Start();
         }
 
         #endregion
