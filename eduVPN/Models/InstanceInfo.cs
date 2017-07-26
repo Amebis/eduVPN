@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN instance = VPN service provider
     /// </summary>
-    public class Instance : BindableBase, JSON.ILoadableItem
+    public class InstanceInfo : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 

@@ -45,18 +45,18 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available instances
         /// </summary>
-        public Models.InstanceList InstanceList
+        public Models.InstanceInfoList InstanceList
         {
             get { return _instance_list; }
             set { _instance_list = value; RaisePropertyChanged(); }
         }
-        private Models.InstanceList _instance_list;
+        private Models.InstanceInfoList _instance_list;
 
         /// <summary>
         /// Selected instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.Instance SelectedInstance
+        public Models.InstanceInfo SelectedInstance
         {
             get { return _selected_instance; }
             set
@@ -66,7 +66,7 @@ namespace eduVPN.ViewModels
                 ((DelegateCommandBase)AuthorizeSelectedInstance).RaiseCanExecuteChanged();
             }
         }
-        private Models.Instance _selected_instance;
+        private Models.InstanceInfo _selected_instance;
 
         /// <summary>
         /// Authorize selected instance command
@@ -204,12 +204,12 @@ namespace eduVPN.ViewModels
             }
 
             // Initialize instance list.
-            InstanceList = new Models.InstanceList();
+            InstanceList = new Models.InstanceInfoList();
             InstanceList.Load(_cache);
             if (_has_custom)
             {
                 // Append "Other instance" entry.
-                InstanceList.Add(new Models.Instance()
+                InstanceList.Add(new Models.InstanceInfo()
                 {
                     DisplayName = Resources.Strings.CustomInstance,
                     IsCustom = true,
@@ -255,13 +255,13 @@ namespace eduVPN.ViewModels
                             var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
 
                             // Load instance list.
-                            var instance_list = new Models.InstanceList();
+                            var instance_list = new Models.InstanceInfoList();
                             instance_list.Load(obj);
 
                             if (_has_custom)
                             {
                                 // Append "Other instance" entry.
-                                instance_list.Add(new Models.Instance()
+                                instance_list.Add(new Models.InstanceInfo()
                                 {
                                     DisplayName = Resources.Strings.CustomInstance,
                                     IsCustom = true,

@@ -17,9 +17,9 @@ namespace eduVPN.Models.Tests
         [TestMethod()]
         public void InstanceTest()
         {
-            Instance inst;
+            InstanceInfo inst;
 
-            inst = new Instance();
+            inst = new InstanceInfo();
             inst.Load(new Dictionary<string, object>
                 {
                     { "base_uri", "https://surf.eduvpn.nl/" }
@@ -28,7 +28,7 @@ namespace eduVPN.Models.Tests
             Assert.AreEqual("surf.eduvpn.nl", inst.DisplayName, "Display name incorrect");
             Assert.AreEqual(null, inst.Logo, "Logo URI incorrect");
 
-            inst = new Instance();
+            inst = new InstanceInfo();
             inst.Load(new Dictionary<string, object>
                 {
                     { "base_uri", "https://surf.eduvpn.nl/" },
@@ -38,7 +38,7 @@ namespace eduVPN.Models.Tests
             Assert.AreEqual("SURF", inst.DisplayName, "Display name incorrect");
             Assert.AreEqual(null, inst.Logo, "Logo URI incorrect");
 
-            inst = new Instance();
+            inst = new InstanceInfo();
             inst.Load(new Dictionary<string, object>
                 {
                     { "base_uri", "https://surf.eduvpn.nl/" },
@@ -52,7 +52,7 @@ namespace eduVPN.Models.Tests
             // Test issues.
             try
             {
-                inst = new Instance();
+                inst = new InstanceInfo();
                 inst.Load(new Dictionary<string, object>
                     {
                         { "display_name", "SURF" },

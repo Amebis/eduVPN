@@ -26,18 +26,18 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available instances
         /// </summary>
-        public Models.InstanceList InstanceList
+        public Models.InstanceInfoList InstanceList
         {
             get { return _instance_list; }
             set { _instance_list = value; RaisePropertyChanged(); }
         }
-        private Models.InstanceList _instance_list;
+        private Models.InstanceInfoList _instance_list;
 
         /// <summary>
         /// Selected instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.Instance SelectedInstance
+        public Models.InstanceInfo SelectedInstance
         {
             get { return _selected_instance; }
             set {
@@ -97,7 +97,7 @@ namespace eduVPN.ViewModels
                     }));
             }
         }
-        private Models.Instance _selected_instance;
+        private Models.InstanceInfo _selected_instance;
 
         /// <summary>
         /// Selected eduVPN instance API endpoints

@@ -40,7 +40,7 @@ namespace eduVPN.Models.Tests
                 Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
             // Load list of institute access instances.
-            var instance_list_ia = new InstanceList();
+            var instance_list_ia = new InstanceInfoList();
             try
             {
                 instance_list_ia_json_task.Wait();
@@ -65,7 +65,7 @@ namespace eduVPN.Models.Tests
             })).Wait();
 
             // Load all secure internet instances API in parallel.
-            var instance_list_si = new InstanceList();
+            var instance_list_si = new InstanceInfoList();
             try
             {
                 instance_list_si_json_task.Wait();

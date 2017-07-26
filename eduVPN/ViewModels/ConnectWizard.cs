@@ -33,7 +33,7 @@ namespace eduVPN.ViewModels
         /// Authenticating eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.Instance AuthenticatingInstance
+        public Models.InstanceInfo AuthenticatingInstance
         {
             get { return _authenticating_instance; }
             set
@@ -42,7 +42,7 @@ namespace eduVPN.ViewModels
                 RaisePropertyChanged();
             }
         }
-        private Models.Instance _authenticating_instance;
+        private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
         /// Authenticating eduVPN instance API endpoints
@@ -68,7 +68,7 @@ namespace eduVPN.ViewModels
         /// Connecting eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.Instance ConnectingInstance
+        public Models.InstanceInfo ConnectingInstance
         {
             get { return _connecting_instance; }
             set
@@ -77,7 +77,7 @@ namespace eduVPN.ViewModels
                 RaisePropertyChanged();
             }
         }
-        private Models.Instance _connecting_instance;
+        private Models.InstanceInfo _connecting_instance;
 
         /// <summary>
         /// Connecting eduVPN instance API endpoints

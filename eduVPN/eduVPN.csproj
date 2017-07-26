@@ -47,8 +47,8 @@
     <Compile Include="ViewModels\AuthorizationPage.cs" />
     <Compile Include="ViewModels\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\ConnectWizard.cs" />
-    <Compile Include="Models\Instance.cs" />
-    <Compile Include="Models\InstanceList.cs" />
+    <Compile Include="Models\InstanceInfo.cs" />
+    <Compile Include="Models\InstanceInfoList.cs" />
     <Compile Include="ViewModels\InstanceAndProfileSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
     <Compile Include="ViewModels\SecureInternetSelectPage.cs" />

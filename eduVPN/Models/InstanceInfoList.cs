@@ -15,7 +15,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN list of instances = VPN service providers
     /// </summary>
-    public class InstanceList : ObservableCollection<Instance>, JSON.ILoadableItem
+    public class InstanceInfoList : ObservableCollection<InstanceInfo>, JSON.ILoadableItem
     {
         #region Properties
 
@@ -69,7 +69,7 @@ namespace eduVPN.Models
             // Parse all instances listed. Don't do it in parallel to preserve the sort order.
             foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "instances"))
             {
-                var instance = new Instance();
+                var instance = new InstanceInfo();
                 instance.Load(el);
                 Add(instance);
             }
