@@ -33,7 +33,7 @@ namespace eduVPN.ViewModels
         /// Authenticating eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public JSON.Instance AuthenticatingInstance
+        public Models.Instance AuthenticatingInstance
         {
             get { return _authenticating_instance; }
             set
@@ -42,17 +42,17 @@ namespace eduVPN.ViewModels
                 RaisePropertyChanged();
             }
         }
-        private JSON.Instance _authenticating_instance;
+        private Models.Instance _authenticating_instance;
 
         /// <summary>
         /// Authenticating eduVPN instance API endpoints
         /// </summary>
-        public JSON.InstanceEndpoints AuthenticatingEndpoints
+        public Models.InstanceEndpoints AuthenticatingEndpoints
         {
             get { return _authenticating_endpoints; }
             set { _authenticating_endpoints = value; RaisePropertyChanged(); }
         }
-        private JSON.InstanceEndpoints _authenticating_endpoints;
+        private Models.InstanceEndpoints _authenticating_endpoints;
 
         /// <summary>
         /// OAuth access token
@@ -68,7 +68,7 @@ namespace eduVPN.ViewModels
         /// Connecting eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public JSON.Instance ConnectingInstance
+        public Models.Instance ConnectingInstance
         {
             get { return _connecting_instance; }
             set
@@ -77,17 +77,17 @@ namespace eduVPN.ViewModels
                 RaisePropertyChanged();
             }
         }
-        private JSON.Instance _connecting_instance;
+        private Models.Instance _connecting_instance;
 
         /// <summary>
         /// Connecting eduVPN instance API endpoints
         /// </summary>
-        public JSON.InstanceEndpoints ConnectingEndpoints
+        public Models.InstanceEndpoints ConnectingEndpoints
         {
             get { return _connecting_endpoints; }
             set { _connecting_endpoints = value; RaisePropertyChanged(); }
         }
-        private JSON.InstanceEndpoints _connecting_endpoints;
+        private Models.InstanceEndpoints _connecting_endpoints;
 
         #region Pages
 

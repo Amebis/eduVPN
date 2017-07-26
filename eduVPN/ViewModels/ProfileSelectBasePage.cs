@@ -24,18 +24,18 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available profiles
         /// </summary>
-        public JSON.Collection<JSON.Profile> ProfileList
+        public JSON.Collection<Models.Profile> ProfileList
         {
             get { return _profile_list; }
             set { _profile_list = value; RaisePropertyChanged(); }
         }
-        private JSON.Collection<JSON.Profile> _profile_list;
+        private JSON.Collection<Models.Profile> _profile_list;
 
         /// <summary>
         /// Selected profile
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public JSON.Profile SelectedProfile
+        public Models.Profile SelectedProfile
         {
             get { return _selected_profile; }
             set
@@ -45,7 +45,7 @@ namespace eduVPN.ViewModels
                 ((DelegateCommandBase)ConnectSelectedProfile).RaiseCanExecuteChanged();
             }
         }
-        private JSON.Profile _selected_profile;
+        private Models.Profile _selected_profile;
 
         /// <summary>
         /// Connect selected profile command
@@ -73,12 +73,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// User info
         /// </summary>
-        public JSON.UserInfo UserInfo
+        public Models.UserInfo UserInfo
         {
             get { return _user_info; }
             set { _user_info = value; RaisePropertyChanged(); }
         }
-        private JSON.UserInfo _user_info;
+        private Models.UserInfo _user_info;
 
         #endregion
 
@@ -91,7 +91,7 @@ namespace eduVPN.ViewModels
         public ProfileSelectBasePage(ConnectWizard parent) :
             base(parent)
         {
-            ProfileList = new JSON.Collection<JSON.Profile>();
+            ProfileList = new JSON.Collection<Models.Profile>();
 
             // Launch user info load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
@@ -103,7 +103,7 @@ namespace eduVPN.ViewModels
                     try
                     {
                         // Get and load user info.
-                        var user_info = new JSON.UserInfo();
+                        var user_info = new Models.UserInfo();
                         user_info.LoadJSONAPIResponse(JSON.Response.Get(
                             Parent.AuthenticatingEndpoints.UserInfo,
                             null,

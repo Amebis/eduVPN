@@ -8,12 +8,12 @@
 using Prism.Mvvm;
 using System.Collections.Generic;
 
-namespace eduVPN.JSON
+namespace eduVPN.Models
 {
     /// <summary>
     /// An eduVPN profile
     /// </summary>
-    public class Profile : BindableBase, ILoadableItem
+    public class Profile : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 

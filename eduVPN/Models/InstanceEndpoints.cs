@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace eduVPN.JSON
+namespace eduVPN.Models
 {
     /// <summary>
     /// An eduVPN API endpoints
     /// </summary>
-    public class InstanceEndpoints : ILoadableItem
+    public class InstanceEndpoints : JSON.ILoadableItem
     {
         #region Properties
 

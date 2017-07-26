@@ -80,7 +80,7 @@ namespace eduVPN.ViewModels
                                 } catch (Exception) { }
 
                                 // Load API endpoints.
-                                var api = new JSON.InstanceEndpoints();
+                                var api = new Models.InstanceEndpoints();
                                 api.LoadJSON((await api_get_task).Value);
                                 Parent.AuthenticatingEndpoints = api;
 

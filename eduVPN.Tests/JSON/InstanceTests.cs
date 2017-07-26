@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace eduVPN.JSON.Tests
+namespace eduVPN.Models.Tests
 {
     [TestClass()]
     public class InstanceTests

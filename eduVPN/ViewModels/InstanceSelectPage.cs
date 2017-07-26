@@ -45,18 +45,18 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available instances
         /// </summary>
-        public JSON.InstanceList InstanceList
+        public Models.InstanceList InstanceList
         {
             get { return _instance_list; }
             set { _instance_list = value; RaisePropertyChanged(); }
         }
-        private JSON.InstanceList _instance_list;
+        private Models.InstanceList _instance_list;
 
         /// <summary>
         /// Selected instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public JSON.Instance SelectedInstance
+        public Models.Instance SelectedInstance
         {
             get { return _selected_instance; }
             set
@@ -66,7 +66,7 @@ namespace eduVPN.ViewModels
                 ((DelegateCommandBase)AuthorizeSelectedInstance).RaiseCanExecuteChanged();
             }
         }
-        private JSON.Instance _selected_instance;
+        private Models.Instance _selected_instance;
 
         /// <summary>
         /// Authorize selected instance command
@@ -114,7 +114,7 @@ namespace eduVPN.ViewModels
                                     catch (Exception) { }
 
                                     // Load API endpoints.
-                                    var api = new JSON.InstanceEndpoints();
+                                    var api = new Models.InstanceEndpoints();
                                     api.LoadJSON((await api_get_task).Value);
                                     Parent.AuthenticatingEndpoints = api;
 
@@ -134,7 +134,7 @@ namespace eduVPN.ViewModels
                                         }
                                     }
 
-                                    if (InstanceList.AuthorizationType == AuthorizationType.Local)
+                                    if (InstanceList.AuthorizationType == Models.AuthorizationType.Local)
                                     {
                                         // Connecting instance will be the same as authenticating.
                                         Parent.ConnectingInstance = Parent.AuthenticatingInstance;
@@ -204,12 +204,12 @@ namespace eduVPN.ViewModels
             }
 
             // Initialize instance list.
-            InstanceList = new JSON.InstanceList();
+            InstanceList = new Models.InstanceList();
             InstanceList.Load(_cache);
             if (_has_custom)
             {
                 // Append "Other instance" entry.
-                InstanceList.Add(new JSON.Instance()
+                InstanceList.Add(new Models.Instance()
                 {
                     DisplayName = Resources.Strings.CustomInstance,
                     IsCustom = true,
@@ -255,13 +255,13 @@ namespace eduVPN.ViewModels
                             var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json.Value, _abort.Token);
 
                             // Load instance list.
-                            var instance_list = new JSON.InstanceList();
+                            var instance_list = new Models.InstanceList();
                             instance_list.Load(obj);
 
                             if (_has_custom)
                             {
                                 // Append "Other instance" entry.
-                                instance_list.Add(new JSON.Instance()
+                                instance_list.Add(new Models.Instance()
                                 {
                                     DisplayName = Resources.Strings.CustomInstance,
                                     IsCustom = true,

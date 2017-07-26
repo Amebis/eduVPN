@@ -32,23 +32,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JSON\APIErrorException.cs" />
-    <Compile Include="JSON\AuthorizationType.cs" />
+    <Compile Include="Models\AuthorizationType.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
-    <Compile Include="JSON\Message.cs" />
-    <Compile Include="JSON\MessageType.cs" />
-    <Compile Include="JSON\Profile.cs" />
-    <Compile Include="JSON\UserInfo.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MessageType.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\UserInfo.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="ViewModels\AccessType.cs" />
     <Compile Include="ViewModels\AccessTypePage.cs" />
-    <Compile Include="JSON\InstanceEndpoints.cs" />
+    <Compile Include="Models\InstanceEndpoints.cs" />
     <Compile Include="ViewModels\AuthorizationPage.cs" />
     <Compile Include="ViewModels\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\ConnectWizard.cs" />
-    <Compile Include="JSON\Instance.cs" />
-    <Compile Include="JSON\InstanceList.cs" />
+    <Compile Include="Models\Instance.cs" />
+    <Compile Include="Models\InstanceList.cs" />
     <Compile Include="ViewModels\InstanceAndProfileSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
     <Compile Include="ViewModels\SecureInternetSelectPage.cs" />

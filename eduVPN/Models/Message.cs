@@ -9,12 +9,12 @@ using System;
 using Prism.Mvvm;
 using System.Collections.Generic;
 
-namespace eduVPN.JSON
+namespace eduVPN.Models
 {
     /// <summary>
     /// eduVPN user/system message
     /// </summary>
-    public class Message : BindableBase, ILoadableItem
+    public class Message : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 

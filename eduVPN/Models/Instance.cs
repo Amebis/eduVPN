@@ -9,12 +9,12 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 
-namespace eduVPN.JSON
+namespace eduVPN.Models
 {
     /// <summary>
     /// An eduVPN instance = VPN service provider
     /// </summary>
-    public class Instance : BindableBase, ILoadableItem
+    public class Instance : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 

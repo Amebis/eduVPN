@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.JSON
+namespace eduVPN.Models
 {
     /// <summary>
     /// Authorization type

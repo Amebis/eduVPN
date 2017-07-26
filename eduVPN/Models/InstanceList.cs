@@ -10,12 +10,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace eduVPN.JSON
+namespace eduVPN.Models
 {
     /// <summary>
     /// An eduVPN list of instances = VPN service providers
     /// </summary>
-    public class InstanceList : ObservableCollection<Instance>, ILoadableItem
+    public class InstanceList : ObservableCollection<Instance>, JSON.ILoadableItem
     {
         #region Properties
 

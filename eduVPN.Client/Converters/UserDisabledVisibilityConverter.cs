@@ -19,7 +19,7 @@ namespace eduVPN.Client.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var user_info = value as JSON.UserInfo;
+            var user_info = value as Models.UserInfo;
             return user_info != null && !user_info.IsEnabled ? Visibility.Visible : Visibility.Collapsed;
         }
 
