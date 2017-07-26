@@ -74,7 +74,8 @@ namespace eduVPN.ViewModels
 
                             if (Parent.InstanceList is Models.InstanceInfoFederatedList instance_list)
                             {
-                                // Set API endpoints.
+                                // Set authenticating instance.
+                                Parent.AuthenticatingInstance = null;
                                 Parent.AuthenticatingEndpoints = new Models.InstanceEndpoints()
                                 {
                                     AuthorizationEndpoint = instance_list.AuthorizationEndpoint,
@@ -106,6 +107,10 @@ namespace eduVPN.ViewModels
                                         Parent.AccessToken = null;
                                     }
                                 }
+
+                                // Reset connecting instance.
+                                Parent.ConnectingInstance = null;
+                                Parent.ConnectingEndpoints = null;
 
                                 if (Parent.AccessToken == null)
                                     Parent.CurrentPage = Parent.AuthorizationPage;

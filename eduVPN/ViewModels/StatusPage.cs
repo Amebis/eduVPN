@@ -158,6 +158,21 @@ namespace eduVPN.ViewModels
                 })).Start();
         }
 
+        protected override void DoNavigateBack()
+        {
+            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
+                Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
+            else if (Parent.InstanceList is Models.InstanceInfoDistributedList)
+                Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
+            else
+                Parent.CurrentPage = Parent.ProfileSelectPage;
+        }
+
+        protected override bool CanNavigateBack()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

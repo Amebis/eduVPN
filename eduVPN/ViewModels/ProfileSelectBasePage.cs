@@ -154,7 +154,9 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            if (Parent.AuthenticatingInstance.IsCustom)
+            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
+                Parent.CurrentPage = Parent.AccessTypePage;
+            else if (Parent.AuthenticatingInstance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;
             else
                 switch (Parent.AccessType)
@@ -166,7 +168,9 @@ namespace eduVPN.ViewModels
 
         protected override bool CanNavigateBack()
         {
-            if (Parent.AuthenticatingInstance.IsCustom)
+            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
+                return true;
+            else if (Parent.AuthenticatingInstance.IsCustom)
                 return true;
             else
                 switch (Parent.AccessType)

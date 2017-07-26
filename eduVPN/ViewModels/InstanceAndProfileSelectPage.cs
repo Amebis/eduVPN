@@ -126,7 +126,7 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            if (Parent.AccessTypePage.InstanceList[(int)Parent.AccessType] is Models.InstanceInfoFederatedList)
+            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
             {
                 // Federated instance list does not favour any particular instance to connect to.
                 SelectedInstance = null;
@@ -134,13 +134,7 @@ namespace eduVPN.ViewModels
             else
             {
                 // By default, select the same connecting instance as authenticating instance.
-                switch (Parent.AccessType)
-                {
-                    case AccessType.SecureInternet: SelectedInstance = Parent.SecureInternetSelectPage.SelectedInstance; break;
-                    case AccessType.InstituteAccess: SelectedInstance = Parent.InstituteAccessSelectPage.SelectedInstance; break;
-                    default: throw new NotImplementedException();
-                }
-
+                SelectedInstance = Parent.AuthenticatingInstance;
             }
         }
 

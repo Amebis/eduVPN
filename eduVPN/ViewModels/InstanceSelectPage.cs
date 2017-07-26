@@ -98,13 +98,13 @@ namespace eduVPN.ViewModels
                                         }
                                     }
 
-                                    if (Parent.AccessTypePage.InstanceList[(int)Parent.AccessType] is Models.InstanceInfoLocalList)
+                                    if (Parent.InstanceList is Models.InstanceInfoLocalList)
                                     {
                                         // Connecting instance will be the same as authenticating.
                                         Parent.ConnectingInstance = Parent.AuthenticatingInstance;
                                         Parent.ConnectingEndpoints = Parent.AuthenticatingEndpoints;
                                     }
-                                    else if (Parent.AccessTypePage.InstanceList[(int)Parent.AccessType] is Models.InstanceInfoDistributedList)
+                                    else if (Parent.InstanceList is Models.InstanceInfoDistributedList)
                                     {
                                         // Connecting instance will not (necessarry) be the same as authenticating.
                                         Parent.ConnectingInstance = null;
