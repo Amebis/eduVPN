@@ -21,7 +21,7 @@
 
         <StatusBar
             Style="{StaticResource eduVPNInlineInfoBarStyle}"
-            Visibility="{Binding UserInfo, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+            Visibility="{Binding Path=UserInfo, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
             <StatusBarItem>
                 <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
             </StatusBarItem>
@@ -37,16 +37,16 @@
             Margin="10"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-            ItemsSource="{Binding InstanceList}"
-            SelectedItem="{Binding SelectedInstance}"/>
+            ItemsSource="{Binding Path=InstanceList}"
+            SelectedItem="{Binding Path=SelectedInstance}"/>
 
         <ListBox
             Grid.Row="2"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-            ItemsSource="{Binding ProfileList}"
-            SelectedItem="{Binding SelectedProfile}"
+            ItemsSource="{Binding Path=ProfileList}"
+            SelectedItem="{Binding Path=SelectedProfile}"
             SelectionChanged="ProfileList_SelectionChanged"/>
     </Grid>
 </view:ProfileSelectBasePage>
