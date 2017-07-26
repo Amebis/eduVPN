@@ -91,7 +91,22 @@ namespace eduVPN.ViewModels
         public ProfileSelectBasePage(ConnectWizard parent) :
             base(parent)
         {
-            ProfileList = new JSON.Collection<Models.ProfileInfo>();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
+            // Reset profile list. It should get reloaded by the inheriting page.
+            ProfileList = null;
+
+            // Reset selected profile, to prevent automatic continuation to
+            // status page.
+            SelectedProfile = null;
 
             // Launch user info load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
@@ -125,10 +140,6 @@ namespace eduVPN.ViewModels
                     }
                 }));
         }
-
-        #endregion
-
-        #region Methods
 
         protected override void DoNavigateBack()
         {

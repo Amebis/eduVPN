@@ -120,6 +120,16 @@ namespace eduVPN.ViewModels
         public InstanceAndProfileSelectPage(ConnectWizard parent) :
             base(parent)
         {
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
             // Attach the instance list to the instance selection page's list.
             // By default, select the same connecting instance as authenticating instance.
             switch (Parent.AccessType)

@@ -322,6 +322,15 @@ namespace eduVPN.ViewModels
             }
         }
 
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
+            // Reset selected instance, to prevent automatic continuation to
+            // CustomInstance/Authorization page.
+            SelectedInstance = null;
+        }
+
         protected override void DoNavigateBack()
         {
             Parent.CurrentPage = Parent.AccessTypePage;
@@ -330,15 +339,6 @@ namespace eduVPN.ViewModels
         protected override bool CanNavigateBack()
         {
             return true;
-        }
-
-        public override void OnActivate()
-        {
-            // Reset selected instance, to prevent automatic continuation to
-            // CustomInstance/Authorization page.
-            SelectedInstance = null;
-
-            base.OnActivate();
         }
 
         #endregion

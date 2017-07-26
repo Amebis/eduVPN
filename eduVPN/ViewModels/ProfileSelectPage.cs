@@ -26,6 +26,16 @@ namespace eduVPN.ViewModels
         public ProfileSelectPage(ConnectWizard parent) :
             base(parent)
         {
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
             // Launch profile list load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
                 param => {
@@ -50,7 +60,7 @@ namespace eduVPN.ViewModels
                             ErrorMessage = null;
                         }));
                     }
-                    catch (OperationCanceledException) {}
+                    catch (OperationCanceledException) { }
                     catch (Exception ex)
                     {
                         // Notify the sender the profile list loading failed.
