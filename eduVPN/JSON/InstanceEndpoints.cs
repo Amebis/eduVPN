@@ -13,7 +13,7 @@ namespace eduVPN.JSON
     /// <summary>
     /// An eduVPN API endpoints
     /// </summary>
-    public class API : ILoadableItem
+    public class InstanceEndpoints : ILoadableItem
     {
         #region Properties
 

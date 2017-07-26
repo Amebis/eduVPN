@@ -60,7 +60,7 @@ namespace eduVPN.JSON.Tests
             Task.WhenAll(instance_list_ia.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
-                new API().LoadJSON((await Response.GetAsync(uri_builder.Uri)).Value);
+                new JSON.InstanceEndpoints().LoadJSON((await Response.GetAsync(uri_builder.Uri)).Value);
             })).Wait();
 
             // Load all secure internet instances API in parallel.
@@ -74,7 +74,7 @@ namespace eduVPN.JSON.Tests
             Task.WhenAll(instance_list_si.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
-                new API().LoadJSON((await Response.GetAsync(uri_builder.Uri)).Value);
+                new JSON.InstanceEndpoints().LoadJSON((await Response.GetAsync(uri_builder.Uri)).Value);
             })).Wait();
 
             // Re-load list of institute access instances.

@@ -43,7 +43,7 @@
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="ViewModels\AccessType.cs" />
     <Compile Include="ViewModels\AccessTypePage.cs" />
-    <Compile Include="JSON\API.cs" />
+    <Compile Include="JSON\InstanceEndpoints.cs" />
     <Compile Include="ViewModels\AuthorizationPage.cs" />
     <Compile Include="ViewModels\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\ConnectWizard.cs" />

@@ -56,7 +56,7 @@ namespace eduVPN.ViewModels
                             // Get and load API endpoints.
                             var uri_builder = new UriBuilder(_selected_instance.Base);
                             uri_builder.Path += "info.json";
-                            var api = new JSON.API();
+                            var api = new JSON.InstanceEndpoints();
                             api.LoadJSON(JSON.Response.Get(
                                 uri_builder.Uri,
                                 null,
@@ -102,12 +102,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Selected eduVPN instance API endpoints
         /// </summary>
-        public JSON.API SelectedInstanceEndpoints
+        public JSON.InstanceEndpoints SelectedInstanceEndpoints
         {
             get { return _selected_instance_endpoints; }
             set { _selected_instance_endpoints = value; RaisePropertyChanged(); }
         }
-        private JSON.API _selected_instance_endpoints;
+        private JSON.InstanceEndpoints _selected_instance_endpoints;
 
         #endregion
 

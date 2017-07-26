@@ -47,12 +47,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authenticating eduVPN instance API endpoints
         /// </summary>
-        public JSON.API AuthenticatingEndpoints
+        public JSON.InstanceEndpoints AuthenticatingEndpoints
         {
             get { return _authenticating_endpoints; }
             set { _authenticating_endpoints = value; RaisePropertyChanged(); }
         }
-        private JSON.API _authenticating_endpoints;
+        private JSON.InstanceEndpoints _authenticating_endpoints;
 
         /// <summary>
         /// OAuth access token
@@ -82,12 +82,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Connecting eduVPN instance API endpoints
         /// </summary>
-        public JSON.API ConnectingEndpoints
+        public JSON.InstanceEndpoints ConnectingEndpoints
         {
             get { return _connecting_endpoints; }
             set { _connecting_endpoints = value; RaisePropertyChanged(); }
         }
-        private JSON.API _connecting_endpoints;
+        private JSON.InstanceEndpoints _connecting_endpoints;
 
         #region Pages
 
