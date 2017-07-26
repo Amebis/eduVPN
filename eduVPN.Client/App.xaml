@@ -112,12 +112,45 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="25"/>
-            <Setter Property="Height" Value="25"/>
+        <Style x:Key="eduVPNButtonBaseStyle" TargetType="{x:Type Button}">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="eduVPNButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNButtonBaseStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Rectangle
+                                x:Name="Border"
+                                Fill="{x:Null}"
+                                Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+                            <ContentPresenter
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Fill" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNButtonBaseStyle}">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -138,14 +171,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.25"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="HorizontalAlignment" Value="Center"/>

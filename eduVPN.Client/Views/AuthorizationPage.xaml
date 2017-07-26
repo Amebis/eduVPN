@@ -20,6 +20,7 @@
 
         <Button
             Margin="0,10,0,2"
+            Style="{StaticResource eduVPNButtonStyle}"
             Content="{x:Static res:Strings.AuthorizationPageRetry}"
             Command="{Binding Path=Retry}"/>
 
