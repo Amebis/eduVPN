@@ -21,7 +21,7 @@
 
         <StatusBar
             Style="{StaticResource eduVPNInlineInfoBarStyle}"
-            Visibility="{Binding Path=UserInfo, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+            Visibility="{Binding Path=UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
             <StatusBarItem>
                 <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
             </StatusBarItem>

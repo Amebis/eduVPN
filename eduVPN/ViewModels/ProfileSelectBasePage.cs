@@ -99,6 +99,10 @@ namespace eduVPN.ViewModels
             // status page.
             SelectedProfile = null;
 
+            // Set blank user info. This prevents flickering of user disabled message,
+            // since UserInfo.IsEnabled will be available for binding before page displays.
+            UserInfo = new Models.UserInfo();
+
             // Launch user info load in the background.
             ThreadPool.QueueUserWorkItem(new WaitCallback(
                 param =>
