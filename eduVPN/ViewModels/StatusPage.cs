@@ -8,8 +8,11 @@
 using eduVPN.JSON;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Web;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -129,6 +132,45 @@ namespace eduVPN.ViewModels
 
                     try
                     {
+                        // Spawn client certificate get.
+                        var certificate_get_task = JSON.Response.GetAsync(
+                            uri: Parent.ConnectingEndpoints.CreateCertificate,
+                            param: new NameValueCollection
+                            {
+                                { "display_name", Resources.Strings.CertificateTitle }
+                            },
+                            token: Parent.AccessToken,
+                            ct: ConnectWizard.Abort.Token);
+
+                        // Spawn profile config get.
+                        var uri_builder = new UriBuilder(Parent.ConnectingEndpoints.ProfileConfig);
+                        var query = HttpUtility.ParseQueryString(uri_builder.Query);
+                        query["profile_id"] = Parent.ConnectingProfile.ID;
+                        uri_builder.Query = query.ToString();
+                        var profile_config_get_task = JSON.Response.GetAsync(
+                            uri: uri_builder.Uri,
+                            token: Parent.AccessToken,
+                            response_type: "application/x-openvpn-profile",
+                            ct: ConnectWizard.Abort.Token);
+
+                        // Load profile config.
+                        try { profile_config_get_task.Wait(ConnectWizard.Abort.Token); }
+                        catch (AggregateException ex) { throw ex.InnerException; }
+
+                        // Load certificate and import it to Windows user certificate store.
+                        try { certificate_get_task.Wait(ConnectWizard.Abort.Token); }
+                        catch (AggregateException ex) { throw ex.InnerException; }
+                        var certificate = new Models.Certificate();
+                        certificate.LoadJSONAPIResponse(certificate_get_task.Result.Value, "create_keypair", ConnectWizard.Abort.Token);
+
+                        var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+                        store.Open(OpenFlags.ReadWrite);
+                        try
+                        {
+                            store.Add(certificate.Value);
+                        }
+                        finally { store.Close(); }
+
                         // State >> Connecting...
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connecting));
 

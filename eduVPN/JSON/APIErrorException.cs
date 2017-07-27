@@ -7,7 +7,6 @@
 
 using System;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 namespace eduVPN.JSON
 {

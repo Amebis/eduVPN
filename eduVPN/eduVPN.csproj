@@ -36,6 +36,8 @@
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
+    <Compile Include="Models\Certificate.cs" />
+    <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\InstanceInfoDistributedList.cs" />
     <Compile Include="Models\InstanceInfoFederatedList.cs" />
     <Compile Include="Models\InstanceInfoLocalList.cs" />
@@ -48,6 +50,7 @@
     <Compile Include="Models\StatusType.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
+    <Compile Include="System\IO\Extensions.cs" />
     <Compile Include="ViewModels\AccessType.cs" />
     <Compile Include="ViewModels\AccessTypePage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />

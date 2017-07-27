@@ -61,6 +61,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to eduVPN for Windows.
+        /// </summary>
+        internal static string CertificateTitle {
+            get {
+                return ResourceManager.GetString("CertificateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other (not listed).
         /// </summary>
         internal static string CustomInstance {
@@ -75,6 +84,15 @@ namespace eduVPN.Resources {
         internal static string ErrorAPIServerReply {
             get {
                 return ResourceManager.GetString("ErrorAPIServerReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private key is invalid or of unsupported format..
+        /// </summary>
+        internal static string ErrorInvalidPrivateKey {
+            get {
+                return ResourceManager.GetString("ErrorInvalidPrivateKey", resourceCulture);
             }
         }
         
