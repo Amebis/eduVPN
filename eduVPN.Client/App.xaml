@@ -119,7 +119,6 @@
         <conv:StatusBarVisibilityConverter x:Key="StatusBarVisibilityConverter"/>
         <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>
         <conv:UserDisabledVisibilityConverter x:Key="UserDisabledVisibilityConverter"/>
-        <conv:DateTimeToUserLocaleConverter x:Key="DateTimeToUserLocaleConverter"/>
 
         <!-- eduVPN Buttons -->
         <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">

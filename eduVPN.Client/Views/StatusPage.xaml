@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:conv="clr-namespace:eduVPN.Client.Converters"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
@@ -97,7 +98,7 @@
                     Grid.Column="1"
                     Margin="2,2,0,2"
                     Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                    Text="{Binding Path=Begin, Converter={StaticResource DateTimeToUserLocaleConverter}}"/>
+                    Text="{Binding Path=Begin, ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}}"/>
 
                 <TextBlock
                     Grid.Row="3"
@@ -110,7 +111,7 @@
                     Grid.Column="1"
                     Margin="2,2,0,2"
                     Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                    Text="{Binding Path=End, Converter={StaticResource DateTimeToUserLocaleConverter}}"/>
+                    Text="{Binding Path=End, ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}}"/>
 
                 <TextBlock
                     Grid.Row="4"
