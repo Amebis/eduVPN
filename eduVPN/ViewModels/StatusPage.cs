@@ -73,71 +73,77 @@ namespace eduVPN.ViewModels
                         var message_list = new Models.MessageList();
 
                         // Spawn user messages get.
-                        var user_messages_get_task = JSON.Response.GetAsync(
-                                Parent.AuthenticatingEndpoints.UserMessages,
-                                null,
-                                Parent.AccessToken,
-                                null,
-                                ConnectWizard.Abort.Token);
+                        var user_messages_get_task = Parent.AuthenticatingEndpoints.UserMessages != null ? JSON.Response.GetAsync(
+                            Parent.AuthenticatingEndpoints.UserMessages,
+                            null,
+                            Parent.AccessToken,
+                            null,
+                            ConnectWizard.Abort.Token) : null;
 
                         // Spawn system messages get.
-                        var system_messages_get_task = JSON.Response.GetAsync(
+                        var system_messages_get_task = Parent.ConnectingEndpoints.SystemMessages != null ? JSON.Response.GetAsync(
                                 Parent.ConnectingEndpoints.SystemMessages,
                                 null,
                                 Parent.AccessToken,
                                 null,
-                                ConnectWizard.Abort.Token);
+                                ConnectWizard.Abort.Token) : null;
 
                         // State >> Connecting...
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connecting));
 
-                        try
+                        if (user_messages_get_task != null)
                         {
-                            // Wait for and load user messages.
-                            user_messages_get_task.Wait(ConnectWizard.Abort.Token);
-                            message_list.LoadJSONAPIResponse(user_messages_get_task.Result.Value, "user_messages", ConnectWizard.Abort.Token);
-
-                            if (message_list.Count > 0)
+                            try
                             {
-                                // Add user messages.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                // Wait for and load user messages.
+                                user_messages_get_task.Wait(ConnectWizard.Abort.Token);
+                                message_list.LoadJSONAPIResponse(user_messages_get_task.Result.Value, "user_messages", ConnectWizard.Abort.Token);
+
+                                if (message_list.Count > 0)
                                 {
-                                    foreach (var msg in message_list)
-                                        MessageList.Add(msg);
-                                }));
+                                    // Add user messages.
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                    {
+                                        foreach (var msg in message_list)
+                                            MessageList.Add(msg);
+                                    }));
+                                }
                             }
-                        }
-                        catch (AggregateException ex)
-                        {
-                            // Access token rejected (401) => Redirect back to authorization page.
-                            if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
-                        }
-                        catch (Exception) { }
-
-                        try
-                        {
-                            // Wait for and load system messages.
-                            system_messages_get_task.Wait(ConnectWizard.Abort.Token);
-                            message_list.LoadJSONAPIResponse(system_messages_get_task.Result.Value, "system_messages", ConnectWizard.Abort.Token);
-
-                            if (message_list.Count > 0)
+                            catch (AggregateException ex)
                             {
-                                // Add system messages.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                {
-                                    foreach (var msg in message_list)
-                                        MessageList.Add(msg);
-                                }));
+                                // Access token rejected (401) => Redirect back to authorization page.
+                                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
                             }
+                            catch (Exception) { }
                         }
-                        catch (AggregateException ex)
+
+                        if (system_messages_get_task != null)
                         {
-                            // Access token rejected (401) => Redirect back to authorization page.
-                            if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
+                            try
+                            {
+                                // Wait for and load system messages.
+                                system_messages_get_task.Wait(ConnectWizard.Abort.Token);
+                                message_list.LoadJSONAPIResponse(system_messages_get_task.Result.Value, "system_messages", ConnectWizard.Abort.Token);
+
+                                if (message_list.Count > 0)
+                                {
+                                    // Add system messages.
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                    {
+                                        foreach (var msg in message_list)
+                                            MessageList.Add(msg);
+                                    }));
+                                }
+                            }
+                            catch (AggregateException ex)
+                            {
+                                // Access token rejected (401) => Redirect back to authorization page.
+                                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
+                            }
+                            catch (Exception) { }
                         }
-                        catch (Exception) { }
 
                         //// Add test messages.
                         //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
