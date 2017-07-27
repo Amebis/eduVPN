@@ -7,7 +7,8 @@
 
 using eduVPN.JSON;
 using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -62,6 +63,66 @@ namespace eduVPN.ViewModels
             State = Models.StatusType.Initializing;
             MessageList = new Models.MessageList();
 
+            // Load messages from all possible sources: authenticating/connecting instance, user/system list
+            foreach (
+                var list in new List<KeyValuePair<Uri, string>>() {
+                    new KeyValuePair<Uri, string>(Parent.AuthenticatingEndpoints.UserMessages, "user_messages"),
+                    new KeyValuePair<Uri, string>(Parent.ConnectingEndpoints.UserMessages, "user_messages"),
+                    new KeyValuePair<Uri, string>(Parent.AuthenticatingEndpoints.SystemMessages, "system_messages"),
+                    new KeyValuePair<Uri, string>(Parent.ConnectingEndpoints.SystemMessages, "system_messages"),
+                }
+                .Where(list => list.Key != null)
+                .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)))
+            {
+                new Thread(new ThreadStart(
+                    () =>
+                    {
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+
+                        try
+                        {
+                            // Get and load user messages.
+                            var message_list = new Models.MessageList();
+                            message_list.LoadJSONAPIResponse(
+                                JSON.Response.Get(
+                                    list.Key,
+                                    null,
+                                    Parent.AccessToken,
+                                    null,
+                                    ConnectWizard.Abort.Token).Value,
+                                list.Value,
+                                ConnectWizard.Abort.Token);
+
+                            if (message_list.Count > 0)
+                            {
+                                // Add user messages.
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                {
+                                    foreach (var msg in message_list)
+                                        MessageList.Add(msg);
+                                }));
+                            }
+                        }
+                        catch (Exception) { }
+                        finally
+                        {
+                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
+                        }
+                    })).Start();
+            }
+
+            //// Add test messages.
+            //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            //{
+            //    MessageList.Add(new Models.MessageMaintenance()
+            //    {
+            //        Text = "This is a test maintenance message.",
+            //        Date = DateTime.Now,
+            //        Begin = new DateTime(2017, 7, 31, 22, 00, 00),
+            //        End = new DateTime(2017, 7, 31, 23, 59, 00)
+            //    });
+            //}));
+
             // Launch VPN connecting task in the background.
             new Thread(new ThreadStart(
                 () =>
@@ -70,92 +131,8 @@ namespace eduVPN.ViewModels
 
                     try
                     {
-                        var message_list = new Models.MessageList();
-
-                        // Spawn user messages get.
-                        var user_messages_get_task = Parent.AuthenticatingEndpoints.UserMessages != null ? JSON.Response.GetAsync(
-                            Parent.AuthenticatingEndpoints.UserMessages,
-                            null,
-                            Parent.AccessToken,
-                            null,
-                            ConnectWizard.Abort.Token) : null;
-
-                        // Spawn system messages get.
-                        var system_messages_get_task = Parent.ConnectingEndpoints.SystemMessages != null ? JSON.Response.GetAsync(
-                                Parent.ConnectingEndpoints.SystemMessages,
-                                null,
-                                Parent.AccessToken,
-                                null,
-                                ConnectWizard.Abort.Token) : null;
-
                         // State >> Connecting...
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connecting));
-
-                        if (user_messages_get_task != null)
-                        {
-                            try
-                            {
-                                // Wait for and load user messages.
-                                user_messages_get_task.Wait(ConnectWizard.Abort.Token);
-                                message_list.LoadJSONAPIResponse(user_messages_get_task.Result.Value, "user_messages", ConnectWizard.Abort.Token);
-
-                                if (message_list.Count > 0)
-                                {
-                                    // Add user messages.
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                    {
-                                        foreach (var msg in message_list)
-                                            MessageList.Add(msg);
-                                    }));
-                                }
-                            }
-                            catch (AggregateException ex)
-                            {
-                                // Access token rejected (401) => Redirect back to authorization page.
-                                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
-                            }
-                            catch (Exception) { }
-                        }
-
-                        if (system_messages_get_task != null)
-                        {
-                            try
-                            {
-                                // Wait for and load system messages.
-                                system_messages_get_task.Wait(ConnectWizard.Abort.Token);
-                                message_list.LoadJSONAPIResponse(system_messages_get_task.Result.Value, "system_messages", ConnectWizard.Abort.Token);
-
-                                if (message_list.Count > 0)
-                                {
-                                    // Add system messages.
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                    {
-                                        foreach (var msg in message_list)
-                                            MessageList.Add(msg);
-                                    }));
-                                }
-                            }
-                            catch (AggregateException ex)
-                            {
-                                // Access token rejected (401) => Redirect back to authorization page.
-                                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
-                            }
-                            catch (Exception) { }
-                        }
-
-                        //// Add test messages.
-                        //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                        //{
-                        //    MessageList.Add(new Models.MessageMaintenance()
-                        //    {
-                        //        Text = "This is a test maintenance message.",
-                        //        Date = DateTime.Now,
-                        //        Begin = new DateTime(2017, 7, 31, 22, 00, 00),
-                        //        End = new DateTime(2017, 7, 31, 23, 59, 00)
-                        //    });
-                        //}));
 
                         // Wait for three seconds, then switch to connected state.
                         if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(1000 * 3)) return;
