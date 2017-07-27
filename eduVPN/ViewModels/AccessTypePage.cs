@@ -33,6 +33,11 @@ namespace eduVPN.ViewModels
             "InstituteAccessDirectory", // AccessType.InstituteAccess
         };
 
+        /// <summary>
+        /// Instance directory cache
+        /// </summary>
+        private Dictionary<string, object>[] _obj_cache;
+
         #endregion
 
         #region Properties
@@ -145,8 +150,7 @@ namespace eduVPN.ViewModels
         public AccessTypePage(ConnectWizard parent) :
             base(parent)
         {
-            var response_cache = new JSON.Response[_instance_directory_id.Length];
-            var obj_cache = new Dictionary<string, object>[_instance_directory_id.Length];
+            _obj_cache = new Dictionary<string, object>[_instance_directory_id.Length];
             InstanceList = new Models.InstanceInfoList[_instance_directory_id.Length];
             for (var i = 0; i < _instance_directory_id.Length; i++)
             {
@@ -154,14 +158,13 @@ namespace eduVPN.ViewModels
                 {
                     try
                     {
-                        // Get instance list JSON response from settings cache.
-                        response_cache[i] = (JSON.Response)Properties.Settings.Default[_instance_directory_id[i] + "Cache"];
-
-                        // Parse instance list JSON.
-                        obj_cache[i] = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache[i].Value, ConnectWizard.Abort.Token);
+                        // Get cached instance list JSON response from settings and parse it.
+                        _obj_cache[i] = (Dictionary<string, object>)eduJSON.Parser.Parse(
+                            ((JSON.Response)Properties.Settings.Default[_instance_directory_id[i] + "Cache"]).Value,
+                            ConnectWizard.Abort.Token);
 
                         // Load instance list from cache.
-                        var instance_list = Models.InstanceInfoList.FromJSON(obj_cache[i]);
+                        var instance_list = Models.InstanceInfoList.FromJSON(_obj_cache[i]);
                         if (i == (int)AccessType.InstituteAccess)
                         {
                             // Append "Other instance" entry to institute access instance list.
@@ -178,8 +181,8 @@ namespace eduVPN.ViewModels
                     catch (Exception)
                     {
                         // Revert cache to default initial value.
-                        response_cache[i] = null;
-                        obj_cache[i] = new Dictionary<string, object>()
+                        Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = null;
+                        _obj_cache[i] = new Dictionary<string, object>()
                         {
                             { "instances", new List<object>() },
                             { "seq", 0 }
@@ -187,111 +190,116 @@ namespace eduVPN.ViewModels
                     }
                 }
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
 
             // Launch instance list load in the background.
             new Thread(new ThreadStart(
                 () =>
                 {
-                    for (;;)
+                    try
                     {
-                        try
+                        var json_get_tasks = new Task<JSON.Response>[_instance_directory_id.Length];
+                        for (var i = 0; i < _instance_directory_id.Length; i++)
                         {
-                            var json_get_tasks = new Task<JSON.Response>[_instance_directory_id.Length];
-                            for (var i = 0; i < _instance_directory_id.Length; i++)
+                            if (_instance_directory_id[i] != null)
                             {
-                                if (_instance_directory_id[i] != null)
-                                {
-                                    // Spawn instance list get.
-                                    json_get_tasks[i] = JSON.Response.GetAsync(
-                                        new Uri((string)Properties.Settings.Default[_instance_directory_id[i]]),
-                                        null,
-                                        null,
-                                        Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[i] + "PubKey"]),
-                                        ConnectWizard.Abort.Token,
-                                        response_cache[i]);
-                                }
+                                // Spawn instance list get.
+                                json_get_tasks[i] = JSON.Response.GetAsync(
+                                    new Uri((string)Properties.Settings.Default[_instance_directory_id[i]]),
+                                    null,
+                                    null,
+                                    Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[i] + "PubKey"]),
+                                    ConnectWizard.Abort.Token,
+                                    (JSON.Response)Properties.Settings.Default[_instance_directory_id[i] + "Cache"]);
                             }
+                        }
 
-                            int period = 1000 * 60 * 5;
-                            for (var i = 0; i < _instance_directory_id.Length; i++)
+                        for (var i = 0; i < _instance_directory_id.Length; i++)
+                        {
+                            if (_instance_directory_id[i] != null)
                             {
-                                if (_instance_directory_id[i] != null)
+                                try
                                 {
+                                    // Wait for the instance list get.
+                                    JSON.Response response_cache = null;
                                     try
                                     {
-                                        // Wait for the instance list get.
+                                        json_get_tasks[i].Wait(ConnectWizard.Abort.Token);
+                                        response_cache = json_get_tasks[i].Result;
+                                    }
+                                    catch (AggregateException ex) { throw ex.InnerException; }
+
+                                    if (response_cache.IsFresh)
+                                    {
+                                        // Parse instance list JSON.
+                                        var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(
+                                            response_cache.Value,
+                                            ConnectWizard.Abort.Token);
+
+                                        // Load instance list.
+                                        var instance_list = Models.InstanceInfoList.FromJSON(obj);
+                                        if (i == (int)AccessType.InstituteAccess)
+                                        {
+                                            // Append "Other instance" entry to institute access instance list.
+                                            instance_list.Add(new Models.InstanceInfo()
+                                            {
+                                                DisplayName = Resources.Strings.CustomInstance,
+                                                IsCustom = true,
+                                            });
+                                        }
+
+                                        // Send the loaded instance list back to the UI thread.
+                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                        {
+                                            InstanceList[i] = instance_list;
+                                            ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
+                                        }));
+
                                         try
                                         {
-                                            json_get_tasks[i].Wait(ConnectWizard.Abort.Token);
-                                            response_cache[i] = json_get_tasks[i].Result;
-                                        }
-                                        catch (AggregateException ex) { throw ex.InnerException; }
-
-                                        if (response_cache[i].IsFresh)
-                                        {
-                                            // Parse instance list JSON.
-                                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache[i].Value, ConnectWizard.Abort.Token);
-
-                                            // Load instance list.
-                                            var instance_list = Models.InstanceInfoList.FromJSON(obj);
-                                            if (i == (int)AccessType.InstituteAccess)
+                                            // If we got here, the loaded instance list is (probably) OK.
+                                            bool update_cache = false;
+                                            try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_obj_cache[i], "seq"); }
+                                            catch (Exception) { update_cache = true; }
+                                            if (update_cache)
                                             {
-                                                // Append "Other instance" entry to institute access instance list.
-                                                instance_list.Add(new Models.InstanceInfo()
-                                                {
-                                                    DisplayName = Resources.Strings.CustomInstance,
-                                                    IsCustom = true,
-                                                });
+                                                // Update cache.
+                                                Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = response_cache;
+                                                _obj_cache[i] = obj;
                                             }
-
-                                            // Send the loaded instance list back to the UI thread.
-                                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                            {
-                                                InstanceList[i] = instance_list;
-                                                ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
-                                            }));
-
-                                            try
-                                            {
-                                                // If we got here, the loaded instance list is (probably) OK.
-                                                bool update_cache = false;
-                                                try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(obj_cache[i], "seq"); }
-                                                catch (Exception) { update_cache = true; }
-                                                if (update_cache)
-                                                {
-                                                    // Update cache.
-                                                    Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = response_cache[i];
-                                                    obj_cache[i] = obj;
-                                                }
-                                            }
-                                            catch (Exception) { }
                                         }
-                                    }
-                                    catch (OperationCanceledException)
-                                    {
-                                        // The load was aborted.
-                                        throw;
-                                    }
-                                    catch (Exception)
-                                    {
-                                        // Wait for ten seconds.
-                                        period = 1000 * 10;
-
-                                        // Make it a clean start.
-                                        response_cache[i] = null;
+                                        catch (Exception) { }
                                     }
                                 }
-                            }
+                                catch (OperationCanceledException)
+                                {
+                                    // The load was aborted.
+                                    throw;
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Make it a clean start next time.
+                                    Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = null;
 
-                            // Wait for the next refresh cycle.
-                            if (ConnectWizard.Abort.Token.WaitHandle.WaitOne(period))
-                                break;
+                                    // Notify the sender the instance list loading failed.
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                                }
+                            }
                         }
-                        catch (OperationCanceledException)
-                        {
-                            // The load was aborted.
-                            break;
-                        }
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex)
+                    {
+                        // Notify the sender the instance list loading failed.
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
                     }
                 })).Start();
         }
