@@ -106,6 +106,7 @@ namespace eduVPN.JSON
                 // Send data.
                 UTF8Encoding utf8 = new UTF8Encoding();
                 var body_binary = Encoding.ASCII.GetBytes(string.Join("&", param.Cast<string>().Select(e => string.Format("{0}={1}", HttpUtility.UrlEncode(e, utf8), HttpUtility.UrlEncode(param[e], utf8)))));
+                request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = body_binary.Length;
                 using (var stream_req = await request.GetRequestStreamAsync())
