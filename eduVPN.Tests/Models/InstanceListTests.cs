@@ -27,17 +27,13 @@ namespace eduVPN.Models.Tests
 
             // Spawn instance list get (Institute Access).
             var instance_list_ia_json_task = JSON.Response.GetAsync(
-                new Uri("https://static.eduvpn.nl/instances.json"),
-                null,
-                null,
-                Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
+                uri: new Uri("https://static.eduvpn.nl/instances.json"),
+                pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
             // Spawn instance list get (Secure Internet).
             var instance_list_si_json_task = JSON.Response.GetAsync(
-                new Uri("https://static.eduvpn.nl/federation.json"),
-                null,
-                null,
-                Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
+                uri: new Uri("https://static.eduvpn.nl/federation.json"),
+                pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
             // Load list of institute access instances.
             var instance_list_ia = new InstanceInfoList();
@@ -50,12 +46,9 @@ namespace eduVPN.Models.Tests
 
             // Re-spawn instance list get.
             instance_list_ia_json_task = JSON.Response.GetAsync(
-                new Uri("https://static.eduvpn.nl/instances.json"),
-                null,
-                null,
-                Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="),
-                default(CancellationToken),
-                instance_list_ia_json_task.Result);
+                uri: new Uri("https://static.eduvpn.nl/instances.json"),
+                pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="),
+                previous: instance_list_ia_json_task.Result);
 
             // Load all institute access instances API in parallel.
             Task.WhenAll(instance_list_ia.Select(async i => {

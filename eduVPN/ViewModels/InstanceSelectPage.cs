@@ -65,11 +65,8 @@ namespace eduVPN.ViewModels
                                     var uri_builder = new UriBuilder(Parent.AuthenticatingInstance.Base);
                                     uri_builder.Path += "info.json";
                                     api.LoadJSON((await JSON.Response.GetAsync(
-                                        uri_builder.Uri,
-                                        null,
-                                        null,
-                                        null,
-                                        ConnectWizard.Abort.Token)).Value, ConnectWizard.Abort.Token);
+                                        uri: uri_builder.Uri,
+                                        ct: ConnectWizard.Abort.Token)).Value, ConnectWizard.Abort.Token);
                                     Parent.AuthenticatingEndpoints = api;
 
                                     // Try to restore the access token from the settings.

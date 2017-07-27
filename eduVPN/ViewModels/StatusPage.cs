@@ -85,11 +85,9 @@ namespace eduVPN.ViewModels
                             var message_list = new Models.MessageList();
                             message_list.LoadJSONAPIResponse(
                                 JSON.Response.Get(
-                                    list.Key,
-                                    null,
-                                    Parent.AccessToken,
-                                    null,
-                                    ConnectWizard.Abort.Token).Value,
+                                    uri: list.Key,
+                                    token: Parent.AccessToken,
+                                    ct: ConnectWizard.Abort.Token).Value,
                                 list.Value,
                                 ConnectWizard.Abort.Token);
 

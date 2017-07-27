@@ -213,12 +213,10 @@ namespace eduVPN.ViewModels
                             {
                                 // Spawn instance list get.
                                 json_get_tasks[i] = JSON.Response.GetAsync(
-                                    new Uri((string)Properties.Settings.Default[_instance_directory_id[i]]),
-                                    null,
-                                    null,
-                                    Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[i] + "PubKey"]),
-                                    ConnectWizard.Abort.Token,
-                                    (JSON.Response)Properties.Settings.Default[_instance_directory_id[i] + "Cache"]);
+                                    uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[i]]),
+                                    pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[i] + "PubKey"]),
+                                    ct: ConnectWizard.Abort.Token,
+                                    previous: (JSON.Response)Properties.Settings.Default[_instance_directory_id[i] + "Cache"]);
                             }
                         }
 

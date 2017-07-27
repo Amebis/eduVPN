@@ -46,11 +46,8 @@ namespace eduVPN.ViewModels
                                     uri_builder.Path += "info.json";
                                     var api = new Models.InstanceEndpoints();
                                     api.LoadJSON(JSON.Response.Get(
-                                        uri_builder.Uri,
-                                        null,
-                                        null,
-                                        null,
-                                        ConnectWizard.Abort.Token).Value, ConnectWizard.Abort.Token);
+                                        uri: uri_builder.Uri,
+                                        ct: ConnectWizard.Abort.Token).Value, ConnectWizard.Abort.Token);
 
                                 // Set selected instance API endpoints.
                                 Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
@@ -60,11 +57,9 @@ namespace eduVPN.ViewModels
                                     try
                                     {
                                         profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                                            api.ProfileList,
-                                            null,
-                                            Parent.AccessToken,
-                                            null,
-                                            ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
+                                            uri: api.ProfileList,
+                                            token: Parent.AccessToken,
+                                            ct: ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
                                     }
                                     catch (WebException ex)
                                     {

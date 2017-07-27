@@ -116,11 +116,9 @@ namespace eduVPN.ViewModels
                         // Get and load user info. (Don't catch the 401, loading the profile list will handle it.)
                         var user_info = new Models.UserInfo();
                             user_info.LoadJSONAPIResponse(JSON.Response.Get(
-                                Parent.AuthenticatingEndpoints.UserInfo,
-                                null,
-                                Parent.AccessToken,
-                                null,
-                                ConnectWizard.Abort.Token).Value, "user_info", ConnectWizard.Abort.Token);
+                                uri: Parent.AuthenticatingEndpoints.UserInfo,
+                                token: Parent.AccessToken,
+                                ct: ConnectWizard.Abort.Token).Value, "user_info", ConnectWizard.Abort.Token);
                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                         }
                         catch (OperationCanceledException) { }

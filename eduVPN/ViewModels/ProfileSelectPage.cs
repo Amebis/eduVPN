@@ -49,11 +49,9 @@ namespace eduVPN.ViewModels
                         try
                         {
                             profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                                Parent.ConnectingEndpoints.ProfileList,
-                                null,
-                                Parent.AccessToken,
-                                null,
-                                ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
+                                uri: Parent.ConnectingEndpoints.ProfileList,
+                                token: Parent.AccessToken,
+                                ct: ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
                         }
                         catch (WebException ex)
                         {
