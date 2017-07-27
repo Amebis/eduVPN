@@ -17,13 +17,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace eduVPN.JSON
 {
     /// <summary>
     /// A helper class to return JSON response
     /// </summary>
-    public class Response
+    public class Response : IXmlSerializable
     {
         #region Fields
 
@@ -184,6 +187,29 @@ namespace eduVPN.JSON
                     IsFresh = true
                 };
             }
+        }
+
+        #endregion
+
+        #region IXmlSerializable Support
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            Value = reader.GetAttribute("Value");
+            Timestamp = DateTime.TryParse(reader.GetAttribute("Timestamp"), out var timestamp) ? timestamp : default(DateTime);
+            IsFresh = reader.GetAttribute("IsFresh").Trim().ToLowerInvariant() == "true";
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteAttributeString("Value", Value);
+            writer.WriteAttributeString("Timestamp", Timestamp.ToString("o"));
+            writer.WriteAttributeString("IsFresh", IsFresh ? "true" : "false");
         }
 
         #endregion

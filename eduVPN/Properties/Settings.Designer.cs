@@ -44,10 +44,9 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string InstituteAccessDirectoryCache {
+        public global::eduVPN.JSON.Response InstituteAccessDirectoryCache {
             get {
-                return ((string)(this["InstituteAccessDirectoryCache"]));
+                return ((global::eduVPN.JSON.Response)(this["InstituteAccessDirectoryCache"]));
             }
             set {
                 this["InstituteAccessDirectoryCache"] = value;
@@ -75,10 +74,9 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SecureInternetDirectoryCache {
+        public global::eduVPN.JSON.Response SecureInternetDirectoryCache {
             get {
-                return ((string)(this["SecureInternetDirectoryCache"]));
+                return ((global::eduVPN.JSON.Response)(this["SecureInternetDirectoryCache"]));
             }
             set {
                 this["SecureInternetDirectoryCache"] = value;

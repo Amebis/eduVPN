@@ -33,11 +33,6 @@ namespace eduVPN.ViewModels
             "InstituteAccessDirectory", // AccessType.InstituteAccess
         };
 
-        /// <summary>
-        /// Cached instance list
-        /// </summary>
-        private Dictionary<string, object>[] _cache;
-
         #endregion
 
         #region Properties
@@ -150,7 +145,8 @@ namespace eduVPN.ViewModels
         public AccessTypePage(ConnectWizard parent) :
             base(parent)
         {
-            _cache = new Dictionary<string, object>[_instance_directory_id.Length];
+            var response_cache = new JSON.Response[_instance_directory_id.Length];
+            var obj_cache = new Dictionary<string, object>[_instance_directory_id.Length];
             InstanceList = new Models.InstanceInfoList[_instance_directory_id.Length];
             for (var i = 0; i < _instance_directory_id.Length; i++)
             {
@@ -158,11 +154,14 @@ namespace eduVPN.ViewModels
                 {
                     try
                     {
-                        // Restore instance list cache.
-                        _cache[i] = (Dictionary<string, object>)eduJSON.Parser.Parse((string)Properties.Settings.Default[_instance_directory_id[i] + "Cache"]);
+                        // Get instance list JSON response from settings cache.
+                        response_cache[i] = (JSON.Response)Properties.Settings.Default[_instance_directory_id[i] + "Cache"];
 
-                        // Initialize instance list from cache.
-                        var instance_list = Models.InstanceInfoList.FromJSON(_cache[i]);
+                        // Parse instance list JSON.
+                        obj_cache[i] = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache[i].Value, ConnectWizard.Abort.Token);
+
+                        // Load instance list from cache.
+                        var instance_list = Models.InstanceInfoList.FromJSON(obj_cache[i]);
                         if (i == (int)AccessType.InstituteAccess)
                         {
                             // Append "Other instance" entry to institute access instance list.
@@ -179,7 +178,8 @@ namespace eduVPN.ViewModels
                     catch (Exception)
                     {
                         // Revert cache to default initial value.
-                        _cache[i] = new Dictionary<string, object>()
+                        response_cache[i] = null;
+                        obj_cache[i] = new Dictionary<string, object>()
                         {
                             { "instances", new List<object>() },
                             { "seq", 0 }
@@ -192,8 +192,6 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
-                    var json = new JSON.Response[_instance_directory_id.Length];
-
                     for (;;)
                     {
                         try
@@ -210,7 +208,7 @@ namespace eduVPN.ViewModels
                                         null,
                                         Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[i] + "PubKey"]),
                                         ConnectWizard.Abort.Token,
-                                        json[i]);
+                                        response_cache[i]);
                                 }
                             }
 
@@ -225,18 +223,17 @@ namespace eduVPN.ViewModels
                                         try
                                         {
                                             json_get_tasks[i].Wait(ConnectWizard.Abort.Token);
-                                            json[i] = json_get_tasks[i].Result;
+                                            response_cache[i] = json_get_tasks[i].Result;
                                         }
                                         catch (AggregateException ex) { throw ex.InnerException; }
 
-                                        if (json[i].IsFresh)
+                                        if (response_cache[i].IsFresh)
                                         {
-                                            // Parse instance list.
-                                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(json[i].Value, ConnectWizard.Abort.Token);
+                                            // Parse instance list JSON.
+                                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache[i].Value, ConnectWizard.Abort.Token);
 
                                             // Load instance list.
                                             var instance_list = Models.InstanceInfoList.FromJSON(obj);
-
                                             if (i == (int)AccessType.InstituteAccess)
                                             {
                                                 // Append "Other instance" entry to institute access instance list.
@@ -258,13 +255,13 @@ namespace eduVPN.ViewModels
                                             {
                                                 // If we got here, the loaded instance list is (probably) OK.
                                                 bool update_cache = false;
-                                                try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_cache[i], "seq"); }
+                                                try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(obj_cache[i], "seq"); }
                                                 catch (Exception) { update_cache = true; }
                                                 if (update_cache)
                                                 {
                                                     // Update cache.
-                                                    _cache[i] = obj;
-                                                    Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = json[i].Value;
+                                                    Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = response_cache[i];
+                                                    obj_cache[i] = obj;
                                                 }
                                             }
                                             catch (Exception) { }
@@ -281,7 +278,7 @@ namespace eduVPN.ViewModels
                                         period = 1000 * 10;
 
                                         // Make it a clean start.
-                                        json[i] = null;
+                                        response_cache[i] = null;
                                     }
                                 }
                             }

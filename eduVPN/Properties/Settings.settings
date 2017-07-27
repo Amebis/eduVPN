@@ -8,7 +8,7 @@
     <Setting Name="InstituteAccessDirectoryPubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
     </Setting>
-    <Setting Name="InstituteAccessDirectoryCache" Type="System.String" Scope="User">
+    <Setting Name="InstituteAccessDirectoryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SecureInternetDirectory" Type="(Web Service URL)" Scope="Application">
@@ -17,7 +17,7 @@
     <Setting Name="SecureInternetDirectoryPubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
     </Setting>
-    <Setting Name="SecureInternetDirectoryCache" Type="System.String" Scope="User">
+    <Setting Name="SecureInternetDirectoryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="AccessTokens" Type="eduVPN.SerializableStringDictionary" Scope="User">

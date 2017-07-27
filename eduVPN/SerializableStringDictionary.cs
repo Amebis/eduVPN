@@ -31,7 +31,7 @@ namespace eduVPN
             Clear();
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == this.GetType().Name))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
                 var name = reader["Name"];
                 if (name == null)
