@@ -61,13 +61,14 @@ namespace eduVPN.JSON
         /// <param name="uri">URI</param>
         /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
         /// <param name="token">OAuth access token</param>
+        /// <param name="response_type">Expected response MIME type</param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <param name="previous">Previous JSON content, when refresh is required</param>
         /// <returns>JSON content</returns>
-        public static Response Get(Uri uri, NameValueCollection param = null, AccessToken token = null, byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
+        public static Response Get(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
-            var task = GetAsync(uri, param, token, pub_key, ct, previous);
+            var task = GetAsync(uri, param, token, response_type, pub_key, ct, previous);
             try
             {
                 task.Wait(ct);
@@ -85,17 +86,18 @@ namespace eduVPN.JSON
         /// <param name="uri">URI</param>
         /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
         /// <param name="token">OAuth access token</param>
+        /// <param name="response_type">Expected response MIME type</param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <param name="previous">Previous JSON content, when refresh is required</param>
         /// <returns>Asynchronous operation with expected JSON string</returns>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
-        public static async Task<Response> GetAsync(Uri uri, NameValueCollection param = null, AccessToken token = null, byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
+        public static async Task<Response> GetAsync(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
             // Spawn data loading.
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.CachePolicy = _no_cache_policy;
-            request.Accept = "application/json";
+            request.Accept = response_type;
             if (token != null)
                 token.AddToRequest(request);
             if (previous != null)
