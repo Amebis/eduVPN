@@ -73,7 +73,8 @@ namespace eduVPN.ViewModels
                                     var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri];
                                     if (at != null)
                                         Parent.AccessToken = AccessToken.FromBase64String(at);
-                                } catch (Exception) { }
+                                }
+                                catch (Exception) { }
 
                                 if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
                                 {

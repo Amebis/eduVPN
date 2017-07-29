@@ -85,6 +85,7 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\"?><SerializableStringDictionary/>")]
         public global::eduVPN.SerializableStringDictionary AccessTokens {
             get {
                 return ((global::eduVPN.SerializableStringDictionary)(this["AccessTokens"]));

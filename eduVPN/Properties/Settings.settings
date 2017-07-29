@@ -21,7 +21,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="AccessTokens" Type="eduVPN.SerializableStringDictionary" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">&lt;?xml version="1.0"?&gt;&lt;SerializableStringDictionary/&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
