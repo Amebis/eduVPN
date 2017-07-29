@@ -113,9 +113,8 @@ namespace eduVPN.Models
                 // Create the private key.
                 var rsa = new RSACryptoServiceProvider(new CspParameters()
                 {
-                    Flags = CspProviderFlags.NoFlags,
+                    Flags = CspProviderFlags.UseNonExportableKey,
                     KeyContainerName = Guid.NewGuid().ToString().ToUpperInvariant(),
-                    ProviderType = ((Environment.OSVersion.Version.Major > 5) || ((Environment.OSVersion.Version.Major == 5) && (Environment.OSVersion.Version.Minor >= 1))) ? 0x18 : 1
                 });
                 rsa.ImportParameters(reader.ReadASN1RSAPrivateKey());
 
@@ -163,9 +162,8 @@ namespace eduVPN.Models
                 // Create the private key.
                 var rsa = new RSACryptoServiceProvider(new CspParameters()
                 {
-                    Flags = CspProviderFlags.NoFlags,
+                    Flags = CspProviderFlags.UseNonExportableKey,
                     KeyContainerName = Guid.NewGuid().ToString().ToUpperInvariant(),
-                    ProviderType = ((Environment.OSVersion.Version.Major > 5) || ((Environment.OSVersion.Version.Major == 5) && (Environment.OSVersion.Version.Minor >= 1))) ? 0x18 : 1
                 });
                 rsa.ImportParameters(reader.ReadASN1RSAPrivateKey());
 
