@@ -69,62 +69,65 @@ namespace eduVPN.ViewModels
                         // execute
                         async param =>
                         {
-                            Parent.AccessType = param.Value;
-                            Parent.InstanceList = InstanceList[(int)Parent.AccessType];
-
-                            if (Parent.InstanceList is Models.InstanceInfoFederatedList instance_list)
+                            Error = null;
+                            TaskCount++;
+                            try
                             {
-                                // Set authenticating instance.
-                                Parent.AuthenticatingInstance = null;
-                                Parent.AuthenticatingEndpoints = new Models.InstanceEndpoints()
-                                {
-                                    AuthorizationEndpoint = instance_list.AuthorizationEndpoint,
-                                    TokenEndpoint = instance_list.TokenEndpoint
-                                };
+                                Parent.AccessType = param.Value;
+                                Parent.InstanceList = InstanceList[(int)Parent.AccessType];
 
-                                // Try to restore the access token from the settings.
-                                Parent.AccessToken = null;
-                                try
+                                if (Parent.InstanceList is Models.InstanceInfoFederatedList instance_list)
                                 {
-                                    var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri];
-                                    if (at != null)
-                                        Parent.AccessToken = AccessToken.FromBase64String(at);
-                                }
-                                catch (Exception) { }
+                                    // Set authenticating instance.
+                                    Parent.AuthenticatingInstance = null;
+                                    Parent.AuthenticatingEndpoints = new Models.InstanceEndpoints()
+                                    {
+                                        AuthorizationEndpoint = instance_list.AuthorizationEndpoint,
+                                        TokenEndpoint = instance_list.TokenEndpoint
+                                    };
 
-                                if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
-                                {
-                                    // The access token expired. Try refreshing it.
+                                    // Try to restore the access token from the settings.
+                                    Parent.AccessToken = null;
                                     try
                                     {
-                                        Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
-                                            Parent.AuthenticatingEndpoints.TokenEndpoint,
-                                            null,
-                                            ConnectWizard.Abort.Token);
+                                        var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri];
+                                        if (at != null)
+                                            Parent.AccessToken = AccessToken.FromBase64String(at);
                                     }
-                                    catch (Exception)
+                                    catch (Exception) { }
+                                    if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
                                     {
-                                        Parent.AccessToken = null;
+                                        // The access token expired. Try refreshing it.
+                                        try
+                                        {
+                                            Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
+                                                Parent.AuthenticatingEndpoints.TokenEndpoint,
+                                                null,
+                                                ConnectWizard.Abort.Token);
+                                        }
+                                        catch (Exception) { Parent.AccessToken = null; }
+                                    }
+
+                                    // Reset connecting instance.
+                                    Parent.ConnectingInstance = null;
+                                    Parent.ConnectingEndpoints = null;
+
+                                    if (Parent.AccessToken == null)
+                                        Parent.CurrentPage = Parent.AuthorizationPage;
+                                    else
+                                        Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
+                                }
+                                else
+                                {
+                                    switch (param)
+                                    {
+                                        case AccessType.SecureInternet: Parent.CurrentPage = Parent.SecureInternetSelectPage; break;
+                                        case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstituteAccessSelectPage; break;
                                     }
                                 }
-
-                                // Reset connecting instance.
-                                Parent.ConnectingInstance = null;
-                                Parent.ConnectingEndpoints = null;
-
-                                if (Parent.AccessToken == null)
-                                    Parent.CurrentPage = Parent.AuthorizationPage;
-                                else
-                                    Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
                             }
-                            else
-                            {
-                                switch (param)
-                                {
-                                    case AccessType.SecureInternet: Parent.CurrentPage = Parent.SecureInternetSelectPage; break;
-                                    case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstituteAccessSelectPage; break;
-                                }
-                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { TaskCount--; }
                         },
 
                         // canExecute
@@ -204,6 +207,8 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                     try
                     {
                         var json_get_tasks = new Task<JSON.Response>[_instance_directory_id.Length];
@@ -277,28 +282,22 @@ namespace eduVPN.ViewModels
                                         catch (Exception) { }
                                     }
                                 }
-                                catch (OperationCanceledException)
-                                {
-                                    // The load was aborted.
-                                    throw;
-                                }
+                                catch (OperationCanceledException) { throw; }
                                 catch (Exception ex)
                                 {
                                     // Make it a clean start next time.
                                     Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = null;
 
-                                    // Notify the sender the instance list loading failed.
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
+                                    // Notify the sender the instance list loading failed. However, continue with other lists.
+                                    // This will overwrite all previous error messages.
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceInfoListLoad, _instance_directory_id[i]), ex)));
                                 }
                             }
                         }
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex)
-                    {
-                        // Notify the sender the instance list loading failed.
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-                    }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                 })).Start();
         }
 

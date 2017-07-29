@@ -7,19 +7,23 @@
 
 using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns <c>Visibility.Visible</c> if input value is a non-null exception; or <c>Visibility.Collapsed</c> otherwise.
+    /// Returns readable exception message.
     /// </summary>
-    public class StatusBarVisibilityConverter : IValueConverter
+    public class ExceptionMessageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && value is Exception ? Visibility.Visible : Visibility.Collapsed;
+            if (value is AggregateException ex_agg)
+                return ex_agg.Message + "\r\n" + new ExceptionMessageConverter().Convert(ex_agg.InnerException, targetType, parameter, culture);
+            else if (value is Exception ex)
+                return ex.Message;
+            else
+                return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

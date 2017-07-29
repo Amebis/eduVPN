@@ -66,7 +66,8 @@ namespace eduVPN.ViewModels
             State = Models.StatusType.Initializing;
             MessageList = new Models.MessageList();
 
-            // Load messages from all possible sources: authenticating/connecting instance, user/system list
+            // Load messages from all possible sources: authenticating/connecting instance, user/system list.
+            // Any errors shall be ignored.
             foreach (
                 var list in new List<KeyValuePair<Uri, string>>() {
                     new KeyValuePair<Uri, string>(Parent.AuthenticatingEndpoints.UserMessages, "user_messages"),
@@ -81,7 +82,6 @@ namespace eduVPN.ViewModels
                     () =>
                     {
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-
                         try
                         {
                             // Get and load user messages.
@@ -105,10 +105,7 @@ namespace eduVPN.ViewModels
                             }
                         }
                         catch (Exception) { }
-                        finally
-                        {
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                        }
+                        finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                     })).Start();
             }
 
@@ -128,8 +125,8 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-
                     try
                     {
                         // Spawn profile config get.
@@ -183,24 +180,34 @@ namespace eduVPN.ViewModels
                                     token: Parent.AccessToken,
                                     ct: ConnectWizard.Abort.Token);
 
-                                // Load certificate and import it to Windows user certificate store.
-                                try { certificate_get_task.Wait(ConnectWizard.Abort.Token); }
-                                catch (AggregateException ex) { throw ex.InnerException; }
-                                var cert = new Models.Certificate();
-                                cert.LoadJSONAPIResponse(certificate_get_task.Result.Value, "create_keypair", ConnectWizard.Abort.Token);
-                                store.Add(cert.Value);
+                                try
+                                {
+                                    // Load certificate and import it to Windows user certificate store.
+                                    try { certificate_get_task.Wait(ConnectWizard.Abort.Token); }
+                                    catch (AggregateException ex) { throw ex.InnerException; }
+                                    var cert = new Models.Certificate();
+                                    cert.LoadJSONAPIResponse(certificate_get_task.Result.Value, "create_keypair", ConnectWizard.Abort.Token);
+                                    store.Add(cert.Value);
 
-                                if (instance_settings == null)
-                                    Properties.Settings.Default.InstanceSettings[Parent.ConnectingInstance.Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = cert.Value.GetCertHash() };
-                                else
-                                    Properties.Settings.Default.InstanceSettings[Parent.ConnectingInstance.Base.AbsoluteUri].ClientCertificateHash = cert.Value.GetCertHash();
+                                    if (instance_settings == null)
+                                        Properties.Settings.Default.InstanceSettings[Parent.ConnectingInstance.Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = cert.Value.GetCertHash() };
+                                    else
+                                        Properties.Settings.Default.InstanceSettings[Parent.ConnectingInstance.Base.AbsoluteUri].ClientCertificateHash = cert.Value.GetCertHash();
+                                }
+                                catch (OperationCanceledException) { throw; }
+                                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
                             }
                         }
                         finally { store.Close(); }
 
-                        // Load profile config.
-                        try { profile_config_get_task.Wait(ConnectWizard.Abort.Token); }
-                        catch (AggregateException ex) { throw ex.InnerException; }
+                        try
+                        {
+                            // Load profile config.
+                            try { profile_config_get_task.Wait(ConnectWizard.Abort.Token); }
+                            catch (AggregateException ex) { throw ex.InnerException; }
+                        }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
 
                         // State >> Connecting...
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connecting));
@@ -210,15 +217,8 @@ namespace eduVPN.ViewModels
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connected));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex)
-                    {
-                        // Notify the sender the profile list loading failed.
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-                    }
-                    finally
-                    {
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                    }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                 })).Start();
         }
 

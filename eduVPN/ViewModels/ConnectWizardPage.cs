@@ -41,14 +41,14 @@ namespace eduVPN.ViewModels
         private ICommand _navigate_back;
 
         /// <summary>
-        /// The page error message; <c>null</c> when no error condition.
+        /// The page error; <c>null</c> when no error condition.
         /// </summary>
-        public string ErrorMessage
+        public Exception Error
         {
-            get { return _error_message; }
-            set { _error_message = value; RaisePropertyChanged(); }
+            get { return _error; }
+            set { _error = value; RaisePropertyChanged(); }
         }
-        private string _error_message;
+        private Exception _error;
 
         /// <summary>
         /// Is wizard page performing background tasks?

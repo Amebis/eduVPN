@@ -50,21 +50,26 @@ namespace eduVPN.ViewModels
                     _authorize_instance = new DelegateCommand(
                         // execute
                         async () => {
+                            Error = null;
                             TaskCount++;
-
                             try
                             {
                                 // Set instance base URI.
                                 Parent.AuthenticatingInstance.Base = new Uri(InstanceURI);
 
-                                // Get and load API endpoints.
-                                var api = new Models.InstanceEndpoints();
-                                var uri_builder = new UriBuilder(Parent.AuthenticatingInstance.Base);
-                                uri_builder.Path += "info.json";
-                                api.LoadJSON((await JSON.Response.GetAsync(
-                                    uri: uri_builder.Uri,
-                                    ct: ConnectWizard.Abort.Token)).Value, ConnectWizard.Abort.Token);
-                                Parent.AuthenticatingEndpoints = api;
+                                try
+                                {
+                                    // Get and load API endpoints.
+                                    var api = new Models.InstanceEndpoints();
+                                    var uri_builder = new UriBuilder(Parent.AuthenticatingInstance.Base);
+                                    uri_builder.Path += "info.json";
+                                    api.LoadJSON((await JSON.Response.GetAsync(
+                                        uri: uri_builder.Uri,
+                                        ct: ConnectWizard.Abort.Token)).Value, ConnectWizard.Abort.Token);
+                                    Parent.AuthenticatingEndpoints = api;
+                                }
+                                catch (OperationCanceledException) { throw; }
+                                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
 
                                 // Try to restore the access token from the settings.
                                 Parent.AccessToken = null;
@@ -75,7 +80,6 @@ namespace eduVPN.ViewModels
                                         Parent.AccessToken = AccessToken.FromBase64String(at);
                                 }
                                 catch (Exception) { }
-
                                 if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
                                 {
                                     // The access token expired. Try refreshing it.
@@ -86,10 +90,7 @@ namespace eduVPN.ViewModels
                                             null,
                                             ConnectWizard.Abort.Token);
                                     }
-                                    catch (Exception)
-                                    {
-                                        Parent.AccessToken = null;
-                                    }
+                                    catch (Exception) { Parent.AccessToken = null; }
                                 }
 
                                 // Connecting instance will be the same as authenticating.
@@ -101,14 +102,8 @@ namespace eduVPN.ViewModels
                                 else
                                     Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
-                            catch (Exception ex)
-                            {
-                                ErrorMessage = ex.Message;
-                            }
-                            finally
-                            {
-                                TaskCount--;
-                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { TaskCount--; }
                         },
 
                         // canExecute

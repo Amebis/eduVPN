@@ -88,6 +88,33 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading of client certificate failed..
+        /// </summary>
+        internal static string ErrorClientCertificateLoad {
+            get {
+                return ResourceManager.GetString("ErrorClientCertificateLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading of API endpoints failed..
+        /// </summary>
+        internal static string ErrorEndpointsLoad {
+            get {
+                return ResourceManager.GetString("ErrorEndpointsLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading of the instance list {0} failed..
+        /// </summary>
+        internal static string ErrorInstanceInfoListLoad {
+            get {
+                return ResourceManager.GetString("ErrorInstanceInfoListLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Private key is invalid or of unsupported format..
         /// </summary>
         internal static string ErrorInvalidPrivateKey {
@@ -102,6 +129,33 @@ namespace eduVPN.Resources {
         internal static string ErrorInvalidSignature {
             get {
                 return ResourceManager.GetString("ErrorInvalidSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading of profile configuration failed..
+        /// </summary>
+        internal static string ErrorProfileConfigLoad {
+            get {
+                return ResourceManager.GetString("ErrorProfileConfigLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading of the profile list failed..
+        /// </summary>
+        internal static string ErrorProfileListLoad {
+            get {
+                return ResourceManager.GetString("ErrorProfileListLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading of user info failed..
+        /// </summary>
+        internal static string ErrorUserInfoLoad {
+            get {
+                return ResourceManager.GetString("ErrorUserInfoLoad", resourceCulture);
             }
         }
     }

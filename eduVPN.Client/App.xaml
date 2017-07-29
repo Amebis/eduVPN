@@ -119,6 +119,7 @@
         <conv:StatusBarVisibilityConverter x:Key="StatusBarVisibilityConverter"/>
         <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>
         <conv:UserDisabledVisibilityConverter x:Key="UserDisabledVisibilityConverter"/>
+        <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
 
         <!-- eduVPN Buttons -->
         <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
@@ -368,14 +369,14 @@
 
                             <StatusBar
                             Style="{StaticResource eduVPNInfoBarStyle}"
-                            Visibility="{Binding Path=ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+                            Visibility="{Binding Path=Error, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
                                 <StatusBarItem>
                                     <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
                                 </StatusBarItem>
                                 <StatusBarItem>
                                     <TextBlock
                                     TextWrapping="Wrap"
-                                    Text="{Binding Path=ErrorMessage}"/>
+                                    Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
                                 </StatusBarItem>
                             </StatusBar>
 
@@ -400,14 +401,14 @@
 
                             <StatusBar
                                 Style="{StaticResource eduVPNInfoBarStyle}"
-                                Visibility="{Binding Path=ErrorMessage, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+                                Visibility="{Binding Path=Error, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
                                 <StatusBarItem>
                                     <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
                                 </StatusBarItem>
                                 <StatusBarItem>
                                     <TextBlock
                                         TextWrapping="Wrap"
-                                        Text="{Binding Path=ErrorMessage}"/>
+                                        Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
                                 </StatusBarItem>
                             </StatusBar>
 

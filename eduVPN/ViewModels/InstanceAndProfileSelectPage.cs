@@ -37,56 +37,51 @@ namespace eduVPN.ViewModels
                     new Thread(new ThreadStart(
                         () =>
                         {
+                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-
                             try
                             {
-                                // Get and load API endpoints.
-                                var uri_builder = new UriBuilder(_selected_instance.Base);
+                                try
+                                {
+                                    // Get and load API endpoints.
+                                    var uri_builder = new UriBuilder(_selected_instance.Base);
                                     uri_builder.Path += "info.json";
                                     var api = new Models.InstanceEndpoints();
                                     api.LoadJSON(JSON.Response.Get(
                                         uri: uri_builder.Uri,
                                         ct: ConnectWizard.Abort.Token).Value, ConnectWizard.Abort.Token);
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
+                                }
+                                catch (OperationCanceledException) { throw; }
+                                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
 
-                                // Set selected instance API endpoints.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
-
-                                // Get and load profile list.
-                                var profile_list = new JSON.Collection<Models.ProfileInfo>();
+                                try
+                                {
+                                    // Get and load profile list.
+                                    var profile_list = new JSON.Collection<Models.ProfileInfo>();
                                     try
                                     {
                                         profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                                            uri: api.ProfileList,
+                                            uri: SelectedInstanceEndpoints.ProfileList,
                                             token: Parent.AccessToken,
                                             ct: ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
                                     }
                                     catch (WebException ex)
                                     {
-                                    // Access token rejected (401) => Redirect back to authorization page.
-                                    if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                                        // Access token rejected (401) => Redirect back to authorization page.
+                                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
                                         else
                                             throw;
                                     }
-
-                                // Send the loaded profile list back to the UI thread.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                    {
-                                        ProfileList = profile_list;
-                                        ErrorMessage = null;
-                                    }));
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileList = profile_list));
+                                }
+                                catch (OperationCanceledException) { throw; }
+                                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
                             }
                             catch (OperationCanceledException) { }
-                            catch (Exception ex)
-                            {
-                                // Notify the sender the API endpoints loading failed.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-                            }
-                            finally
-                            {
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                            }
+                            catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                         })).Start();
                 }
             }

@@ -58,12 +58,10 @@ namespace eduVPN.ViewModels
                         // execute
                         async param =>
                         {
+                            Error = null;
                             TaskCount++;
-
                             try
                             {
-                                ErrorMessage = null;
-
                                 // Process response and get access token.
                                 Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
@@ -80,14 +78,8 @@ namespace eduVPN.ViewModels
                                 else
                                     Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
-                            catch (Exception ex)
-                            {
-                                ErrorMessage = ex.Message;
-                            }
-                            finally
-                            {
-                                TaskCount--;
-                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { TaskCount--; }
                         },
 
                         // canExecute
@@ -133,9 +125,8 @@ namespace eduVPN.ViewModels
         /// </summary>
         private void TriggerAuthorization()
         {
-            // Reset error message.
-            ErrorMessage = null;
-
+            Error = null;
+            TaskCount++;
             try
             {
                 // Open authorization request in the browser.
@@ -149,10 +140,8 @@ namespace eduVPN.ViewModels
                 };
                 System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
             }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
-            }
+            catch (Exception ex) { Error = ex; }
+            finally { TaskCount--; }
         }
 
         public override void OnActivate()

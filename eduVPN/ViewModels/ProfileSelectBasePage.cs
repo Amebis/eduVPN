@@ -109,8 +109,8 @@ namespace eduVPN.ViewModels
                 new Thread(new ThreadStart(
                     () =>
                     {
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-
                         try
                         {
                             // Get and load user info. (Don't catch the 401, loading the profile list will handle it.)
@@ -122,15 +122,8 @@ namespace eduVPN.ViewModels
                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                         }
                         catch (OperationCanceledException) { }
-                        catch (Exception ex)
-                        {
-                            // Notify the sender the profile list loading failed.
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-                        }
-                        finally
-                        {
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                        }
+                        catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(Resources.Strings.ErrorUserInfoLoad, ex))); }
+                        finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                     })).Start();
             }
         }

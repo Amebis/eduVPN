@@ -132,4 +132,22 @@
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value>Zasebni ključ ni veljaven ali je nepodprtega zapisa.</value>
   </data>
+  <data name="ErrorInstanceInfoListLoad" xml:space="preserve">
+    <value>Nalaganje spiska instanc {0} ni uspelo.</value>
+  </data>
+  <data name="ErrorEndpointsLoad" xml:space="preserve">
+    <value>Nalaganje končnih točk API ni uspelo.</value>
+  </data>
+  <data name="ErrorClientCertificateLoad" xml:space="preserve">
+    <value>Nalaganje digitalnega potrdila uporabnika ni uspelo.</value>
+  </data>
+  <data name="ErrorProfileConfigLoad" xml:space="preserve">
+    <value>Nalaganje nastavitev profila ni uspelo.</value>
+  </data>
+  <data name="ErrorProfileListLoad" xml:space="preserve">
+    <value>Nalaganje spiska profilov ni uspelo.</value>
+  </data>
+  <data name="ErrorUserInfoLoad" xml:space="preserve">
+    <value>Nalaganje podatkov o uporabniku ni uspelo.</value>
+  </data>
 </root>

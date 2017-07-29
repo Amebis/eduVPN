@@ -40,8 +40,8 @@ namespace eduVPN.ViewModels
             // Launch profile list load in the background.
             new Thread(new ThreadStart(
                 () => {
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-
                     try
                     {
                         // Get and load profile list.
@@ -63,22 +63,11 @@ namespace eduVPN.ViewModels
                         }
 
                         // Send the loaded profile list back to the UI thread.
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                        {
-                            ProfileList = profile_list;
-                            ErrorMessage = null;
-                        }));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileList = profile_list));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex)
-                    {
-                        // Notify the sender the profile list loading failed.
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ErrorMessage = ex.Message));
-                    }
-                    finally
-                    {
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--));
-                    }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(Resources.Strings.ErrorProfileListLoad, ex))); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                 })).Start();
         }
 
