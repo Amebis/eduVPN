@@ -38,9 +38,11 @@
     <Compile Include="JSON\Collection.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
+    <Compile Include="Models\InstanceSettingsDictionary.cs" />
     <Compile Include="Models\InstanceInfoDistributedList.cs" />
     <Compile Include="Models\InstanceInfoFederatedList.cs" />
     <Compile Include="Models\InstanceInfoLocalList.cs" />
+    <Compile Include="Models\InstanceSettings.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageList.cs" />
     <Compile Include="Models\MessageMaintenance.cs" />
@@ -109,6 +111,7 @@
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -94,5 +94,17 @@ namespace eduVPN.Properties {
                 this["AccessTokens"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\"?><InstanceSettingsDictionary/>")]
+        public global::eduVPN.Models.InstanceSettingsDictionary InstanceSettings {
+            get {
+                return ((global::eduVPN.Models.InstanceSettingsDictionary)(this["InstanceSettings"]));
+            }
+            set {
+                this["InstanceSettings"] = value;
+            }
+        }
     }
 }
