@@ -10,7 +10,9 @@ using eduVPN.JSON;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -43,6 +45,11 @@ namespace eduVPN.Models
         /// List of available profiles
         /// </summary>
         private Dictionary<AccessToken, JSON.Collection<Models.ProfileInfo>> _profile_list_cache;
+
+        /// <summary>
+        /// List of available client certificate hashes
+        /// </summary>
+        private Dictionary<AccessToken, byte[]> _client_certificate_hash_cache;
 
         #endregion
 
@@ -109,6 +116,7 @@ namespace eduVPN.Models
             base()
         {
             _profile_list_cache = new Dictionary<AccessToken, JSON.Collection<Models.ProfileInfo>>();
+            _client_certificate_hash_cache = new Dictionary<AccessToken, byte[]>();
         }
 
         /// <summary>
@@ -394,6 +402,83 @@ namespace eduVPN.Models
             }
             catch (OperationCanceledException) { throw; }
             catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorUserInfoLoad, ex); }
+        }
+
+        /// <summary>
+        /// Gets client certificate asynchronously
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Asynchronous operation with expected client certificate hash. Certificate (including the private key) is saved to user certificate store.</returns>
+        public async Task<byte[]> GetClientCertificateAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            if (!_client_certificate_hash_cache.TryGetValue(token, out var client_certificate_hash))
+            {
+                // Open user certificate store.
+                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+                store.Open(OpenFlags.ReadWrite);
+                try
+                {
+                    if (Properties.Settings.Default.InstanceSettings.TryGetValue(Base.AbsoluteUri, out var instance_settings) && instance_settings.ClientCertificateHash != null)
+                    {
+                        // Try to restore previously issued client certificate from the certificate store first.
+                        foreach (var cert in store.Certificates)
+                        {
+                            if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
+                            {
+                                // Certificate found.
+                                if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
+                                {
+                                    // Not expired && Has the private key.
+                                    client_certificate_hash = instance_settings.ClientCertificateHash;
+                                }
+                                else
+                                {
+                                    // Certificate expired or matching private key not found == Useless. Clean it from the store.
+                                    store.Remove(cert);
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+
+                    if (client_certificate_hash == null)
+                    {
+                        // Get API endpoints.
+                        var api = await GetEndpointsAsync(ct);
+
+                        try
+                        {
+                            // Get certificate and import it to Windows user certificate store.
+                            var cert = new Models.Certificate();
+                            cert.LoadJSONAPIResponse((await JSON.Response.GetAsync(
+                                uri: api.CreateCertificate,
+                                param: new NameValueCollection
+                                {
+                                    { "display_name", Resources.Strings.CertificateTitle }
+                                },
+                                token: token,
+                                ct: ct)).Value, "create_keypair", ct);
+                            store.Add(cert.Value);
+                            client_certificate_hash = cert.Value.GetCertHash();
+
+                            if (instance_settings == null)
+                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = client_certificate_hash };
+                            else
+                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = client_certificate_hash;
+                        }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
+                    }
+                }
+                finally { store.Close(); }
+
+                // Save client certificate hash to cache.
+                _client_certificate_hash_cache.Add(token, client_certificate_hash);
+            }
+
+            return client_certificate_hash;
         }
 
         #endregion

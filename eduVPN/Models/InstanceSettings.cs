@@ -5,8 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
-using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;

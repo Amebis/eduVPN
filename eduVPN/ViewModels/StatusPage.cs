@@ -142,66 +142,6 @@ namespace eduVPN.ViewModels
                             response_type: "application/x-openvpn-profile",
                             ct: ConnectWizard.Abort.Token);
 
-                        var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-                        store.Open(OpenFlags.ReadWrite);
-                        try
-                        {
-                            // Restore client certificate.
-                            X509Certificate2 client_certificate = null;
-                            if (Properties.Settings.Default.InstanceSettings.TryGetValue(Parent.ConnectingInstance.Base.AbsoluteUri, out var instance_settings) && instance_settings.ClientCertificateHash != null)
-                            {
-                                foreach (var cert in store.Certificates)
-                                {
-                                    if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
-                                    {
-                                        if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
-                                        {
-                                            // Not expired && Has the private key
-                                            client_certificate = cert;
-                                        }
-                                        else
-                                        {
-                                            // Certificate expired or matching private key not found. Clean it from the store.
-                                            store.Remove(cert);
-                                        }
-
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (client_certificate == null)
-                            {
-                                // Spawn client certificate get.
-                                var certificate_get_task = JSON.Response.GetAsync(
-                                    uri: api_connecting.CreateCertificate,
-                                    param: new NameValueCollection
-                                    {
-                                { "display_name", Resources.Strings.CertificateTitle }
-                                    },
-                                    token: Parent.AccessToken,
-                                    ct: ConnectWizard.Abort.Token);
-
-                                try
-                                {
-                                    // Load certificate and import it to Windows user certificate store.
-                                    try { certificate_get_task.Wait(ConnectWizard.Abort.Token); }
-                                    catch (AggregateException ex) { throw ex.InnerException; }
-                                    var cert = new Models.Certificate();
-                                    cert.LoadJSONAPIResponse(certificate_get_task.Result.Value, "create_keypair", ConnectWizard.Abort.Token);
-                                    store.Add(cert.Value);
-
-                                    if (instance_settings == null)
-                                        Properties.Settings.Default.InstanceSettings[Parent.ConnectingInstance.Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = cert.Value.GetCertHash() };
-                                    else
-                                        Properties.Settings.Default.InstanceSettings[Parent.ConnectingInstance.Base.AbsoluteUri].ClientCertificateHash = cert.Value.GetCertHash();
-                                }
-                                catch (OperationCanceledException) { throw; }
-                                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
-                            }
-                        }
-                        finally { store.Close(); }
-
                         try
                         {
                             // Load profile config.
