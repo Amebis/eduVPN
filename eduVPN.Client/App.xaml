@@ -214,36 +214,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Width" Value="120"/>
-            <Setter Property="Height" Value="90"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border
-                                    Background="{StaticResource eduVPNChoiceButtonHoverBrushKey}"
-                                    CornerRadius="4">
-                                    <ContentPresenter
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.25"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
 
         <!-- eduVPN Labels -->
         <Style x:Key="eduVPNHeaderStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource eduVPNBaseStyle}">
@@ -263,12 +233,6 @@
         </Style>
         <Style x:Key="eduVPNNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
             <Setter Property="FontSize" Value="11"/>
-        </Style>
-        <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNNoteStyle}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="10,130,10,10"/>
         </Style>
         <Style x:Key="eduVPNListBoxItemTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
