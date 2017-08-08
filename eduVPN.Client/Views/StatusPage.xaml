@@ -175,7 +175,7 @@
                 ToolTip="{Binding Path=State, Converter={StaticResource StatusTypeDisplayNameConverter}}"
                 AutomationProperties.Name="{Binding Path=State, Converter={StaticResource StatusTypeDisplayNameConverter}}"/>
 
-            <!-- TODO: Provide alternative Source for instances with Logo==null. -->
+            <!-- TODO: Provide alternative Source when Logo==null. -->
             <Image
                 Grid.Row="1"
                 Grid.Column="1"
