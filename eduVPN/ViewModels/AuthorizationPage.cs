@@ -5,11 +5,8 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
-using System.Web;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels
@@ -19,20 +16,6 @@ namespace eduVPN.ViewModels
     /// </summary>
     public class AuthorizationPage : ConnectWizardPage
     {
-        #region Fields
-
-        /// <summary>
-        /// OAuth pending authorization grant
-        /// </summary>
-        private AuthorizationGrant _authorization_grant;
-
-        /// <summary>
-        /// Registered client redirect callback URI (endpoint)
-        /// </summary>
-        private const string _redirect_endpoint = "org.eduvpn.app:/api/callback";
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -43,7 +26,7 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_retry == null)
-                    _retry = new DelegateCommand(TriggerAuthorization);
+                    _retry = new DelegateCommand(RequestAuthorization);
                 return _retry;
             }
         }
@@ -62,17 +45,8 @@ namespace eduVPN.ViewModels
                             TaskCount++;
                             try
                             {
-                                var api = Parent.AuthenticatingInstance.GetEndpointsAsync(ConnectWizard.Abort.Token);
-
                                 // Process response and get access token.
-                                Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
-                                    HttpUtility.ParseQueryString(new Uri(param).Query),
-                                    (await api).TokenEndpoint,
-                                    null,
-                                    ConnectWizard.Abort.Token);
-
-                                // Save the access token.
-                                Properties.Settings.Default.AccessTokens[(await api).AuthorizationEndpoint.AbsoluteUri] = Parent.AccessToken.ToBase64String();
+                                Parent.AccessToken = await Parent.AuthenticatingInstance.AuthorizeAsync(new Uri(param), ConnectWizard.Abort.Token);
 
                                 // Go to profile selection page.
                                 if (Parent.ConnectingInstance == null)
@@ -96,7 +70,7 @@ namespace eduVPN.ViewModels
                             try { uri = new Uri(param); }
                             catch (Exception) { return false; }
                             // - Must match the redirect endpoint provided in request.
-                            if (uri.Scheme + ":" + uri.AbsolutePath != _redirect_endpoint) return false;
+                            if (uri.Scheme + ":" + uri.AbsolutePath != Models.InstanceInfo.RedirectEndpoint) return false;
 
                             return true;
                         });
@@ -125,22 +99,13 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Invokes client authorization process in the browser.
         /// </summary>
-        private void TriggerAuthorization()
+        private void RequestAuthorization()
         {
             Error = null;
             TaskCount++;
             try
             {
-                // Open authorization request in the browser.
-                _authorization_grant = new AuthorizationGrant()
-                {
-                    AuthorizationEndpoint = Parent.AuthenticatingInstance.GetEndpoints(ConnectWizard.Abort.Token).AuthorizationEndpoint,
-                    RedirectEndpoint = new Uri(_redirect_endpoint),
-                    ClientID = "org.eduvpn.app",
-                    Scope = new List<string>() { "config" },
-                    CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
-                };
-                System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
+                Parent.AuthenticatingInstance.RequestAuthorization(ConnectWizard.Abort.Token);
             }
             catch (Exception ex) { Error = ex; }
             finally { TaskCount--; }
@@ -150,7 +115,7 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            TriggerAuthorization();
+            RequestAuthorization();
         }
 
         protected override void DoNavigateBack()

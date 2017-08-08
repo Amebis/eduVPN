@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace eduVPN.Models
 {
@@ -22,7 +23,20 @@ namespace eduVPN.Models
     {
         #region Fields
 
+        /// <summary>
+        /// Instance API endpoints
+        /// </summary>
         private InstanceEndpoints _endpoints;
+
+        /// <summary>
+        /// OAuth pending authorization grant
+        /// </summary>
+        private AuthorizationGrant _authorization_grant;
+
+        /// <summary>
+        /// Registered client redirect callback URI (endpoint)
+        /// </summary>
+        public const string RedirectEndpoint = "org.eduvpn.app:/api/callback";
 
         #endregion
 
@@ -116,7 +130,7 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Gets and loads instance endpoints.
+        /// Gets and loads instance endpoints
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Instance endpoints</returns>
@@ -135,7 +149,7 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Gets and loads instance endpoints asynchronously.
+        /// Gets and loads instance endpoints asynchronously
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Asynchronous operation with expected instance endpoints</returns>
@@ -158,6 +172,70 @@ namespace eduVPN.Models
             }
 
             return _endpoints;
+        }
+
+        /// <summary>
+        /// Triggers instance client authorization
+        /// </summary>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        public void RequestAuthorization(CancellationToken ct = default(CancellationToken))
+        {
+            // Prepare new authorization grant.
+            _authorization_grant = new AuthorizationGrant()
+            {
+                AuthorizationEndpoint = GetEndpoints(ct).AuthorizationEndpoint,
+                RedirectEndpoint = new Uri(RedirectEndpoint),
+                ClientID = "org.eduvpn.app",
+                Scope = new List<string>() { "config" },
+                CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
+            };
+
+            // Open authorization request in the browser.
+            System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
+        }
+
+        /// <summary>
+        /// Authorizes client with the instance
+        /// </summary>
+        /// <param name="callback">Callback URI provided by authorization server</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Access token</returns>
+        public AccessToken Authorize(Uri callback, CancellationToken ct = default(CancellationToken))
+        {
+            var task = AuthorizeAsync(callback, ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Authorizes client with the instance asynchronously
+        /// </summary>
+        /// <param name="callback">Callback URI provided by authorization server</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Asynchronous operation with expected access token</returns>
+        public async Task<AccessToken> AuthorizeAsync(Uri callback, CancellationToken ct = default(CancellationToken))
+        {
+            // Get API endpoints.
+            var api = await GetEndpointsAsync(ct);
+
+            // Process response and get access token.
+            var token = await _authorization_grant.ProcessResponseAsync(
+                HttpUtility.ParseQueryString(callback.Query),
+                api.TokenEndpoint,
+                null,
+                ct);
+
+            // Save the access token.
+            Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = token.ToBase64String();
+
+            return token;
         }
 
         /// <summary>
@@ -187,13 +265,13 @@ namespace eduVPN.Models
         public async Task<AccessToken> GetAccessTokenAsync(CancellationToken ct = default(CancellationToken))
         {
             // Get API endpoints.
-            var api = GetEndpointsAsync(ct);
+            var api = await GetEndpointsAsync(ct);
 
             AccessToken token = null;
             try
             {
                 // Try to restore the access token from the settings.
-                var at = Properties.Settings.Default.AccessTokens[(await api).AuthorizationEndpoint.AbsoluteUri];
+                var at = Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri];
                 if (at != null)
                     token = AccessToken.FromBase64String(at);
             }
@@ -202,13 +280,7 @@ namespace eduVPN.Models
             if (token != null && token.Expires.HasValue && token.Expires.Value <= DateTime.Now)
             {
                 // The access token expired. Try refreshing it.
-                try
-                {
-                    token = await token.RefreshTokenAsync(
-                        (await api).TokenEndpoint,
-                        null,
-                        ct);
-                }
+                try { token = await token.RefreshTokenAsync(api.TokenEndpoint, null, ct); }
                 catch (Exception) { token = null; }
             }
 
