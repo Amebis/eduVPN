@@ -81,29 +81,8 @@ namespace eduVPN.ViewModels
                                     // Set authenticating instance.
                                     Parent.AuthenticatingInstance = new Models.InstanceInfo(instance_list);
 
-                                    var api = Parent.AuthenticatingInstance.GetEndpointsAsync(ConnectWizard.Abort.Token);
-
-                                    // Try to restore the access token from the settings.
-                                    Parent.AccessToken = null;
-                                    try
-                                    {
-                                        var at = Properties.Settings.Default.AccessTokens[(await api).AuthorizationEndpoint.AbsoluteUri];
-                                        if (at != null)
-                                            Parent.AccessToken = AccessToken.FromBase64String(at);
-                                    }
-                                    catch (Exception) { }
-                                    if (Parent.AccessToken != null && Parent.AccessToken.Expires.HasValue && Parent.AccessToken.Expires.Value <= DateTime.Now)
-                                    {
-                                        // The access token expired. Try refreshing it.
-                                        try
-                                        {
-                                            Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
-                                                (await api).TokenEndpoint,
-                                                null,
-                                                ConnectWizard.Abort.Token);
-                                        }
-                                        catch (Exception) { Parent.AccessToken = null; }
-                                    }
+                                    // Restore the access token from the settings.
+                                    Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
 
                                     // Reset connecting instance.
                                     Parent.ConnectingInstance = null;

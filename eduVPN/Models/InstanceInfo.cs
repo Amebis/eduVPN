@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using eduVPN.JSON;
 using Prism.Mvvm;
 using System;
@@ -157,6 +158,61 @@ namespace eduVPN.Models
             }
 
             return _endpoints;
+        }
+
+        /// <summary>
+        /// Gets (and refreshes) access token from settings
+        /// </summary>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Access token or <c>null</c> if not available</returns>
+        public AccessToken GetAccessToken(CancellationToken ct = default(CancellationToken))
+        {
+            var task = GetAccessTokenAsync(ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Gets (and refreshes) access token from settings asynchronously
+        /// </summary>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Asynchronous operation with expected access token</returns>
+        public async Task<AccessToken> GetAccessTokenAsync(CancellationToken ct = default(CancellationToken))
+        {
+            // Get API endpoints.
+            var api = GetEndpointsAsync(ct);
+
+            AccessToken token = null;
+            try
+            {
+                // Try to restore the access token from the settings.
+                var at = Properties.Settings.Default.AccessTokens[(await api).AuthorizationEndpoint.AbsoluteUri];
+                if (at != null)
+                    token = AccessToken.FromBase64String(at);
+            }
+            catch (Exception) { return null; }
+
+            if (token != null && token.Expires.HasValue && token.Expires.Value <= DateTime.Now)
+            {
+                // The access token expired. Try refreshing it.
+                try
+                {
+                    token = await token.RefreshTokenAsync(
+                        (await api).TokenEndpoint,
+                        null,
+                        ct);
+                }
+                catch (Exception) { token = null; }
+            }
+
+            return token;
         }
 
         #endregion
