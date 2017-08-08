@@ -153,6 +153,7 @@ namespace eduVPN.ViewModels
                         }
 
                         InstanceList[i] = instance_list;
+                        RaisePropertyChanged("InstanceList");
                         ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
                     }
                     catch (Exception)
@@ -237,6 +238,7 @@ namespace eduVPN.ViewModels
                                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                         {
                                             InstanceList[i] = instance_list;
+                                            RaisePropertyChanged("InstanceList");
                                             ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
                                         }));
 
