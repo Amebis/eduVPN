@@ -1,4 +1,10 @@
-﻿<view:ProfileSelectBasePage
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<view:ProfileSelectBasePage
     x:Class="eduVPN.Views.InstanceAndProfileSelectPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
