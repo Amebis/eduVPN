@@ -121,6 +121,11 @@
         <conv:UserDisabledVisibilityConverter x:Key="UserDisabledVisibilityConverter"/>
         <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
 
+        <!-- eduVPN generic styles -->
+        <Style x:Key="eduVPNBaseStyle" TargetType="{x:Type Control}">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+
         <!-- eduVPN Buttons -->
         <Style x:Key="eduVPNHeaderButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Setter Property="Width" Value="20"/>
@@ -149,7 +154,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="eduVPNButtonBaseStyle" TargetType="{x:Type Button}">
+        <Style x:Key="eduVPNButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -209,7 +214,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}">
+        <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Width" Value="120"/>
@@ -241,11 +246,11 @@
         </Style>
 
         <!-- eduVPN Labels -->
-        <Style x:Key="eduVPNHeaderStyle" TargetType="{x:Type Label}">
+        <Style x:Key="eduVPNHeaderStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
             <Setter Property="FontSize" Value="12"/>
         </Style>
-        <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type Label}">
+        <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
             <Setter Property="FontSize" Value="14"/>
@@ -253,6 +258,7 @@
 
         <!-- eduVPN Text Blocks -->
         <Style x:Key="eduVPNTextBlockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style x:Key="eduVPNNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
@@ -290,7 +296,7 @@
         </Style>
 
         <!-- eduVPN ListBoxes -->
-        <Style x:Key="eduVPNListStyle" TargetType="{x:Type ListBox}">
+        <Style x:Key="eduVPNListStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         </Style>
@@ -301,7 +307,7 @@
         </Style>
 
         <!-- eduVPN ListBox Items -->
-        <Style x:Key="eduVPNListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Style x:Key="eduVPNListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -314,12 +320,12 @@
         </Style>
 
         <!-- eduVPN Text Boxes -->
-        <Style x:Key="eduVPNTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Style x:Key="eduVPNTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="Margin" Value="10"/>
         </Style>
 
         <!-- eduVPN Combo Boxes -->
-        <Style x:Key="eduVPNComboBoxStyle" TargetType="{x:Type ComboBox}">
+        <Style x:Key="eduVPNComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="Margin" Value="10"/>
         </Style>
 
@@ -334,7 +340,7 @@
         </Style>
 
         <!-- eduVPN Status Bars StatusBar -->
-        <Style x:Key="eduVPNInfoBarStyle" TargetType="{x:Type StatusBar}">
+        <Style x:Key="eduVPNInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
@@ -345,7 +351,7 @@
                 </Style>
             </Style.Resources>
         </Style>
-        <Style x:Key="eduVPNInlineInfoBarStyle" TargetType="{x:Type StatusBar}">
+        <Style x:Key="eduVPNInlineInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
@@ -358,6 +364,7 @@
 
         <!-- ConnectWizard page templates -->
         <Style x:Key="eduVPNConnectWizardPage" TargetType="{x:Type Page}">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Page}">
@@ -368,15 +375,15 @@
                             </Grid.RowDefinitions>
 
                             <StatusBar
-                            Style="{StaticResource eduVPNInfoBarStyle}"
-                            Visibility="{Binding Path=Error, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+                                Style="{StaticResource eduVPNInfoBarStyle}"
+                                Visibility="{Binding Path=Error, Converter={StaticResource StatusBarVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
                                 <StatusBarItem>
                                     <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
                                 </StatusBarItem>
                                 <StatusBarItem>
                                     <TextBlock
-                                    TextWrapping="Wrap"
-                                    Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
+                                        TextWrapping="Wrap"
+                                        Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
                                 </StatusBarItem>
                             </StatusBar>
 
