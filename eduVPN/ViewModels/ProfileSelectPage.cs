@@ -44,19 +44,16 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                     try
                     {
-                        // Get and load profile list.
-                        var profile_list = new JSON.Collection<Models.ProfileInfo>();
+                        JSON.Collection<Models.ProfileInfo> profile_list = null;
                         try
                         {
-                            profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                                uri: Parent.ConnectingInstance.GetEndpoints(ConnectWizard.Abort.Token).ProfileList,
-                                token: Parent.AccessToken,
-                                ct: ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
+                            // Get and load profile list.
+                            profile_list = Parent.ConnectingInstance.GetProfileList(Parent.AccessToken, ConnectWizard.Abort.Token);
                         }
-                        catch (WebException ex)
+                        catch (AggregateException ex)
                         {
                             // Access token rejected (401) => Redirect back to authorization page.
-                            if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                            if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                                 Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
                             else
                                 throw;

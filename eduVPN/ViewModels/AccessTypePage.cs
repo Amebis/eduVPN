@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;

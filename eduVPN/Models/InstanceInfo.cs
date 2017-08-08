@@ -10,6 +10,7 @@ using eduVPN.JSON;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -37,6 +38,11 @@ namespace eduVPN.Models
         /// Registered client redirect callback URI (endpoint)
         /// </summary>
         public const string RedirectEndpoint = "org.eduvpn.app:/api/callback";
+
+        /// <summary>
+        /// List of available profiles
+        /// </summary>
+        private Dictionary<AccessToken, JSON.Collection<Models.ProfileInfo>> _profile_list_cache;
 
         #endregion
 
@@ -99,14 +105,18 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs the instance info
         /// </summary>
-        public InstanceInfo()
-        { }
+        public InstanceInfo() :
+            base()
+        {
+            _profile_list_cache = new Dictionary<AccessToken, JSON.Collection<Models.ProfileInfo>>();
+        }
 
         /// <summary>
         /// Constructs the authenticating instance info for given federated instance list
         /// </summary>
         /// <param name="instance_list">Federated instance list</param>
-        public InstanceInfo(InstanceInfoFederatedList instance_list)
+        public InstanceInfo(InstanceInfoFederatedList instance_list) :
+            this()
         {
             // Assume same authenticating instance identity as instance list.
             DisplayName = instance_list.DisplayName;
@@ -285,6 +295,58 @@ namespace eduVPN.Models
             }
 
             return token;
+        }
+
+        /// <summary>
+        /// Gets instance profile list available to the user
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Profile list</returns>
+        public JSON.Collection<Models.ProfileInfo> GetProfileList(AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            var task = GetProfileListAsync(token, ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Gets instance profile list available to the user asynchronously
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Asynchronous operation with expected profile list</returns>
+        public async Task<JSON.Collection<Models.ProfileInfo>> GetProfileListAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            if (!_profile_list_cache.TryGetValue(token, out var profile_list))
+            {
+                // Get API endpoints.
+                var api = await GetEndpointsAsync(ct);
+
+                try
+                {
+                    // Get and load profile list.
+                    profile_list = new JSON.Collection<Models.ProfileInfo>();
+                    profile_list.LoadJSONAPIResponse((await JSON.Response.GetAsync(
+                        uri: api.ProfileList,
+                        token: token,
+                        ct: ct)).Value, "profile_list", ct);
+                }
+                catch (OperationCanceledException) { throw; }
+                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
+
+                // Save profile list to cache.
+                _profile_list_cache.Add(token, profile_list);
+            }
+
+            return profile_list;
         }
 
         #endregion

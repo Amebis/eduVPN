@@ -41,33 +41,23 @@ namespace eduVPN.ViewModels
                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                             try
                             {
-                                // Get and load API endpoints.
-                                var api = _selected_instance.GetEndpoints(ConnectWizard.Abort.Token);
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
-
+                                JSON.Collection<Models.ProfileInfo> profile_list = null;
                                 try
                                 {
                                     // Get and load profile list.
-                                    var profile_list = new JSON.Collection<Models.ProfileInfo>();
-                                    try
-                                    {
-                                        profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                                            uri: SelectedInstanceEndpoints.ProfileList,
-                                            token: Parent.AccessToken,
-                                            ct: ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
-                                    }
-                                    catch (WebException ex)
-                                    {
-                                        // Access token rejected (401) => Redirect back to authorization page.
-                                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
-                                        else
-                                            throw;
-                                    }
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileList = profile_list));
+                                    profile_list = _selected_instance.GetProfileList(Parent.AccessToken, ConnectWizard.Abort.Token);
                                 }
-                                catch (OperationCanceledException) { throw; }
-                                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
+                                catch (AggregateException ex)
+                                {
+                                    // Access token rejected (401) => Redirect back to authorization page.
+                                    if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.CurrentPage = Parent.AuthorizationPage));
+                                    else
+                                        throw;
+                                }
+
+                                // Send the loaded profile list back to the UI thread.
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileList = profile_list));
                             }
                             catch (OperationCanceledException) { }
                             catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
@@ -77,16 +67,6 @@ namespace eduVPN.ViewModels
             }
         }
         private Models.InstanceInfo _selected_instance;
-
-        /// <summary>
-        /// Selected eduVPN instance API endpoints
-        /// </summary>
-        public Models.InstanceEndpoints SelectedInstanceEndpoints
-        {
-            get { return _selected_instance_endpoints; }
-            set { _selected_instance_endpoints = value; RaisePropertyChanged(); }
-        }
-        private Models.InstanceEndpoints _selected_instance_endpoints;
 
         #endregion
 
@@ -132,7 +112,6 @@ namespace eduVPN.ViewModels
         {
             return
                 SelectedInstance != null &&
-                SelectedInstanceEndpoints != null &&
                 base.CanConnectSelectedProfile();
         }
 
