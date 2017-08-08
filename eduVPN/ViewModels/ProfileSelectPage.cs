@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.JSON;
 using System;
 using System.Net;
 using System.Threading;
@@ -63,7 +62,7 @@ namespace eduVPN.ViewModels
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileList = profile_list));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(Resources.Strings.ErrorProfileListLoad, ex))); }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
                     finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                 })).Start();
         }
