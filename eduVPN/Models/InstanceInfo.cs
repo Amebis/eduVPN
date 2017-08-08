@@ -349,6 +349,53 @@ namespace eduVPN.Models
             return profile_list;
         }
 
+        /// <summary>
+        /// Gets instance user info
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>User info</returns>
+        public UserInfo GetUserInfo(AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            var task = GetUserInfoAsync(token, ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Gets instance user info asynchronously
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Asynchronous operation with expected user info</returns>
+        public async Task<UserInfo> GetUserInfoAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            // Get API endpoints.
+            var api = await GetEndpointsAsync(ct);
+            if (api.UserInfo == null)
+                return null;
+
+            try
+            {
+                // Get and load user info.
+                var user_info = new UserInfo();
+                user_info.LoadJSONAPIResponse((await JSON.Response.GetAsync(
+                    uri: api.UserInfo,
+                    token: token,
+                    ct: ct)).Value, "user_info", ct);
+                return user_info;
+            }
+            catch (OperationCanceledException) { throw; }
+            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorUserInfoLoad, ex); }
+        }
+
         #endregion
 
         #region ILoadableItem Support

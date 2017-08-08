@@ -5,8 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
-using eduVPN.JSON;
 using Prism.Commands;
 using System;
 using System.Windows.Input;

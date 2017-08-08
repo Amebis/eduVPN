@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.JSON;
 using Prism.Commands;
 using System;
 using System.Threading;
@@ -104,29 +103,20 @@ namespace eduVPN.ViewModels
             UserInfo = new Models.UserInfo();
 
             // Launch user info load in the background.
-            var api = Parent.AuthenticatingInstance.GetEndpoints(ConnectWizard.Abort.Token);
-            if (api.UserInfo != null)
-            {
-                new Thread(new ThreadStart(
-                    () =>
+            new Thread(new ThreadStart(
+                () =>
+                {
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    try
                     {
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-                        try
-                        {
-                            // Get and load user info. (Don't catch the 401, loading the profile list will handle it.)
-                            var user_info = new Models.UserInfo();
-                            user_info.LoadJSONAPIResponse(JSON.Response.Get(
-                                uri: api.UserInfo,
-                                token: Parent.AccessToken,
-                                ct: ConnectWizard.Abort.Token).Value, "user_info", ConnectWizard.Abort.Token);
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(Resources.Strings.ErrorUserInfoLoad, ex))); }
-                        finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
-                    })).Start();
-            }
+                        var user_info = Parent.AuthenticatingInstance.GetUserInfo(Parent.AccessToken, ConnectWizard.Abort.Token);
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
+                })).Start();
         }
 
         /// <summary>
