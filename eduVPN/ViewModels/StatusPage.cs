@@ -68,12 +68,14 @@ namespace eduVPN.ViewModels
 
             // Load messages from all possible sources: authenticating/connecting instance, user/system list.
             // Any errors shall be ignored.
+            var api_authenticating = Parent.AuthenticatingInstance.GetEndpoints(ConnectWizard.Abort.Token);
+            var api_connecting = Parent.ConnectingInstance.GetEndpoints(ConnectWizard.Abort.Token);
             foreach (
                 var list in new List<KeyValuePair<Uri, string>>() {
-                    new KeyValuePair<Uri, string>(Parent.AuthenticatingEndpoints.UserMessages, "user_messages"),
-                    new KeyValuePair<Uri, string>(Parent.ConnectingEndpoints.UserMessages, "user_messages"),
-                    new KeyValuePair<Uri, string>(Parent.AuthenticatingEndpoints.SystemMessages, "system_messages"),
-                    new KeyValuePair<Uri, string>(Parent.ConnectingEndpoints.SystemMessages, "system_messages"),
+                    new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
+                    new KeyValuePair<Uri, string>(api_connecting.UserMessages, "user_messages"),
+                    new KeyValuePair<Uri, string>(api_authenticating.SystemMessages, "system_messages"),
+                    new KeyValuePair<Uri, string>(api_connecting.SystemMessages, "system_messages"),
                 }
                 .Where(list => list.Key != null)
                 .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)))
@@ -130,7 +132,7 @@ namespace eduVPN.ViewModels
                     try
                     {
                         // Spawn profile config get.
-                        var uri_builder = new UriBuilder(Parent.ConnectingEndpoints.ProfileConfig);
+                        var uri_builder = new UriBuilder(api_connecting.ProfileConfig);
                         var query = HttpUtility.ParseQueryString(uri_builder.Query);
                         query["profile_id"] = Parent.ConnectingProfile.ID;
                         uri_builder.Query = query.ToString();
@@ -172,7 +174,7 @@ namespace eduVPN.ViewModels
                             {
                                 // Spawn client certificate get.
                                 var certificate_get_task = JSON.Response.GetAsync(
-                                    uri: Parent.ConnectingEndpoints.CreateCertificate,
+                                    uri: api_connecting.CreateCertificate,
                                     param: new NameValueCollection
                                     {
                                 { "display_name", Resources.Strings.CertificateTitle }

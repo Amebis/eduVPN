@@ -49,7 +49,7 @@ namespace eduVPN.ViewModels
                         try
                         {
                             profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                                uri: Parent.ConnectingEndpoints.ProfileList,
+                                uri: Parent.ConnectingInstance.GetEndpoints(ConnectWizard.Abort.Token).ProfileList,
                                 token: Parent.AccessToken,
                                 ct: ConnectWizard.Abort.Token).Value, "profile_list", ConnectWizard.Abort.Token);
                         }

@@ -41,19 +41,9 @@ namespace eduVPN.ViewModels
                             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                             try
                             {
-                                try
-                                {
-                                    // Get and load API endpoints.
-                                    var uri_builder = new UriBuilder(_selected_instance.Base);
-                                    uri_builder.Path += "info.json";
-                                    var api = new Models.InstanceEndpoints();
-                                    api.LoadJSON(JSON.Response.Get(
-                                        uri: uri_builder.Uri,
-                                        ct: ConnectWizard.Abort.Token).Value, ConnectWizard.Abort.Token);
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
-                                }
-                                catch (OperationCanceledException) { throw; }
-                                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
+                                // Get and load API endpoints.
+                                var api = _selected_instance.GetEndpoints(ConnectWizard.Abort.Token);
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => SelectedInstanceEndpoints = api));
 
                                 try
                                 {
@@ -134,7 +124,6 @@ namespace eduVPN.ViewModels
         protected override void DoConnectSelectedProfile()
         {
             Parent.ConnectingInstance = SelectedInstance;
-            Parent.ConnectingEndpoints = SelectedInstanceEndpoints;
 
             base.DoConnectSelectedProfile();
         }

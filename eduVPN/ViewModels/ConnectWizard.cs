@@ -66,16 +66,6 @@ namespace eduVPN.ViewModels
         private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
-        /// Authenticating eduVPN instance API endpoints
-        /// </summary>
-        public Models.InstanceEndpoints AuthenticatingEndpoints
-        {
-            get { return _authenticating_endpoints; }
-            set { _authenticating_endpoints = value; RaisePropertyChanged(); }
-        }
-        private Models.InstanceEndpoints _authenticating_endpoints;
-
-        /// <summary>
         /// OAuth access token
         /// </summary>
         public AccessToken AccessToken
@@ -95,16 +85,6 @@ namespace eduVPN.ViewModels
             set { _connecting_instance = value; RaisePropertyChanged(); }
         }
         private Models.InstanceInfo _connecting_instance;
-
-        /// <summary>
-        /// Connecting eduVPN instance API endpoints
-        /// </summary>
-        public Models.InstanceEndpoints ConnectingEndpoints
-        {
-            get { return _connecting_endpoints; }
-            set { _connecting_endpoints = value; RaisePropertyChanged(); }
-        }
-        private Models.InstanceEndpoints _connecting_endpoints;
 
         /// <summary>
         /// Connecting eduVPN instance profile

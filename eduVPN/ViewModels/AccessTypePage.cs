@@ -79,18 +79,15 @@ namespace eduVPN.ViewModels
                                 if (Parent.InstanceList is Models.InstanceInfoFederatedList instance_list)
                                 {
                                     // Set authenticating instance.
-                                    Parent.AuthenticatingInstance = null;
-                                    Parent.AuthenticatingEndpoints = new Models.InstanceEndpoints()
-                                    {
-                                        AuthorizationEndpoint = instance_list.AuthorizationEndpoint,
-                                        TokenEndpoint = instance_list.TokenEndpoint
-                                    };
+                                    Parent.AuthenticatingInstance = new Models.InstanceInfo(instance_list);
+
+                                    var api = Parent.AuthenticatingInstance.GetEndpointsAsync(ConnectWizard.Abort.Token);
 
                                     // Try to restore the access token from the settings.
                                     Parent.AccessToken = null;
                                     try
                                     {
-                                        var at = Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri];
+                                        var at = Properties.Settings.Default.AccessTokens[(await api).AuthorizationEndpoint.AbsoluteUri];
                                         if (at != null)
                                             Parent.AccessToken = AccessToken.FromBase64String(at);
                                     }
@@ -101,7 +98,7 @@ namespace eduVPN.ViewModels
                                         try
                                         {
                                             Parent.AccessToken = await Parent.AccessToken.RefreshTokenAsync(
-                                                Parent.AuthenticatingEndpoints.TokenEndpoint,
+                                                (await api).TokenEndpoint,
                                                 null,
                                                 ConnectWizard.Abort.Token);
                                         }
@@ -110,7 +107,6 @@ namespace eduVPN.ViewModels
 
                                     // Reset connecting instance.
                                     Parent.ConnectingInstance = null;
-                                    Parent.ConnectingEndpoints = null;
 
                                     if (Parent.AccessToken == null)
                                         Parent.CurrentPage = Parent.AuthorizationPage;

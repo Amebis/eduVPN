@@ -62,15 +62,17 @@ namespace eduVPN.ViewModels
                             TaskCount++;
                             try
                             {
+                                var api = Parent.AuthenticatingInstance.GetEndpointsAsync(ConnectWizard.Abort.Token);
+
                                 // Process response and get access token.
                                 Parent.AccessToken = await _authorization_grant.ProcessResponseAsync(
                                     HttpUtility.ParseQueryString(new Uri(param).Query),
-                                    Parent.AuthenticatingEndpoints.TokenEndpoint,
+                                    (await api).TokenEndpoint,
                                     null,
                                     ConnectWizard.Abort.Token);
 
                                 // Save the access token.
-                                Properties.Settings.Default.AccessTokens[Parent.AuthenticatingEndpoints.AuthorizationEndpoint.AbsoluteUri] = Parent.AccessToken.ToBase64String();
+                                Properties.Settings.Default.AccessTokens[(await api).AuthorizationEndpoint.AbsoluteUri] = Parent.AccessToken.ToBase64String();
 
                                 // Go to profile selection page.
                                 if (Parent.ConnectingInstance == null)
@@ -132,7 +134,7 @@ namespace eduVPN.ViewModels
                 // Open authorization request in the browser.
                 _authorization_grant = new AuthorizationGrant()
                 {
-                    AuthorizationEndpoint = Parent.AuthenticatingEndpoints.AuthorizationEndpoint,
+                    AuthorizationEndpoint = Parent.AuthenticatingInstance.GetEndpoints(ConnectWizard.Abort.Token).AuthorizationEndpoint,
                     RedirectEndpoint = new Uri(_redirect_endpoint),
                     ClientID = "org.eduvpn.app",
                     Scope = new List<string>() { "config" },

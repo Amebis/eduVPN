@@ -5,9 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.JSON;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace eduVPN.Models
 {
@@ -16,6 +19,12 @@ namespace eduVPN.Models
     /// </summary>
     public class InstanceInfo : BindableBase, JSON.ILoadableItem
     {
+        #region Fields
+
+        private InstanceEndpoints _endpoints;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -70,11 +79,84 @@ namespace eduVPN.Models
 
         #endregion
 
+        #region Constructors
+
+        /// <summary>
+        /// Constructs the instance info
+        /// </summary>
+        public InstanceInfo()
+        { }
+
+        /// <summary>
+        /// Constructs the authenticating instance info for given federated instance list
+        /// </summary>
+        /// <param name="instance_list">Federated instance list</param>
+        public InstanceInfo(InstanceInfoFederatedList instance_list)
+        {
+            // Assume same authenticating instance identity as instance list.
+            DisplayName = instance_list.DisplayName;
+            Logo = instance_list.Logo;
+
+            // Set API endpoints manually.
+            _endpoints = new InstanceEndpoints()
+            {
+                AuthorizationEndpoint = instance_list.AuthorizationEndpoint,
+                TokenEndpoint = instance_list.TokenEndpoint
+            };
+        }
+
+        #endregion
+
         #region Methods
 
         public override string ToString()
         {
             return DisplayName;
+        }
+
+        /// <summary>
+        /// Gets and loads instance endpoints.
+        /// </summary>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Instance endpoints</returns>
+        public InstanceEndpoints GetEndpoints(CancellationToken ct = default(CancellationToken))
+        {
+            var task = GetEndpointsAsync(ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Gets and loads instance endpoints asynchronously.
+        /// </summary>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Asynchronous operation with expected instance endpoints</returns>
+        public async Task<InstanceEndpoints> GetEndpointsAsync(CancellationToken ct = default(CancellationToken))
+        {
+            if (_endpoints == null)
+            {
+                try
+                {
+                    // Get and load API endpoints.
+                    _endpoints = new InstanceEndpoints();
+                    var uri_builder = new UriBuilder(Base);
+                    uri_builder.Path += "info.json";
+                    _endpoints.LoadJSON((await JSON.Response.GetAsync(
+                        uri: uri_builder.Uri,
+                        ct: ct)).Value, ct);
+                }
+                catch (OperationCanceledException) { throw; }
+                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
+            }
+
+            return _endpoints;
         }
 
         #endregion
