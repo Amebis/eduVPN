@@ -145,12 +145,6 @@ The client will continue after you complete the authorization...</value>
   <data name="InstituteAccessSelectPageTitle" xml:space="preserve">
     <value>Choose Institute</value>
   </data>
-  <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Institute Access</value>
-  </data>
-  <data name="InstituteAccessTitle" xml:space="preserve">
-    <value>Institute Access</value>
-  </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
@@ -159,13 +153,6 @@ The client will continue after you complete the authorization...</value>
   </data>
   <data name="CustomInstancePageURINote" xml:space="preserve">
     <value>Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/</value>
-  </data>
-  <data name="SecureInternetNote" xml:space="preserve">
-    <value>Connect to the internet securely,
-for example when using public WiFi.</value>
-  </data>
-  <data name="SecureInternetTitle" xml:space="preserve">
-    <value>Secure Internet</value>
   </data>
   <data name="ProfileSelectPageTitle" xml:space="preserve">
     <value>Connect</value>

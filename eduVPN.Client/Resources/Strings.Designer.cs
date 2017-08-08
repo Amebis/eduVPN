@@ -152,29 +152,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Institute Access.
-        /// </summary>
-        public static string InstituteAccessNote {
-            get {
-                return ResourceManager.GetString("InstituteAccessNote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Choose Institute.
         /// </summary>
         public static string InstituteAccessSelectPageTitle {
             get {
                 return ResourceManager.GetString("InstituteAccessSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Institute Access.
-        /// </summary>
-        public static string InstituteAccessTitle {
-            get {
-                return ResourceManager.GetString("InstituteAccessTitle", resourceCulture);
             }
         }
         
@@ -233,30 +215,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect to the internet securely,
-        ///for example when using public WiFi..
-        /// </summary>
-        public static string SecureInternetNote {
-            get {
-                return ResourceManager.GetString("SecureInternetNote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Choose your home country.
         /// </summary>
         public static string SecureInternetSelectPageTitle {
             get {
                 return ResourceManager.GetString("SecureInternetSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Secure Internet.
-        /// </summary>
-        public static string SecureInternetTitle {
-            get {
-                return ResourceManager.GetString("SecureInternetTitle", resourceCulture);
             }
         }
         

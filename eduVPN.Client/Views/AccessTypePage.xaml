@@ -65,9 +65,19 @@
         <Button
             Grid.Row="0"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
-            AutomationProperties.Name="{x:Static res:Strings.SecureInternetTitle}"
+            ToolTip="{Binding Path=InstanceList[1].DisplayName}"
+            AutomationProperties.Name="{Binding Path=InstanceList[1].DisplayName}"
             Command="{Binding Path=SetAccessType}"
             CommandParameter="{x:Static viewModel:AccessType.SecureInternet}">
+
+            <!-- TODO: Provide alternative Source when Logo==null. -->
+            <!--<Image
+                Margin="5"
+                Source="{Binding Path=InstanceList[1].Logo}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                RenderOptions.BitmapScalingMode="Fant"/>-->
+
             <Canvas
                 Margin="5">
                 <Canvas.RenderTransform>
@@ -95,14 +105,24 @@
         <TextBlock
             Grid.Row="0"
             Style="{StaticResource eduVPNChoiceNoteStyle}"
-            Text="{x:Static res:Strings.SecureInternetNote}"/>
+            Text="{Binding Path=InstanceList[1].Description}"/>
 
         <Button
             Grid.Row="1"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
-            AutomationProperties.Name="{x:Static res:Strings.InstituteAccessTitle}"
+            ToolTip="{Binding Path=InstanceList[2].DisplayName}"
+            AutomationProperties.Name="{Binding Path=InstanceList[2].DisplayName}"
             Command="{Binding Path=SetAccessType}"
             CommandParameter="{x:Static viewModel:AccessType.InstituteAccess}">
+
+            <!-- TODO: Provide alternative Source when Logo==null. -->
+            <!--<Image
+                Margin="5"
+                Source="{Binding Path=InstanceList[2].Logo}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                RenderOptions.BitmapScalingMode="Fant"/>-->
+
             <Canvas
                 Margin="5">
                 <Canvas.RenderTransform>
@@ -124,6 +144,6 @@
         <TextBlock
             Grid.Row="1"
             Style="{StaticResource eduVPNChoiceNoteStyle}"
-            Text="{x:Static res:Strings.InstituteAccessNote}"/>
+            Text="{Binding Path=InstanceList[2].Description}"/>
     </Grid>
 </Page>

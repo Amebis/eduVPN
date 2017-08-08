@@ -151,24 +151,11 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="InstituteAccessSelectPageTitle" xml:space="preserve">
     <value>Izberite ustanovo</value>
   </data>
-  <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Dostop do ustanove</value>
-  </data>
-  <data name="InstituteAccessTitle" xml:space="preserve">
-    <value>Dostop do ustanove</value>
-  </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
   <data name="ProfileSelectPageTitle" xml:space="preserve">
     <value>Poveži</value>
-  </data>
-  <data name="SecureInternetNote" xml:space="preserve">
-    <value>Varno se povežite se na splet,
-npr. kadar uporabljate javni WiFi.</value>
-  </data>
-  <data name="SecureInternetTitle" xml:space="preserve">
-    <value>Varovani splet</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Zahteva dvojno preverjanje pristnosti</value>
