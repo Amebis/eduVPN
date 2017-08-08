@@ -12,60 +12,6 @@
     Title="{x:Static res:Strings.AccessTypePageTitle}"
     Style="{StaticResource eduVPNConnectWizardPage}">
 
-    <Page.Resources>
-        <!-- eduVPN Buttons -->
-        <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Width" Value="120"/>
-            <Setter Property="Height" Value="90"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border
-                                    Background="{StaticResource eduVPNChoiceButtonHoverBrushKey}"
-                                    CornerRadius="4">
-                                    <ContentPresenter
-                                        Margin="3"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.25"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <ContentPresenter
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- eduVPN Text Blocks -->
-        <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNNoteStyle}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="20,130,20,10"/>
-            <Setter Property="FontSize" Value="13"/>
-        </Style>
-    </Page.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

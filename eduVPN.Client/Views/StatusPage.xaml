@@ -5,123 +5,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
-    xmlns:conv="clr-namespace:eduVPN.Client.Converters"
-    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{x:Static res:Strings.StatusPageTitle}"
     Style="{StaticResource eduVPNConnectWizardPageWithBack}">
+
     <Page.Resources>
-        <!-- Converters -->
-        <conv:StatusTypeIconConverter x:Key="StatusTypeIconConverter"/>
-        <conv:StatusTypeDisplayNameConverter x:Key="StatusTypeDisplayNameConverter"/>
-        <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
-
-        <!-- eduVPN data templates -->
-        <DataTemplate DataType="{x:Type model:MessageNotification}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <Separator
-                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
-
-                <TextBlock
-                    Grid.Row="1"
-                    Margin="0,10,0,2"
-                    Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                    Text="{x:Static res:Strings.MessageNotificationTitle}"/>
-
-                <TextBlock
-                    Grid.Row="2"
-                    Margin="0,2,0,10"
-                    Style="{StaticResource eduVPNTextBlockStyle}"
-                    Text="{Binding Path=Text}"/>
-            </Grid>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type model:MessageOfTheDay}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <Separator
-                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
-
-                <TextBlock
-                    Grid.Row="1"
-                    Margin="0,10"
-                    Style="{StaticResource eduVPNTextBlockStyle}"
-                    Text="{Binding Path=Text}"/>
-            </Grid>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type model:MessageMaintenance}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <Separator
-                    Grid.ColumnSpan="2"
-                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
-
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    Margin="0,10,0,2"
-                    Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                    Text="{x:Static res:Strings.MessageMaintenanceTitle}"/>
-
-                <TextBlock
-                    Grid.Row="2"
-                    Margin="0,2,2,2"
-                    Style="{StaticResource eduVPNTextBlockStyle}"
-                    Text="{x:Static res:Strings.MessageMaintenanceBegin}"/>
-
-                <TextBlock
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Margin="2,2,0,2"
-                    Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                    Text="{Binding Path=Begin, ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}}"/>
-
-                <TextBlock
-                    Grid.Row="3"
-                    Margin="0,2,2,2"
-                    Style="{StaticResource eduVPNTextBlockStyle}"
-                    Text="{x:Static res:Strings.MessageMaintenanceEnd}"/>
-
-                <TextBlock
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Margin="2,2,0,2"
-                    Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                    Text="{Binding Path=End, ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}}"/>
-
-                <TextBlock
-                    Grid.Row="4"
-                    Grid.ColumnSpan="2"
-                    Margin="0,2,0,10"
-                    Style="{StaticResource eduVPNTextBlockStyle}"
-                    Text="{Binding Path=Text}"/>
-            </Grid>
-        </DataTemplate>
-
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="eduVPNMessageList" Source="{Binding Path=MessageList}">
             <CollectionViewSource.SortDescriptions>
