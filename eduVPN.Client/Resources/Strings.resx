@@ -200,4 +200,7 @@ Please, contact your helpdesk for support.</value>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notification</value>
   </data>
+  <data name="StatusTypeError" xml:space="preserve">
+    <value>Connecting failed. Please, read the log for details.</value>
+  </data>
 </root>

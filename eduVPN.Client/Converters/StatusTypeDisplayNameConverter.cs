@@ -27,6 +27,7 @@ namespace eduVPN.Client.Converters
                     case Models.StatusType.Initializing: return Resources.Strings.StatusTypeInitializing;
                     case Models.StatusType.Connecting: return Resources.Strings.StatusTypeConnecting;
                     case Models.StatusType.Connected: return Resources.Strings.StatusTypeConnected;
+                    case Models.StatusType.Error: return Resources.Strings.StatusTypeError;
                     default: return null;
                 }
             }

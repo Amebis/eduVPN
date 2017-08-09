@@ -200,4 +200,7 @@ Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   <data name="MessageMaintenanceEnd" xml:space="preserve">
     <value>Konec</value>
   </data>
+  <data name="StatusTypeError" xml:space="preserve">
+    <value>Povezava ni uspela. Za podrobnosti preberite dnevnik.</value>
+  </data>
 </root>

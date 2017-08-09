@@ -278,6 +278,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting failed. Please, read the log for details..
+        /// </summary>
+        public static string StatusTypeError {
+            get {
+                return ResourceManager.GetString("StatusTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initializing....
         /// </summary>
         public static string StatusTypeInitializing {

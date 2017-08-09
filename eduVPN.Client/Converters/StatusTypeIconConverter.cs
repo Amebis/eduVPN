@@ -27,6 +27,7 @@ namespace eduVPN.Client.Converters
                     case Models.StatusType.Initializing: return Application.Current.TryFindResource("eduVPNStatusTypeInitializingIcon") as Canvas;
                     case Models.StatusType.Connecting: return Application.Current.TryFindResource("eduVPNStatusTypeConnectingIcon") as Canvas;
                     case Models.StatusType.Connected: return Application.Current.TryFindResource("eduVPNStatusTypeConnectedIcon") as Canvas;
+                    case Models.StatusType.Error: return Application.Current.TryFindResource("eduVPNStatusTypeErrorIcon") as Canvas;
                     default: return null;
                 }
             }

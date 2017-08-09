@@ -24,6 +24,7 @@
                 <ResourceDictionary Source="Resources/StatusTypeInitializingIcon.xaml"/>
                 <ResourceDictionary Source="Resources/StatusTypeConnectingIcon.xaml"/>
                 <ResourceDictionary Source="Resources/StatusTypeConnectedIcon.xaml"/>
+                <ResourceDictionary Source="Resources/StatusTypeErrorIcon.xaml"/>
 
                 <ResourceDictionary Source="Resources/Styles.xaml"/>
                 <ResourceDictionary Source="Resources/DataTemplates.xaml"/>
