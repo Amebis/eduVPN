@@ -159,7 +159,13 @@ namespace eduVPN.ViewModels
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connected));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                    catch (Exception ex) {
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        {
+                            Error = ex;
+                            State = Models.StatusType.Error;
+                        }));
+                    }
                     finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                 })).Start();
         }

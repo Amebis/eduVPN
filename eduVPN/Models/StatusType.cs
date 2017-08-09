@@ -25,6 +25,11 @@ namespace eduVPN.Models
         /// <summary>
         /// Client is connected.
         /// </summary>
-        Connected
+        Connected,
+
+        /// <summary>
+        /// Connecting failed.
+        /// </summary>
+        Error
     }
 }
