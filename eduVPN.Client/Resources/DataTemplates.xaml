@@ -1,0 +1,186 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
+    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources">
+
+    <DataTemplate x:Key="eduVPNInstanceSelectionItemTemplate">
+        <Grid
+                Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <!-- TODO: Provide alternative Source when Logo==null. -->
+            <Image
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Source="{Binding Path=Logo}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,10,10,10"
+                    RenderOptions.BitmapScalingMode="Fant"/>
+
+            <TextBlock
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Text="{Binding Path=DisplayName}"
+                    Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="eduVPNProfileSelectionItemTemplate">
+        <Grid
+                Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="{Binding Path=DisplayName}"
+                    Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
+
+            <ContentControl
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10,10,0,10"
+                    Content="{StaticResource eduVPNTwoFactorAuthenticationIcon}"
+                    Visibility="{Binding Path=IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue=Visibility.Collapsed}"
+                    ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
+                    AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type model:MessageNotification}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <TextBlock
+                    Grid.Row="1"
+                    Margin="0,10,0,2"
+                    Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                    Text="{x:Static res:Strings.MessageNotificationTitle}"/>
+
+            <TextBlock
+                    Grid.Row="2"
+                    Margin="0,2,0,10"
+                    Style="{StaticResource eduVPNTextBlockStyle}"
+                    Text="{Binding Path=Text}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type model:MessageOfTheDay}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <TextBlock
+                    Grid.Row="1"
+                    Margin="0,10"
+                    Style="{StaticResource eduVPNTextBlockStyle}"
+                    Text="{Binding Path=Text}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type model:MessageMaintenance}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <TextBlock
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,10,0,2"
+                    Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                    Text="{x:Static res:Strings.MessageMaintenanceTitle}"/>
+
+            <TextBlock
+                    Grid.Row="2"
+                    Margin="0,2,2,2"
+                    Style="{StaticResource eduVPNTextBlockStyle}"
+                    Text="{x:Static res:Strings.MessageMaintenanceBegin}"/>
+
+            <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="2,2,0,2"
+                    Style="{StaticResource eduVPNInfoTextBlockStyle}"
+                    Text="{Binding Path=Begin, ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}}"/>
+
+            <TextBlock
+                    Grid.Row="3"
+                    Margin="0,2,2,2"
+                    Style="{StaticResource eduVPNTextBlockStyle}"
+                    Text="{x:Static res:Strings.MessageMaintenanceEnd}"/>
+
+            <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="2,2,0,2"
+                    Style="{StaticResource eduVPNInfoTextBlockStyle}"
+                    Text="{Binding Path=End, ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}}"/>
+
+            <TextBlock
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Margin="0,2,0,10"
+                    Style="{StaticResource eduVPNTextBlockStyle}"
+                    Text="{Binding Path=Text}"/>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

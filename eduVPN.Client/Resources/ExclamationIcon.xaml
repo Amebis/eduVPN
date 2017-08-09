@@ -1,0 +1,24 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Canvas x:Key="eduVPNExclamationIcon" Width="25" Height="25">
+        <Canvas.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleY="0.15" ScaleX="0.15"/>
+            </TransformGroup>
+        </Canvas.RenderTransform>
+        <Path
+                Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
+                Data="M149.72,154.28H20.36c-5.58,0-9.83-2.04-11.97-5.74c-2.14-3.7-1.78-8.41,1.01-13.24L74.08,23.28c2.79-4.83,6.68-7.49,10.96-7.49c4.28,0,8.17,2.66,10.96,7.49l64.68,112.02c2.79,4.83,3.15,9.53,1.01,13.24C159.55,152.25,155.29,154.28,149.72,154.28z M85.04,21.46c-2.13,0-4.34,1.7-6.05,4.66L14.31,138.14c-1.71,2.96-2.08,5.72-1.01,7.57c1.07,1.85,3.64,2.91,7.06,2.91h129.35c3.42,0,5.99-1.06,7.06-2.91c1.07-1.85,0.7-4.61-1.01-7.57L91.09,26.12C89.38,23.16,87.17,21.46,85.04,21.46z"/>
+        <Path
+                Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
+                Data="M85.04,141.77c-2.49,0-4.61-0.8-6.35-2.4c-1.74-1.6-2.62-3.54-2.62-5.82c0-2.37,0.87-4.38,2.62-6.04c1.74-1.66,3.86-2.49,6.35-2.49c2.41,0,4.49,0.83,6.26,2.49c1.76,1.66,2.65,3.67,2.65,6.04c0,2.28-0.88,4.23-2.65,5.82C89.53,140.97,87.45,141.77,85.04,141.77z M91.95,51.21l-1.18,63.03H78.94l-1.62-63.03H91.95z"/>
+    </Canvas>
+</ResourceDictionary>

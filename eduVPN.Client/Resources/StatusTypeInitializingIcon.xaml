@@ -1,0 +1,24 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Canvas x:Key="eduVPNStatusTypeInitializingIcon" Width="22" Height="22">
+        <Canvas.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleY="0.12" ScaleX="0.12"/>
+            </TransformGroup>
+        </Canvas.RenderTransform>
+        <Path
+                Fill="{StaticResource eduVPNLogoBlackKey}"
+                Data="M138.89,62.01h-59.5v-9.13c0-19.54-15.9-35.43-35.43-35.43S8.52,33.35,8.52,52.88v10.73h14.17V52.88c0-11.72,9.54-21.26,21.26-21.26s21.26,9.54,21.26,21.26v9.13H62.4c-8.58,0-15.59,7.02-15.59,15.59v63.68c0,8.58,7.02,15.59,15.59,15.59h76.49c8.58,0,15.59-7.02,15.59-15.59V77.6C154.48,69.03,147.46,62.01,138.89,62.01z"/>
+        <Path
+                Fill="{StaticResource eduVPNLogoWhiteKey}"
+                Data="M43.95,26.52c-14.54,0-26.36,11.83-26.36,26.36v5.63h-3.97v-5.63c0-16.72,13.61-30.33,30.33-30.33s30.33,13.61,30.33,30.33v9.13h-3.97v-9.13C70.31,38.35,58.48,26.52,43.95,26.52z M148.81,141.29c0,5.47-4.45,9.92-9.92,9.92H62.4c-5.47,0-9.92-4.45-9.92-9.92V77.6c0-5.47,4.45-9.92,9.92-9.92h76.49c5.47,0,9.92,4.45,9.92,9.92V141.29z"/>
+    </Canvas>
+</ResourceDictionary>
