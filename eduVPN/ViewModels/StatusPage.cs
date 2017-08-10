@@ -10,8 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Reflection;
+using System.ServiceProcess;
 using System.Threading;
+using System.Web.Security;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -131,6 +137,17 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                     try
                     {
+                        // Check if the Interactive Service is started.
+                        // In case we hit "Access Denied" (or another error) give up on SCM.
+                        ServiceController openvpn_interactive_service = new ServiceController("OpenVPNServiceInteractive");
+                        try
+                        {
+                            if (openvpn_interactive_service.Status == ServiceControllerStatus.Stopped ||
+                                openvpn_interactive_service.Status == ServiceControllerStatus.Paused)
+                                openvpn_interactive_service.Start();
+                        }
+                        catch (Exception) { openvpn_interactive_service = null; }
+
                         // Get profile's OpenVPN configuration and instance client certificate (in parallel).
                         string profile_config = null;
                         byte[] client_certificate_hash = null;
@@ -164,13 +181,26 @@ namespace eduVPN.ViewModels
                         if (Error != null)
                             return;
 
-                        var profile_config_path =
-                            Path.GetTempPath() +
-                            "eduVPN-" + Guid.NewGuid().ToString() + ".ovpn";
+                        if (openvpn_interactive_service != null) {
+                            // Wait for OpenVPN Interactive Service to report "running" status.
+                            // Maximum 30 times 100µs = 3s.
+                            var refresh_interval = new TimeSpan(1000);
+                            for (var i = 0; i < 30 && !ConnectWizard.Abort.Token.IsCancellationRequested; i++)
+                            {
+                                try { openvpn_interactive_service.WaitForStatus(ServiceControllerStatus.Running, refresh_interval); }
+                                catch (System.ServiceProcess.TimeoutException) { }
+                                catch (Exception) { break; }
+                            }
+                        }
+
+                        var working_folder = Path.GetTempPath();
+                        var connection_id = "eduVPN-" + Guid.NewGuid().ToString();
+                        var profile_config_path = working_folder + connection_id + ".ovpn";
                         try
                         {
                             try
                             {
+                                // Create OpenVPN configuration file.
                                 using (var fs = new FileStream(
                                     profile_config_path,
                                     FileMode.Create,
@@ -180,17 +210,76 @@ namespace eduVPN.ViewModels
                                     FileOptions.SequentialScan))
                                 using (var sw = new StreamWriter(fs))
                                 {
-                                    // Save profile's OpenVPN configuration to file.
+                                    // Save profile's configuration to file.
                                     sw.Write(profile_config);
                                     sw.Write(
-                                        "\n\n# eduVPN Client for Windows Specific\n" +
+                                        "\n\n# eduVPN Client for Windows\n" +
                                         "cryptoapicert \"THUMB: " + BitConverter.ToString(client_certificate_hash).Replace("-", " ") + "\"\n");
                                 }
                             }
                             catch (OperationCanceledException) { throw; }
                             catch (Exception ex) { throw new AggregateException(String.Format(Resources.Strings.ErrorSavingProfileConfiguration, profile_config_path), ex); }
 
-                            // TODO: Connect to OpenVPN Interactive Service (using named pipe) and ask it to start openvpn.exe for us.
+                            // Get management interface and TCP port.
+                            var mgmt_interface = IPAddress.Loopback;
+                            var mgmt_port = 0;
+                            {
+                                var listener = new TcpListener(mgmt_interface, mgmt_port);
+                                listener.Start();
+                                mgmt_port = ((IPEndPoint)listener.LocalEndpoint).Port;
+                                listener.Stop();
+                            }
+
+                            // Generate management password.
+                            var mgmt_password = Membership.GeneratePassword(16, 6);
+
+                            // Generate openvpn.exe command line parameters.
+                            var assembly = Assembly.GetExecutingAssembly();
+                            var assembly_title_attribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
+                            var assembly_informational_version = Attribute.GetCustomAttributes(assembly, typeof(AssemblyInformationalVersionAttribute)).SingleOrDefault() as AssemblyInformationalVersionAttribute;
+                            var parameters = String.Format(
+                                "--log \"{0}\" " +
+                                "--config \"{1}\" " +
+                                "--setenv IV_GUI_VER \"{2}\" " +
+                                "--service \"{3}\" 0 " +
+                                "--auth-retry interact " +
+                                "--management \"{4}\" {5} stdin " +
+                                "--management-query-passwords " +
+                                "--management-hold",
+                                EscapeParameter(connection_id + ".txt"),
+                                EscapeParameter(connection_id + ".ovpn"),
+                                EscapeParameter(assembly_title_attribute?.Title + " " + assembly_informational_version?.InformationalVersion),
+                                EscapeParameter(connection_id), // TODO: Create named event with this name.
+                                EscapeParameter(mgmt_interface.ToString()), mgmt_port.ToString());
+
+                            // Connect to OpenVPN Interactive Service via named pipe.
+                            var openvpn_interactive_service_pipe = new NamedPipeClientStream("\\\\.\\pipe\\openvpn\\service")
+                            {
+                                ReadMode = PipeTransmissionMode.Message
+                            };
+                            openvpn_interactive_service_pipe.Connect();
+
+                            {
+                                // Ask OpenVPN Interactive Service to start openvpn.exe for us.
+                                var msg_stream = new MemoryStream();
+                                using (var writer = new BinaryWriter(msg_stream))
+                                {
+                                    // Working folder (zero terminated)
+                                    writer.Write(working_folder);
+                                    writer.Write((byte)0);
+
+                                    // openvpn.exe command line parameters (zero terminated)
+                                    writer.Write(parameters);
+                                    writer.Write((byte)0);
+
+                                    // stdin (zero terminated)
+                                    writer.Write(mgmt_password);
+                                    writer.Write("\n");
+                                    writer.Write((byte)0);
+                                }
+                                var msg = msg_stream.GetBuffer();
+                                openvpn_interactive_service_pipe.Write(msg, 0, msg.Length);
+                            }
                         }
                         finally
                         {
@@ -230,6 +319,11 @@ namespace eduVPN.ViewModels
         protected override bool CanNavigateBack()
         {
             return true;
+        }
+
+        protected string EscapeParameter(string str)
+        {
+            return str.Replace("\"", "\\\"");
         }
 
         #endregion

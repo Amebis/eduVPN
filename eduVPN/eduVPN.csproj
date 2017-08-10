@@ -26,6 +26,7 @@
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
