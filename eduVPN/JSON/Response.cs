@@ -37,7 +37,7 @@ namespace eduVPN.JSON
         #region Properties
 
         /// <summary>
-        /// JSON string
+        /// String content (JSON, plain text, etc.)
         /// </summary>
         public string Value { get; set; }
 
