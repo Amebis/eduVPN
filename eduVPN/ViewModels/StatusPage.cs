@@ -8,11 +8,10 @@
 using eduVPN.JSON;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
-using System.Web;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -58,6 +57,7 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "FileStream tolerates multiple disposes.")]
         public override void OnActivate()
         {
             base.OnActivate();
@@ -131,25 +131,72 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                     try
                     {
-                        // Spawn profile config get.
-                        var uri_builder = new UriBuilder(api_connecting.ProfileConfig);
-                        var query = HttpUtility.ParseQueryString(uri_builder.Query);
-                        query["profile_id"] = Parent.ConnectingProfile.ID;
-                        uri_builder.Query = query.ToString();
-                        var profile_config_get_task = JSON.Response.GetAsync(
-                            uri: uri_builder.Uri,
-                            token: Parent.AccessToken,
-                            response_type: "application/x-openvpn-profile",
-                            ct: ConnectWizard.Abort.Token);
+                        // Get profile's OpenVPN configuration and instance client certificate (in parallel).
+                        string profile_config = null;
+                        byte[] client_certificate_hash = null;
+                        new List<Action>()
+                        {
+                            () => { profile_config = Parent.ConnectingProfile.GetOpenVPNConfig(Parent.ConnectingInstance, Parent.AccessToken, ConnectWizard.Abort.Token); },
+                            () => { client_certificate_hash = Parent.ConnectingInstance.GetClientCertificate(Parent.AccessToken, ConnectWizard.Abort.Token); }
+                        }.Select(
+                            action =>
+                            {
+                                var t = new Thread(new ThreadStart(
+                                    () =>
+                                    {
+                                        try
+                                        {
+                                            action();
+                                        }
+                                        catch (OperationCanceledException) { }
+                                        catch (Exception ex)
+                                        {
+                                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                            {
+                                                Error = ex;
+                                                State = Models.StatusType.Error;
+                                            }));
+                                        }
+                                    }));
+                                t.Start();
+                                return t;
+                            }).ToList().ForEach(t => t.Join());
+                        if (Error != null)
+                            return;
 
+                        var profile_config_path =
+                            Path.GetTempPath() +
+                            "eduVPN-" + Guid.NewGuid().ToString() + ".ovpn";
                         try
                         {
-                            // Load profile config.
-                            try { profile_config_get_task.Wait(ConnectWizard.Abort.Token); }
-                            catch (AggregateException ex) { throw ex.InnerException; }
+                            try
+                            {
+                                using (var fs = new FileStream(
+                                    profile_config_path,
+                                    FileMode.Create,
+                                    FileAccess.Write,
+                                    FileShare.Read,
+                                    1048576,
+                                    FileOptions.SequentialScan))
+                                using (var sw = new StreamWriter(fs))
+                                {
+                                    // Save profile's OpenVPN configuration to file.
+                                    sw.Write(profile_config);
+                                    sw.Write(
+                                        "\n\n# eduVPN Client for Windows Specific\n" +
+                                        "cryptoapicert \"THUMB: " + BitConverter.ToString(client_certificate_hash).Replace("-", " ") + "\"\n");
+                                }
+                            }
+                            catch (OperationCanceledException) { throw; }
+                            catch (Exception ex) { throw new AggregateException(String.Format(Resources.Strings.ErrorSavingProfileConfiguration, profile_config_path), ex); }
+
+                            // TODO: Connect to OpenVPN Interactive Service (using named pipe) and ask it to start openvpn.exe for us.
                         }
-                        catch (OperationCanceledException) { throw; }
-                        catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
+                        finally
+                        {
+                            try { File.Delete(profile_config_path); }
+                            catch (Exception) { }
+                        }
 
                         // State >> Connecting...
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => State = Models.StatusType.Connecting));

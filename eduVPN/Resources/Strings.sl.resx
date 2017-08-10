@@ -150,4 +150,7 @@
   <data name="ErrorUserInfoLoad" xml:space="preserve">
     <value>Nalaganje podatkov o uporabniku ni uspelo.</value>
   </data>
+  <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
+    <value>Shranjevanje profilovih nastavitev OpenVPN v "{0}" ni uspelo.</value>
+  </data>
 </root>
