@@ -44,12 +44,12 @@ namespace eduVPN.Models
         /// <summary>
         /// List of available profiles
         /// </summary>
-        JSON.Collection<Models.ProfileInfo> _profile_list;
+        private JSON.Collection<Models.ProfileInfo> _profile_list;
 
         /// <summary>
         /// Client certificate hash
         /// </summary>
-        byte[] _client_certificate_hash;
+        private byte[] _client_certificate_hash;
 
         #endregion
 
@@ -397,6 +397,26 @@ namespace eduVPN.Models
             }
             catch (OperationCanceledException) { throw; }
             catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorUserInfoLoad, ex); }
+        }
+
+        /// <summary>
+        /// Gets client certificate
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Client certificate hash. Certificate (including the private key) is saved to user certificate store.</returns>
+        public byte[] GetClientCertificate(AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            var task = GetClientCertificateAsync(token, ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
         }
 
         /// <summary>
