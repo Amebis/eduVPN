@@ -5,8 +5,13 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace eduVPN.Models
 {
@@ -15,6 +20,15 @@ namespace eduVPN.Models
     /// </summary>
     public class ProfileInfo : BindableBase, JSON.ILoadableItem
     {
+        #region Fields
+
+        /// <summary>
+        /// Profile OpenVPN configuration
+        /// </summary>
+        private string _openvpn_config;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -54,6 +68,61 @@ namespace eduVPN.Models
         public override string ToString()
         {
             return DisplayName;
+        }
+
+        /// <summary>
+        /// Gets profile OpenVPN configuration
+        /// </summary>
+        /// <param name="instance">Instance this profile is part of</param>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Profile configuration</returns>
+        public string GetOpenVPNConfig(InstanceInfo instance, AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            var task = GetOpenVPNConfigAsync(instance, token, ct);
+            try
+            {
+                task.Wait(ct);
+                return task.Result;
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
+        /// <summary>
+        /// Gets profile OpenVPN configuration asynchronously
+        /// </summary>
+        /// <param name="instance">Instance this profile is part of</param>
+        /// <param name="token">Access token</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Asynchronous operation with expected profile configuration</returns>
+        public async Task<string> GetOpenVPNConfigAsync(InstanceInfo instance, AccessToken token, CancellationToken ct = default(CancellationToken))
+        {
+            if (_openvpn_config == null)
+            {
+                // Get API endpoints.
+                var api = await instance.GetEndpointsAsync(ct);
+
+                try
+                {
+                    // Get profile config.
+                    var uri_builder = new UriBuilder(api.ProfileConfig);
+                    var query = HttpUtility.ParseQueryString(uri_builder.Query);
+                    query["profile_id"] = ID;
+                    uri_builder.Query = query.ToString();
+                    _openvpn_config = (await JSON.Response.GetAsync(
+                        uri: uri_builder.Uri,
+                        token: token,
+                        response_type: "application/x-openvpn-profile",
+                        ct: ct)).Value;
+                }
+                catch (OperationCanceledException) { throw; }
+                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
+            }
+
+            return _openvpn_config;
         }
 
         #endregion
