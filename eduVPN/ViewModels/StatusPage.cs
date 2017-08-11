@@ -237,7 +237,7 @@ namespace eduVPN.ViewModels
                                 // Generate management password.
                                 var mgmt_password = Membership.GeneratePassword(16, 6);
 
-                                using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Connection())
+                                using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Session())
                                 {
                                     // Connect to OpenVPN Interactive Service.
                                     openvpn_interactive_service_connection.Connect(3000);
