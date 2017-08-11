@@ -105,6 +105,10 @@
       <Project>{44ea054c-0c39-4aac-9e40-253e919c1e2f}</Project>
       <Name>eduOAuth</Name>
     </ProjectReference>
+    <ProjectReference Include="..\eduOpenVPN\eduOpenVPN\eduOpenVPN.csproj">
+      <Project>{ddf40a25-1180-40b1-9bf1-8d3d66d734ad}</Project>
+      <Name>eduOpenVPN</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
