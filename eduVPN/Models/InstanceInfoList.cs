@@ -47,7 +47,7 @@ namespace eduVPN.Models
             get { return _description; }
             set { if (value != _description) { _description = value; OnPropertyChanged(new PropertyChangedEventArgs("Description")); } }
         }
-        protected string _description;
+        private string _description;
 
         /// <summary>
         /// Version sequence
