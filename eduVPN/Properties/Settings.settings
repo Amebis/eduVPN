@@ -26,5 +26,8 @@
     <Setting Name="InstanceSettings" Type="eduVPN.Models.InstanceSettingsDictionary" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0"?&gt;&lt;InstanceSettingsDictionary/&gt;</Value>
     </Setting>
+    <Setting Name="OpenVPNInterface" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
