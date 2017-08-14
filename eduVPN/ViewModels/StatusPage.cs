@@ -215,7 +215,7 @@ namespace eduVPN.ViewModels
                                     sw.Write(profile_config);
                                     sw.Write(
                                         "\n\n# eduVPN Client for Windows\n" +
-                                        "cryptoapicert \"THUMB: " + BitConverter.ToString(client_certificate_hash).Replace("-", " ") + "\"\n");
+                                        "cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB: " + BitConverter.ToString(client_certificate_hash).Replace("-", " ")) + "\n");
 
                                     if (Properties.Settings.Default.OpenVPNInterface != null && Properties.Settings.Default.OpenVPNInterface != "")
                                         sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(Properties.Settings.Default.OpenVPNInterface) + "\n");
