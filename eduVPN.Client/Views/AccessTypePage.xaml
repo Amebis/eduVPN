@@ -33,18 +33,32 @@
             CommandParameter="{x:Static viewModel:AccessType.SecureInternet}">
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
-            <!--<Image
+            <Image
                 Margin="5"
                 Source="{Binding Path=InstanceList[1].Logo}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                RenderOptions.BitmapScalingMode="Fant"/>-->
+                RenderOptions.BitmapScalingMode="Fant"/>
+
+            <!--
+            <Image
+                Margin="5"
+                Source="../Resources/SecureInternet.png"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                RenderOptions.BitmapScalingMode="Fant">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="-12" Y="-12"/>
+                        <ScaleTransform ScaleY="1.5" ScaleX="1.5"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
 
             <Canvas
                 Margin="5">
                 <Canvas.RenderTransform>
                     <TransformGroup>
-                        <!-- Center artwork to 0,0 -->
                         <TranslateTransform X="-85.04" Y="-85.04"/>
                         <ScaleTransform ScaleY="0.74" ScaleX="0.74"/>
                     </TransformGroup>
@@ -62,6 +76,7 @@
                     Fill="{StaticResource eduVPNLogoBlackKey}"
                     Data="M104.903,120.864c-0.648,0-1.26-0.144-1.79-0.41c-6.39-3.25-11.52-8.2-15.239-14.71c-3.41-5.97-5.229-12.76-5.39-20.2c-0.01-0.429-0.04-0.856-0.06-1.339l-0.18-3.57l2.58-0.34c4.74-0.63,9-2.56,13.511-4.6c1.358-0.62,2.719-1.23,4.1-1.813l0.529-0.22h3.939l0.53,0.22c1.35,0.57,2.68,1.17,4.021,1.78c4.301,1.95,8.369,3.78,12.84,4.55c0.26,0.051,0.489,0.103,0.779,0.183l2.67,0.67l-0.18,2.391c-0.05,0.71-0.101,1.41-0.14,2.12c-0.102,1.63-0.211,3.31-0.44,5.01c-1.22,8.75-4.84,16.341-10.76,22.57c-3.06,3.21-6.14,5.6-9.431,7.28C106.073,120.784,105.374,120.864,104.903,120.864z M88.144,85.455c0.149,6.562,1.67,12.271,4.649,17.47c3.061,5.353,7.029,9.302,12.121,12.069c2.448-1.37,4.799-3.26,7.188-5.76c5.08-5.354,8.199-11.893,9.25-19.44c0.189-1.397,0.29-2.817,0.38-4.309c-4.53-1-8.64-2.86-12.62-4.66c-1.12-0.511-2.239-1.011-3.37-1.5h-1.63c-1.149,0.5-2.3,1.01-3.438,1.53C96.713,82.644,92.653,84.473,88.144,85.455z"/>
             </Canvas>
+            -->
         </Button>
 
         <TextBlock
@@ -78,18 +93,32 @@
             CommandParameter="{x:Static viewModel:AccessType.InstituteAccess}">
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
-            <!--<Image
+            <Image
                 Margin="5"
                 Source="{Binding Path=InstanceList[2].Logo}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                RenderOptions.BitmapScalingMode="Fant"/>-->
+                RenderOptions.BitmapScalingMode="Fant"/>
+
+            <!--
+            <Image
+                Margin="5"
+                Source="../Resources/InstituteAccess.png"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                RenderOptions.BitmapScalingMode="Fant">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="-12" Y="-12"/>
+                        <ScaleTransform ScaleY="1.5" ScaleX="1.5"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
 
             <Canvas
                 Margin="5">
                 <Canvas.RenderTransform>
                     <TransformGroup>
-                        <!-- Center artwork to 0,0 -->
                         <TranslateTransform X="-85.04" Y="-85.04"/>
                         <ScaleTransform ScaleY="0.74" ScaleX="0.74"/>
                     </TransformGroup>
@@ -101,6 +130,7 @@
                     Fill="{StaticResource eduVPNLogoBlackKey}"
                     Data="M71.637,73.093c1.21-13.696,5.8-19.366,14.569-19.18c8.601,0.18,12.859,6.7,13.96,19.471c8.521,1.013,7.88,6.209,8,12.899c0.11,6.55-0.199,12.52-0.021,18.38c0.16,5.24-1.93,8.011-7.369,7.99c-10.43-0.05-20.2-0.04-29.69,0c-5.38,0.021-7.46-2.643-7.48-7.92c-0.03-7.171-0.06-14.091-0.02-21.21C63.606,77.613,64.187,72.863,71.637,73.093 M94.646,73.323c0-2.98,0.201-4.62-0.039-6.189c-0.75-4.857-4.642-8.291-8.99-8.107c-4.439,0.18-7.78,3.8-8.34,8.777c-0.76,6.723-1.12,5.649,4.87,5.563C86.036,73.313,89.937,73.323,94.646,73.323 M82.827,101.703c4.229-4.43,8.179-8.37,11.87-12.55c0.85-0.97,0.83-2.72,1.21-4.11c-1.55,0.38-3.591,0.28-4.55,1.25c-2.771,2.79-5.11,6.03-7.62,9.08c-0.37-0.52-0.73-1.05-1.1-1.57c-2.22-0.606-4.45-1.22-6.67-1.84c1.11,2.19,2.1,4.45,3.37,6.554C79.907,99.443,80.997,100.063,82.827,101.703"/>
             </Canvas>
+            -->
         </Button>
 
         <TextBlock
