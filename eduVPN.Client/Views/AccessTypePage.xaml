@@ -34,7 +34,7 @@
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
             <Image
-                Margin="5"
+                Margin="-15"
                 Source="{Binding Path=InstanceList[1].Logo}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -94,7 +94,7 @@
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
             <Image
-                Margin="5"
+                Margin="-15"
                 Source="{Binding Path=InstanceList[2].Logo}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
