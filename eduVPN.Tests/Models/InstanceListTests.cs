@@ -27,12 +27,12 @@ namespace eduVPN.Models.Tests
 
             // Spawn instance list get (Institute Access).
             var instance_list_ia_json_task = JSON.Response.GetAsync(
-                uri: new Uri("https://static.eduvpn.nl/instances.json"),
+                uri: new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
                 pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
             // Spawn instance list get (Secure Internet).
             var instance_list_si_json_task = JSON.Response.GetAsync(
-                uri: new Uri("https://static.eduvpn.nl/federation.json"),
+                uri: new Uri("https://static.eduvpn.nl/disco/secure_internet.json"),
                 pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
             // Load list of institute access instances.
@@ -46,7 +46,7 @@ namespace eduVPN.Models.Tests
 
             // Re-spawn instance list get.
             instance_list_ia_json_task = JSON.Response.GetAsync(
-                uri: new Uri("https://static.eduvpn.nl/instances.json"),
+                uri: new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
                 pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="),
                 previous: instance_list_ia_json_task.Result);
 

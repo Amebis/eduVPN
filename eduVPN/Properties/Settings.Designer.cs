@@ -26,7 +26,7 @@ namespace eduVPN.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/instances.json")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/institute_access.json")]
         public string InstituteAccessDirectory {
             get {
                 return ((string)(this["InstituteAccessDirectory"]));
@@ -56,7 +56,7 @@ namespace eduVPN.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/federation.json")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/secure_internet.json")]
         public string SecureInternetDirectory {
             get {
                 return ((string)(this["SecureInternetDirectory"]));

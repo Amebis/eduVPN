@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="InstituteAccessDirectory" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://static.eduvpn.nl/instances.json</Value>
+      <Value Profile="(Default)">https://static.eduvpn.nl/disco/institute_access.json</Value>
     </Setting>
     <Setting Name="InstituteAccessDirectoryPubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
@@ -12,7 +12,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SecureInternetDirectory" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://static.eduvpn.nl/federation.json</Value>
+      <Value Profile="(Default)">https://static.eduvpn.nl/disco/secure_internet.json</Value>
     </Setting>
     <Setting Name="SecureInternetDirectoryPubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
