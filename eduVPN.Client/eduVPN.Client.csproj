@@ -81,15 +81,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\StatusTypeConnectedIcon.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIcon_CONNECTED.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\StatusTypeConnectingIcon.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIcon_AUTH.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OpenVPNStateTypeIcon_EXITING.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OpenVPNStateTypeIcon_RECONNECTING.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OpenVPNStateTypeIcon_GET_CONFIG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OpenVPNStateTypeIcon_ASSIGN_IP.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OpenVPNStateTypeIcon_ADD_ROUTES.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OpenVPNStateTypeIcon_WAIT.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OpenVPNStateTypeIcon_CONNECTING.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\StatusTypeInitializingIcon.xaml">
+    <Page Include="Resources\OpenVPNStateTypeInitializingIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,7 +8,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Canvas x:Key="eduVPNStatusTypeConnectedIcon" Width="22" Height="22">
+    <Canvas x:Key="eduVPNOpenVPNStateTypeIcon_CONNECTED" Width="22" Height="22">
         <Canvas.RenderTransform>
             <TransformGroup>
                 <ScaleTransform ScaleY="0.12" ScaleX="0.12"/>

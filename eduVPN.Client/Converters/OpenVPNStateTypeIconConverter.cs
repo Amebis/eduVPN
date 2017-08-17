@@ -23,26 +23,8 @@ namespace eduVPN.Client.Converters
         {
             if (value is OpenVPNStateType status_type)
             {
-                switch (status_type)
-                {
-                    case OpenVPNStateType.Connecting:
-                    case OpenVPNStateType.Exiting:
-                        return Application.Current.TryFindResource("eduVPNStatusTypeInitializingIcon") as Canvas;
-
-                    case OpenVPNStateType.Waiting:
-                    case OpenVPNStateType.Authenticating:
-                    case OpenVPNStateType.GettingConfiguration:
-                    case OpenVPNStateType.AssigningIP:
-                    case OpenVPNStateType.AddingRoutes:
-                    case OpenVPNStateType.Reconnecting:
-                        return Application.Current.TryFindResource("eduVPNStatusTypeConnectingIcon") as Canvas;
-
-                    case OpenVPNStateType.Connected:
-                        return Application.Current.TryFindResource("eduVPNStatusTypeConnectedIcon") as Canvas;
-
-                    default:
-                        return null;
-                }
+                var canvas = Application.Current.TryFindResource(String.Format("eduVPNOpenVPNStateTypeIcon_{0}", status_type.GetParameterValue()));
+                return canvas != null ? canvas as Canvas : Application.Current.TryFindResource("eduVPNOpenVPNStateTypeInitializingIcon") as Canvas;
             }
             else
                 return null;
