@@ -117,42 +117,6 @@ namespace eduVPN.ViewModels
         }
         private ulong _bytes_out;
 
-        /// <summary>
-        /// Hold time hint (in seconds)
-        /// </summary>
-        public int HoldWaitHint
-        {
-            get { return _hold_wait_hint; }
-            set { if (value != _hold_wait_hint) { _hold_wait_hint = value; RaisePropertyChanged(); } }
-        }
-        private int _hold_wait_hint;
-
-        /// <summary>
-        /// Hold message
-        /// </summary>
-        public string HoldMessage
-        {
-            get { return _hold_message; }
-            set
-            {
-                if (value != _hold_message)
-                {
-                    _hold_message = value;
-                    RaisePropertyChanged();
-                    RaisePropertyChanged("IsOnHold");
-                }
-            }
-        }
-        private string _hold_message;
-
-        /// <summary>
-        /// Is OpenVPN on hold?
-        /// </summary>
-        public bool IsOnHold
-        {
-            get { return _hold_message != null; }
-        }
-
         #endregion
 
         #region Constructors
@@ -459,12 +423,6 @@ namespace eduVPN.ViewModels
 
         public void OnHold(string message, int wait_hint)
         {
-            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                () =>
-                {
-                    HoldWaitHint = wait_hint;
-                    HoldMessage = message;
-                }));
         }
 
         public void OnNeedAuthentication(string realm, out string password)
