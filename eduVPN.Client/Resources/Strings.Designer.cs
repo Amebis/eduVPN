@@ -260,42 +260,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connected.
-        /// </summary>
-        public static string StatusTypeConnected {
-            get {
-                return ResourceManager.GetString("StatusTypeConnected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connecting....
-        /// </summary>
-        public static string StatusTypeConnecting {
-            get {
-                return ResourceManager.GetString("StatusTypeConnecting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connecting failed. Please, read the log for details..
-        /// </summary>
-        public static string StatusTypeError {
-            get {
-                return ResourceManager.GetString("StatusTypeError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Initializing....
-        /// </summary>
-        public static string StatusTypeInitializing {
-            get {
-                return ResourceManager.GetString("StatusTypeInitializing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Requires two-factor authentication.
         /// </summary>
         public static string TwoFactorAuthenticationRequired {

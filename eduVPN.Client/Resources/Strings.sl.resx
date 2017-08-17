@@ -179,15 +179,6 @@ Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   <data name="StatusPageStatus" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="StatusTypeConnected" xml:space="preserve">
-    <value>Povezan</value>
-  </data>
-  <data name="StatusTypeConnecting" xml:space="preserve">
-    <value>Povezujem...</value>
-  </data>
-  <data name="StatusTypeInitializing" xml:space="preserve">
-    <value>Vzopstavljam...</value>
-  </data>
   <data name="MessageMaintenanceTitle" xml:space="preserve">
     <value>Obvestilo o vzdrževanju</value>
   </data>
@@ -199,8 +190,5 @@ Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   </data>
   <data name="MessageMaintenanceEnd" xml:space="preserve">
     <value>Konec</value>
-  </data>
-  <data name="StatusTypeError" xml:space="preserve">
-    <value>Povezava ni uspela. Za podrobnosti preberite dnevnik.</value>
   </data>
 </root>

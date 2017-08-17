@@ -12,8 +12,7 @@
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:StatusBarVisibilityConverter x:Key="StatusBarVisibilityConverter"/>
-    <conv:StatusTypeDisplayNameConverter x:Key="StatusTypeDisplayNameConverter"/>
-    <conv:StatusTypeIconConverter x:Key="StatusTypeIconConverter"/>
+    <conv:OpenVPNStateTypeIconConverter x:Key="OpenVPNStateTypeIconConverter"/>
     <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>
     <conv:UserDisabledVisibilityConverter x:Key="UserDisabledVisibilityConverter"/>
 </ResourceDictionary>

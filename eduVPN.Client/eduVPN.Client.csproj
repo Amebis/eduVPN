@@ -41,9 +41,8 @@
   <ItemGroup>
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
+    <Compile Include="Converters\OpenVPNStateTypeIconConverter.cs" />
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
-    <Compile Include="Converters\StatusTypeDisplayNameConverter.cs" />
-    <Compile Include="Converters\StatusTypeIconConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Views\InstanceAndProfileSelectPage.xaml.cs">
@@ -86,10 +85,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\StatusTypeConnectingIcon.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\StatusTypeErrorIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,6 +200,10 @@
     <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
       <Project>{44ea054c-0c39-4aac-9e40-253e919c1e2f}</Project>
       <Name>eduOAuth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eduOpenVPN\eduOpenVPN\eduOpenVPN.csproj">
+      <Project>{ddf40a25-1180-40b1-9bf1-8d3d66d734ad}</Project>
+      <Name>eduOpenVPN</Name>
     </ProjectReference>
     <ProjectReference Include="..\eduVPN\eduVPN.csproj">
       <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>

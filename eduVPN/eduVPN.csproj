@@ -50,7 +50,6 @@
     <Compile Include="Models\MessageNotification.cs" />
     <Compile Include="Models\MessageOfTheDay.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
-    <Compile Include="Models\StatusType.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="System\IO\Extensions.cs" />
@@ -111,7 +110,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

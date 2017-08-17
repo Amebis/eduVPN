@@ -68,9 +68,9 @@
                 Margin="0,2,2,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Content="{Binding Path=State, Converter={StaticResource StatusTypeIconConverter}}"
-                ToolTip="{Binding Path=State, Converter={StaticResource StatusTypeDisplayNameConverter}}"
-                AutomationProperties.Name="{Binding Path=State, Converter={StaticResource StatusTypeDisplayNameConverter}}"/>
+                Content="{Binding Path=State, Converter={StaticResource OpenVPNStateTypeIconConverter}}"
+                ToolTip="{Binding Path=StateDescription}"
+                AutomationProperties.Name="{Binding Path=StateDescription}"/>
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
             <Image

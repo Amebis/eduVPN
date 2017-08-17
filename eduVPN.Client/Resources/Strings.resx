@@ -179,15 +179,6 @@ Please, contact your helpdesk for support.</value>
   <data name="StatusPageStatus" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="StatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
-  </data>
-  <data name="StatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
-  </data>
-  <data name="StatusTypeInitializing" xml:space="preserve">
-    <value>Initializing...</value>
-  </data>
   <data name="MessageMaintenanceBegin" xml:space="preserve">
     <value>Begin</value>
   </data>
@@ -199,8 +190,5 @@ Please, contact your helpdesk for support.</value>
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notification</value>
-  </data>
-  <data name="StatusTypeError" xml:space="preserve">
-    <value>Connecting failed. Please, read the log for details.</value>
   </data>
 </root>
