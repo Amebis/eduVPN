@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
+    <Compile Include="Converters\InstanceListToInstanceSelectTitleConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\OpenVPNStateTypeIconConverter.cs" />
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />

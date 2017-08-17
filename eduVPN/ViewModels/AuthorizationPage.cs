@@ -125,26 +125,12 @@ namespace eduVPN.ViewModels
             else if (Parent.AuthenticatingInstance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;
             else
-                switch (Parent.AccessType)
-                {
-                    case AccessType.SecureInternet: Parent.CurrentPage = Parent.SecureInternetSelectPage; break;
-                    case AccessType.InstituteAccess: Parent.CurrentPage = Parent.InstituteAccessSelectPage; break;
-                }
+                Parent.CurrentPage = Parent.InstanceSelectPage;
         }
 
         protected override bool CanNavigateBack()
         {
-            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
-                return true;
-            else if (Parent.AuthenticatingInstance.IsCustom)
-                return true;
-            else
-                switch (Parent.AccessType)
-                {
-                    case AccessType.SecureInternet: return true;
-                    case AccessType.InstituteAccess: return true;
-                    default: return false;
-                }
+            return true;
         }
 
         #endregion

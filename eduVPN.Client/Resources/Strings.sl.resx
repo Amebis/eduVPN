@@ -148,9 +148,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="CustomInstancePageURINote" xml:space="preserve">
     <value>Vnesite naslov URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/</value>
   </data>
-  <data name="InstituteAccessSelectPageTitle" xml:space="preserve">
-    <value>Izberite ustanovo</value>
-  </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
@@ -159,9 +156,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Zahteva dvojno preverjanje pristnosti</value>
-  </data>
-  <data name="SecureInternetSelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo domačo državo</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
     <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati.
@@ -190,5 +184,11 @@ Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   </data>
   <data name="MessageMaintenanceEnd" xml:space="preserve">
     <value>Konec</value>
+  </data>
+  <data name="AuthenticatingInstanceSelectPageTitle" xml:space="preserve">
+    <value>Izberite svojo domačo instanco</value>
+  </data>
+  <data name="ConnectingInstanceSelectPageTitle" xml:space="preserve">
+    <value>Izberite instanco za povezavo</value>
   </data>
 </root>

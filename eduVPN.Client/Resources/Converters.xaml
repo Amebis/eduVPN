@@ -10,6 +10,7 @@
     xmlns:conv="clr-namespace:eduVPN.Client.Converters">
 
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
+    <conv:InstanceListToInstanceSelectTitleConverter x:Key="InstanceListToInstanceSelectTitleConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:StatusBarVisibilityConverter x:Key="StatusBarVisibilityConverter"/>
     <conv:OpenVPNStateTypeIconConverter x:Key="OpenVPNStateTypeIconConverter"/>

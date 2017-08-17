@@ -142,8 +142,8 @@ The client will continue after you complete the authorization...</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Next</value>
   </data>
-  <data name="InstituteAccessSelectPageTitle" xml:space="preserve">
-    <value>Choose Institute</value>
+  <data name="AuthenticatingInstanceSelectPageTitle" xml:space="preserve">
+    <value>Choose your home instance</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
@@ -159,9 +159,6 @@ The client will continue after you complete the authorization...</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Requires two-factor authentication</value>
-  </data>
-  <data name="SecureInternetSelectPageTitle" xml:space="preserve">
-    <value>Choose your home country</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
     <value>Warning! Your account is marked as disabled. You might not be able to connect.
@@ -190,5 +187,8 @@ Please, contact your helpdesk for support.</value>
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notification</value>
+  </data>
+  <data name="ConnectingInstanceSelectPageTitle" xml:space="preserve">
+    <value>Choose connecting instance</value>
   </data>
 </root>

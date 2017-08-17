@@ -35,16 +35,6 @@ namespace eduVPN.ViewModels
         private static CancellationTokenSource _abort = new CancellationTokenSource();
 
         /// <summary>
-        /// User required VPN access type
-        /// </summary>
-        public AccessType AccessType
-        {
-            get { return _access_type; }
-            set { if (value != _access_type) { _access_type = value; RaisePropertyChanged(); } }
-        }
-        private AccessType _access_type;
-
-        /// <summary>
         /// Selected instance list
         /// </summary>
         public Models.InstanceInfoList InstanceList
@@ -129,34 +119,18 @@ namespace eduVPN.ViewModels
         private AccessTypePage _access_type_page;
 
         /// <summary>
-        /// Secure internet selection page
+        /// Instance selection page
         /// </summary>
-        /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
-        public SecureInternetSelectPage SecureInternetSelectPage
+        public InstanceSelectPage InstanceSelectPage
         {
             get
             {
-                if (_secure_internet_select_page == null)
-                    _secure_internet_select_page = new SecureInternetSelectPage(this);
-                return _secure_internet_select_page;
+                if (_instance_select_page == null)
+                    _instance_select_page = new InstanceSelectPage(this);
+                return _instance_select_page;
             }
         }
-        private SecureInternetSelectPage _secure_internet_select_page;
-
-        /// <summary>
-        /// Institute access selection page
-        /// </summary>
-        /// <remarks>This wizard page is pre-created to allow instance list population in advance.</remarks>
-        public InstituteAccessSelectPage InstituteAccessSelectPage
-        {
-            get
-            {
-                if (_institute_access_select_page == null)
-                    _institute_access_select_page = new InstituteAccessSelectPage(this);
-                return _institute_access_select_page;
-            }
-        }
-        private InstituteAccessSelectPage _institute_access_select_page;
+        private InstanceSelectPage _instance_select_page;
 
         /// <summary>
         /// Custom instance page

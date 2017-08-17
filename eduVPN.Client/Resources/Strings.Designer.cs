@@ -70,6 +70,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose your home instance.
+        /// </summary>
+        public static string AuthenticatingInstanceSelectPageTitle {
+            get {
+                return ResourceManager.GetString("AuthenticatingInstanceSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
         ///The client will continue after you complete the authorization....
         /// </summary>
@@ -134,6 +143,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose connecting instance.
+        /// </summary>
+        public static string ConnectingInstanceSelectPageTitle {
+            get {
+                return ResourceManager.GetString("ConnectingInstanceSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other Provider.
         /// </summary>
         public static string CustomInstancePageTitle {
@@ -148,15 +166,6 @@ namespace eduVPN.Client.Resources {
         public static string CustomInstancePageURINote {
             get {
                 return ResourceManager.GetString("CustomInstancePageURINote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose Institute.
-        /// </summary>
-        public static string InstituteAccessSelectPageTitle {
-            get {
-                return ResourceManager.GetString("InstituteAccessSelectPageTitle", resourceCulture);
             }
         }
         
@@ -211,15 +220,6 @@ namespace eduVPN.Client.Resources {
         public static string ProfileSelectPageTitle {
             get {
                 return ResourceManager.GetString("ProfileSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose your home country.
-        /// </summary>
-        public static string SecureInternetSelectPageTitle {
-            get {
-                return ResourceManager.GetString("SecureInternetSelectPageTitle", resourceCulture);
             }
         }
         

@@ -46,11 +46,8 @@
         <DataTemplate DataType="{x:Type viewModel:AccessTypePage}">
             <view:AccessTypePage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:SecureInternetSelectPage}">
-            <view:InstanceSelectPage Title="{x:Static res:Strings.SecureInternetSelectPageTitle}"/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:InstituteAccessSelectPage}">
-            <view:InstanceSelectPage Title="{x:Static res:Strings.InstituteAccessSelectPageTitle}"/>
+        <DataTemplate DataType="{x:Type viewModel:InstanceSelectPage}">
+            <view:InstanceSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CustomInstancePage}">
             <view:CustomInstancePage/>

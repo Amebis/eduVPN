@@ -13,6 +13,7 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
+    Title="{Binding Path=Parent.InstanceList, Converter={StaticResource InstanceListToInstanceSelectTitleConverter}}"
     Style="{StaticResource eduVPNConnectWizardPageWithBack}">
 
     <ListBox

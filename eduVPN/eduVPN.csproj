@@ -53,7 +53,6 @@
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="System\IO\Extensions.cs" />
-    <Compile Include="ViewModels\AccessType.cs" />
     <Compile Include="ViewModels\AccessTypePage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />
     <Compile Include="ViewModels\AuthorizationPage.cs" />
@@ -63,7 +62,6 @@
     <Compile Include="Models\InstanceInfoList.cs" />
     <Compile Include="ViewModels\InstanceAndProfileSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
-    <Compile Include="ViewModels\SecureInternetSelectPage.cs" />
     <Compile Include="ViewModels\CustomInstancePage.cs" />
     <Compile Include="ViewModels\InstanceSelectPage.cs" />
     <Compile Include="JSON\Response.cs" />
@@ -78,7 +76,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\InstituteAccessSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectPage.cs" />
     <Compile Include="ViewModels\StatusPage.cs" />
   </ItemGroup>
