@@ -19,15 +19,15 @@
                 <ResourceDictionary Source="Resources/Brushes.xaml"/>
 
                 <ResourceDictionary Source="Resources/ExclamationIcon.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_CONNECTING.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_WAIT.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_AUTH.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_GET_CONFIG.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_ASSIGN_IP.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_ADD_ROUTES.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_CONNECTED.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_RECONNECTING.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIcon_EXITING.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconConnecting.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconWaiting.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconAuthenticating.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconGettingConfiguration.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconAssigningIP.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconAddingRoutes.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconConnected.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconReconnecting.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconExiting.xaml"/>
                 <ResourceDictionary Source="Resources/OpenVPNStateTypeInitializingIcon.xaml"/>
                 <ResourceDictionary Source="Resources/TwoFactorAuthenticationIcon.xaml"/>
                 <ResourceDictionary Source="Resources/UserDisabledIcon.xaml"/>

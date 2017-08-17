@@ -81,39 +81,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_CONNECTED.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconConnected.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_AUTH.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconAuthenticating.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_EXITING.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconExiting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_RECONNECTING.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconReconnecting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_GET_CONFIG.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconGettingConfiguration.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_ASSIGN_IP.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconAssigningIP.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_ADD_ROUTES.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconAddingRoutes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_WAIT.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconWaiting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIcon_CONNECTING.xaml">
+    <Page Include="Resources\OpenVPNStateTypeIconConnecting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
