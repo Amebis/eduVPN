@@ -215,11 +215,92 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0:G}{1}{2}.
+        /// </summary>
+        public static string NumberToHumanReadable {
+            get {
+                return ResourceManager.GetString("NumberToHumanReadable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string ProfileSelectPageTitle {
             get {
                 return ResourceManager.GetString("ProfileSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bytes in.
+        /// </summary>
+        public static string StatusPageConnectionInfoBytesIn {
+            get {
+                return ResourceManager.GetString("StatusPageConnectionInfoBytesIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bytes out.
+        /// </summary>
+        public static string StatusPageConnectionInfoBytesOut {
+            get {
+                return ResourceManager.GetString("StatusPageConnectionInfoBytesOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        public static string StatusPageConnectionInfoDuration {
+            get {
+                return ResourceManager.GetString("StatusPageConnectionInfoDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv4.
+        /// </summary>
+        public static string StatusPageConnectionInfoIPv4 {
+            get {
+                return ResourceManager.GetString("StatusPageConnectionInfoIPv4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6.
+        /// </summary>
+        public static string StatusPageConnectionInfoIPv6 {
+            get {
+                return ResourceManager.GetString("StatusPageConnectionInfoIPv6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection info.
+        /// </summary>
+        public static string StatusPageConnectionInfoTitle {
+            get {
+                return ResourceManager.GetString("StatusPageConnectionInfoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View log.
+        /// </summary>
+        public static string StatusPageConnectionInfoViewLog {
+            get {
+                return ResourceManager.GetString("StatusPageConnectionInfoViewLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect.
+        /// </summary>
+        public static string StatusPageDisconnect {
+            get {
+                return ResourceManager.GetString("StatusPageDisconnect", resourceCulture);
             }
         }
         
@@ -256,6 +337,24 @@ namespace eduVPN.Client.Resources {
         public static string StatusPageTitle {
             get {
                 return ResourceManager.GetString("StatusPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to h\:mm\:ss.
+        /// </summary>
+        public static string TimeSpanInSeconds {
+            get {
+                return ResourceManager.GetString("TimeSpanInSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to d\.hh\:mm\:ss.
+        /// </summary>
+        public static string TimeSpanInSecondsWithDays {
+            get {
+                return ResourceManager.GetString("TimeSpanInSecondsWithDays", resourceCulture);
             }
         }
         

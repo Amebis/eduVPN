@@ -191,4 +191,40 @@ Please, contact your helpdesk for support.</value>
   <data name="ConnectingInstanceSelectPageTitle" xml:space="preserve">
     <value>Choose connecting instance</value>
   </data>
+  <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
+    <value>Bytes in</value>
+  </data>
+  <data name="StatusPageConnectionInfoBytesOut" xml:space="preserve">
+    <value>Bytes out</value>
+  </data>
+  <data name="StatusPageConnectionInfoDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="StatusPageConnectionInfoIPv4" xml:space="preserve">
+    <value>IPv4</value>
+  </data>
+  <data name="StatusPageConnectionInfoIPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="StatusPageConnectionInfoTitle" xml:space="preserve">
+    <value>Connection info</value>
+  </data>
+  <data name="StatusPageConnectionInfoViewLog" xml:space="preserve">
+    <value>View log</value>
+  </data>
+  <data name="StatusPageDisconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="TimeSpanInSeconds" xml:space="preserve">
+    <value>h\:mm\:ss</value>
+    <comment>Display format of the duration times less then one day</comment>
+  </data>
+  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
+    <value>d\.hh\:mm\:ss</value>
+    <comment>Display format of the duration times one day or longer</comment>
+  </data>
+  <data name="NumberToHumanReadable" xml:space="preserve">
+    <value>{0:G}{1}{2}</value>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
 </root>

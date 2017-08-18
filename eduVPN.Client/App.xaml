@@ -13,6 +13,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Constants.xaml"/>
+
                 <ResourceDictionary Source="Resources/Converters.xaml"/>
 
                 <ResourceDictionary Source="Resources/Colors.xaml"/>
