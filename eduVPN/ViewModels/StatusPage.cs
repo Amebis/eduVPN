@@ -87,7 +87,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// TUN/TAP local IPv6 address
         /// </summary>
-        private IPAddress IPv6TunnelAddress
+        public IPAddress IPv6TunnelAddress
         {
             get { return _ipv6_tunnel_address; }
             set { if (value != _ipv6_tunnel_address) { _ipv6_tunnel_address = value; RaisePropertyChanged(); } }
