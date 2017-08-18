@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOpenVPN;
 using eduOpenVPN.Management;
 using eduVPN.JSON;
 using System;
@@ -16,11 +17,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.ServiceProcess;
 using System.Threading;
 using System.Web.Security;
 using System.Windows.Threading;
-using eduOpenVPN;
 
 namespace eduVPN.ViewModels
 {
@@ -32,6 +34,11 @@ namespace eduVPN.ViewModels
         /// Disconnect cancellation token
         /// </summary>
         private CancellationTokenSource _disconnect;
+
+        /// <summary>
+        /// Client certificate
+        /// </summary>
+        private X509Certificate2 _client_certificate;
 
         #endregion
 
@@ -222,11 +229,10 @@ namespace eduVPN.ViewModels
 
                         // Get profile's OpenVPN configuration and instance client certificate (in parallel).
                         string profile_config = null;
-                        byte[] client_certificate_hash = null;
                         new List<Action>()
                         {
                             () => { profile_config = Parent.ConnectingProfile.GetOpenVPNConfig(Parent.ConnectingInstance, Parent.AccessToken, ct_quit.Token); },
-                            () => { client_certificate_hash = Parent.ConnectingInstance.GetClientCertificate(Parent.AccessToken, ct_quit.Token); }
+                            () => { _client_certificate = Parent.ConnectingInstance.GetClientCertificate(Parent.AccessToken, ct_quit.Token); }
                         }.Select(
                             action =>
                             {
@@ -299,10 +305,14 @@ namespace eduVPN.ViewModels
                                         sw.WriteLine("management-client");
                                         sw.WriteLine("management-hold");
                                         sw.WriteLine("management-query-passwords");
-                                        sw.WriteLine("auth-retry interact");
 
-                                        // Set client certificate.
-                                        sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(client_certificate_hash).Replace("-", " ")));
+                                        // Configure client certificate.
+                                        //sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
+                                        sw.WriteLine("management-external-cert " + eduOpenVPN.Configuration.EscapeParamValue(connection_id));
+                                        sw.WriteLine("management-external-key");
+
+                                        // Ask when username/password is denied.
+                                        sw.WriteLine("auth-retry interact");
 
                                         // Set TAP interface to be used.
                                         if (Properties.Settings.Default.OpenVPNInterface != null && Properties.Settings.Default.OpenVPNInterface != "")
@@ -439,6 +449,11 @@ namespace eduVPN.ViewModels
         {
         }
 
+        public X509Certificate2 OnNeedCertificate(string hint)
+        {
+            return _client_certificate;
+        }
+
         public void OnNeedAuthentication(string realm, out string password)
         {
             // TODO: Implement.
@@ -455,6 +470,46 @@ namespace eduVPN.ViewModels
         {
             // TODO: Implement.
             throw new NotImplementedException();
+        }
+
+        public byte[] OnRSASign(byte[] data)
+        {
+            var rsa = (RSACryptoServiceProvider)_client_certificate.PrivateKey;
+            var RSAFormatter = new RSAPKCS1SignatureFormatter(rsa);
+
+            // Parse message.
+            var stream = new MemoryStream(data);
+            using (var reader = new BinaryReader(stream))
+            {
+                // SEQUENCE(DigestInfo)
+                if (reader.ReadByte() != 0x30)
+                    throw new InvalidDataException();
+                long dgi_end = reader.ReadASN1Length() + reader.BaseStream.Position;
+
+                // SEQUENCE(AlgorithmIdentifier)
+                if (reader.ReadByte() != 0x30)
+                    throw new InvalidDataException();
+                long alg_id_end = reader.ReadASN1Length() + reader.BaseStream.Position;
+
+                // OBJECT IDENTIFIER
+                switch (reader.ReadASN1ObjectID().Value)
+                {
+                    case "2.16.840.1.101.3.4.2.1": RSAFormatter.SetHashAlgorithm("SHA256"); break;
+                    case "2.16.840.1.101.3.4.2.2": RSAFormatter.SetHashAlgorithm("SHA384"); break;
+                    case "2.16.840.1.101.3.4.2.3": RSAFormatter.SetHashAlgorithm("SHA512"); break;
+                    case "2.16.840.1.101.3.4.2.4": RSAFormatter.SetHashAlgorithm("SHA224"); break;
+                    default: throw new InvalidDataException();
+                }
+
+                reader.BaseStream.Seek(alg_id_end, SeekOrigin.Begin);
+
+                // OCTET STRING(Digest)
+                if (reader.ReadByte() != 0x04)
+                    throw new InvalidDataException();
+
+                // Read, sign hash, and return.
+                return RSAFormatter.CreateSignature(reader.ReadBytes(reader.ReadASN1Length()));
+            }
         }
 
         public void OnState(DateTimeOffset timestamp, OpenVPNStateType state, string message, IPAddress tunnel, IPAddress ipv6_tunnel, IPEndPoint remote, IPEndPoint local)

@@ -47,9 +47,9 @@ namespace eduVPN.Models
         private JSON.Collection<Models.ProfileInfo> _profile_list;
 
         /// <summary>
-        /// Client certificate hash
+        /// Client certificate
         /// </summary>
-        private byte[] _client_certificate_hash;
+        private X509Certificate2 _client_certificate;
 
         #endregion
 
@@ -404,8 +404,8 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="token">Access token</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Client certificate hash. Certificate (including the private key) is saved to user certificate store.</returns>
-        public byte[] GetClientCertificate(AccessToken token, CancellationToken ct = default(CancellationToken))
+        /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
+        public X509Certificate2 GetClientCertificate(AccessToken token, CancellationToken ct = default(CancellationToken))
         {
             var task = GetClientCertificateAsync(token, ct);
             try
@@ -424,10 +424,10 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="token">Access token</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Asynchronous operation with expected client certificate hash. Certificate (including the private key) is saved to user certificate store.</returns>
-        public async Task<byte[]> GetClientCertificateAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
+        /// <returns>Asynchronous operation with expected client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
+        public async Task<X509Certificate2> GetClientCertificateAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
         {
-            if (_client_certificate_hash == null)
+            if (_client_certificate == null)
             {
                 // Open user certificate store.
                 var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
@@ -445,7 +445,7 @@ namespace eduVPN.Models
                                 if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
                                 {
                                     // Not expired && Has the private key.
-                                    _client_certificate_hash = instance_settings.ClientCertificateHash;
+                                    _client_certificate = cert;
                                 }
                                 else
                                 {
@@ -458,7 +458,7 @@ namespace eduVPN.Models
                         }
                     }
 
-                    if (_client_certificate_hash == null)
+                    if (_client_certificate == null)
                     {
                         // Get API endpoints.
                         var api = await GetEndpointsAsync(ct);
@@ -476,12 +476,12 @@ namespace eduVPN.Models
                                 token: token,
                                 ct: ct)).Value, "create_keypair", ct);
                             store.Add(cert.Value);
-                            _client_certificate_hash = cert.Value.GetCertHash();
+                            _client_certificate = cert.Value;
 
                             if (instance_settings == null)
-                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = _client_certificate_hash };
+                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = _client_certificate.GetCertHash() };
                             else
-                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = _client_certificate_hash;
+                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = _client_certificate.GetCertHash();
                         }
                         catch (OperationCanceledException) { throw; }
                         catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
@@ -490,7 +490,7 @@ namespace eduVPN.Models
                 finally { store.Close(); }
             }
 
-            return _client_certificate_hash;
+            return _client_certificate;
         }
 
         #endregion
