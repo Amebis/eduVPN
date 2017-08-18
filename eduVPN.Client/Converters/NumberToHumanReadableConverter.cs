@@ -46,6 +46,16 @@ namespace eduVPN.Client.Converters
         }
         private int _base = 1000;
 
+        /// <summary>
+        /// Return empty string when number is 0?
+        /// </summary>
+        public bool EmptyIfZero
+        {
+            get { return _empty_if_zero; }
+            set { if (value != _empty_if_zero) { _empty_if_zero = value; RaisePropertyChanged(); } }
+        }
+        private bool _empty_if_zero = false;
+
         #endregion
 
         #region Methods
@@ -57,6 +67,9 @@ namespace eduVPN.Client.Converters
 
             double number = System.Convert.ToDouble(value);
             int _base = parameter != null ? System.Convert.ToInt32(parameter) : 1000;
+
+            if (number <= 0.5 && _empty_if_zero)
+                return "";
 
             int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(_base) + 0.2), _prefixes.Length) : 0;
             return String.Format(
