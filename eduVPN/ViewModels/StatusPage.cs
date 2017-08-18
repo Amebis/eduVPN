@@ -100,9 +100,25 @@ namespace eduVPN.ViewModels
         public DateTimeOffset? ConnectedSince
         {
             get { return _connected_since; }
-            set { if (value != _connected_since) { _connected_since = value; RaisePropertyChanged(); } }
+            set {
+                if (value != _connected_since)
+                {
+                    _connected_since = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("ConnectedTime");
+                }
+            }
         }
         private DateTimeOffset? _connected_since;
+
+        /// <summary>
+        /// Running time connected
+        /// </summary>
+        public TimeSpan? ConnectedTime
+        {
+            get { return _connected_since != null ? DateTimeOffset.UtcNow - _connected_since : null; }
+        }
+        private DispatcherTimer _connected_time_updater;
 
         /// <summary>
         /// Number of bytes that have been received from the server
@@ -135,6 +151,11 @@ namespace eduVPN.ViewModels
         public StatusPage(ConnectWizard parent) :
             base(parent)
         {
+            // Create dispatcher timer.
+            _connected_time_updater = new DispatcherTimer(
+                new TimeSpan(0, 0, 0, 1),
+                DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged("ConnectedTime"),
+                Parent.Dispatcher);
         }
 
         #endregion
@@ -521,7 +542,18 @@ namespace eduVPN.ViewModels
                     StateDescription = message;
                     TunnelAddress = tunnel;
                     IPv6TunnelAddress = ipv6_tunnel;
-                    ConnectedSince = state == OpenVPNStateType.Connected ? timestamp : (DateTimeOffset?)null;
+
+                    // Update connected time.
+                    if (state == OpenVPNStateType.Connected)
+                    {
+                        ConnectedSince = timestamp;
+                        _connected_time_updater.Start();
+                    }
+                    else
+                    {
+                        _connected_time_updater.Stop();
+                        ConnectedSince = null;
+                    }
                 }));
         }
 
