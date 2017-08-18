@@ -235,7 +235,7 @@ namespace eduVPN.ViewModels
                                     {
                                         try { action(); }
                                         catch (OperationCanceledException) { }
-                                        catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex )); }
+                                        catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
                                     }));
                                 t.Start();
                                 return t;
@@ -413,15 +413,25 @@ namespace eduVPN.ViewModels
         {
         }
 
-        public void OnLog(DateTimeOffset timestamp, LogMessageFlags flags, string message)
-        {
-        }
-
         public void OnEcho(DateTimeOffset timestamp, string command)
         {
         }
 
+        public void OnFatal(string message)
+        {
+            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                () =>
+                {
+                    State = OpenVPNStateType.FatalError;
+                    StateDescription = message;
+                }));
+        }
+
         public void OnHold(string message, int wait_hint)
+        {
+        }
+
+        public void OnLog(DateTimeOffset timestamp, LogMessageFlags flags, string message)
         {
         }
 

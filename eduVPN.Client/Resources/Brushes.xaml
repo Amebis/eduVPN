@@ -15,6 +15,7 @@
     <SolidColorBrush x:Key="eduVPNWindowBorderKey" Color="{StaticResource eduVPNGray}" />
     <SolidColorBrush x:Key="eduVPNLogoOrangeKey" Color="{StaticResource eduVPNOrange}" />
     <SolidColorBrush x:Key="eduVPNLogoGreenKey" Color="{StaticResource eduVPNGreen}" />
+    <SolidColorBrush x:Key="eduVPNLogoRedKey" Color="{StaticResource eduVPNRed}" />
     <SolidColorBrush x:Key="eduVPNLogoWhiteKey" Color="{StaticResource eduVPNWhite}" />
     <SolidColorBrush x:Key="eduVPNLogoBlackKey" Color="{StaticResource eduVPNBlack}" />
     <SolidColorBrush x:Key="eduVPNChoiceButtonHoverBrushKey" Color="{StaticResource eduVPNBlueLight}" />

@@ -28,6 +28,7 @@
                 <ResourceDictionary Source="Resources/OpenVPNStateTypeIconConnected.xaml"/>
                 <ResourceDictionary Source="Resources/OpenVPNStateTypeIconReconnecting.xaml"/>
                 <ResourceDictionary Source="Resources/OpenVPNStateTypeIconExiting.xaml"/>
+                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconFatalError.xaml"/>
                 <ResourceDictionary Source="Resources/OpenVPNStateTypeInitializingIcon.xaml"/>
                 <ResourceDictionary Source="Resources/TwoFactorAuthenticationIcon.xaml"/>
                 <ResourceDictionary Source="Resources/UserDisabledIcon.xaml"/>
