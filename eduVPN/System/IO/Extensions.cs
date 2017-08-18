@@ -87,26 +87,29 @@ namespace System.IO
             try
             {
                 var sb = new StringBuilder();
-                uint n = 0, b;
-
-                b = reader.ReadByte(); length--;
-                if (40 <= b && b < 80)
-                    sb.AppendFormat("{0}.{1}", b / 40, b % 40);
-                else if (b < 0x80)
-                    sb.AppendFormat("{0}", b);
-                else
-                    n = b;
+                uint n = 0, bits = 0;
 
                 while (length > 0)
                 {
-                    b = reader.ReadByte(); length--;
-                    n = (n << 7) | (b & 0x7f);
-                    if (b < 0x80)
+                    var v = reader.ReadByte(); length--;
+                    n = (n << 7) | (v & (uint)0x7F);
+                    bits += 7;
+                    if ((v & 0x80) == 0)
                     {
-                        sb.AppendFormat(sb.Length > 0 ? ".{0}" : "{0}", n);
+                        if (sb.Length == 0)
+                        {
+                            var m = n < 80 ? n < 40 ? 0 : 1 : 2;
+                            sb.AppendFormat("{0:D}.{1:D}", m, n - m * 40);
+                        }
+                        else
+                            sb.AppendFormat(".{0:D}", n);
+
                         n = 0;
+                        bits = 0;
                     }
                 }
+                if (bits > 0)
+                    sb.Append(".incomplete");
 
                 return new Oid(sb.ToString());
             }
