@@ -431,6 +431,10 @@ namespace eduVPN.ViewModels
         {
         }
 
+        public void OnInfo(string message)
+        {
+        }
+
         public void OnLog(DateTimeOffset timestamp, LogMessageFlags flags, string message)
         {
         }
