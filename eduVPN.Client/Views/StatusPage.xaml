@@ -206,6 +206,7 @@
         <Button
             Grid.Row="3"
             Margin="10"
-            Content="{x:Static res:Strings.StatusPageDisconnect}"/>
+            Content="{x:Static res:Strings.StatusPageDisconnect}"
+            Command="{Binding Path=Disconnect}"/>
     </Grid>
 </Page>

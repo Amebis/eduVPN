@@ -8,6 +8,7 @@
 using eduOpenVPN;
 using eduOpenVPN.Management;
 using eduVPN.JSON;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,6 +23,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.ServiceProcess;
 using System.Threading;
 using System.Web.Security;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -33,7 +35,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Disconnect cancellation token
         /// </summary>
-        private CancellationTokenSource _disconnect;
+        private CancellationTokenSource _terminate;
 
         /// <summary>
         /// Client certificate
@@ -123,22 +125,43 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Number of bytes that have been received from the server
         /// </summary>
-        public ulong BytesIn
+        public ulong? BytesIn
         {
             get { return _bytes_in; }
             set { if (value != _bytes_in) { _bytes_in = value; RaisePropertyChanged(); } }
         }
-        private ulong _bytes_in;
+        private ulong? _bytes_in;
 
         /// <summary>
         /// Number of bytes that have been sent to the server
         /// </summary>
-        public ulong BytesOut
+        public ulong? BytesOut
         {
             get { return _bytes_out; }
             set { if (value != _bytes_out) { _bytes_out = value; RaisePropertyChanged(); } }
         }
-        private ulong _bytes_out;
+        private ulong? _bytes_out;
+
+        /// <summary>
+        /// Disconnect
+        /// </summary>
+        public ICommand Disconnect
+        {
+            get
+            {
+                if (_disconnect == null)
+                {
+                    _disconnect = new DelegateCommand(
+                        // execute
+                        () => {
+                            // Terminate connection.
+                            _terminate.Cancel();
+                        });
+                }
+                return _disconnect;
+            }
+        }
+        private ICommand _disconnect;
 
         #endregion
 
@@ -167,8 +190,8 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            _disconnect = new CancellationTokenSource();
-            var ct_quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ConnectWizard.Abort.Token);
+            _terminate = new CancellationTokenSource();
+            var ct_quit = CancellationTokenSource.CreateLinkedTokenSource(_terminate.Token, ConnectWizard.Abort.Token);
 
             MessageList = new Models.MessageList();
 
@@ -381,8 +404,15 @@ namespace eduVPN.ViewModels
                                     }
                                     finally
                                     {
-                                        // Disconnect from OpenVPN interactive service.
-                                        openvpn_interactive_service_connection.Disconnect();
+                                        // Cleanup status properties.
+                                        State = OpenVPNStateType.Unknown;
+                                        StateDescription = null;
+                                        TunnelAddress = null;
+                                        IPv6TunnelAddress = null;
+                                        _connected_time_updater.Stop();
+                                        ConnectedSince = null;
+                                        BytesIn = null;
+                                        BytesOut = null;
 
                                         // Wait for openvpn.exe to finish. Maximum 5s.
                                         Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(5000);
@@ -411,7 +441,7 @@ namespace eduVPN.ViewModels
         protected override void DoNavigateBack()
         {
             // Terminate connection.
-            _disconnect.Cancel();
+            _terminate.Cancel();
 
             if (Parent.InstanceList is Models.InstanceInfoFederatedList)
                 Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
@@ -567,7 +597,7 @@ namespace eduVPN.ViewModels
             if (!disposedValue)
             {
                 if (disposing)
-                    _disconnect.Dispose();
+                    _terminate.Dispose();
 
                 disposedValue = true;
             }
