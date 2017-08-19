@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <Separator
