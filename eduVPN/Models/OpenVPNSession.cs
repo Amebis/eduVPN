@@ -8,6 +8,7 @@
 using eduOAuth;
 using eduOpenVPN;
 using eduOpenVPN.Management;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,9 +35,34 @@ namespace eduVPN.Models
         #region Fields
 
         /// <summary>
+        /// OpenVPN connection ID
+        /// </summary>
+        /// <remarks>Connection ID determines .ovpn and .log filenames.</remarks>
+        private string _connection_id;
+
+        /// <summary>
+        /// OpenVPN working folder
+        /// </summary>
+        private string _working_folder;
+
+        /// <summary>
         /// Client certificate
         /// </summary>
         private X509Certificate2 _client_certificate;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// OpenVPN profile configuration file path
+        /// </summary>
+        string ConfigurationPath { get => _working_folder + _connection_id + ".ovpn"; }
+
+        /// <summary>
+        /// OpenVPN connection log
+        /// </summary>
+        string LogPath { get => _working_folder + _connection_id + ".txt"; }
 
         #endregion
 
@@ -48,10 +74,17 @@ namespace eduVPN.Models
         public OpenVPNSession(InstanceInfo instance, ProfileInfo profile, AccessToken access_token) :
             base(instance, profile, access_token)
         {
+            _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
+            _working_folder = Path.GetTempPath();
+
+            // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
+            new DispatcherTimer(
+                new TimeSpan(0, 0, 0, 1),
+                DispatcherPriority.Normal, (object sender, EventArgs e) => ((DelegateCommandBase)ShowLog).RaiseCanExecuteChanged(),
+                Dispatcher.CurrentDispatcher).Start();
         }
 
         #endregion
-
 
         #region Methods
 
@@ -106,9 +139,6 @@ namespace eduVPN.Models
                 }
             }
 
-            var working_folder = Path.GetTempPath();
-            var connection_id = "eduVPN-" + Guid.NewGuid().ToString();
-            var profile_config_path = working_folder + connection_id + ".ovpn";
             try
             {
                 // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
@@ -120,7 +150,7 @@ namespace eduVPN.Models
                     {
                         // Save OpenVPN configuration file.
                         using (var fs = new FileStream(
-                            profile_config_path,
+                            ConfigurationPath,
                             FileMode.Create,
                             FileAccess.Write,
                             FileShare.Read,
@@ -142,8 +172,8 @@ namespace eduVPN.Models
                             var assembly_informational_version = Attribute.GetCustomAttributes(assembly, typeof(AssemblyInformationalVersionAttribute)).SingleOrDefault() as AssemblyInformationalVersionAttribute;
                             sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assembly_title_attribute?.Title + " " + assembly_informational_version?.InformationalVersion));
 
-                            // Configure log file (relative to working_folder).
-                            sw.WriteLine("log " + eduOpenVPN.Configuration.EscapeParamValue(connection_id + ".txt"));
+                            // Configure log file (relative to _working_folder).
+                            sw.WriteLine("log " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id + ".txt"));
 
                             // Configure interaction between us and openvpn.exe.
                             sw.WriteLine("management " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Address.ToString()) + " " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Port.ToString()) + " stdin");
@@ -153,7 +183,7 @@ namespace eduVPN.Models
 
                             // Configure client certificate.
                             //sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
-                            sw.WriteLine("management-external-cert " + eduOpenVPN.Configuration.EscapeParamValue(connection_id));
+                            sw.WriteLine("management-external-cert " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id));
                             sw.WriteLine("management-external-key");
 
                             // Ask when username/password is denied.
@@ -165,15 +195,15 @@ namespace eduVPN.Models
                         }
                     }
                     catch (OperationCanceledException) { throw; }
-                    catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, profile_config_path), ex); }
+                    catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
 
                     // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
                     using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Session())
                     {
                         var mgmt_password = Membership.GeneratePassword(16, 6);
                         openvpn_interactive_service_connection.Connect(
-                                working_folder,
-                                new string[] { "--config", connection_id + ".ovpn", },
+                                _working_folder,
+                                new string[] { "--config", _connection_id + ".ovpn", },
                                 mgmt_password + "\n",
                                 3000,
                                 ct_quit.Token);
@@ -217,11 +247,11 @@ namespace eduVPN.Models
                                     BytesOut = null;
                                 }));
 
-                            // Wait for openvpn.exe to finish. Maximum 5s.
-                            Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(5000);
+                            // Wait for openvpn.exe to finish. Maximum 30s.
+                            Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(30000);
 
                             // Delete OpenVPN log file. If possible.
-                            try { File.Delete(working_folder + connection_id + ".txt"); }
+                            try { File.Delete(LogPath); }
                             catch (Exception) { }
                         }
                     }
@@ -231,9 +261,20 @@ namespace eduVPN.Models
             finally
             {
                 // Delete profile configuration file. If possible.
-                try { File.Delete(profile_config_path); }
+                try { File.Delete(ConfigurationPath); }
                 catch (Exception) { }
             }
+        }
+
+        protected override void DoShowLog()
+        {
+            // Open log file in registered application.
+            Process.Start(LogPath);
+        }
+
+        protected override bool CanShowLog()
+        {
+            return File.Exists(LogPath);
         }
 
         #endregion

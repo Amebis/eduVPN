@@ -152,17 +152,32 @@ namespace eduVPN.Models
         {
             get
             {
-                if (_disconnect_command == null) _disconnect_command = new DelegateCommand(
-                    // execute
-                    () =>
-                    {
-                        // Terminate connection.
-                        _disconnect.Cancel();
-                    });
+                if (_disconnect_command == null)
+                    _disconnect_command = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            // Terminate connection.
+                            _disconnect.Cancel();
+                        });
                 return _disconnect_command;
             }
         }
         private ICommand _disconnect_command;
+
+        /// <summary>
+        /// Disconnect
+        /// </summary>
+        public ICommand ShowLog
+        {
+            get
+            {
+                if (_show_log_command == null)
+                    _show_log_command = new DelegateCommand(DoShowLog, CanShowLog);
+                return _show_log_command;
+            }
+        }
+        private ICommand _show_log_command;
 
         #endregion
 
@@ -199,6 +214,22 @@ namespace eduVPN.Models
         {
             // Do nothing but wait.
             CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ct).Token.WaitHandle.WaitOne();
+        }
+
+        /// <summary>
+        /// Called when ShowLog command is invoked.
+        /// </summary>
+        protected virtual void DoShowLog()
+        {
+        }
+
+        /// <summary>
+        /// Called to test if ShowLog command is enabled.
+        /// </summary>
+        /// <returns><c>true</c> if enabled; <c>false</c> otherwise</returns>
+        protected virtual bool CanShowLog()
+        {
+            return false;
         }
 
         #endregion
