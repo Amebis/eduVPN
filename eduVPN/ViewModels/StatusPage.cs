@@ -130,7 +130,7 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
                     try
                     {
-                        _session.Run();
+                        _session.Run(ConnectWizard.Abort.Token);
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
