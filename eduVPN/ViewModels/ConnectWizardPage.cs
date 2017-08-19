@@ -8,9 +8,7 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Threading;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
 {
