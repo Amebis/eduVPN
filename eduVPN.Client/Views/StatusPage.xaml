@@ -69,9 +69,9 @@
                 Margin="0,2,2,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Content="{Binding Path=State, Converter={StaticResource OpenVPNStateTypeIconConverter}}"
-                ToolTip="{Binding Path=StateDescription}"
-                AutomationProperties.Name="{Binding Path=StateDescription}"/>
+                Content="{Binding Path=Session.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
+                ToolTip="{Binding Path=Session.StateDescription}"
+                AutomationProperties.Name="{Binding Path=Session.StateDescription}"/>
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
             <Image
@@ -137,7 +137,7 @@
                 Grid.Column="1"
                 Margin="2,2,5,2"
                 Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                Text="{Binding Path=ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
+                Text="{Binding Path=Session.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -151,7 +151,7 @@
                 Grid.Column="3"
                 Margin="2,2,0,2"
                 Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                Text="{Binding Path=TunnelAddress}"/>
+                Text="{Binding Path=Session.TunnelAddress}"/>
 
             <TextBlock
                 Grid.Row="2"
@@ -165,7 +165,7 @@
                 Grid.Column="1"
                 Margin="2,2,5,2"
                 Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                Text="{Binding Path=BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                Text="{Binding Path=Session.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <TextBlock
                 Grid.Row="2"
@@ -179,7 +179,7 @@
                 Grid.Column="3"
                 Margin="2,2,0,2"
                 Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                Text="{Binding Path=IPv6TunnelAddress}"/>
+                Text="{Binding Path=Session.IPv6TunnelAddress}"/>
 
             <TextBlock
                 Grid.Row="3"
@@ -193,7 +193,7 @@
                 Grid.Column="1"
                 Margin="2,2,5,0"
                 Style="{StaticResource eduVPNInfoTextBlockStyle}"
-                Text="{Binding Path=BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                Text="{Binding Path=Session.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <Button
                 Grid.Row="3"
@@ -207,6 +207,6 @@
             Grid.Row="3"
             Margin="10"
             Content="{x:Static res:Strings.StatusPageDisconnect}"
-            Command="{Binding Path=Disconnect}"/>
+            Command="{Binding Path=Session.Disconnect}"/>
     </Grid>
 </Page>

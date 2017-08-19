@@ -43,11 +43,11 @@
     <Compile Include="Converters\InstanceListToInstanceSelectTitleConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
-    <Compile Include="Converters\OpenVPNStateTypeIconConverter.cs" />
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
+    <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Views\InstanceAndProfileSelectPage.xaml.cs">
       <DependentUpon>InstanceAndProfileSelectPage.xaml</DependentUpon>
     </Compile>
@@ -87,47 +87,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconFatalError.xaml">
+    <Page Include="Resources\VPNSessionStatusTypeIconError.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconConnected.xaml">
+    <Page Include="Resources\VPNSessionStatusTypeIconConnected.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconAuthenticating.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconExiting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconReconnecting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconGettingConfiguration.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconAssigningIP.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconAddingRoutes.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconWaiting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\OpenVPNStateTypeIconConnecting.xaml">
+    <Page Include="Resources\VPNSessionStatusTypeIconConnecting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\OpenVPNStateTypeInitializingIcon.xaml">
+    <Page Include="Resources\VPNSessionStatusTypeInitializingIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,8 +49,11 @@
     <Compile Include="Models\MessageMaintenance.cs" />
     <Compile Include="Models\MessageNotification.cs" />
     <Compile Include="Models\MessageOfTheDay.cs" />
+    <Compile Include="Models\OpenVPNSession.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\VPNSession.cs" />
+    <Compile Include="Models\VPNSessionStatusType.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="System\IO\Extensions.cs" />
     <Compile Include="ViewModels\AccessTypePage.cs" />

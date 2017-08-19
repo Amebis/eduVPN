@@ -21,17 +21,10 @@
                 <ResourceDictionary Source="Resources/Brushes.xaml"/>
 
                 <ResourceDictionary Source="Resources/ExclamationIcon.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconConnecting.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconWaiting.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconAuthenticating.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconGettingConfiguration.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconAssigningIP.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconAddingRoutes.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconConnected.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconReconnecting.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconExiting.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeIconFatalError.xaml"/>
-                <ResourceDictionary Source="Resources/OpenVPNStateTypeInitializingIcon.xaml"/>
+                <ResourceDictionary Source="Resources/VPNSessionStatusTypeIconConnected.xaml"/>
+                <ResourceDictionary Source="Resources/VPNSessionStatusTypeIconConnecting.xaml"/>
+                <ResourceDictionary Source="Resources/VPNSessionStatusTypeIconError.xaml"/>
+                <ResourceDictionary Source="Resources/VPNSessionStatusTypeInitializingIcon.xaml"/>
                 <ResourceDictionary Source="Resources/TwoFactorAuthenticationIcon.xaml"/>
                 <ResourceDictionary Source="Resources/UserDisabledIcon.xaml"/>
 

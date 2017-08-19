@@ -6,6 +6,7 @@
 */
 
 using eduOpenVPN;
+using eduVPN.Models;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -17,14 +18,14 @@ namespace eduVPN.Client.Converters
     /// <summary>
     /// Returns status icon according to status state.
     /// </summary>
-    public class OpenVPNStateTypeIconConverter : IValueConverter
+    public class VPNSessionStatusTypeIconConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is OpenVPNStateType status_type)
+            if (value is VPNSessionStatusType status_type)
             {
-                var canvas = Application.Current.TryFindResource(String.Format("eduVPNOpenVPNStateTypeIcon{0}", Enum.GetName(typeof(OpenVPNStateType), status_type)));
-                return canvas != null ? canvas as Canvas : Application.Current.TryFindResource("eduVPNOpenVPNStateTypeInitializingIcon") as Canvas;
+                var canvas = Application.Current.TryFindResource(String.Format("eduVPNSessionStatusTypeIcon{0}", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
+                return canvas != null ? canvas as Canvas : Application.Current.TryFindResource("eduVPNVPNSessionStatusTypeInitializingIcon") as Canvas;
             }
             else
                 return null;
