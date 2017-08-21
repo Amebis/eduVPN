@@ -44,7 +44,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available instances
         /// </summary>
-        public Models.InstanceGroupInfo[] InstanceGroups
+        public ObservableCollection<Models.InstanceGroupInfo> InstanceGroups
         {
             get { return _instance_groups; }
             set {
@@ -53,7 +53,7 @@ namespace eduVPN.ViewModels
                 ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
             }
         }
-        private Models.InstanceGroupInfo[] _instance_groups;
+        private ObservableCollection<Models.InstanceGroupInfo> _instance_groups;
 
         /// <summary>
         /// Set access type
@@ -117,7 +117,7 @@ namespace eduVPN.ViewModels
             base(parent)
         {
             _obj_cache = new Dictionary<string, object>[_instance_directory_id.Length];
-            InstanceGroups = new Models.InstanceGroupInfo[_instance_directory_id.Length];
+            InstanceGroups = new ObservableCollection<Models.InstanceGroupInfo>();
             for (var i = 0; i < _instance_directory_id.Length; i++)
             {
                 try
@@ -139,8 +139,7 @@ namespace eduVPN.ViewModels
                         });
                     }
 
-                    InstanceGroups[i] = instance_group;
-                    RaisePropertyChanged("InstanceGroups");
+                    InstanceGroups.Add(instance_group);
                     ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
                 }
                 catch (Exception)
@@ -172,6 +171,8 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                     try
                     {
+                        var instance_groups = new ObservableCollection<Models.InstanceGroupInfo>();
+
                         var json_get_tasks = new Task<JSON.Response>[_instance_directory_id.Length];
                         for (var i = 0; i < _instance_directory_id.Length; i++)
                         {
@@ -215,13 +216,7 @@ namespace eduVPN.ViewModels
                                         });
                                     }
 
-                                    // Send the loaded instance list back to the UI thread.
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                    {
-                                        InstanceGroups[i] = instance_group;
-                                        RaisePropertyChanged("InstanceGroups");
-                                        ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
-                                    }));
+                                    instance_groups.Add(instance_group);
 
                                     try
                                     {
@@ -250,6 +245,9 @@ namespace eduVPN.ViewModels
                                 Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[i]), ex)));
                             }
                         }
+
+                        // Send the loaded instance group back to the UI thread.
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceGroups = instance_groups));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
