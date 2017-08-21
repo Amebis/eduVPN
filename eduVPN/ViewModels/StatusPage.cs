@@ -143,9 +143,9 @@ namespace eduVPN.ViewModels
             if (_session != null && _session.Disconnect.CanExecute(null))
                 _session.Disconnect.Execute(null);
 
-            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
+            if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo)
                 Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
-            else if (Parent.InstanceList is Models.InstanceInfoDistributedList)
+            else if (Parent.InstanceGroup is Models.DistributedInstanceGroupInfo)
                 Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
             else
                 Parent.CurrentPage = Parent.ProfileSelectPage;

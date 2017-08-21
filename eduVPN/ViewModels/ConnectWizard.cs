@@ -35,14 +35,14 @@ namespace eduVPN.ViewModels
         private static CancellationTokenSource _abort = new CancellationTokenSource();
 
         /// <summary>
-        /// Selected instance list
+        /// Selected instance group
         /// </summary>
-        public Models.InstanceInfoList InstanceList
+        public Models.InstanceGroupInfo InstanceGroup
         {
-            get { return _instance_list; }
-            set { _instance_list = value; RaisePropertyChanged(); }
+            get { return _instance_group; }
+            set { _instance_group = value; RaisePropertyChanged(); }
         }
-        private Models.InstanceInfoList _instance_list;
+        private Models.InstanceGroupInfo _instance_group;
 
         /// <summary>
         /// Authenticating eduVPN instance

@@ -12,15 +12,15 @@ using System.Windows.Data;
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns title string to be used on the instance select page based on instance list type
+    /// Returns title string to be used on the instance select page based on instance group type
     /// </summary>
-    public class InstanceListToInstanceSelectTitleConverter : IValueConverter
+    public class InstanceGroupToInstanceSelectTitleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Models.InstanceInfoLocalList)
+            if (value is Models.LocalInstanceGroupInfo)
                 return Resources.Strings.ConnectingInstanceSelectPageTitle;
-            else if (value is Models.InstanceInfoDistributedList)
+            else if (value is Models.DistributedInstanceGroupInfo)
                 return Resources.Strings.AuthenticatingInstanceSelectPageTitle;
             else
                 return null;

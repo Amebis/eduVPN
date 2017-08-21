@@ -20,7 +20,7 @@
     <ItemsControl
         VerticalAlignment="Center"
         HorizontalContentAlignment="Center"
-        ItemsSource="{Binding Path=InstanceLists}">
+        ItemsSource="{Binding Path=InstanceGroups}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <Grid>

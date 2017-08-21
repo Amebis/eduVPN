@@ -13,14 +13,14 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{Binding Path=Parent.InstanceList, Converter={StaticResource InstanceListToInstanceSelectTitleConverter}}"
+    Title="{Binding Path=Parent.InstanceGroup, Converter={StaticResource InstanceGroupToInstanceSelectTitleConverter}}"
     Style="{StaticResource eduVPNConnectWizardPageWithBack}">
 
     <ListBox
         Style="{StaticResource eduVPNListStyle}"
         ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
         ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-        ItemsSource="{Binding Path=Parent.InstanceList}"
+        ItemsSource="{Binding Path=Parent.InstanceGroup}"
         SelectedItem="{Binding Path=SelectedInstance}"
-        SelectionChanged="InstanceList_SelectionChanged"/>
+        SelectionChanged="InstanceGroup_SelectionChanged"/>
 </Page>

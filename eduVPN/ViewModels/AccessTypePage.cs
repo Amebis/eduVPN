@@ -8,6 +8,7 @@
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -43,16 +44,16 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available instances
         /// </summary>
-        public Models.InstanceInfoList[] InstanceLists
+        public Models.InstanceGroupInfo[] InstanceGroups
         {
-            get { return _instance_lists; }
+            get { return _instance_groups; }
             set {
-                _instance_lists = value;
+                _instance_groups = value;
                 RaisePropertyChanged();
                 ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
             }
         }
-        private Models.InstanceInfoList[] _instance_lists;
+        private Models.InstanceGroupInfo[] _instance_groups;
 
         /// <summary>
         /// Set access type
@@ -63,7 +64,7 @@ namespace eduVPN.ViewModels
             {
                 if (_set_access_type == null)
                 {
-                    _set_access_type = new DelegateCommand<Models.InstanceInfoList>(
+                    _set_access_type = new DelegateCommand<Models.InstanceGroupInfo>(
                         // execute
                         async param =>
                         {
@@ -71,12 +72,12 @@ namespace eduVPN.ViewModels
                             TaskCount++;
                             try
                             {
-                                Parent.InstanceList = param;
+                                Parent.InstanceGroup = param;
 
-                                if (Parent.InstanceList is Models.InstanceInfoFederatedList instance_list)
+                                if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo instance_group)
                                 {
                                     // Set authenticating instance.
-                                    Parent.AuthenticatingInstance = new Models.InstanceInfo(instance_list);
+                                    Parent.AuthenticatingInstance = new Models.InstanceInfo(instance_group);
 
                                     // Restore the access token from the settings.
                                     Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
@@ -116,30 +117,30 @@ namespace eduVPN.ViewModels
             base(parent)
         {
             _obj_cache = new Dictionary<string, object>[_instance_directory_id.Length];
-            InstanceLists = new Models.InstanceInfoList[_instance_directory_id.Length];
+            InstanceGroups = new Models.InstanceGroupInfo[_instance_directory_id.Length];
             for (var i = 0; i < _instance_directory_id.Length; i++)
             {
                 try
                 {
-                    // Get cached instance list JSON response from settings and parse it.
+                    // Get cached instance group JSON response from settings and parse it.
                     _obj_cache[i] = (Dictionary<string, object>)eduJSON.Parser.Parse(
                         ((JSON.Response)Properties.Settings.Default[_instance_directory_id[i] + "Cache"]).Value,
                         ConnectWizard.Abort.Token);
 
-                    // Load instance list from cache.
-                    var instance_list = Models.InstanceInfoList.FromJSON(_obj_cache[i]);
-                    if (instance_list is Models.InstanceInfoLocalList)
+                    // Load instance group from cache.
+                    var instance_group = Models.InstanceGroupInfo.FromJSON(_obj_cache[i]);
+                    if (instance_group is Models.LocalInstanceGroupInfo)
                     {
-                        // Append "Other instance" entry to institute access instance list.
-                        instance_list.Add(new Models.InstanceInfo()
+                        // Append "Other instance" entry to institute access instance group.
+                        instance_group.Add(new Models.InstanceInfo()
                         {
                             DisplayName = Resources.Strings.CustomInstance,
                             IsCustom = true,
                         });
                     }
 
-                    InstanceLists[i] = instance_list;
-                    RaisePropertyChanged("InstanceLists");
+                    InstanceGroups[i] = instance_group;
+                    RaisePropertyChanged("InstanceGroups");
                     ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
                 }
                 catch (Exception)
@@ -163,7 +164,7 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            // Launch instance list load in the background.
+            // Launch instance group load in the background.
             new Thread(new ThreadStart(
                 () =>
                 {
@@ -174,7 +175,7 @@ namespace eduVPN.ViewModels
                         var json_get_tasks = new Task<JSON.Response>[_instance_directory_id.Length];
                         for (var i = 0; i < _instance_directory_id.Length; i++)
                         {
-                            // Spawn instance list get.
+                            // Spawn instance group get.
                             json_get_tasks[i] = JSON.Response.GetAsync(
                                 uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[i]]),
                                 pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[i] + "PubKey"]),
@@ -186,7 +187,7 @@ namespace eduVPN.ViewModels
                         {
                             try
                             {
-                                // Wait for the instance list get.
+                                // Wait for the instance group get.
                                 JSON.Response response_cache = null;
                                 try
                                 {
@@ -197,17 +198,17 @@ namespace eduVPN.ViewModels
 
                                 if (response_cache.IsFresh)
                                 {
-                                    // Parse instance list JSON.
+                                    // Parse instance group JSON.
                                     var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(
                                         response_cache.Value,
                                         ConnectWizard.Abort.Token);
 
-                                    // Load instance list.
-                                    var instance_list = Models.InstanceInfoList.FromJSON(obj);
-                                    if (instance_list is Models.InstanceInfoLocalList)
+                                    // Load instance group.
+                                    var instance_group = Models.InstanceGroupInfo.FromJSON(obj);
+                                    if (instance_group is Models.LocalInstanceGroupInfo)
                                     {
-                                        // Append "Other instance" entry to institute access instance list.
-                                        instance_list.Add(new Models.InstanceInfo()
+                                        // Append "Other instance" entry to institute access instance group.
+                                        instance_group.Add(new Models.InstanceInfo()
                                         {
                                             DisplayName = Resources.Strings.CustomInstance,
                                             IsCustom = true,
@@ -217,14 +218,14 @@ namespace eduVPN.ViewModels
                                     // Send the loaded instance list back to the UI thread.
                                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                     {
-                                        InstanceLists[i] = instance_list;
-                                        RaisePropertyChanged("InstanceLists");
+                                        InstanceGroups[i] = instance_group;
+                                        RaisePropertyChanged("InstanceGroups");
                                         ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
                                     }));
 
                                     try
                                     {
-                                        // If we got here, the loaded instance list is (probably) OK.
+                                        // If we got here, the loaded instance group is (probably) OK.
                                         bool update_cache = false;
                                         try { update_cache = eduJSON.Parser.GetValue<int>(obj, "seq") >= eduJSON.Parser.GetValue<int>(_obj_cache[i], "seq"); }
                                         catch (Exception) { update_cache = true; }
@@ -244,9 +245,9 @@ namespace eduVPN.ViewModels
                                 // Make it a clean start next time.
                                 Properties.Settings.Default[_instance_directory_id[i] + "Cache"] = null;
 
-                                // Notify the sender the instance list loading failed. However, continue with other lists.
+                                // Notify the sender the instance group loading failed. However, continue with other lists.
                                 // This will overwrite all previous error messages.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceInfoListLoad, _instance_directory_id[i]), ex)));
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[i]), ex)));
                             }
                         }
                     }

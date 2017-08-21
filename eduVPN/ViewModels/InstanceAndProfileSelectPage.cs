@@ -88,9 +88,9 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
+            if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo)
             {
-                // Federated instance list does not favour any particular instance to connect to.
+                // Federated instance group does not favour any particular instance to connect to.
                 SelectedInstance = null;
             }
             else

@@ -16,7 +16,7 @@ namespace eduVPN.Models
     /// <remarks>
     /// Access token is issued by a central OAuth server; all instances accept this token.
     /// </remarks>
-    public class InstanceInfoFederatedList : InstanceInfoList
+    public class FederatedInstanceGroupInfo : InstanceGroupInfo
     {
         #region Properties
 

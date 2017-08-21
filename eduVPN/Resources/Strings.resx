@@ -135,8 +135,8 @@
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Loading of API endpoints failed.</value>
   </data>
-  <data name="ErrorInstanceInfoListLoad" xml:space="preserve">
-    <value>Loading of the instance list {0} failed.</value>
+  <data name="ErrorInstanceGroupInfoLoad" xml:space="preserve">
+    <value>Loading of the instance group {0} failed.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Loading of the profile list failed.</value>

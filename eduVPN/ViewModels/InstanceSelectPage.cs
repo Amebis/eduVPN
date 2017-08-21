@@ -61,12 +61,12 @@ namespace eduVPN.ViewModels
                                     // Restore the access token from the settings.
                                     Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
 
-                                    if (Parent.InstanceList is Models.InstanceInfoLocalList)
+                                    if (Parent.InstanceGroup is Models.LocalInstanceGroupInfo)
                                     {
                                         // Connecting instance will be the same as authenticating.
                                         Parent.ConnectingInstance = Parent.AuthenticatingInstance;
                                     }
-                                    else if (Parent.InstanceList is Models.InstanceInfoDistributedList)
+                                    else if (Parent.InstanceGroup is Models.DistributedInstanceGroupInfo)
                                     {
                                         // Connecting instance will not (necessarry) be the same as authenticating.
                                         Parent.ConnectingInstance = null;

@@ -132,8 +132,8 @@
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value>Zasebni ključ ni veljaven ali je nepodprtega zapisa.</value>
   </data>
-  <data name="ErrorInstanceInfoListLoad" xml:space="preserve">
-    <value>Nalaganje spiska instanc {0} ni uspelo.</value>
+  <data name="ErrorInstanceGroupInfoLoad" xml:space="preserve">
+    <value>Nalaganje skupine instanc {0} ni uspelo.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Nalaganje končnih točk API ni uspelo.</value>

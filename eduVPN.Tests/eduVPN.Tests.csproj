@@ -48,7 +48,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Models\InstanceListTests.cs" />
+    <Compile Include="Models\InstanceGroupInfoTests.cs" />
     <Compile Include="Models\InstanceTests.cs" />
     <Compile Include="eduBase\MultiplatformDllLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

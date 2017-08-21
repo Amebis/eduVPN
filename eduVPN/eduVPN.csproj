@@ -39,11 +39,12 @@
     <Compile Include="JSON\Collection.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
+    <Compile Include="Models\DistributedInstanceGroupInfo.cs" />
+    <Compile Include="Models\FederatedInstanceGroupInfo.cs" />
+    <Compile Include="Models\InstanceGroupInfo.cs" />
     <Compile Include="Models\InstanceSettingsDictionary.cs" />
-    <Compile Include="Models\InstanceInfoDistributedList.cs" />
-    <Compile Include="Models\InstanceInfoFederatedList.cs" />
-    <Compile Include="Models\InstanceInfoLocalList.cs" />
     <Compile Include="Models\InstanceSettings.cs" />
+    <Compile Include="Models\LocalInstanceGroupInfo.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageList.cs" />
     <Compile Include="Models\MessageMaintenance.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="ViewModels\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="Models\InstanceInfo.cs" />
-    <Compile Include="Models\InstanceInfoList.cs" />
     <Compile Include="ViewModels\InstanceAndProfileSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
     <Compile Include="ViewModels\CustomInstancePage.cs" />
@@ -87,7 +87,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.sl.resx" />
+    <EmbeddedResource Include="Resources\Strings.sl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">

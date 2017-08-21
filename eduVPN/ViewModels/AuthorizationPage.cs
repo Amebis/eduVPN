@@ -120,7 +120,7 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            if (Parent.InstanceList is Models.InstanceInfoFederatedList)
+            if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo)
                 Parent.CurrentPage = Parent.AccessTypePage;
             else if (Parent.AuthenticatingInstance.IsCustom)
                 Parent.CurrentPage = Parent.CustomInstancePage;

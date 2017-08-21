@@ -8,12 +8,12 @@
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN list of instances using local authentication
+    /// An eduVPN list of instances using distributed authentication
     /// </summary>
     /// <remarks>
-    /// Access token is specific to each instance and cannot be used by other instances.
+    /// Access token from any instance can be used by any other instance.
     /// </remarks>
-    public class InstanceInfoLocalList : InstanceInfoList
+    public class DistributedInstanceGroupInfo : InstanceGroupInfo
     {
     }
 }
