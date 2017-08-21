@@ -429,8 +429,8 @@ namespace eduVPN.Models
         {
             if (_client_certificate == null)
             {
-                // Open user certificate store.
-                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+                // Open eduVPN client certificate store.
+                var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
                 store.Open(OpenFlags.ReadWrite);
                 try
                 {
@@ -439,21 +439,19 @@ namespace eduVPN.Models
                         // Try to restore previously issued client certificate from the certificate store first.
                         foreach (var cert in store.Certificates)
                         {
-                            if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
+                            if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
                             {
-                                // Certificate found.
-                                if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
+                                // Not expired && Has the private key.
+                                if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
                                 {
-                                    // Not expired && Has the private key.
+                                    // Certificate found.
                                     _client_certificate = cert;
                                 }
-                                else
-                                {
-                                    // Certificate expired or matching private key not found == Useless. Clean it from the store.
-                                    store.Remove(cert);
-                                }
-
-                                break;
+                            }
+                            else
+                            {
+                                // Certificate expired or matching private key not found == Useless. Clean it from the store.
+                                store.Remove(cert);
                             }
                         }
                     }
