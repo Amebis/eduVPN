@@ -95,16 +95,6 @@ namespace eduVPN.Models
         }
         private byte[] _public_key;
 
-        /// <summary>
-        /// Is this instance manually entered by user?
-        /// </summary>
-        public bool IsCustom
-        {
-            get { return _is_custom; }
-            set { if (value != _is_custom) { _is_custom = value; RaisePropertyChanged(); } }
-        }
-        private bool _is_custom;
-
         #endregion
 
         #region Constructors

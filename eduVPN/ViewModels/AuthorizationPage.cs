@@ -49,10 +49,7 @@ namespace eduVPN.ViewModels
                                 Parent.AccessToken = await Parent.AuthenticatingInstance.AuthorizeAsync(new Uri(param), ConnectWizard.Abort.Token);
 
                                 // Go to profile selection page.
-                                if (Parent.ConnectingInstance == null)
-                                    Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
-                                else
-                                    Parent.CurrentPage = Parent.ProfileSelectPage;
+                                Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
                             catch (Exception ex) { Error = ex; }
                             finally { TaskCount--; }
@@ -121,9 +118,12 @@ namespace eduVPN.ViewModels
         protected override void DoNavigateBack()
         {
             if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo)
-                Parent.CurrentPage = Parent.InstanceGroupSelectPage;
-            else if (Parent.AuthenticatingInstance.IsCustom)
-                Parent.CurrentPage = Parent.CustomInstancePage;
+            {
+                if (Parent.InstanceGroupSelectPage.InstanceGroups.IndexOf(Parent.InstanceGroup) >= 0)
+                    Parent.CurrentPage = Parent.InstanceGroupSelectPage;
+                else
+                    Parent.CurrentPage = Parent.CustomInstanceGroupPage;
+            }
             else
                 Parent.CurrentPage = Parent.InstanceSelectPage;
         }

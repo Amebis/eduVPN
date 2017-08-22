@@ -57,6 +57,7 @@
     <Compile Include="Models\VPNSessionStatusType.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="System\IO\Extensions.cs" />
+    <Compile Include="ViewModels\CountrySelectPage.cs" />
     <Compile Include="ViewModels\InstanceGroupSelectPage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />
     <Compile Include="ViewModels\AuthorizationPage.cs" />
@@ -64,8 +65,9 @@
     <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="Models\InstanceInfo.cs" />
     <Compile Include="ViewModels\InstanceAndProfileSelectPage.cs" />
+    <Compile Include="ViewModels\InstituteSelectPage.cs" />
     <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
-    <Compile Include="ViewModels\CustomInstancePage.cs" />
+    <Compile Include="ViewModels\CustomInstanceGroupPage.cs" />
     <Compile Include="ViewModels\InstanceSelectPage.cs" />
     <Compile Include="JSON\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

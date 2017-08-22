@@ -7,64 +7,63 @@
 
 using Prism.Commands;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Custom instance entry wizard page
+    /// Custom instance group entry wizard page
     /// </summary>
-    public class CustomInstancePage : ConnectWizardPage
+    public class CustomInstanceGroupPage : ConnectWizardPage
     {
         #region Properties
 
         /// <summary>
         /// Instance URI
         /// </summary>
-        public string InstanceURI
+        public string URI
         {
-            get { return _instance_uri; }
+            get { return _uri; }
             set
             {
-                if (value != _instance_uri)
+                if (value != _uri)
                 {
-                    _instance_uri = value;
+                    _uri = value;
                     RaisePropertyChanged();
-                    ((DelegateCommandBase)AuthorizeCustomInstance).RaiseCanExecuteChanged();
+                    ((DelegateCommandBase)SelectCustomInstanceGroup).RaiseCanExecuteChanged();
                 }
             }
         }
-        private string _instance_uri;
+        private string _uri;
 
         /// <summary>
         /// Authorize Other Instance Command
         /// </summary>
-        public ICommand AuthorizeCustomInstance
+        public ICommand SelectCustomInstanceGroup
         {
             get
             {
-                if (_authorize_instance == null)
+                if (_select_custom_instance_group == null)
                 {
-                    _authorize_instance = new DelegateCommand(
+                    _select_custom_instance_group = new DelegateCommand(
                         // execute
                         async () => {
                             Error = null;
                             TaskCount++;
                             try
                             {
-                                // Set instance base URI.
-                                Parent.AuthenticatingInstance.Base = new Uri(InstanceURI);
+                                // Get and parse instance group JSON.
+                                var instance_group = Models.InstanceGroupInfo.FromJSON(
+                                    (Dictionary<string, object>)eduJSON.Parser.Parse(
+                                        (await JSON.Response.GetAsync(
+                                            uri: new Uri(URI),
+                                            ct: ConnectWizard.Abort.Token)).Value,
+                                        ConnectWizard.Abort.Token));
 
-                                // Restore the access token from the settings.
-                                Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
-
-                                // Connecting instance will be the same as authenticating.
-                                Parent.ConnectingInstance = Parent.AuthenticatingInstance;
-
-                                if (Parent.AccessToken == null)
-                                    Parent.CurrentPage = Parent.AuthorizationPage;
-                                else
-                                    Parent.CurrentPage = Parent.ProfileSelectPage;
+                                // Reuse instance group selection page's SelectInstanceGroup command to set instance group.
+                                if (Parent.InstanceGroupSelectPage.SelectInstanceGroup.CanExecute(instance_group))
+                                    Parent.InstanceGroupSelectPage.SelectInstanceGroup.Execute(instance_group);
                             }
                             catch (Exception ex) { Error = ex; }
                             finally { TaskCount--; }
@@ -72,15 +71,15 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         () => {
-                            try { new Uri(InstanceURI); }
+                            try { new Uri(URI); }
                             catch (Exception) { return false; }
                             return true;
                         });
                 }
-                return _authorize_instance;
+                return _select_custom_instance_group;
             }
         }
-        private ICommand _authorize_instance;
+        private ICommand _select_custom_instance_group;
 
         #endregion
 
@@ -89,10 +88,10 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Constructs a view model.
         /// </summary>
-        public CustomInstancePage(ConnectWizard parent) :
+        public CustomInstanceGroupPage(ConnectWizard parent) :
             base(parent)
         {
-            InstanceURI = "https://";
+            URI = "https://";
         }
 
         #endregion
@@ -101,7 +100,7 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            Parent.CurrentPage = Parent.InstanceSelectPage;
+            Parent.CurrentPage = Parent.InstanceGroupSelectPage;
         }
 
         protected override bool CanNavigateBack()

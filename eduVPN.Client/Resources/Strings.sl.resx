@@ -127,9 +127,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="AuthorizationPageRetry" xml:space="preserve">
     <value>Ponovi</value>
   </data>
-  <data name="AuthorizationPageRetryNote" xml:space="preserve">
-    <value>Če ste po nesreči zaprli stran za avtorizacijo v svojem brskalniku ali je šlo kaj drugega narobe, prosimo, kliknite ta gumb, da začnete nov postopek za pooblastilo odjemalca.</value>
-  </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
     <value>Čakam na pooblastilo</value>
   </data>
@@ -142,11 +139,11 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Naprej</value>
   </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
+  <data name="CustomInstanceGroupPageTitle" xml:space="preserve">
     <value>Drugi ponudnik</value>
   </data>
-  <data name="CustomInstancePageURINote" xml:space="preserve">
-    <value>Vnesite naslov URI kazala API svojega ponudnika VPN. Primer: https://demo.eduvpn.nl/</value>
+  <data name="CustomInstanceGroupPageDescription" xml:space="preserve">
+    <value>Vnesite naslov URI svojega ponudnika VPN.</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
@@ -158,14 +155,13 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Zahteva dvojno preverjanje pristnosti</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati.
-Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
+    <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati. Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
     <value>Povezava VPN</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
-    <value>Location</value>
+    <value>Ponudnik</value>
   </data>
   <data name="StatusPageProfile" xml:space="preserve">
     <value>Profil</value>
@@ -185,11 +181,11 @@ Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   <data name="MessageMaintenanceEnd" xml:space="preserve">
     <value>Konec</value>
   </data>
-  <data name="AuthenticatingInstanceSelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo domačo instanco</value>
+  <data name="CountrySelectPageTitle" xml:space="preserve">
+    <value>Izberite svojo državo</value>
   </data>
-  <data name="ConnectingInstanceSelectPageTitle" xml:space="preserve">
-    <value>Izberite instanco za povezavo</value>
+  <data name="InstituteSelectPageTitle" xml:space="preserve">
+    <value>Izberite svojo ustanovo</value>
   </data>
   <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
     <value>Dohodno</value>
@@ -226,5 +222,14 @@ Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
+  <data name="CountrySelectPageDescription" xml:space="preserve">
+    <value>Tukaj izberite državo svoje ustanove. Ko se boste prijavili s poverilnicami svoje ustanove, boste lahko izbrali končno točko VPN v drugih državah.</value>
+  </data>
+  <data name="InstanceGroupSelectCustom" xml:space="preserve">
+    <value>Dodaj drug naslov</value>
+  </data>
+  <data name="InstanceGroupSelectPageDescription" xml:space="preserve">
+    <value>Spodaj izberite vrsto profila, ki ga želite uporabiti. Preusmerjeni boste v svoj brskalnik, kjer boste vnesli svoje poverilnice.</value>
   </data>
 </root>

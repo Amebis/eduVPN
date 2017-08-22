@@ -5,22 +5,19 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Windows;
-using System.Windows.Controls;
-
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for CustomInstancePage.xaml
+    /// Interaction logic for CustomInstanceGroupPage.xaml
     /// </summary>
-    public partial class CustomInstancePage : Page
+    public partial class CustomInstanceGroupPage : ConnectWizardPage
     {
         #region Constructors
 
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public CustomInstancePage()
+        public CustomInstanceGroupPage()
         {
             if (eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory == null)
                 eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
@@ -30,12 +27,16 @@ namespace eduVPN.Views
 
         #endregion
 
+        #region Methods
+
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var instance_uri = InstanceURI.Text;
+            var instance_uri = InstanceGroupURI.Text;
 
             if (!eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Contains(instance_uri))
                 eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, instance_uri);
         }
+
+        #endregion
     }
 }

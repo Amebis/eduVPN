@@ -12,7 +12,7 @@ namespace eduVPN.Views
     /// <summary>
     /// Interaction logic for SecureInternetSelectPage.xaml and InstituteAccessSelectPage.xaml
     /// </summary>
-    public partial class InstanceSelectPage : Page
+    public partial class InstanceSelectPage : ConnectWizardPage
     {
         #region Constructors
 

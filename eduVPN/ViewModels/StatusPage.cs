@@ -143,12 +143,7 @@ namespace eduVPN.ViewModels
             if (_session != null && _session.Disconnect.CanExecute(null))
                 _session.Disconnect.Execute(null);
 
-            if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo)
-                Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
-            else if (Parent.InstanceGroup is Models.DistributedInstanceGroupInfo)
-                Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
-            else
-                Parent.CurrentPage = Parent.ProfileSelectPage;
+            Parent.CurrentPage = Parent.ProfileSelectPage;
         }
 
         protected override bool CanNavigateBack()

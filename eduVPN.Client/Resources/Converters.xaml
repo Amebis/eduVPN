@@ -10,10 +10,10 @@
     xmlns:conv="clr-namespace:eduVPN.Client.Converters">
 
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
-    <conv:InstanceGroupToInstanceSelectTitleConverter x:Key="InstanceGroupToInstanceSelectTitleConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
     <conv:StatusBarVisibilityConverter x:Key="StatusBarVisibilityConverter"/>
+    <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
     <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
     <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>

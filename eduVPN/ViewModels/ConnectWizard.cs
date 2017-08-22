@@ -125,26 +125,36 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (_instance_select_page == null)
-                    _instance_select_page = new InstanceSelectPage(this);
-                return _instance_select_page;
+                if (InstanceGroup is Models.DistributedInstanceGroupInfo)
+                {
+                    if (_country_select_page == null)
+                        _country_select_page = new CountrySelectPage(this);
+                    return _country_select_page;
+                }
+                else
+                {
+                    if (_institute_select_page == null)
+                        _institute_select_page = new InstituteSelectPage(this);
+                    return _institute_select_page;
+                }
             }
         }
-        private InstanceSelectPage _instance_select_page;
+        private CountrySelectPage _country_select_page;
+        private InstituteSelectPage _institute_select_page;
 
         /// <summary>
-        /// Custom instance page
+        /// Custom instance group page
         /// </summary>
-        public CustomInstancePage CustomInstancePage
+        public CustomInstanceGroupPage CustomInstanceGroupPage
         {
             get
             {
-                if (_custom_instance_page == null)
-                    _custom_instance_page = new CustomInstancePage(this);
-                return _custom_instance_page;
+                if (_custom_instance_group_page == null)
+                    _custom_instance_group_page = new CustomInstanceGroupPage(this);
+                return _custom_instance_group_page;
             }
         }
-        private CustomInstancePage _custom_instance_page;
+        private CustomInstanceGroupPage _custom_instance_group_page;
 
         /// <summary>
         /// Authorization wizard page
@@ -161,31 +171,28 @@ namespace eduVPN.ViewModels
         private AuthorizationPage _authorization_page;
 
         /// <summary>
-        /// Profile selection wizard page
+        /// (Instance and) profile selection wizard page
         /// </summary>
-        public ProfileSelectPage ProfileSelectPage
+        public ProfileSelectBasePage ProfileSelectPage
         {
             get
             {
-                if (_profile_select_page == null)
-                    _profile_select_page = new ProfileSelectPage(this);
-                return _profile_select_page;
+                if (InstanceGroup is Models.FederatedInstanceGroupInfo ||
+                    InstanceGroup is Models.DistributedInstanceGroupInfo)
+                {
+                    if (_instance_and_profile_select_page == null)
+                        _instance_and_profile_select_page = new InstanceAndProfileSelectPage(this);
+                    return _instance_and_profile_select_page;
+                }
+                else
+                {
+                    if (_profile_select_page == null)
+                        _profile_select_page = new ProfileSelectPage(this);
+                    return _profile_select_page;
+                }
             }
         }
         private ProfileSelectPage _profile_select_page;
-
-        /// <summary>
-        /// Instance and profile selection wizard page (for federated authentication)
-        /// </summary>
-        public InstanceAndProfileSelectPage InstanceAndProfileSelectPage
-        {
-            get
-            {
-                if (_instance_and_profile_select_page == null)
-                    _instance_and_profile_select_page = new InstanceAndProfileSelectPage(this);
-                return _instance_and_profile_select_page;
-            }
-        }
         private InstanceAndProfileSelectPage _instance_and_profile_select_page;
 
         /// <summary>

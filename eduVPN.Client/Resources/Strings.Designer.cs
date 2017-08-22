@@ -61,15 +61,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose your home instance.
-        /// </summary>
-        public static string AuthenticatingInstanceSelectPageTitle {
-            get {
-                return ResourceManager.GetString("AuthenticatingInstanceSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
         ///The client will continue after you complete the authorization....
         /// </summary>
@@ -85,15 +76,6 @@ namespace eduVPN.Client.Resources {
         public static string AuthorizationPageRetry {
             get {
                 return ResourceManager.GetString("AuthorizationPageRetry", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to In case you accidentaly closed the authorization page in your browser or something else went wrong, please click this button to start a new client autorization request..
-        /// </summary>
-        public static string AuthorizationPageRetryNote {
-            get {
-                return ResourceManager.GetString("AuthorizationPageRetryNote", resourceCulture);
             }
         }
         
@@ -134,38 +116,74 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose connecting instance.
+        ///   Looks up a localized string similar to Select your institution&apos;s country here. You can select VPN endpoints in other countries after signing in with your institution credentials..
         /// </summary>
-        public static string ConnectingInstanceSelectPageTitle {
+        public static string CountrySelectPageDescription {
             get {
-                return ResourceManager.GetString("ConnectingInstanceSelectPageTitle", resourceCulture);
+                return ResourceManager.GetString("CountrySelectPageDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other Provider.
+        ///   Looks up a localized string similar to Select Your Country.
         /// </summary>
-        public static string CustomInstancePageTitle {
+        public static string CountrySelectPageTitle {
             get {
-                return ResourceManager.GetString("CustomInstancePageTitle", resourceCulture);
+                return ResourceManager.GetString("CountrySelectPageTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/.
+        ///   Looks up a localized string similar to Enter discovery URI of your VPN provider..
         /// </summary>
-        public static string CustomInstancePageURINote {
+        public static string CustomInstanceGroupPageDescription {
             get {
-                return ResourceManager.GetString("CustomInstancePageURINote", resourceCulture);
+                return ResourceManager.GetString("CustomInstanceGroupPageDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose your profile.
+        ///   Looks up a localized string similar to Other Profile.
+        /// </summary>
+        public static string CustomInstanceGroupPageTitle {
+            get {
+                return ResourceManager.GetString("CustomInstanceGroupPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add other address.
+        /// </summary>
+        public static string InstanceGroupSelectCustom {
+            get {
+                return ResourceManager.GetString("InstanceGroupSelectCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the profile type you want to use below. You will be redirected to the browser for your credentials..
+        /// </summary>
+        public static string InstanceGroupSelectPageDescription {
+            get {
+                return ResourceManager.GetString("InstanceGroupSelectPageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose Your Profile.
         /// </summary>
         public static string InstanceGroupSelectPageTitle {
             get {
                 return ResourceManager.GetString("InstanceGroupSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Your Institution.
+        /// </summary>
+        public static string InstituteSelectPageTitle {
+            get {
+                return ResourceManager.GetString("InstituteSelectPageTitle", resourceCulture);
             }
         }
         
@@ -278,7 +296,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection info.
+        ///   Looks up a localized string similar to Connection Info.
         /// </summary>
         public static string StatusPageConnectionInfoTitle {
             get {
@@ -305,7 +323,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Location.
+        ///   Looks up a localized string similar to Provider.
         /// </summary>
         public static string StatusPageInstance {
             get {
@@ -368,8 +386,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning! Your account is marked as disabled. You might not be able to connect.
-        ///Please, contact your helpdesk for support..
+        ///   Looks up a localized string similar to Warning! Your account is marked as disabled. You might not be able to connect. Please, contact your helpdesk for support..
         /// </summary>
         public static string UserDisabledMessage {
             get {

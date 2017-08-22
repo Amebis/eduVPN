@@ -88,7 +88,7 @@ namespace eduVPN.ViewModels
                                     if (Parent.AccessToken == null)
                                         Parent.CurrentPage = Parent.AuthorizationPage;
                                     else
-                                        Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
+                                        Parent.CurrentPage = Parent.ProfileSelectPage;
                                 }
                                 else
                                     Parent.CurrentPage = Parent.InstanceSelectPage;
@@ -104,6 +104,38 @@ namespace eduVPN.ViewModels
             }
         }
         private ICommand _select_instance_group;
+
+        /// <summary>
+        /// Select custom instance group
+        /// </summary>
+        public ICommand SelectCustomInstanceGroup
+        {
+            get
+            {
+                if (_select_custom_instance_group == null)
+                {
+                    _select_custom_instance_group = new DelegateCommand<Models.InstanceGroupInfo>(
+                        // execute
+                        param =>
+                        {
+                            Error = null;
+                            TaskCount++;
+                            try
+                            {
+                                Parent.InstanceGroup = null;
+                                Parent.CurrentPage = Parent.CustomInstanceGroupPage;
+                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { TaskCount--; }
+                        },
+
+                        // canExecute
+                        param => true);
+                }
+                return _select_custom_instance_group;
+            }
+        }
+        private ICommand _select_custom_instance_group;
 
         #endregion
 
@@ -130,15 +162,6 @@ namespace eduVPN.ViewModels
 
                     // Load instance group from cache.
                     instance_group = Models.InstanceGroupInfo.FromJSON(_obj_cache[i]);
-                    if (instance_group is Models.LocalInstanceGroupInfo)
-                    {
-                        // Append "Other instance" entry to institute access instance group.
-                        instance_group.Add(new Models.InstanceInfo()
-                        {
-                            DisplayName = Resources.Strings.CustomInstance,
-                            IsCustom = true,
-                        });
-                    }
                 }
                 catch (Exception)
                 {
@@ -207,15 +230,6 @@ namespace eduVPN.ViewModels
 
                                     // Load instance group.
                                     var instance_group = Models.InstanceGroupInfo.FromJSON(obj);
-                                    if (instance_group is Models.LocalInstanceGroupInfo)
-                                    {
-                                        // Append "Other instance" entry to institute access instance group.
-                                        instance_group.Add(new Models.InstanceInfo()
-                                        {
-                                            DisplayName = Resources.Strings.CustomInstance,
-                                            IsCustom = true,
-                                        });
-                                    }
 
                                     // Send the loaded instance group back to the UI thread.
                                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(

@@ -8,15 +8,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="eduVPNHeaderBrushKey" Color="{StaticResource eduVPNBlue}" />
-    <SolidColorBrush x:Key="eduVPNHeaderTextBrushKey" Color="{StaticResource eduVPNWhite}" />
-    <SolidColorBrush x:Key="eduVPNWindowBrushKey" Color="{StaticResource eduVPNWhite}" />
-    <SolidColorBrush x:Key="eduVPNWindowTextBrushKey" Color="{StaticResource eduVPNBlack}" />
-    <SolidColorBrush x:Key="eduVPNWindowBorderKey" Color="{StaticResource eduVPNGray}" />
-    <SolidColorBrush x:Key="eduVPNLogoOrangeKey" Color="{StaticResource eduVPNOrange}" />
-    <SolidColorBrush x:Key="eduVPNLogoGreenKey" Color="{StaticResource eduVPNGreen}" />
-    <SolidColorBrush x:Key="eduVPNLogoRedKey" Color="{StaticResource eduVPNRed}" />
-    <SolidColorBrush x:Key="eduVPNLogoWhiteKey" Color="{StaticResource eduVPNWhite}" />
-    <SolidColorBrush x:Key="eduVPNLogoBlackKey" Color="{StaticResource eduVPNBlack}" />
-    <SolidColorBrush x:Key="eduVPNChoiceButtonHoverBrushKey" Color="{StaticResource eduVPNBlueLight}" />
+    <SolidColorBrush x:Key="eduVPNHeaderBrushKey" Color="{StaticResource eduVPNBlue}"/>
+    <SolidColorBrush x:Key="eduVPNHeaderTextBrushKey" Color="{StaticResource eduVPNWhite}"/>
+    <SolidColorBrush x:Key="eduVPNWindowBrushKey" Color="{StaticResource eduVPNWhite}"/>
+    <SolidColorBrush x:Key="eduVPNWindowTextBrushKey" Color="{StaticResource eduVPNBlack}"/>
+    <SolidColorBrush x:Key="eduVPNWindowBorderKey" Color="{StaticResource eduVPNGray}"/>
+    <SolidColorBrush x:Key="eduVPNControlBorderKey" Color="{StaticResource eduVPNLightGray}"/>
+    <SolidColorBrush x:Key="eduVPNLogoOrangeKey" Color="{StaticResource eduVPNOrange}"/>
+    <SolidColorBrush x:Key="eduVPNLogoGreenKey" Color="{StaticResource eduVPNGreen}"/>
+    <SolidColorBrush x:Key="eduVPNLogoRedKey" Color="{StaticResource eduVPNRed}"/>
+    <SolidColorBrush x:Key="eduVPNLogoWhiteKey" Color="{StaticResource eduVPNWhite}"/>
+    <SolidColorBrush x:Key="eduVPNLogoBlackKey" Color="{StaticResource eduVPNBlack}"/>
+    <SolidColorBrush x:Key="eduVPNChoiceButtonHoverBrushKey" Color="{StaticResource eduVPNBlueLight}"/>
 </ResourceDictionary>

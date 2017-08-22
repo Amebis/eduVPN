@@ -4,23 +4,30 @@
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
-<Page
+<view:ConnectWizardPage
     x:Class="eduVPN.Views.InstanceSelectPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:view="clr-namespace:eduVPN.Views"
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{Binding Path=Parent.InstanceGroup, Converter={StaticResource InstanceGroupToInstanceSelectTitleConverter}}"
-    Style="{StaticResource eduVPNConnectWizardPageWithBack}">
+    Style="{StaticResource eduVPNConnectWizardPageWithTitleAndBack}">
 
-    <ListBox
-        Style="{StaticResource eduVPNListStyle}"
-        ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
-        ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-        ItemsSource="{Binding Path=Parent.InstanceGroup}"
-        SelectedItem="{Binding Path=SelectedInstance}"
-        SelectionChanged="InstanceGroup_SelectionChanged"/>
-</Page>
+    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ListBox
+            Margin="10,5"
+            Style="{StaticResource eduVPNListStyle}"
+            ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
+            ItemsSource="{Binding Path=Parent.InstanceGroup}"
+            SelectedItem="{Binding Path=SelectedInstance}"
+            SelectionChanged="InstanceGroup_SelectionChanged"/>
+    </Grid>
+</view:ConnectWizardPage>

@@ -40,14 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
-    <Compile Include="Converters\InstanceGroupToInstanceSelectTitleConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
     <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
+    <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
+    <Compile Include="Views\ConnectWizardPage.cs" />
     <Compile Include="Views\InstanceAndProfileSelectPage.xaml.cs">
       <DependentUpon>InstanceAndProfileSelectPage.xaml</DependentUpon>
     </Compile>
@@ -148,7 +149,7 @@
       <DependentUpon>ConnectWizard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\CustomInstancePage.xaml">
+    <Page Include="Views\CustomInstanceGroupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -166,8 +167,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\CustomInstancePage.xaml.cs">
-      <DependentUpon>CustomInstancePage.xaml</DependentUpon>
+    <Compile Include="Views\CustomInstanceGroupPage.xaml.cs">
+      <DependentUpon>CustomInstanceGroupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

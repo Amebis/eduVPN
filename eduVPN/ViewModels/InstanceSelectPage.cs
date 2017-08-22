@@ -54,32 +54,25 @@ namespace eduVPN.ViewModels
                                 // Save selected instance.
                                 Parent.AuthenticatingInstance = SelectedInstance;
 
-                                if (SelectedInstance.IsCustom)
-                                    Parent.CurrentPage = Parent.CustomInstancePage;
-                                else
+                                // Restore the access token from the settings.
+                                Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
+
+                                if (Parent.InstanceGroup is Models.LocalInstanceGroupInfo)
                                 {
-                                    // Restore the access token from the settings.
-                                    Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
-
-                                    if (Parent.InstanceGroup is Models.LocalInstanceGroupInfo)
-                                    {
-                                        // Connecting instance will be the same as authenticating.
-                                        Parent.ConnectingInstance = Parent.AuthenticatingInstance;
-                                    }
-                                    else if (Parent.InstanceGroup is Models.DistributedInstanceGroupInfo)
-                                    {
-                                        // Connecting instance will not (necessarry) be the same as authenticating.
-                                        Parent.ConnectingInstance = null;
-                                    } else
-                                        throw new NotImplementedException();
-
-                                    if (Parent.AccessToken == null)
-                                        Parent.CurrentPage = Parent.AuthorizationPage;
-                                    else if (Parent.ConnectingInstance == null)
-                                        Parent.CurrentPage = Parent.InstanceAndProfileSelectPage;
-                                    else
-                                        Parent.CurrentPage = Parent.ProfileSelectPage;
+                                    // Connecting instance will be the same as authenticating.
+                                    Parent.ConnectingInstance = Parent.AuthenticatingInstance;
                                 }
+                                else if (Parent.InstanceGroup is Models.DistributedInstanceGroupInfo)
+                                {
+                                    // Connecting instance will not (necessarry) be the same as authenticating.
+                                    Parent.ConnectingInstance = null;
+                                } else
+                                    throw new NotImplementedException();
+
+                                if (Parent.AccessToken == null)
+                                    Parent.CurrentPage = Parent.AuthorizationPage;
+                                else
+                                    Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
                             catch (Exception ex) { Error = ex; }
                             finally { TaskCount--; }
@@ -121,7 +114,10 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            Parent.CurrentPage = Parent.InstanceGroupSelectPage;
+            if (Parent.InstanceGroupSelectPage.InstanceGroups.IndexOf(Parent.InstanceGroup) >= 0)
+                Parent.CurrentPage = Parent.InstanceGroupSelectPage;
+            else
+                Parent.CurrentPage = Parent.CustomInstanceGroupPage;
         }
 
         protected override bool CanNavigateBack()

@@ -120,9 +120,6 @@
   <data name="ErrorInvalidSignature" xml:space="preserve">
     <value>Preverjanje podpisa ni uspelo. Celovitost {0} ni veljavna.</value>
   </data>
-  <data name="CustomInstance" xml:space="preserve">
-    <value>Drugo (ni našteto)</value>
-  </data>
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>Strežnik API je sporočil napako.</value>
   </data>

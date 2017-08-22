@@ -7,23 +7,19 @@
 
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns title string to be used on the instance select page based on instance group type
+    /// Returns <c>Visibility.Visible</c> if input value is non-empty string; or <c>Visibility.Collapsed</c> otherwise.
     /// </summary>
-    public class InstanceGroupToInstanceSelectTitleConverter : IValueConverter
+    public class StringVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Models.LocalInstanceGroupInfo)
-                return Resources.Strings.ConnectingInstanceSelectPageTitle;
-            else if (value is Models.DistributedInstanceGroupInfo)
-                return Resources.Strings.AuthenticatingInstanceSelectPageTitle;
-            else
-                return null;
+            return value is string str && str.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

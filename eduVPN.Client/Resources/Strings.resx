@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InstanceGroupSelectPageTitle" xml:space="preserve">
-    <value>Choose your profile</value>
+    <value>Choose Your Profile</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
     <value>eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
@@ -126,9 +126,6 @@ The client will continue after you complete the authorization...</value>
   </data>
   <data name="AuthorizationPageRetry" xml:space="preserve">
     <value>Retry</value>
-  </data>
-  <data name="AuthorizationPageRetryNote" xml:space="preserve">
-    <value>In case you accidentaly closed the authorization page in your browser or something else went wrong, please click this button to start a new client autorization request.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
     <value>Waiting for Authorization</value>
@@ -142,17 +139,17 @@ The client will continue after you complete the authorization...</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Next</value>
   </data>
-  <data name="AuthenticatingInstanceSelectPageTitle" xml:space="preserve">
-    <value>Choose your home instance</value>
+  <data name="CountrySelectPageTitle" xml:space="preserve">
+    <value>Select Your Country</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Other Provider</value>
+  <data name="CustomInstanceGroupPageTitle" xml:space="preserve">
+    <value>Other Profile</value>
   </data>
-  <data name="CustomInstancePageURINote" xml:space="preserve">
-    <value>Enter API discovery URI of your VPN provider. Example: https://demo.eduvpn.nl/</value>
+  <data name="CustomInstanceGroupPageDescription" xml:space="preserve">
+    <value>Enter discovery URI of your VPN provider.</value>
   </data>
   <data name="ProfileSelectPageTitle" xml:space="preserve">
     <value>Connect</value>
@@ -161,14 +158,13 @@ The client will continue after you complete the authorization...</value>
     <value>Requires two-factor authentication</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Warning! Your account is marked as disabled. You might not be able to connect.
-Please, contact your helpdesk for support.</value>
+    <value>Warning! Your account is marked as disabled. You might not be able to connect. Please, contact your helpdesk for support.</value>
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
     <value>VPN Connection</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
-    <value>Location</value>
+    <value>Provider</value>
   </data>
   <data name="StatusPageProfile" xml:space="preserve">
     <value>Profile</value>
@@ -188,8 +184,8 @@ Please, contact your helpdesk for support.</value>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notification</value>
   </data>
-  <data name="ConnectingInstanceSelectPageTitle" xml:space="preserve">
-    <value>Choose connecting instance</value>
+  <data name="InstituteSelectPageTitle" xml:space="preserve">
+    <value>Select Your Institution</value>
   </data>
   <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
     <value>Bytes in</value>
@@ -207,7 +203,7 @@ Please, contact your helpdesk for support.</value>
     <value>IPv6</value>
   </data>
   <data name="StatusPageConnectionInfoTitle" xml:space="preserve">
-    <value>Connection info</value>
+    <value>Connection Info</value>
   </data>
   <data name="StatusPageConnectionInfoViewLog" xml:space="preserve">
     <value>View log</value>
@@ -226,5 +222,14 @@ Please, contact your helpdesk for support.</value>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
+  <data name="CountrySelectPageDescription" xml:space="preserve">
+    <value>Select your institution's country here. You can select VPN endpoints in other countries after signing in with your institution credentials.</value>
+  </data>
+  <data name="InstanceGroupSelectCustom" xml:space="preserve">
+    <value>Add other address</value>
+  </data>
+  <data name="InstanceGroupSelectPageDescription" xml:space="preserve">
+    <value>Select the profile type you want to use below. You will be redirected to the browser for your credentials.</value>
   </data>
 </root>

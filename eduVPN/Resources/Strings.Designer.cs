@@ -70,15 +70,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other (not listed).
-        /// </summary>
-        internal static string CustomInstance {
-            get {
-                return ResourceManager.GetString("CustomInstance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to API server replied with an error..
         /// </summary>
         internal static string ErrorAPIServerReply {

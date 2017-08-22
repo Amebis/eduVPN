@@ -5,14 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Windows.Controls;
-
 namespace eduVPN.Views
 {
     /// <summary>
     /// Interaction logic for InstanceGroupSelectPage.xaml
     /// </summary>
-    public partial class InstanceGroupSelectPage : Page
+    public partial class InstanceGroupSelectPage : ConnectWizardPage
     {
         #region Constructors
 
