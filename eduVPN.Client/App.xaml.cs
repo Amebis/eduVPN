@@ -40,6 +40,13 @@ namespace eduVPN.Client
         {
             if (SingleInstance<App>.InitializeAsFirstInstance("org.eduvpn.app"))
             {
+                if (eduVPN.Client.Properties.Settings.Default.SettingsVersion == 0)
+                {
+                    // Migrate settings from previous version.
+                    eduVPN.Client.Properties.Settings.Default.Upgrade();
+                    eduVPN.Client.Properties.Settings.Default.SettingsVersion = 1;
+                }
+
                 // First instance
                 var application = new App();
                 application.InitializeComponent();

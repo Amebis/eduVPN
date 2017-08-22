@@ -20,14 +20,19 @@
     <Setting Name="SecureInternetDirectoryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AccessTokens" Type="eduVPN.SerializableStringDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0"?&gt;&lt;SerializableStringDictionary/&gt;</Value>
-    </Setting>
-    <Setting Name="InstanceSettings" Type="eduVPN.Models.InstanceSettingsDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0"?&gt;&lt;InstanceSettingsDictionary/&gt;</Value>
-    </Setting>
     <Setting Name="OpenVPNInterface" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="AccessTokens" Type="eduVPN.SerializableStringDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableStringDictionary /&gt;</Value>
+    </Setting>
+    <Setting Name="InstanceSettings" Type="eduVPN.Models.InstanceSettingsDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;InstanceSettingsDictionary /&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

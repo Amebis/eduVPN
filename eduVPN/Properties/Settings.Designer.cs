@@ -85,7 +85,31 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\"?><SerializableStringDictionary/>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpenVPNInterface {
+            get {
+                return ((string)(this["OpenVPNInterface"]));
+            }
+            set {
+                this["OpenVPNInterface"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SettingsVersion {
+            get {
+                return ((int)(this["SettingsVersion"]));
+            }
+            set {
+                this["SettingsVersion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<SerializableStringDictionary />")]
         public global::eduVPN.SerializableStringDictionary AccessTokens {
             get {
                 return ((global::eduVPN.SerializableStringDictionary)(this["AccessTokens"]));
@@ -97,25 +121,13 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\"?><InstanceSettingsDictionary/>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<InstanceSettingsDictionary />")]
         public global::eduVPN.Models.InstanceSettingsDictionary InstanceSettings {
             get {
                 return ((global::eduVPN.Models.InstanceSettingsDictionary)(this["InstanceSettings"]));
             }
             set {
                 this["InstanceSettings"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string OpenVPNInterface {
-            get {
-                return ((string)(this["OpenVPNInterface"]));
-            }
-            set {
-                this["OpenVPNInterface"] = value;
             }
         }
     }

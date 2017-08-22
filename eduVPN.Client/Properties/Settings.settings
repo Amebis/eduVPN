@@ -1,6 +1,6 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPN.Client.Properties" GeneratedClassName="Settings">
-  <Profiles/>
+  <Profiles />
   <Settings>
     <Setting Name="WindowTop" Type="System.Double" Scope="User">
       <Value Profile="(Default)">NaN</Value>
@@ -9,7 +9,10 @@
       <Value Profile="(Default)">NaN</Value>
     </Setting>
     <Setting Name="CustomInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)"/>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

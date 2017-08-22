@@ -223,6 +223,13 @@ namespace eduVPN.ViewModels
             // Save UI thread's dispatcher.
             Dispatcher = Dispatcher.CurrentDispatcher;
 
+            if (Properties.Settings.Default.SettingsVersion == 0)
+            {
+                // Migrate settings from previous version.
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.SettingsVersion = 1;
+            }
+
             Dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
                 // Raise the abort flag to gracefully shutdown all background threads.
                 Abort.Cancel();
