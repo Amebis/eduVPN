@@ -105,18 +105,18 @@ namespace eduVPN.ViewModels
         private ConnectWizardPage _current_page;
 
         /// <summary>
-        /// Access type page
+        /// Instance group page
         /// </summary>
-        public AccessTypePage AccessTypePage
+        public InstanceGroupSelectPage InstanceGroupSelectPage
         {
             get
             {
-                if (_access_type_page == null)
-                    _access_type_page = new AccessTypePage(this);
-                return _access_type_page;
+                if (_instance_group_page == null)
+                    _instance_group_page = new InstanceGroupSelectPage(this);
+                return _instance_group_page;
             }
         }
-        private AccessTypePage _access_type_page;
+        private InstanceGroupSelectPage _instance_group_page;
 
         /// <summary>
         /// Instance selection page
@@ -224,7 +224,7 @@ namespace eduVPN.ViewModels
                 Properties.Settings.Default.Save();
             };
 
-            CurrentPage = AccessTypePage;
+            CurrentPage = InstanceGroupSelectPage;
         }
 
         #endregion

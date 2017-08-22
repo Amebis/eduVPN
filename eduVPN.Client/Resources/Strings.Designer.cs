@@ -61,15 +61,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Access Type.
-        /// </summary>
-        public static string AccessTypePageTitle {
-            get {
-                return ResourceManager.GetString("AccessTypePageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Choose your home instance.
         /// </summary>
         public static string AuthenticatingInstanceSelectPageTitle {
@@ -166,6 +157,15 @@ namespace eduVPN.Client.Resources {
         public static string CustomInstancePageURINote {
             get {
                 return ResourceManager.GetString("CustomInstancePageURINote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose your profile.
+        /// </summary>
+        public static string InstanceGroupSelectPageTitle {
+            get {
+                return ResourceManager.GetString("InstanceGroupSelectPageTitle", resourceCulture);
             }
         }
         

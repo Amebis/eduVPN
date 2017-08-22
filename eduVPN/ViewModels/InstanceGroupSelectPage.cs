@@ -17,9 +17,9 @@ using System.Windows.Threading;
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Access type selection wizard page
+    /// Instance group selection wizard page
     /// </summary>
-    public class AccessTypePage : ConnectWizardPage
+    public class InstanceGroupSelectPage : ConnectWizardPage
     {
         #region Fields
 
@@ -50,21 +50,21 @@ namespace eduVPN.ViewModels
             set {
                 _instance_groups = value;
                 RaisePropertyChanged();
-                ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
+                ((DelegateCommandBase)SelectInstanceGroup).RaiseCanExecuteChanged();
             }
         }
         private ObservableCollection<Models.InstanceGroupInfo> _instance_groups;
 
         /// <summary>
-        /// Set access type
+        /// Select instance group
         /// </summary>
-        public ICommand SetAccessType
+        public ICommand SelectInstanceGroup
         {
             get
             {
-                if (_set_access_type == null)
+                if (_select_instance_group == null)
                 {
-                    _set_access_type = new DelegateCommand<Models.InstanceGroupInfo>(
+                    _select_instance_group = new DelegateCommand<Models.InstanceGroupInfo>(
                         // execute
                         async param =>
                         {
@@ -100,20 +100,20 @@ namespace eduVPN.ViewModels
                         // canExecute
                         param => param != null);
                 }
-                return _set_access_type;
+                return _select_instance_group;
             }
         }
-        private ICommand _set_access_type;
+        private ICommand _select_instance_group;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs an access type selection wizard page.
+        /// Constructs an instance group selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public AccessTypePage(ConnectWizard parent) :
+        public InstanceGroupSelectPage(ConnectWizard parent) :
             base(parent)
         {
             _obj_cache = new Dictionary<string, object>[_instance_directory_id.Length];
@@ -154,7 +154,7 @@ namespace eduVPN.ViewModels
                 }
 
                 InstanceGroups.Add(instance_group);
-                ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
+                ((DelegateCommandBase)SelectInstanceGroup).RaiseCanExecuteChanged();
             }
         }
 
@@ -222,7 +222,7 @@ namespace eduVPN.ViewModels
                                         () =>
                                         {
                                             InstanceGroups[i] = instance_group;
-                                            ((DelegateCommandBase)SetAccessType).RaiseCanExecuteChanged();
+                                            ((DelegateCommandBase)SelectInstanceGroup).RaiseCanExecuteChanged();
                                         }));
 
                                     try

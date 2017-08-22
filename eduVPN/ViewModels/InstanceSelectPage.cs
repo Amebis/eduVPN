@@ -121,7 +121,7 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            Parent.CurrentPage = Parent.AccessTypePage;
+            Parent.CurrentPage = Parent.InstanceGroupSelectPage;
         }
 
         protected override bool CanNavigateBack()

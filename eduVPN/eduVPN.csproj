@@ -57,7 +57,7 @@
     <Compile Include="Models\VPNSessionStatusType.cs" />
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="System\IO\Extensions.cs" />
-    <Compile Include="ViewModels\AccessTypePage.cs" />
+    <Compile Include="ViewModels\InstanceGroupSelectPage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />
     <Compile Include="ViewModels\AuthorizationPage.cs" />
     <Compile Include="ViewModels\ConnectWizardPage.cs" />

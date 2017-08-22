@@ -10,13 +10,13 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for AccessTypePage.xaml
+    /// Interaction logic for InstanceGroupSelectPage.xaml
     /// </summary>
-    public partial class AccessTypePage : Page
+    public partial class InstanceGroupSelectPage : Page
     {
         #region Constructors
 
-        public AccessTypePage()
+        public InstanceGroupSelectPage()
         {
             InitializeComponent();
         }

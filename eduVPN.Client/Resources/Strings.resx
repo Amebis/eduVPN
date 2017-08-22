@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessTypePageTitle" xml:space="preserve">
-    <value>Access Type</value>
+  <data name="InstanceGroupSelectPageTitle" xml:space="preserve">
+    <value>Choose your profile</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
     <value>eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
