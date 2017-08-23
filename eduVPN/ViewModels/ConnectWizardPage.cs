@@ -7,7 +7,6 @@
 
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels
@@ -37,41 +36,6 @@ namespace eduVPN.ViewModels
             }
         }
         private ICommand _navigate_back;
-
-        /// <summary>
-        /// The page error; <c>null</c> when no error condition.
-        /// </summary>
-        public Exception Error
-        {
-            get { return _error; }
-            set { _error = value; RaisePropertyChanged(); }
-        }
-        private Exception _error;
-
-        /// <summary>
-        /// Is wizard page performing background tasks?
-        /// </summary>
-        public bool IsBusy
-        {
-            get { return _task_count > 0; }
-        }
-
-        /// <summary>
-        /// Number of background tasks the wizard is performing
-        /// </summary>
-        public uint TaskCount
-        {
-            get { return _task_count; }
-            set {
-                if (value != _task_count)
-                {
-                    _task_count = value;
-                    RaisePropertyChanged();
-                    RaisePropertyChanged("IsBusy");
-                }
-            }
-        }
-        private uint _task_count;
 
         #endregion
 

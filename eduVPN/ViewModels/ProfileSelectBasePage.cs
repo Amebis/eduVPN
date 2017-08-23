@@ -106,16 +106,16 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = null));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
                     try
                     {
                         var user_info = Parent.Configuration.AuthenticatingInstance.GetUserInfo(Parent.Configuration.AccessToken, ConnectWizard.Abort.Token);
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
-                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
                 })).Start();
         }
 

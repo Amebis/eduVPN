@@ -47,8 +47,8 @@ namespace eduVPN.ViewModels
                         // execute
                         async () =>
                         {
-                            Error = null;
-                            TaskCount++;
+                            Parent.Error = null;
+                            Parent.ChangeTaskCount(+1);
                             try
                             {
                                 // Save selected instance.
@@ -74,8 +74,8 @@ namespace eduVPN.ViewModels
                                 else
                                     Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
-                            catch (Exception ex) { Error = ex; }
-                            finally { TaskCount--; }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute

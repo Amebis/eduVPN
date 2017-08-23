@@ -34,6 +34,34 @@ namespace eduVPN.ViewModels
         private static CancellationTokenSource _abort = new CancellationTokenSource();
 
         /// <summary>
+        /// The page error; <c>null</c> when no error condition.
+        /// </summary>
+        public Exception Error
+        {
+            get { return _error; }
+            set { _error = value; RaisePropertyChanged(); }
+        }
+        private Exception _error;
+
+        /// <summary>
+        /// Is wizard performing background tasks?
+        /// </summary>
+        public bool IsBusy
+        {
+            get { return _task_count > 0; }
+        }
+
+        /// <summary>
+        /// Number of background tasks the wizard is performing
+        /// </summary>
+        public int TaskCount
+        {
+            get { lock (_task_count_lock) return _task_count; }
+        }
+        private int _task_count;
+        private object _task_count_lock = new object();
+
+        /// <summary>
         /// Selected instance group
         /// </summary>
         public Models.InstanceGroupInfo InstanceGroup
@@ -217,6 +245,23 @@ namespace eduVPN.ViewModels
             Configuration = new Models.VPNConfiguration();
 
             CurrentPage = InstanceGroupSelectPage;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Increments or decrements number of background tasks the wizard is performing
+        /// </summary>
+        /// <param name="increment">Positive to increment, negative to decrement</param>
+        public void ChangeTaskCount(int increment)
+        {
+            lock (_task_count_lock)
+                _task_count += increment;
+
+            RaisePropertyChanged("TaskCount");
+            RaisePropertyChanged("IsBusy");
         }
 
         #endregion

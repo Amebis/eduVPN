@@ -68,8 +68,8 @@ namespace eduVPN.ViewModels
                         // execute
                         async param =>
                         {
-                            Error = null;
-                            TaskCount++;
+                            Parent.Error = null;
+                            Parent.ChangeTaskCount(+1);
                             try
                             {
                                 Parent.InstanceGroup = param;
@@ -93,8 +93,8 @@ namespace eduVPN.ViewModels
                                 else
                                     Parent.CurrentPage = Parent.InstanceSelectPage;
                             }
-                            catch (Exception ex) { Error = ex; }
-                            finally { TaskCount--; }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -118,15 +118,15 @@ namespace eduVPN.ViewModels
                         // execute
                         param =>
                         {
-                            Error = null;
-                            TaskCount++;
+                            Parent.Error = null;
+                            Parent.ChangeTaskCount(+1);
                             try
                             {
                                 Parent.InstanceGroup = null;
                                 Parent.CurrentPage = Parent.CustomInstanceGroupPage;
                             }
-                            catch (Exception ex) { Error = ex; }
-                            finally { TaskCount--; }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -193,8 +193,8 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = null));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
                     try
                     {
                         var json_get_tasks = new Task<JSON.Response>[_instance_directory_id.Length];
@@ -263,13 +263,13 @@ namespace eduVPN.ViewModels
 
                                 // Notify the sender the instance group loading failed. However, continue with other lists.
                                 // This will overwrite all previous error messages.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[i]), ex)));
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[i]), ex)));
                             }
                         }
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
-                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
                 })).Start();
         }
 

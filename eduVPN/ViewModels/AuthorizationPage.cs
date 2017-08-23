@@ -41,8 +41,8 @@ namespace eduVPN.ViewModels
                         // execute
                         async param =>
                         {
-                            Error = null;
-                            TaskCount++;
+                            Parent.Error = null;
+                            Parent.ChangeTaskCount(+1);
                             try
                             {
                                 // Process response and get access token.
@@ -51,8 +51,8 @@ namespace eduVPN.ViewModels
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
-                            catch (Exception ex) { Error = ex; }
-                            finally { TaskCount--; }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -98,14 +98,14 @@ namespace eduVPN.ViewModels
         /// </summary>
         private void RequestAuthorization()
         {
-            Error = null;
-            TaskCount++;
+            Parent.Error = null;
+            Parent.ChangeTaskCount(+1);
             try
             {
                 Parent.Configuration.AuthenticatingInstance.RequestAuthorization(ConnectWizard.Abort.Token);
             }
-            catch (Exception ex) { Error = ex; }
-            finally { TaskCount--; }
+            catch (Exception ex) { Parent.Error = ex; }
+            finally { Parent.ChangeTaskCount(-1); }
         }
 
         public override void OnActivate()

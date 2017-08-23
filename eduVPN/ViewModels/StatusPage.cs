@@ -71,7 +71,7 @@ namespace eduVPN.ViewModels
                 new Thread(new ThreadStart(
                     () =>
                     {
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
                         try
                         {
                             // Get and load user messages.
@@ -95,7 +95,7 @@ namespace eduVPN.ViewModels
                             }
                         }
                         catch (Exception) { }
-                        finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
+                        finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
                     })).Start();
             }
 
@@ -117,13 +117,13 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = null));
                     try
                     {
                         Parent.Session.Run(ConnectWizard.Abort.Token);
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Parent.Error = ex; })); }
                 })).Start();
         }
 

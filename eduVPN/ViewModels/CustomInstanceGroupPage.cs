@@ -49,8 +49,8 @@ namespace eduVPN.ViewModels
                     _select_custom_instance_group = new DelegateCommand(
                         // execute
                         async () => {
-                            Error = null;
-                            TaskCount++;
+                            Parent.Error = null;
+                            Parent.ChangeTaskCount(+1);
                             try
                             {
                                 // Get and parse instance group JSON.
@@ -65,8 +65,8 @@ namespace eduVPN.ViewModels
                                 if (Parent.InstanceGroupSelectPage.SelectInstanceGroup.CanExecute(instance_group))
                                     Parent.InstanceGroupSelectPage.SelectInstanceGroup.Execute(instance_group);
                             }
-                            catch (Exception ex) { Error = ex; }
-                            finally { TaskCount--; }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute

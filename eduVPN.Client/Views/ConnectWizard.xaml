@@ -30,7 +30,7 @@
         <!-- Change mouse cursor when wizard page reports doing background task. -->
         <Style TargetType="{x:Type Window}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=CurrentPage.IsBusy}" Value="True">
+                <DataTrigger Binding="{Binding Path=IsBusy}" Value="True">
                     <Setter Property="Cursor" Value="AppStarting"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -140,14 +140,14 @@
             Grid.Row="1"
             Grid.ColumnSpan="3"
             Style="{StaticResource eduVPNInfoBarStyle}"
-            Visibility="{Binding Path=CurrentPage.Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+            Visibility="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
             <StatusBarItem>
                 <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <TextBlock
                     TextWrapping="Wrap"
-                    Text="{Binding Path=CurrentPage.Error, Converter={StaticResource ExceptionMessageConverter}}"/>
+                    Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
             </StatusBarItem>
         </StatusBar>
 
