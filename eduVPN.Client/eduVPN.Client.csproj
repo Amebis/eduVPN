@@ -51,6 +51,9 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Views\ConnectWizardPage.cs" />
+    <Compile Include="Views\InitializingPage.xaml.cs">
+      <DependentUpon>InitializingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InstanceAndProfileSelectPage.xaml.cs">
       <DependentUpon>InstanceAndProfileSelectPage.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\UserDisabledIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InitializingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

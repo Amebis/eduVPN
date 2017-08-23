@@ -30,7 +30,7 @@
         <ItemsControl
             Margin="10,5"
             Style="{StaticResource eduVPNChoiceItemsControlStyle}"
-            ItemsSource="{Binding Path=InstanceGroups}">
+            ItemsSource="{Binding Path=Parent.InstanceGroups}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>

@@ -59,6 +59,7 @@
     <Compile Include="SerializableStringDictionary.cs" />
     <Compile Include="System\IO\Extensions.cs" />
     <Compile Include="ViewModels\CountrySelectPage.cs" />
+    <Compile Include="ViewModels\InitializingPage.cs" />
     <Compile Include="ViewModels\InstanceGroupSelectPage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />
     <Compile Include="ViewModels\AuthorizationPage.cs" />

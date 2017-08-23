@@ -119,7 +119,7 @@ namespace eduVPN.ViewModels
         {
             if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo)
             {
-                if (Parent.InstanceGroupSelectPage.InstanceGroups.IndexOf(Parent.InstanceGroup) >= 0)
+                if (Array.IndexOf(Parent.InstanceGroups, Parent.InstanceGroup) >= 0)
                     Parent.CurrentPage = Parent.InstanceGroupSelectPage;
                 else
                     Parent.CurrentPage = Parent.CustomInstanceGroupPage;

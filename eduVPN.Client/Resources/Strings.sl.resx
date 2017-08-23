@@ -235,4 +235,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>I_zhod</value>
   </data>
+  <data name="InitializingPageTitle" xml:space="preserve">
+    <value>Vzpostavljam ...</value>
+  </data>
 </root>

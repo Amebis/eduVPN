@@ -235,4 +235,7 @@ The client will continue after you complete the authorization...</value>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>E_xit</value>
   </data>
+  <data name="InitializingPageTitle" xml:space="preserve">
+    <value>Initializing...</value>
+  </data>
 </root>

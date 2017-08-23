@@ -114,7 +114,7 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            if (Parent.InstanceGroupSelectPage.InstanceGroups.IndexOf(Parent.InstanceGroup) >= 0)
+            if (Array.IndexOf(Parent.InstanceGroups, Parent.InstanceGroup) >= 0)
                 Parent.CurrentPage = Parent.InstanceGroupSelectPage;
             else
                 Parent.CurrentPage = Parent.CustomInstanceGroupPage;

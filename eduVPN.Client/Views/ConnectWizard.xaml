@@ -43,6 +43,9 @@
 
     <Window.Resources>
         <!-- Page view model to view mapping -->
+        <DataTemplate DataType="{x:Type viewModel:InitializingPage}">
+            <view:InitializingPage/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:InstanceGroupSelectPage}">
             <view:InstanceGroupSelectPage/>
         </DataTemplate>

@@ -152,6 +152,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initializing....
+        /// </summary>
+        public static string InitializingPageTitle {
+            get {
+                return ResourceManager.GetString("InitializingPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add other address.
         /// </summary>
         public static string InstanceGroupSelectCustom {

@@ -1,0 +1,21 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<view:ConnectWizardPage
+    x:Class="eduVPN.Views.InitializingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:view="clr-namespace:eduVPN.Views"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Title="{x:Static res:Strings.InitializingPageTitle}"
+    Style="{StaticResource eduVPNConnectWizardPageWithTitle}">
+
+</view:ConnectWizardPage>

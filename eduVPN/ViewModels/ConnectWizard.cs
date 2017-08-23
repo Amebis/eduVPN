@@ -7,6 +7,7 @@
 
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -17,6 +18,19 @@ namespace eduVPN.ViewModels
     /// </summary>
     public class ConnectWizard : BindableBase, IDisposable
     {
+        #region Fields
+
+        /// <summary>
+        /// Instance directory URI IDs as used in <c>Properties.Settings.Default</c> collection
+        /// </summary>
+        private static readonly string[] _instance_directory_id = new string[]
+        {
+            "SecureInternetDirectory",
+            "InstituteAccessDirectory",
+        };
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -60,6 +74,15 @@ namespace eduVPN.ViewModels
         }
         private int _task_count;
         private object _task_count_lock = new object();
+
+        /// <summary>
+        /// Available instance groups
+        /// </summary>
+        public Models.InstanceGroupInfo[] InstanceGroups
+        {
+            get { return _instance_groups; }
+        }
+        private Models.InstanceGroupInfo[] _instance_groups;
 
         /// <summary>
         /// Selected instance group
@@ -107,6 +130,20 @@ namespace eduVPN.ViewModels
             }
         }
         private ConnectWizardPage _current_page;
+
+        /// <summary>
+        /// Initializing wizard page
+        /// </summary>
+        public InitializingPage InitializingPage
+        {
+            get
+            {
+                if (_initializing_page == null)
+                    _initializing_page = new InitializingPage(this);
+                return _initializing_page;
+            }
+        }
+        private InitializingPage _initializing_page;
 
         /// <summary>
         /// Instance group page
@@ -244,7 +281,73 @@ namespace eduVPN.ViewModels
 
             Configuration = new Models.VPNConfiguration();
 
-            CurrentPage = InstanceGroupSelectPage;
+            // Show initializing wizard page.
+            CurrentPage = InitializingPage;
+
+            // Spawn instance group loading threads.
+            _instance_groups = new Models.InstanceGroupInfo[_instance_directory_id.Length];
+            var threads = new Thread[_instance_directory_id.Length];
+            for (var i = 0; i < _instance_directory_id.Length; i++)
+            {
+                // Launch instance group load in the background.
+                threads[i] = new Thread(new ParameterizedThreadStart(
+                    param =>
+                    {
+                        var group_index = (int)param;
+                        try
+                        {
+                            // Get instance group.
+                            var response_cache = JSON.Response.Get(
+                                uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[group_index]]),
+                                pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[group_index] + "PubKey"]),
+                                ct: Abort.Token,
+                                previous: (JSON.Response)Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"]);
+
+                            // Parse instance group JSON.
+                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(
+                                response_cache.Value,
+                                Abort.Token);
+
+                            // Load instance group.
+                            _instance_groups[group_index] = Models.InstanceGroupInfo.FromJSON(obj);
+
+                            if (response_cache.IsFresh)
+                            {
+                                // If we got here, the loaded instance group is (probably) OK. Update cache.
+                                Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = response_cache;
+                            }
+                        }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception ex)
+                        {
+                            // Make it a clean start next time.
+                            Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = null;
+
+                            // Notify the sender the instance group loading failed. However, continue with other groups.
+                            // This will overwrite all previous error messages.
+                            Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[group_index]), ex);
+                        }
+                    }));
+                threads[i].Start(i);
+            }
+
+            // Spawn monitor thread to wait for initialization to complete.
+            new Thread(new ThreadStart(
+                () =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
+                    try
+                    {
+                        // Wait for all threads.
+                        foreach (var thread in threads)
+                            thread.Join();
+
+                        // Of everything is OK, proceed to the "first" page.
+                        if (Error == null)
+                            CurrentPage = InstanceGroupSelectPage;
+                    }
+                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                })).Start();
         }
 
         #endregion
