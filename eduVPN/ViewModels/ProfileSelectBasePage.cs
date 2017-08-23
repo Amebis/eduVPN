@@ -110,7 +110,7 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                     try
                     {
-                        var user_info = Parent.AuthenticatingInstance.GetUserInfo(Parent.AccessToken, ConnectWizard.Abort.Token);
+                        var user_info = Parent.Configuration.AuthenticatingInstance.GetUserInfo(Parent.Configuration.AccessToken, ConnectWizard.Abort.Token);
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                     }
                     catch (OperationCanceledException) { }
@@ -124,7 +124,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         protected virtual void DoConnectSelectedProfile()
         {
-            Parent.ConnectingProfile = SelectedProfile;
+            Parent.Configuration.ConnectingProfile = SelectedProfile;
             Parent.CurrentPage = Parent.StatusPage;
         }
 

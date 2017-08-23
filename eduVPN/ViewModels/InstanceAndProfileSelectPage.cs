@@ -44,7 +44,7 @@ namespace eduVPN.ViewModels
                                 try
                                 {
                                     // Get and load profile list.
-                                    profile_list = _selected_instance.GetProfileList(Parent.AccessToken, ConnectWizard.Abort.Token);
+                                    profile_list = _selected_instance.GetProfileList(Parent.Configuration.AccessToken, ConnectWizard.Abort.Token);
                                 }
                                 catch (AggregateException ex)
                                 {
@@ -96,13 +96,13 @@ namespace eduVPN.ViewModels
             else
             {
                 // By default, select the same connecting instance as authenticating instance.
-                SelectedInstance = Parent.AuthenticatingInstance;
+                SelectedInstance = Parent.Configuration.AuthenticatingInstance;
             }
         }
 
         protected override void DoConnectSelectedProfile()
         {
-            Parent.ConnectingInstance = SelectedInstance;
+            Parent.Configuration.ConnectingInstance = SelectedInstance;
 
             base.DoConnectSelectedProfile();
         }

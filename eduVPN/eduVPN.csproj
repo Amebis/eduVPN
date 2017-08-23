@@ -53,6 +53,7 @@
     <Compile Include="Models\OpenVPNSession.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\VPNConfiguration.cs" />
     <Compile Include="Models\VPNSession.cs" />
     <Compile Include="Models\VPNSessionStatusType.cs" />
     <Compile Include="SerializableStringDictionary.cs" />

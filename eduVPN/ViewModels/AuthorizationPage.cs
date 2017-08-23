@@ -46,7 +46,7 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Process response and get access token.
-                                Parent.AccessToken = await Parent.AuthenticatingInstance.AuthorizeAsync(new Uri(param), ConnectWizard.Abort.Token);
+                                Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.AuthorizeAsync(new Uri(param), ConnectWizard.Abort.Token);
 
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ProfileSelectPage;
@@ -102,7 +102,7 @@ namespace eduVPN.ViewModels
             TaskCount++;
             try
             {
-                Parent.AuthenticatingInstance.RequestAuthorization(ConnectWizard.Abort.Token);
+                Parent.Configuration.AuthenticatingInstance.RequestAuthorization(ConnectWizard.Abort.Token);
             }
             catch (Exception ex) { Error = ex; }
             finally { TaskCount--; }

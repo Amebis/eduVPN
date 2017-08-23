@@ -77,15 +77,15 @@ namespace eduVPN.ViewModels
                                 if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo instance_group)
                                 {
                                     // Set authenticating instance.
-                                    Parent.AuthenticatingInstance = new Models.InstanceInfo(instance_group);
+                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_group);
 
                                     // Restore the access token from the settings.
-                                    Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
+                                    Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
 
                                     // Reset connecting instance.
-                                    Parent.ConnectingInstance = null;
+                                    Parent.Configuration.ConnectingInstance = null;
 
-                                    if (Parent.AccessToken == null)
+                                    if (Parent.Configuration.AccessToken == null)
                                         Parent.CurrentPage = Parent.AuthorizationPage;
                                     else
                                         Parent.CurrentPage = Parent.ProfileSelectPage;

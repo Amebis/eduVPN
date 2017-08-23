@@ -52,24 +52,24 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Save selected instance.
-                                Parent.AuthenticatingInstance = SelectedInstance;
+                                Parent.Configuration.AuthenticatingInstance = SelectedInstance;
 
                                 // Restore the access token from the settings.
-                                Parent.AccessToken = await Parent.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
+                                Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
 
                                 if (Parent.InstanceGroup is Models.LocalInstanceGroupInfo)
                                 {
                                     // Connecting instance will be the same as authenticating.
-                                    Parent.ConnectingInstance = Parent.AuthenticatingInstance;
+                                    Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
                                 }
                                 else if (Parent.InstanceGroup is Models.DistributedInstanceGroupInfo)
                                 {
                                     // Connecting instance will not (necessarry) be the same as authenticating.
-                                    Parent.ConnectingInstance = null;
+                                    Parent.Configuration.ConnectingInstance = null;
                                 } else
                                     throw new NotImplementedException();
 
-                                if (Parent.AccessToken == null)
+                                if (Parent.Configuration.AccessToken == null)
                                     Parent.CurrentPage = Parent.AuthorizationPage;
                                 else
                                     Parent.CurrentPage = Parent.ProfileSelectPage;

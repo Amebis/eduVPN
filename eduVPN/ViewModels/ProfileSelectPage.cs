@@ -47,7 +47,7 @@ namespace eduVPN.ViewModels
                         try
                         {
                             // Get and load profile list.
-                            profile_list = Parent.ConnectingInstance.GetProfileList(Parent.AccessToken, ConnectWizard.Abort.Token);
+                            profile_list = Parent.Configuration.ConnectingInstance.GetProfileList(Parent.Configuration.AccessToken, ConnectWizard.Abort.Token);
                         }
                         catch (AggregateException ex)
                         {
