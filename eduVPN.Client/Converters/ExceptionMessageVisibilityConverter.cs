@@ -15,7 +15,7 @@ namespace eduVPN.Client.Converters
     /// <summary>
     /// Returns <c>Visibility.Visible</c> if input value is a non-null exception; or <c>Visibility.Collapsed</c> otherwise.
     /// </summary>
-    public class StatusBarVisibilityConverter : IValueConverter
+    public class ExceptionMessageVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

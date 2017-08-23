@@ -40,9 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
+    <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
-    <Compile Include="Converters\StatusBarVisibilityConverter.cs" />
     <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
