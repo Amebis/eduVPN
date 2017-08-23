@@ -17,7 +17,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Connection status wizard page
     /// </summary>
-    public class StatusPage : ConnectWizardPage, IDisposable
+    public class StatusPage : ConnectWizardPage
     {
         #region Properties
 
@@ -30,16 +30,6 @@ namespace eduVPN.ViewModels
             set { _message_list = value; RaisePropertyChanged(); }
         }
         private Models.MessageList _message_list;
-
-        /// <summary>
-        /// VPN session
-        /// </summary>
-        public Models.VPNSession Session
-        {
-            get { return _session; }
-            set { _session = value; RaisePropertyChanged(); }
-        }
-        private Models.VPNSession _session;
 
         #endregion
 
@@ -121,7 +111,7 @@ namespace eduVPN.ViewModels
             //    });
             //}));
 
-            _session = new Models.OpenVPNSession(Parent.ConnectingInstance, Parent.ConnectingProfile, Parent.AccessToken);
+            Parent.Session = new Models.OpenVPNSession(Parent.ConnectingInstance, Parent.ConnectingProfile, Parent.AccessToken);
 
             // Launch VPN session in the background.
             new Thread(new ThreadStart(
@@ -130,7 +120,7 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
                     try
                     {
-                        _session.Run(ConnectWizard.Abort.Token);
+                        Parent.Session.Run(ConnectWizard.Abort.Token);
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
@@ -140,8 +130,8 @@ namespace eduVPN.ViewModels
         protected override void DoNavigateBack()
         {
             // Terminate connection.
-            if (_session != null && _session.Disconnect.CanExecute(null))
-                _session.Disconnect.Execute(null);
+            if (Parent.Session != null && Parent.Session.Disconnect.CanExecute(null))
+                Parent.Session.Disconnect.Execute(null);
 
             Parent.CurrentPage = Parent.ProfileSelectPage;
         }
@@ -151,28 +141,6 @@ namespace eduVPN.ViewModels
             return true;
         }
 
-        #endregion
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                    _session.Dispose();
-
-                disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
         #endregion
     }
 }

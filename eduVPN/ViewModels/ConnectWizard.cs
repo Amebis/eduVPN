@@ -87,6 +87,16 @@ namespace eduVPN.ViewModels
         }
         private Models.ProfileInfo _connecting_profile;
 
+        /// <summary>
+        /// VPN session
+        /// </summary>
+        public Models.VPNSession Session
+        {
+            get { return _session; }
+            set { _session = value; RaisePropertyChanged(); }
+        }
+        private Models.VPNSession _session;
+
         #region Pages
 
         /// <summary>
@@ -252,8 +262,11 @@ namespace eduVPN.ViewModels
             {
                 if (disposing)
                 {
-                    if (_status_page != null)
-                        _status_page.Dispose();
+                    if (_session != null)
+                    {
+                        _session.Dispose();
+                        _session = null;
+                    }
                 }
 
                 disposedValue = true;
