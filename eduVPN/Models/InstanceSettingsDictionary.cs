@@ -32,7 +32,7 @@ namespace eduVPN.Models
             Clear();
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "InstanceSettingsDictionary"))
             {
                 var key = reader["Key"];
                 if (key == null)

@@ -27,12 +27,16 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AccessTokens" Type="eduVPN.SerializableStringDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableStringDictionary /&gt;</Value>
+      <Value Profile="(Default)">&lt;SerializableStringDictionary/&gt;</Value>
     </Setting>
     <Setting Name="InstanceSettings" Type="eduVPN.Models.InstanceSettingsDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;InstanceSettingsDictionary /&gt;</Value>
+      <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
+    </Setting>
+    <Setting Name="InstituteAccessDirectoryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
+      <Value Profile="(Default)">&lt;VPNConfigurationSettingsList/&gt;</Value>
+    </Setting>
+    <Setting Name="SecureInternetDirectoryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
+      <Value Profile="(Default)">&lt;VPNConfigurationSettingsList/&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

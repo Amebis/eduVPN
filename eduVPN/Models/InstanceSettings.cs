@@ -43,7 +43,7 @@ namespace eduVPN.Models
             ClientCertificateHash = null;
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "InstanceSettings"))
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "ClientCertificate")
                     ClientCertificateHash = FromHexToBin(reader["Hash"]);

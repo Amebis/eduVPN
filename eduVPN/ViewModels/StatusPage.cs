@@ -111,20 +111,7 @@ namespace eduVPN.ViewModels
             //    });
             //}));
 
-            Parent.Session = new Models.OpenVPNSession(Parent.Configuration.ConnectingInstance, Parent.Configuration.ConnectingProfile, Parent.Configuration.AccessToken);
-
-            // Launch VPN session in the background.
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = null));
-                    try
-                    {
-                        Parent.Session.Run(ConnectWizard.Abort.Token);
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Parent.Error = ex; })); }
-                })).Start();
+            Parent.StartSession();
         }
 
         protected override void DoNavigateBack()

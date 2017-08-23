@@ -45,6 +45,7 @@
     <Compile Include="Models\InstanceSettingsDictionary.cs" />
     <Compile Include="Models\InstanceSettings.cs" />
     <Compile Include="Models\LocalInstanceGroupInfo.cs" />
+    <Compile Include="Models\DistributedVPNConfigurationSettings.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageList.cs" />
     <Compile Include="Models\MessageMaintenance.cs" />
@@ -54,6 +55,10 @@
     <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\VPNConfiguration.cs" />
+    <Compile Include="Models\LocalVPNConfigurationSettings.cs" />
+    <Compile Include="Models\FederatedVPNConfigurationSettings.cs" />
+    <Compile Include="Models\VPNConfigurationSettings.cs" />
+    <Compile Include="Models\VPNConfigurationSettingsList.cs" />
     <Compile Include="Models\VPNSession.cs" />
     <Compile Include="Models\VPNSessionStatusType.cs" />
     <Compile Include="SerializableStringDictionary.cs" />

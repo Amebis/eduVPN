@@ -109,7 +109,7 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<SerializableStringDictionary />")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
         public global::eduVPN.SerializableStringDictionary AccessTokens {
             get {
                 return ((global::eduVPN.SerializableStringDictionary)(this["AccessTokens"]));
@@ -121,13 +121,37 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<InstanceSettingsDictionary />")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSettingsDictionary/>")]
         public global::eduVPN.Models.InstanceSettingsDictionary InstanceSettings {
             get {
                 return ((global::eduVPN.Models.InstanceSettingsDictionary)(this["InstanceSettings"]));
             }
             set {
                 this["InstanceSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
+        public global::eduVPN.Models.VPNConfigurationSettingsList InstituteAccessDirectoryConfigHistory {
+            get {
+                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["InstituteAccessDirectoryConfigHistory"]));
+            }
+            set {
+                this["InstituteAccessDirectoryConfigHistory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
+        public global::eduVPN.Models.VPNConfigurationSettingsList SecureInternetDirectoryConfigHistory {
+            get {
+                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["SecureInternetDirectoryConfigHistory"]));
+            }
+            set {
+                this["SecureInternetDirectoryConfigHistory"] = value;
             }
         }
     }

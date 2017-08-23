@@ -8,6 +8,8 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -83,6 +85,15 @@ namespace eduVPN.ViewModels
             get { return _instance_groups; }
         }
         private Models.InstanceGroupInfo[] _instance_groups;
+
+        /// <summary>
+        /// VPN configuration histories
+        /// </summary>
+        public ObservableCollection<Models.VPNConfiguration>[] ConfigurationHistories
+        {
+            get { return _configuration_histories; }
+        }
+        private ObservableCollection<Models.VPNConfiguration>[] _configuration_histories;
 
         /// <summary>
         /// Selected instance group
@@ -284,8 +295,10 @@ namespace eduVPN.ViewModels
             // Show initializing wizard page.
             CurrentPage = InitializingPage;
 
-            // Spawn instance group loading threads.
             _instance_groups = new Models.InstanceGroupInfo[_instance_directory_id.Length];
+            _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[_instance_directory_id.Length];
+
+            // Spawn instance group loading threads.
             var threads = new Thread[_instance_directory_id.Length];
             for (var i = 0; i < _instance_directory_id.Length; i++)
             {
@@ -315,6 +328,66 @@ namespace eduVPN.ViewModels
                             {
                                 // If we got here, the loaded instance group is (probably) OK. Update cache.
                                 Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = response_cache;
+                            }
+
+                            _configuration_histories[group_index] = new ObservableCollection<Models.VPNConfiguration>();
+
+                            // Load configuration histories from settings.
+                            var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[group_index] + "ConfigHistory"];
+                            foreach (var h in hist)
+                            {
+                                var cfg = new Models.VPNConfiguration();
+
+                                try
+                                {
+                                    // Restore configuration.
+                                    if (_instance_groups[group_index] is Models.LocalInstanceGroupInfo instance_group_local &&
+                                        h is Models.LocalVPNConfigurationSettings h_local)
+                                    {
+                                        // Local group instance:
+                                        // - Restore instance, which is both: authenticating and connecting.
+                                        // - Restore access token.
+                                        // - Restore profile.
+                                        cfg.AuthenticatingInstance = instance_group_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance).FirstOrDefault();
+                                        if (cfg.AuthenticatingInstance == null) continue;
+                                        cfg.AccessToken = h_local.AccessToken;
+                                        if (cfg.AccessToken == null) continue;
+                                        cfg.ConnectingInstance = cfg.AuthenticatingInstance;
+                                        cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AccessToken, Abort.Token).Where(p => p.ID == h_local.Profile).FirstOrDefault();
+                                        if (cfg.ConnectingProfile == null) continue;
+                                    }
+                                    else if (_instance_groups[group_index] is Models.DistributedInstanceGroupInfo instance_group_distributed &&
+                                        h is Models.DistributedVPNConfigurationSettings h_distributed)
+                                    {
+                                        // Distributed group instance:
+                                        // - Restore authenticating instance.
+                                        // - Restore access token.
+                                        // - Restore last connected instance (optional).
+                                        cfg.AuthenticatingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
+                                        if (cfg.AuthenticatingInstance == null) continue;
+                                        cfg.AccessToken = h_distributed.AccessToken;
+                                        if (cfg.AccessToken == null) continue;
+                                        cfg.ConnectingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
+                                    }
+                                    else if (_instance_groups[group_index] is Models.FederatedInstanceGroupInfo instance_group_federated &&
+                                        h is Models.FederatedVPNConfigurationSettings h_federated)
+                                    {
+                                        // Federated group instance:
+                                        // - Get authenticating instance from federated group settings.
+                                        // - Restore access token.
+                                        // - Restore last connected instance (optional).
+                                        cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_group_federated);
+                                        cfg.AccessToken = h_federated.AccessToken;
+                                        if (cfg.AccessToken == null) continue;
+                                        cfg.ConnectingInstance = instance_group_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
+                                    }
+                                    else
+                                        continue;
+                                }
+                                catch (Exception) { continue; }
+
+                                // Configuration successfuly restored. Add it.
+                                _configuration_histories[group_index].Add(cfg);
                             }
                         }
                         catch (OperationCanceledException) { throw; }
@@ -365,6 +438,107 @@ namespace eduVPN.ViewModels
 
             RaisePropertyChanged("TaskCount");
             RaisePropertyChanged("IsBusy");
+        }
+
+        /// <summary>
+        /// Starts VPN session
+        /// </summary>
+        public void StartSession()
+        {
+            Session = new Models.OpenVPNSession(Configuration.ConnectingInstance, Configuration.ConnectingProfile, Configuration.AccessToken);
+
+            // Save session configuration to history.
+            var group_index = Array.IndexOf(InstanceGroups, InstanceGroup);
+            if (group_index >= 0)
+            {
+                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[group_index] + "ConfigHistory"];
+                Models.VPNConfigurationSettings el = null;
+                if (_instance_groups[group_index] is Models.LocalInstanceGroupInfo)
+                {
+                    // Local group instance
+                    el = new Models.LocalVPNConfigurationSettings()
+                    {
+                        Instance = Configuration.ConnectingInstance.Base.AbsoluteUri,
+                        AccessToken = Configuration.AccessToken,
+                        Profile = Configuration.ConnectingProfile.ID,
+                    };
+                }
+                else if (_instance_groups[group_index] is Models.DistributedInstanceGroupInfo)
+                {
+                    // Distributed group instance
+                    el = new Models.DistributedVPNConfigurationSettings()
+                    {
+                        AuthenticatingInstance = Configuration.AuthenticatingInstance.Base.AbsoluteUri,
+                        AccessToken = Configuration.AccessToken,
+                        LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
+                    };
+                }
+                else if (_instance_groups[group_index] is Models.FederatedInstanceGroupInfo)
+                {
+                    // Federated group instance.
+                    el = new Models.FederatedVPNConfigurationSettings()
+                    {
+                        AccessToken = Configuration.AccessToken,
+                        LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
+                    };
+                }
+
+                if (el != null)
+                {
+                    // Check for duplicates and update popularity.
+                    int found = -1;
+                    for (var i = hist.Count; i-- > 0;)
+                    {
+                        if (hist[i].Equals(el))
+                        {
+                            if (found < 0)
+                            {
+                                // Upvote popularity && refresh access token.
+                                hist[i].Popularity *= 1.1f;
+                                hist[i].AccessToken = el.AccessToken;
+                                found = i;
+                            }
+                            else
+                            {
+                                // We found a match second time. This happened early in the Alpha stage when duplicate checking didn't work right.
+                                // Clean the list. The victim is the entry with access token expiring sooner.
+                                if (hist[i].AccessToken.Expires < hist[found].AccessToken.Expires)
+                                {
+                                    hist[found].Popularity = Math.Max(hist[i].Popularity, hist[found].Popularity);
+                                    hist.RemoveAt(i);
+                                    found--;
+                                }
+                                else
+                                {
+                                    hist[i].Popularity = Math.Max(hist[i].Popularity, hist[found].Popularity);
+                                    hist.RemoveAt(found);
+                                    found = i;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Downvote popularity.
+                            hist[i].Popularity /= 1.1f;
+                        }
+                    }
+                    if (found < 0)
+                        hist.Add(el);
+                }
+            }
+
+            // Launch VPN session in the background.
+            new Thread(new ThreadStart(
+                () =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
+                    try
+                    {
+                        Session.Run(Abort.Token);
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
+                })).Start();
         }
 
         #endregion
