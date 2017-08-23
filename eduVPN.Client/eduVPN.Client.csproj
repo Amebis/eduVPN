@@ -31,7 +31,9 @@
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -223,7 +225,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\eduVPN.ico" />
+    <Resource Include="Resources\eduVPN.ico" />
+    <Resource Include="Resources\eduVPNConnected.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\InstituteAccess.png" />

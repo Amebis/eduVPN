@@ -100,7 +100,12 @@ namespace eduVPN.Client
                 if (wizard.AuthorizationPage.Authorize.CanExecute(uri))
                 {
                     wizard.AuthorizationPage.Authorize.Execute(uri);
+
+                    // (Re)activate window.
+                    if (!MainWindow.IsActive)
+                        MainWindow.Show();
                     MainWindow.Activate();
+                    MainWindow.Focus();
                 }
             }
 

@@ -359,6 +359,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E_xit.
+        /// </summary>
+        public static string SystemTrayMenuExit {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to h\:mm\:ss.
         /// </summary>
         public static string TimeSpanInSeconds {

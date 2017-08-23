@@ -232,4 +232,7 @@ The client will continue after you complete the authorization...</value>
   <data name="InstanceGroupSelectPageDescription" xml:space="preserve">
     <value>Select the profile type you want to use below. You will be redirected to the browser for your credentials.</value>
   </data>
+  <data name="SystemTrayMenuExit" xml:space="preserve">
+    <value>E_xit</value>
+  </data>
 </root>

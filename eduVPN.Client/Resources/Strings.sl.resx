@@ -232,4 +232,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="InstanceGroupSelectPageDescription" xml:space="preserve">
     <value>Spodaj izberite vrsto profila, ki ga želite uporabiti. Preusmerjeni boste v svoj brskalnik, kjer boste vnesli svoje poverilnice.</value>
   </data>
+  <data name="SystemTrayMenuExit" xml:space="preserve">
+    <value>I_zhod</value>
+  </data>
 </root>

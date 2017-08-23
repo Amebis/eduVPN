@@ -70,6 +70,12 @@
         <DataTemplate DataType="{x:Type viewModel:StatusPage}">
             <view:StatusPage/>
         </DataTemplate>
+
+        <ContextMenu x:Key="eduVPNSystemTrayMenu">
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuExit}"
+                Click="Exit_Click"/>
+        </ContextMenu>
     </Window.Resources>
 
     <Grid>
