@@ -142,7 +142,7 @@ namespace eduVPN.Models
                 ID = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
 
                 // Set display name.
-                DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : ID;
+                DisplayName = eduJSON.Parser.GetLocalizedValue(obj2, "display_name", out string display_name) ? display_name : ID;
 
                 // Set two-factor authentication.
                 IsTwoFactorAuthentication = eduJSON.Parser.GetValue(obj2, "two_factor", out bool two_factor) ? two_factor : false;

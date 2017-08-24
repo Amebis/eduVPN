@@ -61,7 +61,7 @@ namespace eduVPN.Models
             if (obj is Dictionary<string, object> obj2)
             {
                 // Set message text.
-                Text = eduJSON.Parser.GetValue<string>(obj2, "message");
+                Text = eduJSON.Parser.GetLocalizedValue<string>(obj2, "message");
 
                 // Set message dates.
                 Date = DateTime.Parse(eduJSON.Parser.GetValue<string>(obj2, "date_time"));
