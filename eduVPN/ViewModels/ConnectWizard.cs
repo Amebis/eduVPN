@@ -78,13 +78,13 @@ namespace eduVPN.ViewModels
         private object _task_count_lock = new object();
 
         /// <summary>
-        /// Available instance groups
+        /// Available instance sources
         /// </summary>
-        public Models.InstanceGroupInfo[] InstanceGroups
+        public Models.InstanceSourceInfo[] InstanceSources
         {
-            get { return _instance_groups; }
+            get { return _instance_sources; }
         }
-        private Models.InstanceGroupInfo[] _instance_groups;
+        private Models.InstanceSourceInfo[] _instance_sources;
 
         /// <summary>
         /// VPN configuration histories
@@ -96,14 +96,14 @@ namespace eduVPN.ViewModels
         private ObservableCollection<Models.VPNConfiguration>[] _configuration_histories;
 
         /// <summary>
-        /// Selected instance group
+        /// Selected instance source
         /// </summary>
-        public Models.InstanceGroupInfo InstanceGroup
+        public Models.InstanceSourceInfo InstanceSource
         {
-            get { return _instance_group; }
-            set { _instance_group = value; RaisePropertyChanged(); }
+            get { return _instance_source; }
+            set { _instance_source = value; RaisePropertyChanged(); }
         }
-        private Models.InstanceGroupInfo _instance_group;
+        private Models.InstanceSourceInfo _instance_source;
 
         /// <summary>
         /// VPN configuration
@@ -157,18 +157,18 @@ namespace eduVPN.ViewModels
         private InitializingPage _initializing_page;
 
         /// <summary>
-        /// Instance group page
+        /// Instance source page
         /// </summary>
-        public InstanceGroupSelectPage InstanceGroupSelectPage
+        public InstanceSourceSelectPage InstanceSourceSelectPage
         {
             get
             {
-                if (_instance_group_page == null)
-                    _instance_group_page = new InstanceGroupSelectPage(this);
-                return _instance_group_page;
+                if (_instance_source_page == null)
+                    _instance_source_page = new InstanceSourceSelectPage(this);
+                return _instance_source_page;
             }
         }
-        private InstanceGroupSelectPage _instance_group_page;
+        private InstanceSourceSelectPage _instance_source_page;
 
         /// <summary>
         /// Instance selection page
@@ -177,7 +177,7 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (InstanceGroup is Models.DistributedInstanceGroupInfo)
+                if (InstanceSource is Models.DistributedInstanceSourceInfo)
                 {
                     if (_country_select_page == null)
                         _country_select_page = new CountrySelectPage(this);
@@ -195,18 +195,18 @@ namespace eduVPN.ViewModels
         private InstituteSelectPage _institute_select_page;
 
         /// <summary>
-        /// Custom instance group page
+        /// Custom instance source page
         /// </summary>
-        public CustomInstanceGroupPage CustomInstanceGroupPage
+        public CustomInstanceSourcePage CustomInstanceSourcePage
         {
             get
             {
-                if (_custom_instance_group_page == null)
-                    _custom_instance_group_page = new CustomInstanceGroupPage(this);
-                return _custom_instance_group_page;
+                if (_custom_instance_source_page == null)
+                    _custom_instance_source_page = new CustomInstanceSourcePage(this);
+                return _custom_instance_source_page;
             }
         }
-        private CustomInstanceGroupPage _custom_instance_group_page;
+        private CustomInstanceSourcePage _custom_instance_source_page;
 
         /// <summary>
         /// Authorization wizard page
@@ -229,8 +229,8 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (InstanceGroup is Models.FederatedInstanceGroupInfo ||
-                    InstanceGroup is Models.DistributedInstanceGroupInfo)
+                if (InstanceSource is Models.FederatedInstanceSourceInfo ||
+                    InstanceSource is Models.DistributedInstanceSourceInfo)
                 {
                     if (_instance_and_profile_select_page == null)
                         _instance_and_profile_select_page = new InstanceAndProfileSelectPage(this);
@@ -295,47 +295,47 @@ namespace eduVPN.ViewModels
             // Show initializing wizard page.
             CurrentPage = InitializingPage;
 
-            _instance_groups = new Models.InstanceGroupInfo[_instance_directory_id.Length];
+            _instance_sources = new Models.InstanceSourceInfo[_instance_directory_id.Length];
             _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[_instance_directory_id.Length];
 
-            // Spawn instance group loading threads.
+            // Spawn instance source loading threads.
             var threads = new Thread[_instance_directory_id.Length];
             for (var i = 0; i < _instance_directory_id.Length; i++)
             {
-                // Launch instance group load in the background.
+                // Launch instance source load in the background.
                 threads[i] = new Thread(new ParameterizedThreadStart(
                     param =>
                     {
-                        var group_index = (int)param;
+                        var source_index = (int)param;
                         for (;;)
                         {
                             try
                             {
-                                // Get instance group.
+                                // Get instance source.
                                 var response_cache = JSON.Response.Get(
-                                    uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[group_index]]),
-                                    pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[group_index] + "PubKey"]),
+                                    uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index]]),
+                                    pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[source_index] + "PubKey"]),
                                     ct: Abort.Token,
-                                    previous: (JSON.Response)Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"]);
+                                    previous: (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"]);
 
-                                // Parse instance group JSON.
+                                // Parse instance source JSON.
                                 var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(
                                     response_cache.Value,
                                     Abort.Token);
 
-                                // Load instance group.
-                                _instance_groups[group_index] = Models.InstanceGroupInfo.FromJSON(obj);
+                                // Load instance source.
+                                _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj);
 
                                 if (response_cache.IsFresh)
                                 {
-                                    // If we got here, the loaded instance group is (probably) OK. Update cache.
-                                    Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = response_cache;
+                                    // If we got here, the loaded instance source is (probably) OK. Update cache.
+                                    Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"] = response_cache;
                                 }
 
-                                _configuration_histories[group_index] = new ObservableCollection<Models.VPNConfiguration>();
+                                _configuration_histories[source_index] = new ObservableCollection<Models.VPNConfiguration>();
 
                                 // Load configuration histories from settings.
-                                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[group_index] + "ConfigHistory"];
+                                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"];
                                 foreach (var h in hist)
                                 {
                                     var cfg = new Models.VPNConfiguration();
@@ -343,14 +343,14 @@ namespace eduVPN.ViewModels
                                     try
                                     {
                                         // Restore configuration.
-                                        if (_instance_groups[group_index] is Models.LocalInstanceGroupInfo instance_group_local &&
+                                        if (_instance_sources[source_index] is Models.LocalInstanceSourceInfo instance_source_local &&
                                             h is Models.LocalVPNConfigurationSettings h_local)
                                         {
-                                            // Local group instance:
+                                            // Local authenticating instance source:
                                             // - Restore instance, which is both: authenticating and connecting.
                                             // - Restore access token.
                                             // - Restore profile.
-                                            cfg.AuthenticatingInstance = instance_group_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
+                                            cfg.AuthenticatingInstance = instance_source_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
                                             if (cfg.AuthenticatingInstance == null) cfg.AuthenticatingInstance = h_local.Instance;
                                             cfg.AccessToken = h_local.AccessToken;
                                             if (cfg.AccessToken == null) continue;
@@ -358,30 +358,30 @@ namespace eduVPN.ViewModels
                                             cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AccessToken, Abort.Token).Where(p => p.ID == h_local.Profile).FirstOrDefault();
                                             if (cfg.ConnectingProfile == null) continue;
                                         }
-                                        else if (_instance_groups[group_index] is Models.DistributedInstanceGroupInfo instance_group_distributed &&
+                                        else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed &&
                                             h is Models.DistributedVPNConfigurationSettings h_distributed)
                                         {
-                                            // Distributed group instance:
+                                            // Distributed authenticating instance source:
                                             // - Restore authenticating instance.
                                             // - Restore access token.
                                             // - Restore last connected instance (optional).
-                                            cfg.AuthenticatingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
+                                            cfg.AuthenticatingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
                                             if (cfg.AuthenticatingInstance == null) continue;
                                             cfg.AccessToken = h_distributed.AccessToken;
                                             if (cfg.AccessToken == null) continue;
-                                            cfg.ConnectingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
+                                            cfg.ConnectingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
                                         }
-                                        else if (_instance_groups[group_index] is Models.FederatedInstanceGroupInfo instance_group_federated &&
+                                        else if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated &&
                                             h is Models.FederatedVPNConfigurationSettings h_federated)
                                         {
-                                            // Federated group instance:
-                                            // - Get authenticating instance from federated group settings.
+                                            // Federated authenticating instance source:
+                                            // - Get authenticating instance from federated instance source settings.
                                             // - Restore access token.
                                             // - Restore last connected instance (optional).
-                                            cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_group_federated);
+                                            cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
                                             cfg.AccessToken = h_federated.AccessToken;
                                             if (cfg.AccessToken == null) continue;
-                                            cfg.ConnectingInstance = instance_group_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
+                                            cfg.ConnectingInstance = instance_source_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
                                         }
                                         else
                                             continue;
@@ -389,7 +389,7 @@ namespace eduVPN.ViewModels
                                     catch (Exception) { continue; }
 
                                     // Configuration successfuly restored. Add it.
-                                    _configuration_histories[group_index].Add(cfg);
+                                    _configuration_histories[source_index].Add(cfg);
                                 }
 
                                 break;
@@ -398,11 +398,11 @@ namespace eduVPN.ViewModels
                             catch (Exception ex)
                             {
                                 // Make it a clean start next time.
-                                Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = null;
+                                Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"] = null;
 
-                                // Notify the sender the instance group loading failed. However, continue with other groups.
+                                // Notify the sender the instance source loading failed. However, continue with other instance sources.
                                 // This will overwrite all previous error messages.
-                                Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[group_index]), ex);
+                                Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, _instance_directory_id[source_index]), ex);
                             }
 
                             // Sleep for 3s, then retry.
@@ -425,7 +425,7 @@ namespace eduVPN.ViewModels
                             thread.Join();
 
                         // Proceed to the "first" page.
-                        CurrentPage = InstanceGroupSelectPage;
+                        CurrentPage = InstanceSourceSelectPage;
                     }
                     finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                 })).Start();
@@ -456,14 +456,14 @@ namespace eduVPN.ViewModels
             Session = new Models.OpenVPNSession(Configuration.ConnectingInstance, Configuration.ConnectingProfile, Configuration.AccessToken);
 
             // Save session configuration to history.
-            var group_index = Array.IndexOf(InstanceGroups, InstanceGroup);
-            if (group_index >= 0)
+            var source_index = Array.IndexOf(InstanceSources, InstanceSource);
+            if (source_index >= 0)
             {
-                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[group_index] + "ConfigHistory"];
+                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"];
                 Models.VPNConfigurationSettings el = null;
-                if (_instance_groups[group_index] is Models.LocalInstanceGroupInfo)
+                if (_instance_sources[source_index] is Models.LocalInstanceSourceInfo)
                 {
-                    // Local group instance
+                    // Local authenticating instance source
                     el = new Models.LocalVPNConfigurationSettings()
                     {
                         Instance = Configuration.ConnectingInstance,
@@ -471,9 +471,9 @@ namespace eduVPN.ViewModels
                         Profile = Configuration.ConnectingProfile.ID,
                     };
                 }
-                else if (_instance_groups[group_index] is Models.DistributedInstanceGroupInfo)
+                else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo)
                 {
-                    // Distributed group instance
+                    // Distributed authenticating instance source
                     el = new Models.DistributedVPNConfigurationSettings()
                     {
                         AuthenticatingInstance = Configuration.AuthenticatingInstance.Base.AbsoluteUri,
@@ -481,9 +481,9 @@ namespace eduVPN.ViewModels
                         LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
                     };
                 }
-                else if (_instance_groups[group_index] is Models.FederatedInstanceGroupInfo)
+                else if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo)
                 {
-                    // Federated group instance.
+                    // Federated authenticating instance source.
                     el = new Models.FederatedVPNConfigurationSettings()
                     {
                         AccessToken = Configuration.AccessToken,

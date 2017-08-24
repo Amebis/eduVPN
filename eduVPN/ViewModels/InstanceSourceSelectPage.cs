@@ -12,22 +12,22 @@ using System.Windows.Input;
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Instance group selection wizard page
+    /// Instance source selection wizard page
     /// </summary>
-    public class InstanceGroupSelectPage : ConnectWizardPage
+    public class InstanceSourceSelectPage : ConnectWizardPage
     {
         #region Properties
 
         /// <summary>
-        /// Select instance group
+        /// Select instance source
         /// </summary>
-        public ICommand SelectInstanceGroup
+        public ICommand SelectInstanceSource
         {
             get
             {
-                if (_select_instance_group == null)
+                if (_select_instance_source == null)
                 {
-                    _select_instance_group = new DelegateCommand<Models.InstanceGroupInfo>(
+                    _select_instance_source = new DelegateCommand<Models.InstanceSourceInfo>(
                         // execute
                         async param =>
                         {
@@ -35,12 +35,12 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.InstanceGroup = param;
+                                Parent.InstanceSource = param;
 
-                                if (Parent.InstanceGroup is Models.FederatedInstanceGroupInfo instance_group)
+                                if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source)
                                 {
                                     // Set authenticating instance.
-                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_group);
+                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source);
 
                                     // Restore the access token from the settings.
                                     Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
@@ -63,21 +63,21 @@ namespace eduVPN.ViewModels
                         // canExecute
                         param => param != null);
                 }
-                return _select_instance_group;
+                return _select_instance_source;
             }
         }
-        private ICommand _select_instance_group;
+        private ICommand _select_instance_source;
 
         /// <summary>
-        /// Select custom instance group
+        /// Select custom instance source
         /// </summary>
-        public ICommand SelectCustomInstanceGroup
+        public ICommand SelectCustomInstanceSource
         {
             get
             {
-                if (_select_custom_instance_group == null)
+                if (_select_custom_instance_source == null)
                 {
-                    _select_custom_instance_group = new DelegateCommand<Models.InstanceGroupInfo>(
+                    _select_custom_instance_source = new DelegateCommand<Models.InstanceSourceInfo>(
                         // execute
                         param =>
                         {
@@ -85,8 +85,8 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.InstanceGroup = null;
-                                Parent.CurrentPage = Parent.CustomInstanceGroupPage;
+                                Parent.InstanceSource = null;
+                                Parent.CurrentPage = Parent.CustomInstanceSourcePage;
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
@@ -95,20 +95,20 @@ namespace eduVPN.ViewModels
                         // canExecute
                         param => true);
                 }
-                return _select_custom_instance_group;
+                return _select_custom_instance_source;
             }
         }
-        private ICommand _select_custom_instance_group;
+        private ICommand _select_custom_instance_source;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs an instance group selection wizard page.
+        /// Constructs an instance source selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public InstanceGroupSelectPage(ConnectWizard parent) :
+        public InstanceSourceSelectPage(ConnectWizard parent) :
             base(parent)
         {
         }

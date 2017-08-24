@@ -112,21 +112,21 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Constructs the authenticating instance info for given federated instance group
+        /// Constructs the authenticating instance info for given federated instance source
         /// </summary>
-        /// <param name="instance_group">Federated instance group</param>
-        public InstanceInfo(FederatedInstanceGroupInfo instance_group) :
+        /// <param name="instance_source">Federated instance source</param>
+        public InstanceInfo(FederatedInstanceSourceInfo instance_source) :
             this()
         {
-            // Assume same authenticating instance identity as instance group.
-            DisplayName = instance_group.DisplayName;
-            Logo = instance_group.Logo;
+            // Assume same authenticating instance identity as instance source.
+            DisplayName = instance_source.DisplayName;
+            Logo = instance_source.Logo;
 
             // Set API endpoints manually.
             _endpoints = new InstanceEndpoints()
             {
-                AuthorizationEndpoint = instance_group.AuthorizationEndpoint,
-                TokenEndpoint = instance_group.TokenEndpoint
+                AuthorizationEndpoint = instance_source.AuthorizationEndpoint,
+                TokenEndpoint = instance_source.TokenEndpoint
             };
         }
 

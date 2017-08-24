@@ -97,11 +97,11 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading of the instance group {0} failed..
+        ///   Looks up a localized string similar to Loading of the instance source {0} failed..
         /// </summary>
-        internal static string ErrorInstanceGroupInfoLoad {
+        internal static string ErrorInstanceSourceInfoLoad {
             get {
-                return ResourceManager.GetString("ErrorInstanceGroupInfoLoad", resourceCulture);
+                return ResourceManager.GetString("ErrorInstanceSourceInfoLoad", resourceCulture);
             }
         }
         

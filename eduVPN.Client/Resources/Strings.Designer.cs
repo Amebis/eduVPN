@@ -136,18 +136,18 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Enter discovery URI of your VPN provider..
         /// </summary>
-        public static string CustomInstanceGroupPageDescription {
+        public static string CustomInstanceSourcePageDescription {
             get {
-                return ResourceManager.GetString("CustomInstanceGroupPageDescription", resourceCulture);
+                return ResourceManager.GetString("CustomInstanceSourcePageDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Other Profile.
         /// </summary>
-        public static string CustomInstanceGroupPageTitle {
+        public static string CustomInstanceSourcePageTitle {
             get {
-                return ResourceManager.GetString("CustomInstanceGroupPageTitle", resourceCulture);
+                return ResourceManager.GetString("CustomInstanceSourcePageTitle", resourceCulture);
             }
         }
         
@@ -163,27 +163,27 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Add other address.
         /// </summary>
-        public static string InstanceGroupSelectCustom {
+        public static string InstanceSourceSelectCustom {
             get {
-                return ResourceManager.GetString("InstanceGroupSelectCustom", resourceCulture);
+                return ResourceManager.GetString("InstanceSourceSelectCustom", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Select the profile type you want to use below. You will be redirected to the browser for your credentials..
         /// </summary>
-        public static string InstanceGroupSelectPageDescription {
+        public static string InstanceSourceSelectPageDescription {
             get {
-                return ResourceManager.GetString("InstanceGroupSelectPageDescription", resourceCulture);
+                return ResourceManager.GetString("InstanceSourceSelectPageDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Choose Your Profile.
         /// </summary>
-        public static string InstanceGroupSelectPageTitle {
+        public static string InstanceSourceSelectPageTitle {
             get {
-                return ResourceManager.GetString("InstanceGroupSelectPageTitle", resourceCulture);
+                return ResourceManager.GetString("InstanceSourceSelectPageTitle", resourceCulture);
             }
         }
         

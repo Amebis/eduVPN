@@ -46,8 +46,8 @@
         <DataTemplate DataType="{x:Type viewModel:InitializingPage}">
             <view:InitializingPage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:InstanceGroupSelectPage}">
-            <view:InstanceGroupSelectPage/>
+        <DataTemplate DataType="{x:Type viewModel:InstanceSourceSelectPage}">
+            <view:InstanceSourceSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CountrySelectPage}">
             <view:InstanceSelectPage
@@ -58,8 +58,8 @@
             <view:InstanceSelectPage
                 Title="{x:Static res:Strings.InstituteSelectPageTitle}"/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:CustomInstanceGroupPage}">
-            <view:CustomInstanceGroupPage/>
+        <DataTemplate DataType="{x:Type viewModel:CustomInstanceSourcePage}">
+            <view:CustomInstanceSourcePage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:AuthorizationPage}">
             <view:AuthorizationPage/>

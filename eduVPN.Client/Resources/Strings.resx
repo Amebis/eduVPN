@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InstanceGroupSelectPageTitle" xml:space="preserve">
+  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
     <value>Choose Your Profile</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
@@ -145,10 +145,10 @@ The client will continue after you complete the authorization...</value>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
-  <data name="CustomInstanceGroupPageTitle" xml:space="preserve">
+  <data name="CustomInstanceSourcePageTitle" xml:space="preserve">
     <value>Other Profile</value>
   </data>
-  <data name="CustomInstanceGroupPageDescription" xml:space="preserve">
+  <data name="CustomInstanceSourcePageDescription" xml:space="preserve">
     <value>Enter discovery URI of your VPN provider.</value>
   </data>
   <data name="ProfileSelectPageTitle" xml:space="preserve">
@@ -226,10 +226,10 @@ The client will continue after you complete the authorization...</value>
   <data name="CountrySelectPageDescription" xml:space="preserve">
     <value>Select your institution's country here. You can select VPN endpoints in other countries after signing in with your institution credentials.</value>
   </data>
-  <data name="InstanceGroupSelectCustom" xml:space="preserve">
+  <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Add other address</value>
   </data>
-  <data name="InstanceGroupSelectPageDescription" xml:space="preserve">
+  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
     <value>Select the profile type you want to use below. You will be redirected to the browser for your credentials.</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">

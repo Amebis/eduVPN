@@ -26,8 +26,8 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-            ItemsSource="{Binding Path=Parent.InstanceGroup}"
+            ItemsSource="{Binding Path=Parent.InstanceSource}"
             SelectedItem="{Binding Path=SelectedInstance}"
-            SelectionChanged="InstanceGroup_SelectionChanged"/>
+            SelectionChanged="InstanceSource_SelectionChanged"/>
     </Grid>
 </view:ConnectWizardPage>

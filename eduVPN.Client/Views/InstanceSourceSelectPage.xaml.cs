@@ -8,13 +8,13 @@
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for InstanceGroupSelectPage.xaml
+    /// Interaction logic for InstanceSourceSelectPage.xaml
     /// </summary>
-    public partial class InstanceGroupSelectPage : ConnectWizardPage
+    public partial class InstanceSourceSelectPage : ConnectWizardPage
     {
         #region Constructors
 
-        public InstanceGroupSelectPage()
+        public InstanceSourceSelectPage()
         {
             InitializeComponent();
         }

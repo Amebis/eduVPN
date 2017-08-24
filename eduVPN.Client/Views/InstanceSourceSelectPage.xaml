@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <view:ConnectWizardPage
-    x:Class="eduVPN.Views.InstanceGroupSelectPage"
+    x:Class="eduVPN.Views.InstanceSourceSelectPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,8 +15,8 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.InstanceGroupSelectPageTitle}"
-    Description="{x:Static res:Strings.InstanceGroupSelectPageDescription}"
+    Title="{x:Static res:Strings.InstanceSourceSelectPageTitle}"
+    Description="{x:Static res:Strings.InstanceSourceSelectPageDescription}"
     Style="{StaticResource eduVPNConnectWizardPageWithTitle}">
 
     <Grid
@@ -30,7 +30,7 @@
         <ItemsControl
             Margin="10,5"
             Style="{StaticResource eduVPNChoiceItemsControlStyle}"
-            ItemsSource="{Binding Path=Parent.InstanceGroups}">
+            ItemsSource="{Binding Path=Parent.InstanceSources}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -39,7 +39,7 @@
                             Style="{StaticResource eduVPNChoiceButtonStyle}"
                             ToolTip="{Binding Path=DisplayName}"
                             AutomationProperties.Name="{Binding Path=DisplayName}"
-                            Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.SelectInstanceGroup}"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.SelectInstanceSource}"
                             CommandParameter="{Binding }">
 
                             <Grid>
@@ -72,7 +72,7 @@
             Grid.Row="1"
             Margin="10"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            Content="{x:Static res:Strings.InstanceGroupSelectCustom}"
-            Command="{Binding Path=SelectCustomInstanceGroup}"/>
+            Content="{x:Static res:Strings.InstanceSourceSelectCustom}"
+            Command="{Binding Path=SelectCustomInstanceSource}"/>
     </Grid>
 </view:ConnectWizardPage>

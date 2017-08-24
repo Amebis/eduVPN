@@ -8,16 +8,16 @@
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for CustomInstanceGroupPage.xaml
+    /// Interaction logic for CustomInstanceSourcePage.xaml
     /// </summary>
-    public partial class CustomInstanceGroupPage : ConnectWizardPage
+    public partial class CustomInstanceSourcePage : ConnectWizardPage
     {
         #region Constructors
 
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public CustomInstanceGroupPage()
+        public CustomInstanceSourcePage()
         {
             if (eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory == null)
                 eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
@@ -31,7 +31,7 @@ namespace eduVPN.Views
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var instance_uri = InstanceGroupURI.Text;
+            var instance_uri = InstanceSourceURI.Text;
 
             if (!eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Contains(instance_uri))
                 eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, instance_uri);

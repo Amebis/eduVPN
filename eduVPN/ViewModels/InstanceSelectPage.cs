@@ -57,12 +57,12 @@ namespace eduVPN.ViewModels
                                 // Restore the access token from the settings.
                                 Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
 
-                                if (Parent.InstanceGroup is Models.LocalInstanceGroupInfo)
+                                if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
                                 {
                                     // Connecting instance will be the same as authenticating.
                                     Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
                                 }
-                                else if (Parent.InstanceGroup is Models.DistributedInstanceGroupInfo)
+                                else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo)
                                 {
                                     // Connecting instance will not (necessarry) be the same as authenticating.
                                     Parent.Configuration.ConnectingInstance = null;
@@ -114,10 +114,10 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            if (Array.IndexOf(Parent.InstanceGroups, Parent.InstanceGroup) >= 0)
-                Parent.CurrentPage = Parent.InstanceGroupSelectPage;
+            if (Array.IndexOf(Parent.InstanceSources, Parent.InstanceSource) >= 0)
+                Parent.CurrentPage = Parent.InstanceSourceSelectPage;
             else
-                Parent.CurrentPage = Parent.CustomInstanceGroupPage;
+                Parent.CurrentPage = Parent.CustomInstanceSourcePage;
         }
 
         protected override bool CanNavigateBack()

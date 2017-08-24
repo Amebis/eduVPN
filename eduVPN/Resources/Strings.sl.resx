@@ -129,7 +129,7 @@
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value>Zasebni ključ ni veljaven ali je nepodprtega zapisa.</value>
   </data>
-  <data name="ErrorInstanceGroupInfoLoad" xml:space="preserve">
+  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
     <value>Nalaganje skupine instanc {0} ni uspelo.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">

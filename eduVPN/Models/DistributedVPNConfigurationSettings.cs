@@ -10,7 +10,7 @@ using System.Xml;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// VPN configuration for distributed authenticating instance group as persisted to settings
+    /// VPN configuration for distributed authenticating instance source as persisted to settings
     /// </summary>
     public class DistributedVPNConfigurationSettings : FederatedVPNConfigurationSettings
     {

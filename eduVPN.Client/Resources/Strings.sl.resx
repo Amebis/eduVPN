@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InstanceGroupSelectPageTitle" xml:space="preserve">
+  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
     <value>Izberite svoj profil</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
@@ -139,10 +139,10 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Naprej</value>
   </data>
-  <data name="CustomInstanceGroupPageTitle" xml:space="preserve">
+  <data name="CustomInstanceSourcePageTitle" xml:space="preserve">
     <value>Drugi ponudnik</value>
   </data>
-  <data name="CustomInstanceGroupPageDescription" xml:space="preserve">
+  <data name="CustomInstanceSourcePageDescription" xml:space="preserve">
     <value>Vnesite naslov URI svojega ponudnika VPN.</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
@@ -226,10 +226,10 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="CountrySelectPageDescription" xml:space="preserve">
     <value>Tukaj izberite državo svoje ustanove. Ko se boste prijavili s poverilnicami svoje ustanove, boste lahko izbrali končno točko VPN v drugih državah.</value>
   </data>
-  <data name="InstanceGroupSelectCustom" xml:space="preserve">
+  <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Dodaj drug naslov</value>
   </data>
-  <data name="InstanceGroupSelectPageDescription" xml:space="preserve">
+  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
     <value>Spodaj izberite vrsto profila, ki ga želite uporabiti. Preusmerjeni boste v svoj brskalnik, kjer boste vnesli svoje poverilnice.</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">

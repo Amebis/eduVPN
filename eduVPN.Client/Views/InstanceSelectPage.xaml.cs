@@ -28,7 +28,7 @@ namespace eduVPN.Views
 
         #region Methods
 
-        private void InstanceGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void InstanceSource_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // TODO: Using SelectionChanged of a ListBox renders the UI accessibility unfriendly. Discuss other options with Rogier.
             // Either:

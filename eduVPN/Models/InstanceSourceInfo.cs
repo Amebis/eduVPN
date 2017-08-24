@@ -15,12 +15,12 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN list of instances base class
     /// </summary>
-    public class InstanceGroupInfo : ObservableCollection<InstanceInfo>, JSON.ILoadableItem
+    public class InstanceSourceInfo : ObservableCollection<InstanceInfo>, JSON.ILoadableItem
     {
         #region Properties
 
         /// <summary>
-        /// Instance group name to display in GUI
+        /// Instance source name to display in GUI
         /// </summary>
         public string DisplayName
         {
@@ -30,7 +30,7 @@ namespace eduVPN.Models
         private string _display_name;
 
         /// <summary>
-        /// Instance group logo URI
+        /// Instance source logo URI
         /// </summary>
         public Uri Logo
         {
@@ -40,7 +40,7 @@ namespace eduVPN.Models
         private Uri _logo;
 
         /// <summary>
-        /// Instance group description to display in GUI
+        /// Instance source description to display in GUI
         /// </summary>
         public string Description
         {
@@ -79,20 +79,20 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Loads instance group from a dictionary object (provided by JSON)
+        /// Loads instance source from a dictionary object (provided by JSON)
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements</param>
-        /// <returns>Instance group</returns>
-        public static InstanceGroupInfo FromJSON(Dictionary<string, object> obj)
+        /// <returns>Instance source</returns>
+        public static InstanceSourceInfo FromJSON(Dictionary<string, object> obj)
         {
             // Parse authorization data.
-            InstanceGroupInfo instance_group;
+            InstanceSourceInfo instance_source;
         #if INSTANCE_LIST_FORCE_LOCAL
-            instance_group = new LocalInstanceGroupInfo();
+            instance_source = new LocalInstanceSourceInfo();
         #elif INSTANCE_LIST_FORCE_DISTRIBUTED
-            instance_group = new DistributedInstanceGroupInfo();
+            instance_source = new DistributedInstanceSourceInfo();
         #elif INSTANCE_LIST_FORCE_FEDERATED
-            instance_group = new FederatedInstanceGroupInfo();
+            instance_source = new FederatedInstanceSourceInfo();
             obj.Add("authorization_endpoint", "https://demo.eduvpn.nl/portal/_oauth/authorize");
             obj.Add("token_endpoint"        , "https://demo.eduvpn.nl/portal/oauth.php/token");
         #else
@@ -100,17 +100,17 @@ namespace eduVPN.Models
             {
                 switch (authorization_type.ToLower())
                 {
-                    case "federated": instance_group = new FederatedInstanceGroupInfo(); break;
-                    case "distributed": instance_group = new DistributedInstanceGroupInfo(); break;
-                    default: instance_group = new LocalInstanceGroupInfo(); break; // Assume local authorization type on all other values.
+                    case "federated": instance_source = new FederatedInstanceSourceInfo(); break;
+                    case "distributed": instance_source = new DistributedInstanceSourceInfo(); break;
+                    default: instance_source = new LocalInstanceSourceInfo(); break; // Assume local authorization type on all other values.
                 }
             }
             else
-                instance_group = new LocalInstanceGroupInfo();
+                instance_source = new LocalInstanceSourceInfo();
         #endif
 
-            instance_group.Load(obj);
-            return instance_group;
+            instance_source.Load(obj);
+            return instance_source;
         }
 
         #endregion
@@ -118,7 +118,7 @@ namespace eduVPN.Models
         #region ILoadableItem Support
 
         /// <summary>
-        /// Loads instance group from a dictionary object (provided by JSON)
+        /// Loads instance source from a dictionary object (provided by JSON)
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements</param>
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>

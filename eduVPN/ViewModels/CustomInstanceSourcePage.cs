@@ -13,9 +13,9 @@ using System.Windows.Input;
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Custom instance group entry wizard page
+    /// Custom instance source entry wizard page
     /// </summary>
-    public class CustomInstanceGroupPage : ConnectWizardPage
+    public class CustomInstanceSourcePage : ConnectWizardPage
     {
         #region Properties
 
@@ -31,7 +31,7 @@ namespace eduVPN.ViewModels
                 {
                     _uri = value;
                     RaisePropertyChanged();
-                    ((DelegateCommandBase)SelectCustomInstanceGroup).RaiseCanExecuteChanged();
+                    ((DelegateCommandBase)SelectCustomInstanceSource).RaiseCanExecuteChanged();
                 }
             }
         }
@@ -40,30 +40,30 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authorize Other Instance Command
         /// </summary>
-        public ICommand SelectCustomInstanceGroup
+        public ICommand SelectCustomInstanceSource
         {
             get
             {
-                if (_select_custom_instance_group == null)
+                if (_select_custom_instance_source == null)
                 {
-                    _select_custom_instance_group = new DelegateCommand(
+                    _select_custom_instance_source = new DelegateCommand(
                         // execute
                         async () => {
                             Parent.Error = null;
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                // Get and parse instance group JSON.
-                                var instance_group = Models.InstanceGroupInfo.FromJSON(
+                                // Get and parse instance source JSON.
+                                var instance_source = Models.InstanceSourceInfo.FromJSON(
                                     (Dictionary<string, object>)eduJSON.Parser.Parse(
                                         (await JSON.Response.GetAsync(
                                             uri: new Uri(URI),
                                             ct: ConnectWizard.Abort.Token)).Value,
                                         ConnectWizard.Abort.Token));
 
-                                // Reuse instance group selection page's SelectInstanceGroup command to set instance group.
-                                if (Parent.InstanceGroupSelectPage.SelectInstanceGroup.CanExecute(instance_group))
-                                    Parent.InstanceGroupSelectPage.SelectInstanceGroup.Execute(instance_group);
+                                // Reuse instance source selection page's SelectInstanceSource command to set instance source.
+                                if (Parent.InstanceSourceSelectPage.SelectInstanceSource.CanExecute(instance_source))
+                                    Parent.InstanceSourceSelectPage.SelectInstanceSource.Execute(instance_source);
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
@@ -76,10 +76,10 @@ namespace eduVPN.ViewModels
                             return true;
                         });
                 }
-                return _select_custom_instance_group;
+                return _select_custom_instance_source;
             }
         }
-        private ICommand _select_custom_instance_group;
+        private ICommand _select_custom_instance_source;
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Constructs a view model.
         /// </summary>
-        public CustomInstanceGroupPage(ConnectWizard parent) :
+        public CustomInstanceSourcePage(ConnectWizard parent) :
             base(parent)
         {
             URI = "https://";
@@ -100,7 +100,7 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
-            Parent.CurrentPage = Parent.InstanceGroupSelectPage;
+            Parent.CurrentPage = Parent.InstanceSourceSelectPage;
         }
 
         protected override bool CanNavigateBack()

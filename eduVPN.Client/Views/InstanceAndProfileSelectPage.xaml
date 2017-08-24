@@ -45,7 +45,7 @@
             Style="{StaticResource eduVPNComboBoxStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
-            ItemsSource="{Binding Path=Parent.InstanceGroup}"
+            ItemsSource="{Binding Path=Parent.InstanceSource}"
             SelectedItem="{Binding Path=SelectedInstance}"/>
 
         <ListBox
