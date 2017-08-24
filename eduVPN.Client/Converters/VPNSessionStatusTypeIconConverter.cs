@@ -5,13 +5,11 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOpenVPN;
 using eduVPN.Models;
 using System;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace eduVPN.Client.Converters
 {
@@ -23,10 +21,7 @@ namespace eduVPN.Client.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is VPNSessionStatusType status_type)
-            {
-                var canvas = Application.Current.TryFindResource(String.Format("eduVPNSessionStatusTypeIcon{0}", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
-                return canvas != null ? canvas as Canvas : Application.Current.TryFindResource("eduVPNVPNSessionStatusTypeInitializingIcon") as Canvas;
-            }
+                return new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.png", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
             else
                 return null;
         }

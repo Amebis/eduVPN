@@ -65,14 +65,16 @@
                 Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageProfile}"/>
 
-            <ContentControl
+            <Image
                 Grid.Row="1"
                 Margin="0,2,5,0"
+                MaxHeight="22"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Content="{Binding Path=Parent.Session.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
+                Source="{Binding Path=Parent.Session.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
                 ToolTip="{Binding Path=Parent.Session.StateDescription}"
-                AutomationProperties.Name="{Binding Path=Parent.Session.StateDescription}"/>
+                AutomationProperties.Name="{Binding Path=Parent.Session.StateDescription}"
+                RenderOptions.BitmapScalingMode="Fant"/>
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
             <Image

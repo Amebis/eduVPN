@@ -93,22 +93,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\VPNSessionStatusTypeIconError.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\VPNSessionStatusTypeIconConnected.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\VPNSessionStatusTypeIconConnecting.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\VPNSessionStatusTypeInitializingIcon.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,10 +218,12 @@
   <ItemGroup>
     <Resource Include="Resources\eduVPN.ico" />
     <Resource Include="Resources\eduVPNConnected.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\InstituteAccess.png" />
     <Resource Include="Resources\SecureInternet.png" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconConnected.png" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.png" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconError.png" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />

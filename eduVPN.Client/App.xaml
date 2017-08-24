@@ -21,10 +21,6 @@
                 <ResourceDictionary Source="Resources/Brushes.xaml"/>
 
                 <ResourceDictionary Source="Resources/ExclamationIcon.xaml"/>
-                <ResourceDictionary Source="Resources/VPNSessionStatusTypeIconConnected.xaml"/>
-                <ResourceDictionary Source="Resources/VPNSessionStatusTypeIconConnecting.xaml"/>
-                <ResourceDictionary Source="Resources/VPNSessionStatusTypeIconError.xaml"/>
-                <ResourceDictionary Source="Resources/VPNSessionStatusTypeInitializingIcon.xaml"/>
                 <ResourceDictionary Source="Resources/TwoFactorAuthenticationIcon.xaml"/>
                 <ResourceDictionary Source="Resources/UserDisabledIcon.xaml"/>
 

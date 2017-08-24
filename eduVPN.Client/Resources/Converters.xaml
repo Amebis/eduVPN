@@ -14,8 +14,8 @@
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
     <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
-    <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
     <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>
     <conv:UserDisabledVisibilityConverter x:Key="UserDisabledVisibilityConverter"/>
+    <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
 </ResourceDictionary>
