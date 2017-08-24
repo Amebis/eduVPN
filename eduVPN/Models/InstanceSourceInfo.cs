@@ -102,7 +102,7 @@ namespace eduVPN.Models
                 }
 
                 // Parse sequence.
-                Sequence = eduJSON.Parser.GetValue(obj2, "seq", out int seq) ? (uint)seq : 0;
+                Sequence = (uint)eduJSON.Parser.GetValue<int>(obj2, "seq");
 
                 // Parse signed date.
                 SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out var signed_at_date) ? signed_at_date : (DateTime?)null;
