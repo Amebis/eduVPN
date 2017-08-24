@@ -23,6 +23,7 @@
     Foreground="{StaticResource eduVPNWindowTextBrushKey}"
     BorderBrush="{StaticResource eduVPNWindowBorderKey}"
     BorderThickness="1"
+    Icon="{Binding Path=Session.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}}"
     MouseDown="Window_MouseDown"
     Closing="Window_Closing">
 
@@ -80,6 +81,10 @@
                 Click="Exit_Click"/>
         </ContextMenu>
     </Window.Resources>
+
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo Overlay="{Binding Path=Session.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"/>
+    </Window.TaskbarItemInfo>
 
     <Grid>
         <Grid.ColumnDefinitions>

@@ -18,4 +18,5 @@
     <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>
     <conv:UserDisabledVisibilityConverter x:Key="UserDisabledVisibilityConverter"/>
     <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
+    <conv:VPNSessionStatusTypeWindowIconConverter x:Key="VPNSessionStatusTypeWindowIconConverter"/>
 </ResourceDictionary>
