@@ -43,7 +43,7 @@ namespace eduVPN.Models.Tests
                 {
                     { "base_uri", "https://surf.eduvpn.nl/" },
                     { "display_name", "SURF" },
-                    { "logo_uri", "https://static.eduvpn.nl/img/surfnet.png" }
+                    { "logo", "https://static.eduvpn.nl/img/surfnet.png" }
                 });
             Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), inst.Base, "Base URI incorrect");
             Assert.AreEqual("SURF", inst.DisplayName, "Display name incorrect");
@@ -56,7 +56,7 @@ namespace eduVPN.Models.Tests
                 inst.Load(new Dictionary<string, object>
                     {
                         { "display_name", "SURF" },
-                        { "logo_uri", "https://static.eduvpn.nl/img/surfnet.png" }
+                        { "logo", "https://static.eduvpn.nl/img/surfnet.png" }
                     });
                 Assert.Fail("Missing base URL tolerated");
             } catch (eduJSON.MissingParameterException) {}
