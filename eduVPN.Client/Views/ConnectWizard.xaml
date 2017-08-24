@@ -142,7 +142,7 @@
             IsCancel="True"
             Style="{StaticResource eduVPNHeaderButtonStyle}"
             AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}"
-            Click="Close_Click">×</Button>
+            Click="Hide_Click">×</Button>
 
         <StatusBar
             Grid.Row="1"

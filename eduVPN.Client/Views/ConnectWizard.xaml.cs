@@ -23,6 +23,7 @@ namespace eduVPN.Views
 
         private System.Windows.Forms.NotifyIcon _notify_icon;
         private Icon[] _icons;
+        private bool _do_close = false;
 
         #endregion
 
@@ -98,12 +99,12 @@ namespace eduVPN.Views
 
             // Show icon when Connect Wizard is loaded. Hide icon when closed.
             Loaded += (object sender, RoutedEventArgs ea) => _notify_icon.Visible = true;
-            Closing += (object sender, CancelEventArgs ea) => _notify_icon.Visible = false;
+            Closing += (object sender, CancelEventArgs ea) => { if (_do_close) _notify_icon.Visible = false; };
 
             base.OnInitialized(e);
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void Hide_Click(object sender, RoutedEventArgs e)
         {
             Hide();
         }
@@ -117,14 +118,24 @@ namespace eduVPN.Views
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            // Save window position on closing.
-            eduVPN.Client.Properties.Settings.Default.WindowTop = Top;
-            eduVPN.Client.Properties.Settings.Default.WindowLeft = Left;
+            if (_do_close)
+            {
+                // Save window position on closing.
+                eduVPN.Client.Properties.Settings.Default.WindowTop = Top;
+                eduVPN.Client.Properties.Settings.Default.WindowLeft = Left;
+            }
+            else
+            {
+                // User/system tried to close our window other than [x] button.
+                // Cancel close and revert to hide.
+                e.Cancel = true;
+                Hide();
+            }
         }
-
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            _do_close = true;
             Close();
         }
 
