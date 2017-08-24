@@ -425,6 +425,7 @@ namespace eduVPN.ViewModels
                             thread.Join();
 
                         // Proceed to the "first" page.
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
                         CurrentPage = InstanceSourceSelectPage;
                     }
                     finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
