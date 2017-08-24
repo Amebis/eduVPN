@@ -197,16 +197,16 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Custom instance source page
         /// </summary>
-        public CustomInstanceSourcePage CustomInstanceSourcePage
+        public CustomInstancePage CustomInstancePage
         {
             get
             {
-                if (_custom_instance_source_page == null)
-                    _custom_instance_source_page = new CustomInstanceSourcePage(this);
-                return _custom_instance_source_page;
+                if (_custom_instance_page == null)
+                    _custom_instance_page = new CustomInstancePage(this);
+                return _custom_instance_page;
             }
         }
-        private CustomInstanceSourcePage _custom_instance_source_page;
+        private CustomInstancePage _custom_instance_page;
 
         /// <summary>
         /// Authorization wizard page

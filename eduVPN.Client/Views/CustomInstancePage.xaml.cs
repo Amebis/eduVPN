@@ -8,16 +8,16 @@
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for CustomInstanceSourcePage.xaml
+    /// Interaction logic for CustomInstancePage.xaml
     /// </summary>
-    public partial class CustomInstanceSourcePage : ConnectWizardPage
+    public partial class CustomInstancePage : ConnectWizardPage
     {
         #region Constructors
 
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public CustomInstanceSourcePage()
+        public CustomInstancePage()
         {
             if (eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory == null)
                 eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();

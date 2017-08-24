@@ -15,14 +15,14 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Custom instance source entry wizard page
     /// </summary>
-    public class CustomInstanceSourcePage : ConnectWizardPage
+    public class CustomInstancePage : ConnectWizardPage
     {
         #region Properties
 
         /// <summary>
-        /// Instance URI
+        /// Instance base URI
         /// </summary>
-        public string URI
+        public string BaseURI
         {
             get { return _uri; }
             set
@@ -31,7 +31,7 @@ namespace eduVPN.ViewModels
                 {
                     _uri = value;
                     RaisePropertyChanged();
-                    ((DelegateCommandBase)SelectCustomInstanceSource).RaiseCanExecuteChanged();
+                    ((DelegateCommandBase)SelectCustomInstance).RaiseCanExecuteChanged();
                 }
             }
         }
@@ -40,30 +40,40 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authorize Other Instance Command
         /// </summary>
-        public ICommand SelectCustomInstanceSource
+        public ICommand SelectCustomInstance
         {
             get
             {
-                if (_select_custom_instance_source == null)
+                if (_select_custom_instance == null)
                 {
-                    _select_custom_instance_source = new DelegateCommand(
+                    _select_custom_instance = new DelegateCommand(
                         // execute
                         async () => {
                             Parent.Error = null;
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                // Get and parse instance source JSON.
-                                var instance_source = Models.InstanceSourceInfo.FromJSON(
-                                    (Dictionary<string, object>)eduJSON.Parser.Parse(
-                                        (await JSON.Response.GetAsync(
-                                            uri: new Uri(URI),
-                                            ct: ConnectWizard.Abort.Token)).Value,
-                                        ConnectWizard.Abort.Token));
+                                // Set authentication instance.
+                                var base_uri = new Uri(BaseURI);
+                                var uri_builder = new UriBuilder(base_uri);
+                                uri_builder.Path = "/favicon.ico";
+                                Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo()
+                                {
+                                    Base = new Uri(BaseURI),
+                                    DisplayName = base_uri.Host,
+                                    Logo = uri_builder.Uri
+                                };
 
-                                // Reuse instance source selection page's SelectInstanceSource command to set instance source.
-                                if (Parent.InstanceSourceSelectPage.SelectInstanceSource.CanExecute(instance_source))
-                                    Parent.InstanceSourceSelectPage.SelectInstanceSource.Execute(instance_source);
+                                // Restore the access token from the settings.
+                                Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
+
+                                // Connecting instance will be the same as authenticating.
+                                Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+
+                                if (Parent.Configuration.AccessToken == null)
+                                    Parent.CurrentPage = Parent.AuthorizationPage;
+                                else
+                                    Parent.CurrentPage = Parent.ProfileSelectPage;
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
@@ -71,15 +81,15 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         () => {
-                            try { new Uri(URI); }
+                            try { new Uri(BaseURI); }
                             catch (Exception) { return false; }
                             return true;
                         });
                 }
-                return _select_custom_instance_source;
+                return _select_custom_instance;
             }
         }
-        private ICommand _select_custom_instance_source;
+        private ICommand _select_custom_instance;
 
         #endregion
 
@@ -88,10 +98,10 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Constructs a view model.
         /// </summary>
-        public CustomInstanceSourcePage(ConnectWizard parent) :
+        public CustomInstancePage(ConnectWizard parent) :
             base(parent)
         {
-            URI = "https://";
+            BaseURI = "https://";
         }
 
         #endregion

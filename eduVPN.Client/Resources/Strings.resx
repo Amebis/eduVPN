@@ -145,11 +145,11 @@ The client will continue after you complete the authorization...</value>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
-  <data name="CustomInstanceSourcePageTitle" xml:space="preserve">
+  <data name="CustomInstancePageTitle" xml:space="preserve">
     <value>Other instance</value>
   </data>
-  <data name="CustomInstanceSourcePageDescription" xml:space="preserve">
-    <value>Enter discovery URI of your VPN provider.</value>
+  <data name="CustomInstancePageDescription" xml:space="preserve">
+    <value>Enter base URI of your VPN provider.</value>
   </data>
   <data name="ProfileSelectPageTitle" xml:space="preserve">
     <value>Connect</value>

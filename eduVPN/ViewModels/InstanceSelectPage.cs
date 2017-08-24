@@ -117,7 +117,7 @@ namespace eduVPN.ViewModels
             if (Array.IndexOf(Parent.InstanceSources, Parent.InstanceSource) >= 0)
                 Parent.CurrentPage = Parent.InstanceSourceSelectPage;
             else
-                Parent.CurrentPage = Parent.CustomInstanceSourcePage;
+                Parent.CurrentPage = Parent.CustomInstancePage;
         }
 
         protected override bool CanNavigateBack()

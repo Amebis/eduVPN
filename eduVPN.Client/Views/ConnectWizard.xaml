@@ -58,8 +58,8 @@
             <view:InstanceSelectPage
                 Title="{x:Static res:Strings.InstituteSelectPageTitle}"/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:CustomInstanceSourcePage}">
-            <view:CustomInstanceSourcePage/>
+        <DataTemplate DataType="{x:Type viewModel:CustomInstancePage}">
+            <view:CustomInstancePage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:AuthorizationPage}">
             <view:AuthorizationPage/>

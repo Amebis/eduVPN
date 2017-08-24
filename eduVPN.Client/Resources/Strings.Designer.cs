@@ -134,20 +134,20 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter discovery URI of your VPN provider..
+        ///   Looks up a localized string similar to Enter base URI of your VPN provider..
         /// </summary>
-        public static string CustomInstanceSourcePageDescription {
+        public static string CustomInstancePageDescription {
             get {
-                return ResourceManager.GetString("CustomInstanceSourcePageDescription", resourceCulture);
+                return ResourceManager.GetString("CustomInstancePageDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Other instance.
         /// </summary>
-        public static string CustomInstanceSourcePageTitle {
+        public static string CustomInstancePageTitle {
             get {
-                return ResourceManager.GetString("CustomInstanceSourcePageTitle", resourceCulture);
+                return ResourceManager.GetString("CustomInstancePageTitle", resourceCulture);
             }
         }
         

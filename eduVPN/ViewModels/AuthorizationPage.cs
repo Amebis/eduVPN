@@ -118,14 +118,13 @@ namespace eduVPN.ViewModels
         protected override void DoNavigateBack()
         {
             if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo)
-            {
-                if (Array.IndexOf(Parent.InstanceSources, Parent.InstanceSource) >= 0)
-                    Parent.CurrentPage = Parent.InstanceSourceSelectPage;
-                else
-                    Parent.CurrentPage = Parent.CustomInstanceSourcePage;
-            }
-            else
+                Parent.CurrentPage = Parent.InstanceSourceSelectPage;
+            else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo)
                 Parent.CurrentPage = Parent.InstanceSelectPage;
+            else if (Parent.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
+                Parent.CurrentPage = Parent.InstanceSelectPage;
+            else
+                Parent.CurrentPage = Parent.CustomInstancePage;
         }
 
         protected override bool CanNavigateBack()

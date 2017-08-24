@@ -95,6 +95,6 @@
             Margin="10"
             Style="{StaticResource eduVPNLinkButtonStyle}"
             Content="{x:Static res:Strings.InstanceSourceSelectCustom}"
-            Command="{Binding Path=SelectCustomInstanceSource}"/>
+            Command="{Binding Path=SelectCustomInstance}"/>
     </Grid>
 </view:ConnectWizardPage>

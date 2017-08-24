@@ -74,13 +74,13 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Select custom instance source
         /// </summary>
-        public ICommand SelectCustomInstanceSource
+        public ICommand SelectCustomInstance
         {
             get
             {
-                if (_select_custom_instance_source == null)
+                if (_select_custom_instance == null)
                 {
-                    _select_custom_instance_source = new DelegateCommand<Models.InstanceSourceInfo>(
+                    _select_custom_instance = new DelegateCommand<Models.InstanceSourceInfo>(
                         // execute
                         param =>
                         {
@@ -88,8 +88,10 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.InstanceSource = null;
-                                Parent.CurrentPage = Parent.CustomInstanceSourcePage;
+                                // Assume the custom instance would otherwise be a part of "Institute Access" source.
+                                Parent.InstanceSource = Parent.InstanceSources[(int)Models.InstanceSourceType.InstituteAccess];
+
+                                Parent.CurrentPage = Parent.CustomInstancePage;
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
@@ -98,10 +100,10 @@ namespace eduVPN.ViewModels
                         // canExecute
                         param => true);
                 }
-                return _select_custom_instance_source;
+                return _select_custom_instance;
             }
         }
-        private ICommand _select_custom_instance_source;
+        private ICommand _select_custom_instance;
 
         #endregion
 
