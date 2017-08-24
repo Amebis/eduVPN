@@ -133,7 +133,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\InstanceSelectPage.xaml">
+    <Page Include="Views\AuthenticatingInstanceSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,8 +151,8 @@
     <Compile Include="Views\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InstanceSelectPage.xaml.cs">
-      <DependentUpon>InstanceSelectPage.xaml</DependentUpon>
+    <Compile Include="Views\AuthenticatingInstanceSelectPage.xaml.cs">
+      <DependentUpon>AuthenticatingInstanceSelectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectWizard.xaml.cs">
       <DependentUpon>ConnectWizard.xaml</DependentUpon>

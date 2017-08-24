@@ -8,17 +8,17 @@
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Institute selection wizard page
+    /// Country selection wizard page
     /// </summary>
-    public class InstituteSelectPage : InstanceSelectPage
+    public class AuthenticatingCountrySelectPage : AuthenticatingInstanceSelectPage
     {
         #region Constructors
 
         /// <summary>
-        /// Constructs an institute selection wizard page.
+        /// Constructs a country selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public InstituteSelectPage(ConnectWizard parent) :
+        public AuthenticatingCountrySelectPage(ConnectWizard parent) :
             base(parent)
         {
         }

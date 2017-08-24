@@ -14,7 +14,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Instance selection base wizard page
     /// </summary>
-    public class InstanceSelectPage : ConnectWizardPage
+    public class AuthenticatingInstanceSelectPage : ConnectWizardPage
     {
         #region Properties
 
@@ -94,7 +94,7 @@ namespace eduVPN.ViewModels
         /// Constructs an instance selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public InstanceSelectPage(ConnectWizard parent) :
+        public AuthenticatingInstanceSelectPage(ConnectWizard parent) :
             base(parent)
         {
         }

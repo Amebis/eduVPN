@@ -139,7 +139,7 @@ The client will continue after you complete the authorization...</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Next</value>
   </data>
-  <data name="CountrySelectPageTitle" xml:space="preserve">
+  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
     <value>Select your Country</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
@@ -184,7 +184,7 @@ The client will continue after you complete the authorization...</value>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notification</value>
   </data>
-  <data name="InstituteSelectPageTitle" xml:space="preserve">
+  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Select your Institution</value>
   </data>
   <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
@@ -223,7 +223,7 @@ The client will continue after you complete the authorization...</value>
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="CountrySelectPageDescription" xml:space="preserve">
+  <data name="AuthenticatingCountrySelectPageDescription" xml:space="preserve">
     <value>Select your institution's country here. You can select VPN endpoints in other countries after signing in with your institution credentials.</value>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">

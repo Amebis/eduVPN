@@ -12,14 +12,14 @@ namespace eduVPN.Views
     /// <summary>
     /// Interaction logic for SecureInternetSelectPage.xaml and InstituteAccessSelectPage.xaml
     /// </summary>
-    public partial class InstanceSelectPage : ConnectWizardPage
+    public partial class AuthenticatingInstanceSelectPage : ConnectWizardPage
     {
         #region Constructors
 
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public InstanceSelectPage()
+        public AuthenticatingInstanceSelectPage()
         {
             InitializeComponent();
         }
@@ -36,7 +36,7 @@ namespace eduVPN.Views
             // 2. Change the list of instances to a stack of buttons of instances
 
             // User selected an instance.
-            var viewmodel = (ViewModels.InstanceSelectPage)DataContext;
+            var viewmodel = (ViewModels.AuthenticatingInstanceSelectPage)DataContext;
             if (viewmodel != null && // Sometimes this event gets called with null view model.
                 viewmodel.AuthorizeSelectedInstance.CanExecute(null))
             {

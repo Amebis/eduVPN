@@ -10,7 +10,7 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for ProfileSelectPage.xaml and InstanceAndProfileSelectPage.xaml
+    /// Interaction logic for ProfileSelectPage.xaml and ConnectingInstanceAndProfileSelectPage.xaml
     /// </summary>
     public class ProfileSelectBasePage : ConnectWizardPage
     {

@@ -49,14 +49,14 @@
         <DataTemplate DataType="{x:Type viewModel:InstanceSourceSelectPage}">
             <view:InstanceSourceSelectPage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:CountrySelectPage}">
-            <view:InstanceSelectPage
-                Title="{x:Static res:Strings.CountrySelectPageTitle}"
-                Description="{x:Static res:Strings.CountrySelectPageDescription}"/>
+        <DataTemplate DataType="{x:Type viewModel:AuthenticatingCountrySelectPage}">
+            <view:AuthenticatingInstanceSelectPage
+                Title="{x:Static res:Strings.AuthenticatingCountrySelectPageTitle}"
+                Description="{x:Static res:Strings.AuthenticatingCountrySelectPageDescription}"/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:InstituteSelectPage}">
-            <view:InstanceSelectPage
-                Title="{x:Static res:Strings.InstituteSelectPageTitle}"/>
+        <DataTemplate DataType="{x:Type viewModel:AuthenticatingInstituteSelectPage}">
+            <view:AuthenticatingInstanceSelectPage
+                Title="{x:Static res:Strings.AuthenticatingInstituteSelectPageTitle}"/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CustomInstancePage}">
             <view:CustomInstancePage/>
@@ -67,8 +67,8 @@
         <DataTemplate DataType="{x:Type viewModel:ProfileSelectPage}">
             <view:ProfileSelectPage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:InstanceAndProfileSelectPage}">
-            <view:InstanceAndProfileSelectPage/>
+        <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPage}">
+            <view:ConnectingInstanceAndProfileSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:StatusPage}">
             <view:StatusPage/>

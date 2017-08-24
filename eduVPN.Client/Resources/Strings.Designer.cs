@@ -61,6 +61,33 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select your institution&apos;s country here. You can select VPN endpoints in other countries after signing in with your institution credentials..
+        /// </summary>
+        public static string AuthenticatingCountrySelectPageDescription {
+            get {
+                return ResourceManager.GetString("AuthenticatingCountrySelectPageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your Country.
+        /// </summary>
+        public static string AuthenticatingCountrySelectPageTitle {
+            get {
+                return ResourceManager.GetString("AuthenticatingCountrySelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your Institution.
+        /// </summary>
+        public static string AuthenticatingInstituteSelectPageTitle {
+            get {
+                return ResourceManager.GetString("AuthenticatingInstituteSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
         ///The client will continue after you complete the authorization....
         /// </summary>
@@ -112,24 +139,6 @@ namespace eduVPN.Client.Resources {
         public static string ButtonNextTitle {
             get {
                 return ResourceManager.GetString("ButtonNextTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select your institution&apos;s country here. You can select VPN endpoints in other countries after signing in with your institution credentials..
-        /// </summary>
-        public static string CountrySelectPageDescription {
-            get {
-                return ResourceManager.GetString("CountrySelectPageDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select your Country.
-        /// </summary>
-        public static string CountrySelectPageTitle {
-            get {
-                return ResourceManager.GetString("CountrySelectPageTitle", resourceCulture);
             }
         }
         
@@ -202,15 +211,6 @@ namespace eduVPN.Client.Resources {
         public static string InstituteAccessTitle {
             get {
                 return ResourceManager.GetString("InstituteAccessTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select your Institution.
-        /// </summary>
-        public static string InstituteSelectPageTitle {
-            get {
-                return ResourceManager.GetString("InstituteSelectPageTitle", resourceCulture);
             }
         }
         

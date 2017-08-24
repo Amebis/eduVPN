@@ -144,7 +144,7 @@ namespace eduVPN.ViewModels
             else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo)
                 Parent.CurrentPage = Parent.InstanceSourceSelectPage;
             else if (Parent.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
-                Parent.CurrentPage = Parent.InstanceSelectPage;
+                Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
             else
                 Parent.CurrentPage = Parent.CustomInstancePage;
         }

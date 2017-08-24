@@ -54,7 +54,7 @@ namespace eduVPN.ViewModels
                                         Parent.CurrentPage = Parent.ProfileSelectPage;
                                 }
                                 else
-                                    Parent.CurrentPage = Parent.InstanceSelectPage;
+                                    Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }

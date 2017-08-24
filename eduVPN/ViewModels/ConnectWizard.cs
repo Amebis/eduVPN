@@ -173,26 +173,26 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Instance selection page
         /// </summary>
-        public InstanceSelectPage InstanceSelectPage
+        public AuthenticatingInstanceSelectPage AuthenticatingInstanceSelectPage
         {
             get
             {
                 if (InstanceSource is Models.DistributedInstanceSourceInfo)
                 {
-                    if (_country_select_page == null)
-                        _country_select_page = new CountrySelectPage(this);
-                    return _country_select_page;
+                    if (_authenticating_country_select_page == null)
+                        _authenticating_country_select_page = new AuthenticatingCountrySelectPage(this);
+                    return _authenticating_country_select_page;
                 }
                 else
                 {
-                    if (_institute_select_page == null)
-                        _institute_select_page = new InstituteSelectPage(this);
-                    return _institute_select_page;
+                    if (_authenticating_institute_select_page == null)
+                        _authenticating_institute_select_page = new AuthenticatingInstituteSelectPage(this);
+                    return _authenticating_institute_select_page;
                 }
             }
         }
-        private CountrySelectPage _country_select_page;
-        private InstituteSelectPage _institute_select_page;
+        private AuthenticatingCountrySelectPage _authenticating_country_select_page;
+        private AuthenticatingInstituteSelectPage _authenticating_institute_select_page;
 
         /// <summary>
         /// Custom instance source page
@@ -232,9 +232,9 @@ namespace eduVPN.ViewModels
                 if (InstanceSource is Models.FederatedInstanceSourceInfo ||
                     InstanceSource is Models.DistributedInstanceSourceInfo)
                 {
-                    if (_instance_and_profile_select_page == null)
-                        _instance_and_profile_select_page = new InstanceAndProfileSelectPage(this);
-                    return _instance_and_profile_select_page;
+                    if (_connecting_instance_and_profile_select_page == null)
+                        _connecting_instance_and_profile_select_page = new ConnectingInstanceAndProfileSelectPage(this);
+                    return _connecting_instance_and_profile_select_page;
                 }
                 else
                 {
@@ -245,7 +245,7 @@ namespace eduVPN.ViewModels
             }
         }
         private ProfileSelectPage _profile_select_page;
-        private InstanceAndProfileSelectPage _instance_and_profile_select_page;
+        private ConnectingInstanceAndProfileSelectPage _connecting_instance_and_profile_select_page;
 
         /// <summary>
         /// Status wizard page

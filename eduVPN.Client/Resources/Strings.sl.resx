@@ -181,10 +181,10 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="MessageMaintenanceEnd" xml:space="preserve">
     <value>Konec</value>
   </data>
-  <data name="CountrySelectPageTitle" xml:space="preserve">
+  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
     <value>Izberite svojo državo</value>
   </data>
-  <data name="InstituteSelectPageTitle" xml:space="preserve">
+  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Izberite svojo ustanovo</value>
   </data>
   <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
@@ -223,7 +223,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>{0:G} {1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="CountrySelectPageDescription" xml:space="preserve">
+  <data name="AuthenticatingCountrySelectPageDescription" xml:space="preserve">
     <value>Tukaj izberite državo svoje ustanove. Ko se boste prijavili s poverilnicami svoje ustanove, boste lahko izbrali končno točko VPN v drugih državah.</value>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">

@@ -15,7 +15,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Instance and profile selection wizard page
     /// </summary>
-    public class InstanceAndProfileSelectPage : ProfileSelectBasePage
+    public class ConnectingInstanceAndProfileSelectPage : ProfileSelectBasePage
     {
         #region Properties
 
@@ -75,7 +75,7 @@ namespace eduVPN.ViewModels
         /// Constructs a profile selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public InstanceAndProfileSelectPage(ConnectWizard parent) :
+        public ConnectingInstanceAndProfileSelectPage(ConnectWizard parent) :
             base(parent)
         {
         }
