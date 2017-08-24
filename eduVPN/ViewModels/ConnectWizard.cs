@@ -307,98 +307,107 @@ namespace eduVPN.ViewModels
                     param =>
                     {
                         var group_index = (int)param;
-                        try
+                        for (;;)
                         {
-                            // Get instance group.
-                            var response_cache = JSON.Response.Get(
-                                uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[group_index]]),
-                                pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[group_index] + "PubKey"]),
-                                ct: Abort.Token,
-                                previous: (JSON.Response)Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"]);
-
-                            // Parse instance group JSON.
-                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(
-                                response_cache.Value,
-                                Abort.Token);
-
-                            // Load instance group.
-                            _instance_groups[group_index] = Models.InstanceGroupInfo.FromJSON(obj);
-
-                            if (response_cache.IsFresh)
+                            try
                             {
-                                // If we got here, the loaded instance group is (probably) OK. Update cache.
-                                Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = response_cache;
-                            }
+                                // Get instance group.
+                                var response_cache = JSON.Response.Get(
+                                    uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[group_index]]),
+                                    pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[group_index] + "PubKey"]),
+                                    ct: Abort.Token,
+                                    previous: (JSON.Response)Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"]);
 
-                            _configuration_histories[group_index] = new ObservableCollection<Models.VPNConfiguration>();
+                                // Parse instance group JSON.
+                                var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(
+                                    response_cache.Value,
+                                    Abort.Token);
 
-                            // Load configuration histories from settings.
-                            var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[group_index] + "ConfigHistory"];
-                            foreach (var h in hist)
-                            {
-                                var cfg = new Models.VPNConfiguration();
+                                // Load instance group.
+                                _instance_groups[group_index] = Models.InstanceGroupInfo.FromJSON(obj);
 
-                                try
+                                if (response_cache.IsFresh)
                                 {
-                                    // Restore configuration.
-                                    if (_instance_groups[group_index] is Models.LocalInstanceGroupInfo instance_group_local &&
-                                        h is Models.LocalVPNConfigurationSettings h_local)
-                                    {
-                                        // Local group instance:
-                                        // - Restore instance, which is both: authenticating and connecting.
-                                        // - Restore access token.
-                                        // - Restore profile.
-                                        cfg.AuthenticatingInstance = instance_group_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
-                                        if (cfg.AuthenticatingInstance == null) cfg.AuthenticatingInstance = h_local.Instance;
-                                        cfg.AccessToken = h_local.AccessToken;
-                                        if (cfg.AccessToken == null) continue;
-                                        cfg.ConnectingInstance = cfg.AuthenticatingInstance;
-                                        cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AccessToken, Abort.Token).Where(p => p.ID == h_local.Profile).FirstOrDefault();
-                                        if (cfg.ConnectingProfile == null) continue;
-                                    }
-                                    else if (_instance_groups[group_index] is Models.DistributedInstanceGroupInfo instance_group_distributed &&
-                                        h is Models.DistributedVPNConfigurationSettings h_distributed)
-                                    {
-                                        // Distributed group instance:
-                                        // - Restore authenticating instance.
-                                        // - Restore access token.
-                                        // - Restore last connected instance (optional).
-                                        cfg.AuthenticatingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
-                                        if (cfg.AuthenticatingInstance == null) continue;
-                                        cfg.AccessToken = h_distributed.AccessToken;
-                                        if (cfg.AccessToken == null) continue;
-                                        cfg.ConnectingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
-                                    }
-                                    else if (_instance_groups[group_index] is Models.FederatedInstanceGroupInfo instance_group_federated &&
-                                        h is Models.FederatedVPNConfigurationSettings h_federated)
-                                    {
-                                        // Federated group instance:
-                                        // - Get authenticating instance from federated group settings.
-                                        // - Restore access token.
-                                        // - Restore last connected instance (optional).
-                                        cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_group_federated);
-                                        cfg.AccessToken = h_federated.AccessToken;
-                                        if (cfg.AccessToken == null) continue;
-                                        cfg.ConnectingInstance = instance_group_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
-                                    }
-                                    else
-                                        continue;
+                                    // If we got here, the loaded instance group is (probably) OK. Update cache.
+                                    Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = response_cache;
                                 }
-                                catch (Exception) { continue; }
 
-                                // Configuration successfuly restored. Add it.
-                                _configuration_histories[group_index].Add(cfg);
+                                _configuration_histories[group_index] = new ObservableCollection<Models.VPNConfiguration>();
+
+                                // Load configuration histories from settings.
+                                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[group_index] + "ConfigHistory"];
+                                foreach (var h in hist)
+                                {
+                                    var cfg = new Models.VPNConfiguration();
+
+                                    try
+                                    {
+                                        // Restore configuration.
+                                        if (_instance_groups[group_index] is Models.LocalInstanceGroupInfo instance_group_local &&
+                                            h is Models.LocalVPNConfigurationSettings h_local)
+                                        {
+                                            // Local group instance:
+                                            // - Restore instance, which is both: authenticating and connecting.
+                                            // - Restore access token.
+                                            // - Restore profile.
+                                            cfg.AuthenticatingInstance = instance_group_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
+                                            if (cfg.AuthenticatingInstance == null) cfg.AuthenticatingInstance = h_local.Instance;
+                                            cfg.AccessToken = h_local.AccessToken;
+                                            if (cfg.AccessToken == null) continue;
+                                            cfg.ConnectingInstance = cfg.AuthenticatingInstance;
+                                            cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AccessToken, Abort.Token).Where(p => p.ID == h_local.Profile).FirstOrDefault();
+                                            if (cfg.ConnectingProfile == null) continue;
+                                        }
+                                        else if (_instance_groups[group_index] is Models.DistributedInstanceGroupInfo instance_group_distributed &&
+                                            h is Models.DistributedVPNConfigurationSettings h_distributed)
+                                        {
+                                            // Distributed group instance:
+                                            // - Restore authenticating instance.
+                                            // - Restore access token.
+                                            // - Restore last connected instance (optional).
+                                            cfg.AuthenticatingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
+                                            if (cfg.AuthenticatingInstance == null) continue;
+                                            cfg.AccessToken = h_distributed.AccessToken;
+                                            if (cfg.AccessToken == null) continue;
+                                            cfg.ConnectingInstance = instance_group_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
+                                        }
+                                        else if (_instance_groups[group_index] is Models.FederatedInstanceGroupInfo instance_group_federated &&
+                                            h is Models.FederatedVPNConfigurationSettings h_federated)
+                                        {
+                                            // Federated group instance:
+                                            // - Get authenticating instance from federated group settings.
+                                            // - Restore access token.
+                                            // - Restore last connected instance (optional).
+                                            cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_group_federated);
+                                            cfg.AccessToken = h_federated.AccessToken;
+                                            if (cfg.AccessToken == null) continue;
+                                            cfg.ConnectingInstance = instance_group_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
+                                        }
+                                        else
+                                            continue;
+                                    }
+                                    catch (Exception) { continue; }
+
+                                    // Configuration successfuly restored. Add it.
+                                    _configuration_histories[group_index].Add(cfg);
+                                }
+
+                                break;
                             }
-                        }
-                        catch (OperationCanceledException) { throw; }
-                        catch (Exception ex)
-                        {
-                            // Make it a clean start next time.
-                            Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = null;
+                            catch (OperationCanceledException) { throw; }
+                            catch (Exception ex)
+                            {
+                                // Make it a clean start next time.
+                                Properties.Settings.Default[_instance_directory_id[group_index] + "Cache"] = null;
 
-                            // Notify the sender the instance group loading failed. However, continue with other groups.
-                            // This will overwrite all previous error messages.
-                            Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[group_index]), ex);
+                                // Notify the sender the instance group loading failed. However, continue with other groups.
+                                // This will overwrite all previous error messages.
+                                Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceGroupInfoLoad, _instance_directory_id[group_index]), ex);
+                            }
+
+                            // Sleep for 3s, then retry.
+                            if (Abort.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(3)))
+                                break;
                         }
                     }));
                 threads[i].Start(i);
@@ -415,9 +424,8 @@ namespace eduVPN.ViewModels
                         foreach (var thread in threads)
                             thread.Join();
 
-                        // Of everything is OK, proceed to the "first" page.
-                        if (Error == null)
-                            CurrentPage = InstanceGroupSelectPage;
+                        // Proceed to the "first" page.
+                        CurrentPage = InstanceGroupSelectPage;
                     }
                     finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                 })).Start();
