@@ -80,7 +80,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting for Authorization.
+        ///   Looks up a localized string similar to Waiting for authorization.
         /// </summary>
         public static string AuthorizationPageTitle {
             get {
@@ -125,7 +125,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Your Country.
+        ///   Looks up a localized string similar to Select your Country.
         /// </summary>
         public static string CountrySelectPageTitle {
             get {
@@ -143,7 +143,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other Profile.
+        ///   Looks up a localized string similar to Other instance.
         /// </summary>
         public static string CustomInstanceSourcePageTitle {
             get {
@@ -179,7 +179,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose Your Profile.
+        ///   Looks up a localized string similar to Choose your profile.
         /// </summary>
         public static string InstanceSourceSelectPageTitle {
             get {
@@ -188,7 +188,25 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Your Institution.
+        ///   Looks up a localized string similar to Access your institute&apos;s network from outside the institution..
+        /// </summary>
+        public static string InstituteAccessNote {
+            get {
+                return ResourceManager.GetString("InstituteAccessNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Institute Access.
+        /// </summary>
+        public static string InstituteAccessTitle {
+            get {
+                return ResourceManager.GetString("InstituteAccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your Institution.
         /// </summary>
         public static string InstituteSelectPageTitle {
             get {
@@ -224,7 +242,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maintenance Notification.
+        ///   Looks up a localized string similar to Maintenance notification.
         /// </summary>
         public static string MessageMaintenanceTitle {
             get {
@@ -256,6 +274,24 @@ namespace eduVPN.Client.Resources {
         public static string ProfileSelectPageTitle {
             get {
                 return ResourceManager.GetString("ProfileSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect to the internet securely, for example when using public WiFi..
+        /// </summary>
+        public static string SecureInternetNote {
+            get {
+                return ResourceManager.GetString("SecureInternetNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secure Internet.
+        /// </summary>
+        public static string SecureInternetTitle {
+            get {
+                return ResourceManager.GetString("SecureInternetTitle", resourceCulture);
             }
         }
         
@@ -305,7 +341,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection Info.
+        ///   Looks up a localized string similar to Connection info.
         /// </summary>
         public static string StatusPageConnectionInfoTitle {
             get {
@@ -359,7 +395,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VPN Connection.
+        ///   Looks up a localized string similar to VPN connection.
         /// </summary>
         public static string StatusPageTitle {
             get {

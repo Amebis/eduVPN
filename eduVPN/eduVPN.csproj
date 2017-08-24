@@ -45,6 +45,7 @@
     <Compile Include="Models\InstanceSettings.cs" />
     <Compile Include="Models\InstanceSourceInfo.cs" />
     <Compile Include="Models\DistributedVPNConfigurationSettings.cs" />
+    <Compile Include="Models\InstanceSourceType.cs" />
     <Compile Include="Models\LocalInstanceSourceInfo.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageList.cs" />

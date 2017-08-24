@@ -27,7 +27,7 @@ namespace eduVPN.ViewModels
             {
                 if (_select_instance_source == null)
                 {
-                    _select_instance_source = new DelegateCommand<Models.InstanceSourceInfo>(
+                    _select_instance_source = new DelegateCommand<Models.InstanceSourceType?>(
                         // execute
                         async param =>
                         {
@@ -35,12 +35,12 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.InstanceSource = param;
+                                Parent.InstanceSource = Parent.InstanceSources[(int)param];
 
-                                if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source)
+                                if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
                                 {
                                     // Set authenticating instance.
-                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source);
+                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
 
                                     // Restore the access token from the settings.
                                     Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
@@ -61,7 +61,10 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        param => param != null);
+                        param =>
+                            param != null &&
+                            Parent.InstanceSources != null &&
+                            Parent.InstanceSources[(int)param] != null);
                 }
                 return _select_instance_source;
             }

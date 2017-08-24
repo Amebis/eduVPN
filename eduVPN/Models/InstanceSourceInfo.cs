@@ -13,41 +13,11 @@ using System.ComponentModel;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN list of instances base class
+    /// An eduVPN instance source base class
     /// </summary>
     public class InstanceSourceInfo : ObservableCollection<InstanceInfo>, JSON.ILoadableItem
     {
         #region Properties
-
-        /// <summary>
-        /// Instance source name to display in GUI
-        /// </summary>
-        public string DisplayName
-        {
-            get { return _display_name; }
-            set { if (value != _display_name) { _display_name = value; OnPropertyChanged(new PropertyChangedEventArgs("DisplayName")); } }
-        }
-        private string _display_name;
-
-        /// <summary>
-        /// Instance source logo URI
-        /// </summary>
-        public Uri Logo
-        {
-            get { return _logo; }
-            set { if (value != _logo) { _logo = value; OnPropertyChanged(new PropertyChangedEventArgs("Logo")); } }
-        }
-        private Uri _logo;
-
-        /// <summary>
-        /// Instance source description to display in GUI
-        /// </summary>
-        public string Description
-        {
-            get { return _description; }
-            set { if (value != _description) { _description = value; OnPropertyChanged(new PropertyChangedEventArgs("Description")); } }
-        }
-        private string _description;
 
         /// <summary>
         /// Version sequence
@@ -72,11 +42,6 @@ namespace eduVPN.Models
         #endregion
 
         #region Methods
-
-        public override string ToString()
-        {
-            return DisplayName;
-        }
 
         /// <summary>
         /// Loads instance source from a dictionary object (provided by JSON)
@@ -135,15 +100,6 @@ namespace eduVPN.Models
                     instance.Load(el);
                     Add(instance);
                 }
-
-                // Parse display name.
-                DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : null;
-
-                // Parse description.
-                Description = eduJSON.Parser.GetValue(obj2, "description", out string description) ? description : null;
-
-                // Parse logo URI.
-                Logo = eduJSON.Parser.GetValue(obj2, "logo_uri", out string logo_uri) ? new Uri(logo_uri) : null;
 
                 // Parse sequence.
                 Sequence = eduJSON.Parser.GetValue(obj2, "seq", out int seq) ? (uint)seq : 0;

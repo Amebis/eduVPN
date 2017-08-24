@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Choose Your Profile</value>
+    <value>Choose your profile</value>
   </data>
   <data name="AuthorizationPageMessage" xml:space="preserve">
     <value>eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
@@ -128,7 +128,7 @@ The client will continue after you complete the authorization...</value>
     <value>Retry</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Waiting for Authorization</value>
+    <value>Waiting for authorization</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">
     <value>Back</value>
@@ -140,13 +140,13 @@ The client will continue after you complete the authorization...</value>
     <value>Next</value>
   </data>
   <data name="CountrySelectPageTitle" xml:space="preserve">
-    <value>Select Your Country</value>
+    <value>Select your Country</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
   <data name="CustomInstanceSourcePageTitle" xml:space="preserve">
-    <value>Other Profile</value>
+    <value>Other instance</value>
   </data>
   <data name="CustomInstanceSourcePageDescription" xml:space="preserve">
     <value>Enter discovery URI of your VPN provider.</value>
@@ -161,7 +161,7 @@ The client will continue after you complete the authorization...</value>
     <value>Warning! Your account is marked as disabled. You might not be able to connect. Please, contact your helpdesk for support.</value>
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN Connection</value>
+    <value>VPN connection</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
     <value>Provider</value>
@@ -179,13 +179,13 @@ The client will continue after you complete the authorization...</value>
     <value>End</value>
   </data>
   <data name="MessageMaintenanceTitle" xml:space="preserve">
-    <value>Maintenance Notification</value>
+    <value>Maintenance notification</value>
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notification</value>
   </data>
   <data name="InstituteSelectPageTitle" xml:space="preserve">
-    <value>Select Your Institution</value>
+    <value>Select your Institution</value>
   </data>
   <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
     <value>Bytes in</value>
@@ -203,7 +203,7 @@ The client will continue after you complete the authorization...</value>
     <value>IPv6</value>
   </data>
   <data name="StatusPageConnectionInfoTitle" xml:space="preserve">
-    <value>Connection Info</value>
+    <value>Connection info</value>
   </data>
   <data name="StatusPageConnectionInfoViewLog" xml:space="preserve">
     <value>View log</value>
@@ -237,5 +237,17 @@ The client will continue after you complete the authorization...</value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initializing...</value>
+  </data>
+  <data name="InstituteAccessNote" xml:space="preserve">
+    <value>Access your institute's network from outside the institution.</value>
+  </data>
+  <data name="InstituteAccessTitle" xml:space="preserve">
+    <value>Institute Access</value>
+  </data>
+  <data name="SecureInternetNote" xml:space="preserve">
+    <value>Connect to the internet securely, for example when using public WiFi.</value>
+  </data>
+  <data name="SecureInternetTitle" xml:space="preserve">
+    <value>Secure Internet</value>
   </data>
 </root>

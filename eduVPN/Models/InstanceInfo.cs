@@ -118,10 +118,6 @@ namespace eduVPN.Models
         public InstanceInfo(FederatedInstanceSourceInfo instance_source) :
             this()
         {
-            // Assume same authenticating instance identity as instance source.
-            DisplayName = instance_source.DisplayName;
-            Logo = instance_source.Logo;
-
             // Set API endpoints manually.
             _endpoints = new InstanceEndpoints()
             {
@@ -502,10 +498,10 @@ namespace eduVPN.Models
                 Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_uri"));
 
                 // Set display name.
-                DisplayName = eduJSON.Parser.GetValue(obj2, "display_name", out string display_name) ? display_name : Base.Host;
+                DisplayName = eduJSON.Parser.GetLocalizedValue(obj2, "display_name", out string display_name) ? display_name : Base.Host;
 
                 // Set logo URI.
-                Logo = eduJSON.Parser.GetValue(obj2, "logo_uri", out string logo_uri) ? new Uri(logo_uri) : null;
+                Logo = eduJSON.Parser.GetLocalizedValue(obj2, "logo_uri", out string logo_uri) ? new Uri(logo_uri) : null;
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());

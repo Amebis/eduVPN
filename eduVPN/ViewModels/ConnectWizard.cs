@@ -457,7 +457,7 @@ namespace eduVPN.ViewModels
             Session = new Models.OpenVPNSession(Configuration.ConnectingInstance, Configuration.ConnectingProfile, Configuration.AccessToken);
 
             // Save session configuration to history.
-            var source_index = Array.IndexOf(InstanceSources, InstanceSource);
+            var source_index = Array.IndexOf(_instance_sources, InstanceSource);
             if (source_index >= 0)
             {
                 var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"];

@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:view="clr-namespace:eduVPN.Views"
+    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="298"
@@ -24,52 +25,73 @@
         Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ItemsControl
-            Margin="10,5"
-            Style="{StaticResource eduVPNChoiceItemsControlStyle}"
-            ItemsSource="{Binding Path=Parent.InstanceSources}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Button
-                            Margin="0,5"
-                            Style="{StaticResource eduVPNChoiceButtonStyle}"
-                            ToolTip="{Binding Path=DisplayName}"
-                            AutomationProperties.Name="{Binding Path=DisplayName}"
-                            Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.SelectInstanceSource}"
-                            CommandParameter="{Binding }">
+        <Button
+            Margin="10,10,10,5"
+            Style="{StaticResource eduVPNChoiceButtonStyle}"
+            ToolTip="{x:Static res:Strings.SecureInternetTitle}"
+            AutomationProperties.Name="{x:Static res:Strings.SecureInternetTitle}"
+            Command="{Binding Path=SelectInstanceSource}"
+            CommandParameter="{x:Static model:InstanceSourceType.SecureInternet}">
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-                                <!-- TODO: Provide alternative Source when Logo==null. -->
-                                <Image
-                                    Style="{StaticResource eduVPNChoiceIconStyle}"
-                                    Source="{Binding Path=Logo}"/>
+                <Image
+                    Margin="13"
+                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Source="pack://application:,,,/Resources/SecureInternet.png"/>
 
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Margin="10"
-                                    Style="{StaticResource eduVPNChoiceNoteStyle}"
-                                    Text="{Binding Path=Description}"/>
-                            </Grid>
-                        </Button>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="10"
+                    Style="{StaticResource eduVPNChoiceNoteStyle}"
+                    Text="{x:Static res:Strings.SecureInternetNote}"/>
+            </Grid>
+        </Button>
 
         <Button
             Grid.Row="1"
+            Margin="10,5,10,10"
+            Style="{StaticResource eduVPNChoiceButtonStyle}"
+            ToolTip="{x:Static res:Strings.InstituteAccessTitle}"
+            AutomationProperties.Name="{x:Static res:Strings.InstituteAccessTitle}"
+            Command="{Binding Path=SelectInstanceSource}"
+            CommandParameter="{x:Static model:InstanceSourceType.InstituteAccess}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Margin="13"
+                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Source="pack://application:,,,/Resources/InstituteAccess.png"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="10"
+                    Style="{StaticResource eduVPNChoiceNoteStyle}"
+                    Text="{x:Static res:Strings.InstituteAccessNote}"/>
+            </Grid>
+        </Button>
+
+        <Button
+            Grid.Row="2"
             Margin="10"
             Style="{StaticResource eduVPNLinkButtonStyle}"
             Content="{x:Static res:Strings.InstanceSourceSelectCustom}"

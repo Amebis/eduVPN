@@ -236,8 +236,8 @@
     <Resource Include="Resources\eduVPNConnected.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\InstituteAccess.png" />
-    <None Include="Resources\SecureInternet.png" />
+    <Resource Include="Resources\InstituteAccess.png" />
+    <Resource Include="Resources\SecureInternet.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />
