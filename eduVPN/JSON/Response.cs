@@ -47,6 +47,11 @@ namespace eduVPN.JSON
         public DateTime Timestamp { get; set; }
 
         /// <summary>
+        /// Content ETag
+        /// </summary>
+        public string ETag { get; set; }
+
+        /// <summary>
         /// <c>true</c> - the content was freshly loaded, <c>false</c> - Content not modified
         /// </summary>
         public bool IsFresh { get; set; }
@@ -101,7 +106,12 @@ namespace eduVPN.JSON
             if (token != null)
                 token.AddToRequest(request);
             if (previous != null)
+            {
                 request.IfModifiedSince = previous.Timestamp;
+
+                if (previous.ETag != null)
+                    request.Headers.Add("If-None-Match", previous.ETag);
+            }
 
             if (param != null)
             {
@@ -187,6 +197,7 @@ namespace eduVPN.JSON
                 {
                     Value = Encoding.UTF8.GetString(data, 0, data_size),
                     Timestamp = DateTime.TryParse(response.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
+                    ETag = response.GetResponseHeader("ETag"),
                     IsFresh = true
                 };
             }
@@ -205,6 +216,7 @@ namespace eduVPN.JSON
         {
             Value = reader.GetAttribute("Value");
             Timestamp = DateTime.TryParse(reader.GetAttribute("Timestamp"), out var timestamp) ? timestamp : default(DateTime);
+            ETag = reader.GetAttribute("ETag");
             IsFresh = reader.GetAttribute("IsFresh").Trim().ToLowerInvariant() == "true";
         }
 
@@ -212,6 +224,7 @@ namespace eduVPN.JSON
         {
             writer.WriteAttributeString("Value", Value);
             writer.WriteAttributeString("Timestamp", Timestamp.ToString("o"));
+            writer.WriteAttributeString("ETag", ETag);
             writer.WriteAttributeString("IsFresh", IsFresh ? "true" : "false");
         }
 
