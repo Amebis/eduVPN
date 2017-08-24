@@ -63,32 +63,22 @@ namespace eduVPN.Models
 
         public virtual void ReadXml(XmlReader reader)
         {
-            AccessToken = null;
-            Popularity = 1.0f;
+            string v;
 
-            while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "VPNConfigurationSettings"))
-            {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    switch (reader.Name)
-                    {
-                        case "AccessToken": AccessToken = AccessToken.FromBase64String(reader["Value"]); break;
-                        case "Popularity": Popularity = float.Parse(reader["Value"], CultureInfo.InvariantCulture); break;
-                    }
-                }
-            }
+            Popularity = (v = reader["Popularity"]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
+            AccessToken = (v = reader["AccessToken"]) != null ? AccessToken.FromBase64String(v) : null;
         }
 
         public virtual void WriteXml(XmlWriter writer)
         {
-            writer.WriteStartElement("AccessToken");
-            writer.WriteAttributeString("Value", AccessToken.ToBase64String());
-            writer.WriteEndElement();
+            writer.WriteAttributeString("Popularity", Popularity.ToString(CultureInfo.InvariantCulture));
 
-            writer.WriteStartElement("Popularity");
-            writer.WriteAttributeString("Value", Popularity.ToString(CultureInfo.InvariantCulture));
-            writer.WriteEndElement();
+            if (AccessToken != null)
+            {
+                writer.WriteStartAttribute("AccessToken");
+                writer.WriteString(AccessToken.ToBase64String());
+                writer.WriteEndAttribute();
+            }
         }
 
         #endregion

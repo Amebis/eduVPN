@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using System.Xml;
 
 namespace eduVPN.Models
@@ -18,7 +17,7 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
-        /// Last connected instance ID
+        /// Last connected instance base URI
         /// </summary>
         public string LastInstance { get; set; }
 
@@ -49,30 +48,23 @@ namespace eduVPN.Models
 
         public override void ReadXml(XmlReader reader)
         {
-            LastInstance = null;
+            LastInstance = reader["LastInstance"];
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "FederatedVPNConfigurationSettings"))
             {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    switch (reader.Name)
-                    {
-                        case "VPNConfigurationSettings": base.ReadXml(reader); break;
-                        case "LastInstance": LastInstance = reader["Key"]; break;
-                    }
-                }
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "VPNConfigurationSettings")
+                    base.ReadXml(reader);
             }
         }
 
         public override void WriteXml(XmlWriter writer)
         {
+            if (LastInstance != null)
+                writer.WriteAttributeString("LastInstance", LastInstance);
+
             writer.WriteStartElement("VPNConfigurationSettings");
             base.WriteXml(writer);
-            writer.WriteEndElement();
-
-            writer.WriteStartElement("LastInstance");
-            writer.WriteAttributeString("Key", LastInstance);
             writer.WriteEndElement();
         }
 

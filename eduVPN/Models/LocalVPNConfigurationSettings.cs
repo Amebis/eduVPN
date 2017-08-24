@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using System.Xml;
 
 namespace eduVPN.Models
@@ -18,9 +17,9 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
-        /// Instance ID
+        /// Instance
         /// </summary>
-        public string Instance { get; set; }
+        public InstanceInfo Instance { get; set; }
 
         /// <summary>
         /// Profile ID
@@ -37,7 +36,7 @@ namespace eduVPN.Models
                 return false;
 
             var other = obj as LocalVPNConfigurationSettings;
-            if (!Instance.Equals(other.Instance) ||
+            if (!Instance.Base.Equals(other.Instance.Base) ||
                 !Profile.Equals(other.Profile))
                 return false;
 
@@ -46,7 +45,7 @@ namespace eduVPN.Models
 
         public override int GetHashCode()
         {
-            return base.GetHashCode() ^ Instance.GetHashCode() ^ Profile.GetHashCode();
+            return base.GetHashCode() ^ Instance.Base.GetHashCode() ^ Profile.GetHashCode();
         }
 
         #endregion
@@ -55,8 +54,9 @@ namespace eduVPN.Models
 
         public override void ReadXml(XmlReader reader)
         {
+            Profile = reader.GetAttribute("Profile");
+
             Instance = null;
-            Profile = null;
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "LocalVPNConfigurationSettings"))
@@ -65,9 +65,17 @@ namespace eduVPN.Models
                 {
                     switch (reader.Name)
                     {
-                        case "VPNConfigurationSettings": base.ReadXml(reader); break;
-                        case "Instance": Instance = reader["Key"]; break;
-                        case "Profile": Profile = reader["Key"]; break;
+                        case "VPNConfigurationSettings":
+                            base.ReadXml(reader);
+                            break;
+
+                        case "InstanceInfo":
+                            if (reader["Key"] == "Instance")
+                            {
+                                Instance = new InstanceInfo();
+                                Instance.ReadXml(reader);
+                            }
+                            break;
                     }
                 }
             }
@@ -75,17 +83,20 @@ namespace eduVPN.Models
 
         public override void WriteXml(XmlWriter writer)
         {
+            if (Profile != null)
+                writer.WriteAttributeString("Profile", Profile);
+
             writer.WriteStartElement("VPNConfigurationSettings");
             base.WriteXml(writer);
             writer.WriteEndElement();
 
-            writer.WriteStartElement("Instance");
-            writer.WriteAttributeString("Key", Instance);
-            writer.WriteEndElement();
-
-            writer.WriteStartElement("Profile");
-            writer.WriteAttributeString("Key", Profile);
-            writer.WriteEndElement();
+            if (Instance != null)
+            {
+                writer.WriteStartElement("InstanceInfo");
+                writer.WriteAttributeString("Key", "Instance");
+                Instance.WriteXml(writer);
+                writer.WriteEndElement();
+            }
         }
 
         #endregion

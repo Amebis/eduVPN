@@ -33,12 +33,15 @@ namespace eduVPN
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "SerializableStringDictionary"))
             {
-                var name = reader["Name"];
-                if (name == null)
-                    throw new FormatException();
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "DictionaryEntry")
+                {
+                    var name = reader["Key"];
+                    if (name == null)
+                        throw new FormatException();
 
-                var value = reader["Value"];
-                this[name] = value;
+                    var value = reader["Value"];
+                    this[name] = value;
+                }
             }
         }
 
@@ -46,8 +49,8 @@ namespace eduVPN
         {
             foreach (DictionaryEntry entry in this)
             {
-                writer.WriteStartElement("Pair");
-                writer.WriteAttributeString("Name", (string)entry.Key);
+                writer.WriteStartElement("DictionaryEntry");
+                writer.WriteAttributeString("Key", (string)entry.Key);
                 writer.WriteAttributeString("Value", (string)entry.Value);
                 writer.WriteEndElement();
             }

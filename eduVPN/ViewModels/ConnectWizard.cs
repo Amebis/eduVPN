@@ -348,8 +348,8 @@ namespace eduVPN.ViewModels
                                         // - Restore instance, which is both: authenticating and connecting.
                                         // - Restore access token.
                                         // - Restore profile.
-                                        cfg.AuthenticatingInstance = instance_group_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance).FirstOrDefault();
-                                        if (cfg.AuthenticatingInstance == null) continue;
+                                        cfg.AuthenticatingInstance = instance_group_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
+                                        if (cfg.AuthenticatingInstance == null) cfg.AuthenticatingInstance = h_local.Instance;
                                         cfg.AccessToken = h_local.AccessToken;
                                         if (cfg.AccessToken == null) continue;
                                         cfg.ConnectingInstance = cfg.AuthenticatingInstance;
@@ -458,7 +458,7 @@ namespace eduVPN.ViewModels
                     // Local group instance
                     el = new Models.LocalVPNConfigurationSettings()
                     {
-                        Instance = Configuration.ConnectingInstance.Base.AbsoluteUri,
+                        Instance = Configuration.ConnectingInstance,
                         AccessToken = Configuration.AccessToken,
                         Profile = Configuration.ConnectingProfile.ID,
                     };
@@ -489,6 +489,13 @@ namespace eduVPN.ViewModels
                     int found = -1;
                     for (var i = hist.Count; i-- > 0;)
                     {
+                        if (hist[i].AccessToken == null)
+                        {
+                            // Remove configurations with no access token.
+                            hist.RemoveAt(i);
+                            continue;
+                        }
+
                         if (hist[i].Equals(el))
                         {
                             if (found < 0)

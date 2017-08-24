@@ -16,13 +16,16 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace eduVPN.Models
 {
     /// <summary>
     /// An eduVPN instance (VPN service provider) basic info
     /// </summary>
-    public class InstanceInfo : BindableBase, JSON.ILoadableItem
+    public class InstanceInfo : BindableBase, JSON.ILoadableItem, IXmlSerializable
     {
         #region Fields
 
@@ -61,7 +64,18 @@ namespace eduVPN.Models
         public Uri Base
         {
             get { return _base; }
-            set { if (value != _base) { _base = value; RaisePropertyChanged(); } }
+            set {
+                if (value != _base)
+                {
+                    _base = value; RaisePropertyChanged();
+
+                    // Setting the base also resets internal state (fields).
+                    _endpoints = null;
+                    _authorization_grant = null;
+                    _profile_list = null;
+                    _client_certificate = null;
+                }
+            }
         }
         private Uri _base;
 
@@ -84,16 +98,6 @@ namespace eduVPN.Models
             set { if (value != _logo) { _logo = value; RaisePropertyChanged(); } }
         }
         private Uri _logo;
-
-        /// <summary>
-        /// Public key used for access token signing (<c>null</c> if none)
-        /// </summary>
-        public byte[] PublicKey
-        {
-            get { return _public_key; }
-            set { _public_key = value; RaisePropertyChanged(); }
-        }
-        private byte[] _public_key;
 
         #endregion
 
@@ -502,12 +506,36 @@ namespace eduVPN.Models
 
                 // Set logo URI.
                 Logo = eduJSON.Parser.GetValue(obj2, "logo_uri", out string logo_uri) ? new Uri(logo_uri) : null;
-
-                // Set public key.
-                PublicKey = eduJSON.Parser.GetValue(obj2, "public_key", out string pub_key) ? Convert.FromBase64String(pub_key) : null;
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+        }
+
+        #endregion
+
+        #region IXmlSerializable Support
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            string v;
+
+            Base = (v = reader.GetAttribute("Base")) != null ? new Uri(v) : null;
+            DisplayName = reader.GetAttribute("DisplayName");
+            Logo = (v = reader.GetAttribute("Logo")) != null ? new Uri(v) : null;
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteAttributeString("Base", Base.AbsoluteUri);
+            if (DisplayName != null)
+                writer.WriteAttributeString("DisplayName", DisplayName);
+            if (Logo != null)
+                writer.WriteAttributeString("Logo", Logo.AbsoluteUri);
         }
 
         #endregion

@@ -40,25 +40,18 @@ namespace eduVPN.Models
 
         public void ReadXml(XmlReader reader)
         {
-            ClientCertificateHash = null;
+            string v;
 
-            while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "InstanceSettings"))
-            {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name == "ClientCertificate")
-                    ClientCertificateHash = FromHexToBin(reader["Hash"]);
-            }
+            ClientCertificateHash = (v = reader["ClientCertificateHash"]) != null ? ClientCertificateHash = FromHexToBin(v) : null;
         }
 
         public void WriteXml(XmlWriter writer)
         {
             if (ClientCertificateHash != null)
             {
-                writer.WriteStartElement("ClientCertificate");
-                writer.WriteStartAttribute("Hash");
+                writer.WriteStartAttribute("ClientCertificateHash");
                 writer.WriteBinHex(ClientCertificateHash, 0, ClientCertificateHash.Length);
                 writer.WriteEndAttribute();
-                writer.WriteEndElement();
             }
         }
 
