@@ -311,26 +311,50 @@ namespace eduVPN.ViewModels
                         {
                             try
                             {
+                                var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"];
+
                                 // Get instance source.
-                                var response_cache = JSON.Response.Get(
+                                var response_web = JSON.Response.Get(
                                     uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index]]),
                                     pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[source_index] + "PubKey"]),
                                     ct: Abort.Token,
-                                    previous: (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"]);
+                                    previous: response_cache);
 
                                 // Parse instance source JSON.
-                                var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(
-                                    response_cache.Value,
+                                var obj_web = (Dictionary<string, object>)eduJSON.Parser.Parse(
+                                    response_web.Value,
                                     Abort.Token);
 
-                                // Load instance source.
-                                _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj);
-
-                                if (response_cache.IsFresh)
+                                if (response_web.IsFresh)
                                 {
-                                    // If we got here, the loaded instance source is (probably) OK. Update cache.
-                                    Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"] = response_cache;
+                                    if (response_cache != null)
+                                    {
+                                        try
+                                        {
+                                            // Verify sequence.
+                                            var obj_cache = (Dictionary<string, object>)eduJSON.Parser.Parse(
+                                                response_cache.Value,
+                                                Abort.Token);
+
+                                            bool rollback = false;
+                                            try { rollback = (uint)eduJSON.Parser.GetValue<int>(obj_cache, "seq") > (uint)eduJSON.Parser.GetValue<int>(obj_web, "seq"); }
+                                            catch (Exception) { rollback = true; }
+                                            if (rollback)
+                                            {
+                                                // Sequence rollback detected. Revert to cached version.
+                                                obj_web = obj_cache;
+                                                response_web = response_cache;
+                                            }
+                                        }
+                                        catch (Exception) { }
+                                    }
+
+                                    // Save response to cache.
+                                    Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"] = response_web;
                                 }
+
+                                // Load instance source.
+                                _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj_web);
 
                                 _configuration_histories[source_index] = new ObservableCollection<Models.VPNConfiguration>();
 
