@@ -25,6 +25,7 @@
     BorderThickness="1"
     Icon="{Binding Path=Session.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}}"
     MouseDown="Window_MouseDown"
+    Loaded="Window_Loaded"
     Closing="Window_Closing">
 
     <Window.Style>

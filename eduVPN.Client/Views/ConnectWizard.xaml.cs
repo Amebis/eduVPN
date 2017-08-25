@@ -21,7 +21,7 @@ namespace eduVPN.Views
     {
         #region Fields
 
-        private System.Windows.Forms.NotifyIcon _notify_icon;
+        private System.Windows.Forms.NotifyIcon _tray_icon;
         private Icon[] _icons;
         private bool _do_close = false;
 
@@ -56,11 +56,10 @@ namespace eduVPN.Views
 
             var view_model = (ViewModels.ConnectWizard)DataContext;
 
-            // Create notify icon and set default icon.
-            _notify_icon = new System.Windows.Forms.NotifyIcon()
-            {
-                Icon = _icons[view_model != null && view_model.Session != null && view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0]
-            };
+            // Create notify icon, set default icon, and setup events.
+            _tray_icon = new System.Windows.Forms.NotifyIcon();
+            _tray_icon.Icon = _icons[view_model != null && view_model.Session != null && view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+            _tray_icon.Click += TrayIcon_Click;
 
             // Bind to "Session.State" property to update tray icon.
             view_model.PropertyChanged += (object sender1, PropertyChangedEventArgs e1) =>
@@ -69,37 +68,9 @@ namespace eduVPN.Views
                     view_model.Session.PropertyChanged += (object sender2, PropertyChangedEventArgs e2) =>
                     {
                         if (e2.PropertyName == "State")
-                            _notify_icon.Icon = _icons[view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+                            _tray_icon.Icon = _icons[view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
                     };
             };
-
-            // Setup tray icon events.
-            _notify_icon.Click += (object sender, EventArgs ea) =>
-            {
-                if (ea is System.Windows.Forms.MouseEventArgs e_mouse)
-                {
-                    switch (e_mouse.Button)
-                    {
-                        case System.Windows.Forms.MouseButtons.Left:
-                            // (Re)activate window.
-                            if (!IsActive)
-                                Show();
-                            Activate();
-                            Focus();
-                            break;
-
-                        case System.Windows.Forms.MouseButtons.Right:
-                            // Pop-up context menu.
-                            if (Resources["eduVPNSystemTrayMenu"] is ContextMenu menu)
-                                menu.IsOpen = true;
-                            break;
-                    }
-                }
-            };
-
-            // Show icon when Connect Wizard is loaded. Hide icon when closed.
-            Loaded += (object sender, RoutedEventArgs ea) => _notify_icon.Visible = true;
-            Closing += (object sender, CancelEventArgs ea) => { if (_do_close) _notify_icon.Visible = false; };
 
             base.OnInitialized(e);
         }
@@ -109,6 +80,29 @@ namespace eduVPN.Views
             Hide();
         }
 
+        private void TrayIcon_Click(object sender, EventArgs ea)
+        {
+            if (ea is System.Windows.Forms.MouseEventArgs e_mouse)
+            {
+                switch (e_mouse.Button)
+                {
+                    case System.Windows.Forms.MouseButtons.Left:
+                        // (Re)activate window.
+                        if (!IsActive)
+                            Show();
+                        Activate();
+                        Focus();
+                        break;
+
+                    case System.Windows.Forms.MouseButtons.Right:
+                        // Pop-up context menu.
+                        if (Resources["eduVPNSystemTrayMenu"] is ContextMenu menu)
+                            menu.IsOpen = true;
+                        break;
+                }
+            }
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // Makes window draggable.
@@ -116,10 +110,19 @@ namespace eduVPN.Views
                 DragMove();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Show tray icon when Connect Wizard is loaded.
+            _tray_icon.Visible = true;
+        }
+
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             if (_do_close)
             {
+                // Hide tray icon when closed.
+                _tray_icon.Visible = false;
+
                 // Save window position on closing.
                 eduVPN.Client.Properties.Settings.Default.WindowTop = Top;
                 eduVPN.Client.Properties.Settings.Default.WindowLeft = Left;
@@ -150,10 +153,10 @@ namespace eduVPN.Views
             {
                 if (disposing)
                 {
-                    if (_notify_icon != null)
+                    if (_tray_icon != null)
                     {
-                        _notify_icon.Dispose();
-                        _notify_icon = null;
+                        _tray_icon.Dispose();
+                        _tray_icon = null;
                     }
                     if (_icons != null)
                     {
