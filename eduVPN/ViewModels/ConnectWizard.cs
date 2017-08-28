@@ -509,7 +509,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="sender">Instance of type <c>eduVPN.Models.InstanceInfo</c> requiring authorization</param>
         /// <param name="e">Authorization request event arguments</param>
-        private void Instance_RequestAuthorization(object sender, Models.RequestAuthorizationEventArgs e)
+        public void Instance_RequestAuthorization(object sender, Models.RequestAuthorizationEventArgs e)
         {
             // Re-raise this event as ConnectWizard event, to simplify view.
             // This way the view can listen ConnectWizard for authentication events only.

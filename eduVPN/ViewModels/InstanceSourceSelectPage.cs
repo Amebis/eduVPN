@@ -43,6 +43,7 @@ namespace eduVPN.ViewModels
                                     {
                                         // Set authenticating instance.
                                         Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
+                                        Parent.Configuration.AuthenticatingInstance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
                                         // Reset connecting instance.
                                         Parent.Configuration.ConnectingInstance = null;
