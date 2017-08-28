@@ -37,7 +37,7 @@ namespace eduVPN.Models
 
             var other = obj as LocalVPNConfigurationSettings;
             if (!Instance.Base.Equals(other.Instance.Base) ||
-                !Profile.Equals(other.Profile))
+                !Profile.ID.Equals(other.Profile.ID))
                 return false;
 
             return base.Equals(obj);
@@ -45,7 +45,7 @@ namespace eduVPN.Models
 
         public override int GetHashCode()
         {
-            return base.GetHashCode() ^ Instance.Base.GetHashCode() ^ Profile.GetHashCode();
+            return base.GetHashCode() ^ Instance.Base.GetHashCode() ^ Profile.ID.GetHashCode();
         }
 
         #endregion
