@@ -31,12 +31,28 @@
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <StatusBar
+            Margin="10"
+            Style="{StaticResource eduVPNInlineInfoBarStyle}"
+            Visibility="{Binding Path=UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+            <StatusBarItem>
+                <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock
+                    TextWrapping="Wrap"
+                    Text="{x:Static res:Strings.UserDisabledMessage}"/>
+            </StatusBarItem>
+        </StatusBar>
+
         <Grid
+            Grid.Row="1"
             Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -100,7 +116,7 @@
         </Grid>
 
         <ListBox
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="10,5"
             Style="{StaticResource eduVPNListStyle}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
@@ -108,7 +124,7 @@
             Visibility="{Binding Path=MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue=Visibility.Collapsed}"/>
 
         <Grid
-            Grid.Row="2"
+            Grid.Row="3"
             Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -212,7 +228,7 @@
         </Grid>
 
         <Button
-            Grid.Row="3"
+            Grid.Row="4"
             Margin="10"
             Width="170"
             FontSize="16"

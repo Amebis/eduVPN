@@ -20,26 +20,10 @@
 
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StatusBar
-            Margin="10"
-            Style="{StaticResource eduVPNInlineInfoBarStyle}"
-            Visibility="{Binding Path=UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
-            <StatusBarItem>
-                <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <TextBlock
-                    TextWrapping="Wrap"
-                    Text="{x:Static res:Strings.UserDisabledMessage}"/>
-            </StatusBarItem>
-        </StatusBar>
-
         <ListBox
-            Grid.Row="1"
             Margin="10,5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"

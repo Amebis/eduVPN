@@ -65,16 +65,6 @@ namespace eduVPN.ViewModels
         private ICommand _connect_profile;
         private object _connect_profile_lock = new object();
 
-        /// <summary>
-        /// User info
-        /// </summary>
-        public Models.UserInfo UserInfo
-        {
-            get { return _user_info; }
-            set { _user_info = value; RaisePropertyChanged(); }
-        }
-        private Models.UserInfo _user_info;
-
         #endregion
 
         #region Constructors
@@ -102,26 +92,6 @@ namespace eduVPN.ViewModels
             // Reset selected profile, to prevent automatic continuation to
             // status page.
             SelectedProfile = null;
-
-            // Set blank user info. This prevents flickering of user disabled message,
-            // since UserInfo.IsEnabled will be available for binding before page displays.
-            UserInfo = new Models.UserInfo();
-
-            // Launch user info load in the background.
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = null));
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
-                    try
-                    {
-                        var user_info = Parent.Configuration.AuthenticatingInstance.GetUserInfo(Parent.Configuration.AuthenticatingInstance, Window.Abort.Token);
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
-                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-                })).Start();
         }
 
         /// <summary>
