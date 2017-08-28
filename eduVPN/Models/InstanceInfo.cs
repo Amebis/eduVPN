@@ -175,12 +175,15 @@ namespace eduVPN.Models
                     try
                     {
                         // Get and load API endpoints.
-                        _endpoints = new InstanceEndpoints();
+                        var endpoints = new InstanceEndpoints();
                         var uri_builder = new UriBuilder(Base);
                         uri_builder.Path += "info.json";
-                        _endpoints.LoadJSON(JSON.Response.Get(
+                        endpoints.LoadJSON(JSON.Response.Get(
                             uri: uri_builder.Uri,
                             ct: ct).Value, ct);
+
+                        // If we got here, save the endpoints.
+                        _endpoints = endpoints;
                     }
                     catch (OperationCanceledException) { throw; }
                     catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
@@ -207,20 +210,28 @@ namespace eduVPN.Models
                     try
                     {
                         // Try to restore the access token from the settings.
-                        _access_token = AccessToken.FromBase64String(Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri]);
+                        var access_token = AccessToken.FromBase64String(Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri]);
 
-                        if (_access_token.Expires.HasValue && _access_token.Expires.Value <= DateTime.Now)
+                        if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
                         {
                             // Token expired. Refresh it.
-                            _access_token = _access_token.RefreshToken(api.TokenEndpoint, null, ct);
-                            if (_access_token != null)
+                            access_token = access_token.RefreshToken(api.TokenEndpoint, null, ct);
+                            if (access_token != null)
                             {
+                                // If we got here, save the token.
+                                _access_token = access_token;
+
                                 // Update access token in the settings.
                                 Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
                             }
                         }
+                        else
+                        {
+                            // If we got here, save the token.
+                            _access_token = access_token;
+                        }
                     }
-                    catch (Exception) { _access_token = null; }
+                    catch (Exception) { }
                 }
 
                 return _access_token;
@@ -250,6 +261,7 @@ namespace eduVPN.Models
                         if (e.AccessToken == null)
                             throw new AccessTokenNullException();
 
+                        // If we got here, save the token.
                         _access_token = e.AccessToken;
                     }
                     catch (OperationCanceledException) { throw; }
@@ -293,11 +305,14 @@ namespace eduVPN.Models
                     try
                     {
                         // Get and load profile list.
-                        _profile_list = new JSON.Collection<Models.ProfileInfo>();
-                        _profile_list.LoadJSONAPIResponse(JSON.Response.Get(
+                        var profile_list = new JSON.Collection<Models.ProfileInfo>();
+                        profile_list.LoadJSONAPIResponse(JSON.Response.Get(
                             uri: GetEndpoints(ct).ProfileList,
                             token: authenticating_instance.GetAccessToken(ct),
                             ct: ct).Value, "profile_list", ct);
+
+                        // If we got here, save the profile.
+                        _profile_list = profile_list;
                     }
                     catch (OperationCanceledException) { throw; }
                     catch (AggregateException ex)
@@ -412,8 +427,11 @@ namespace eduVPN.Models
                                     token: authenticating_instance.GetAccessToken(ct),
                                     ct: ct).Value, "create_keypair", ct);
                                 store.Add(cert.Value);
+
+                                // If we got here, save the certificate.
                                 _client_certificate = cert.Value;
 
+                                // Save the certificate hash to the settings.
                                 if (instance_settings == null)
                                     Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = _client_certificate.GetCertHash() };
                                 else

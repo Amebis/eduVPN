@@ -94,11 +94,14 @@ namespace eduVPN.Models
                         var query = HttpUtility.ParseQueryString(uri_builder.Query);
                         query["profile_id"] = ID;
                         uri_builder.Query = query.ToString();
-                        _openvpn_config = JSON.Response.Get(
+                        var openvpn_config = JSON.Response.Get(
                             uri: uri_builder.Uri,
                             token: authenticating_instance.GetAccessToken(ct),
                             response_type: "application/x-openvpn-profile",
                             ct: ct).Value;
+
+                        // If we got here, save the config.
+                        _openvpn_config = openvpn_config;
                     }
                     catch (OperationCanceledException) { throw; }
                     catch (AggregateException ex)
