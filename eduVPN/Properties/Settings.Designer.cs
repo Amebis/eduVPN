@@ -134,24 +134,24 @@ namespace eduVPN.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
-        public global::eduVPN.Models.VPNConfigurationSettingsList InstituteAccessDiscoveryConfigHistory {
+        public global::eduVPN.Models.VPNConfigurationSettingsList InstituteAccessConfigHistory {
             get {
-                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["InstituteAccessDiscoveryConfigHistory"]));
+                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["InstituteAccessConfigHistory"]));
             }
             set {
-                this["InstituteAccessDiscoveryConfigHistory"] = value;
+                this["InstituteAccessConfigHistory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
-        public global::eduVPN.Models.VPNConfigurationSettingsList SecureInternetDiscoveryConfigHistory {
+        public global::eduVPN.Models.VPNConfigurationSettingsList SecureInternetConfigHistory {
             get {
-                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["SecureInternetDiscoveryConfigHistory"]));
+                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["SecureInternetConfigHistory"]));
             }
             set {
-                this["SecureInternetDiscoveryConfigHistory"] = value;
+                this["SecureInternetConfigHistory"] = value;
             }
         }
     }

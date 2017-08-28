@@ -27,8 +27,8 @@ namespace eduVPN.ViewModels
         /// </summary>
         private static readonly string[] _instance_directory_id = new string[]
         {
-            "SecureInternetDiscovery",
-            "InstituteAccessDiscovery",
+            "SecureInternet",
+            "InstituteAccess",
         };
 
         #endregion
@@ -254,12 +254,12 @@ namespace eduVPN.ViewModels
                         {
                             try
                             {
-                                var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"];
+                                var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"];
 
                                 // Get instance source.
                                 var response_web = JSON.Response.Get(
-                                    uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index]]),
-                                    pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[source_index] + "PubKey"]),
+                                    uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index] + "Discovery"]),
+                                    pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryPubKey"]),
                                     ct: Abort.Token,
                                     previous: response_cache);
 
@@ -293,7 +293,7 @@ namespace eduVPN.ViewModels
                                     }
 
                                     // Save response to cache.
-                                    Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"] = response_web;
+                                    Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"] = response_web;
                                 }
 
                                 // Load instance source.

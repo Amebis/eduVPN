@@ -32,10 +32,10 @@
     <Setting Name="InstanceSettings" Type="eduVPN.Models.InstanceSettingsDictionary" Scope="User">
       <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="InstituteAccessDiscoveryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
+    <Setting Name="InstituteAccessConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
       <Value Profile="(Default)">&lt;VPNConfigurationSettingsList/&gt;</Value>
     </Setting>
-    <Setting Name="SecureInternetDiscoveryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
+    <Setting Name="SecureInternetConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
       <Value Profile="(Default)">&lt;VPNConfigurationSettingsList/&gt;</Value>
     </Setting>
   </Settings>
