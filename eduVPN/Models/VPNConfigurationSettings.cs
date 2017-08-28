@@ -20,9 +20,9 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
-        /// Popularity factor (default 1.0)
+        /// Popularity factor in the [0.0, 1.0] range (default 0.5)
         /// </summary>
-        public float Popularity { get; set; } = 1.0f;
+        public float Popularity { get; set; } = 0.5f;
 
         #endregion
 

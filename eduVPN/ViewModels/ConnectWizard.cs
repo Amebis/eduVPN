@@ -31,6 +31,11 @@ namespace eduVPN.ViewModels
             "InstituteAccess",
         };
 
+        /// <summary>
+        /// The alpha factor to increase/decrease popularity
+        /// </summary>
+        private static readonly float _popularity_alpha = 0.1f;
+
         #endregion
 
         #region Properties
@@ -457,7 +462,7 @@ namespace eduVPN.ViewModels
                             if (found < 0)
                             {
                                 // Upvote popularity.
-                                hist[i].Popularity *= 1.1f;
+                                hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
                                 found = i;
                             }
                             else
@@ -479,7 +484,7 @@ namespace eduVPN.ViewModels
                         else
                         {
                             // Downvote popularity.
-                            hist[i].Popularity /= 1.1f;
+                            hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
                         }
                     }
                     if (found < 0)
