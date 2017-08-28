@@ -370,9 +370,6 @@ namespace eduVPN.ViewModels
                             catch (OperationCanceledException) { throw; }
                             catch (Exception ex)
                             {
-                                // Make it a clean start next time.
-                                Properties.Settings.Default[_instance_directory_id[source_index] + "Cache"] = null;
-
                                 // Notify the sender the instance source loading failed. However, continue with other instance sources.
                                 // This will overwrite all previous error messages.
                                 Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, _instance_directory_id[source_index]), ex);
