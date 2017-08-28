@@ -25,51 +25,50 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (_select_instance_source == null)
+                lock (_select_instance_source_lock)
                 {
-                    _select_instance_source = new DelegateCommand<Models.InstanceSourceType?>(
-                        // execute
-                        async param =>
-                        {
-                            Parent.Error = null;
-                            Parent.ChangeTaskCount(+1);
-                            try
+                    if (_select_instance_source == null)
+                    {
+                        _select_instance_source = new DelegateCommand<Models.InstanceSourceType?>(
+                            // execute
+                            param =>
                             {
-                                Parent.InstanceSource = Parent.InstanceSources[(int)param];
-
-                                if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                Parent.Error = null;
+                                Parent.ChangeTaskCount(+1);
+                                try
                                 {
-                                    // Set authenticating instance.
-                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
+                                    Parent.InstanceSource = Parent.InstanceSources[(int)param];
 
-                                    // Restore the access token from the settings.
-                                    Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
+                                    if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                    {
+                                        // Set authenticating instance.
+                                        Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
 
-                                    // Reset connecting instance.
-                                    Parent.Configuration.ConnectingInstance = null;
+                                        // Reset connecting instance.
+                                        Parent.Configuration.ConnectingInstance = null;
 
-                                    if (Parent.Configuration.AccessToken == null)
-                                        Parent.CurrentPage = Parent.AuthorizationPage;
-                                    else
                                         Parent.CurrentPage = Parent.ProfileSelectPage;
+                                    }
+                                    else
+                                        Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
-                                else
-                                    Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
-                            }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
-                        },
+                                catch (Exception ex) { Parent.Error = ex; }
+                                finally { Parent.ChangeTaskCount(-1); }
+                            },
 
-                        // canExecute
-                        param =>
-                            param != null &&
-                            Parent.InstanceSources != null &&
-                            Parent.InstanceSources[(int)param] != null);
+                            // canExecute
+                            param =>
+                                param != null &&
+                                Parent.InstanceSources != null &&
+                                Parent.InstanceSources[(int)param] != null);
+                    }
+
+                    return _select_instance_source;
                 }
-                return _select_instance_source;
             }
         }
         private ICommand _select_instance_source;
+        private object _select_instance_source_lock = new object();
 
         /// <summary>
         /// Select custom instance source
@@ -78,32 +77,37 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (_select_custom_instance == null)
+                lock (_select_custom_instance_lock)
                 {
-                    _select_custom_instance = new DelegateCommand<Models.InstanceSourceInfo>(
-                        // execute
-                        param =>
-                        {
-                            Parent.Error = null;
-                            Parent.ChangeTaskCount(+1);
-                            try
+                    if (_select_custom_instance == null)
+                    {
+                        _select_custom_instance = new DelegateCommand<Models.InstanceSourceInfo>(
+                            // execute
+                            param =>
                             {
-                                // Assume the custom instance would otherwise be a part of "Institute Access" source.
-                                Parent.InstanceSource = Parent.InstanceSources[(int)Models.InstanceSourceType.InstituteAccess];
+                                Parent.Error = null;
+                                Parent.ChangeTaskCount(+1);
+                                try
+                                {
+                                    // Assume the custom instance would otherwise be a part of "Institute Access" source.
+                                    Parent.InstanceSource = Parent.InstanceSources[(int)Models.InstanceSourceType.InstituteAccess];
 
-                                Parent.CurrentPage = Parent.CustomInstancePage;
-                            }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
-                        },
+                                    Parent.CurrentPage = Parent.CustomInstancePage;
+                                }
+                                catch (Exception ex) { Parent.Error = ex; }
+                                finally { Parent.ChangeTaskCount(-1); }
+                            },
 
-                        // canExecute
-                        param => true);
+                            // canExecute
+                            param => true);
+                    }
+
+                    return _select_custom_instance;
                 }
-                return _select_custom_instance;
             }
         }
         private ICommand _select_custom_instance;
+        private object _select_custom_instance_lock = new object();
 
         #endregion
 

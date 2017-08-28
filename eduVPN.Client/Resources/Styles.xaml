@@ -43,9 +43,13 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
                     </Border>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                            <Setter
+                                TargetName="Border"
+                                Property="Background"
+                                Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -68,7 +72,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border
-                        Background="Transparent">
+                        Background="{x:Null}">
                         <ContentPresenter/>
                     </Border>
                 </ControlTemplate>
@@ -211,6 +215,37 @@
         </Style.Resources>
     </Style>
 
+    <Style x:Key="eduVPNInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,1"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type StatusBarItem}">
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+
+    <!--
+        Windows
+    -->
+
+    <Style x:Key="eduVPNWindow" TargetType="{x:Type view:Window}" BasedOn="{StaticResource eduVPNBaseStyle}">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="Background" Value="{StaticResource eduVPNWindowBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNWindowTextBrushKey}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource eduVPNWindowBorderKey}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsBusy}" Value="True">
+                <Setter Property="Cursor" Value="AppStarting"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
 
     <!--
         ConnectWizard
@@ -228,50 +263,40 @@
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Name="Border"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        BorderThickness="0"
+                        CornerRadius="4">
+
+                        <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="Background"
+                                Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border
-                                    Background="{StaticResource eduVPNHeaderTextBrushKey}"
-                                    BorderBrush="{x:Null}"
-                                    BorderThickness="0"
-                                    CornerRadius="4">
-                                <ContentPresenter
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
             </Trigger>
         </Style.Triggers>
-    </Style>
-
-    <Style x:Key="eduVPNInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
-        <Setter Property="BorderThickness" Value="0,1,0,1"/>
-        <Style.Resources>
-            <Style TargetType="{x:Type StatusBarItem}">
-                <Setter Property="VerticalContentAlignment" Value="Top"/>
-            </Style>
-        </Style.Resources>
     </Style>
 
 
@@ -338,10 +363,12 @@
                             x:Name="Border"
                             Fill="{x:Null}"
                             Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+
                         <ContentPresenter
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
                     </Grid>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter
@@ -410,6 +437,49 @@
 
 
     <!--
+        Popups
+    -->
+
+    <Style x:Key="eduVPNPopupHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNHeaderButtonStyle}">
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Name="Border"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        BorderThickness="0"
+                        CornerRadius="4">
+
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="Background"
+                                Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.25"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <!--
         Choice Buttons
     -->
 
@@ -432,9 +502,13 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"/>
                     </Border>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                            <Setter
+                                TargetName="Border"
+                                Property="Background"
+                                Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

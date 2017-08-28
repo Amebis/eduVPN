@@ -150,4 +150,10 @@
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>Saving of profile's OpenVPN configuration to "{0}" failed.</value>
   </data>
+  <data name="ErrorAuthorization" xml:space="preserve">
+    <value>Client authorization failed.</value>
+  </data>
+  <data name="ErrorNullAccessToken" xml:space="preserve">
+    <value>No access token granted.</value>
+  </data>
 </root>

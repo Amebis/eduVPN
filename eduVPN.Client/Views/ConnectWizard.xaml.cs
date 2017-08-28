@@ -10,7 +10,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace eduVPN.Views
 {
@@ -24,6 +23,15 @@ namespace eduVPN.Views
         private System.Windows.Forms.NotifyIcon _tray_icon;
         private Icon[] _icons;
         private bool _do_close = false;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Authorization pop-up window
+        /// </summary>
+        public AuthorizationPopup AuthorizationPopup { get; set; }
 
         #endregion
 
@@ -103,13 +111,6 @@ namespace eduVPN.Views
             }
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            // Makes window draggable.
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Show tray icon when Connect Wizard is loaded.
@@ -140,6 +141,29 @@ namespace eduVPN.Views
         {
             _do_close = true;
             Close();
+        }
+
+        /// <summary>
+        /// Called when one of the ConnectWizard's instances requests user authorization
+        /// </summary>
+        /// <param name="sender"><c>eduVPN.ViewModels.ConnectWizard</c> requiring instance authorization</param>
+        /// <param name="e">Authorization request event arguments</param>
+        private void ConnectWizard_RequestInstanceAuthorization(object sender, ViewModels.RequestInstanceAuthorizationEventArgs e)
+        {
+            // Create a new authorization pop-up.
+            AuthorizationPopup = new AuthorizationPopup() { Owner = this };
+
+            // Trigger authorization.
+            var view_model = AuthorizationPopup.DataContext as ViewModels.AuthorizationPopup;
+            if (view_model.RequestAuthorization.CanExecute(e.Instance))
+                view_model.RequestAuthorization.Execute(e.Instance);
+
+            // Run the authorization pop-up and pass the access token to be returned to the event sender.
+            if (AuthorizationPopup.ShowDialog() == true)
+            {
+                e.AccessToken = view_model.AccessToken;
+                AuthorizationPopup = null;
+            }
         }
 
         #endregion

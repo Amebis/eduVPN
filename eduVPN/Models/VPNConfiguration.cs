@@ -29,16 +29,6 @@ namespace eduVPN.Models
         private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
-        /// OAuth access token
-        /// </summary>
-        public AccessToken AccessToken
-        {
-            get { return _access_token; }
-            set { _access_token = value; RaisePropertyChanged(); }
-        }
-        private AccessToken _access_token;
-
-        /// <summary>
         /// Connecting eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>

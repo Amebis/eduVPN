@@ -53,12 +53,17 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (_connect_profile == null)
-                    _connect_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
-                return _connect_profile;
+                lock (_connect_profile_lock)
+                {
+                    if (_connect_profile == null)
+                        _connect_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
+
+                    return _connect_profile;
+                }
             }
         }
         private ICommand _connect_profile;
+        private object _connect_profile_lock = new object();
 
         /// <summary>
         /// User info
@@ -110,7 +115,7 @@ namespace eduVPN.ViewModels
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
                     try
                     {
-                        var user_info = Parent.Configuration.AuthenticatingInstance.GetUserInfo(Parent.Configuration.AccessToken, ConnectWizard.Abort.Token);
+                        var user_info = Parent.Configuration.AuthenticatingInstance.GetUserInfo(Parent.Configuration.AuthenticatingInstance, Window.Abort.Token);
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                     }
                     catch (OperationCanceledException) { }

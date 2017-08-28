@@ -24,7 +24,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Profile ID
         /// </summary>
-        public string Profile { get; set; }
+        public ProfileInfo Profile { get; set; }
 
         #endregion
 
@@ -54,9 +54,8 @@ namespace eduVPN.Models
 
         public override void ReadXml(XmlReader reader)
         {
-            Profile = reader.GetAttribute("Profile");
-
             Instance = null;
+            Profile = null;
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "LocalVPNConfigurationSettings"))
@@ -76,6 +75,14 @@ namespace eduVPN.Models
                                 Instance.ReadXml(reader);
                             }
                             break;
+
+                        case "ProfileInfo":
+                            if (reader["Key"] == "Profile")
+                            {
+                                Profile = new ProfileInfo();
+                                Profile.ReadXml(reader);
+                            }
+                            break;
                     }
                 }
             }
@@ -83,9 +90,6 @@ namespace eduVPN.Models
 
         public override void WriteXml(XmlWriter writer)
         {
-            if (Profile != null)
-                writer.WriteAttributeString("Profile", Profile);
-
             writer.WriteStartElement("VPNConfigurationSettings");
             base.WriteXml(writer);
             writer.WriteEndElement();
@@ -95,6 +99,14 @@ namespace eduVPN.Models
                 writer.WriteStartElement("InstanceInfo");
                 writer.WriteAttributeString("Key", "Instance");
                 Instance.WriteXml(writer);
+                writer.WriteEndElement();
+            }
+
+            if (Profile != null)
+            {
+                writer.WriteStartElement("ProfileInfo");
+                writer.WriteAttributeString("Key", "Profile");
+                Profile.WriteXml(writer);
                 writer.WriteEndElement();
             }
         }

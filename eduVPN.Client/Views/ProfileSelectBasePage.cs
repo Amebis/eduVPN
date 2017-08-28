@@ -24,11 +24,11 @@ namespace eduVPN.Views
             // 2. Change the list of profiles to a stack of buttons of profiles
 
             // User selected a profile.
-            var viewmodel = (ViewModels.ProfileSelectBasePage)DataContext;
-            if (viewmodel != null && // Sometimes this event gets called with null view model.
-                viewmodel.ConnectSelectedProfile.CanExecute(null))
+            var view_model = (ViewModels.ProfileSelectBasePage)DataContext;
+            if (view_model != null && // Sometimes this event gets called with null view model.
+                view_model.ConnectSelectedProfile.CanExecute(null))
             {
-                viewmodel.ConnectSelectedProfile.Execute(null);
+                view_model.ConnectSelectedProfile.Execute(null);
             }
         }
 

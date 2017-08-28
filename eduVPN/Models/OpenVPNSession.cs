@@ -71,8 +71,8 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
-        public OpenVPNSession(InstanceInfo instance, ProfileInfo profile, AccessToken access_token) :
-            base(instance, profile, access_token)
+        public OpenVPNSession(VPNConfiguration configuration) :
+            base(configuration)
         {
             _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
             _working_folder = Path.GetTempPath();
@@ -109,8 +109,8 @@ namespace eduVPN.Models
             string profile_config = null;
             new List<Action>()
                         {
-                            () => { profile_config = _profile.GetOpenVPNConfig(_instance, _access_token, ct_quit.Token); },
-                            () => { _client_certificate = _instance.GetClientCertificate(_access_token, ct_quit.Token); }
+                            () => { profile_config = _configuration.ConnectingProfile.GetOpenVPNConfig(_configuration.ConnectingInstance, _configuration.AuthenticatingInstance, ct_quit.Token); },
+                            () => { _client_certificate = _configuration.ConnectingInstance.GetClientCertificate(_configuration.AuthenticatingInstance, ct_quit.Token); }
                         }.Select(
                 action =>
                 {

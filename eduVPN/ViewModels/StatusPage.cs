@@ -56,8 +56,8 @@ namespace eduVPN.ViewModels
 
             // Load messages from all possible sources: authenticating/connecting instance, user/system list.
             // Any errors shall be ignored.
-            var api_authenticating = Parent.Configuration.AuthenticatingInstance.GetEndpoints(ConnectWizard.Abort.Token);
-            var api_connecting = Parent.Configuration.ConnectingInstance.GetEndpoints(ConnectWizard.Abort.Token);
+            var api_authenticating = Parent.Configuration.AuthenticatingInstance.GetEndpoints(Window.Abort.Token);
+            var api_connecting = Parent.Configuration.ConnectingInstance.GetEndpoints(Window.Abort.Token);
             foreach (
                 var list in new List<KeyValuePair<Uri, string>>() {
                     new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
@@ -79,10 +79,10 @@ namespace eduVPN.ViewModels
                             message_list.LoadJSONAPIResponse(
                                 JSON.Response.Get(
                                     uri: list.Key,
-                                    token: Parent.Configuration.AccessToken,
-                                    ct: ConnectWizard.Abort.Token).Value,
+                                    token: Parent.Configuration.AuthenticatingInstance.PeekAccessToken(Window.Abort.Token),
+                                    ct: Window.Abort.Token).Value,
                                 list.Value,
-                                ConnectWizard.Abort.Token);
+                                Window.Abort.Token);
 
                             if (message_list.Count > 0)
                             {

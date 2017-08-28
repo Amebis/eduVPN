@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -18,7 +18,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Connect wizard
     /// </summary>
-    public class ConnectWizard : BindableBase, IDisposable
+    public class ConnectWizard : Window, IDisposable
     {
         #region Fields
 
@@ -34,48 +34,6 @@ namespace eduVPN.ViewModels
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// UI thread's dispatcher
-        /// </summary>
-        /// <remarks>
-        /// Background threads must raise property change events in the UI thread.
-        /// </remarks>
-        public Dispatcher Dispatcher { get; }
-
-        /// <summary>
-        /// Token used to abort unfinished background processes in case of application shutdown.
-        /// </summary>
-        public static CancellationTokenSource Abort { get => _abort; }
-        private static CancellationTokenSource _abort = new CancellationTokenSource();
-
-        /// <summary>
-        /// The page error; <c>null</c> when no error condition.
-        /// </summary>
-        public Exception Error
-        {
-            get { return _error; }
-            set { _error = value; RaisePropertyChanged(); }
-        }
-        private Exception _error;
-
-        /// <summary>
-        /// Is wizard performing background tasks?
-        /// </summary>
-        public bool IsBusy
-        {
-            get { return _task_count > 0; }
-        }
-
-        /// <summary>
-        /// Number of background tasks the wizard is performing
-        /// </summary>
-        public int TaskCount
-        {
-            get { lock (_task_count_lock) return _task_count; }
-        }
-        private int _task_count;
-        private object _task_count_lock = new object();
 
         /// <summary>
         /// Available instance sources
@@ -124,6 +82,11 @@ namespace eduVPN.ViewModels
             set { _session = value; RaisePropertyChanged(); }
         }
         private Models.VPNSession _session;
+
+        /// <summary>
+        /// Instance request authorization event
+        /// </summary>
+        public event EventHandler<RequestInstanceAuthorizationEventArgs> RequestInstanceAuthorization;
 
         #region Pages
 
@@ -209,20 +172,6 @@ namespace eduVPN.ViewModels
         private CustomInstancePage _custom_instance_page;
 
         /// <summary>
-        /// Authorization wizard page
-        /// </summary>
-        public AuthorizationPage AuthorizationPage
-        {
-            get
-            {
-                if (_authorization_page == null)
-                    _authorization_page = new AuthorizationPage(this);
-                return _authorization_page;
-            }
-        }
-        private AuthorizationPage _authorization_page;
-
-        /// <summary>
         /// (Instance and) profile selection wizard page
         /// </summary>
         public ProfileSelectBasePage ProfileSelectPage
@@ -272,9 +221,6 @@ namespace eduVPN.ViewModels
         /// </summary>
         public ConnectWizard()
         {
-            // Save UI thread's dispatcher.
-            Dispatcher = Dispatcher.CurrentDispatcher;
-
             if (Properties.Settings.Default.SettingsVersion == 0)
             {
                 // Migrate settings from previous version.
@@ -283,9 +229,6 @@ namespace eduVPN.ViewModels
             }
 
             Dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
-                // Raise the abort flag to gracefully shutdown all background threads.
-                Abort.Cancel();
-
                 // Persist settings to disk.
                 Properties.Settings.Default.Save();
             };
@@ -356,65 +299,71 @@ namespace eduVPN.ViewModels
                                 // Load instance source.
                                 _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj_web);
 
+                                // Attach to RequestAuthorization instance events.
+                                foreach (var instance in _instance_sources[source_index])
+                                    instance.RequestAuthorization += Instance_RequestAuthorization;
+
                                 _configuration_histories[source_index] = new ObservableCollection<Models.VPNConfiguration>();
 
                                 // Load configuration histories from settings.
                                 var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"];
-                                foreach (var h in hist)
-                                {
-                                    var cfg = new Models.VPNConfiguration();
-
-                                    try
+                                Parallel.For(0, hist.Count,
+                                    idx_hist =>
                                     {
-                                        // Restore configuration.
-                                        if (_instance_sources[source_index] is Models.LocalInstanceSourceInfo instance_source_local &&
-                                            h is Models.LocalVPNConfigurationSettings h_local)
-                                        {
-                                            // Local authenticating instance source:
-                                            // - Restore instance, which is both: authenticating and connecting.
-                                            // - Restore access token.
-                                            // - Restore profile.
-                                            cfg.AuthenticatingInstance = instance_source_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
-                                            if (cfg.AuthenticatingInstance == null) cfg.AuthenticatingInstance = h_local.Instance;
-                                            cfg.AccessToken = h_local.AccessToken;
-                                            if (cfg.AccessToken == null) continue;
-                                            cfg.ConnectingInstance = cfg.AuthenticatingInstance;
-                                            cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AccessToken, Abort.Token).Where(p => p.ID == h_local.Profile).FirstOrDefault();
-                                            if (cfg.ConnectingProfile == null) continue;
-                                        }
-                                        else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed &&
-                                            h is Models.DistributedVPNConfigurationSettings h_distributed)
-                                        {
-                                            // Distributed authenticating instance source:
-                                            // - Restore authenticating instance.
-                                            // - Restore access token.
-                                            // - Restore last connected instance (optional).
-                                            cfg.AuthenticatingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
-                                            if (cfg.AuthenticatingInstance == null) continue;
-                                            cfg.AccessToken = h_distributed.AccessToken;
-                                            if (cfg.AccessToken == null) continue;
-                                            cfg.ConnectingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
-                                        }
-                                        else if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated &&
-                                            h is Models.FederatedVPNConfigurationSettings h_federated)
-                                        {
-                                            // Federated authenticating instance source:
-                                            // - Get authenticating instance from federated instance source settings.
-                                            // - Restore access token.
-                                            // - Restore last connected instance (optional).
-                                            cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
-                                            cfg.AccessToken = h_federated.AccessToken;
-                                            if (cfg.AccessToken == null) continue;
-                                            cfg.ConnectingInstance = instance_source_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
-                                        }
-                                        else
-                                            continue;
-                                    }
-                                    catch (Exception) { continue; }
+                                        var cfg = new Models.VPNConfiguration();
+                                        var h = hist[idx_hist];
 
-                                    // Configuration successfuly restored. Add it.
-                                    _configuration_histories[source_index].Add(cfg);
-                                }
+                                        try
+                                        {
+                                            // Restore configuration.
+                                            if (_instance_sources[source_index] is Models.LocalInstanceSourceInfo instance_source_local &&
+                                                h is Models.LocalVPNConfigurationSettings h_local)
+                                            {
+                                                // Local authenticating instance source:
+                                                // - Restore instance, which is both: authenticating and connecting.
+                                                // - Restore profile.
+                                                cfg.AuthenticatingInstance = instance_source_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
+                                                if (cfg.AuthenticatingInstance == null)
+                                                {
+                                                    cfg.AuthenticatingInstance = h_local.Instance;
+                                                    cfg.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                                }
+                                                cfg.ConnectingInstance = cfg.AuthenticatingInstance;
+
+                                                // Don't try to match profile with existing profiles, or risk triggering OAuth in GetProfileList(). Use stored version from settings directly.
+                                                //cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AuthenticatingInstance, Abort.Token).Where(p => p.ID == h_local.Profile.ID).FirstOrDefault();
+                                                cfg.ConnectingProfile = h_local.Profile;
+                                                if (cfg.ConnectingProfile == null) return;
+                                            }
+                                            else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed &&
+                                                h is Models.DistributedVPNConfigurationSettings h_distributed)
+                                            {
+                                                // Distributed authenticating instance source:
+                                                // - Restore authenticating instance.
+                                                // - Restore last connected instance (optional).
+                                                cfg.AuthenticatingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
+                                                if (cfg.AuthenticatingInstance == null) return;
+                                                cfg.ConnectingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
+                                            }
+                                            else if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated &&
+                                                h is Models.FederatedVPNConfigurationSettings h_federated)
+                                            {
+                                                // Federated authenticating instance source:
+                                                // - Get authenticating instance from federated instance source settings.
+                                                // - Restore last connected instance (optional).
+                                                cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
+                                                cfg.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                                cfg.ConnectingInstance = instance_source_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
+                                            }
+                                            else
+                                                return;
+                                        }
+                                        catch (Exception) { return; }
+
+                                        // Configuration successfuly restored. Add it.
+                                        lock (_configuration_histories[source_index])
+                                            _configuration_histories[source_index].Add(cfg);
+                                    });
 
                                 break;
                             }
@@ -461,24 +410,11 @@ namespace eduVPN.ViewModels
         #region Methods
 
         /// <summary>
-        /// Increments or decrements number of background tasks the wizard is performing
-        /// </summary>
-        /// <param name="increment">Positive to increment, negative to decrement</param>
-        public void ChangeTaskCount(int increment)
-        {
-            lock (_task_count_lock)
-                _task_count += increment;
-
-            RaisePropertyChanged("TaskCount");
-            RaisePropertyChanged("IsBusy");
-        }
-
-        /// <summary>
         /// Starts VPN session
         /// </summary>
         public void StartSession()
         {
-            Session = new Models.OpenVPNSession(Configuration.ConnectingInstance, Configuration.ConnectingProfile, Configuration.AccessToken);
+            Session = new Models.OpenVPNSession(Configuration);
 
             // Save session configuration to history.
             var source_index = Array.IndexOf(_instance_sources, InstanceSource);
@@ -492,8 +428,7 @@ namespace eduVPN.ViewModels
                     el = new Models.LocalVPNConfigurationSettings()
                     {
                         Instance = Configuration.ConnectingInstance,
-                        AccessToken = Configuration.AccessToken,
-                        Profile = Configuration.ConnectingProfile.ID,
+                        Profile = Configuration.ConnectingProfile,
                     };
                 }
                 else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo)
@@ -502,7 +437,6 @@ namespace eduVPN.ViewModels
                     el = new Models.DistributedVPNConfigurationSettings()
                     {
                         AuthenticatingInstance = Configuration.AuthenticatingInstance.Base.AbsoluteUri,
-                        AccessToken = Configuration.AccessToken,
                         LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
                     };
                 }
@@ -511,7 +445,6 @@ namespace eduVPN.ViewModels
                     // Federated authenticating instance source.
                     el = new Models.FederatedVPNConfigurationSettings()
                     {
-                        AccessToken = Configuration.AccessToken,
                         LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
                     };
                 }
@@ -522,35 +455,25 @@ namespace eduVPN.ViewModels
                     int found = -1;
                     for (var i = hist.Count; i-- > 0;)
                     {
-                        if (hist[i].AccessToken == null)
-                        {
-                            // Remove configurations with no access token.
-                            hist.RemoveAt(i);
-                            continue;
-                        }
-
                         if (hist[i].Equals(el))
                         {
                             if (found < 0)
                             {
-                                // Upvote popularity && refresh access token.
+                                // Upvote popularity.
                                 hist[i].Popularity *= 1.1f;
-                                hist[i].AccessToken = el.AccessToken;
                                 found = i;
                             }
                             else
                             {
                                 // We found a match second time. This happened early in the Alpha stage when duplicate checking didn't work right.
-                                // Clean the list. The victim is the entry with access token expiring sooner.
-                                if (hist[i].AccessToken.Expires < hist[found].AccessToken.Expires)
+                                // Clean the list. The victim is less popular entry.
+                                if (hist[i].Popularity < hist[found].Popularity)
                                 {
-                                    hist[found].Popularity = Math.Max(hist[i].Popularity, hist[found].Popularity);
                                     hist.RemoveAt(i);
                                     found--;
                                 }
                                 else
                                 {
-                                    hist[i].Popularity = Math.Max(hist[i].Popularity, hist[found].Popularity);
                                     hist.RemoveAt(found);
                                     found = i;
                                 }
@@ -579,6 +502,35 @@ namespace eduVPN.ViewModels
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
                 })).Start();
+        }
+
+        /// <summary>
+        /// Called when an instance requests user authorization
+        /// </summary>
+        /// <param name="sender">Instance of type <c>eduVPN.Models.InstanceInfo</c> requiring authorization</param>
+        /// <param name="e">Authorization request event arguments</param>
+        private void Instance_RequestAuthorization(object sender, Models.RequestAuthorizationEventArgs e)
+        {
+            // Re-raise this event as ConnectWizard event, to simplify view.
+            // This way the view can listen ConnectWizard for authentication events only.
+            if (Dispatcher.CurrentDispatcher == Dispatcher)
+            {
+                // We're in the GUI thread.
+                var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender);
+                RequestInstanceAuthorization?.Invoke(this, e_instance);
+                e.AccessToken = e_instance.AccessToken;
+            }
+            else
+            {
+                // We're in the background thread - raise event via dispatcher.
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    (Action)(() =>
+                    {
+                        var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender);
+                        RequestInstanceAuthorization?.Invoke(this, e_instance);
+                        e.AccessToken = e_instance.AccessToken;
+                    }));
+            }
         }
 
         #endregion

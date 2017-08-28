@@ -88,30 +88,30 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eduVPN client needs authorization to access the requested eduVPN instance, and has opened an authorization web page in your browser.
+        ///   Looks up a localized string similar to eduVPN client needs authorization to access {0}, and has opened an authorization web page in your browser.
         ///The client will continue after you complete the authorization....
         /// </summary>
-        public static string AuthorizationPageMessage {
+        public static string AuthorizationPopupMessage {
             get {
-                return ResourceManager.GetString("AuthorizationPageMessage", resourceCulture);
+                return ResourceManager.GetString("AuthorizationPopupMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Retry.
         /// </summary>
-        public static string AuthorizationPageRetry {
+        public static string AuthorizationPopupRetry {
             get {
-                return ResourceManager.GetString("AuthorizationPageRetry", resourceCulture);
+                return ResourceManager.GetString("AuthorizationPopupRetry", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Waiting for authorization.
         /// </summary>
-        public static string AuthorizationPageTitle {
+        public static string AuthorizationPopupTitle {
             get {
-                return ResourceManager.GetString("AuthorizationPageTitle", resourceCulture);
+                return ResourceManager.GetString("AuthorizationPopupTitle", resourceCulture);
             }
         }
         

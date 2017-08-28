@@ -7,7 +7,6 @@
 
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels
@@ -44,52 +43,45 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (_select_custom_instance == null)
+                lock (_select_custom_instance_lock)
                 {
-                    _select_custom_instance = new DelegateCommand(
-                        // execute
-                        async () => {
-                            Parent.Error = null;
-                            Parent.ChangeTaskCount(+1);
-                            try
+                    if (_select_custom_instance == null)
+                    {
+                        _select_custom_instance = new DelegateCommand(
+                            // execute
+                            () =>
                             {
-                                // Set authentication instance.
-                                var base_uri = new Uri(BaseURI);
-                                var uri_builder = new UriBuilder(base_uri);
-                                uri_builder.Path = "/favicon.ico";
-                                Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo()
+                                Parent.Error = null;
+                                Parent.ChangeTaskCount(+1);
+                                try
                                 {
-                                    Base = new Uri(BaseURI),
-                                    DisplayName = base_uri.Host,
-                                    Logo = uri_builder.Uri
-                                };
+                                    // Set authentication instance.
+                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(new Uri(BaseURI));
 
-                                // Restore the access token from the settings.
-                                Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
+                                    // Connecting instance will be the same as authenticating.
+                                    Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
 
-                                // Connecting instance will be the same as authenticating.
-                                Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
-
-                                if (Parent.Configuration.AccessToken == null)
-                                    Parent.CurrentPage = Parent.AuthorizationPage;
-                                else
                                     Parent.CurrentPage = Parent.ProfileSelectPage;
-                            }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
-                        },
+                                }
+                                catch (Exception ex) { Parent.Error = ex; }
+                                finally { Parent.ChangeTaskCount(-1); }
+                            },
 
-                        // canExecute
-                        () => {
-                            try { new Uri(BaseURI); }
-                            catch (Exception) { return false; }
-                            return true;
-                        });
+                            // canExecute
+                            () =>
+                            {
+                                try { new Uri(BaseURI); }
+                                catch (Exception) { return false; }
+                                return true;
+                            });
+                    }
+
+                    return _select_custom_instance;
                 }
-                return _select_custom_instance;
             }
         }
         private ICommand _select_custom_instance;
+        private object _select_custom_instance_lock = new object();
 
         #endregion
 

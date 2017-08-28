@@ -120,14 +120,14 @@
   <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
     <value>Izberite svoj profil</value>
   </data>
-  <data name="AuthorizationPageMessage" xml:space="preserve">
-    <value>Odjemalec eduVPN potrebuje pooblastilo za dostop do zahtevane instance eduVPN in je odprl avtorizacijsko spletno stran v vašem brskalniku.
+  <data name="AuthorizationPopupMessage" xml:space="preserve">
+    <value>Odjemalec eduVPN potrebuje pooblastilo za dostop do {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
 Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
-  <data name="AuthorizationPageRetry" xml:space="preserve">
+  <data name="AuthorizationPopupRetry" xml:space="preserve">
     <value>Ponovi</value>
   </data>
-  <data name="AuthorizationPageTitle" xml:space="preserve">
+  <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Čakam na pooblastilo</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">

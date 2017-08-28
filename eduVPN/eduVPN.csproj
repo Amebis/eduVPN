@@ -37,6 +37,7 @@
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="JSON\Collection.cs" />
+    <Compile Include="Models\AccessTokenNullException.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSourceInfo.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Models\MessageOfTheDay.cs" />
     <Compile Include="Models\OpenVPNSession.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
+    <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\VPNConfiguration.cs" />
     <Compile Include="Models\LocalVPNConfigurationSettings.cs" />
@@ -71,7 +73,7 @@
     <Compile Include="ViewModels\CustomInstancePage.cs" />
     <Compile Include="ViewModels\InitializingPage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />
-    <Compile Include="ViewModels\AuthorizationPage.cs" />
+    <Compile Include="ViewModels\AuthorizationPopup.cs" />
     <Compile Include="ViewModels\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="Models\InstanceInfo.cs" />
@@ -90,7 +92,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ProfileSelectPage.cs" />
+    <Compile Include="ViewModels\RequestInstanceAuthorizationEventArgs.cs" />
     <Compile Include="ViewModels\StatusPage.cs" />
+    <Compile Include="ViewModels\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx">

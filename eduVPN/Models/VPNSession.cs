@@ -34,19 +34,9 @@ namespace eduVPN.Models
         protected CancellationTokenSource _disconnect;
 
         /// <summary>
-        /// Connecting instance
+        /// VPN configuration
         /// </summary>
-        protected InstanceInfo _instance;
-
-        /// <summary>
-        /// Selected profile
-        /// </summary>
-        protected ProfileInfo _profile;
-
-        /// <summary>
-        /// Client access token
-        /// </summary>
-        protected AccessToken _access_token;
+        protected VPNConfiguration _configuration;
 
         #endregion
 
@@ -152,18 +142,23 @@ namespace eduVPN.Models
         {
             get
             {
-                if (_disconnect_command == null)
-                    _disconnect_command = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            // Terminate connection.
-                            _disconnect.Cancel();
-                        });
-                return _disconnect_command;
+                lock (_disconnect_command_lock)
+                {
+                    if (_disconnect_command == null)
+                        _disconnect_command = new DelegateCommand(
+                            // execute
+                            () =>
+                            {
+                                // Terminate connection.
+                                _disconnect.Cancel();
+                            });
+
+                    return _disconnect_command;
+                }
             }
         }
         private ICommand _disconnect_command;
+        private object _disconnect_command_lock = new object();
 
         /// <summary>
         /// Disconnect
@@ -172,12 +167,17 @@ namespace eduVPN.Models
         {
             get
             {
-                if (_show_log_command == null)
-                    _show_log_command = new DelegateCommand(DoShowLog, CanShowLog);
-                return _show_log_command;
+                lock (_show_log_command_lock)
+                {
+                    if (_show_log_command == null)
+                        _show_log_command = new DelegateCommand(DoShowLog, CanShowLog);
+
+                    return _show_log_command;
+                }
             }
         }
         private ICommand _show_log_command;
+        private object _show_log_command_lock = new object();
 
         #endregion
 
@@ -186,14 +186,12 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        public VPNSession(InstanceInfo instance, ProfileInfo profile, AccessToken access_token)
+        public VPNSession(VPNConfiguration configuration)
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
             _disconnect = new CancellationTokenSource();
 
-            _instance = instance;
-            _profile = profile;
-            _access_token = access_token;
+            _configuration = configuration;
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(

@@ -36,11 +36,11 @@ namespace eduVPN.Views
             // 2. Change the list of instances to a stack of buttons of instances
 
             // User selected an instance.
-            var viewmodel = (ViewModels.AuthenticatingInstanceSelectPage)DataContext;
-            if (viewmodel != null && // Sometimes this event gets called with null view model.
-                viewmodel.AuthorizeSelectedInstance.CanExecute(null))
+            var view_model = (ViewModels.AuthenticatingInstanceSelectPage)DataContext;
+            if (view_model != null && // Sometimes this event gets called with null view model.
+                view_model.AuthorizeSelectedInstance.CanExecute(null))
             {
-                viewmodel.AuthorizeSelectedInstance.Execute(null);
+                view_model.AuthorizeSelectedInstance.Execute(null);
             }
         }
 

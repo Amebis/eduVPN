@@ -79,6 +79,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client authorization failed..
+        /// </summary>
+        internal static string ErrorAuthorization {
+            get {
+                return ResourceManager.GetString("ErrorAuthorization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading of client certificate failed..
         /// </summary>
         internal static string ErrorClientCertificateLoad {
@@ -120,6 +129,15 @@ namespace eduVPN.Resources {
         internal static string ErrorInvalidSignature {
             get {
                 return ResourceManager.GetString("ErrorInvalidSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No access token granted..
+        /// </summary>
+        internal static string ErrorNullAccessToken {
+            get {
+                return ResourceManager.GetString("ErrorNullAccessToken", resourceCulture);
             }
         }
         

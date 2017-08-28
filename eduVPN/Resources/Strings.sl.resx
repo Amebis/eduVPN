@@ -150,4 +150,10 @@
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>Shranjevanje profilovih nastavitev OpenVPN v "{0}" ni uspelo.</value>
   </data>
+  <data name="ErrorAuthorization" xml:space="preserve">
+    <value>Pooblaščanje odjemalca ni uspelo.</value>
+  </data>
+  <data name="ErrorNullAccessToken" xml:space="preserve">
+    <value>Žeton za dostop ni bil odobren.</value>
+  </data>
 </root>

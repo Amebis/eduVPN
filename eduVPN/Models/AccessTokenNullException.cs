@@ -11,18 +11,18 @@ using System.Runtime.Serialization;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// Private key is invalid or of unsupported format.
+    /// No access token granted.
     /// </summary>
     [Serializable]
-    public class CertificatePrivateKeyException : ApplicationException, ISerializable
+    class AccessTokenNullException : ApplicationException, ISerializable
     {
         #region Constructors
 
         /// <summary>
         /// Constructs an exception
         /// </summary>
-        public CertificatePrivateKeyException() :
-            this(Resources.Strings.ErrorInvalidPrivateKey)
+        public AccessTokenNullException() :
+            this(Resources.Strings.ErrorNullAccessToken)
         {
         }
 
@@ -30,7 +30,7 @@ namespace eduVPN.Models
         /// Constructs an exception
         /// </summary>
         /// <param name="message">Exception message</param>
-        public CertificatePrivateKeyException(string message) :
+        public AccessTokenNullException(string message) :
             this(message, null)
         {
         }
@@ -40,7 +40,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="message">Exception message</param>
         /// <param name="innerException">Inner exception reference</param>
-        public CertificatePrivateKeyException(string message, Exception innerException) :
+        public AccessTokenNullException(string message, Exception innerException) :
             base(message, innerException)
         {
         }

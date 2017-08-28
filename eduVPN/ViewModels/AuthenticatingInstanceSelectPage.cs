@@ -41,50 +41,50 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (_authorize_instance == null)
+                lock (_authorize_instance_lock)
                 {
-                    _authorize_instance = new DelegateCommand(
-                        // execute
-                        async () =>
-                        {
-                            Parent.Error = null;
-                            Parent.ChangeTaskCount(+1);
-                            try
+                    if (_authorize_instance == null)
+                    {
+                        _authorize_instance = new DelegateCommand(
+                            // execute
+                            () =>
                             {
-                                // Save selected instance.
-                                Parent.Configuration.AuthenticatingInstance = SelectedInstance;
-
-                                // Restore the access token from the settings.
-                                Parent.Configuration.AccessToken = await Parent.Configuration.AuthenticatingInstance.GetAccessTokenAsync(ConnectWizard.Abort.Token);
-
-                                if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
+                                Parent.Error = null;
+                                Parent.ChangeTaskCount(+1);
+                                try
                                 {
-                                    // Connecting instance will be the same as authenticating.
-                                    Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
-                                }
-                                else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo)
-                                {
-                                    // Connecting instance will not (necessarry) be the same as authenticating.
-                                    Parent.Configuration.ConnectingInstance = null;
-                                } else
-                                    throw new NotImplementedException();
+                                    // Save selected instance.
+                                    Parent.Configuration.AuthenticatingInstance = SelectedInstance;
 
-                                if (Parent.Configuration.AccessToken == null)
-                                    Parent.CurrentPage = Parent.AuthorizationPage;
-                                else
+                                    if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
+                                    {
+                                        // Connecting instance will be the same as authenticating.
+                                        Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+                                    }
+                                    else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo)
+                                    {
+                                        // Connecting instance will not (necessarry) be the same as authenticating.
+                                        Parent.Configuration.ConnectingInstance = null;
+                                    }
+                                    else
+                                        throw new NotImplementedException();
+
                                     Parent.CurrentPage = Parent.ProfileSelectPage;
-                            }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
-                        },
+                                }
+                                catch (Exception ex) { Parent.Error = ex; }
+                                finally { Parent.ChangeTaskCount(-1); }
+                            },
 
-                        // canExecute
-                        () => SelectedInstance != null);
+                            // canExecute
+                            () => SelectedInstance != null);
+                    }
+
+                    return _authorize_instance;
                 }
-                return _authorize_instance;
             }
         }
         private ICommand _authorize_instance;
+        private object _authorize_instance_lock = new object();
 
         #endregion
 

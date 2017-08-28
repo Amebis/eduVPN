@@ -12,13 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace eduVPN.Models
 {
@@ -33,26 +32,25 @@ namespace eduVPN.Models
         /// Instance API endpoints
         /// </summary>
         private InstanceEndpoints _endpoints;
+        private object _endpoints_lock = new object();
 
         /// <summary>
-        /// OAuth pending authorization grant
+        /// Access token
         /// </summary>
-        private AuthorizationGrant _authorization_grant;
-
-        /// <summary>
-        /// Registered client redirect callback URI (endpoint)
-        /// </summary>
-        public const string RedirectEndpoint = "org.eduvpn.app:/api/callback";
+        private AccessToken _access_token;
+        private object _access_token_lock = new object();
 
         /// <summary>
         /// List of available profiles
         /// </summary>
         private JSON.Collection<Models.ProfileInfo> _profile_list;
+        private object _profile_list_lock = new object();
 
         /// <summary>
         /// Client certificate
         /// </summary>
         private X509Certificate2 _client_certificate;
+        private object _client_certificate_lock = new object();
 
         #endregion
 
@@ -67,13 +65,14 @@ namespace eduVPN.Models
             set {
                 if (value != _base)
                 {
-                    _base = value; RaisePropertyChanged();
-
-                    // Setting the base also resets internal state (fields).
+                    // Setting the base resets internal state (fields).
                     _endpoints = null;
-                    _authorization_grant = null;
+                    _access_token = null;
                     _profile_list = null;
                     _client_certificate = null;
+
+                    _base = value;
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -99,16 +98,37 @@ namespace eduVPN.Models
         }
         private Uri _logo;
 
+        /// <summary>
+        /// Request authorization event
+        /// </summary>
+        public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
+
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs the instance info
+        /// Constructs an instance info
         /// </summary>
         public InstanceInfo() :
             base()
         {
+        }
+
+        /// <summary>
+        /// Constructs a custom instance info
+        /// </summary>
+        /// <param name="_base"></param>
+        public InstanceInfo(Uri _base)
+        {
+            // Set base.
+            Base = _base;
+
+            // Set display name to base URI hostname.
+            DisplayName = _base.Host;
+
+            // Set instance logo to /favicon.ico, perhaps we might get lucky.
+            Logo = new UriBuilder(_base) { Path = "/favicon.ico" }.Uri;
         }
 
         /// <summary>
@@ -118,6 +138,12 @@ namespace eduVPN.Models
         public InstanceInfo(FederatedInstanceSourceInfo instance_source) :
             this()
         {
+            // Set display name to authorization URI hostname.
+            DisplayName = instance_source.AuthorizationEndpoint.Host;
+
+            // Set instance logo to /favicon.ico, perhaps we might get lucky.
+            Logo = new UriBuilder(instance_source.AuthorizationEndpoint) { Path = "/favicon.ico" }.Uri;
+
             // Set API endpoints manually.
             _endpoints = new InstanceEndpoints()
             {
@@ -142,343 +168,277 @@ namespace eduVPN.Models
         /// <returns>Instance endpoints</returns>
         public InstanceEndpoints GetEndpoints(CancellationToken ct = default(CancellationToken))
         {
-            var task = GetEndpointsAsync(ct);
-            try
+            lock (_endpoints_lock)
             {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-
-        /// <summary>
-        /// Gets and loads instance endpoints asynchronously
-        /// </summary>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Asynchronous operation with expected instance endpoints</returns>
-        public async Task<InstanceEndpoints> GetEndpointsAsync(CancellationToken ct = default(CancellationToken))
-        {
-            if (_endpoints == null)
-            {
-                try
+                if (_endpoints == null)
                 {
-                    // Get and load API endpoints.
-                    _endpoints = new InstanceEndpoints();
-                    var uri_builder = new UriBuilder(Base);
-                    uri_builder.Path += "info.json";
-                    _endpoints.LoadJSON((await JSON.Response.GetAsync(
-                        uri: uri_builder.Uri,
-                        ct: ct)).Value, ct);
+                    try
+                    {
+                        // Get and load API endpoints.
+                        _endpoints = new InstanceEndpoints();
+                        var uri_builder = new UriBuilder(Base);
+                        uri_builder.Path += "info.json";
+                        _endpoints.LoadJSON(JSON.Response.Get(
+                            uri: uri_builder.Uri,
+                            ct: ct).Value, ct);
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
                 }
-                catch (OperationCanceledException) { throw; }
-                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
-            }
 
-            return _endpoints;
-        }
-
-        /// <summary>
-        /// Triggers instance client authorization
-        /// </summary>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        public void RequestAuthorization(CancellationToken ct = default(CancellationToken))
-        {
-            // Prepare new authorization grant.
-            _authorization_grant = new AuthorizationGrant()
-            {
-                AuthorizationEndpoint = GetEndpoints(ct).AuthorizationEndpoint,
-                RedirectEndpoint = new Uri(RedirectEndpoint),
-                ClientID = "org.eduvpn.app",
-                Scope = new List<string>() { "config" },
-                CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
-            };
-
-            // Open authorization request in the browser.
-            System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
-        }
-
-        /// <summary>
-        /// Authorizes client with the instance
-        /// </summary>
-        /// <param name="callback">Callback URI provided by authorization server</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Access token</returns>
-        public AccessToken Authorize(Uri callback, CancellationToken ct = default(CancellationToken))
-        {
-            var task = AuthorizeAsync(callback, ct);
-            try
-            {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
+                return _endpoints;
             }
         }
 
         /// <summary>
-        /// Authorizes client with the instance asynchronously
+        /// Gets (and refreshes) access token, but does not initiate authorization when the token is not available silently returning <c>null</c>
         /// </summary>
-        /// <param name="callback">Callback URI provided by authorization server</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Asynchronous operation with expected access token</returns>
-        public async Task<AccessToken> AuthorizeAsync(Uri callback, CancellationToken ct = default(CancellationToken))
+        /// <returns>Access token or <c>null</c> if not available</returns>
+        public AccessToken PeekAccessToken(CancellationToken ct = default(CancellationToken))
         {
-            // Get API endpoints.
-            var api = await GetEndpointsAsync(ct);
+            lock (_access_token_lock)
+            {
+                if (_access_token == null)
+                {
+                    // Get API endpoints.
+                    var api = GetEndpoints(ct);
 
-            // Process response and get access token.
-            var token = await _authorization_grant.ProcessResponseAsync(
-                HttpUtility.ParseQueryString(callback.Query),
-                api.TokenEndpoint,
-                null,
-                ct);
+                    try
+                    {
+                        // Try to restore the access token from the settings.
+                        _access_token = AccessToken.FromBase64String(Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri]);
 
-            // Save the access token.
-            Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = token.ToBase64String();
+                        if (_access_token.Expires.HasValue && _access_token.Expires.Value <= DateTime.Now)
+                        {
+                            // Token expired. Refresh it.
+                            _access_token = _access_token.RefreshToken(api.TokenEndpoint, null, ct);
+                            if (_access_token != null)
+                            {
+                                // Update access token in the settings.
+                                Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
+                            }
+                        }
+                    }
+                    catch (Exception) { _access_token = null; }
+                }
 
-            return token;
+                return _access_token;
+            }
         }
 
         /// <summary>
-        /// Gets (and refreshes) access token from settings
+        /// Gets (and refreshes) access token
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Access token or <c>null</c> if not available</returns>
         public AccessToken GetAccessToken(CancellationToken ct = default(CancellationToken))
         {
-            var task = GetAccessTokenAsync(ct);
-            try
+            lock (_access_token_lock)
             {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
+                PeekAccessToken(ct);
+
+                if (_access_token == null)
+                {
+                    try
+                    {
+                        // If we got here, there was no saved token, or something is wrong with it: decoding failed, refreshing failed...
+                        // Request user authorization.
+                        var e = new RequestAuthorizationEventArgs();
+                        RequestAuthorization?.Invoke(this, e);
+
+                        if (e.AccessToken == null)
+                            throw new AccessTokenNullException();
+
+                        _access_token = e.AccessToken;
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorAuthorization, ex); }
+
+                    // Save the access token to the settings.
+                    Properties.Settings.Default.AccessTokens[GetEndpoints(ct).AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
+                }
+
+                return _access_token;
             }
         }
 
         /// <summary>
-        /// Gets (and refreshes) access token from settings asynchronously
+        /// Resets access token
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Asynchronous operation with expected access token</returns>
-        public async Task<AccessToken> GetAccessTokenAsync(CancellationToken ct = default(CancellationToken))
+        public void ResetAccessToken(CancellationToken ct = default(CancellationToken))
         {
-            // Get API endpoints.
-            var api = await GetEndpointsAsync(ct);
-
-            AccessToken token = null;
-            try
+            lock (_access_token_lock)
             {
-                // Try to restore the access token from the settings.
-                var at = Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri];
-                if (at != null)
-                    token = AccessToken.FromBase64String(at);
+                // Remove access token from settings and from our internal state.
+                Properties.Settings.Default.AccessTokens.Remove(GetEndpoints(ct).AuthorizationEndpoint.AbsoluteUri);
+                _access_token = null;
             }
-            catch (Exception) { return null; }
-
-            if (token != null && token.Expires.HasValue && token.Expires.Value <= DateTime.Now)
-            {
-                // The access token expired. Try refreshing it.
-                try { token = await token.RefreshTokenAsync(api.TokenEndpoint, null, ct); }
-                catch (Exception) { token = null; }
-            }
-
-            return token;
         }
 
         /// <summary>
         /// Gets instance profile list available to the user
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile list</returns>
-        public JSON.Collection<Models.ProfileInfo> GetProfileList(AccessToken token, CancellationToken ct = default(CancellationToken))
+        public JSON.Collection<Models.ProfileInfo> GetProfileList(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
-            var task = GetProfileListAsync(token, ct);
-            try
+            lock (_profile_list_lock)
             {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-
-        /// <summary>
-        /// Gets instance profile list available to the user asynchronously
-        /// </summary>
-        /// <param name="token">Access token</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Asynchronous operation with expected profile list</returns>
-        public async Task<JSON.Collection<Models.ProfileInfo>> GetProfileListAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
-        {
-            if (_profile_list == null)
-            {
-                // Get API endpoints.
-                var api = await GetEndpointsAsync(ct);
-
-                try
+                if (_profile_list == null)
                 {
-                    // Get and load profile list.
-                    _profile_list = new JSON.Collection<Models.ProfileInfo>();
-                    _profile_list.LoadJSONAPIResponse((await JSON.Response.GetAsync(
-                        uri: api.ProfileList,
-                        token: token,
-                        ct: ct)).Value, "profile_list", ct);
+                    retry:
+                    try
+                    {
+                        // Get and load profile list.
+                        _profile_list = new JSON.Collection<Models.ProfileInfo>();
+                        _profile_list.LoadJSONAPIResponse(JSON.Response.Get(
+                            uri: GetEndpoints(ct).ProfileList,
+                            token: authenticating_instance.GetAccessToken(ct),
+                            ct: ct).Value, "profile_list", ct);
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (AggregateException ex)
+                    {
+                        if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // Access token was rejected (401 Unauthorized): reset access token and retry.
+                            authenticating_instance.ResetAccessToken(ct);
+                            goto retry;
+                        }
+                        else
+                            throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex);
+                    }
+                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
                 }
-                catch (OperationCanceledException) { throw; }
-                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
-            }
 
-            return _profile_list;
+                return _profile_list;
+            }
         }
 
         /// <summary>
         /// Gets instance user info
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>User info</returns>
-        public UserInfo GetUserInfo(AccessToken token, CancellationToken ct = default(CancellationToken))
-        {
-            var task = GetUserInfoAsync(token, ct);
-            try
-            {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-
-        /// <summary>
-        /// Gets instance user info asynchronously
-        /// </summary>
-        /// <param name="token">Access token</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Asynchronous operation with expected user info</returns>
-        public async Task<UserInfo> GetUserInfoAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
+        public UserInfo GetUserInfo(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             // Get API endpoints.
-            var api = await GetEndpointsAsync(ct);
+            var api = GetEndpoints(ct);
             if (api.UserInfo == null)
                 return null;
 
+            retry:
             try
             {
                 // Get and load user info.
                 var user_info = new UserInfo();
-                user_info.LoadJSONAPIResponse((await JSON.Response.GetAsync(
+                user_info.LoadJSONAPIResponse(JSON.Response.Get(
                     uri: api.UserInfo,
-                    token: token,
-                    ct: ct)).Value, "user_info", ct);
+                    token: authenticating_instance.GetAccessToken(ct),
+                    ct: ct).Value, "user_info", ct);
                 return user_info;
             }
             catch (OperationCanceledException) { throw; }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Access token was rejected (401 Unauthorized): reset access token and retry.
+                    authenticating_instance.ResetAccessToken(ct);
+                    goto retry;
+                }
+                else
+                    throw new AggregateException(Resources.Strings.ErrorUserInfoLoad, ex);
+            }
             catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorUserInfoLoad, ex); }
         }
 
         /// <summary>
         /// Gets client certificate
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
-        public X509Certificate2 GetClientCertificate(AccessToken token, CancellationToken ct = default(CancellationToken))
+        public X509Certificate2 GetClientCertificate(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
-            var task = GetClientCertificateAsync(token, ct);
-            try
+            lock (_client_certificate_lock)
             {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-
-        /// <summary>
-        /// Gets client certificate asynchronously
-        /// </summary>
-        /// <param name="token">Access token</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Asynchronous operation with expected client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
-        public async Task<X509Certificate2> GetClientCertificateAsync(AccessToken token, CancellationToken ct = default(CancellationToken))
-        {
-            if (_client_certificate == null)
-            {
-                // Open eduVPN client certificate store.
-                var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
-                store.Open(OpenFlags.ReadWrite);
-                try
+                if (_client_certificate == null)
                 {
-                    if (Properties.Settings.Default.InstanceSettings.TryGetValue(Base.AbsoluteUri, out var instance_settings) && instance_settings.ClientCertificateHash != null)
+                    // Open eduVPN client certificate store.
+                    var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
+                    store.Open(OpenFlags.ReadWrite);
+                    try
                     {
-                        // Try to restore previously issued client certificate from the certificate store first.
-                        foreach (var cert in store.Certificates)
+                        if (Properties.Settings.Default.InstanceSettings.TryGetValue(Base.AbsoluteUri, out var instance_settings) && instance_settings.ClientCertificateHash != null)
                         {
-                            if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
+                            // Try to restore previously issued client certificate from the certificate store first.
+                            foreach (var cert in store.Certificates)
                             {
-                                // Not expired && Has the private key.
-                                if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
+                                if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
                                 {
-                                    // Certificate found.
-                                    _client_certificate = cert;
+                                    // Not expired && Has the private key.
+                                    if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
+                                    {
+                                        // Certificate found.
+                                        _client_certificate = cert;
+                                    }
+                                }
+                                else
+                                {
+                                    // Certificate expired or matching private key not found == Useless. Clean it from the store.
+                                    store.Remove(cert);
                                 }
                             }
-                            else
-                            {
-                                // Certificate expired or matching private key not found == Useless. Clean it from the store.
-                                store.Remove(cert);
-                            }
                         }
-                    }
 
-                    if (_client_certificate == null)
-                    {
-                        // Get API endpoints.
-                        var api = await GetEndpointsAsync(ct);
-
-                        try
+                        if (_client_certificate == null)
                         {
-                            // Get certificate and import it to Windows user certificate store.
-                            var cert = new Models.Certificate();
-                            cert.LoadJSONAPIResponse((await JSON.Response.GetAsync(
-                                uri: api.CreateCertificate,
-                                param: new NameValueCollection
+                            retry:
+                            try
+                            {
+                                // Get certificate and import it to Windows user certificate store.
+                                var cert = new Models.Certificate();
+                                cert.LoadJSONAPIResponse(JSON.Response.Get(
+                                    uri: GetEndpoints(ct).CreateCertificate,
+                                    param: new NameValueCollection
+                                    {
+                                        { "display_name", Resources.Strings.CertificateTitle }
+                                    },
+                                    token: authenticating_instance.GetAccessToken(ct),
+                                    ct: ct).Value, "create_keypair", ct);
+                                store.Add(cert.Value);
+                                _client_certificate = cert.Value;
+
+                                if (instance_settings == null)
+                                    Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = _client_certificate.GetCertHash() };
+                                else
+                                    Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = _client_certificate.GetCertHash();
+                            }
+                            catch (OperationCanceledException) { throw; }
+                            catch (AggregateException ex)
+                            {
+                                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                                 {
-                                    { "display_name", Resources.Strings.CertificateTitle }
-                                },
-                                token: token,
-                                ct: ct)).Value, "create_keypair", ct);
-                            store.Add(cert.Value);
-                            _client_certificate = cert.Value;
-
-                            if (instance_settings == null)
-                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = _client_certificate.GetCertHash() };
-                            else
-                                Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = _client_certificate.GetCertHash();
+                                    // Access token was rejected (401 Unauthorized): reset access token and retry.
+                                    authenticating_instance.ResetAccessToken(ct);
+                                    goto retry;
+                                }
+                                else
+                                    throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
+                            }
+                            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
                         }
-                        catch (OperationCanceledException) { throw; }
-                        catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
                     }
+                    finally { store.Close(); }
                 }
-                finally { store.Close(); }
-            }
 
-            return _client_certificate;
+                return _client_certificate;
+            }
         }
 
         #endregion

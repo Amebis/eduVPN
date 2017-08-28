@@ -65,6 +65,7 @@
     <Compile Include="Views\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Window.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -114,7 +115,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AuthorizationPage.xaml">
+    <Page Include="Views\AuthorizationPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,8 +134,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\AuthorizationPage.xaml.cs">
-      <DependentUpon>AuthorizationPage.xaml</DependentUpon>
+    <Compile Include="Views\AuthorizationPopup.xaml.cs">
+      <DependentUpon>AuthorizationPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AuthenticatingInstanceSelectPage.xaml.cs">
       <DependentUpon>AuthenticatingInstanceSelectPage.xaml</DependentUpon>

@@ -93,15 +93,17 @@ namespace eduVPN.Client
         {
             if (args.Count >= 2)
             {
-                // Forward redirect URI to the wizard.
+                // Forward redirect URI to the authorization pop-up.
                 var uri = args[1];
-                var wizard = (ViewModels.ConnectWizard)(((Views.ConnectWizard)MainWindow).DataContext);
+                var wizard = (eduVPN.Views.ConnectWizard)MainWindow;
 
-                if (wizard.AuthorizationPage.Authorize.CanExecute(uri))
+                if (wizard.AuthorizationPopup != null &&
+                    wizard.AuthorizationPopup.DataContext is ViewModels.AuthorizationPopup view_model &&
+                    view_model.Authorize.CanExecute(uri))
                 {
-                    wizard.AuthorizationPage.Authorize.Execute(uri);
+                    view_model.Authorize.Execute(uri);
 
-                    // (Re)activate window.
+                    // (Re)activate main window.
                     if (!MainWindow.IsActive)
                         MainWindow.Show();
                     MainWindow.Activate();
