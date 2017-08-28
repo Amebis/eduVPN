@@ -41,7 +41,7 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Get and load profile list.
-                                var profile_list = _selected_instance.GetProfileList(Parent.Configuration.ConnectingInstance, Window.Abort.Token);
+                                var profile_list = _selected_instance.GetProfileList(Parent.Configuration.AuthenticatingInstance, Window.Abort.Token);
 
                                 // Send the loaded profile list back to the UI thread.
                                 Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileList = profile_list));
