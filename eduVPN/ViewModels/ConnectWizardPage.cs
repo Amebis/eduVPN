@@ -64,6 +64,8 @@ namespace eduVPN.ViewModels
         /// </summary>
         protected virtual void DoNavigateBack()
         {
+            // Reset error condition on every backwar navigation.
+            Parent.Error = null;
         }
 
         /// <summary>

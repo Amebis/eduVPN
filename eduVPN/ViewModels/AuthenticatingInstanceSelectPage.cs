@@ -114,6 +114,8 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
+            base.DoNavigateBack();
+
             if (Array.IndexOf(Parent.InstanceSources, Parent.InstanceSource) >= 0)
                 Parent.CurrentPage = Parent.InstanceSourceSelectPage;
             else

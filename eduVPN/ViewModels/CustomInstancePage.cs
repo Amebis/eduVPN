@@ -103,6 +103,8 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
+            base.DoNavigateBack();
+
             Parent.CurrentPage = Parent.InstanceSourceSelectPage;
         }
 

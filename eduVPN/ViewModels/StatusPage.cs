@@ -146,6 +146,8 @@ namespace eduVPN.ViewModels
 
         protected override void DoNavigateBack()
         {
+            base.DoNavigateBack();
+
             // Terminate connection.
             if (Parent.Session != null && Parent.Session.Disconnect.CanExecute(null))
                 Parent.Session.Disconnect.Execute(null);
