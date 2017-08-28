@@ -55,8 +55,8 @@
     <Compile Include="Views\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InstanceAndProfileSelectPage.xaml.cs">
-      <DependentUpon>InstanceAndProfileSelectPage.xaml</DependentUpon>
+    <Compile Include="Views\ConnectingInstanceAndProfileSelectPage.xaml.cs">
+      <DependentUpon>ConnectingInstanceAndProfileSelectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfileSelectPage.xaml.cs">
       <DependentUpon>ProfileSelectPage.xaml</DependentUpon>
@@ -148,7 +148,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\InstanceAndProfileSelectPage.xaml">
+    <Page Include="Views\ConnectingInstanceAndProfileSelectPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
