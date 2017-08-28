@@ -27,29 +27,29 @@ namespace eduVPN.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/institute_access.json")]
-        public string InstituteAccessDirectory {
+        public string InstituteAccessDiscovery {
             get {
-                return ((string)(this["InstituteAccessDirectory"]));
+                return ((string)(this["InstituteAccessDiscovery"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
-        public string InstituteAccessDirectoryPubKey {
+        public string InstituteAccessDiscoveryPubKey {
             get {
-                return ((string)(this["InstituteAccessDirectoryPubKey"]));
+                return ((string)(this["InstituteAccessDiscoveryPubKey"]));
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.JSON.Response InstituteAccessDirectoryCache {
+        public global::eduVPN.JSON.Response InstituteAccessDiscoveryCache {
             get {
-                return ((global::eduVPN.JSON.Response)(this["InstituteAccessDirectoryCache"]));
+                return ((global::eduVPN.JSON.Response)(this["InstituteAccessDiscoveryCache"]));
             }
             set {
-                this["InstituteAccessDirectoryCache"] = value;
+                this["InstituteAccessDiscoveryCache"] = value;
             }
         }
         
@@ -57,29 +57,29 @@ namespace eduVPN.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/secure_internet.json")]
-        public string SecureInternetDirectory {
+        public string SecureInternetDiscovery {
             get {
-                return ((string)(this["SecureInternetDirectory"]));
+                return ((string)(this["SecureInternetDiscovery"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
-        public string SecureInternetDirectoryPubKey {
+        public string SecureInternetDiscoveryPubKey {
             get {
-                return ((string)(this["SecureInternetDirectoryPubKey"]));
+                return ((string)(this["SecureInternetDiscoveryPubKey"]));
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.JSON.Response SecureInternetDirectoryCache {
+        public global::eduVPN.JSON.Response SecureInternetDiscoveryCache {
             get {
-                return ((global::eduVPN.JSON.Response)(this["SecureInternetDirectoryCache"]));
+                return ((global::eduVPN.JSON.Response)(this["SecureInternetDiscoveryCache"]));
             }
             set {
-                this["SecureInternetDirectoryCache"] = value;
+                this["SecureInternetDiscoveryCache"] = value;
             }
         }
         
@@ -134,24 +134,24 @@ namespace eduVPN.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
-        public global::eduVPN.Models.VPNConfigurationSettingsList InstituteAccessDirectoryConfigHistory {
+        public global::eduVPN.Models.VPNConfigurationSettingsList InstituteAccessDiscoveryConfigHistory {
             get {
-                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["InstituteAccessDirectoryConfigHistory"]));
+                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["InstituteAccessDiscoveryConfigHistory"]));
             }
             set {
-                this["InstituteAccessDirectoryConfigHistory"] = value;
+                this["InstituteAccessDiscoveryConfigHistory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
-        public global::eduVPN.Models.VPNConfigurationSettingsList SecureInternetDirectoryConfigHistory {
+        public global::eduVPN.Models.VPNConfigurationSettingsList SecureInternetDiscoveryConfigHistory {
             get {
-                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["SecureInternetDirectoryConfigHistory"]));
+                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["SecureInternetDiscoveryConfigHistory"]));
             }
             set {
-                this["SecureInternetDirectoryConfigHistory"] = value;
+                this["SecureInternetDiscoveryConfigHistory"] = value;
             }
         }
     }

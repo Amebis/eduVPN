@@ -27,8 +27,8 @@ namespace eduVPN.ViewModels
         /// </summary>
         private static readonly string[] _instance_directory_id = new string[]
         {
-            "SecureInternetDirectory",
-            "InstituteAccessDirectory",
+            "SecureInternetDiscovery",
+            "InstituteAccessDiscovery",
         };
 
         #endregion

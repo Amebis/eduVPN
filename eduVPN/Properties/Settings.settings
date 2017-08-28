@@ -2,22 +2,22 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPN.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="InstituteAccessDirectory" Type="(Web Service URL)" Scope="Application">
+    <Setting Name="InstituteAccessDiscovery" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://static.eduvpn.nl/disco/institute_access.json</Value>
     </Setting>
-    <Setting Name="InstituteAccessDirectoryPubKey" Type="System.String" Scope="Application">
+    <Setting Name="InstituteAccessDiscoveryPubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
     </Setting>
-    <Setting Name="InstituteAccessDirectoryCache" Type="eduVPN.JSON.Response" Scope="User">
+    <Setting Name="InstituteAccessDiscoveryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SecureInternetDirectory" Type="(Web Service URL)" Scope="Application">
+    <Setting Name="SecureInternetDiscovery" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://static.eduvpn.nl/disco/secure_internet.json</Value>
     </Setting>
-    <Setting Name="SecureInternetDirectoryPubKey" Type="System.String" Scope="Application">
+    <Setting Name="SecureInternetDiscoveryPubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=</Value>
     </Setting>
-    <Setting Name="SecureInternetDirectoryCache" Type="eduVPN.JSON.Response" Scope="User">
+    <Setting Name="SecureInternetDiscoveryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OpenVPNInterface" Type="System.String" Scope="User">
@@ -32,10 +32,10 @@
     <Setting Name="InstanceSettings" Type="eduVPN.Models.InstanceSettingsDictionary" Scope="User">
       <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="InstituteAccessDirectoryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
+    <Setting Name="InstituteAccessDiscoveryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
       <Value Profile="(Default)">&lt;VPNConfigurationSettingsList/&gt;</Value>
     </Setting>
-    <Setting Name="SecureInternetDirectoryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
+    <Setting Name="SecureInternetDiscoveryConfigHistory" Type="eduVPN.Models.VPNConfigurationSettingsList" Scope="User">
       <Value Profile="(Default)">&lt;VPNConfigurationSettingsList/&gt;</Value>
     </Setting>
   </Settings>
