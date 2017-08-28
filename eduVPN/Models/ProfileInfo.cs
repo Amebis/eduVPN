@@ -109,7 +109,7 @@ namespace eduVPN.Models
                         if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                         {
                             // Access token was rejected (401 Unauthorized): reset access token and retry.
-                            authenticating_instance.ResetAccessToken(ct);
+                            authenticating_instance.RefreshOrResetAccessToken(ct);
                             goto retry;
                         }
                         else

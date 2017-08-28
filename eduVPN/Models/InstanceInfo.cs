@@ -263,12 +263,12 @@ namespace eduVPN.Models
 
                         // If we got here, save the token.
                         _access_token = e.AccessToken;
+
+                        // Save the access token to the settings.
+                        Properties.Settings.Default.AccessTokens[GetEndpoints(ct).AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
                     }
                     catch (OperationCanceledException) { throw; }
                     catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorAuthorization, ex); }
-
-                    // Save the access token to the settings.
-                    Properties.Settings.Default.AccessTokens[GetEndpoints(ct).AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
                 }
 
                 return _access_token;
@@ -279,13 +279,36 @@ namespace eduVPN.Models
         /// Resets access token
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        public void ResetAccessToken(CancellationToken ct = default(CancellationToken))
+        public void RefreshOrResetAccessToken(CancellationToken ct = default(CancellationToken))
         {
             lock (_access_token_lock)
             {
-                // Remove access token from settings and from our internal state.
-                Properties.Settings.Default.AccessTokens.Remove(GetEndpoints(ct).AuthorizationEndpoint.AbsoluteUri);
+                // Get API endpoints.
+                var api = GetEndpoints(ct);
+
+                if (_access_token != null && _access_token.Expires.HasValue)
+                {
+                    try
+                    {
+                        // We have an expirable access token. Try to refresh it first.
+                        var access_token = _access_token.RefreshToken(api.TokenEndpoint, null, ct);
+                        if (access_token != null)
+                        {
+                            // If we got here, save the token.
+                            _access_token = access_token;
+
+                            // Save the access token to the settings.
+                            Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
+
+                            return;
+                        }
+                    }
+                    catch (Exception) { }
+                }
+
+                // Remove access token from our internal state and from settings.
                 _access_token = null;
+                Properties.Settings.Default.AccessTokens.Remove(api.AuthorizationEndpoint.AbsoluteUri);
             }
         }
 
@@ -320,7 +343,7 @@ namespace eduVPN.Models
                         if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                         {
                             // Access token was rejected (401 Unauthorized): reset access token and retry.
-                            authenticating_instance.ResetAccessToken(ct);
+                            authenticating_instance.RefreshOrResetAccessToken(ct);
                             goto retry;
                         }
                         else
@@ -363,7 +386,7 @@ namespace eduVPN.Models
                 if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     // Access token was rejected (401 Unauthorized): reset access token and retry.
-                    authenticating_instance.ResetAccessToken(ct);
+                    authenticating_instance.RefreshOrResetAccessToken(ct);
                     goto retry;
                 }
                 else
@@ -443,7 +466,7 @@ namespace eduVPN.Models
                                 if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                                 {
                                     // Access token was rejected (401 Unauthorized): reset access token and retry.
-                                    authenticating_instance.ResetAccessToken(ct);
+                                    authenticating_instance.RefreshOrResetAccessToken(ct);
                                     goto retry;
                                 }
                                 else
