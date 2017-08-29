@@ -6,10 +6,7 @@
 */
 
 using Prism.Commands;
-using System;
-using System.Threading;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
 {
