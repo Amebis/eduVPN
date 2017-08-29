@@ -121,7 +121,7 @@
     <value>Choose your profile</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>eduVPN client needs authorization to access {0}, and has opened an authorization web page in your browser.
+    <value>eduVPN client needs {0} authorization, and has opened an authorization web page in your browser.
 The client will continue after you complete the authorization...</value>
   </data>
   <data name="AuthorizationPopupRetry" xml:space="preserve">

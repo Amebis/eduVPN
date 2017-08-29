@@ -88,7 +88,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eduVPN client needs authorization to access {0}, and has opened an authorization web page in your browser.
+        ///   Looks up a localized string similar to eduVPN client needs {0} authorization, and has opened an authorization web page in your browser.
         ///The client will continue after you complete the authorization....
         /// </summary>
         public static string AuthorizationPopupMessage {
