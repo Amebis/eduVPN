@@ -26,7 +26,13 @@ namespace eduVPN.ViewModels
         public JSON.Collection<Models.ProfileInfo> ProfileList
         {
             get { return _profile_list; }
-            set { _profile_list = value; RaisePropertyChanged(); }
+            set {
+                _profile_list = value;
+                RaisePropertyChanged();
+
+                // The list of profiles changed, reset selected profile.
+                SelectedProfile = null;
+            }
         }
         private JSON.Collection<Models.ProfileInfo> _profile_list;
 
@@ -87,11 +93,9 @@ namespace eduVPN.ViewModels
             base.OnActivate();
 
             // Reset profile list. It should get reloaded by the inheriting page.
+            // This will also reset selected profile, to prevent automatic continuation
+            // to the status page.
             ProfileList = null;
-
-            // Reset selected profile, to prevent automatic continuation to
-            // status page.
-            SelectedProfile = null;
         }
 
         /// <summary>
