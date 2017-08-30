@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels
@@ -31,7 +32,7 @@ namespace eduVPN.ViewModels
                     {
                         _select_instance_source = new DelegateCommand<Models.InstanceSourceType?>(
                             // execute
-                            param =>
+                            async param =>
                             {
                                 Parent.ChangeTaskCount(+1);
                                 try
@@ -50,11 +51,17 @@ namespace eduVPN.ViewModels
                                     }
                                     else if(Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
                                     {
-                                        // Set authenticating instance.
-                                        Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
-                                        Parent.Configuration.AuthenticatingInstance.RequestAuthorization += Parent.Instance_RequestAuthorization;
+                                        // Create authenticating instance.
+                                        var authenticating_instance = new Models.InstanceInfo(instance_source_federated);
+                                        authenticating_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
-                                        // TODO: Add initial authorization request. (issue #15)
+                                        // Trigger initial authorization request.
+                                        var authorization_task = new Task(() => authenticating_instance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                        authorization_task.Start();
+                                        await authorization_task;
+
+                                        // Set authenticating instance.
+                                        Parent.Configuration.AuthenticatingInstance = authenticating_instance;
 
                                         // Reset connecting instance.
                                         Parent.Configuration.ConnectingInstance = null;

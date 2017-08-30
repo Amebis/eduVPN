@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels
@@ -47,15 +48,18 @@ namespace eduVPN.ViewModels
                     {
                         _authorize_instance = new DelegateCommand(
                             // execute
-                            () =>
+                            async () =>
                             {
                                 Parent.ChangeTaskCount(+1);
                                 try
                                 {
+                                    // Trigger initial authorization request.
+                                    var authorization_task = new Task(() => SelectedInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                    authorization_task.Start();
+                                    await authorization_task;
+
                                     // Save selected instance.
                                     Parent.Configuration.AuthenticatingInstance = SelectedInstance;
-
-                                    // TODO: Add initial authorization request. (issue #15)
 
                                     // Assume the same connecting instance.
                                     Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
