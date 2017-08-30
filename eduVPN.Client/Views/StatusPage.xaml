@@ -118,6 +118,7 @@
         <ListBox
             Grid.Row="2"
             Margin="5"
+            ScrollViewer.CanContentScroll="False"
             Style="{StaticResource eduVPNListStyle}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MessageListView}}"
