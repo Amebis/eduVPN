@@ -21,7 +21,7 @@
 
     <Page.Resources>
         <!-- eduVPN collection view sources -->
-        <CollectionViewSource x:Key="eduVPNMessageList" Source="{Binding Path=MessageList}">
+        <CollectionViewSource x:Key="MessageListView" Source="{Binding Path=MessageList}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Date" Direction="Descending"/>
             </CollectionViewSource.SortDescriptions>
@@ -120,7 +120,7 @@
             Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-            ItemsSource="{Binding Source={StaticResource eduVPNMessageList}}"
+            ItemsSource="{Binding Source={StaticResource MessageListView}}"
             Visibility="{Binding Path=MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
 
         <Grid

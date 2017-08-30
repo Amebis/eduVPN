@@ -57,7 +57,7 @@
             <view:StatusPage/>
         </DataTemplate>
 
-        <ContextMenu x:Key="eduVPNSystemTrayMenu">
+        <ContextMenu x:Key="SystemTrayMenu">
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuExit}"
                 Click="Exit_Click"/>

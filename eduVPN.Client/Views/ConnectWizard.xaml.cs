@@ -104,7 +104,7 @@ namespace eduVPN.Views
 
                     case System.Windows.Forms.MouseButtons.Right:
                         // Pop-up context menu.
-                        if (Resources["eduVPNSystemTrayMenu"] is ContextMenu menu)
+                        if (Resources["SystemTrayMenu"] is ContextMenu menu)
                             menu.IsOpen = true;
                         break;
                 }
