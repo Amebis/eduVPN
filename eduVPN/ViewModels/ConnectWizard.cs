@@ -394,6 +394,8 @@ namespace eduVPN.ViewModels
                                             }
                                             else
                                                 return;
+
+                                            cfg.Popularity = h.Popularity;
                                         }
                                         catch (Exception) { return; }
 
@@ -491,7 +493,7 @@ namespace eduVPN.ViewModels
                         if (found < 0)
                         {
                             // Upvote popularity.
-                            hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                            Configuration.Popularity = hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
                             found = i;
                         }
                         else
@@ -505,6 +507,7 @@ namespace eduVPN.ViewModels
                             }
                             else
                             {
+                                Configuration.Popularity = hist[i].Popularity;
                                 hist.RemoveAt(found);
                                 found = i;
                             }

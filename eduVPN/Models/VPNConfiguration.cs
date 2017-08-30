@@ -50,6 +50,11 @@ namespace eduVPN.Models
         }
         private Models.ProfileInfo _connecting_profile;
 
+        /// <summary>
+        /// Popularity factor in the [0.0, 1.0] range (default 0.5)
+        /// </summary>
+        public float Popularity { get; set; } = 0.5f;
+
         #endregion
     }
 }
