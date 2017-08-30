@@ -83,7 +83,7 @@
             </Grid.RowDefinitions>
 
             <Button
-                Margin="10"
+                Margin="5"
                 Style="{StaticResource eduVPNButtonStyle}"
                 Content="{x:Static res:Strings.AuthorizationPopupRetry}"
                 Command="{Binding Path=RetryAuthorization}"/>

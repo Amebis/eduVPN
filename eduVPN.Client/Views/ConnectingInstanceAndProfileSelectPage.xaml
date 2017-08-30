@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <ComboBox
-            Margin="10"
+            Margin="5"
             Style="{StaticResource eduVPNComboBoxStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
@@ -34,7 +34,7 @@
 
         <ListBox
             Grid.Row="1"
-            Margin="10,5"
+            Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"

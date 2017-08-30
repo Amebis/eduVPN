@@ -30,7 +30,7 @@
 
         <ComboBox
             x:Name="InstanceSourceURI"
-            Margin="10"
+            Margin="5"
             Text="{Binding Path=BaseURI}"
             TextSearch.TextPath=""
             ItemsSource="{Binding Source={x:Static prop:Settings.Default}, Path=CustomInstanceHistory}"
@@ -39,7 +39,7 @@
 
         <Button
             Grid.Row="1"
-            Margin="10"
+            Margin="5"
             Style="{StaticResource eduVPNButtonStyle}"
             Content="{x:Static res:Strings.ButtonNextTitle}"
             Command="{Binding Path=SelectCustomInstance}"

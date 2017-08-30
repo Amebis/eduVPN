@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <ListBox
-            Margin="10,5"
+            Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"

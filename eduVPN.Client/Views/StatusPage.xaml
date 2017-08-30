@@ -38,7 +38,7 @@
         </Grid.RowDefinitions>
 
         <StatusBar
-            Margin="10"
+            Margin="5"
             Style="{StaticResource eduVPNInlineInfoBarStyle}"
             Visibility="{Binding Path=UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
             <StatusBarItem>
@@ -53,7 +53,7 @@
 
         <Grid
             Grid.Row="1"
-            Margin="10">
+            Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -117,7 +117,7 @@
 
         <ListBox
             Grid.Row="2"
-            Margin="10,5"
+            Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource eduVPNMessageList}}"
@@ -125,7 +125,7 @@
 
         <Grid
             Grid.Row="3"
-            Margin="10">
+            Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -229,7 +229,7 @@
 
         <Button
             Grid.Row="4"
-            Margin="10"
+            Margin="5"
             Width="170"
             FontSize="16"
             VerticalAlignment="Center"

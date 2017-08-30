@@ -197,7 +197,7 @@
     -->
 
     <Style x:Key="eduVPNPageContentGridStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Margin" Value="-10"/>
+        <Setter Property="Margin" Value="-5"/>
     </Style>
 
 
