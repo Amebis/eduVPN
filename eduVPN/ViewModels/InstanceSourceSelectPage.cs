@@ -7,6 +7,8 @@
 
 using Prism.Commands;
 using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -41,13 +43,43 @@ namespace eduVPN.ViewModels
 
                                     if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
                                     {
+                                        // With local authentication, the authenticating instance is the connecting instance.
+                                        // Therefore, select "authenticating" instance.
                                         Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                     }
                                     else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo instance_source_distributed)
                                     {
-                                        // TODO: Check for any available token and skip authentication instance select page when any usable token found. (issue #11)
+                                        // Check if we have access token for any of the instances.
+                                        object authenticating_instance_lock = new object();
+                                        Models.InstanceInfo authenticating_instance = null;
+                                        await Task.WhenAll(Parent.InstanceSource.Select(instance =>
+                                        {
+                                            var authorization_task = new Task(
+                                                () =>
+                                                {
+                                                    if (instance.PeekAccessToken(Window.Abort.Token) != null)
+                                                        lock (authenticating_instance_lock)
+                                                            authenticating_instance = instance;
+                                                },
+                                                Window.Abort.Token,
+                                                TaskCreationOptions.LongRunning);
+                                            authorization_task.Start();
+                                            return authorization_task;
+                                        }));
 
-                                        Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                                        if (authenticating_instance != null)
+                                        {
+                                            // Save found instance.
+                                            Parent.Configuration.AuthenticatingInstance = authenticating_instance;
+
+                                            // Assume the same connecting instance.
+                                            Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+
+                                            // Go to (instance and) profile selection page.
+                                            Parent.CurrentPage = Parent.ProfileSelectPage;
+                                        }
+                                        else
+                                            Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                     }
                                     else if(Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
                                     {
