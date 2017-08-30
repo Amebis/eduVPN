@@ -104,7 +104,6 @@ namespace eduVPN.ViewModels
                             // execute
                             param =>
                             {
-                                Error = null;
                                 ChangeTaskCount(+1);
                                 try
                                 {
@@ -120,6 +119,8 @@ namespace eduVPN.ViewModels
 
                                     // Open authorization request in the browser.
                                     System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
+
+                                    Error = null;
                                 }
                                 catch (Exception ex) { Error = ex; }
                                 finally { ChangeTaskCount(-1); }
@@ -149,7 +150,6 @@ namespace eduVPN.ViewModels
                             // execute
                             async param =>
                             {
-                                Error = null;
                                 ChangeTaskCount(+1);
                                 try
                                 {
@@ -159,6 +159,8 @@ namespace eduVPN.ViewModels
                                         AuthenticatingInstance.GetEndpoints(Abort.Token).TokenEndpoint,
                                         null,
                                         Abort.Token);
+
+                                    Error = null;
                                 }
                                 catch (Exception ex) { Error = ex; }
                                 finally { ChangeTaskCount(-1); }
