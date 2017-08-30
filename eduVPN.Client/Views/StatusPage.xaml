@@ -40,7 +40,7 @@
         <StatusBar
             Margin="5"
             Style="{StaticResource eduVPNInlineInfoBarStyle}"
-            Visibility="{Binding Path=UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+            Visibility="{Binding Path=UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <StatusBarItem>
                 <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
             </StatusBarItem>
@@ -121,7 +121,7 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource eduVPNMessageList}}"
-            Visibility="{Binding Path=MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue=Visibility.Collapsed}"/>
+            Visibility="{Binding Path=MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
 
         <Grid
             Grid.Row="3"

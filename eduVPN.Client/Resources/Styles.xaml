@@ -337,7 +337,7 @@
                             Grid.Row="1"
                             Margin="30,10"
                             Style="{StaticResource eduVPNTextBlockStyle}"
-                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue=Visibility.Collapsed}"
+                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                             Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                         <ContentPresenter
@@ -422,7 +422,7 @@
                             Grid.Row="1"
                             Margin="30,10"
                             Style="{StaticResource eduVPNTextBlockStyle}"
-                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue=Visibility.Collapsed}"
+                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                             Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                         <ContentPresenter

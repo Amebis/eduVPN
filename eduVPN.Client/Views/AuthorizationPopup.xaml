@@ -54,7 +54,7 @@
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Style="{StaticResource eduVPNInfoBarStyle}"
-            Visibility="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue=Visibility.Collapsed}">
+            Visibility="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <StatusBarItem>
                 <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
             </StatusBarItem>
