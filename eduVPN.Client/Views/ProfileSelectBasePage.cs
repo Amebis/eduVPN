@@ -28,9 +28,9 @@ namespace eduVPN.Views
                 // User selected a profile.
                 var view_model = (ViewModels.ProfileSelectBasePage)DataContext;
                 if (view_model != null && // Sometimes this event gets called with null view model.
-                    view_model.ConnectSelectedProfile.CanExecute(null))
+                    view_model.ConnectSelectedProfile.CanExecute())
                 {
-                    view_model.ConnectSelectedProfile.Execute(null);
+                    view_model.ConnectSelectedProfile.Execute();
                 }
             }
         }

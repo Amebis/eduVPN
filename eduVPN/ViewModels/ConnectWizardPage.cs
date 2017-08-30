@@ -7,7 +7,6 @@
 
 using Prism.Commands;
 using Prism.Mvvm;
-using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
@@ -24,9 +23,9 @@ namespace eduVPN.ViewModels
         public ConnectWizard Parent { get; }
 
         /// <summary>
-        /// Navigate back
+        /// Navigate back command
         /// </summary>
-        public ICommand NavigateBack
+        public DelegateCommand NavigateBack
         {
             get
             {
@@ -39,7 +38,7 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _navigate_back;
+        private DelegateCommand _navigate_back;
         private object _navigate_back_lock = new object();
 
         #endregion

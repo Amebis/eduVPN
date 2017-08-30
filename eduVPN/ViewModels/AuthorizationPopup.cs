@@ -10,7 +10,6 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
@@ -45,7 +44,7 @@ namespace eduVPN.ViewModels
             set {
                 _authenticating_instance = value;
                 RaisePropertyChanged();
-                ((DelegateCommandBase)RetryAuthorization).RaiseCanExecuteChanged();
+                RetryAuthorization.RaiseCanExecuteChanged();
             }
         }
         private Models.InstanceInfo _authenticating_instance;
@@ -63,7 +62,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Request authorization command
         /// </summary>
-        public ICommand RequestAuthorization
+        public DelegateCommand<Models.InstanceInfo> RequestAuthorization
         {
             get
             {
@@ -88,13 +87,13 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _request_authorization;
+        private DelegateCommand<Models.InstanceInfo> _request_authorization;
         private object _request_authorization_lock = new object();
 
         /// <summary>
         /// Retry authorization command
         /// </summary>
-        public ICommand RetryAuthorization
+        public DelegateCommand<Models.InstanceInfo> RetryAuthorization
         {
             get
             {
@@ -133,13 +132,13 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _retry_authorization;
+        private DelegateCommand<Models.InstanceInfo> _retry_authorization;
         private object _retry_authorization_lock = new object();
 
         /// <summary>
         /// Authorize command
         /// </summary>
-        public ICommand Authorize
+        public DelegateCommand<string> Authorize
         {
             get
             {
@@ -186,7 +185,7 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _authorize;
+        private DelegateCommand<string> _authorize;
         private object _authorize_lock = new object();
 
         #endregion

@@ -8,7 +8,6 @@
 using Prism.Commands;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
@@ -30,7 +29,7 @@ namespace eduVPN.ViewModels
             {
                 _selected_instance = value;
                 RaisePropertyChanged();
-                ((DelegateCommandBase)AuthorizeSelectedInstance).RaiseCanExecuteChanged();
+                AuthorizeSelectedInstance.RaiseCanExecuteChanged();
             }
         }
         private Models.InstanceInfo _selected_instance;
@@ -38,7 +37,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authorize selected instance command
         /// </summary>
-        public ICommand AuthorizeSelectedInstance
+        public DelegateCommand AuthorizeSelectedInstance
         {
             get
             {
@@ -79,7 +78,7 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _authorize_instance;
+        private DelegateCommand _authorize_instance;
         private object _authorize_instance_lock = new object();
 
         #endregion

@@ -8,9 +8,7 @@
 using Prism.Commands;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
@@ -22,9 +20,9 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// Select instance source
+        /// Select instance source command
         /// </summary>
-        public ICommand SelectInstanceSource
+        public DelegateCommand<Models.InstanceSourceType?> SelectInstanceSource
         {
             get
             {
@@ -116,13 +114,13 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _select_instance_source;
+        private DelegateCommand<Models.InstanceSourceType?> _select_instance_source;
         private object _select_instance_source_lock = new object();
 
         /// <summary>
         /// Select custom instance source
         /// </summary>
-        public ICommand SelectCustomInstance
+        public DelegateCommand<Models.InstanceSourceInfo> SelectCustomInstance
         {
             get
             {
@@ -154,7 +152,7 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _select_custom_instance;
+        private DelegateCommand<Models.InstanceSourceInfo> _select_custom_instance;
         private object _select_custom_instance_lock = new object();
 
         #endregion

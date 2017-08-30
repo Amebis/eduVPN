@@ -5,13 +5,11 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Net;
 using System.Threading;
-using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace eduVPN.Models
@@ -136,9 +134,9 @@ namespace eduVPN.Models
         private ulong? _bytes_out;
 
         /// <summary>
-        /// Disconnect
+        /// Disconnect command
         /// </summary>
-        public ICommand Disconnect
+        public DelegateCommand Disconnect
         {
             get
             {
@@ -157,13 +155,13 @@ namespace eduVPN.Models
                 }
             }
         }
-        private ICommand _disconnect_command;
+        private DelegateCommand _disconnect_command;
         private object _disconnect_command_lock = new object();
 
         /// <summary>
-        /// Disconnect
+        /// Show log command
         /// </summary>
-        public ICommand ShowLog
+        public DelegateCommand ShowLog
         {
             get
             {
@@ -176,7 +174,7 @@ namespace eduVPN.Models
                 }
             }
         }
-        private ICommand _show_log_command;
+        private DelegateCommand _show_log_command;
         private object _show_log_command_lock = new object();
 
         #endregion

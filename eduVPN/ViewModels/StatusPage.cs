@@ -148,8 +148,8 @@ namespace eduVPN.ViewModels
             base.DoNavigateBack();
 
             // Terminate connection.
-            if (Parent.Session != null && Parent.Session.Disconnect.CanExecute(null))
-                Parent.Session.Disconnect.Execute(null);
+            if (Parent.Session != null && Parent.Session.Disconnect.CanExecute())
+                Parent.Session.Disconnect.Execute();
 
             Parent.CurrentPage = Parent.ProfileSelectPage;
         }

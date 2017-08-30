@@ -7,7 +7,6 @@
 
 using Prism.Commands;
 using System;
-using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
@@ -30,16 +29,16 @@ namespace eduVPN.ViewModels
                 {
                     _uri = value;
                     RaisePropertyChanged();
-                    ((DelegateCommandBase)SelectCustomInstance).RaiseCanExecuteChanged();
+                    SelectCustomInstance.RaiseCanExecuteChanged();
                 }
             }
         }
         private string _uri;
 
         /// <summary>
-        /// Authorize Other Instance Command
+        /// Authorize other instance command
         /// </summary>
-        public ICommand SelectCustomInstance
+        public DelegateCommand SelectCustomInstance
         {
             get
             {
@@ -80,7 +79,7 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ICommand _select_custom_instance;
+        private DelegateCommand _select_custom_instance;
         private object _select_custom_instance_lock = new object();
 
         #endregion

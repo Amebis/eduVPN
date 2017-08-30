@@ -6,7 +6,6 @@
 */
 
 using Prism.Commands;
-using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
@@ -44,7 +43,7 @@ namespace eduVPN.ViewModels
             {
                 _selected_profile = value;
                 RaisePropertyChanged();
-                ((DelegateCommandBase)ConnectSelectedProfile).RaiseCanExecuteChanged();
+                ConnectSelectedProfile.RaiseCanExecuteChanged();
             }
         }
         private Models.ProfileInfo _selected_profile;
@@ -52,21 +51,21 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Connect selected profile command
         /// </summary>
-        public ICommand ConnectSelectedProfile
+        public DelegateCommand ConnectSelectedProfile
         {
             get
             {
-                lock (_connect_profile_lock)
+                lock (_connect_selected_profile_lock)
                 {
-                    if (_connect_profile == null)
-                        _connect_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
+                    if (_connect_selected_profile == null)
+                        _connect_selected_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
 
-                    return _connect_profile;
+                    return _connect_selected_profile;
                 }
             }
         }
-        private ICommand _connect_profile;
-        private object _connect_profile_lock = new object();
+        private DelegateCommand _connect_selected_profile;
+        private object _connect_selected_profile_lock = new object();
 
         #endregion
 

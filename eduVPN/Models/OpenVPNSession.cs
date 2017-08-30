@@ -80,7 +80,7 @@ namespace eduVPN.Models
             // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
             new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal, (object sender, EventArgs e) => ((DelegateCommandBase)ShowLog).RaiseCanExecuteChanged(),
+                DispatcherPriority.Normal, (object sender, EventArgs e) => ShowLog.RaiseCanExecuteChanged(),
                 Dispatcher.CurrentDispatcher).Start();
         }
 
