@@ -38,7 +38,6 @@ namespace eduVPN.ViewModels
             // Launch profile list load in the background.
             new Thread(new ThreadStart(
                 () => {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = null));
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
                     try
                     {

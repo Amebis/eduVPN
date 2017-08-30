@@ -64,8 +64,6 @@ namespace eduVPN.ViewModels
         /// </summary>
         protected virtual void DoNavigateBack()
         {
-            // Reset error condition on every backward navigation.
-            Parent.Error = null;
         }
 
         /// <summary>
@@ -82,6 +80,8 @@ namespace eduVPN.ViewModels
         /// </summary>
         public virtual void OnActivate()
         {
+            // Reset error condition on every page activation.
+            Parent.Error = null;
         }
 
         #endregion

@@ -33,7 +33,6 @@ namespace eduVPN.ViewModels
                             // execute
                             param =>
                             {
-                                Parent.Error = null;
                                 Parent.ChangeTaskCount(+1);
                                 try
                                 {
@@ -96,7 +95,6 @@ namespace eduVPN.ViewModels
                             // execute
                             param =>
                             {
-                                Parent.Error = null;
                                 Parent.ChangeTaskCount(+1);
                                 try
                                 {

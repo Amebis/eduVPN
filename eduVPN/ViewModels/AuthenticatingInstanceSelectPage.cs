@@ -49,7 +49,6 @@ namespace eduVPN.ViewModels
                             // execute
                             () =>
                             {
-                                Parent.Error = null;
                                 Parent.ChangeTaskCount(+1);
                                 try
                                 {

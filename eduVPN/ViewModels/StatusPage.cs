@@ -70,7 +70,6 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = null));
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
                     try
                     {
