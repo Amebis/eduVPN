@@ -117,14 +117,14 @@ namespace eduVPN.ViewModels
         {
             base.DoNavigateBack();
 
-            if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo)
+            if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
+            {
+                if (Parent.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
+                    Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                else
+                    Parent.CurrentPage = Parent.CustomInstancePage;
+            } else
                 Parent.CurrentPage = Parent.InstanceSourceSelectPage;
-            else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo)
-                Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
-            else if (Parent.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
-                Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
-            else
-                Parent.CurrentPage = Parent.CustomInstancePage;
         }
 
         protected override bool CanNavigateBack()

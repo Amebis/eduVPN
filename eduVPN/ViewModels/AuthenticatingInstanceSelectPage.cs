@@ -56,19 +56,12 @@ namespace eduVPN.ViewModels
                                     // Save selected instance.
                                     Parent.Configuration.AuthenticatingInstance = SelectedInstance;
 
-                                    if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
-                                    {
-                                        // Connecting instance will be the same as authenticating.
-                                        Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
-                                    }
-                                    else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo)
-                                    {
-                                        // Connecting instance will not (necessarry) be the same as authenticating.
-                                        Parent.Configuration.ConnectingInstance = null;
-                                    }
-                                    else
-                                        throw new NotImplementedException();
+                                    // TODO: Add initial authorization request. (issue #15)
 
+                                    // Assume the same connecting instance.
+                                    Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+
+                                    // Go to (instance and) profile selection page.
                                     Parent.CurrentPage = Parent.ProfileSelectPage;
                                 }
                                 catch (Exception ex) { Parent.Error = ex; }
@@ -116,10 +109,7 @@ namespace eduVPN.ViewModels
         {
             base.DoNavigateBack();
 
-            if (Array.IndexOf(Parent.InstanceSources, Parent.InstanceSource) >= 0)
-                Parent.CurrentPage = Parent.InstanceSourceSelectPage;
-            else
-                Parent.CurrentPage = Parent.CustomInstancePage;
+            Parent.CurrentPage = Parent.InstanceSourceSelectPage;
         }
 
         protected override bool CanNavigateBack()

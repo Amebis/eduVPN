@@ -75,16 +75,8 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo)
-            {
-                // Federated instance source does not favour any particular instance to connect to.
-                SelectedInstance = null;
-            }
-            else
-            {
-                // By default, select the same connecting instance as authenticating instance.
-                SelectedInstance = Parent.Configuration.AuthenticatingInstance;
-            }
+            // Set connecting instance as initially selected instance.
+            SelectedInstance = Parent.Configuration.ConnectingInstance;
         }
 
         protected override void DoConnectSelectedProfile()

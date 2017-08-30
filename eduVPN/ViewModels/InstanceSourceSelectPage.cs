@@ -37,21 +37,31 @@ namespace eduVPN.ViewModels
                                 Parent.ChangeTaskCount(+1);
                                 try
                                 {
-                                    Parent.InstanceSource = Parent.InstanceSources[(int)param];
+                                    Parent.InstanceSourceType = param.Value;
 
-                                    if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                    if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
+                                    {
+                                        Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                                    }
+                                    else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo instance_source_distributed)
+                                    {
+                                        // TODO: Check for any available token and skip authentication instance select page when any usable token found. (issue #11)
+
+                                        Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                                    }
+                                    else if(Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
                                     {
                                         // Set authenticating instance.
                                         Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
                                         Parent.Configuration.AuthenticatingInstance.RequestAuthorization += Parent.Instance_RequestAuthorization;
+
+                                        // TODO: Add initial authorization request. (issue #15)
 
                                         // Reset connecting instance.
                                         Parent.Configuration.ConnectingInstance = null;
 
                                         Parent.CurrentPage = Parent.ProfileSelectPage;
                                     }
-                                    else
-                                        Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
                                 catch (Exception ex) { Parent.Error = ex; }
                                 finally { Parent.ChangeTaskCount(-1); }
@@ -91,7 +101,7 @@ namespace eduVPN.ViewModels
                                 try
                                 {
                                     // Assume the custom instance would otherwise be a part of "Institute Access" source.
-                                    Parent.InstanceSource = Parent.InstanceSources[(int)Models.InstanceSourceType.InstituteAccess];
+                                    Parent.InstanceSourceType = Models.InstanceSourceType.InstituteAccess;
 
                                     Parent.CurrentPage = Parent.CustomInstancePage;
                                 }

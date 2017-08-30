@@ -27,6 +27,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         private static readonly string[] _instance_directory_id = new string[]
         {
+            null,
             "SecureInternet",
             "InstituteAccess",
         };
@@ -50,6 +51,32 @@ namespace eduVPN.ViewModels
         private Models.InstanceSourceInfo[] _instance_sources;
 
         /// <summary>
+        /// Selected instance source
+        /// </summary>
+        public Models.InstanceSourceType InstanceSourceType
+        {
+            get { return _instance_source_type; }
+            set
+            {
+                if (value != _instance_source_type)
+                {
+                    _instance_source_type = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("InstanceSource");
+                }
+            }
+        }
+        private Models.InstanceSourceType _instance_source_type;
+
+        /// <summary>
+        /// Selected instance source
+        /// </summary>
+        public Models.InstanceSourceInfo InstanceSource
+        {
+            get { return _instance_sources[(int)_instance_source_type]; }
+        }
+
+        /// <summary>
         /// VPN configuration histories
         /// </summary>
         public ObservableCollection<Models.VPNConfiguration>[] ConfigurationHistories
@@ -57,16 +84,6 @@ namespace eduVPN.ViewModels
             get { return _configuration_histories; }
         }
         private ObservableCollection<Models.VPNConfiguration>[] _configuration_histories;
-
-        /// <summary>
-        /// Selected instance source
-        /// </summary>
-        public Models.InstanceSourceInfo InstanceSource
-        {
-            get { return _instance_source; }
-            set { _instance_source = value; RaisePropertyChanged(); }
-        }
-        private Models.InstanceSourceInfo _instance_source;
 
         /// <summary>
         /// VPN configuration
@@ -139,24 +156,36 @@ namespace eduVPN.ViewModels
         private InstanceSourceSelectPage _instance_source_page;
 
         /// <summary>
-        /// Instance selection page
+        /// Authenticating instance selection page
         /// </summary>
+        /// <remarks>Available only when authenticating and connecting instances can be different. I.e. <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSourceInfo</c> or <c>eduVPN.Models.DistributedInstanceSourceInfo</c>.</remarks>
         public AuthenticatingInstanceSelectPage AuthenticatingInstanceSelectPage
         {
             get
             {
-                if (InstanceSource is Models.DistributedInstanceSourceInfo)
+                if (InstanceSource is Models.LocalInstanceSourceInfo ||
+                    InstanceSource is Models.DistributedInstanceSourceInfo)
                 {
-                    if (_authenticating_country_select_page == null)
-                        _authenticating_country_select_page = new AuthenticatingCountrySelectPage(this);
-                    return _authenticating_country_select_page;
+                    // Only local and distrubuted authentication sources have this page.
+                    // However, this page varies between Secure Internet and Institute Access.
+                    switch (InstanceSourceType)
+                    {
+                        case Models.InstanceSourceType.SecureInternet:
+                            if (_authenticating_country_select_page == null)
+                                _authenticating_country_select_page = new AuthenticatingCountrySelectPage(this);
+                            return _authenticating_country_select_page;
+
+                        case Models.InstanceSourceType.InstituteAccess:
+                            if (_authenticating_institute_select_page == null)
+                                _authenticating_institute_select_page = new AuthenticatingInstituteSelectPage(this);
+                            return _authenticating_institute_select_page;
+
+                        default:
+                            throw new InvalidOperationException();
+                    }
                 }
                 else
-                {
-                    if (_authenticating_institute_select_page == null)
-                        _authenticating_institute_select_page = new AuthenticatingInstituteSelectPage(this);
-                    return _authenticating_institute_select_page;
-                }
+                    throw new InvalidOperationException();
             }
         }
         private AuthenticatingCountrySelectPage _authenticating_country_select_page;
@@ -179,22 +208,24 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// (Instance and) profile selection wizard page
         /// </summary>
+        /// <remarks>When <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSourceInfo</c> the profile selection page is returned; otherwise, the instance and profile selection page is returned.</remarks>
         public ProfileSelectBasePage ProfileSelectPage
         {
             get
             {
-                if (InstanceSource is Models.FederatedInstanceSourceInfo ||
-                    InstanceSource is Models.DistributedInstanceSourceInfo)
+                if (InstanceSource is Models.LocalInstanceSourceInfo)
                 {
-                    if (_connecting_instance_and_profile_select_page == null)
-                        _connecting_instance_and_profile_select_page = new ConnectingInstanceAndProfileSelectPage(this);
-                    return _connecting_instance_and_profile_select_page;
-                }
-                else
-                {
+                    // Profile selection (local authentication).
                     if (_profile_select_page == null)
                         _profile_select_page = new ProfileSelectPage(this);
                     return _profile_select_page;
+                }
+                else
+                {
+                    // Connecting instance and profile selection (distributed and federated authentication).
+                    if (_connecting_instance_and_profile_select_page == null)
+                        _connecting_instance_and_profile_select_page = new ConnectingInstanceAndProfileSelectPage(this);
+                    return _connecting_instance_and_profile_select_page;
                 }
             }
         }
@@ -243,12 +274,13 @@ namespace eduVPN.ViewModels
             // Show initializing wizard page.
             CurrentPage = InitializingPage;
 
-            _instance_sources = new Models.InstanceSourceInfo[_instance_directory_id.Length];
-            _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[_instance_directory_id.Length];
+            var source_type_length = (int)Models.InstanceSourceType._end;
+            _instance_sources = new Models.InstanceSourceInfo[source_type_length];
+            _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[source_type_length];
 
             // Spawn instance source loading threads.
-            var threads = new Thread[_instance_directory_id.Length];
-            for (var i = 0; i < _instance_directory_id.Length; i++)
+            var threads = new Thread[source_type_length];
+            for (var i = (int)Models.InstanceSourceType._start; i < source_type_length; i++)
             {
                 // Launch instance source load in the background.
                 threads[i] = new Thread(new ParameterizedThreadStart(
@@ -397,7 +429,8 @@ namespace eduVPN.ViewModels
                     {
                         // Wait for all threads.
                         foreach (var thread in threads)
-                            thread.Join();
+                            if (thread != null)
+                                thread.Join();
 
                         // Proceed to the "first" page.
                         Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = null));
@@ -418,77 +451,77 @@ namespace eduVPN.ViewModels
         {
             Session = new Models.OpenVPNSession(Configuration);
 
-            // Save session configuration to history.
-            var source_index = Array.IndexOf(_instance_sources, InstanceSource);
-            if (source_index >= 0)
+            // Prepare persistable session configuration.
+            Models.VPNConfigurationSettings el = null;
+            if (InstanceSource is Models.LocalInstanceSourceInfo)
             {
-                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"];
-                Models.VPNConfigurationSettings el = null;
-                if (_instance_sources[source_index] is Models.LocalInstanceSourceInfo)
+                // Local authenticating instance source
+                el = new Models.LocalVPNConfigurationSettings()
                 {
-                    // Local authenticating instance source
-                    el = new Models.LocalVPNConfigurationSettings()
-                    {
-                        Instance = Configuration.ConnectingInstance,
-                        Profile = Configuration.ConnectingProfile,
-                    };
-                }
-                else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo)
+                    Instance = Configuration.ConnectingInstance,
+                    Profile = Configuration.ConnectingProfile,
+                };
+            }
+            else if (InstanceSource is Models.DistributedInstanceSourceInfo)
+            {
+                // Distributed authenticating instance source
+                el = new Models.DistributedVPNConfigurationSettings()
                 {
-                    // Distributed authenticating instance source
-                    el = new Models.DistributedVPNConfigurationSettings()
-                    {
-                        AuthenticatingInstance = Configuration.AuthenticatingInstance.Base.AbsoluteUri,
-                        LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
-                    };
-                }
-                else if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo)
+                    AuthenticatingInstance = Configuration.AuthenticatingInstance.Base.AbsoluteUri,
+                    LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
+                };
+            }
+            else if (InstanceSource is Models.FederatedInstanceSourceInfo)
+            {
+                // Federated authenticating instance source.
+                el = new Models.FederatedVPNConfigurationSettings()
                 {
-                    // Federated authenticating instance source.
-                    el = new Models.FederatedVPNConfigurationSettings()
-                    {
-                        LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
-                    };
-                }
+                    LastInstance = Configuration.ConnectingInstance.Base.AbsoluteUri,
+                };
+            }
 
-                if (el != null)
+            if (el != null)
+            {
+                // Check for session configuration duplicates and update popularity.
+                int found = -1;
+                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[(int)InstanceSourceType] + "ConfigHistory"];
+                for (var i = hist.Count; i-- > 0;)
                 {
-                    // Check for duplicates and update popularity.
-                    int found = -1;
-                    for (var i = hist.Count; i-- > 0;)
+                    if (hist[i].Equals(el))
                     {
-                        if (hist[i].Equals(el))
+                        if (found < 0)
                         {
-                            if (found < 0)
-                            {
-                                // Upvote popularity.
-                                hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
-                                found = i;
-                            }
-                            else
-                            {
-                                // We found a match second time. This happened early in the Alpha stage when duplicate checking didn't work right.
-                                // Clean the list. The victim is less popular entry.
-                                if (hist[i].Popularity < hist[found].Popularity)
-                                {
-                                    hist.RemoveAt(i);
-                                    found--;
-                                }
-                                else
-                                {
-                                    hist.RemoveAt(found);
-                                    found = i;
-                                }
-                            }
+                            // Upvote popularity.
+                            hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                            found = i;
                         }
                         else
                         {
-                            // Downvote popularity.
-                            hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                            // We found a match second time. This happened early in the Alpha stage when duplicate checking didn't work right.
+                            // Clean the list. The victim is less popular entry.
+                            if (hist[i].Popularity < hist[found].Popularity)
+                            {
+                                hist.RemoveAt(i);
+                                found--;
+                            }
+                            else
+                            {
+                                hist.RemoveAt(found);
+                                found = i;
+                            }
                         }
                     }
-                    if (found < 0)
-                        hist.Add(el);
+                    else
+                    {
+                        // Downvote popularity.
+                        hist[i].Popularity = hist[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                    }
+                }
+
+                if (found < 0)
+                {
+                    // Add session configuration to history.
+                    hist.Add(el);
                 }
             }
 
