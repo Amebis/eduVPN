@@ -9,7 +9,6 @@ using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
 using System.Net;
-//using System.Threading;
 using System.Windows;
 
 namespace eduVPN.Client
@@ -64,11 +63,11 @@ namespace eduVPN.Client
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
             //// Set language preference.
-            //var culture = new CultureInfo("sl-SI");
-            //CultureInfo.DefaultThreadCurrentCulture = culture;
-            //CultureInfo.DefaultThreadCurrentUICulture = culture;
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //Thread.CurrentThread.CurrentUICulture = culture;
+            //var culture = new System.Globalization.CultureInfo("sl-SI");
+            //System.Globalization.CultureInfo.DefaultThreadCurrentCulture = culture;
+            //System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = culture;
+            //System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             base.OnStartup(e);
         }
