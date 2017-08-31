@@ -75,6 +75,8 @@ namespace eduVPN.Models
 
         public override bool Equals(object obj)
         {
+            if (this == obj)
+                return true;
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
@@ -82,13 +84,12 @@ namespace eduVPN.Models
             if (!ID.Equals(other.ID))
                 return false;
 
-            return base.Equals(obj);
+            return true;
         }
 
         public override int GetHashCode()
         {
             return
-                base.GetHashCode() ^
                 ID.GetHashCode();
         }
 
