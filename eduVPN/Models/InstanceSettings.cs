@@ -22,12 +22,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Instance specific client certificate hash
         /// </summary>
-        public byte[] ClientCertificateHash
-        {
-            get { return _cert_hash; }
-            set { _cert_hash = value; }
-        }
-        private byte[] _cert_hash;
+        public byte[] ClientCertificateHash { get; set; }
 
         #endregion
 
