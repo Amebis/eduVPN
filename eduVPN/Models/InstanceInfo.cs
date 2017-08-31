@@ -161,6 +161,25 @@ namespace eduVPN.Models
             return DisplayName;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = obj as InstanceInfo;
+            if (!Base.Equals(other.Base))
+                return false;
+
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                base.GetHashCode() ^
+                Base.GetHashCode();
+        }
+
         /// <summary>
         /// Gets and loads instance endpoints
         /// </summary>

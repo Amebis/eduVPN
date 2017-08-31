@@ -7,6 +7,7 @@
 
 using eduOAuth;
 using Prism.Mvvm;
+using System;
 
 namespace eduVPN.Models
 {
@@ -54,6 +55,33 @@ namespace eduVPN.Models
         /// Popularity factor in the [0.0, 1.0] range (default 0.5)
         /// </summary>
         public float Popularity { get; set; } = 0.5f;
+
+        #endregion
+
+        #region Methods
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = obj as VPNConfiguration;
+            if (!AuthenticatingInstance.Equals(other.AuthenticatingInstance) ||
+                !ConnectingInstance.Equals(other.ConnectingInstance) ||
+                !ConnectingProfile.Equals(other.ConnectingProfile))
+                return false;
+
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                base.GetHashCode() ^
+                AuthenticatingInstance.GetHashCode() ^
+                ConnectingInstance.GetHashCode() ^
+                ConnectingProfile.GetHashCode();
+        }
 
         #endregion
     }

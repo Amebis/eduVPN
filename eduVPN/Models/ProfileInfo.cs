@@ -73,6 +73,25 @@ namespace eduVPN.Models
             return DisplayName;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = obj as ProfileInfo;
+            if (!ID.Equals(other.ID))
+                return false;
+
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                base.GetHashCode() ^
+                ID.GetHashCode();
+        }
+
         /// <summary>
         /// Gets profile OpenVPN configuration
         /// </summary>
