@@ -42,9 +42,12 @@ namespace eduVPN.ViewModels
         {
             get { return _authenticating_instance; }
             set {
-                _authenticating_instance = value;
-                RaisePropertyChanged();
-                RetryAuthorization.RaiseCanExecuteChanged();
+                if (value != _authenticating_instance)
+                {
+                    _authenticating_instance = value;
+                    RaisePropertyChanged();
+                    RetryAuthorization.RaiseCanExecuteChanged();
+                }
             }
         }
         private Models.InstanceInfo _authenticating_instance;
@@ -55,7 +58,7 @@ namespace eduVPN.ViewModels
         public AccessToken AccessToken
         {
             get { return _access_token; }
-            set { _access_token = value; RaisePropertyChanged(); }
+            set { if (value != _access_token) { _access_token = value; RaisePropertyChanged(); } }
         }
         private AccessToken _access_token;
 

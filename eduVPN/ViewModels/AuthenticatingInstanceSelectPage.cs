@@ -27,9 +27,12 @@ namespace eduVPN.ViewModels
             get { return _selected_instance; }
             set
             {
-                _selected_instance = value;
-                RaisePropertyChanged();
-                AuthorizeSelectedInstance.RaiseCanExecuteChanged();
+                if (value != _selected_instance)
+                {
+                    _selected_instance = value;
+                    RaisePropertyChanged();
+                    AuthorizeSelectedInstance.RaiseCanExecuteChanged();
+                }
             }
         }
         private Models.InstanceInfo _selected_instance;

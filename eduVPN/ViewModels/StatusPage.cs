@@ -27,7 +27,7 @@ namespace eduVPN.ViewModels
         public Models.UserInfo UserInfo
         {
             get { return _user_info; }
-            set { _user_info = value; RaisePropertyChanged(); }
+            set { if (value != _user_info) { _user_info = value; RaisePropertyChanged(); } }
         }
         private Models.UserInfo _user_info;
 
@@ -37,7 +37,7 @@ namespace eduVPN.ViewModels
         public Models.MessageList MessageList
         {
             get { return _message_list; }
-            set { _message_list = value; RaisePropertyChanged(); }
+            set { if (value != _message_list) { _message_list = value; RaisePropertyChanged(); } }
         }
         private Models.MessageList _message_list;
 

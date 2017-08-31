@@ -23,11 +23,14 @@ namespace eduVPN.ViewModels
         {
             get { return _profile_list; }
             set {
-                _profile_list = value;
-                RaisePropertyChanged();
+                if (value != _profile_list)
+                {
+                    _profile_list = value;
+                    RaisePropertyChanged();
 
-                // The list of profiles changed, reset selected profile.
-                SelectedProfile = null;
+                    // The list of profiles changed, reset selected profile.
+                    SelectedProfile = null;
+                }
             }
         }
         private JSON.Collection<Models.ProfileInfo> _profile_list;
@@ -41,9 +44,12 @@ namespace eduVPN.ViewModels
             get { return _selected_profile; }
             set
             {
-                _selected_profile = value;
-                RaisePropertyChanged();
-                ConnectSelectedProfile.RaiseCanExecuteChanged();
+                if (value != _selected_profile)
+                {
+                    _selected_profile = value;
+                    RaisePropertyChanged();
+                    ConnectSelectedProfile.RaiseCanExecuteChanged();
+                }
             }
         }
         private Models.ProfileInfo _selected_profile;

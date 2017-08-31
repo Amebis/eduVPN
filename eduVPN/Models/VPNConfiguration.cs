@@ -25,7 +25,7 @@ namespace eduVPN.Models
         public Models.InstanceInfo AuthenticatingInstance
         {
             get { return _authenticating_instance; }
-            set { _authenticating_instance = value; RaisePropertyChanged(); }
+            set { if (value != _authenticating_instance) { _authenticating_instance = value; RaisePropertyChanged(); } }
         }
         private Models.InstanceInfo _authenticating_instance;
 
@@ -36,7 +36,7 @@ namespace eduVPN.Models
         public Models.InstanceInfo ConnectingInstance
         {
             get { return _connecting_instance; }
-            set { _connecting_instance = value; RaisePropertyChanged(); }
+            set { if (value != _connecting_instance) { _connecting_instance = value; RaisePropertyChanged(); } }
         }
         private Models.InstanceInfo _connecting_instance;
 
@@ -47,7 +47,7 @@ namespace eduVPN.Models
         public Models.ProfileInfo ConnectingProfile
         {
             get { return _connecting_profile; }
-            set { _connecting_profile = value; RaisePropertyChanged(); }
+            set { if (value != _connecting_profile) { _connecting_profile = value; RaisePropertyChanged(); } }
         }
         private Models.ProfileInfo _connecting_profile;
 

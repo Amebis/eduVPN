@@ -91,7 +91,7 @@ namespace eduVPN.ViewModels
         public Models.VPNConfiguration Configuration
         {
             get { return _configuration; }
-            set { _configuration = value; RaisePropertyChanged(); }
+            set { if (value != _configuration) { _configuration = value; RaisePropertyChanged(); } }
         }
         private Models.VPNConfiguration _configuration;
 
@@ -101,7 +101,7 @@ namespace eduVPN.ViewModels
         public Models.VPNSession Session
         {
             get { return _session; }
-            set { _session = value; RaisePropertyChanged(); }
+            set { if (value != _session) { _session = value; RaisePropertyChanged(); } }
         }
         private Models.VPNSession _session;
 
@@ -120,9 +120,12 @@ namespace eduVPN.ViewModels
             get { return _current_page; }
             set
             {
-                _current_page = value;
-                RaisePropertyChanged();
-                _current_page.OnActivate();
+                if (value != _current_page)
+                {
+                    _current_page = value;
+                    RaisePropertyChanged();
+                    _current_page.OnActivate();
+                }
             }
         }
         private ConnectWizardPage _current_page;

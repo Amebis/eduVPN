@@ -26,34 +26,37 @@ namespace eduVPN.ViewModels
         {
             get { return _selected_instance; }
             set {
-                _selected_instance = value;
-                RaisePropertyChanged();
-
-                ProfileList = new JSON.Collection<Models.ProfileInfo>();
-                if (_selected_instance != null)
+                if (value != _selected_instance)
                 {
-                    new Thread(new ThreadStart(
-                        () =>
-                        {
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
-                            try
-                            {
-                                // Get and load profile list.
-                                var profile_list = _selected_instance.GetProfileList(Parent.Configuration.AuthenticatingInstance, Window.Abort.Token);
+                    _selected_instance = value;
+                    RaisePropertyChanged();
 
-                                // Send the loaded profile list back to the UI thread.
-                                // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                    () =>
-                                    {
-                                        ProfileList = profile_list;
-                                        Parent.Error = null;
-                                    }));
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
-                            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-                        })).Start();
+                    ProfileList = new JSON.Collection<Models.ProfileInfo>();
+                    if (_selected_instance != null)
+                    {
+                        new Thread(new ThreadStart(
+                            () =>
+                            {
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                                try
+                                {
+                                    // Get and load profile list.
+                                    var profile_list = _selected_instance.GetProfileList(Parent.Configuration.AuthenticatingInstance, Window.Abort.Token);
+
+                                    // Send the loaded profile list back to the UI thread.
+                                    // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                        () =>
+                                        {
+                                            ProfileList = profile_list;
+                                            Parent.Error = null;
+                                        }));
+                                }
+                                catch (OperationCanceledException) { }
+                                catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
+                                finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                            })).Start();
+                    }
                 }
             }
         }
@@ -80,14 +83,16 @@ namespace eduVPN.ViewModels
         {
             base.OnActivate();
 
-            // Set connecting instance as initially selected instance.
+            // Initialize selected instance.
             SelectedInstance = Parent.Configuration.ConnectingInstance;
         }
 
         protected override void DoConnectSelectedProfile()
         {
+            // Save selected instance.
             Parent.Configuration.ConnectingInstance = SelectedInstance;
 
+            // Let base class do the rest.
             base.DoConnectSelectedProfile();
         }
 
