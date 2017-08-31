@@ -132,7 +132,9 @@
             Style="{StaticResource eduVPNInfoBarStyle}"
             Visibility="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <StatusBarItem>
-                <ContentControl Content="{StaticResource eduVPNExclamationIcon}"/>
+                <ContentControl
+                    IsTabStop="False"
+                    Content="{StaticResource eduVPNExclamationIcon}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <TextBlock
