@@ -54,7 +54,12 @@ namespace eduVPN.Models
         /// <summary>
         /// Popularity factor in the [0.0, 1.0] range (default 0.5)
         /// </summary>
-        public float Popularity { get; set; } = 0.5f;
+        public float Popularity
+        {
+            get { return _popularity; }
+            set { if (value != _popularity) { _popularity = value; RaisePropertyChanged(); } }
+        }
+        private float _popularity = 0.5f;
 
         #endregion
 
