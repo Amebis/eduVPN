@@ -63,6 +63,9 @@ namespace eduVPN.ViewModels
                                     // Save selected instance.
                                     Parent.Configuration.AuthenticatingInstance = SelectedInstance;
 
+                                    // Reset selected instance, to prevent repetitive triggering.
+                                    SelectedInstance = null;
+
                                     // Assume the same connecting instance.
                                     Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
 
@@ -100,15 +103,6 @@ namespace eduVPN.ViewModels
         #endregion
 
         #region Methods
-
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            // Reset selected instance, to prevent automatic continuation to
-            // CustomInstance/Authorization page.
-            SelectedInstance = null;
-        }
 
         protected override void DoNavigateBack()
         {

@@ -90,22 +90,18 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            // Reset profile list. It should get reloaded by the inheriting page.
-            // This will also reset selected profile, to prevent automatic continuation
-            // to the status page.
-            ProfileList = null;
-        }
-
         /// <summary>
         /// Called when ConnectSelectedProfile command is invoked.
         /// </summary>
         protected virtual void DoConnectSelectedProfile()
         {
+            // Save selected profile.
             Parent.Configuration.ConnectingProfile = SelectedProfile;
+
+            // Reset selected profile, to prevent repetitive triggering.
+            SelectedProfile = null;
+
+            // Go to status page.
             Parent.CurrentPage = Parent.StatusPage;
         }
 
