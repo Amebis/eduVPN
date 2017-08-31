@@ -17,6 +17,25 @@ namespace eduVPN.Models
     /// </summary>
     public class VPNConfigurationSettingsList : List<VPNConfigurationSettings>, IXmlSerializable
     {
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a VPN configuration list
+        /// </summary>
+        public VPNConfigurationSettingsList() :
+            base()
+        { }
+
+        /// <summary>
+        /// Constructs a VPN configuration list that is empty and has the specified initial capacity
+        /// </summary>
+        /// <param name="capacity">The number of elements that the new list can initially store.</param>
+        public VPNConfigurationSettingsList(int capacity) :
+            base(capacity)
+        { }
+
+        #endregion
+
         #region IXmlSerializable Support
 
         public XmlSchema GetSchema()
