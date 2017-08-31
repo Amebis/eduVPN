@@ -250,4 +250,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Varni splet</value>
   </data>
+  <data name="RecentProfileSelectPageAddProfile" xml:space="preserve">
+    <value>Dodaj drug profil</value>
+  </data>
 </root>

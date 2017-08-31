@@ -278,6 +278,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add another profile.
+        /// </summary>
+        public static string RecentProfileSelectPageAddProfile {
+            get {
+                return ResourceManager.GetString("RecentProfileSelectPageAddProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect to the internet securely, for example when using public WiFi..
         /// </summary>
         public static string SecureInternetNote {

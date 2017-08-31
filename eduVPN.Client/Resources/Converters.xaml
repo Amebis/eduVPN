@@ -11,6 +11,8 @@
 
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
+    <conv:HistorySourceVisibilityConverter x:Key="HistorySourceVisibilityConverter"/>
+    <conv:HistorySourceInverseVisibilityConverter x:Key="HistorySourceInverseVisibilityConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
     <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>

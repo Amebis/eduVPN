@@ -118,9 +118,9 @@ namespace eduVPN.ViewModels
         {
             base.DoNavigateBack();
 
-            if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
+            if (Parent.Configuration.InstanceSource is Models.LocalInstanceSourceInfo)
             {
-                if (Parent.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
+                if (Parent.Configuration.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
                     Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                 else
                     Parent.CurrentPage = Parent.CustomInstancePage;

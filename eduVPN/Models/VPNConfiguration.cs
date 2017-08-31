@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduOAuth;
 using Prism.Mvvm;
 using System;
 
@@ -17,6 +16,26 @@ namespace eduVPN.Models
     public class VPNConfiguration : BindableBase
     {
         #region Properties
+
+        /// <summary>
+        /// Selected instance source type
+        /// </summary>
+        public Models.InstanceSourceType InstanceSourceType
+        {
+            get { return _instance_source_type; }
+            set { if (value != _instance_source_type) { _instance_source_type = value; RaisePropertyChanged(); } }
+        }
+        private Models.InstanceSourceType _instance_source_type;
+
+        /// <summary>
+        /// Selected instance source
+        /// </summary>
+        public Models.InstanceSourceInfo InstanceSource
+        {
+            get { return _instance_source; }
+            set { if (value != _instance_source) { _instance_source = value; RaisePropertyChanged(); } }
+        }
+        private Models.InstanceSourceInfo _instance_source;
 
         /// <summary>
         /// Authenticating eduVPN instance
@@ -73,7 +92,8 @@ namespace eduVPN.Models
                 return false;
 
             var other = obj as VPNConfiguration;
-            if (!AuthenticatingInstance.Equals(other.AuthenticatingInstance) ||
+            if (!InstanceSourceType.Equals(other.InstanceSourceType) ||
+                !AuthenticatingInstance.Equals(other.AuthenticatingInstance) ||
                 !ConnectingInstance.Equals(other.ConnectingInstance) ||
                 !ConnectingProfile.Equals(other.ConnectingProfile))
                 return false;
@@ -84,9 +104,45 @@ namespace eduVPN.Models
         public override int GetHashCode()
         {
             return
+                InstanceSourceType.GetHashCode() ^
                 AuthenticatingInstance.GetHashCode() ^
                 ConnectingInstance.GetHashCode() ^
                 ConnectingProfile.GetHashCode();
+        }
+
+        public VPNConfigurationSettings ToSettings()
+        {
+            if (InstanceSource is Models.LocalInstanceSourceInfo)
+            {
+                // Local authenticating instance source
+                return new Models.LocalVPNConfigurationSettings()
+                {
+                    Instance = ConnectingInstance,
+                    Profile = ConnectingProfile,
+                    Popularity = Popularity,
+                };
+            }
+            else if (InstanceSource is Models.DistributedInstanceSourceInfo)
+            {
+                // Distributed authenticating instance source
+                return new Models.DistributedVPNConfigurationSettings()
+                {
+                    AuthenticatingInstance = AuthenticatingInstance.Base.AbsoluteUri,
+                    LastInstance = ConnectingInstance.Base.AbsoluteUri,
+                    Popularity = Popularity,
+                };
+            }
+            else if (InstanceSource is Models.FederatedInstanceSourceInfo)
+            {
+                // Federated authenticating instance source.
+                return new Models.FederatedVPNConfigurationSettings()
+                {
+                    LastInstance = ConnectingInstance.Base.AbsoluteUri,
+                    Popularity = Popularity,
+                };
+            }
+            else
+                throw new InvalidOperationException();
         }
 
         #endregion

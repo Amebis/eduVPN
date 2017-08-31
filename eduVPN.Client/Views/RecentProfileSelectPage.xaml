@@ -1,0 +1,144 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<view:ProfileSelectBasePage
+    x:Class="eduVPN.Views.RecentProfileSelectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
+    xmlns:viewModel="clr-namespace:eduVPN.ViewModels;assembly=eduVPN"
+    xmlns:view="clr-namespace:eduVPN.Views"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Title="{x:Static res:Strings.ProfileSelectPageTitle}"
+    Style="{StaticResource eduVPNConnectWizardPageWithTitle}">
+
+    <view:ProfileSelectBasePage.Resources>
+        <!-- eduVPN collection view sources -->
+        <CollectionViewSource x:Key="ConfigurationListView" Source="{Binding Path=Parent.ConfigurationHistories[2]}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Popularity" Direction="Descending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        
+        <!-- Page view model to view mapping -->
+        <DataTemplate DataType="{x:Type viewModel:LocalConfigurationHistoryPanel}">
+            <view:LocalConfigurationHistoryPanel/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPanel}">
+            <view:ConnectingInstanceAndProfileSelectPanel/>
+        </DataTemplate>
+    </view:ProfileSelectBasePage.Resources>
+
+    <Grid
+        VerticalAlignment="Top"
+        Style="{StaticResource eduVPNPageContentGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid
+            Visibility="{Binding Path=Parent.ConfigurationHistories, Converter={StaticResource HistorySourceVisibilityConverter}, ConverterParameter={x:Static model:InstanceSourceType.SecureInternet}, FallbackValue={x:Static Visibility.Collapsed}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid
+                Margin="0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Margin="5,2"
+                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Source="pack://application:,,,/Resources/SecureInternetBlue.png"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="5,2"
+                    Style="{StaticResource eduVPNSectionTitleStyle}"
+                    Text="{x:Static res:Strings.SecureInternetTitle}"/>
+
+                <Separator
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Margin="5,2"
+                    Style="{StaticResource eduVPNSeparatorStyle}"/>
+            </Grid>
+
+            <ContentControl
+                Grid.Row="1"
+                Margin="5"
+                IsTabStop="False"
+                Content="{Binding Path=ConfigurationHistoryPanels[1]}"/>
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            Visibility="{Binding Path=Parent.ConfigurationHistories, Converter={StaticResource HistorySourceVisibilityConverter}, ConverterParameter={x:Static model:InstanceSourceType.InstituteAccess}, FallbackValue={x:Static Visibility.Collapsed}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <Grid
+                Margin="0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Margin="5,2"
+                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Source="pack://application:,,,/Resources/InstituteAccessBlue.png"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="5,2"
+                    Style="{StaticResource eduVPNSectionTitleStyle}"
+                    Text="{x:Static res:Strings.InstituteAccessTitle}"/>
+
+                <Separator
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Margin="5,2"
+                    Style="{StaticResource eduVPNSeparatorStyle}"/>
+            </Grid>
+
+            <ContentControl
+                Grid.Row="1"
+                Margin="5"
+                IsTabStop="False"
+                Content="{Binding Path=ConfigurationHistoryPanels[2]}"/>
+        </Grid>
+
+        <Button
+            Grid.Row="3"
+            Margin="5"
+            Style="{StaticResource eduVPNLinkButtonStyle}"
+            Content="{x:Static res:Strings.RecentProfileSelectPageAddProfile}"
+            Command="{Binding Path=AddAnotherProfile}"/>
+    </Grid>
+</view:ProfileSelectBasePage>

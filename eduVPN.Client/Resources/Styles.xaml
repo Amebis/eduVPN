@@ -126,9 +126,12 @@
         eduVPN Separator Styles
     -->
 
-    <Style x:Key="eduVPNListBoxItemSeparatorStyle" TargetType="{x:Type Separator}">
+    <Style x:Key="eduVPNSeparatorStyle" TargetType="{x:Type Separator}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Background" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+    </Style>
+
+    <Style x:Key="eduVPNListBoxItemSeparatorStyle" TargetType="{x:Type Separator}" BasedOn="{StaticResource eduVPNSeparatorStyle}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -526,6 +529,15 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+    </Style>
+
+
+    <!--
+        Sections
+    -->
+
+    <Style x:Key="eduVPNSectionTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
     </Style>
 
 </ResourceDictionary>

@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
+    <Compile Include="Converters\HistorySourceInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\HistorySourceVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
     <Compile Include="Converters\StringVisibilityConverter.cs" />
@@ -51,6 +53,15 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
+    <Compile Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
+      <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LocalConfigurationHistoryPanel.xaml.cs">
+      <DependentUpon>LocalConfigurationHistoryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecentProfileSelectPage.xaml.cs">
+      <DependentUpon>RecentProfileSelectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectWizardPage.cs" />
     <Compile Include="Views\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
@@ -106,6 +117,18 @@
     <Page Include="Resources\UserDisabledIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LocalConfigurationHistoryPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecentProfileSelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\InitializingPage.xaml">
       <SubType>Designer</SubType>
@@ -221,7 +244,9 @@
     <Resource Include="Resources\eduVPN.ico" />
     <Resource Include="Resources\eduVPNConnected.ico" />
     <Resource Include="Resources\InstituteAccess.png" />
+    <Resource Include="Resources\InstituteAccessBlue.png" />
     <Resource Include="Resources\SecureInternet.png" />
+    <Resource Include="Resources\SecureInternetBlue.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnected.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconError.png" />

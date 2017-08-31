@@ -250,4 +250,7 @@ The client will continue after you complete the authorization...</value>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
+  <data name="RecentProfileSelectPageAddProfile" xml:space="preserve">
+    <value>Add another profile</value>
+  </data>
 </root>

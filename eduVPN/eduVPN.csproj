@@ -69,7 +69,9 @@
     <Compile Include="ViewModels\AuthenticatingCountrySelectPage.cs" />
     <Compile Include="ViewModels\AuthenticatingInstanceSelectPage.cs" />
     <Compile Include="ViewModels\AuthenticatingInstituteSelectPage.cs" />
+    <Compile Include="ViewModels\ConfigurationHistoryPanel.cs" />
     <Compile Include="ViewModels\ConnectingInstanceAndProfileSelectPage.cs" />
+    <Compile Include="ViewModels\ConnectingInstanceAndProfileSelectPanel.cs" />
     <Compile Include="ViewModels\CustomInstancePage.cs" />
     <Compile Include="ViewModels\InitializingPage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="Models\InstanceInfo.cs" />
     <Compile Include="ViewModels\InstanceSourceSelectPage.cs" />
+    <Compile Include="ViewModels\LocalConfigurationHistoryPanel.cs" />
     <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
     <Compile Include="JSON\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +95,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ProfileSelectPage.cs" />
+    <Compile Include="ViewModels\RecentProfileSelectPage.cs" />
     <Compile Include="ViewModels\RequestInstanceAuthorizationEventArgs.cs" />
     <Compile Include="ViewModels\StatusPage.cs" />
     <Compile Include="ViewModels\Window.cs" />

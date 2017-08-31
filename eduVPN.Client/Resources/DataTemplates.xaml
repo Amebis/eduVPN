@@ -81,6 +81,67 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="eduVPNConfigurationSelectionItemTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="43"/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                Grid.ColumnSpan="3"
+                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <!-- TODO: Provide alternative Source when Logo==null. -->
+            <Image
+                Grid.Column="0"
+                Grid.Row="1"
+                Source="{Binding Path=ConnectingInstance.Logo}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,5,5,5"
+                RenderOptions.BitmapScalingMode="Fant"/>
+
+            <Grid
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="5,5,-55,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Margin="0,0,0,-1"
+                    Text="{Binding Path=ConnectingProfile.DisplayName}"
+                    Style="{StaticResource eduVPNTextBlockStyle}"/>
+
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="0,-1,0,0"
+                    Text="{Binding Path=ConnectingInstance.DisplayName}"
+                    FontSize="10"
+                    Style="{StaticResource eduVPNTextBlockStyle}"/>
+            </Grid>
+
+            <ContentControl
+                Grid.Column="1"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="5,5,0,5"
+                Content="{StaticResource eduVPNTwoFactorAuthenticationIcon}"
+                Visibility="{Binding Path=ConnectingProfile.IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
+                AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"/>
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type model:MessageNotification}">
         <Grid>
             <Grid.RowDefinitions>

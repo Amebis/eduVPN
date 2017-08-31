@@ -151,7 +151,7 @@ namespace eduVPN.ViewModels
             if (Parent.Session != null && Parent.Session.Disconnect.CanExecute())
                 Parent.Session.Disconnect.Execute();
 
-            Parent.CurrentPage = Parent.ProfileSelectPage;
+            Parent.CurrentPage = Parent.RecentProfileSelectPage;
         }
 
         protected override bool CanNavigateBack()
