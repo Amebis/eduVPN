@@ -31,9 +31,6 @@ namespace eduVPN.Views
                     view_model.ConnectSelectedProfile.CanExecute())
                 {
                     view_model.ConnectSelectedProfile.Execute();
-
-                    // Reset selected profile, to prevent repetitive triggering.
-                    view_model.SelectedProfile = null;
                 }
             }
         }

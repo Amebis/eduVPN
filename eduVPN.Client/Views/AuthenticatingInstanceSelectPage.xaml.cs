@@ -43,9 +43,6 @@ namespace eduVPN.Views
                     view_model.AuthorizeSelectedInstance.CanExecute())
                 {
                     view_model.AuthorizeSelectedInstance.Execute();
-
-                    // Reset selected instance, to prevent repetitive triggering.
-                    view_model.SelectedInstance = null;
                 }
             }
         }
