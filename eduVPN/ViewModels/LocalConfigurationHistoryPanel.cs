@@ -6,6 +6,7 @@
 */
 
 using Prism.Commands;
+using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
 {
@@ -47,8 +48,13 @@ namespace eduVPN.ViewModels
                     if (_connect_selected_configuration == null)
                         _connect_selected_configuration = new DelegateCommand(
                             // execute
-                            () =>
+                            async () =>
                             {
+                                // Trigger initial authorization request.
+                                var authorization_task = new Task(() => SelectedConfiguration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                authorization_task.Start();
+                                await authorization_task;
+
                                 // Set selected configuration.
                                 Parent.Configuration = SelectedConfiguration;
 
