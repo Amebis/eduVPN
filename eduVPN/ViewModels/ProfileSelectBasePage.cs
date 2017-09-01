@@ -98,9 +98,6 @@ namespace eduVPN.ViewModels
             // Save selected profile.
             Parent.Configuration.ConnectingProfile = SelectedProfile;
 
-            // Reset selected profile, to prevent repetitive triggering.
-            SelectedProfile = null;
-
             // Go to status page.
             Parent.CurrentPage = Parent.StatusPage;
         }

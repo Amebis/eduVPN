@@ -40,6 +40,9 @@ namespace eduVPN.Views
                     view_model.ConnectSelectedConfiguration.CanExecute())
                 {
                     view_model.ConnectSelectedConfiguration.Execute();
+
+                    // Reset selected configuration, to prevent repetitive triggering.
+                    view_model.SelectedConfiguration = null;
                 }
             }
         }

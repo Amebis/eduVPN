@@ -123,9 +123,6 @@ namespace eduVPN.ViewModels
                                 // Save connecting profile
                                 ConfigurationHistory[0].ConnectingProfile = SelectedProfile;
 
-                                // Reset selected profile, to prevent repetitive triggering.
-                                SelectedProfile = null;
-
                                 // Set configuration.
                                 Parent.Configuration = ConfigurationHistory[0];
 

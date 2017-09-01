@@ -63,9 +63,6 @@ namespace eduVPN.ViewModels
                                     // Save selected instance.
                                     Parent.Configuration.AuthenticatingInstance = SelectedInstance;
 
-                                    // Reset selected instance, to prevent repetitive triggering.
-                                    SelectedInstance = null;
-
                                     // Assume the same connecting instance.
                                     Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
 

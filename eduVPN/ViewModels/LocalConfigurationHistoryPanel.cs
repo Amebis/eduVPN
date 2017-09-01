@@ -52,9 +52,6 @@ namespace eduVPN.ViewModels
                                 // Set selected configuration.
                                 Parent.Configuration = SelectedConfiguration;
 
-                                // Reset selected configuration, to prevent repetitive triggering.
-                                SelectedConfiguration = null;
-
                                 // Go to status page.
                                 Parent.CurrentPage = Parent.StatusPage;
                             },
