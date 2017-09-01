@@ -56,6 +56,7 @@
     <Compile Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImageWithFallback.cs" />
     <Compile Include="Views\LocalConfigurationHistoryPanel.xaml.cs">
       <DependentUpon>LocalConfigurationHistoryPanel.xaml</DependentUpon>
     </Compile>

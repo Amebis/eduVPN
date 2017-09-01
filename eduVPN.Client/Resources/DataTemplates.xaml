@@ -9,6 +9,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
+    xmlns:view="clr-namespace:eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Client.Resources">
 
     <DataTemplate x:Key="eduVPNInstanceSelectionItemTemplate">
@@ -27,10 +28,10 @@
                 Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
-            <Image
+            <view:ImageWithFallback
                 Grid.Column="0"
                 Grid.Row="1"
-                Source="{Binding Path=Logo}"
+                UriSource="{Binding Path=Logo}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,5,5,5"
@@ -98,10 +99,10 @@
                 Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
-            <Image
+            <view:ImageWithFallback
                 Grid.Column="0"
                 Grid.Row="1"
-                Source="{Binding Path=ConnectingInstance.Logo}"
+                UriSource="{Binding Path=ConnectingInstance.Logo}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,5,5,5"

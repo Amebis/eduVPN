@@ -93,14 +93,14 @@
                 RenderOptions.BitmapScalingMode="Fant"/>
 
             <!-- TODO: Provide alternative Source when Logo==null. -->
-            <Image
+            <view:ImageWithFallback
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="5,2,5,0"
                 MaxHeight="22"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Source="{Binding Path=Parent.Configuration.ConnectingInstance.Logo}"
+                UriSource="{Binding Path=Parent.Configuration.ConnectingInstance.Logo}"
                 ToolTip="{Binding Path=Parent.Configuration.ConnectingInstance.DisplayName}"
                 AutomationProperties.Name="{Binding Path=Parent.Configuration.ConnectingInstance.DisplayName}"
                 RenderOptions.BitmapScalingMode="Fant"/>
