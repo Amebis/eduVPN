@@ -44,48 +44,44 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_authorize_instance_lock)
+                if (_authorize_instance == null)
                 {
-                    if (_authorize_instance == null)
-                    {
-                        _authorize_instance = new DelegateCommand(
-                            // execute
-                            async () =>
+                    _authorize_instance = new DelegateCommand(
+                        // execute
+                        async () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try
                             {
-                                Parent.ChangeTaskCount(+1);
-                                try
-                                {
-                                    // Trigger initial authorization request.
-                                    var authorization_task = new Task(() => SelectedInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
-                                    authorization_task.Start();
-                                    await authorization_task;
+                                // Trigger initial authorization request.
+                                var authorization_task = new Task(() => SelectedInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                authorization_task.Start();
+                                await authorization_task;
 
-                                    // Save selected instance.
-                                    Parent.Configuration.AuthenticatingInstance = SelectedInstance;
+                                // Save selected instance.
+                                Parent.Configuration.AuthenticatingInstance = SelectedInstance;
 
-                                    // Reset selected instance, to prevent repetitive triggering.
-                                    SelectedInstance = null;
+                                // Reset selected instance, to prevent repetitive triggering.
+                                SelectedInstance = null;
 
-                                    // Assume the same connecting instance.
-                                    Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+                                // Assume the same connecting instance.
+                                Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
 
-                                    // Go to (instance and) profile selection page.
-                                    Parent.CurrentPage = Parent.ProfileSelectPage;
-                                }
-                                catch (Exception ex) { Parent.Error = ex; }
-                                finally { Parent.ChangeTaskCount(-1); }
-                            },
+                                // Go to (instance and) profile selection page.
+                                Parent.CurrentPage = Parent.ProfileSelectPage;
+                            }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
 
-                            // canExecute
-                            () => SelectedInstance != null);
-                    }
-
-                    return _authorize_instance;
+                        // canExecute
+                        () => SelectedInstance != null);
                 }
+
+                return _authorize_instance;
             }
         }
         private DelegateCommand _authorize_instance;
-        private object _authorize_instance_lock = new object();
 
         #endregion
 

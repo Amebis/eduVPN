@@ -32,17 +32,13 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_add_another_profile_lock)
-                {
-                    if (_add_another_profile == null)
-                        _add_another_profile = new DelegateCommand(() => Parent.CurrentPage = Parent.InstanceSourceSelectPage);
+                if (_add_another_profile == null)
+                    _add_another_profile = new DelegateCommand(() => Parent.CurrentPage = Parent.InstanceSourceSelectPage);
 
-                    return _add_another_profile;
-                }
+                return _add_another_profile;
             }
         }
         private DelegateCommand _add_another_profile;
-        private object _add_another_profile_lock = new object();
 
         #endregion
 

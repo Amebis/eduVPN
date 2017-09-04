@@ -42,45 +42,41 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_select_custom_instance_lock)
+                if (_select_custom_instance == null)
                 {
-                    if (_select_custom_instance == null)
-                    {
-                        _select_custom_instance = new DelegateCommand(
-                            // execute
-                            () =>
+                    _select_custom_instance = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try
                             {
-                                Parent.ChangeTaskCount(+1);
-                                try
-                                {
-                                    // Set authentication instance.
-                                    Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(new Uri(BaseURI));
-                                    Parent.Configuration.AuthenticatingInstance.RequestAuthorization += Parent.Instance_RequestAuthorization;
+                                // Set authentication instance.
+                                Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(new Uri(BaseURI));
+                                Parent.Configuration.AuthenticatingInstance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
-                                    // Connecting instance will be the same as authenticating.
-                                    Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+                                // Connecting instance will be the same as authenticating.
+                                Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
 
-                                    Parent.CurrentPage = Parent.ProfileSelectPage;
-                                }
-                                catch (Exception ex) { Parent.Error = ex; }
-                                finally { Parent.ChangeTaskCount(-1); }
-                            },
+                                Parent.CurrentPage = Parent.ProfileSelectPage;
+                            }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
 
-                            // canExecute
-                            () =>
-                            {
-                                try { new Uri(BaseURI); }
-                                catch (Exception) { return false; }
-                                return true;
-                            });
-                    }
-
-                    return _select_custom_instance;
+                        // canExecute
+                        () =>
+                        {
+                            try { new Uri(BaseURI); }
+                            catch (Exception) { return false; }
+                            return true;
+                        });
                 }
+
+                return _select_custom_instance;
             }
         }
         private DelegateCommand _select_custom_instance;
-        private object _select_custom_instance_lock = new object();
 
         #endregion
 

@@ -29,17 +29,13 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_navigate_back_lock)
-                {
-                    if (_navigate_back == null)
-                        _navigate_back = new DelegateCommand(DoNavigateBack, CanNavigateBack);
+                if (_navigate_back == null)
+                    _navigate_back = new DelegateCommand(DoNavigateBack, CanNavigateBack);
 
-                    return _navigate_back;
-                }
+                return _navigate_back;
             }
         }
         private DelegateCommand _navigate_back;
-        private object _navigate_back_lock = new object();
 
         #endregion
 

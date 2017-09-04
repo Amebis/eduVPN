@@ -61,17 +61,13 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_connect_selected_profile_lock)
-                {
-                    if (_connect_selected_profile == null)
-                        _connect_selected_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
+                if (_connect_selected_profile == null)
+                    _connect_selected_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
 
-                    return _connect_selected_profile;
-                }
+                return _connect_selected_profile;
             }
         }
         private DelegateCommand _connect_selected_profile;
-        private object _connect_selected_profile_lock = new object();
 
         #endregion
 

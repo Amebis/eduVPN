@@ -43,37 +43,33 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_connect_selected_configuration_lock)
-                {
-                    if (_connect_selected_configuration == null)
-                        _connect_selected_configuration = new DelegateCommand(
-                            // execute
-                            async () =>
-                            {
-                                // Trigger initial authorization request.
-                                var authorization_task = new Task(() => SelectedConfiguration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
-                                authorization_task.Start();
-                                await authorization_task;
+                if (_connect_selected_configuration == null)
+                    _connect_selected_configuration = new DelegateCommand(
+                        // execute
+                        async () =>
+                        {
+                            // Trigger initial authorization request.
+                            var authorization_task = new Task(() => SelectedConfiguration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                            authorization_task.Start();
+                            await authorization_task;
 
-                                // Set selected configuration.
-                                Parent.Configuration = SelectedConfiguration;
+                            // Set selected configuration.
+                            Parent.Configuration = SelectedConfiguration;
 
-                                // Reset selected configuration, to prevent repetitive triggering.
-                                SelectedConfiguration = null;
+                            // Reset selected configuration, to prevent repetitive triggering.
+                            SelectedConfiguration = null;
 
-                                // Go to status page.
-                                Parent.CurrentPage = Parent.StatusPage;
-                            },
+                            // Go to status page.
+                            Parent.CurrentPage = Parent.StatusPage;
+                        },
 
-                            // canExecute
-                            () => SelectedConfiguration != null);
+                        // canExecute
+                        () => SelectedConfiguration != null);
 
-                    return _connect_selected_configuration;
-                }
+                return _connect_selected_configuration;
             }
         }
         private DelegateCommand _connect_selected_configuration;
-        private object _connect_selected_configuration_lock = new object();
 
         #endregion
 

@@ -110,38 +110,34 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_connect_selected_profile_lock)
-                {
-                    if (_connect_selected_profile == null)
-                        _connect_selected_profile = new DelegateCommand(
-                            // execute
-                            () =>
-                            {
-                                // Save selected instance.
-                                ConfigurationHistory[0].ConnectingInstance = SelectedInstance;
+                if (_connect_selected_profile == null)
+                    _connect_selected_profile = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            // Save selected instance.
+                            ConfigurationHistory[0].ConnectingInstance = SelectedInstance;
 
-                                // Save connecting profile
-                                ConfigurationHistory[0].ConnectingProfile = SelectedProfile;
+                            // Save connecting profile
+                            ConfigurationHistory[0].ConnectingProfile = SelectedProfile;
 
-                                // Reset selected profile, to prevent repetitive triggering.
-                                SelectedProfile = null;
+                            // Reset selected profile, to prevent repetitive triggering.
+                            SelectedProfile = null;
 
-                                // Set configuration.
-                                Parent.Configuration = ConfigurationHistory[0];
+                            // Set configuration.
+                            Parent.Configuration = ConfigurationHistory[0];
 
-                                // Go to status page.
-                                Parent.CurrentPage = Parent.StatusPage;
-                            },
+                            // Go to status page.
+                            Parent.CurrentPage = Parent.StatusPage;
+                        },
 
-                            // canExecute
-                            () => SelectedProfile != null);
+                        // canExecute
+                        () => SelectedProfile != null);
 
-                    return _connect_selected_profile;
-                }
+                return _connect_selected_profile;
             }
         }
         private DelegateCommand _connect_selected_profile;
-        private object _connect_selected_profile_lock = new object();
 
         #endregion
 

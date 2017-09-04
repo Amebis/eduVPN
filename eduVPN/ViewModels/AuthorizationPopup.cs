@@ -69,29 +69,25 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_request_authorization_lock)
-                {
-                    if (_request_authorization == null)
-                        _request_authorization = new DelegateCommand<Models.InstanceInfo>(
-                            // execute
-                            param =>
-                            {
-                                AuthenticatingInstance = param;
+                if (_request_authorization == null)
+                    _request_authorization = new DelegateCommand<Models.InstanceInfo>(
+                        // execute
+                        param =>
+                        {
+                            AuthenticatingInstance = param;
 
-                                // Let retry authorization command do the job.
-                                if (RetryAuthorization.CanExecute(null))
-                                    RetryAuthorization.Execute(null);
-                            },
+                            // Let retry authorization command do the job.
+                            if (RetryAuthorization.CanExecute(null))
+                                RetryAuthorization.Execute(null);
+                        },
 
-                            // canExecute
-                            param => param is Models.InstanceInfo);
+                        // canExecute
+                        param => param is Models.InstanceInfo);
 
-                    return _request_authorization;
-                }
+                return _request_authorization;
             }
         }
         private DelegateCommand<Models.InstanceInfo> _request_authorization;
-        private object _request_authorization_lock = new object();
 
         /// <summary>
         /// Retry authorization command
@@ -100,44 +96,40 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_retry_authorization_lock)
-                {
-                    if (_retry_authorization == null)
-                        _retry_authorization = new DelegateCommand<Models.InstanceInfo>(
-                            // execute
-                            param =>
+                if (_retry_authorization == null)
+                    _retry_authorization = new DelegateCommand<Models.InstanceInfo>(
+                        // execute
+                        param =>
+                        {
+                            ChangeTaskCount(+1);
+                            try
                             {
-                                ChangeTaskCount(+1);
-                                try
+                                // Prepare new authorization grant.
+                                _authorization_grant = new AuthorizationGrant()
                                 {
-                                    // Prepare new authorization grant.
-                                    _authorization_grant = new AuthorizationGrant()
-                                    {
-                                        AuthorizationEndpoint = AuthenticatingInstance.GetEndpoints(Abort.Token).AuthorizationEndpoint,
-                                        RedirectEndpoint = new Uri(_redirect_endpoint),
-                                        ClientID = "org.eduvpn.app",
-                                        Scope = new List<string>() { "config" },
-                                        CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
-                                    };
+                                    AuthorizationEndpoint = AuthenticatingInstance.GetEndpoints(Abort.Token).AuthorizationEndpoint,
+                                    RedirectEndpoint = new Uri(_redirect_endpoint),
+                                    ClientID = "org.eduvpn.app",
+                                    Scope = new List<string>() { "config" },
+                                    CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
+                                };
 
-                                    // Open authorization request in the browser.
-                                    System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
+                                // Open authorization request in the browser.
+                                System.Diagnostics.Process.Start(_authorization_grant.AuthorizationURI.ToString());
 
-                                    Error = null;
-                                }
-                                catch (Exception ex) { Error = ex; }
-                                finally { ChangeTaskCount(-1); }
-                            },
+                                Error = null;
+                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
+                        },
 
-                            // canExecute
-                            param => AuthenticatingInstance != null);
+                        // canExecute
+                        param => AuthenticatingInstance != null);
 
-                    return _retry_authorization;
-                }
+                return _retry_authorization;
             }
         }
         private DelegateCommand<Models.InstanceInfo> _retry_authorization;
-        private object _retry_authorization_lock = new object();
 
         /// <summary>
         /// Authorize command
@@ -146,52 +138,48 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                lock (_authorize_lock)
-                {
-                    if (_authorize == null)
-                        _authorize = new DelegateCommand<string>(
-                            // execute
-                            async param =>
+                if (_authorize == null)
+                    _authorize = new DelegateCommand<string>(
+                        // execute
+                        async param =>
+                        {
+                            ChangeTaskCount(+1);
+                            try
                             {
-                                ChangeTaskCount(+1);
-                                try
-                                {
-                                    // Process response and get access token.
-                                    AccessToken = await _authorization_grant.ProcessResponseAsync(
-                                        HttpUtility.ParseQueryString(new Uri(param).Query),
-                                        AuthenticatingInstance.GetEndpoints(Abort.Token).TokenEndpoint,
-                                        null,
-                                        Abort.Token);
+                                // Process response and get access token.
+                                AccessToken = await _authorization_grant.ProcessResponseAsync(
+                                    HttpUtility.ParseQueryString(new Uri(param).Query),
+                                    AuthenticatingInstance.GetEndpoints(Abort.Token).TokenEndpoint,
+                                    null,
+                                    Abort.Token);
 
-                                    Error = null;
-                                }
-                                catch (Exception ex) { Error = ex; }
-                                finally { ChangeTaskCount(-1); }
-                            },
+                                Error = null;
+                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
+                        },
 
-                            // canExecute
-                            param =>
-                            {
-                                Uri uri;
+                        // canExecute
+                        param =>
+                        {
+                            Uri uri;
 
-                                // URI must be:
-                                // - non-NULL
-                                if (param == null) return false;
-                                // - Valid URI (parsable)
-                                try { uri = new Uri(param); }
-                                catch (Exception) { return false; }
-                                // - Must match the redirect endpoint provided in request.
-                                if (uri.Scheme + ":" + uri.AbsolutePath != _redirect_endpoint) return false;
+                            // URI must be:
+                            // - non-NULL
+                            if (param == null) return false;
+                            // - Valid URI (parsable)
+                            try { uri = new Uri(param); }
+                            catch (Exception) { return false; }
+                            // - Must match the redirect endpoint provided in request.
+                            if (uri.Scheme + ":" + uri.AbsolutePath != _redirect_endpoint) return false;
 
-                                return true;
-                            });
+                            return true;
+                        });
 
-                    return _authorize;
-                }
+                return _authorize;
             }
         }
         private DelegateCommand<string> _authorize;
-        private object _authorize_lock = new object();
 
         #endregion
 

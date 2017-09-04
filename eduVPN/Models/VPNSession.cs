@@ -140,23 +140,19 @@ namespace eduVPN.Models
         {
             get
             {
-                lock (_disconnect_command_lock)
-                {
-                    if (_disconnect_command == null)
-                        _disconnect_command = new DelegateCommand(
-                            // execute
-                            () =>
-                            {
-                                // Terminate connection.
-                                _disconnect.Cancel();
-                            });
+                if (_disconnect_command == null)
+                    _disconnect_command = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            // Terminate connection.
+                            _disconnect.Cancel();
+                        });
 
-                    return _disconnect_command;
-                }
+                return _disconnect_command;
             }
         }
         private DelegateCommand _disconnect_command;
-        private object _disconnect_command_lock = new object();
 
         /// <summary>
         /// Show log command
@@ -165,17 +161,13 @@ namespace eduVPN.Models
         {
             get
             {
-                lock (_show_log_command_lock)
-                {
-                    if (_show_log_command == null)
-                        _show_log_command = new DelegateCommand(DoShowLog, CanShowLog);
+                if (_show_log_command == null)
+                    _show_log_command = new DelegateCommand(DoShowLog, CanShowLog);
 
-                    return _show_log_command;
-                }
+                return _show_log_command;
             }
         }
         private DelegateCommand _show_log_command;
-        private object _show_log_command_lock = new object();
 
         #endregion
 
