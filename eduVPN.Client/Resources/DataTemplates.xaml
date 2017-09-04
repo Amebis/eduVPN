@@ -27,11 +27,11 @@
                 Grid.ColumnSpan="2"
                 Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
 
-            <!-- TODO: Provide alternative Source when Logo==null. -->
             <view:ImageWithFallback
                 Grid.Column="0"
                 Grid.Row="1"
                 UriSource="{Binding Path=Logo}"
+                UriFallbackSource="pack://application:,,,/Resources/GenericInstanceBlue.png"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,5,5,5"
@@ -98,11 +98,11 @@
                 Grid.ColumnSpan="3"
                 Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
 
-            <!-- TODO: Provide alternative Source when Logo==null. -->
             <view:ImageWithFallback
                 Grid.Column="0"
                 Grid.Row="1"
                 UriSource="{Binding Path=ConnectingInstance.Logo}"
+                UriFallbackSource="pack://application:,,,/Resources/GenericInstanceBlue.png"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,5,5,5"

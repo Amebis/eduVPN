@@ -92,7 +92,6 @@
                 AutomationProperties.Name="{Binding Path=Parent.Session.StateDescription}"
                 RenderOptions.BitmapScalingMode="Fant"/>
 
-            <!-- TODO: Provide alternative Source when Logo==null. -->
             <view:ImageWithFallback
                 Grid.Row="1"
                 Grid.Column="1"
@@ -101,6 +100,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 UriSource="{Binding Path=Parent.Configuration.ConnectingInstance.Logo}"
+                UriFallbackSource="pack://application:,,,/Resources/GenericInstanceBlue.png"
                 ToolTip="{Binding Path=Parent.Configuration.ConnectingInstance.DisplayName}"
                 AutomationProperties.Name="{Binding Path=Parent.Configuration.ConnectingInstance.DisplayName}"
                 RenderOptions.BitmapScalingMode="Fant"/>
