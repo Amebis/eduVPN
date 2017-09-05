@@ -244,8 +244,12 @@ namespace eduVPN.Models
                                         // Cleanup status properties.
                                         State = VPNSessionStatusType.Disconnecting;
                                         StateDescription = null;
+                                        TunnelAddress = null;
+                                        IPv6TunnelAddress = null;
                                         _connected_time_updater.Stop();
                                         ConnectedSince = null;
+                                        BytesIn = null;
+                                        BytesOut = null;
                                     }));
 
                                 // Wait for openvpn.exe to finish. Maximum 30s.
