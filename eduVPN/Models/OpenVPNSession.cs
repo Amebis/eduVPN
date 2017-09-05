@@ -69,8 +69,8 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
-        public OpenVPNSession(VPNConfiguration configuration) :
-            base(configuration)
+        public OpenVPNSession(ViewModels.ConnectWizard parent, VPNConfiguration configuration) :
+            base(parent, configuration)
         {
             _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
             _working_folder = Path.GetTempPath();
@@ -87,180 +87,190 @@ namespace eduVPN.Models
         #region Methods
 
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "FileStream tolerates multiple disposes.")]
-        public override void Run(CancellationToken ct = default(CancellationToken))
+        public override void Run()
         {
-            var ct_quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ct);
-
-            // Check if the Interactive Service is started.
-            // In case we hit "Access Denied" (or another error) give up on SCM.
-            ServiceController openvpn_interactive_service = new ServiceController("OpenVPNServiceInteractive");
+            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
             try
             {
-                if (openvpn_interactive_service.Status == ServiceControllerStatus.Stopped ||
-                    openvpn_interactive_service.Status == ServiceControllerStatus.Paused)
-                    openvpn_interactive_service.Start();
-            }
-            catch (Exception) { openvpn_interactive_service = null; }
+                var ct_quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ViewModels.Window.Abort.Token);
 
-            // Get profile's OpenVPN configuration and instance client certificate (in parallel).
-            Exception error = null;
-            string profile_config = null;
-            new List<Action>()
-                        {
-                            () => { profile_config = Configuration.ConnectingProfile.GetOpenVPNConfig(Configuration.ConnectingInstance, Configuration.AuthenticatingInstance, ct_quit.Token); },
-                            () => { _client_certificate = Configuration.ConnectingInstance.GetClientCertificate(Configuration.AuthenticatingInstance, ct_quit.Token); }
-                        }.Select(
-                action =>
-                {
-                    var t = new Thread(new ThreadStart(
-                        () =>
-                        {
-                            try { action(); }
-                            catch (Exception ex) { error = ex; }
-                        }));
-                    t.Start();
-                    return t;
-                }).ToList().ForEach(t => t.Join());
-            if (error != null)
-                throw error;
-
-            if (openvpn_interactive_service != null)
-            {
-                // Wait for OpenVPN Interactive Service to report "running" status.
-                // Maximum 30 times 100ms = 3s.
-                var refresh_interval = TimeSpan.FromMilliseconds(100);
-                for (var i = 0; i < 30 && !ct_quit.Token.IsCancellationRequested; i++)
-                {
-                    try { openvpn_interactive_service.WaitForStatus(ServiceControllerStatus.Running, refresh_interval); }
-                    catch (System.ServiceProcess.TimeoutException) { }
-                    catch (Exception) { break; }
-                }
-            }
-
-            try
-            {
-                // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
-                var mgmt_server = new TcpListener(IPAddress.Loopback, 0);
-                mgmt_server.Start();
+                // Check if the Interactive Service is started.
+                // In case we hit "Access Denied" (or another error) give up on SCM.
+                ServiceController openvpn_interactive_service = new ServiceController("OpenVPNServiceInteractive");
                 try
                 {
-                    try
-                    {
-                        // Save OpenVPN configuration file.
-                        using (var fs = new FileStream(
-                            ConfigurationPath,
-                            FileMode.Create,
-                            FileAccess.Write,
-                            FileShare.Read,
-                            1048576,
-                            FileOptions.SequentialScan))
-                        using (var sw = new StreamWriter(fs))
-                        {
-                            // Save profile's configuration to file.
-                            sw.Write(profile_config);
+                    if (openvpn_interactive_service.Status == ServiceControllerStatus.Stopped ||
+                        openvpn_interactive_service.Status == ServiceControllerStatus.Paused)
+                        openvpn_interactive_service.Start();
+                }
+                catch (Exception) { openvpn_interactive_service = null; }
 
-                            // Append eduVPN Client specific configuration directives.
-                            sw.WriteLine();
-                            sw.WriteLine();
-                            sw.WriteLine("# eduVPN Client for Windows");
-
-                            // Introduce ourself (to OpenVPN server).
-                            var assembly = Assembly.GetExecutingAssembly();
-                            var assembly_title_attribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
-                            var assembly_informational_version = Attribute.GetCustomAttributes(assembly, typeof(AssemblyInformationalVersionAttribute)).SingleOrDefault() as AssemblyInformationalVersionAttribute;
-                            sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assembly_title_attribute?.Title + " " + assembly_informational_version?.InformationalVersion));
-
-                            // Configure log file (relative to _working_folder).
-                            sw.WriteLine("log " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id + ".txt"));
-
-                            // Configure interaction between us and openvpn.exe.
-                            sw.WriteLine("management " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Address.ToString()) + " " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Port.ToString()) + " stdin");
-                            sw.WriteLine("management-client");
-                            sw.WriteLine("management-hold");
-                            sw.WriteLine("management-query-passwords");
-
-                            // Configure client certificate.
-                            //sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
-                            sw.WriteLine("management-external-cert " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id));
-                            sw.WriteLine("management-external-key");
-
-                            // Ask when username/password is denied.
-                            sw.WriteLine("auth-retry interact");
-
-                            // Set TAP interface to be used.
-                            if (Properties.Settings.Default.OpenVPNInterface != null && Properties.Settings.Default.OpenVPNInterface != "")
-                                sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(Properties.Settings.Default.OpenVPNInterface) + "\n");
-                        }
-                    }
-                    catch (OperationCanceledException) { throw; }
-                    catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
-
-                    // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
-                    using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Session())
-                    {
-                        var mgmt_password = Membership.GeneratePassword(16, 6);
-                        openvpn_interactive_service_connection.Connect(
-                                _working_folder,
-                                new string[] { "--config", _connection_id + ".ovpn", },
-                                mgmt_password + "\n",
-                                3000,
-                                ct_quit.Token);
-                        try
-                        {
-                            // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
-                            var mgmt_client_task = mgmt_server.AcceptTcpClientAsync();
-                            try { mgmt_client_task.Wait(ct_quit.Token); }
-                            catch (AggregateException ex) { throw ex.InnerException; }
-                            var mgmt_client = mgmt_client_task.Result;
-                            try
+                // Get profile's OpenVPN configuration and instance client certificate (in parallel).
+                Exception error = null;
+                string profile_config = null;
+                new List<Action>()
                             {
-                                // Start the management session.
-                                var mgmt_session = new eduOpenVPN.Management.Session();
-                                mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, this, ct_quit.Token);
+                                () => { profile_config = Configuration.ConnectingProfile.GetOpenVPNConfig(Configuration.ConnectingInstance, Configuration.AuthenticatingInstance, ct_quit.Token); },
+                                () => { _client_certificate = Configuration.ConnectingInstance.GetClientCertificate(Configuration.AuthenticatingInstance, ct_quit.Token); }
+                            }.Select(
+                    action =>
+                    {
+                        var t = new Thread(new ThreadStart(
+                            () =>
+                            {
+                                try { action(); }
+                                catch (Exception ex) { error = ex; }
+                            }));
+                        t.Start();
+                        return t;
+                    }).ToList().ForEach(t => t.Join());
+                if (error != null)
+                    throw error;
 
-                                // Initialize session and release openvpn.exe to get started.
-                                mgmt_session.ReplayAndEnableState(ct_quit.Token);
-                                mgmt_session.SetByteCount(5, ct_quit.Token);
-                                mgmt_session.EnableHold(false, ct_quit.Token);
-                                mgmt_session.ReleaseHold(ct_quit.Token);
-
-                                // Wait for the session to end gracefully.
-                                mgmt_session.Monitor.Join();
-                            }
-                            finally { mgmt_client.Close(); }
-                        }
-                        finally
-                        {
-                            _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                () =>
-                                {
-                                    // Cleanup status properties.
-                                    State = VPNSessionStatusType.Initializing;
-                                    StateDescription = null;
-                                    TunnelAddress = null;
-                                    IPv6TunnelAddress = null;
-                                    _connected_time_updater.Stop();
-                                    ConnectedSince = null;
-                                    BytesIn = null;
-                                    BytesOut = null;
-                                }));
-
-                            // Wait for openvpn.exe to finish. Maximum 30s.
-                            Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(30000);
-
-                            // Delete OpenVPN log file. If possible.
-                            try { File.Delete(LogPath); }
-                            catch (Exception) { }
-                        }
+                if (openvpn_interactive_service != null)
+                {
+                    // Wait for OpenVPN Interactive Service to report "running" status.
+                    // Maximum 30 times 100ms = 3s.
+                    var refresh_interval = TimeSpan.FromMilliseconds(100);
+                    for (var i = 0; i < 30 && !ct_quit.Token.IsCancellationRequested; i++)
+                    {
+                        try { openvpn_interactive_service.WaitForStatus(ServiceControllerStatus.Running, refresh_interval); }
+                        catch (System.ServiceProcess.TimeoutException) { }
+                        catch (Exception) { break; }
                     }
                 }
-                finally { mgmt_server.Stop(); }
+
+                try
+                {
+                    // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
+                    var mgmt_server = new TcpListener(IPAddress.Loopback, 0);
+                    mgmt_server.Start();
+                    try
+                    {
+                        try
+                        {
+                            // Save OpenVPN configuration file.
+                            using (var fs = new FileStream(
+                                ConfigurationPath,
+                                FileMode.Create,
+                                FileAccess.Write,
+                                FileShare.Read,
+                                1048576,
+                                FileOptions.SequentialScan))
+                            using (var sw = new StreamWriter(fs))
+                            {
+                                // Save profile's configuration to file.
+                                sw.Write(profile_config);
+
+                                // Append eduVPN Client specific configuration directives.
+                                sw.WriteLine();
+                                sw.WriteLine();
+                                sw.WriteLine("# eduVPN Client for Windows");
+
+                                // Introduce ourself (to OpenVPN server).
+                                var assembly = Assembly.GetExecutingAssembly();
+                                var assembly_title_attribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
+                                var assembly_informational_version = Attribute.GetCustomAttributes(assembly, typeof(AssemblyInformationalVersionAttribute)).SingleOrDefault() as AssemblyInformationalVersionAttribute;
+                                sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assembly_title_attribute?.Title + " " + assembly_informational_version?.InformationalVersion));
+
+                                // Configure log file (relative to _working_folder).
+                                sw.WriteLine("log " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id + ".txt"));
+
+                                // Configure interaction between us and openvpn.exe.
+                                sw.WriteLine("management " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Address.ToString()) + " " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Port.ToString()) + " stdin");
+                                sw.WriteLine("management-client");
+                                sw.WriteLine("management-hold");
+                                sw.WriteLine("management-query-passwords");
+
+                                // Configure client certificate.
+                                //sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
+                                sw.WriteLine("management-external-cert " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id));
+                                sw.WriteLine("management-external-key");
+
+                                // Ask when username/password is denied.
+                                sw.WriteLine("auth-retry interact");
+
+                                // Set TAP interface to be used.
+                                if (Properties.Settings.Default.OpenVPNInterface != null && Properties.Settings.Default.OpenVPNInterface != "")
+                                    sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(Properties.Settings.Default.OpenVPNInterface) + "\n");
+                            }
+                        }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
+
+                        // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
+                        using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Session())
+                        {
+                            var mgmt_password = Membership.GeneratePassword(16, 6);
+                            openvpn_interactive_service_connection.Connect(
+                                    _working_folder,
+                                    new string[] { "--config", _connection_id + ".ovpn", },
+                                    mgmt_password + "\n",
+                                    3000,
+                                    ct_quit.Token);
+                            try
+                            {
+                                // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
+                                var mgmt_client_task = mgmt_server.AcceptTcpClientAsync();
+                                try { mgmt_client_task.Wait(ct_quit.Token); }
+                                catch (AggregateException ex) { throw ex.InnerException; }
+                                var mgmt_client = mgmt_client_task.Result;
+                                try
+                                {
+                                    // Start the management session.
+                                    var mgmt_session = new eduOpenVPN.Management.Session();
+                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, this, ct_quit.Token);
+
+                                    // Initialize session and release openvpn.exe to get started.
+                                    mgmt_session.ReplayAndEnableState(ct_quit.Token);
+                                    mgmt_session.SetByteCount(5, ct_quit.Token);
+                                    mgmt_session.EnableHold(false, ct_quit.Token);
+                                    mgmt_session.ReleaseHold(ct_quit.Token);
+
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1)));
+                                    try
+                                    {
+                                        // Wait for the session to end gracefully.
+                                        mgmt_session.Monitor.Join();
+                                    } finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1))); }
+                                }
+                                finally { mgmt_client.Close(); }
+                            }
+                            finally
+                            {
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                    () =>
+                                    {
+                                        // Cleanup status properties.
+                                        State = VPNSessionStatusType.Initializing;
+                                        StateDescription = null;
+                                        TunnelAddress = null;
+                                        IPv6TunnelAddress = null;
+                                        _connected_time_updater.Stop();
+                                        ConnectedSince = null;
+                                        BytesIn = null;
+                                        BytesOut = null;
+                                    }));
+
+                                // Wait for openvpn.exe to finish. Maximum 30s.
+                                Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(30000);
+
+                                // Delete OpenVPN log file. If possible.
+                                try { File.Delete(LogPath); }
+                                catch (Exception) { }
+                            }
+                        }
+                    }
+                    finally { mgmt_server.Stop(); }
+                }
+                finally
+                {
+                    // Delete profile configuration file. If possible.
+                    try { File.Delete(ConfigurationPath); }
+                    catch (Exception) { }
+                }
             }
-            finally
-            {
-                // Delete profile configuration file. If possible.
-                try { File.Delete(ConfigurationPath); }
-                catch (Exception) { }
+            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
         }
 
         protected override void DoShowLog()
@@ -280,7 +290,7 @@ namespace eduVPN.Models
 
         public void OnByteCount(ulong bytes_in, ulong bytes_out)
         {
-            _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                 () =>
                 {
                     BytesIn = bytes_in;
@@ -298,7 +308,7 @@ namespace eduVPN.Models
 
         public void OnFatal(string message)
         {
-            _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                 () =>
                 {
                     State = VPNSessionStatusType.Error;
@@ -383,7 +393,7 @@ namespace eduVPN.Models
 
         public void OnState(DateTimeOffset timestamp, OpenVPNStateType state, string message, IPAddress tunnel, IPAddress ipv6_tunnel, IPEndPoint remote, IPEndPoint local)
         {
-            _dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                 () =>
                 {
                     switch (state)

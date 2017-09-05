@@ -22,11 +22,6 @@ namespace eduVPN.Models
         #region Fields
 
         /// <summary>
-        /// Parent thread dispatcher
-        /// </summary>
-        protected Dispatcher _dispatcher;
-
-        /// <summary>
         /// Terminate connection token
         /// </summary>
         protected CancellationTokenSource _disconnect;
@@ -34,6 +29,11 @@ namespace eduVPN.Models
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// The session parent
+        /// </summary>
+        public ViewModels.ConnectWizard Parent { get; }
 
         /// <summary>
         /// VPN configuration
@@ -196,11 +196,11 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        public VPNSession(VPNConfiguration configuration)
+        public VPNSession(ViewModels.ConnectWizard parent, VPNConfiguration configuration)
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
             _disconnect = new CancellationTokenSource();
 
+            Parent = parent;
             Configuration = configuration;
 
             // Create dispatcher timer.
@@ -217,11 +217,10 @@ namespace eduVPN.Models
         /// <summary>
         /// Run the session
         /// </summary>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        public virtual void Run(CancellationToken ct = default(CancellationToken))
+        public virtual void Run()
         {
             // Do nothing but wait.
-            CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ct).Token.WaitHandle.WaitOne();
+            CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ViewModels.Window.Abort.Token).Token.WaitHandle.WaitOne();
         }
 
         /// <summary>

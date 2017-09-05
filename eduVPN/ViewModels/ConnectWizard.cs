@@ -446,7 +446,8 @@ namespace eduVPN.ViewModels
         /// </summary>
         public void StartSession()
         {
-            Session = new Models.OpenVPNSession(Configuration);
+            // Create a new session.
+            Session = new Models.OpenVPNSession(this, Configuration);
 
             // Launch user info load in the background.
             Session.UserInfo = new Models.UserInfo();
@@ -532,7 +533,7 @@ namespace eduVPN.ViewModels
                 {
                     try
                     {
-                        Session.Run(Abort.Token);
+                        Session.Run();
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
