@@ -531,12 +531,28 @@ namespace eduVPN.ViewModels
             new Thread(new ThreadStart(
                 () =>
                 {
-                    try
-                    {
-                        Session.Run();
-                    }
+                    var session = Session;
+                    try { session.Run(); }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
+                    finally
+                    {
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                            () =>
+                            {
+                                if (session == Session)
+                                {
+                                    // This session is still "the" session. Invalidate it.
+                                    Session = null;
+
+                                    if (CurrentPage == StatusPage)
+                                    {
+                                        // Navigate back to recent profile select page.
+                                        CurrentPage = RecentProfileSelectPage;
+                                    }
+                                }
+                            }));
+                    }
                 })).Start();
 
             // Do the configuration history book-keeping.
