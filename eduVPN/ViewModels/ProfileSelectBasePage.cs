@@ -42,32 +42,24 @@ namespace eduVPN.ViewModels
         public Models.ProfileInfo SelectedProfile
         {
             get { return _selected_profile; }
-            set
-            {
-                if (value != _selected_profile)
-                {
-                    _selected_profile = value;
-                    RaisePropertyChanged();
-                    ConnectSelectedProfile.RaiseCanExecuteChanged();
-                }
-            }
+            set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); } }
         }
         private Models.ProfileInfo _selected_profile;
 
         /// <summary>
         /// Connect selected profile command
         /// </summary>
-        public DelegateCommand ConnectSelectedProfile
+        public DelegateCommand<Models.ProfileInfo> ConnectProfile
         {
             get
             {
-                if (_connect_selected_profile == null)
-                    _connect_selected_profile = new DelegateCommand(DoConnectSelectedProfile, CanConnectSelectedProfile);
+                if (_connect_profile == null)
+                    _connect_profile = new DelegateCommand<Models.ProfileInfo>(DoConnectSelectedProfile, CanConnectSelectedProfile);
 
-                return _connect_selected_profile;
+                return _connect_profile;
             }
         }
-        private DelegateCommand _connect_selected_profile;
+        private DelegateCommand<Models.ProfileInfo> _connect_profile;
 
         #endregion
 
@@ -87,27 +79,24 @@ namespace eduVPN.ViewModels
         #region Methods
 
         /// <summary>
-        /// Called when ConnectSelectedProfile command is invoked.
+        /// Called when ConnectProfile command is invoked.
         /// </summary>
-        protected virtual void DoConnectSelectedProfile()
+        protected virtual void DoConnectSelectedProfile(Models.ProfileInfo profile)
         {
             // Save selected profile.
-            Parent.Configuration.ConnectingProfile = SelectedProfile;
-
-            // Reset selected profile, to prevent repetitive triggering.
-            SelectedProfile = null;
+            Parent.Configuration.ConnectingProfile = profile;
 
             // Go to status page.
             Parent.CurrentPage = Parent.StatusPage;
         }
 
         /// <summary>
-        /// Called to test if ConnectSelectedProfile command is enabled.
+        /// Called to test if ConnectProfile command is enabled.
         /// </summary>
         /// <returns><c>true</c> if enabled; <c>false</c> otherwise</returns>
-        protected virtual bool CanConnectSelectedProfile()
+        protected virtual bool CanConnectSelectedProfile(Models.ProfileInfo profile)
         {
-            return SelectedProfile != null;
+            return profile != null;
         }
 
         protected override void DoNavigateBack()

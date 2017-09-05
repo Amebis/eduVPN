@@ -24,52 +24,41 @@ namespace eduVPN.ViewModels
         public Models.VPNConfiguration SelectedConfiguration
         {
             get { return _selected_configuration; }
-            set
-            {
-                if (value != _selected_configuration)
-                {
-                    _selected_configuration = value;
-                    RaisePropertyChanged();
-                    ConnectSelectedConfiguration.RaiseCanExecuteChanged();
-                }
-            }
+            set { if (value != _selected_configuration) { _selected_configuration = value; RaisePropertyChanged(); } }
         }
         private Models.VPNConfiguration _selected_configuration;
 
         /// <summary>
-        /// Connect selected configuration command
+        /// Connect configuration command
         /// </summary>
-        public DelegateCommand ConnectSelectedConfiguration
+        public DelegateCommand<Models.VPNConfiguration> ConnectConfiguration
         {
             get
             {
-                if (_connect_selected_configuration == null)
-                    _connect_selected_configuration = new DelegateCommand(
+                if (_connect_configuration == null)
+                    _connect_configuration = new DelegateCommand<Models.VPNConfiguration>(
                         // execute
-                        async () =>
+                        async configuration =>
                         {
                             // Trigger initial authorization request.
-                            var authorization_task = new Task(() => SelectedConfiguration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                            var authorization_task = new Task(() => configuration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
                             authorization_task.Start();
                             await authorization_task;
 
                             // Set selected configuration.
-                            Parent.Configuration = SelectedConfiguration;
-
-                            // Reset selected configuration, to prevent repetitive triggering.
-                            SelectedConfiguration = null;
+                            Parent.Configuration = configuration;
 
                             // Go to status page.
                             Parent.CurrentPage = Parent.StatusPage;
                         },
 
                         // canExecute
-                        () => SelectedConfiguration != null);
+                        configuration => configuration != null);
 
-                return _connect_selected_configuration;
+                return _connect_configuration;
             }
         }
-        private DelegateCommand _connect_selected_configuration;
+        private DelegateCommand<Models.VPNConfiguration> _connect_configuration;
 
         #endregion
 

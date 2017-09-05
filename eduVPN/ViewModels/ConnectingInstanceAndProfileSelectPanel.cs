@@ -91,38 +91,27 @@ namespace eduVPN.ViewModels
         public Models.ProfileInfo SelectedProfile
         {
             get { return _selected_profile; }
-            set
-            {
-                if (value != _selected_profile)
-                {
-                    _selected_profile = value;
-                    RaisePropertyChanged();
-                    ConnectSelectedProfile.RaiseCanExecuteChanged();
-                }
-            }
+            set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); } }
         }
         protected Models.ProfileInfo _selected_profile;
 
         /// <summary>
         /// Connect selected profile command
         /// </summary>
-        public DelegateCommand ConnectSelectedProfile
+        public DelegateCommand<Models.ProfileInfo> ConnectProfile
         {
             get
             {
-                if (_connect_selected_profile == null)
-                    _connect_selected_profile = new DelegateCommand(
+                if (_connect_profile == null)
+                    _connect_profile = new DelegateCommand<Models.ProfileInfo>(
                         // execute
-                        () =>
+                        profile =>
                         {
                             // Save selected instance.
                             ConfigurationHistory[0].ConnectingInstance = SelectedInstance;
 
                             // Save connecting profile
-                            ConfigurationHistory[0].ConnectingProfile = SelectedProfile;
-
-                            // Reset selected profile, to prevent repetitive triggering.
-                            SelectedProfile = null;
+                            ConfigurationHistory[0].ConnectingProfile = profile;
 
                             // Set configuration.
                             Parent.Configuration = ConfigurationHistory[0];
@@ -132,12 +121,12 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () => SelectedProfile != null);
+                        profile => profile != null);
 
-                return _connect_selected_profile;
+                return _connect_profile;
             }
         }
-        private DelegateCommand _connect_selected_profile;
+        private DelegateCommand<Models.ProfileInfo> _connect_profile;
 
         #endregion
 

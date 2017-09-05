@@ -37,9 +37,12 @@ namespace eduVPN.Views
                 // User selected a recent configuration.
                 var view_model = (ViewModels.LocalConfigurationHistoryPanel)DataContext;
                 if (view_model != null && // Sometimes this event gets called with null view model.
-                    view_model.ConnectSelectedConfiguration.CanExecute())
+                    view_model.ConnectConfiguration.CanExecute(view_model.SelectedConfiguration))
                 {
-                    view_model.ConnectSelectedConfiguration.Execute();
+                    view_model.ConnectConfiguration.Execute(view_model.SelectedConfiguration);
+
+                    // Reset selected configuration, to prevent repetitive triggering.
+                    view_model.SelectedConfiguration = null;
                 }
             }
         }

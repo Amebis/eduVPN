@@ -40,9 +40,12 @@ namespace eduVPN.Views
                 // User selected an instance.
                 var view_model = (ViewModels.AuthenticatingInstanceSelectPage)DataContext;
                 if (view_model != null && // Sometimes this event gets called with null view model.
-                    view_model.AuthorizeSelectedInstance.CanExecute())
+                    view_model.AuthorizeInstance.CanExecute(view_model.SelectedInstance))
                 {
-                    view_model.AuthorizeSelectedInstance.Execute();
+                    view_model.AuthorizeInstance.Execute(view_model.SelectedInstance);
+
+                    // Reset selected instance, to prevent repetitive triggering.
+                    view_model.SelectedInstance = null;
                 }
             }
         }

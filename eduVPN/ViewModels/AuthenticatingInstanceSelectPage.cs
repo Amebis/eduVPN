@@ -25,44 +25,33 @@ namespace eduVPN.ViewModels
         public Models.InstanceInfo SelectedInstance
         {
             get { return _selected_instance; }
-            set
-            {
-                if (value != _selected_instance)
-                {
-                    _selected_instance = value;
-                    RaisePropertyChanged();
-                    AuthorizeSelectedInstance.RaiseCanExecuteChanged();
-                }
-            }
+            set { if (value != _selected_instance) { _selected_instance = value; RaisePropertyChanged(); } }
         }
         private Models.InstanceInfo _selected_instance;
 
         /// <summary>
         /// Authorize selected instance command
         /// </summary>
-        public DelegateCommand AuthorizeSelectedInstance
+        public DelegateCommand<Models.InstanceInfo> AuthorizeInstance
         {
             get
             {
                 if (_authorize_instance == null)
                 {
-                    _authorize_instance = new DelegateCommand(
+                    _authorize_instance = new DelegateCommand<Models.InstanceInfo>(
                         // execute
-                        async () =>
+                        async selected_instance =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
                             {
                                 // Trigger initial authorization request.
-                                var authorization_task = new Task(() => SelectedInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                var authorization_task = new Task(() => selected_instance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
                                 authorization_task.Start();
                                 await authorization_task;
 
                                 // Save selected instance.
-                                Parent.Configuration.AuthenticatingInstance = SelectedInstance;
-
-                                // Reset selected instance, to prevent repetitive triggering.
-                                SelectedInstance = null;
+                                Parent.Configuration.AuthenticatingInstance = selected_instance;
 
                                 // Assume the same connecting instance.
                                 Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
@@ -75,13 +64,13 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () => SelectedInstance != null);
+                        selected_instance => selected_instance != null);
                 }
 
                 return _authorize_instance;
             }
         }
-        private DelegateCommand _authorize_instance;
+        private DelegateCommand<Models.InstanceInfo> _authorize_instance;
 
         #endregion
 

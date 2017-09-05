@@ -87,20 +87,20 @@ namespace eduVPN.ViewModels
             SelectedInstance = Parent.Configuration.ConnectingInstance;
         }
 
-        protected override void DoConnectSelectedProfile()
+        protected override void DoConnectSelectedProfile(Models.ProfileInfo profile)
         {
             // Save selected instance.
             Parent.Configuration.ConnectingInstance = SelectedInstance;
 
             // Let base class do the rest.
-            base.DoConnectSelectedProfile();
+            base.DoConnectSelectedProfile(profile);
         }
 
-        protected override bool CanConnectSelectedProfile()
+        protected override bool CanConnectSelectedProfile(Models.ProfileInfo profile)
         {
             return
                 SelectedInstance != null &&
-                base.CanConnectSelectedProfile();
+                base.CanConnectSelectedProfile(profile);
         }
 
         #endregion
