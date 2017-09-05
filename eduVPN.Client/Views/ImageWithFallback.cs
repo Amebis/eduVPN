@@ -23,7 +23,17 @@ namespace eduVPN.Views
         /// <summary>
         /// Default web-content caching policy.
         /// </summary>
-        protected static readonly RequestCachePolicy _default_request_cache_policy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
+        private static readonly RequestCachePolicy _default_request_cache_policy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
+
+        /// <summary>
+        /// Source bitmap image
+        /// </summary>
+        private BitmapImage _bitmap_image;
+
+        /// <summary>
+        /// Fall-back source bitmap image
+        /// </summary>
+        private BitmapImage _fallback_bitmap_image;
 
         #endregion
 
@@ -37,7 +47,7 @@ namespace eduVPN.Views
             get { return GetValue(UriSourceProperty) as Uri; }
             set { SetValue(UriSourceProperty, value); }
         }
-        public static readonly DependencyProperty UriSourceProperty = DependencyProperty.Register("UriSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, null));
+        public static readonly DependencyProperty UriSourceProperty = DependencyProperty.Register("UriSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriSourceChanged));
 
         /// <summary>
         /// Image source URI when <c>UriSource</c> failed downloading or decoding
@@ -46,58 +56,60 @@ namespace eduVPN.Views
             get { return GetValue(UriFallbackSourceProperty) as Uri; }
             set { SetValue(UriFallbackSourceProperty, value); }
         }
-        public static readonly DependencyProperty UriFallbackSourceProperty = DependencyProperty.Register("UriFallbackSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, null));
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Constructs an image with fallback image URI
-        /// </summary>
-        public ImageWithFallback()
-        {
-            Loaded +=
-                (object sender, RoutedEventArgs e) =>
-                {
-                    if (UriSource != null)
-                    {
-                        // Load the specified image.
-                        var bi = new BitmapImage();
-                        bi.BeginInit();
-                        bi.CacheOption = BitmapCacheOption.OnDemand;
-                        bi.UriCachePolicy = _default_request_cache_policy;
-                        bi.DownloadFailed += (object sender2, System.Windows.Media.ExceptionEventArgs e2) => LoadFallbackImage();
-                        bi.DecodeFailed += (object sender2, System.Windows.Media.ExceptionEventArgs e2) => LoadFallbackImage();
-                        bi.UriSource = UriSource;
-                        bi.EndInit();
-
-                        Source = bi;
-                    }
-                    else
-                        LoadFallbackImage();
-
-                    e.Handled = true;
-                };
-        }
+        public static readonly DependencyProperty UriFallbackSourceProperty = DependencyProperty.Register("UriFallbackSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriFallbackSourceChanged));
 
         #endregion
 
         #region Methods
+
+        private static void OnUriSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ImageWithFallback _this)
+            {
+                if (e.NewValue is Uri uri)
+                {
+                    // Load the specified image.
+                    _this._bitmap_image = new BitmapImage();
+                    _this._bitmap_image.BeginInit();
+                    _this._bitmap_image.UriCachePolicy = _default_request_cache_policy;
+                    _this._bitmap_image.CacheOption = BitmapCacheOption.OnDemand;
+                    _this._bitmap_image.UriSource = uri;
+                    _this._bitmap_image.DownloadFailed += (object sender2, System.Windows.Media.ExceptionEventArgs e2) => _this.LoadFallbackImage();
+                    _this._bitmap_image.DecodeFailed += (object sender2, System.Windows.Media.ExceptionEventArgs e2) => _this.LoadFallbackImage();
+                    _this._bitmap_image.EndInit();
+
+                    _this.Source = _this._bitmap_image;
+                }
+                else
+                    _this.LoadFallbackImage();
+            }
+        }
+
+        private static void OnUriFallbackSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ImageWithFallback _this)
+            {
+                if (_this.Source == _this._fallback_bitmap_image && e.NewValue is Uri uri)
+                {
+                    // We're displaying the fall-back image and it changed. Reload it.
+                    _this.LoadFallbackImage();
+                }
+            }
+        }
 
         private void LoadFallbackImage()
         {
             if (UriFallbackSource != null)
             {
                 // Load fall-back image.
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriCachePolicy = _default_request_cache_policy;
-                bi.CacheOption = BitmapCacheOption.OnLoad;
-                bi.UriSource = UriFallbackSource;
-                bi.EndInit();
+                _fallback_bitmap_image = new BitmapImage();
+                _fallback_bitmap_image.BeginInit();
+                _fallback_bitmap_image.UriCachePolicy = _default_request_cache_policy;
+                _fallback_bitmap_image.CacheOption = BitmapCacheOption.OnLoad;
+                _fallback_bitmap_image.UriSource = UriFallbackSource;
+                _fallback_bitmap_image.EndInit();
 
-                Source = bi;
+                Source = _fallback_bitmap_image;
             }
         }
 
