@@ -48,6 +48,10 @@ namespace eduVPN.Models
         /// </summary>
         private X509Certificate2 _client_certificate;
 
+        // Management session
+        private eduOpenVPN.Management.Session _mgmt_session;
+        private object _mgmt_session_lock = new object();
+
         #endregion
 
         #region Properties
@@ -219,19 +223,23 @@ namespace eduVPN.Models
                                 {
                                     // Start the management session.
                                     var mgmt_session = new eduOpenVPN.Management.Session();
-                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, this, ct_quit.Token);
+                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, this, ViewModels.Window.Abort.Token);
+
+                                    // The management session is up and running.
+                                    lock (_mgmt_session_lock)
+                                        _mgmt_session = mgmt_session;
 
                                     // Initialize session and release openvpn.exe to get started.
-                                    mgmt_session.ReplayAndEnableState(ct_quit.Token);
-                                    mgmt_session.SetByteCount(5, ct_quit.Token);
-                                    mgmt_session.EnableHold(false, ct_quit.Token);
-                                    mgmt_session.ReleaseHold(ct_quit.Token);
+                                    _mgmt_session.ReplayAndEnableState(ViewModels.Window.Abort.Token);
+                                    _mgmt_session.SetByteCount(5, ViewModels.Window.Abort.Token);
+                                    _mgmt_session.EnableHold(false, ViewModels.Window.Abort.Token);
+                                    _mgmt_session.ReleaseHold(ViewModels.Window.Abort.Token);
 
                                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1)));
                                     try
                                     {
                                         // Wait for the session to end gracefully.
-                                        mgmt_session.Monitor.Join();
+                                        _mgmt_session.Monitor.Join();
                                     } finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1))); }
                                 }
                                 finally { mgmt_client.Close(); }
@@ -272,6 +280,23 @@ namespace eduVPN.Models
                 }
             }
             finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+        }
+
+        protected override void DoDisconnect()
+        {
+            lock (_mgmt_session_lock)
+                if (_mgmt_session != null)
+                {
+                    // Try the graceful disconnect first.
+                    try
+                    {
+                        _mgmt_session.SendSignal(SignalType.SIGTERM, ViewModels.Window.Abort.Token);
+                        return;
+                    }
+                    catch (Exception) { }
+                }
+
+            base.DoDisconnect();
         }
 
         protected override void DoShowLog()
