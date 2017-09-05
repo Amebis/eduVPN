@@ -253,7 +253,8 @@ namespace eduVPN.Models
                                     }));
 
                                 // Wait for openvpn.exe to finish. Maximum 30s.
-                                Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(30000);
+                                try { Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(30000); }
+                                catch (ArgumentException) { }
 
                                 // Delete OpenVPN log file. If possible.
                                 try { File.Delete(LogPath); }
