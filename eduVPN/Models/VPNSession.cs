@@ -31,14 +31,19 @@ namespace eduVPN.Models
         /// </summary>
         protected CancellationTokenSource _disconnect;
 
-        /// <summary>
-        /// VPN configuration
-        /// </summary>
-        protected VPNConfiguration _configuration;
-
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// VPN configuration
+        /// </summary>
+        public VPNConfiguration Configuration
+        {
+            get { return _configuration; }
+            set { if (value != _configuration) { _configuration = value; RaisePropertyChanged(); } }
+        }
+        protected VPNConfiguration _configuration;
 
         /// <summary>
         /// User info

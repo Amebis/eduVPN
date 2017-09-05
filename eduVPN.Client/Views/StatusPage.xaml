@@ -99,10 +99,10 @@
                 MaxHeight="22"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                UriSource="{Binding Path=Parent.Configuration.ConnectingInstance.Logo}"
+                UriSource="{Binding Path=Parent.Session.Configuration.ConnectingInstance.Logo}"
                 UriFallbackSource="pack://application:,,,/Resources/GenericInstanceBlue.png"
-                ToolTip="{Binding Path=Parent.Configuration.ConnectingInstance.DisplayName}"
-                AutomationProperties.Name="{Binding Path=Parent.Configuration.ConnectingInstance.DisplayName}"
+                ToolTip="{Binding Path=Parent.Session.Configuration.ConnectingInstance.DisplayName}"
+                AutomationProperties.Name="{Binding Path=Parent.Session.Configuration.ConnectingInstance.DisplayName}"
                 RenderOptions.BitmapScalingMode="Fant"/>
 
             <TextBlock
@@ -112,7 +112,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Parent.Configuration.ConnectingProfile.DisplayName}"/>
+                Text="{Binding Path=Parent.Session.Configuration.ConnectingProfile.DisplayName}"/>
         </Grid>
 
         <ListBox
