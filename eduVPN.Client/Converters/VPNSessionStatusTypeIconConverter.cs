@@ -8,6 +8,8 @@
 using eduVPN.Models;
 using System;
 using System.Globalization;
+using System.IO;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -21,9 +23,18 @@ namespace eduVPN.Client.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is VPNSessionStatusType status_type)
-                return new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.png", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
-            else
-                return null;
+            {
+                var image_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.png", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
+                try {
+                    // If resource with given image URI exist, return the URI.
+                    Application.GetResourceStream(image_uri);
+                    return image_uri;
+                }
+                catch (IOException) { }
+            }
+
+            // Fallback to blank image.
+            return new Uri("pack://application:,,,/Resources/Blank.png");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
