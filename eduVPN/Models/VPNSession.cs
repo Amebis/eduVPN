@@ -219,7 +219,10 @@ namespace eduVPN.Models
             _disconnect = new CancellationTokenSource();
 
             Parent = parent;
-            Configuration = configuration;
+
+            // Clone configuration and keep an own copy.
+            // This prevents dependency on Parent.Configuration.
+            Configuration = (VPNConfiguration)configuration.Clone();
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(

@@ -13,7 +13,7 @@ namespace eduVPN.Models
     /// <summary>
     /// VPN configuration
     /// </summary>
-    public class VPNConfiguration : BindableBase
+    public class VPNConfiguration : BindableBase, ICloneable
     {
         #region Properties
 
@@ -143,6 +143,15 @@ namespace eduVPN.Models
             }
             else
                 throw new InvalidOperationException();
+        }
+
+        #endregion
+
+        #region IClonable Support
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
 
         #endregion
