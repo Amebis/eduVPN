@@ -5,9 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.JSON;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Threading;
@@ -202,6 +205,84 @@ namespace eduVPN.Models
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged("ConnectedTime"),
                 Dispatcher.CurrentDispatcher);
+
+            // Launch user info load in the background.
+            UserInfo = new Models.UserInfo();
+            new Thread(new ThreadStart(
+                () =>
+                {
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                    try
+                    {
+                        var user_info = Configuration.AuthenticatingInstance.GetUserInfo(Configuration.AuthenticatingInstance, ViewModels.Window.Abort.Token);
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                })).Start();
+
+            // Load messages from all possible sources: authenticating/connecting instance, user/system list.
+            // Any errors shall be ignored.
+            MessageList = new Models.MessageList();
+            new Thread(new ThreadStart(
+                () =>
+                {
+                    var api_authenticating = Configuration.AuthenticatingInstance.GetEndpoints(ViewModels.Window.Abort.Token);
+                    var api_connecting = Configuration.ConnectingInstance.GetEndpoints(ViewModels.Window.Abort.Token);
+                    foreach (
+                        var list in new List<KeyValuePair<Uri, string>>() {
+                            new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
+                            new KeyValuePair<Uri, string>(api_connecting.UserMessages, "user_messages"),
+                            new KeyValuePair<Uri, string>(api_authenticating.SystemMessages, "system_messages"),
+                            new KeyValuePair<Uri, string>(api_connecting.SystemMessages, "system_messages"),
+                        }
+                        .Where(list => list.Key != null)
+                        .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)))
+                    {
+                        new Thread(new ThreadStart(
+                            () =>
+                            {
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                                try
+                                {
+                                    // Get and load user messages.
+                                    var message_list = new Models.MessageList();
+                                    message_list.LoadJSONAPIResponse(
+                                        JSON.Response.Get(
+                                            uri: list.Key,
+                                            token: Configuration.AuthenticatingInstance.PeekAccessToken(ViewModels.Window.Abort.Token),
+                                            ct: ViewModels.Window.Abort.Token).Value,
+                                        list.Value,
+                                        ViewModels.Window.Abort.Token);
+
+                                    if (message_list.Count > 0)
+                                    {
+                                        // Add user messages.
+                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                        {
+                                            foreach (var msg in message_list)
+                                                MessageList.Add(msg);
+                                        }));
+                                    }
+                                }
+                                catch (Exception) { }
+                                finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                            })).Start();
+                    }
+
+                    //// Add test messages.
+                    //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                    //{
+                    //    MessageList.Add(new Models.MessageMaintenance()
+                    //    {
+                    //        Text = "This is a test maintenance message.",
+                    //        Date = DateTime.Now,
+                    //        Begin = new DateTime(2017, 7, 31, 22, 00, 00),
+                    //        End = new DateTime(2017, 7, 31, 23, 59, 00)
+                    //    });
+                    //}));
+                })).Start();
         }
 
         #endregion
