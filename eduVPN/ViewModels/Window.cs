@@ -48,7 +48,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         public bool IsBusy
         {
-            get { return _task_count > 0; }
+            get { lock (_task_count_lock) return _task_count > 0; }
         }
 
         /// <summary>
@@ -89,11 +89,18 @@ namespace eduVPN.ViewModels
         /// <param name="increment">Positive to increment, negative to decrement</param>
         public void ChangeTaskCount(int increment)
         {
+            bool is_busy_changed = false;
             lock (_task_count_lock)
+            {
+                var previous_value = IsBusy;
                 _task_count += increment;
+                if (previous_value != IsBusy)
+                    is_busy_changed = true;
+            }
 
             RaisePropertyChanged("TaskCount");
-            RaisePropertyChanged("IsBusy");
+            if (is_busy_changed)
+                RaisePropertyChanged("IsBusy");
         }
 
         #endregion
