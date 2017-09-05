@@ -397,12 +397,12 @@ namespace eduVPN.ViewModels
 
                                 break;
                             }
-                            catch (OperationCanceledException) { throw; }
+                            catch (OperationCanceledException) { break; }
                             catch (Exception ex)
                             {
-                                // Notify the sender the instance source loading failed. However, continue with other instance sources.
+                                // Do not re-throw the exception. Notify the sender the instance source loading failed.
                                 // This will overwrite all previous error messages.
-                                Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, _instance_directory_id[source_index]), ex);
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, _instance_directory_id[source_index]), ex)));
                             }
 
                             // Sleep for 3s, then retry.
@@ -424,6 +424,9 @@ namespace eduVPN.ViewModels
                         foreach (var thread in threads)
                             if (thread != null)
                                 thread.Join();
+
+                        if (Abort.Token.IsCancellationRequested)
+                            return;
 
                         // Proceed to the "first" page.
                         if (_configuration_histories[(int)Models.InstanceSourceType.SecureInternet].Count > 0 ||
