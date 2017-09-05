@@ -73,11 +73,22 @@ namespace eduVPN.Views
             view_model.PropertyChanged += (object sender1, PropertyChangedEventArgs e1) =>
             {
                 if (e1.PropertyName == "Session")
-                    view_model.Session.PropertyChanged += (object sender2, PropertyChangedEventArgs e2) =>
+                {
+                    if (view_model.Session != null)
                     {
-                        if (e2.PropertyName == "State")
-                            _tray_icon.Icon = _icons[view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
-                    };
+                        // Bind to the session for property changes.
+                        view_model.Session.PropertyChanged += (object sender2, PropertyChangedEventArgs e2) =>
+                        {
+                            if (e2.PropertyName == "State")
+                                _tray_icon.Icon = _icons[view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+                        };
+                    }
+                    else
+                    {
+                        // Session is gone. Reset tray icon to default.
+                        _tray_icon.Icon = _icons[0];
+                    }
+                }
             };
 
             base.OnInitialized(e);
