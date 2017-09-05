@@ -464,7 +464,7 @@ namespace eduVPN.ViewModels
                         Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                             () =>
                             {
-                                if (session == Session)
+                                if (session == Session && Error == null)
                                 {
                                     // This session is still "the" session. Invalidate it.
                                     Session = null;
