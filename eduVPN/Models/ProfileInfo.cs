@@ -106,11 +106,14 @@ namespace eduVPN.Models
             {
                 if (_openvpn_config == null)
                 {
+                    // Get API endpoints.
+                    var api = connecting_instance.GetEndpoints(ct);
+
                     retry:
                     try
                     {
                         // Get profile config.
-                        var uri_builder = new UriBuilder(connecting_instance.GetEndpoints(ct).ProfileConfig);
+                        var uri_builder = new UriBuilder(api.ProfileConfig);
                         var query = HttpUtility.ParseQueryString(uri_builder.Query);
                         query["profile_id"] = ID;
                         uri_builder.Query = query.ToString();

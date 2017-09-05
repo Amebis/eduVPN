@@ -271,6 +271,9 @@ namespace eduVPN.Models
 
                 if (_access_token == null)
                 {
+                    // Get API endpoints.
+                    var api = GetEndpoints(ct);
+
                     try
                     {
                         // If we got here, there was no saved token, or something is wrong with it: decoding failed, refreshing failed...
@@ -285,7 +288,7 @@ namespace eduVPN.Models
                         _access_token = e.AccessToken;
 
                         // Save the access token to the settings.
-                        Properties.Settings.Default.AccessTokens[GetEndpoints(ct).AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
+                        Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = _access_token.ToBase64String();
                     }
                     catch (OperationCanceledException) { throw; }
                     catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorAuthorization, ex); }
@@ -344,13 +347,16 @@ namespace eduVPN.Models
             {
                 if (_profile_list == null)
                 {
+                    // Get API endpoints.
+                    var api = GetEndpoints(ct);
+
                     retry:
                     try
                     {
                         // Get and load profile list.
                         var profile_list = new JSON.Collection<Models.ProfileInfo>();
                         profile_list.LoadJSONAPIResponse(JSON.Response.Get(
-                            uri: GetEndpoints(ct).ProfileList,
+                            uri: api.ProfileList,
                             token: authenticating_instance.GetAccessToken(ct),
                             ct: ct).Value, "profile_list", ct);
 
@@ -456,13 +462,16 @@ namespace eduVPN.Models
 
                         if (_client_certificate == null)
                         {
+                            // Get API endpoints.
+                            var api = GetEndpoints(ct);
+
                             retry:
                             try
                             {
                                 // Get certificate and import it to Windows user certificate store.
                                 var cert = new Models.Certificate();
                                 cert.LoadJSONAPIResponse(JSON.Response.Get(
-                                    uri: GetEndpoints(ct).CreateCertificate,
+                                    uri: api.CreateCertificate,
                                     param: new NameValueCollection
                                     {
                                         { "display_name", Resources.Strings.CertificateTitle }
