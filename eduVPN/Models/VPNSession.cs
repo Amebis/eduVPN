@@ -41,6 +41,26 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
+        /// User info
+        /// </summary>
+        public Models.UserInfo UserInfo
+        {
+            get { return _user_info; }
+            set { if (value != _user_info) { _user_info = value; RaisePropertyChanged(); } }
+        }
+        private Models.UserInfo _user_info;
+
+        /// <summary>
+        /// Merged list of user and system messages
+        /// </summary>
+        public Models.MessageList MessageList
+        {
+            get { return _message_list; }
+            set { if (value != _message_list) { _message_list = value; RaisePropertyChanged(); } }
+        }
+        private Models.MessageList _message_list;
+
+        /// <summary>
         /// Client connection state
         /// </summary>
         public VPNSessionStatusType State
