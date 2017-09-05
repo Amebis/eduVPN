@@ -358,9 +358,9 @@ namespace eduVPN.Models
                         _profile_list = profile_list;
                     }
                     catch (OperationCanceledException) { throw; }
-                    catch (AggregateException ex)
+                    catch (WebException ex)
                     {
-                        if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                         {
                             // Access token was rejected (401 Unauthorized): reset access token and retry.
                             authenticating_instance.RefreshOrResetAccessToken(ct);
@@ -401,9 +401,9 @@ namespace eduVPN.Models
                 return user_info;
             }
             catch (OperationCanceledException) { throw; }
-            catch (AggregateException ex)
+            catch (WebException ex)
             {
-                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     // Access token was rejected (401 Unauthorized): reset access token and retry.
                     authenticating_instance.RefreshOrResetAccessToken(ct);
@@ -481,9 +481,9 @@ namespace eduVPN.Models
                                     Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = _client_certificate.GetCertHash();
                             }
                             catch (OperationCanceledException) { throw; }
-                            catch (AggregateException ex)
+                            catch (WebException ex)
                             {
-                                if (ex.InnerException is WebException ex_inner && ex_inner.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                                 {
                                     // Access token was rejected (401 Unauthorized): reset access token and retry.
                                     authenticating_instance.RefreshOrResetAccessToken(ct);
