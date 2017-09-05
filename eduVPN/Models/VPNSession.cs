@@ -38,12 +38,7 @@ namespace eduVPN.Models
         /// <summary>
         /// VPN configuration
         /// </summary>
-        public VPNConfiguration Configuration
-        {
-            get { return _configuration; }
-            set { if (value != _configuration) { _configuration = value; RaisePropertyChanged(); } }
-        }
-        protected VPNConfiguration _configuration;
+        public VPNConfiguration Configuration { get; }
 
         /// <summary>
         /// User info
@@ -206,7 +201,7 @@ namespace eduVPN.Models
             _dispatcher = Dispatcher.CurrentDispatcher;
             _disconnect = new CancellationTokenSource();
 
-            _configuration = configuration;
+            Configuration = configuration;
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(

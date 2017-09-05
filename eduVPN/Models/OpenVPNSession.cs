@@ -107,8 +107,8 @@ namespace eduVPN.Models
             string profile_config = null;
             new List<Action>()
                         {
-                            () => { profile_config = _configuration.ConnectingProfile.GetOpenVPNConfig(_configuration.ConnectingInstance, _configuration.AuthenticatingInstance, ct_quit.Token); },
-                            () => { _client_certificate = _configuration.ConnectingInstance.GetClientCertificate(_configuration.AuthenticatingInstance, ct_quit.Token); }
+                            () => { profile_config = Configuration.ConnectingProfile.GetOpenVPNConfig(Configuration.ConnectingInstance, Configuration.AuthenticatingInstance, ct_quit.Token); },
+                            () => { _client_certificate = Configuration.ConnectingInstance.GetClientCertificate(Configuration.AuthenticatingInstance, ct_quit.Token); }
                         }.Select(
                 action =>
                 {
@@ -261,7 +261,6 @@ namespace eduVPN.Models
                 // Delete profile configuration file. If possible.
                 try { File.Delete(ConfigurationPath); }
                 catch (Exception) { }
-            }
         }
 
         protected override void DoShowLog()
