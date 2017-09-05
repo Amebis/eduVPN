@@ -6,6 +6,7 @@
 */
 
 using Prism.Commands;
+using System;
 using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
@@ -40,16 +41,22 @@ namespace eduVPN.ViewModels
                         // execute
                         async configuration =>
                         {
-                            // Trigger initial authorization request.
-                            var authorization_task = new Task(() => configuration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
-                            authorization_task.Start();
-                            await authorization_task;
+                            Parent.ChangeTaskCount(+1);
+                            try
+                            {
+                                // Trigger initial authorization request.
+                                var authorization_task = new Task(() => configuration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                authorization_task.Start();
+                                await authorization_task;
 
-                            // Set selected configuration.
-                            Parent.Configuration = configuration;
+                                // Set selected configuration.
+                                Parent.Configuration = configuration;
 
-                            // Go to status page.
-                            Parent.CurrentPage = Parent.StatusPage;
+                                // Go to status page.
+                                Parent.CurrentPage = Parent.StatusPage;
+                            }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute

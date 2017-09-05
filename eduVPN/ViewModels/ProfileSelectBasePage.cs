@@ -6,6 +6,7 @@
 */
 
 using Prism.Commands;
+using System;
 
 namespace eduVPN.ViewModels
 {
@@ -54,7 +55,18 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_connect_profile == null)
-                    _connect_profile = new DelegateCommand<Models.ProfileInfo>(DoConnectSelectedProfile, CanConnectSelectedProfile);
+                    _connect_profile = new DelegateCommand<Models.ProfileInfo>(
+                        // execute
+                        profile =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try { DoConnectSelectedProfile(profile); }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        CanConnectSelectedProfile);
 
                 return _connect_profile;
             }

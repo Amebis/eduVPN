@@ -6,6 +6,7 @@
 */
 
 using Prism.Commands;
+using System;
 
 namespace eduVPN.ViewModels
 {
@@ -33,7 +34,15 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_add_another_profile == null)
-                    _add_another_profile = new DelegateCommand(() => Parent.CurrentPage = Parent.InstanceSourceSelectPage);
+                    _add_another_profile = new DelegateCommand(
+                        //execute
+                        () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try { Parent.CurrentPage = Parent.InstanceSourceSelectPage; }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        });
 
                 return _add_another_profile;
             }

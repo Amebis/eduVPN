@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
 
 namespace eduVPN.ViewModels
 {
@@ -30,7 +31,18 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_navigate_back == null)
-                    _navigate_back = new DelegateCommand(DoNavigateBack, CanNavigateBack);
+                    _navigate_back = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try { DoNavigateBack(); }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        CanNavigateBack);
 
                 return _navigate_back;
             }

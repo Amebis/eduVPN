@@ -107,17 +107,23 @@ namespace eduVPN.ViewModels
                         // execute
                         profile =>
                         {
-                            // Save selected instance.
-                            ConfigurationHistory[0].ConnectingInstance = SelectedInstance;
+                            Parent.ChangeTaskCount(+1);
+                            try
+                            {
+                                // Save selected instance.
+                                ConfigurationHistory[0].ConnectingInstance = SelectedInstance;
 
-                            // Save connecting profile
-                            ConfigurationHistory[0].ConnectingProfile = profile;
+                                // Save connecting profile
+                                ConfigurationHistory[0].ConnectingProfile = profile;
 
-                            // Set configuration.
-                            Parent.Configuration = ConfigurationHistory[0];
+                                // Set configuration.
+                                Parent.Configuration = ConfigurationHistory[0];
 
-                            // Go to status page.
-                            Parent.CurrentPage = Parent.StatusPage;
+                                // Go to status page.
+                                Parent.CurrentPage = Parent.StatusPage;
+                            }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute

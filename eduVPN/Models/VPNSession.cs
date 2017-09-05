@@ -189,7 +189,18 @@ namespace eduVPN.Models
             get
             {
                 if (_show_log_command == null)
-                    _show_log_command = new DelegateCommand(DoShowLog, CanShowLog);
+                    _show_log_command = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try { DoShowLog(); }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        CanShowLog);
 
                 return _show_log_command;
             }
