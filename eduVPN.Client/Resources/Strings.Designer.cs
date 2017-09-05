@@ -305,69 +305,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bytes in.
-        /// </summary>
-        public static string StatusPageConnectionInfoBytesIn {
-            get {
-                return ResourceManager.GetString("StatusPageConnectionInfoBytesIn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bytes out.
-        /// </summary>
-        public static string StatusPageConnectionInfoBytesOut {
-            get {
-                return ResourceManager.GetString("StatusPageConnectionInfoBytesOut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Duration.
-        /// </summary>
-        public static string StatusPageConnectionInfoDuration {
-            get {
-                return ResourceManager.GetString("StatusPageConnectionInfoDuration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IPv4.
-        /// </summary>
-        public static string StatusPageConnectionInfoIPv4 {
-            get {
-                return ResourceManager.GetString("StatusPageConnectionInfoIPv4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IPv6.
-        /// </summary>
-        public static string StatusPageConnectionInfoIPv6 {
-            get {
-                return ResourceManager.GetString("StatusPageConnectionInfoIPv6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connection info.
-        /// </summary>
-        public static string StatusPageConnectionInfoTitle {
-            get {
-                return ResourceManager.GetString("StatusPageConnectionInfoTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View log.
-        /// </summary>
-        public static string StatusPageConnectionInfoViewLog {
-            get {
-                return ResourceManager.GetString("StatusPageConnectionInfoViewLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Disconnect.
         /// </summary>
         public static string StatusPageDisconnect {
@@ -391,6 +328,69 @@ namespace eduVPN.Client.Resources {
         public static string StatusPageProfile {
             get {
                 return ResourceManager.GetString("StatusPageProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bytes in.
+        /// </summary>
+        public static string StatusPageSessionInfoBytesIn {
+            get {
+                return ResourceManager.GetString("StatusPageSessionInfoBytesIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bytes out.
+        /// </summary>
+        public static string StatusPageSessionInfoBytesOut {
+            get {
+                return ResourceManager.GetString("StatusPageSessionInfoBytesOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        public static string StatusPageSessionInfoDuration {
+            get {
+                return ResourceManager.GetString("StatusPageSessionInfoDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv4.
+        /// </summary>
+        public static string StatusPageSessionInfoIPv4 {
+            get {
+                return ResourceManager.GetString("StatusPageSessionInfoIPv4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6.
+        /// </summary>
+        public static string StatusPageSessionInfoIPv6 {
+            get {
+                return ResourceManager.GetString("StatusPageSessionInfoIPv6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection info.
+        /// </summary>
+        public static string StatusPageSessionInfoTitle {
+            get {
+                return ResourceManager.GetString("StatusPageSessionInfoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View log.
+        /// </summary>
+        public static string StatusPageSessionInfoViewLog {
+            get {
+                return ResourceManager.GetString("StatusPageSessionInfoViewLog", resourceCulture);
             }
         }
         

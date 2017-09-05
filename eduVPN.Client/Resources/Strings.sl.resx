@@ -187,25 +187,25 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Izberite svojo ustanovo</value>
   </data>
-  <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
+  <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
     <value>Dohodno</value>
   </data>
-  <data name="StatusPageConnectionInfoBytesOut" xml:space="preserve">
+  <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
     <value>Odhodno</value>
   </data>
-  <data name="StatusPageConnectionInfoDuration" xml:space="preserve">
+  <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Trajanje</value>
   </data>
-  <data name="StatusPageConnectionInfoIPv4" xml:space="preserve">
+  <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
     <value>IPv4</value>
   </data>
-  <data name="StatusPageConnectionInfoIPv6" xml:space="preserve">
+  <data name="StatusPageSessionInfoIPv6" xml:space="preserve">
     <value>IPv6</value>
   </data>
-  <data name="StatusPageConnectionInfoTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Podatki povezave</value>
   </data>
-  <data name="StatusPageConnectionInfoViewLog" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLog" xml:space="preserve">
     <value>Ogled dnevnika</value>
   </data>
   <data name="StatusPageDisconnect" xml:space="preserve">

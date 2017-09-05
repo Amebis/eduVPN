@@ -187,25 +187,25 @@ The client will continue after you complete the authorization...</value>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Select your Institution</value>
   </data>
-  <data name="StatusPageConnectionInfoBytesIn" xml:space="preserve">
+  <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
     <value>Bytes in</value>
   </data>
-  <data name="StatusPageConnectionInfoBytesOut" xml:space="preserve">
+  <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
     <value>Bytes out</value>
   </data>
-  <data name="StatusPageConnectionInfoDuration" xml:space="preserve">
+  <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Duration</value>
   </data>
-  <data name="StatusPageConnectionInfoIPv4" xml:space="preserve">
+  <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
     <value>IPv4</value>
   </data>
-  <data name="StatusPageConnectionInfoIPv6" xml:space="preserve">
+  <data name="StatusPageSessionInfoIPv6" xml:space="preserve">
     <value>IPv6</value>
   </data>
-  <data name="StatusPageConnectionInfoTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Connection info</value>
   </data>
-  <data name="StatusPageConnectionInfoViewLog" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLog" xml:space="preserve">
     <value>View log</value>
   </data>
   <data name="StatusPageDisconnect" xml:space="preserve">

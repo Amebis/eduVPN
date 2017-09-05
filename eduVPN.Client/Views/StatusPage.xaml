@@ -144,14 +144,14 @@
                 Grid.ColumnSpan="4"
                 Margin="0,0,0,2"
                 Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageConnectionInfoTitle}"/>
+                Text="{x:Static res:Strings.StatusPageSessionInfoTitle}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="0,2,2,0"
                 Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageConnectionInfoDuration}"/>
+                Text="{x:Static res:Strings.StatusPageSessionInfoDuration}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -165,7 +165,7 @@
                 Grid.Column="2"
                 Margin="5,2,2,0"
                 Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageConnectionInfoIPv4}"/>
+                Text="{x:Static res:Strings.StatusPageSessionInfoIPv4}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -179,7 +179,7 @@
                 Grid.Column="0"
                 Margin="0,0,2,0"
                 Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageConnectionInfoBytesIn}"/>
+                Text="{x:Static res:Strings.StatusPageSessionInfoBytesIn}"/>
 
             <TextBlock
                 Grid.Row="2"
@@ -193,7 +193,7 @@
                 Grid.Column="2"
                 Margin="5,0,2,0"
                 Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageConnectionInfoIPv6}"/>
+                Text="{x:Static res:Strings.StatusPageSessionInfoIPv6}"/>
 
             <TextBlock
                 Grid.Row="2"
@@ -207,7 +207,7 @@
                 Grid.Column="0"
                 Margin="0,0,2,0"
                 Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageConnectionInfoBytesOut}"/>
+                Text="{x:Static res:Strings.StatusPageSessionInfoBytesOut}"/>
 
             <TextBlock
                 Grid.Row="3"
@@ -224,7 +224,7 @@
                 Height="20"
                 FontSize="11"
                 Style="{StaticResource eduVPNButtonStyle}"
-                Content="{x:Static res:Strings.StatusPageConnectionInfoViewLog}"
+                Content="{x:Static res:Strings.StatusPageSessionInfoViewLog}"
                 Command="{Binding Path=Parent.Session.ShowLog}"/>
         </Grid>
 
