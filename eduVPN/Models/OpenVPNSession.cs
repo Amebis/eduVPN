@@ -282,6 +282,9 @@ namespace eduVPN.Models
 
                         Parent.ChangeTaskCount(-1);
                     }));
+
+                // Signal session finished.
+                Finished.Set();
             }
         }
 

@@ -44,6 +44,12 @@ namespace eduVPN.Models
         public VPNConfiguration Configuration { get; }
 
         /// <summary>
+        /// Event to signal VPN session finished
+        /// </summary>
+        public EventWaitHandle Finished { get => _finished; }
+        private EventWaitHandle _finished;
+
+        /// <summary>
         /// User info
         /// </summary>
         public Models.UserInfo UserInfo
@@ -217,6 +223,7 @@ namespace eduVPN.Models
         public VPNSession(ViewModels.ConnectWizard parent, VPNConfiguration configuration)
         {
             _disconnect = new CancellationTokenSource();
+            _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Parent = parent;
 
@@ -320,6 +327,9 @@ namespace eduVPN.Models
         {
             // Do nothing but wait.
             CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ViewModels.Window.Abort.Token).Token.WaitHandle.WaitOne();
+
+            // Signal session finished.
+            Finished.Set();
         }
 
         /// <summary>
@@ -348,7 +358,10 @@ namespace eduVPN.Models
             if (!disposedValue)
             {
                 if (disposing)
+                {
                     _disconnect.Dispose();
+                    _finished.Dispose();
+                }
 
                 _disconnect.Cancel();
 
