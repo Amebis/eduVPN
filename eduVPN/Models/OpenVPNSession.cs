@@ -48,10 +48,6 @@ namespace eduVPN.Models
         /// </summary>
         private X509Certificate2 _client_certificate;
 
-        // Management session
-        private eduOpenVPN.Management.Session _mgmt_session;
-        private object _mgmt_session_lock = new object();
-
         #endregion
 
         #region Properties
@@ -223,23 +219,19 @@ namespace eduVPN.Models
                                 {
                                     // Start the management session.
                                     var mgmt_session = new eduOpenVPN.Management.Session();
-                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, this, ViewModels.Window.Abort.Token);
-
-                                    // The management session is up and running.
-                                    lock (_mgmt_session_lock)
-                                        _mgmt_session = mgmt_session;
+                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, this, ct_quit.Token);
 
                                     // Initialize session and release openvpn.exe to get started.
-                                    _mgmt_session.ReplayAndEnableState(ViewModels.Window.Abort.Token);
-                                    _mgmt_session.SetByteCount(5, ViewModels.Window.Abort.Token);
-                                    _mgmt_session.EnableHold(false, ViewModels.Window.Abort.Token);
-                                    _mgmt_session.ReleaseHold(ViewModels.Window.Abort.Token);
+                                    mgmt_session.ReplayAndEnableState(ct_quit.Token);
+                                    mgmt_session.SetByteCount(5, ct_quit.Token);
+                                    mgmt_session.EnableHold(false, ct_quit.Token);
+                                    mgmt_session.ReleaseHold(ct_quit.Token);
 
                                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1)));
                                     try
                                     {
                                         // Wait for the session to end gracefully.
-                                        _mgmt_session.Monitor.Join();
+                                        mgmt_session.Monitor.Join();
                                     } finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1))); }
                                 }
                                 finally { mgmt_client.Close(); }
@@ -250,14 +242,10 @@ namespace eduVPN.Models
                                     () =>
                                     {
                                         // Cleanup status properties.
-                                        State = VPNSessionStatusType.Initializing;
+                                        State = VPNSessionStatusType.Disconnecting;
                                         StateDescription = null;
-                                        TunnelAddress = null;
-                                        IPv6TunnelAddress = null;
                                         _connected_time_updater.Stop();
                                         ConnectedSince = null;
-                                        BytesIn = null;
-                                        BytesOut = null;
                                     }));
 
                                 // Wait for openvpn.exe to finish. Maximum 30s.
@@ -279,24 +267,18 @@ namespace eduVPN.Models
                     catch (Exception) { }
                 }
             }
-            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-        }
-
-        protected override void DoDisconnect()
-        {
-            lock (_mgmt_session_lock)
-                if (_mgmt_session != null)
-                {
-                    // Try the graceful disconnect first.
-                    try
+            finally
+            {
+                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                    () =>
                     {
-                        _mgmt_session.SendSignal(SignalType.SIGTERM, ViewModels.Window.Abort.Token);
-                        return;
-                    }
-                    catch (Exception) { }
-                }
+                        // Cleanup status properties.
+                        State = VPNSessionStatusType.Initializing;
+                        StateDescription = null;
 
-            base.DoDisconnect();
+                        Parent.ChangeTaskCount(-1);
+                    }));
+            }
         }
 
         protected override void DoShowLog()

@@ -164,7 +164,17 @@ namespace eduVPN.Models
             get
             {
                 if (_disconnect_command == null)
-                    _disconnect_command = new DelegateCommand(DoDisconnect, CanDiconnect);
+                    _disconnect_command = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            // Terminate connection.
+                            _disconnect.Cancel();
+                            Disconnect.RaiseCanExecuteChanged();
+                        },
+
+                        // canExecute
+                        () => !_disconnect.IsCancellationRequested);
 
                 return _disconnect_command;
             }
@@ -296,24 +306,6 @@ namespace eduVPN.Models
         {
             // Do nothing but wait.
             CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ViewModels.Window.Abort.Token).Token.WaitHandle.WaitOne();
-        }
-
-        /// <summary>
-        /// Called when Disconnect command is invoked.
-        /// </summary>
-        protected virtual void DoDisconnect()
-        {
-            // Raise "disconnect" flag.
-            _disconnect.Cancel();
-        }
-
-        /// <summary>
-        /// Called to test if Disconnect command is enabled.
-        /// </summary>
-        /// <returns><c>true</c> if enabled; <c>false</c> otherwise</returns>
-        protected virtual bool CanDiconnect()
-        {
-            return true;
         }
 
         /// <summary>
