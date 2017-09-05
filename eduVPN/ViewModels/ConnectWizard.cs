@@ -526,6 +526,19 @@ namespace eduVPN.ViewModels
                     //}));
                 })).Start();
 
+            // Launch VPN session in the background.
+            new Thread(new ThreadStart(
+                () =>
+                {
+                    try
+                    {
+                        Session.Run(Abort.Token);
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
+                })).Start();
+
+            // Do the configuration history book-keeping.
             var configuration_history = ConfigurationHistories[(int)Configuration.InstanceSourceType];
             if (Configuration.InstanceSource is Models.LocalInstanceSourceInfo)
             {
@@ -587,18 +600,6 @@ namespace eduVPN.ViewModels
             foreach (var cfg in configuration_history)
                 hist.Add(cfg.ToSettings());
             Properties.Settings.Default[_instance_directory_id[(int)Configuration.InstanceSourceType] + "ConfigHistory"] = hist;
-
-            // Launch VPN session in the background.
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    try
-                    {
-                        Session.Run(Abort.Token);
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
-                })).Start();
         }
 
         /// <summary>
