@@ -235,7 +235,7 @@ namespace eduVPN.Models
             _connected_time_updater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged("ConnectedTime"),
-                Dispatcher.CurrentDispatcher);
+                Parent.Dispatcher);
 
             // Launch user info load in the background.
             UserInfo = new Models.UserInfo();

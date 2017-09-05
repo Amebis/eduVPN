@@ -79,7 +79,7 @@ namespace eduVPN.Models
             new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => ShowLog.RaiseCanExecuteChanged(),
-                Dispatcher.CurrentDispatcher).Start();
+                Parent.Dispatcher).Start();
         }
 
         #endregion
