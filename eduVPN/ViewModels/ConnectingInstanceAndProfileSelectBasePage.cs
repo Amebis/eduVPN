@@ -49,6 +49,26 @@ namespace eduVPN.ViewModels
             _panel.OnActivate();
         }
 
+        protected override void DoNavigateBack()
+        {
+            base.DoNavigateBack();
+
+            if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
+            {
+                if (Parent.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
+                    Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                else
+                    Parent.CurrentPage = Parent.CustomInstancePage;
+            }
+            else
+                Parent.CurrentPage = Parent.InstanceSourceSelectPage;
+        }
+
+        protected override bool CanNavigateBack()
+        {
+            return true;
+        }
+
         #endregion
     }
 }
