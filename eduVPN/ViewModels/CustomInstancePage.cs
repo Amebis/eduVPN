@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using System;
+using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
 {
@@ -46,18 +47,26 @@ namespace eduVPN.ViewModels
                 {
                     _select_custom_instance = new DelegateCommand(
                         // execute
-                        () =>
+                        async () =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
                             {
+                                var selected_instance = new Models.InstanceInfo(new Uri(BaseURI));
+                                selected_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
+
+                                // Trigger initial authorization request.
+                                var authorization_task = new Task(() => selected_instance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                authorization_task.Start();
+                                await authorization_task;
+
                                 // Set authentication instance.
-                                Parent.Configuration.AuthenticatingInstance = new Models.InstanceInfo(new Uri(BaseURI));
-                                Parent.Configuration.AuthenticatingInstance.RequestAuthorization += Parent.Instance_RequestAuthorization;
+                                Parent.Configuration.AuthenticatingInstance = selected_instance;
 
                                 // Connecting instance will be the same as authenticating.
                                 Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
 
+                                // Go to (instance and) profile selection page.
                                 Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
                             }
                             catch (Exception ex) { Parent.Error = ex; }
