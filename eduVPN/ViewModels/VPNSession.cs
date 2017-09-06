@@ -226,10 +226,7 @@ namespace eduVPN.ViewModels
             _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Parent = parent;
-
-            // Clone configuration and keep an own copy.
-            // This prevents dependency on Parent.Configuration.
-            Configuration = (Models.VPNConfiguration)configuration.Clone();
+            Configuration = configuration;
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(

@@ -36,7 +36,6 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 Parent.InstanceSourceType = param.Value;
-                                Parent.Configuration = new Models.VPNConfiguration();
 
                                 if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
                                 {
@@ -67,10 +66,7 @@ namespace eduVPN.ViewModels
                                     if (authenticating_instance != null)
                                     {
                                         // Save found instance.
-                                        Parent.Configuration.AuthenticatingInstance = authenticating_instance;
-
-                                        // Assume the same connecting instance.
-                                        Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+                                        Parent.AuthenticatingInstance = authenticating_instance;
 
                                         // Go to (instance and) profile selection page.
                                         Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
@@ -78,7 +74,7 @@ namespace eduVPN.ViewModels
                                     else
                                         Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
-                                else if(Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                else if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
                                 {
                                     // Create authenticating instance.
                                     var authenticating_instance = new Models.InstanceInfo(instance_source_federated);
@@ -90,10 +86,7 @@ namespace eduVPN.ViewModels
                                     await authorization_task;
 
                                     // Set authenticating instance.
-                                    Parent.Configuration.AuthenticatingInstance = authenticating_instance;
-
-                                    // Reset connecting instance.
-                                    Parent.Configuration.ConnectingInstance = null;
+                                    Parent.AuthenticatingInstance = authenticating_instance;
 
                                     Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
                                 }
@@ -132,7 +125,6 @@ namespace eduVPN.ViewModels
                             {
                                 // Assume the custom instance would otherwise be a part of "Institute Access" source.
                                 Parent.InstanceSourceType = Models.InstanceSourceType.InstituteAccess;
-                                Parent.Configuration = new Models.VPNConfiguration();
 
                                 Parent.CurrentPage = Parent.CustomInstancePage;
                             }

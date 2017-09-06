@@ -89,14 +89,15 @@ namespace eduVPN.ViewModels
         }
 
         /// <summary>
-        /// VPN configuration
+        /// Authenticating eduVPN instance
         /// </summary>
-        public Models.VPNConfiguration Configuration
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public Models.InstanceInfo AuthenticatingInstance
         {
-            get { return _configuration; }
-            set { if (value != _configuration) { _configuration = value; RaisePropertyChanged(); } }
+            get { return _authenticating_instance; }
+            set { if (value != _authenticating_instance) { _authenticating_instance = value; RaisePropertyChanged(); } }
         }
-        private Models.VPNConfiguration _configuration;
+        private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
         /// VPN session

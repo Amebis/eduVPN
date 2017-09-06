@@ -35,7 +35,7 @@ namespace eduVPN.ViewModels
         public ConnectingInstanceAndProfileSelectBasePage(ConnectWizard parent) :
             base(parent)
         {
-            Panel = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.InstanceSourceType, Parent.Configuration.AuthenticatingInstance);
+            Panel = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.InstanceSourceType, Parent.AuthenticatingInstance);
         }
 
         #endregion
@@ -48,7 +48,7 @@ namespace eduVPN.ViewModels
 
             if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
             {
-                if (Parent.InstanceSource.IndexOf(Parent.Configuration.AuthenticatingInstance) >= 0)
+                if (Parent.InstanceSource.IndexOf(Parent.AuthenticatingInstance) >= 0)
                     Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                 else
                     Parent.CurrentPage = Parent.CustomInstancePage;

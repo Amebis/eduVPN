@@ -51,10 +51,7 @@ namespace eduVPN.ViewModels
                                 await authorization_task;
 
                                 // Save selected instance.
-                                Parent.Configuration.AuthenticatingInstance = selected_instance;
-
-                                // Assume the same connecting instance.
-                                Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
+                                Parent.AuthenticatingInstance = selected_instance;
 
                                 // Go to (instance and) profile selection page.
                                 Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
