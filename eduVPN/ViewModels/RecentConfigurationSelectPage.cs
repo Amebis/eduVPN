@@ -70,10 +70,16 @@ namespace eduVPN.ViewModels
                 else if (
                     Parent.InstanceSources[i] is Models.DistributedInstanceSourceInfo ||
                     Parent.InstanceSources[i] is Models.FederatedInstanceSourceInfo)
-                    _configuration_history_panels[i] = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)i, Parent.ConfigurationHistories[i].Count > 0 ? Parent.ConfigurationHistories[i][0].AuthenticatingInstance : null)
+                {
+                    var panel = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)i);
+                    if (Parent.ConfigurationHistories[i].Count > 0)
                     {
-                        SelectedInstance = Parent.ConfigurationHistories[i].Count > 0 ? Parent.ConfigurationHistories[i][0].ConnectingInstance : null
+                        // Mind the order: authenticating instance first, connecting second. Otherwise, the profile list loading will fail.
+                        panel.AuthenticatingInstance = Parent.ConfigurationHistories[i][0].AuthenticatingInstance;
+                        panel.SelectedInstance       = Parent.ConfigurationHistories[i][0].ConnectingInstance    ;
                     };
+                    _configuration_history_panels[i] = panel;
+                }
             }
         }
 

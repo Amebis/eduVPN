@@ -22,7 +22,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authenticating instance
         /// </summary>
-        public Models.InstanceInfo AuthenticatingInstance { get; }
+        public Models.InstanceInfo AuthenticatingInstance
+        {
+            get { return _authenticating_instance; }
+            set { if (value != _authenticating_instance) { _authenticating_instance = value; RaisePropertyChanged(); } }
+        }
+        private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
         /// Selected connecting instance
@@ -151,10 +156,9 @@ namespace eduVPN.ViewModels
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
         /// <param name="authenticating_instance">Authenticating instance</param>
-        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type, Models.InstanceInfo authenticating_instance) :
+        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
             base(parent, instance_source_type)
         {
-            AuthenticatingInstance = authenticating_instance;
         }
 
         #endregion
