@@ -42,6 +42,18 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
+            // Set authenticating instance first.
+            _panel.AuthenticatingInstance = Parent.AuthenticatingInstance;
+
+            // Force refresh the profile list. Otherwise, failed previous attempt followed by navigating the connection wizard back causes list not to reload.
+            _panel.SelectedInstance = null;
+            _panel.SelectedInstance = Parent.AuthenticatingInstance;
+        }
+
         protected override void DoNavigateBack()
         {
             base.DoNavigateBack();
