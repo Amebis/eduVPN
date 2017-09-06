@@ -42,13 +42,6 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            _panel.OnActivate();
-        }
-
         protected override void DoNavigateBack()
         {
             base.DoNavigateBack();

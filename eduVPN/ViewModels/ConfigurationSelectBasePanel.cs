@@ -73,16 +73,5 @@ namespace eduVPN.ViewModels
         }
 
         #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Called when the panel is activated.
-        /// </summary>
-        public virtual void OnActivate()
-        {
-        }
-
-        #endregion
     }
 }

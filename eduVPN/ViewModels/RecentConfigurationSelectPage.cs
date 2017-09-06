@@ -78,20 +78,5 @@ namespace eduVPN.ViewModels
         }
 
         #endregion
-
-        #region Methods
-
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            for (var i = (int)Models.InstanceSourceType._start; i < (int)Models.InstanceSourceType._end; i++)
-            {
-                if (_configuration_history_panels[i] != null)
-                    _configuration_history_panels[i].OnActivate();
-            }
-        }
-
-        #endregion
     }
 }
