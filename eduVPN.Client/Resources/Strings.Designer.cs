@@ -161,7 +161,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other instance.
+        ///   Looks up a localized string similar to Other address.
         /// </summary>
         public static string CustomInstancePageTitle {
             get {

@@ -140,7 +140,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Naprej</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Drugi ponudnik</value>
+    <value>Drug naslov</value>
   </data>
   <data name="CustomInstancePageDescription" xml:space="preserve">
     <value>Vnesite osnovni naslov URI svojega ponudnika VPN.</value>

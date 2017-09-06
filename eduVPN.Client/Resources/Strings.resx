@@ -146,7 +146,7 @@ The client will continue after you complete the authorization...</value>
     <value>eduVPN</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Other instance</value>
+    <value>Other address</value>
   </data>
   <data name="CustomInstancePageDescription" xml:space="preserve">
     <value>Enter base URI of your VPN provider.</value>
