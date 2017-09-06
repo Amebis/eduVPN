@@ -299,8 +299,8 @@ namespace eduVPN.ViewModels
             /// <summary>
             /// Constructs a StartSession command parameter set
             /// </summary>
-            /// <param name="instance_source_type"></param>
-            /// <param name="configuration"></param>
+            /// <param name="instance_source_type">Instance source type</param>
+            /// <param name="configuration">VPN configuration</param>
             public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.VPNConfiguration configuration)
             {
                 InstanceSourceType = instance_source_type;

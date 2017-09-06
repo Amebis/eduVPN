@@ -121,16 +121,15 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                // Create VPN configuration.
-                                var configuration = new Models.VPNConfiguration()
-                                {
-                                    AuthenticatingInstance = AuthenticatingInstance,
-                                    ConnectingInstance = SelectedInstance,
-                                    ConnectingProfile = profile
-                                };
-
                                 // Start VPN session.
-                                var param = new ConnectWizard.StartSessionParams(InstanceSourceType, configuration);
+                                var param = new ConnectWizard.StartSessionParams(
+                                    InstanceSourceType,
+                                    new Models.VPNConfiguration()
+                                    {
+                                        AuthenticatingInstance = AuthenticatingInstance,
+                                        ConnectingInstance = SelectedInstance,
+                                        ConnectingProfile = profile
+                                    });
                                 if (Parent.StartSession.CanExecute(param))
                                     Parent.StartSession.Execute(param);
                             }
