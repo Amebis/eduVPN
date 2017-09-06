@@ -151,7 +151,7 @@ The client will continue after you complete the authorization...</value>
   <data name="CustomInstancePageDescription" xml:space="preserve">
     <value>Enter base URI of your VPN provider.</value>
   </data>
-  <data name="ProfileSelectPageTitle" xml:space="preserve">
+  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
     <value>Connect</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
@@ -250,7 +250,10 @@ The client will continue after you complete the authorization...</value>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
-  <data name="RecentProfileSelectPageAddProfile" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddProfile" xml:space="preserve">
     <value>Add another profile</value>
+  </data>
+  <data name="SystemTrayMenuStatus" xml:space="preserve">
+    <value>Connection _info...</value>
   </data>
 </root>

@@ -58,7 +58,7 @@ namespace eduVPN.ViewModels
                                 // Connecting instance will be the same as authenticating.
                                 Parent.Configuration.ConnectingInstance = Parent.Configuration.AuthenticatingInstance;
 
-                                Parent.CurrentPage = Parent.ProfileSelectPage;
+                                Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }

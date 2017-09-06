@@ -13,14 +13,19 @@ using System.Windows.Threading;
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Distributed/federated authenticated configuration history panel base class
+    /// Instance and profile select panel base class
     /// </summary>
-    public class ConnectingInstanceAndProfileSelectPanel : ProfileSelectBasePanel
+    public class ConnectingInstanceAndProfileSelectPanel : ConfigurationSelectBasePanel
     {
         #region Properties
 
         /// <summary>
-        /// Selected instance
+        /// Authenticating instance
+        /// </summary>
+        public Models.InstanceInfo AuthenticatingInstance { get; }
+
+        /// <summary>
+        /// Selected connecting instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
         public Models.InstanceInfo SelectedInstance
@@ -32,6 +37,7 @@ namespace eduVPN.ViewModels
                 {
                     _selected_instance = value;
                     RaisePropertyChanged();
+                    ConnectProfile.RaiseCanExecuteChanged();
 
                     ProfileList = new JSON.Collection<Models.ProfileInfo>();
                     if (_selected_instance != null)
@@ -43,7 +49,7 @@ namespace eduVPN.ViewModels
                                 try
                                 {
                                     // Get and load profile list.
-                                    var profile_list = _selected_instance.GetProfileList(ConfigurationHistory[0].AuthenticatingInstance, Window.Abort.Token);
+                                    var profile_list = _selected_instance.GetProfileList(AuthenticatingInstance, Window.Abort.Token);
 
                                     // Send the loaded profile list back to the UI thread.
                                     // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
@@ -110,24 +116,26 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                // Save selected instance.
-                                ConfigurationHistory[0].ConnectingInstance = SelectedInstance;
+                                // Create VPN configuration.
+                                var configuration = new Models.VPNConfiguration()
+                                {
+                                    InstanceSourceType = InstanceSourceType,
+                                    InstanceSource = InstanceSource,
+                                    AuthenticatingInstance = AuthenticatingInstance,
+                                    ConnectingInstance = SelectedInstance,
+                                    ConnectingProfile = profile
+                                };
 
-                                // Save connecting profile
-                                ConfigurationHistory[0].ConnectingProfile = profile;
-
-                                // Set configuration.
-                                Parent.Configuration = ConfigurationHistory[0];
-
-                                // Go to status page.
-                                Parent.CurrentPage = Parent.StatusPage;
+                                // Start VPN session.
+                                if (Parent.StartSession.CanExecute(configuration))
+                                    Parent.StartSession.Execute(configuration);
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
-                        profile => profile != null);
+                        profile => SelectedInstance != null && profile != null);
 
                 return _connect_profile;
             }
@@ -139,28 +147,15 @@ namespace eduVPN.ViewModels
         #region Constructors
 
         /// <summary>
-        /// Constructs history panel
+        /// Constructs a panel
         /// </summary>
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
+        /// <param name="authenticating_instance">Authenticating instance</param>
+        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type, Models.InstanceInfo authenticating_instance) :
             base(parent, instance_source_type)
         {
-        }
-
-        #endregion
-
-        #region Methods
-
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            if (ConfigurationHistory.Count > 0)
-            {
-                // Initialize selected instance.
-                SelectedInstance = ConfigurationHistory[0].ConnectingInstance;
-            }
+            AuthenticatingInstance = authenticating_instance;
         }
 
         #endregion

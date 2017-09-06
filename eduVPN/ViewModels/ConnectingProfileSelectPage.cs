@@ -8,17 +8,17 @@
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Instance and profile selection wizard page
+    /// Profile selection wizard page
     /// </summary>
-    public class ConnectingInstanceAndProfileSelectPage : ConnectingInstanceAndProfileSelectBasePage
+    public class ConnectingProfileSelectPage : ConnectingInstanceAndProfileSelectBasePage
     {
         #region Constructors
 
         /// <summary>
-        /// Constructs a wizard page.
+        /// Constructs a profile selection wizard page.
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public ConnectingInstanceAndProfileSelectPage(ConnectWizard parent) :
+        public ConnectingProfileSelectPage(ConnectWizard parent) :
             base(parent)
         {
             Panel.SelectedInstance = Parent.Configuration.AuthenticatingInstance;

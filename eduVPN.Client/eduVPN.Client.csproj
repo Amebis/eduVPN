@@ -41,6 +41,7 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ConnectingInstanceAndProfileEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\HistorySourceInverseVisibilityConverter.cs" />
@@ -53,6 +54,10 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
+    <Compile Include="Views\ConnectingInstanceAndProfileSelectBasePanel.cs" />
+    <Compile Include="Views\ConnectingProfileSelectPanel.xaml.cs">
+      <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
     </Compile>
@@ -60,8 +65,8 @@
     <Compile Include="Views\ConfigurationSelectPanel.xaml.cs">
       <DependentUpon>ConfigurationSelectPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RecentProfileSelectPage.xaml.cs">
-      <DependentUpon>RecentProfileSelectPage.xaml</DependentUpon>
+    <Compile Include="Views\RecentConfigurationSelectPage.xaml.cs">
+      <DependentUpon>RecentConfigurationSelectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectWizardPage.cs" />
     <Compile Include="Views\InitializingPage.xaml.cs">
@@ -70,10 +75,9 @@
     <Compile Include="Views\ConnectingInstanceAndProfileSelectPage.xaml.cs">
       <DependentUpon>ConnectingInstanceAndProfileSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileSelectPage.xaml.cs">
-      <DependentUpon>ProfileSelectPage.xaml</DependentUpon>
+    <Compile Include="Views\ConnectingProfileSelectPage.xaml.cs">
+      <DependentUpon>ConnectingProfileSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileSelectBasePage.cs" />
     <Compile Include="Views\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
@@ -119,6 +123,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ConnectingProfileSelectPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,7 +135,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RecentProfileSelectPage.xaml">
+    <Page Include="Views\RecentConfigurationSelectPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -176,7 +184,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ProfileSelectPage.xaml">
+    <Page Include="Views\ConnectingProfileSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

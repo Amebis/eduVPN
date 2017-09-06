@@ -14,7 +14,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Locally authenticated configuration history panel
     /// </summary>
-    public class ConfigurationSelectPanel : ProfileSelectBasePanel
+    public class ConfigurationSelectPanel : ConfigurationSelectBasePanel
     {
         #region Properties
 
@@ -49,11 +49,9 @@ namespace eduVPN.ViewModels
                                 authorization_task.Start();
                                 await authorization_task;
 
-                                // Set selected configuration.
-                                Parent.Configuration = configuration;
-
-                                // Go to status page.
-                                Parent.CurrentPage = Parent.StatusPage;
+                                // Start VPN session.
+                                if (Parent.StartSession.CanExecute(configuration))
+                                    Parent.StartSession.Execute(configuration);
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }

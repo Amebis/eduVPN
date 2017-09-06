@@ -67,7 +67,7 @@ namespace eduVPN.Views
             // Create notify icon, set default icon, and setup events.
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
             _tray_icon = new System.Windows.Forms.NotifyIcon();
-            _tray_icon.Icon = _icons[view_model != null && view_model.Session != null && view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+            _tray_icon.Icon = _icons[view_model.Session != null && view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
             _tray_icon.Click += TrayIcon_Click;
 
             // Bind to "Session.State" property to update tray icon.
@@ -91,6 +91,10 @@ namespace eduVPN.Views
                     }
                 }
             };
+
+            // Set context menu data context to allow bindings to work.
+            if (Resources["SystemTrayMenu"] is ContextMenu menu)
+                menu.DataContext = DataContext;
 
             base.OnInitialized(e);
         }
@@ -147,6 +151,15 @@ namespace eduVPN.Views
                 e.Cancel = true;
                 Hide();
             }
+        }
+
+        private void SessionInfo_Click(object sender, RoutedEventArgs e)
+        {
+            // (Re)activate window.
+            if (!IsActive)
+                Show();
+            Activate();
+            Focus();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

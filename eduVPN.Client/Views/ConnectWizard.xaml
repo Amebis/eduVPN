@@ -47,20 +47,25 @@
         <DataTemplate DataType="{x:Type viewModel:CustomInstancePage}">
             <view:CustomInstancePage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:ProfileSelectPage}">
-            <view:ProfileSelectPage/>
+        <DataTemplate DataType="{x:Type viewModel:ConnectingProfileSelectPage}">
+            <view:ConnectingProfileSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPage}">
             <view:ConnectingInstanceAndProfileSelectPage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:RecentProfileSelectPage}">
-            <view:RecentProfileSelectPage/>
+        <DataTemplate DataType="{x:Type viewModel:RecentConfigurationSelectPage}">
+            <view:RecentConfigurationSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:StatusPage}">
             <view:StatusPage/>
         </DataTemplate>
 
         <ContextMenu x:Key="SystemTrayMenu">
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuStatus}"
+                Command="{Binding Path=SessionInfo}"
+                Click="SessionInfo_Click"/>
+            <Separator/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuExit}"
                 Click="Exit_Click"/>

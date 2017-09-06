@@ -32,18 +32,15 @@ namespace eduVPN.Views
             // 1. Change the UI to provide separate button after the selection is made.
             // 2. Change the list of profiles to a stack of buttons of profiles
 
-            if (e.AddedItems.Count > 0)
+            if (e.AddedItems.Count > 0 &&
+                DataContext is ViewModels.ConfigurationSelectPanel view_model &&
+                view_model.ConnectConfiguration.CanExecute(view_model.SelectedConfiguration))
             {
-                // User selected a recent configuration.
-                var view_model = (ViewModels.ConfigurationSelectPanel)DataContext;
-                if (view_model != null && // Sometimes this event gets called with null view model.
-                    view_model.ConnectConfiguration.CanExecute(view_model.SelectedConfiguration))
-                {
-                    view_model.ConnectConfiguration.Execute(view_model.SelectedConfiguration);
+                // Connect selected configuration.
+                view_model.ConnectConfiguration.Execute(view_model.SelectedConfiguration);
 
-                    // Reset selected configuration, to prevent repetitive triggering.
-                    view_model.SelectedConfiguration = null;
-                }
+                // Reset selected configuration, to prevent repetitive triggering.
+                view_model.SelectedConfiguration = null;
             }
         }
 

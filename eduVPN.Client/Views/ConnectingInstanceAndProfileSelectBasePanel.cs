@@ -10,9 +10,9 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for ProfileSelectPage.xaml and ConnectingInstanceAndProfileSelectPage.xaml
+    /// Interaction logic for ConnectingProfileSelectPanel.xaml and ConnectingInstanceAndProfileSelectPanel.xaml
     /// </summary>
-    public class ProfileSelectBasePage : ConnectWizardPage
+    public class ConnectingInstanceAndProfileSelectBasePanel : UserControl
     {
         #region Methods
 
@@ -23,18 +23,15 @@ namespace eduVPN.Views
             // 1. Change the UI to provide separate button after the selection is made.
             // 2. Change the list of profiles to a stack of buttons of profiles
 
-            if (e.AddedItems.Count > 0)
+            if (e.AddedItems.Count > 0 &&
+                DataContext is ViewModels.ConnectingInstanceAndProfileSelectPanel view_model &&
+                view_model.ConnectProfile.CanExecute(view_model.SelectedProfile))
             {
-                // User selected a profile.
-                var view_model = (ViewModels.ProfileSelectBasePage)DataContext;
-                if (view_model != null && // Sometimes this event gets called with null view model.
-                    view_model.ConnectProfile.CanExecute(view_model.SelectedProfile))
-                {
-                    view_model.ConnectProfile.Execute(view_model.SelectedProfile);
+                // Connect selected profile.
+                view_model.ConnectProfile.Execute(view_model.SelectedProfile);
 
-                    // Reset selected profile, to prevent repetitive triggering.
-                    view_model.SelectedProfile = null;
-                }
+                // Reset selected profile, to prevent repetitive triggering.
+                view_model.SelectedProfile = null;
             }
         }
 

@@ -8,13 +8,13 @@
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for ConnectingInstanceAndProfileSelectPanel.xaml
+    /// Interaction logic for ConnectingProfileSelectPanel.xaml
     /// </summary>
-    public partial class ConnectingInstanceAndProfileSelectPanel : ConnectingInstanceAndProfileSelectBasePanel
+    public partial class ConnectingProfileSelectPanel : ConnectingInstanceAndProfileSelectBasePanel
     {
         #region Constructors
 
-        public ConnectingInstanceAndProfileSelectPanel()
+        public ConnectingProfileSelectPanel()
         {
             InitializeComponent();
         }

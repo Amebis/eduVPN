@@ -11,7 +11,7 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for ProfileSelectPage.xaml and ConnectingInstanceAndProfileSelectPage.xaml
+    /// Interaction logic for connection wizard pages
     /// </summary>
     public class ConnectWizardPage : Page, INotifyPropertyChanged
     {

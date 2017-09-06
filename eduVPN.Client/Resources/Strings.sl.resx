@@ -148,7 +148,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
   </data>
-  <data name="ProfileSelectPageTitle" xml:space="preserve">
+  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
     <value>Poveži</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
@@ -250,7 +250,10 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Varni splet</value>
   </data>
-  <data name="RecentProfileSelectPageAddProfile" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddProfile" xml:space="preserve">
     <value>Dodaj drug profil</value>
+  </data>
+  <data name="SystemTrayMenuStatus" xml:space="preserve">
+    <value>Podatk_i povezave...</value>
   </data>
 </root>

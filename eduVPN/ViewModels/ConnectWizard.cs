@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -75,9 +76,173 @@ namespace eduVPN.ViewModels
         public Models.VPNSession Session
         {
             get { return _session; }
-            set { if (value != _session) { _session = value; RaisePropertyChanged(); } }
+            set {
+                if (value != _session)
+                {
+                    _session = value;
+                    RaisePropertyChanged();
+                    SessionInfo.RaiseCanExecuteChanged();
+                }
+            }
         }
         private Models.VPNSession _session;
+
+        /// <summary>
+        /// Connection info command
+        /// </summary>
+        public DelegateCommand SessionInfo
+        {
+            get
+            {
+                if (_session_info == null)
+                    _session_info = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            ChangeTaskCount(+1);
+                            try { CurrentPage = StatusPage; }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () => Session != null);
+
+                return _session_info;
+            }
+        }
+        private DelegateCommand _session_info;
+
+        /// <summary>
+        /// Starts VPN session
+        /// </summary>
+        public DelegateCommand<Models.VPNConfiguration> StartSession
+        {
+            get
+            {
+                if (_start_session == null)
+                    _start_session = new DelegateCommand<Models.VPNConfiguration>(
+                        // execute
+                        configuration =>
+                        {
+                            // Switch to the status page, for user to see the progress.
+                            CurrentPage = StatusPage;
+
+                            if (Session != null && Session.Configuration != null && Session.Configuration.Equals(configuration) && !Session.Finished.WaitOne(0))
+                            {
+                                // Wizard is already running (or attempting to run) a VPN session of the same configuration as specified.
+                                return;
+                            }
+
+                            // Launch the VPN session in the background.
+                            new Thread(new ThreadStart(
+                                () =>
+                                {
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
+                                    try
+                                    {
+                                        if (Session != null)
+                                        {
+                                            // Finish active session first.
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                                () =>
+                                                {
+                                                    if (Session.Disconnect.CanExecute())
+                                                        Session.Disconnect.Execute();
+                                                }));
+
+                                            // Await for the session to finish.
+                                            if (WaitHandle.WaitAny(new WaitHandle[] { Abort.Token.WaitHandle, Session.Finished }) == 0)
+                                                throw new OperationCanceledException();
+                                        }
+
+                                        // Create and run a new session.
+                                        var session = new Models.OpenVPNSession(this, configuration);
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                            () =>
+                                            {
+                                                Session = session;
+                                                ChangeTaskCount(-1);
+                                            }));
+                                        try { session.Run(); }
+                                        finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1))); }
+                                    }
+                                    catch (OperationCanceledException) { }
+                                    catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                                })).Start();
+
+                            // Do the configuration history book-keeping.
+                            var configuration_history = ConfigurationHistories[(int)configuration.InstanceSourceType];
+                            if (configuration.InstanceSource is Models.LocalInstanceSourceInfo)
+                            {
+                                // Check for session configuration duplicates and update popularity.
+                                int found = -1;
+                                for (var i = configuration_history.Count; i-- > 0;)
+                                {
+                                    if (configuration_history[i].Equals(configuration))
+                                    {
+                                        if (found < 0)
+                                        {
+                                            // Upvote popularity.
+                                            configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                            found = i;
+                                        }
+                                        else
+                                        {
+                                            // We found a match second time. This happened early in the Alpha stage when duplicate checking didn't work right.
+                                            // Clean the list. The victim is less popular entry.
+                                            if (configuration_history[i].Popularity < configuration_history[found].Popularity)
+                                            {
+                                                configuration_history.RemoveAt(i);
+                                                found--;
+                                            }
+                                            else
+                                            {
+                                                configuration.Popularity = configuration_history[i].Popularity;
+                                                configuration_history.RemoveAt(found);
+                                                found = i;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // Downvote popularity.
+                                        configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                    }
+                                }
+
+                                if (found < 0)
+                                {
+                                    // Add session configuration to history.
+                                    configuration_history.Add(configuration);
+                                }
+                            }
+                            else if (
+                                configuration.InstanceSource is Models.DistributedInstanceSourceInfo ||
+                                configuration.InstanceSource is Models.FederatedInstanceSourceInfo)
+                            {
+                                // Set session configuration to history.
+                                if (configuration_history.Count == 0)
+                                    configuration_history.Add(configuration);
+                                else
+                                    configuration_history[0] = configuration;
+                            }
+
+                            // Update settings.
+                            var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
+                            foreach (var cfg in configuration_history)
+                                hist.Add(cfg.ToSettings());
+                            Properties.Settings.Default[_instance_directory_id[(int)configuration.InstanceSourceType] + "ConfigHistory"] = hist;
+                        },
+
+                        // canExecute
+                        configuration => configuration != null);
+
+                return _start_session;
+            }
+        }
+        private DelegateCommand<Models.VPNConfiguration> _start_session;
 
         /// <summary>
         /// Instance request authorization event
@@ -186,16 +351,16 @@ namespace eduVPN.ViewModels
         /// (Instance and) profile selection wizard page
         /// </summary>
         /// <remarks>When <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSourceInfo</c> the profile selection page is returned; otherwise, the instance and profile selection page is returned.</remarks>
-        public ProfileSelectBasePage ProfileSelectPage
+        public ConnectingInstanceAndProfileSelectBasePage ConnectingProfileSelectPage
         {
             get
             {
                 if (Configuration.InstanceSource is Models.LocalInstanceSourceInfo)
                 {
                     // Profile selection (local authentication).
-                    if (_profile_select_page == null)
-                        _profile_select_page = new ProfileSelectPage(this);
-                    return _profile_select_page;
+                    if (_connecting_profile_select_page == null)
+                        _connecting_profile_select_page = new ConnectingProfileSelectPage(this);
+                    return _connecting_profile_select_page;
                 }
                 else
                 {
@@ -206,22 +371,22 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private ProfileSelectPage _profile_select_page;
+        private ConnectingProfileSelectPage _connecting_profile_select_page;
         private ConnectingInstanceAndProfileSelectPage _connecting_instance_and_profile_select_page;
 
         /// <summary>
         /// Recent profile selection wizard page
         /// </summary>
-        public RecentProfileSelectPage RecentProfileSelectPage
+        public RecentConfigurationSelectPage RecentConfigurationSelectPage
         {
             get
             {
-                if (_recent_profile_select_page == null)
-                    _recent_profile_select_page = new RecentProfileSelectPage(this);
-                return _recent_profile_select_page;
+                if (_recent_configuration_select_page == null)
+                    _recent_configuration_select_page = new RecentConfigurationSelectPage(this);
+                return _recent_configuration_select_page;
             }
         }
-        private RecentProfileSelectPage _recent_profile_select_page;
+        private RecentConfigurationSelectPage _recent_configuration_select_page;
 
         /// <summary>
         /// Status wizard page
@@ -431,7 +596,7 @@ namespace eduVPN.ViewModels
                         // Proceed to the "first" page.
                         if (_configuration_histories[(int)Models.InstanceSourceType.SecureInternet].Count > 0 ||
                             _configuration_histories[(int)Models.InstanceSourceType.InstituteAccess].Count > 0)
-                            CurrentPage = RecentProfileSelectPage;
+                            CurrentPage = RecentConfigurationSelectPage;
                         else
                             CurrentPage = InstanceSourceSelectPage;
                     }
@@ -442,106 +607,6 @@ namespace eduVPN.ViewModels
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Starts VPN session
-        /// </summary>
-        public void StartSession()
-        {
-            // Create a new session.
-            Session = new Models.OpenVPNSession(this, Configuration);
-
-            // Launch VPN session in the background.
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    var session = Session;
-                    try { session.Run(); }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { Error = ex; })); }
-                    finally
-                    {
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                            () =>
-                            {
-                                if (session == Session && Error == null)
-                                {
-                                    // This session is still "the" session. Invalidate it.
-                                    Session = null;
-
-                                    if (CurrentPage == StatusPage)
-                                    {
-                                        // Navigate back to recent profile select page.
-                                        CurrentPage = RecentProfileSelectPage;
-                                    }
-                                }
-                            }));
-                    }
-                })).Start();
-
-            // Do the configuration history book-keeping.
-            var configuration_history = ConfigurationHistories[(int)Configuration.InstanceSourceType];
-            if (Configuration.InstanceSource is Models.LocalInstanceSourceInfo)
-            {
-                // Check for session configuration duplicates and update popularity.
-                int found = -1;
-                for (var i = configuration_history.Count; i-- > 0;)
-                {
-                    if (configuration_history[i].Equals(Configuration))
-                    {
-                        if (found < 0)
-                        {
-                            // Upvote popularity.
-                            configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
-                            found = i;
-                        }
-                        else
-                        {
-                            // We found a match second time. This happened early in the Alpha stage when duplicate checking didn't work right.
-                            // Clean the list. The victim is less popular entry.
-                            if (configuration_history[i].Popularity < configuration_history[found].Popularity)
-                            {
-                                configuration_history.RemoveAt(i);
-                                found--;
-                            }
-                            else
-                            {
-                                Configuration.Popularity = configuration_history[i].Popularity;
-                                configuration_history.RemoveAt(found);
-                                found = i;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Downvote popularity.
-                        configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
-                    }
-                }
-
-                if (found < 0)
-                {
-                    // Add session configuration to history.
-                    configuration_history.Add(Configuration);
-                }
-            }
-            else if (
-                Configuration.InstanceSource is Models.DistributedInstanceSourceInfo ||
-                Configuration.InstanceSource is Models.FederatedInstanceSourceInfo)
-            {
-                // Set session configuration to history.
-                if (configuration_history.Count == 0)
-                    configuration_history.Add(Configuration);
-                else
-                    configuration_history[0] = Configuration;
-            }
-
-            // Update settings.
-            var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
-            foreach (var cfg in configuration_history)
-                hist.Add(cfg.ToSettings());
-            Properties.Settings.Default[_instance_directory_id[(int)Configuration.InstanceSourceType] + "ConfigHistory"] = hist;
-        }
 
         /// <summary>
         /// Called when an instance requests user authorization

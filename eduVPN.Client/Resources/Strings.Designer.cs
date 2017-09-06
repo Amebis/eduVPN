@@ -143,6 +143,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect.
+        /// </summary>
+        public static string ConnectingProfileSelectPageTitle {
+            get {
+                return ResourceManager.GetString("ConnectingProfileSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter base URI of your VPN provider..
         /// </summary>
         public static string CustomInstancePageDescription {
@@ -269,20 +278,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect.
-        /// </summary>
-        public static string ProfileSelectPageTitle {
-            get {
-                return ResourceManager.GetString("ProfileSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add another profile.
         /// </summary>
-        public static string RecentProfileSelectPageAddProfile {
+        public static string RecentConfigurationSelectPageAddProfile {
             get {
-                return ResourceManager.GetString("RecentProfileSelectPageAddProfile", resourceCulture);
+                return ResourceManager.GetString("RecentConfigurationSelectPageAddProfile", resourceCulture);
             }
         }
         
@@ -418,6 +418,15 @@ namespace eduVPN.Client.Resources {
         public static string SystemTrayMenuExit {
             get {
                 return ResourceManager.GetString("SystemTrayMenuExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection _info....
+        /// </summary>
+        public static string SystemTrayMenuStatus {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuStatus", resourceCulture);
             }
         }
         

@@ -27,22 +27,11 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            Parent.StartSession();
-        }
-
         protected override void DoNavigateBack()
         {
             base.DoNavigateBack();
 
-            // Terminate connection.
-            if (Parent.Session != null && Parent.Session.Disconnect.CanExecute())
-                Parent.Session.Disconnect.Execute();
-
-            Parent.CurrentPage = Parent.RecentProfileSelectPage;
+            Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
         }
 
         protected override bool CanNavigateBack()
