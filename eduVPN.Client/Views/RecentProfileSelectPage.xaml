@@ -30,8 +30,8 @@
         </CollectionViewSource>
         
         <!-- Page view model to view mapping -->
-        <DataTemplate DataType="{x:Type viewModel:LocalConfigurationHistoryPanel}">
-            <view:LocalConfigurationHistoryPanel/>
+        <DataTemplate DataType="{x:Type viewModel:ConfigurationSelectPanel}">
+            <view:ConfigurationSelectPanel/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPanel}">
             <view:ConnectingInstanceAndProfileSelectPanel/>

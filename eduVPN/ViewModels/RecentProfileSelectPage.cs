@@ -20,11 +20,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Configuration history panels
         /// </summary>
-        public ConfigurationHistoryPanel[] ConfigurationHistoryPanels
+        public ProfileSelectBasePanel[] ConfigurationHistoryPanels
         {
             get { return _configuration_history_panels; }
         }
-        private ConfigurationHistoryPanel[] _configuration_history_panels;
+        private ProfileSelectBasePanel[] _configuration_history_panels;
 
         /// <summary>
         /// Add another profile
@@ -62,11 +62,11 @@ namespace eduVPN.ViewModels
         {
             // Create history panels.
             var source_type_length = (int)Models.InstanceSourceType._end;
-            _configuration_history_panels = new ConfigurationHistoryPanel[Parent.InstanceSources.Length];
+            _configuration_history_panels = new ProfileSelectBasePanel[Parent.InstanceSources.Length];
             for (var i = (int)Models.InstanceSourceType._start; i < source_type_length; i++)
             {
                 if (Parent.InstanceSources[i] is Models.LocalInstanceSourceInfo)
-                    _configuration_history_panels[i] = new LocalConfigurationHistoryPanel(Parent, (Models.InstanceSourceType)i);
+                    _configuration_history_panels[i] = new ConfigurationSelectPanel(Parent, (Models.InstanceSourceType)i);
                 else if (
                     Parent.InstanceSources[i] is Models.DistributedInstanceSourceInfo ||
                     Parent.InstanceSources[i] is Models.FederatedInstanceSourceInfo)

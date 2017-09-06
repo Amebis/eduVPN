@@ -15,7 +15,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Distributed/federated authenticated configuration history panel base class
     /// </summary>
-    public class ConnectingInstanceAndProfileSelectPanel : ConfigurationHistoryPanel
+    public class ConnectingInstanceAndProfileSelectPanel : ProfileSelectBasePanel
     {
         #region Properties
 

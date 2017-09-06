@@ -57,8 +57,8 @@
       <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImageWithFallback.cs" />
-    <Compile Include="Views\LocalConfigurationHistoryPanel.xaml.cs">
-      <DependentUpon>LocalConfigurationHistoryPanel.xaml</DependentUpon>
+    <Compile Include="Views\ConfigurationSelectPanel.xaml.cs">
+      <DependentUpon>ConfigurationSelectPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RecentProfileSelectPage.xaml.cs">
       <DependentUpon>RecentProfileSelectPage.xaml</DependentUpon>
@@ -123,7 +123,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LocalConfigurationHistoryPanel.xaml">
+    <Page Include="Views\ConfigurationSelectPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

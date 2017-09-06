@@ -13,7 +13,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Configuration history panel base class
     /// </summary>
-    public class ConfigurationHistoryPanel : BindableBase
+    public class ProfileSelectBasePanel : BindableBase
     {
         #region Properties
 
@@ -66,7 +66,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public ConfigurationHistoryPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type)
+        public ProfileSelectBasePanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type)
         {
             Parent = parent;
             InstanceSourceType = instance_source_type;

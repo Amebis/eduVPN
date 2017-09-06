@@ -14,7 +14,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Locally authenticated configuration history panel
     /// </summary>
-    public class LocalConfigurationHistoryPanel : ConfigurationHistoryPanel
+    public class ConfigurationSelectPanel : ProfileSelectBasePanel
     {
         #region Properties
 
@@ -76,7 +76,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public LocalConfigurationHistoryPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
+        public ConfigurationSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
             base(parent, instance_source_type)
         {
         }

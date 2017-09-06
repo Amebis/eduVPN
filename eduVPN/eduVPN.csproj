@@ -69,7 +69,7 @@
     <Compile Include="ViewModels\AuthenticatingCountrySelectPage.cs" />
     <Compile Include="ViewModels\AuthenticatingInstanceSelectPage.cs" />
     <Compile Include="ViewModels\AuthenticatingInstituteSelectPage.cs" />
-    <Compile Include="ViewModels\ConfigurationHistoryPanel.cs" />
+    <Compile Include="ViewModels\ProfileSelectBasePanel.cs" />
     <Compile Include="ViewModels\ConnectingInstanceAndProfileSelectPage.cs" />
     <Compile Include="ViewModels\ConnectingInstanceAndProfileSelectPanel.cs" />
     <Compile Include="ViewModels\CustomInstancePage.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="ViewModels\ConnectWizard.cs" />
     <Compile Include="Models\InstanceInfo.cs" />
     <Compile Include="ViewModels\InstanceSourceSelectPage.cs" />
-    <Compile Include="ViewModels\LocalConfigurationHistoryPanel.cs" />
+    <Compile Include="ViewModels\ConfigurationSelectPanel.cs" />
     <Compile Include="ViewModels\ProfileSelectBasePage.cs" />
     <Compile Include="JSON\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

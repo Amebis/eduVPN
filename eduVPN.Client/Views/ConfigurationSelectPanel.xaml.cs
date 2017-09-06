@@ -10,13 +10,13 @@ using System.Windows.Controls;
 namespace eduVPN.Views
 {
     /// <summary>
-    /// Interaction logic for LocalConfigurationHistoryPanel.xaml
+    /// Interaction logic for ConfigurationSelectPanel.xaml
     /// </summary>
-    public partial class LocalConfigurationHistoryPanel : UserControl
+    public partial class ConfigurationSelectPanel : UserControl
     {
         #region Constructors
 
-        public LocalConfigurationHistoryPanel()
+        public ConfigurationSelectPanel()
         {
             InitializeComponent();
         }
@@ -35,7 +35,7 @@ namespace eduVPN.Views
             if (e.AddedItems.Count > 0)
             {
                 // User selected a recent configuration.
-                var view_model = (ViewModels.LocalConfigurationHistoryPanel)DataContext;
+                var view_model = (ViewModels.ConfigurationSelectPanel)DataContext;
                 if (view_model != null && // Sometimes this event gets called with null view model.
                     view_model.ConnectConfiguration.CanExecute(view_model.SelectedConfiguration))
                 {
