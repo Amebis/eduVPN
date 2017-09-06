@@ -15,7 +15,7 @@ using System.Net;
 using System.Threading;
 using System.Windows.Threading;
 
-namespace eduVPN.Models
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// VPN session base class
@@ -36,12 +36,12 @@ namespace eduVPN.Models
         /// <summary>
         /// The session parent
         /// </summary>
-        public ViewModels.ConnectWizard Parent { get; }
+        public ConnectWizard Parent { get; }
 
         /// <summary>
         /// VPN configuration
         /// </summary>
-        public VPNConfiguration Configuration { get; }
+        public Models.VPNConfiguration Configuration { get; }
 
         /// <summary>
         /// Event to signal VPN session finished
@@ -72,12 +72,12 @@ namespace eduVPN.Models
         /// <summary>
         /// Client connection state
         /// </summary>
-        public VPNSessionStatusType State
+        public Models.VPNSessionStatusType State
         {
             get { return _state; }
             set { if (value != _state) { _state = value; RaisePropertyChanged(); } }
         }
-        private VPNSessionStatusType _state;
+        private Models.VPNSessionStatusType _state;
 
         /// <summary>
         /// Descriptive string (used mostly on <c>StateType.Reconnecting</c> and <c>StateType.Exiting</c> to show the reason for the disconnect)
@@ -220,7 +220,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        public VPNSession(ViewModels.ConnectWizard parent, VPNConfiguration configuration)
+        public VPNSession(ConnectWizard parent, Models.VPNConfiguration configuration)
         {
             _disconnect = new CancellationTokenSource();
             _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
@@ -229,7 +229,7 @@ namespace eduVPN.Models
 
             // Clone configuration and keep an own copy.
             // This prevents dependency on Parent.Configuration.
-            Configuration = (VPNConfiguration)configuration.Clone();
+            Configuration = (Models.VPNConfiguration)configuration.Clone();
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(
@@ -245,7 +245,7 @@ namespace eduVPN.Models
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
                     try
                     {
-                        var user_info = Configuration.AuthenticatingInstance.GetUserInfo(Configuration.AuthenticatingInstance, ViewModels.Window.Abort.Token);
+                        var user_info = Configuration.AuthenticatingInstance.GetUserInfo(Configuration.AuthenticatingInstance, Window.Abort.Token);
                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                     }
                     catch (OperationCanceledException) { }
@@ -259,8 +259,8 @@ namespace eduVPN.Models
             new Thread(new ThreadStart(
                 () =>
                 {
-                    var api_authenticating = Configuration.AuthenticatingInstance.GetEndpoints(ViewModels.Window.Abort.Token);
-                    var api_connecting = Configuration.ConnectingInstance.GetEndpoints(ViewModels.Window.Abort.Token);
+                    var api_authenticating = Configuration.AuthenticatingInstance.GetEndpoints(Window.Abort.Token);
+                    var api_connecting = Configuration.ConnectingInstance.GetEndpoints(Window.Abort.Token);
                     foreach (
                         var list in new List<KeyValuePair<Uri, string>>() {
                             new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
@@ -282,10 +282,10 @@ namespace eduVPN.Models
                                     message_list.LoadJSONAPIResponse(
                                         JSON.Response.Get(
                                             uri: list.Key,
-                                            token: Configuration.AuthenticatingInstance.PeekAccessToken(ViewModels.Window.Abort.Token),
-                                            ct: ViewModels.Window.Abort.Token).Value,
+                                            token: Configuration.AuthenticatingInstance.PeekAccessToken(Window.Abort.Token),
+                                            ct: Window.Abort.Token).Value,
                                         list.Value,
-                                        ViewModels.Window.Abort.Token);
+                                        Window.Abort.Token);
 
                                     if (message_list.Count > 0)
                                     {
@@ -326,7 +326,7 @@ namespace eduVPN.Models
         public virtual void Run()
         {
             // Do nothing but wait.
-            CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ViewModels.Window.Abort.Token).Token.WaitHandle.WaitOne();
+            CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token).Token.WaitHandle.WaitOne();
 
             // Signal session finished.
             Finished.Set();

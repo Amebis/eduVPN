@@ -23,7 +23,7 @@ using System.Threading;
 using System.Web.Security;
 using System.Windows.Threading;
 
-namespace eduVPN.Models
+namespace eduVPN.ViewModels
 {
     /// <summary>
     /// OpenVPN session
@@ -69,7 +69,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
-        public OpenVPNSession(ViewModels.ConnectWizard parent, VPNConfiguration configuration) :
+        public OpenVPNSession(ConnectWizard parent, Models.VPNConfiguration configuration) :
             base(parent, configuration)
         {
             _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
@@ -92,7 +92,7 @@ namespace eduVPN.Models
             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
             try
             {
-                var ct_quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, ViewModels.Window.Abort.Token);
+                var ct_quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
 
                 // Check if the Interactive Service is started.
                 // In case we hit "Access Denied" (or another error) give up on SCM.
@@ -242,7 +242,7 @@ namespace eduVPN.Models
                                     () =>
                                     {
                                         // Cleanup status properties.
-                                        State = VPNSessionStatusType.Disconnecting;
+                                        State = Models.VPNSessionStatusType.Disconnecting;
                                         StateDescription = null;
                                         TunnelAddress = null;
                                         IPv6TunnelAddress = null;
@@ -277,7 +277,7 @@ namespace eduVPN.Models
                     () =>
                     {
                         // Cleanup status properties.
-                        State = VPNSessionStatusType.Initializing;
+                        State = Models.VPNSessionStatusType.Initializing;
                         StateDescription = null;
 
                         Parent.ChangeTaskCount(-1);
@@ -326,7 +326,7 @@ namespace eduVPN.Models
             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                 () =>
                 {
-                    State = VPNSessionStatusType.Error;
+                    State = Models.VPNSessionStatusType.Error;
                     StateDescription = message;
                 }));
         }
@@ -420,19 +420,19 @@ namespace eduVPN.Models
                         case OpenVPNStateType.AssigningIP:
                         case OpenVPNStateType.AddingRoutes:
                         case OpenVPNStateType.Reconnecting:
-                            State = VPNSessionStatusType.Connecting;
+                            State = Models.VPNSessionStatusType.Connecting;
                             break;
 
                         case OpenVPNStateType.Connected:
-                            State = VPNSessionStatusType.Connected;
+                            State = Models.VPNSessionStatusType.Connected;
                             break;
 
                         case OpenVPNStateType.Exiting:
-                            State = VPNSessionStatusType.Disconnecting;
+                            State = Models.VPNSessionStatusType.Disconnecting;
                             break;
 
                         case OpenVPNStateType.FatalError:
-                            State = VPNSessionStatusType.Error;
+                            State = Models.VPNSessionStatusType.Error;
                             break;
                     }
                     StateDescription = message;

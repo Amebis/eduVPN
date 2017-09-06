@@ -101,7 +101,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// VPN session
         /// </summary>
-        public Models.VPNSession Session
+        public VPNSession Session
         {
             get { return _session; }
             set {
@@ -113,7 +113,7 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private Models.VPNSession _session;
+        private VPNSession _session;
 
         /// <summary>
         /// Connection info command
@@ -185,7 +185,7 @@ namespace eduVPN.ViewModels
                                         }
 
                                         // Create and run a new session.
-                                        var session = new Models.OpenVPNSession(this, param.Configuration);
+                                        var session = new OpenVPNSession(this, param.Configuration);
                                         Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                             () =>
                                             {
