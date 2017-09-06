@@ -35,7 +35,7 @@ namespace eduVPN.ViewModels
         public ConnectingInstanceAndProfileSelectBasePage(ConnectWizard parent) :
             base(parent)
         {
-            Panel = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.Configuration.InstanceSourceType, Parent.Configuration.AuthenticatingInstance);
+            Panel = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.InstanceSourceType, Parent.Configuration.AuthenticatingInstance);
         }
 
         #endregion

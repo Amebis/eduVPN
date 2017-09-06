@@ -35,24 +35,21 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.Configuration = new Models.VPNConfiguration()
-                                {
-                                    InstanceSourceType = param.Value,
-                                    InstanceSource = Parent.InstanceSources[(int)param.Value]
-                                };
+                                Parent.InstanceSourceType = param.Value;
+                                Parent.Configuration = new Models.VPNConfiguration();
 
-                                if (Parent.Configuration.InstanceSource is Models.LocalInstanceSourceInfo)
+                                if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
                                 {
                                     // With local authentication, the authenticating instance is the connecting instance.
                                     // Therefore, select "authenticating" instance.
                                     Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
-                                else if (Parent.Configuration.InstanceSource is Models.DistributedInstanceSourceInfo instance_source_distributed)
+                                else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo instance_source_distributed)
                                 {
                                     // Check if we have access token for any of the instances.
                                     object authenticating_instance_lock = new object();
                                     Models.InstanceInfo authenticating_instance = null;
-                                    await Task.WhenAll(Parent.Configuration.InstanceSource.Select(instance =>
+                                    await Task.WhenAll(Parent.InstanceSource.Select(instance =>
                                     {
                                         var authorization_task = new Task(
                                             () =>
@@ -81,7 +78,7 @@ namespace eduVPN.ViewModels
                                     else
                                         Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
-                                else if(Parent.Configuration.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                else if(Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
                                 {
                                     // Create authenticating instance.
                                     var authenticating_instance = new Models.InstanceInfo(instance_source_federated);
@@ -134,11 +131,8 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Assume the custom instance would otherwise be a part of "Institute Access" source.
-                                Parent.Configuration = new Models.VPNConfiguration()
-                                {
-                                    InstanceSourceType = Models.InstanceSourceType.InstituteAccess,
-                                    InstanceSource = Parent.InstanceSources[(int)Models.InstanceSourceType.InstituteAccess]
-                                };
+                                Parent.InstanceSourceType = Models.InstanceSourceType.InstituteAccess;
+                                Parent.Configuration = new Models.VPNConfiguration();
 
                                 Parent.CurrentPage = Parent.CustomInstancePage;
                             }

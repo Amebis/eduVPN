@@ -50,8 +50,9 @@ namespace eduVPN.ViewModels
                                 await authorization_task;
 
                                 // Start VPN session.
-                                if (Parent.StartSession.CanExecute(configuration))
-                                    Parent.StartSession.Execute(configuration);
+                                var param = new ConnectWizard.StartSessionParams(InstanceSourceType, configuration);
+                                if (Parent.StartSession.CanExecute(param))
+                                    Parent.StartSession.Execute(param);
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }

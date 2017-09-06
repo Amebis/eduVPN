@@ -61,6 +61,34 @@ namespace eduVPN.ViewModels
         private ObservableCollection<Models.VPNConfiguration>[] _configuration_histories;
 
         /// <summary>
+        /// Selected instance source
+        /// </summary>
+        public Models.InstanceSourceType InstanceSourceType
+        {
+            get { return _instance_source_type; }
+            set
+            {
+                if (value != _instance_source_type)
+                {
+                    _instance_source_type = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("InstanceSource");
+                    RaisePropertyChanged("AuthenticatingInstanceSelectPage");
+                    RaisePropertyChanged("ConnectingProfileSelectPage");
+                }
+            }
+        }
+        private Models.InstanceSourceType _instance_source_type;
+
+        /// <summary>
+        /// Selected instance source
+        /// </summary>
+        public Models.InstanceSourceInfo InstanceSource
+        {
+            get { return InstanceSources[(int)_instance_source_type]; }
+        }
+
+        /// <summary>
         /// VPN configuration
         /// </summary>
         public Models.VPNConfiguration Configuration
@@ -116,19 +144,19 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Starts VPN session
         /// </summary>
-        public DelegateCommand<Models.VPNConfiguration> StartSession
+        public DelegateCommand<StartSessionParams> StartSession
         {
             get
             {
                 if (_start_session == null)
-                    _start_session = new DelegateCommand<Models.VPNConfiguration>(
+                    _start_session = new DelegateCommand<StartSessionParams>(
                         // execute
-                        configuration =>
+                        param =>
                         {
                             // Switch to the status page, for user to see the progress.
                             CurrentPage = StatusPage;
 
-                            if (Session != null && Session.Configuration != null && Session.Configuration.Equals(configuration) && !Session.Finished.WaitOne(0))
+                            if (Session != null && Session.Configuration != null && Session.Configuration.Equals(param.Configuration) && !Session.Finished.WaitOne(0))
                             {
                                 // Wizard is already running (or attempting to run) a VPN session of the same configuration as specified.
                                 return;
@@ -157,7 +185,7 @@ namespace eduVPN.ViewModels
                                         }
 
                                         // Create and run a new session.
-                                        var session = new Models.OpenVPNSession(this, configuration);
+                                        var session = new Models.OpenVPNSession(this, param.Configuration);
                                         Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                             () =>
                                             {
@@ -173,14 +201,14 @@ namespace eduVPN.ViewModels
                                 })).Start();
 
                             // Do the configuration history book-keeping.
-                            var configuration_history = ConfigurationHistories[(int)configuration.InstanceSourceType];
-                            if (configuration.InstanceSource is Models.LocalInstanceSourceInfo)
+                            var configuration_history = ConfigurationHistories[(int)param.InstanceSourceType];
+                            if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSourceInfo)
                             {
                                 // Check for session configuration duplicates and update popularity.
                                 int found = -1;
                                 for (var i = configuration_history.Count; i-- > 0;)
                                 {
-                                    if (configuration_history[i].Equals(configuration))
+                                    if (configuration_history[i].Equals(param.Configuration))
                                     {
                                         if (found < 0)
                                         {
@@ -199,7 +227,7 @@ namespace eduVPN.ViewModels
                                             }
                                             else
                                             {
-                                                configuration.Popularity = configuration_history[i].Popularity;
+                                                param.Configuration.Popularity = configuration_history[i].Popularity;
                                                 configuration_history.RemoveAt(found);
                                                 found = i;
                                             }
@@ -215,34 +243,71 @@ namespace eduVPN.ViewModels
                                 if (found < 0)
                                 {
                                     // Add session configuration to history.
-                                    configuration_history.Add(configuration);
+                                    configuration_history.Add(param.Configuration);
                                 }
                             }
                             else if (
-                                configuration.InstanceSource is Models.DistributedInstanceSourceInfo ||
-                                configuration.InstanceSource is Models.FederatedInstanceSourceInfo)
+                                InstanceSources[(int)param.InstanceSourceType] is Models.DistributedInstanceSourceInfo ||
+                                InstanceSources[(int)param.InstanceSourceType] is Models.FederatedInstanceSourceInfo)
                             {
                                 // Set session configuration to history.
                                 if (configuration_history.Count == 0)
-                                    configuration_history.Add(configuration);
+                                    configuration_history.Add(param.Configuration);
                                 else
-                                    configuration_history[0] = configuration;
+                                    configuration_history[0] = param.Configuration;
                             }
+                            else
+                                throw new InvalidOperationException();
 
                             // Update settings.
                             var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
                             foreach (var cfg in configuration_history)
-                                hist.Add(cfg.ToSettings());
-                            Properties.Settings.Default[_instance_directory_id[(int)configuration.InstanceSourceType] + "ConfigHistory"] = hist;
+                                hist.Add(cfg.ToSettings(InstanceSources[(int)param.InstanceSourceType].GetType()));
+                            Properties.Settings.Default[_instance_directory_id[(int)param.InstanceSourceType] + "ConfigHistory"] = hist;
                         },
 
                         // canExecute
-                        configuration => configuration != null);
+                        param => param != null && param.Configuration != null);
 
                 return _start_session;
             }
         }
-        private DelegateCommand<Models.VPNConfiguration> _start_session;
+        private DelegateCommand<StartSessionParams> _start_session;
+
+        /// <summary>
+        /// StartSession command parameter set
+        /// </summary>
+        public class StartSessionParams
+        {
+            #region Properties
+
+            /// <summary>
+            /// Instance source
+            /// </summary>
+            public Models.InstanceSourceType InstanceSourceType { get; }
+
+            /// <summary>
+            /// VPN configuration
+            /// </summary>
+            public Models.VPNConfiguration Configuration { get; }
+
+            #endregion
+
+            #region Constructors
+
+            /// <summary>
+            /// Constructs a StartSession command parameter set
+            /// </summary>
+            /// <param name="instance_source_type"></param>
+            /// <param name="configuration"></param>
+            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.VPNConfiguration configuration)
+            {
+                InstanceSourceType = instance_source_type;
+                Configuration = configuration;
+            }
+
+            #endregion
+        }
 
         /// <summary>
         /// Instance request authorization event
@@ -305,12 +370,12 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (Configuration.InstanceSource is Models.LocalInstanceSourceInfo ||
-                    Configuration.InstanceSource is Models.DistributedInstanceSourceInfo)
+                if (InstanceSource is Models.LocalInstanceSourceInfo ||
+                    InstanceSource is Models.DistributedInstanceSourceInfo)
                 {
                     // Only local and distrubuted authentication sources have this page.
                     // However, this page varies between Secure Internet and Institute Access.
-                    switch (Configuration.InstanceSourceType)
+                    switch (InstanceSourceType)
                     {
                         case Models.InstanceSourceType.SecureInternet:
                             if (_authenticating_country_select_page == null)
@@ -355,7 +420,7 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (Configuration.InstanceSource is Models.LocalInstanceSourceInfo)
+                if (InstanceSource is Models.LocalInstanceSourceInfo)
                 {
                     // Profile selection (local authentication).
                     if (_connecting_profile_select_page == null)
@@ -549,8 +614,6 @@ namespace eduVPN.ViewModels
                                             else
                                                 return;
 
-                                            cfg.InstanceSourceType = (Models.InstanceSourceType)source_index;
-                                            cfg.InstanceSource = _instance_sources[source_index];
                                             cfg.Popularity = h.Popularity;
                                         }
                                         catch (Exception) { return; }

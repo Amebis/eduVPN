@@ -18,26 +18,6 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
-        /// Selected instance source type
-        /// </summary>
-        public Models.InstanceSourceType InstanceSourceType
-        {
-            get { return _instance_source_type; }
-            set { if (value != _instance_source_type) { _instance_source_type = value; RaisePropertyChanged(); } }
-        }
-        private Models.InstanceSourceType _instance_source_type;
-
-        /// <summary>
-        /// Selected instance source
-        /// </summary>
-        public Models.InstanceSourceInfo InstanceSource
-        {
-            get { return _instance_source; }
-            set { if (value != _instance_source) { _instance_source = value; RaisePropertyChanged(); } }
-        }
-        private Models.InstanceSourceInfo _instance_source;
-
-        /// <summary>
         /// Authenticating eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
@@ -92,8 +72,7 @@ namespace eduVPN.Models
                 return false;
 
             var other = obj as VPNConfiguration;
-            if (!InstanceSourceType.Equals(other.InstanceSourceType) ||
-                !AuthenticatingInstance.Equals(other.AuthenticatingInstance) ||
+            if (!AuthenticatingInstance.Equals(other.AuthenticatingInstance) ||
                 !ConnectingInstance.Equals(other.ConnectingInstance) ||
                 !ConnectingProfile.Equals(other.ConnectingProfile))
                 return false;
@@ -104,15 +83,19 @@ namespace eduVPN.Models
         public override int GetHashCode()
         {
             return
-                InstanceSourceType.GetHashCode() ^
                 AuthenticatingInstance.GetHashCode() ^
                 ConnectingInstance.GetHashCode() ^
                 ConnectingProfile.GetHashCode();
         }
 
-        public VPNConfigurationSettings ToSettings()
+        /// <summary>
+        /// Converts configuration to settings
+        /// </summary>
+        /// <param name="source_info_type">The type of settings required. Must be one of <c></c></param>
+        /// <returns></returns>
+        public VPNConfigurationSettings ToSettings(Type source_info_type)
         {
-            if (InstanceSource is Models.LocalInstanceSourceInfo)
+            if (source_info_type == typeof(Models.LocalInstanceSourceInfo))
             {
                 // Local authenticating instance source
                 return new Models.LocalVPNConfigurationSettings()
@@ -122,7 +105,7 @@ namespace eduVPN.Models
                     Popularity = Popularity,
                 };
             }
-            else if (InstanceSource is Models.DistributedInstanceSourceInfo)
+            else if (source_info_type == typeof(Models.DistributedInstanceSourceInfo))
             {
                 // Distributed authenticating instance source
                 return new Models.DistributedVPNConfigurationSettings()
@@ -132,7 +115,7 @@ namespace eduVPN.Models
                     Popularity = Popularity,
                 };
             }
-            else if (InstanceSource is Models.FederatedInstanceSourceInfo)
+            else if (source_info_type == typeof(Models.FederatedInstanceSourceInfo))
             {
                 // Federated authenticating instance source.
                 return new Models.FederatedVPNConfigurationSettings()
