@@ -153,7 +153,7 @@ namespace eduVPN.Views
             }
         }
 
-        private void SessionInfo_Click(object sender, RoutedEventArgs e)
+        private void Open_Click(object sender, RoutedEventArgs e)
         {
             // (Re)activate window.
             if (!IsActive)

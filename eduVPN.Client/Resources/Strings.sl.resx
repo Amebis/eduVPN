@@ -262,4 +262,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonCopy" xml:space="preserve">
     <value>Kopiraj</value>
   </data>
+  <data name="SystemTrayMenuOpen" xml:space="preserve">
+    <value>_Odpri</value>
+  </data>
 </root>

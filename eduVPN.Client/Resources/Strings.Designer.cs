@@ -440,6 +440,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Open.
+        /// </summary>
+        public static string SystemTrayMenuOpen {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connection _info....
         /// </summary>
         public static string SystemTrayMenuStatus {

@@ -262,4 +262,7 @@ The client will continue after you complete the authorization...</value>
   <data name="ButtonCopy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="SystemTrayMenuOpen" xml:space="preserve">
+    <value>_Open</value>
+  </data>
 </root>

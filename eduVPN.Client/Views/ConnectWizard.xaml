@@ -62,9 +62,13 @@
 
         <ContextMenu x:Key="SystemTrayMenu">
             <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuOpen}"
+                Click="Open_Click"
+                FontWeight="Bold"/>
+            <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuStatus}"
                 Command="{Binding Path=SessionInfo}"
-                Click="SessionInfo_Click"/>
+                Click="Open_Click"/>
             <Separator/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuExit}"
