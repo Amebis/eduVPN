@@ -149,6 +149,7 @@
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
     </Style>
 
     <Style x:Key="eduVPNListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNBaseStyle}">
