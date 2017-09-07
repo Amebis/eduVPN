@@ -256,4 +256,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Podatk_i povezave...</value>
   </data>
+  <data name="ListBoxNoItems" xml:space="preserve">
+    <value>Brez elementov</value>
+  </data>
 </root>

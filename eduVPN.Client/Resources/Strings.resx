@@ -256,4 +256,7 @@ The client will continue after you complete the authorization...</value>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Connection _info...</value>
   </data>
+  <data name="ListBoxNoItems" xml:space="preserve">
+    <value>No items</value>
+  </data>
 </root>

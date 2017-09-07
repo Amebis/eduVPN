@@ -224,6 +224,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No items.
+        /// </summary>
+        public static string ListBoxNoItems {
+            get {
+                return ResourceManager.GetString("ListBoxNoItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eduVPN.
         /// </summary>
         public static string MainWindowTitle {
