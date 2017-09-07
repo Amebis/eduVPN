@@ -156,4 +156,34 @@
   <data name="ErrorNullAccessToken" xml:space="preserve">
     <value>No access token granted.</value>
   </data>
+  <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
+    <value>Adding routes to system...</value>
+  </data>
+  <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
+    <value>Assigning IP address to virtual network interface...</value>
+  </data>
+  <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
+    <value>Authenticating with server...</value>
+  </data>
+  <data name="OpenVPNStateTypeConnected" xml:space="preserve">
+    <value>Connected.</value>
+  </data>
+  <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="OpenVPNStateTypeExiting" xml:space="preserve">
+    <value>A graceful exit is in progress...</value>
+  </data>
+  <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
+    <value>OpenVPN reported fatal error.</value>
+  </data>
+  <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
+    <value>Downloading configuration options from server...</value>
+  </data>
+  <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
+    <value>A restart has occurred...</value>
+  </data>
+  <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
+    <value>Waiting for initial response from server...</value>
+  </data>
 </root>

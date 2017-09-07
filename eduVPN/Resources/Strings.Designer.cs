@@ -176,5 +176,95 @@ namespace eduVPN.Resources {
                 return ResourceManager.GetString("ErrorUserInfoLoad", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding routes to system....
+        /// </summary>
+        internal static string OpenVPNStateTypeAddingRoutes {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeAddingRoutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assigning IP address to virtual network interface....
+        /// </summary>
+        internal static string OpenVPNStateTypeAssigningIP {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeAssigningIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authenticating with server....
+        /// </summary>
+        internal static string OpenVPNStateTypeAuthenticating {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeAuthenticating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected..
+        /// </summary>
+        internal static string OpenVPNStateTypeConnected {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        internal static string OpenVPNStateTypeConnecting {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A graceful exit is in progress....
+        /// </summary>
+        internal static string OpenVPNStateTypeExiting {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeExiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpenVPN reported fatal error..
+        /// </summary>
+        internal static string OpenVPNStateTypeFatalError {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeFatalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading configuration options from server....
+        /// </summary>
+        internal static string OpenVPNStateTypeGettingConfiguration {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeGettingConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A restart has occurred....
+        /// </summary>
+        internal static string OpenVPNStateTypeReconnecting {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeReconnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for initial response from server....
+        /// </summary>
+        internal static string OpenVPNStateTypeWaiting {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeWaiting", resourceCulture);
+            }
+        }
     }
 }

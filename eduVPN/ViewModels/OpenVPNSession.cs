@@ -243,7 +243,7 @@ namespace eduVPN.ViewModels
                                     {
                                         // Cleanup status properties.
                                         State = Models.VPNSessionStatusType.Disconnecting;
-                                        StateDescription = null;
+                                        StateDescription = Resources.Strings.OpenVPNStateTypeExiting;
                                         TunnelAddress = null;
                                         IPv6TunnelAddress = null;
                                         _connected_time_updater.Stop();
@@ -327,7 +327,13 @@ namespace eduVPN.ViewModels
                 () =>
                 {
                     State = Models.VPNSessionStatusType.Error;
-                    StateDescription = message;
+                    var msg = Resources.Strings.OpenVPNStateTypeFatalError;
+                    if (message != null && message.Length > 0)
+                    {
+                        // Append OpenVPN message.
+                        msg += "\r\n" + message;
+                    }
+                    StateDescription = msg;
                 }));
         }
 
@@ -411,31 +417,76 @@ namespace eduVPN.ViewModels
             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                 () =>
                 {
+                    string msg = null;
+
                     switch (state)
                     {
                         case OpenVPNStateType.Connecting:
-                        case OpenVPNStateType.Waiting:
-                        case OpenVPNStateType.Authenticating:
-                        case OpenVPNStateType.GettingConfiguration:
-                        case OpenVPNStateType.AssigningIP:
-                        case OpenVPNStateType.AddingRoutes:
-                        case OpenVPNStateType.Reconnecting:
                             State = Models.VPNSessionStatusType.Connecting;
+                            msg = Resources.Strings.OpenVPNStateTypeConnecting;
+                            break;
+
+                        case OpenVPNStateType.Waiting:
+                            State = Models.VPNSessionStatusType.Connecting;
+                            msg = Resources.Strings.OpenVPNStateTypeWaiting;
+                            break;
+
+                        case OpenVPNStateType.Authenticating:
+                            State = Models.VPNSessionStatusType.Connecting;
+                            msg = Resources.Strings.OpenVPNStateTypeAuthenticating;
+                            break;
+
+                        case OpenVPNStateType.GettingConfiguration:
+                            State = Models.VPNSessionStatusType.Connecting;
+                            msg = Resources.Strings.OpenVPNStateTypeGettingConfiguration;
+                            break;
+
+                        case OpenVPNStateType.AssigningIP:
+                            State = Models.VPNSessionStatusType.Connecting;
+                            msg = Resources.Strings.OpenVPNStateTypeAssigningIP;
+                            break;
+
+                        case OpenVPNStateType.AddingRoutes:
+                            State = Models.VPNSessionStatusType.Connecting;
+                            msg = Resources.Strings.OpenVPNStateTypeAddingRoutes;
                             break;
 
                         case OpenVPNStateType.Connected:
                             State = Models.VPNSessionStatusType.Connected;
+                            msg = Resources.Strings.OpenVPNStateTypeConnected;
+                            break;
+
+                        case OpenVPNStateType.Reconnecting:
+                            State = Models.VPNSessionStatusType.Connecting;
+                            msg = Resources.Strings.OpenVPNStateTypeReconnecting;
                             break;
 
                         case OpenVPNStateType.Exiting:
                             State = Models.VPNSessionStatusType.Disconnecting;
+                            msg = Resources.Strings.OpenVPNStateTypeExiting;
                             break;
 
                         case OpenVPNStateType.FatalError:
                             State = Models.VPNSessionStatusType.Error;
+                            msg = Resources.Strings.OpenVPNStateTypeFatalError;
                             break;
                     }
-                    StateDescription = message;
+
+                    if (message != null && message.Length > 0)
+                    {
+                        if (msg != null)
+                        {
+                            // Append OpenVPN message.
+                            msg += "\r\n" + message;
+                        }
+                        else
+                        {
+                            // Replace with OpenVPN message.
+                            msg = message;
+                        }
+                    }
+
+                    StateDescription = msg;
                     TunnelAddress = tunnel;
                     IPv6TunnelAddress = ipv6_tunnel;
 
