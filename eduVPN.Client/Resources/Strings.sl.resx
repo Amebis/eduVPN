@@ -143,7 +143,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Drug naslov</value>
   </data>
   <data name="CustomInstancePageDescription" xml:space="preserve">
-    <value>Vnesite osnovni naslov URI svojega ponudnika VPN.</value>
+    <value>Vnesite ime gostitelja svojega ponudnika VPN.</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>

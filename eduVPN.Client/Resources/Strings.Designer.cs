@@ -152,7 +152,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter base URI of your VPN provider..
+        ///   Looks up a localized string similar to Enter hostname of your VPN provider..
         /// </summary>
         public static string CustomInstancePageDescription {
             get {

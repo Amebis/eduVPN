@@ -45,6 +45,21 @@ namespace eduVPN.ViewModels
             {
                 if (_select_custom_instance == null)
                 {
+                    bool TryParseUri(string input, out Uri output)
+                    {
+                        try
+                        {
+                            // Convert hostname to https://hostname.
+                            output = new UriBuilder("https", input).Uri;
+                            return true;
+                        }
+                        catch
+                        {
+                            output = null;
+                            return false;
+                        }
+                    };
+
                     _select_custom_instance = new DelegateCommand(
                         // execute
                         async () =>
@@ -52,7 +67,8 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                var selected_instance = new Models.InstanceInfo(new Uri(BaseURI));
+                                TryParseUri(BaseURI, out var uri);
+                                var selected_instance = new Models.InstanceInfo(uri);
                                 selected_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
                                 // Trigger initial authorization request.
@@ -71,12 +87,7 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () =>
-                        {
-                            try { new Uri(BaseURI); }
-                            catch { return false; }
-                            return true;
-                        });
+                        () => TryParseUri(BaseURI, out var uri));
                 }
 
                 return _select_custom_instance;
@@ -94,7 +105,6 @@ namespace eduVPN.ViewModels
         public CustomInstancePage(ConnectWizard parent) :
             base(parent)
         {
-            BaseURI = "https://";
         }
 
         #endregion
