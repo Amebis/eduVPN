@@ -564,11 +564,10 @@ namespace eduVPN.ViewModels
 
                                 // Load configuration histories from settings.
                                 var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"];
-                                Parallel.For(0, hist.Count,
-                                    idx_hist =>
+                                Parallel.ForEach(hist,
+                                    h =>
                                     {
                                         var cfg = new Models.VPNConfiguration();
-                                        var h = hist[idx_hist];
 
                                         try
                                         {
