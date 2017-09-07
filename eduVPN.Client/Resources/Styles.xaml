@@ -51,6 +51,12 @@
                                 Property="Background"
                                 Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
                         </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="Background"
+                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -81,6 +87,9 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -178,6 +187,9 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
             </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
             </Trigger>
@@ -207,7 +219,7 @@
                 <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -398,6 +410,16 @@
                                 Property="Fill"
                                 Value="{StaticResource eduVPNHeaderBrushKey}"/>
                         </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="Fill"
+                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                            <Setter
+                                TargetName="Border"
+                                Property="Stroke"
+                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -530,6 +552,12 @@
                                 TargetName="Border"
                                 Property="Background"
                                 Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="Background"
+                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
