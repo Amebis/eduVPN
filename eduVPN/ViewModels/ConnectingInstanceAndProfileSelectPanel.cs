@@ -44,7 +44,7 @@ namespace eduVPN.ViewModels
                     RaisePropertyChanged();
                     ConnectProfile.RaiseCanExecuteChanged();
 
-                    ProfileList = new JSON.Collection<Models.ProfileInfo>();
+                    ProfileList = null;
                     if (_selected_instance != null)
                     {
                         new Thread(new ThreadStart(

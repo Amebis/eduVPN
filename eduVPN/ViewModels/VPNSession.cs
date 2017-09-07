@@ -235,7 +235,6 @@ namespace eduVPN.ViewModels
                 Parent.Dispatcher);
 
             // Launch user info load in the background.
-            UserInfo = new Models.UserInfo();
             new Thread(new ThreadStart(
                 () =>
                 {
