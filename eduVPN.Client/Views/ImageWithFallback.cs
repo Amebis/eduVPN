@@ -6,6 +6,9 @@
 */
 
 using System;
+using System.ComponentModel;
+using System.IO;
+using System.Net;
 using System.Net.Cache;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,14 +29,9 @@ namespace eduVPN.Views
         private static readonly RequestCachePolicy _default_request_cache_policy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
 
         /// <summary>
-        /// Source bitmap image
+        /// Are we displaying the fall-back image?
         /// </summary>
-        private BitmapImage _bitmap_image;
-
-        /// <summary>
-        /// Fall-back source bitmap image
-        /// </summary>
-        private BitmapImage _fallback_bitmap_image;
+        private bool _is_fallback;
 
         #endregion
 
@@ -67,19 +65,7 @@ namespace eduVPN.Views
             if (d is ImageWithFallback _this)
             {
                 if (e.NewValue is Uri uri)
-                {
-                    // Load the specified image.
-                    _this._bitmap_image = new BitmapImage();
-                    _this._bitmap_image.BeginInit();
-                    _this._bitmap_image.UriCachePolicy = _default_request_cache_policy;
-                    _this._bitmap_image.CacheOption = BitmapCacheOption.OnDemand;
-                    _this._bitmap_image.UriSource = uri;
-                    _this._bitmap_image.DownloadFailed += (object sender2, System.Windows.Media.ExceptionEventArgs e2) => _this.LoadFallbackImage();
-                    _this._bitmap_image.DecodeFailed += (object sender2, System.Windows.Media.ExceptionEventArgs e2) => _this.LoadFallbackImage();
-                    _this._bitmap_image.EndInit();
-
-                    _this.Source = _this._bitmap_image;
-                }
+                    _this.LoadImage(uri);
                 else
                     _this.LoadFallbackImage();
             }
@@ -89,7 +75,7 @@ namespace eduVPN.Views
         {
             if (d is ImageWithFallback _this)
             {
-                if (_this.Source == _this._fallback_bitmap_image && e.NewValue is Uri uri)
+                if (_this._is_fallback && e.NewValue is Uri uri)
                 {
                     // We're displaying the fall-back image and it changed. Reload it.
                     _this.LoadFallbackImage();
@@ -97,19 +83,75 @@ namespace eduVPN.Views
             }
         }
 
+        private void LoadImage(Uri uri)
+        {
+            // Set a blank image while waiting to load.
+            Source = null;
+            _is_fallback = false;
+
+            // Spawn image loading as a background thread as this might be a time-consuming task and might block UI.
+            var worker = new BackgroundWorker();
+            worker.DoWork +=
+                (object sender, DoWorkEventArgs e) =>
+                {
+                    // Download the specified image.
+                    using (var web_client = new WebClient())
+                    {
+                        web_client.CachePolicy = _default_request_cache_policy;
+                        try
+                        {
+                            var data = web_client.DownloadData(uri);
+                            if (data == null)
+                            {
+                                e.Result = null;
+                                return;
+                            }
+
+                            // Decode image.
+                            var bitmap_image = new BitmapImage();
+                            using (var imageStream = new MemoryStream(data))
+                            {
+                                bitmap_image.BeginInit();
+                                bitmap_image.StreamSource = imageStream;
+                                bitmap_image.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmap_image.EndInit();
+                                bitmap_image.Freeze();
+                            }
+                            e.Result = bitmap_image;
+                        }
+                        catch { e.Result = null; }
+                    }
+                };
+
+            worker.RunWorkerCompleted +=
+                (object sender, RunWorkerCompletedEventArgs e) =>
+                {
+                    if (e.Result is BitmapImage bitmap_image)
+                        Source = bitmap_image;
+                    else
+                        LoadFallbackImage();
+
+                    worker.Dispose();
+                };
+
+            worker.RunWorkerAsync();
+        }
+
         private void LoadFallbackImage()
         {
             if (UriFallbackSource != null)
             {
-                // Load fall-back image.
-                _fallback_bitmap_image = new BitmapImage();
-                _fallback_bitmap_image.BeginInit();
-                _fallback_bitmap_image.UriCachePolicy = _default_request_cache_policy;
-                _fallback_bitmap_image.CacheOption = BitmapCacheOption.OnLoad;
-                _fallback_bitmap_image.UriSource = UriFallbackSource;
-                _fallback_bitmap_image.EndInit();
+                // Load fall-back image. No need to load it in the background thread, since fall-back images should be locally and quickly loadable.
+                var bitmap_image = new BitmapImage();
+                bitmap_image.BeginInit();
+                bitmap_image.UriCachePolicy = _default_request_cache_policy;
+                bitmap_image.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap_image.UriSource = UriFallbackSource;
+                bitmap_image.EndInit();
+                bitmap_image.Freeze();
 
-                Source = _fallback_bitmap_image;
+                Source = bitmap_image;
+                _is_fallback = true;
             }
         }
 
