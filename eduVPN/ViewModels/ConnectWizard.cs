@@ -19,7 +19,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Connect wizard
     /// </summary>
-    public class ConnectWizard : Window, IDisposable
+    public class ConnectWizard : Window
     {
         #region Fields
 
@@ -100,21 +100,13 @@ namespace eduVPN.ViewModels
         private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
-        /// VPN session
+        /// VPN session queue - session 0 is the active session
         /// </summary>
-        public VPNSession Session
+        public ObservableCollection<VPNSession> Sessions
         {
-            get { return _session; }
-            set {
-                if (value != _session)
-                {
-                    _session = value;
-                    RaisePropertyChanged();
-                    SessionInfo.RaiseCanExecuteChanged();
-                }
-            }
+            get { return _sessions; }
         }
-        private VPNSession _session;
+        private ObservableCollection<VPNSession> _sessions;
 
         /// <summary>
         /// Connection info command
@@ -135,7 +127,7 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () => Session != null);
+                        () => Sessions.Count > 0);
 
                 return _session_info;
             }
@@ -157,9 +149,11 @@ namespace eduVPN.ViewModels
                             // Switch to the status page, for user to see the progress.
                             CurrentPage = StatusPage;
 
-                            if (Session != null && Session.Configuration != null && Session.Configuration.Equals(param.Configuration) && !Session.Finished.WaitOne(0))
+                            // Note: Sessions locking is not required, since all queue manipulation is done exclusively in the UI thread.
+
+                            if (Sessions.Count > 0 && Sessions[Sessions.Count - 1].Configuration.Equals(param.Configuration))
                             {
-                                // Wizard is already running (or attempting to run) a VPN session of the same configuration as specified.
+                                // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
                                 return;
                             }
 
@@ -170,31 +164,56 @@ namespace eduVPN.ViewModels
                                     Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
                                     try
                                     {
-                                        if (Session != null)
+                                        // Create our new session.
+                                        using (var session = new OpenVPNSession(this, param.Configuration))
                                         {
-                                            // Finish active session first.
+                                            VPNSession previous_session = null;
                                             Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                 () =>
                                                 {
-                                                    if (Session.Disconnect.CanExecute())
-                                                        Session.Disconnect.Execute();
+                                                    if (Sessions.Count > 0)
+                                                    {
+                                                        // Trigger disconnection of the previous session.
+                                                        previous_session = Sessions[Sessions.Count - 1];
+                                                        if (previous_session.Disconnect.CanExecute())
+                                                            previous_session.Disconnect.Execute();
+                                                    }
+
+                                                    // Add our session to the queue.
+                                                    Sessions.Add(session);
+                                                    SessionInfo.RaiseCanExecuteChanged();
                                                 }));
-
-                                            // Await for the session to finish.
-                                            if (WaitHandle.WaitAny(new WaitHandle[] { Abort.Token.WaitHandle, Session.Finished }) == 0)
-                                                throw new OperationCanceledException();
-                                        }
-
-                                        // Create and run a new session.
-                                        var session = new OpenVPNSession(this, param.Configuration);
-                                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                            () =>
+                                            try
                                             {
-                                                Session = session;
-                                                ChangeTaskCount(-1);
-                                            }));
-                                        try { session.Run(); }
-                                        finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1))); }
+                                                if (previous_session != null)
+                                                {
+                                                    // Await for the previous session to finish.
+                                                    if (WaitHandle.WaitAny(new WaitHandle[] { Abort.Token.WaitHandle, previous_session.Finished }) == 0)
+                                                        throw new OperationCanceledException();
+                                                }
+
+                                                // Run our session.
+                                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1)));
+                                                try { session.Run(); }
+                                                finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1))); }
+                                            }
+                                            finally
+                                            {
+                                                // Remove our session from the queue.
+                                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                                    () =>
+                                                    {
+                                                        Sessions.Remove(session);
+                                                        SessionInfo.RaiseCanExecuteChanged();
+
+                                                        if (Sessions.Count <= 0 && CurrentPage == StatusPage)
+                                                        {
+                                                            // No more sessions and user is still on the status page. Redirect the wizard back.
+                                                            CurrentPage = RecentConfigurationSelectPage;
+                                                        }
+                                                    }));
+                                            }
+                                        }
                                     }
                                     catch (OperationCanceledException) { }
                                     catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
@@ -491,6 +510,9 @@ namespace eduVPN.ViewModels
                 Properties.Settings.Default.Save();
             };
 
+            // Create session queue.
+            _sessions = new ObservableCollection<VPNSession>();
+
             // Show initializing wizard page.
             CurrentPage = InitializingPage;
 
@@ -700,34 +722,6 @@ namespace eduVPN.ViewModels
             }
         }
 
-        #endregion
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    if (_session != null)
-                    {
-                        _session.Dispose();
-                        _session = null;
-                    }
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
         #endregion
     }
 }

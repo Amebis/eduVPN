@@ -67,21 +67,21 @@ namespace eduVPN.Views
             // Create notify icon, set default icon, and setup events.
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
             _tray_icon = new System.Windows.Forms.NotifyIcon();
-            _tray_icon.Icon = _icons[view_model.Session != null && view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+            _tray_icon.Icon = _icons[view_model.Sessions.Count > 0 && view_model.Sessions[0] != null && view_model.Sessions[0].State == Models.VPNSessionStatusType.Connected ? 1 : 0];
             _tray_icon.Click += TrayIcon_Click;
 
-            // Bind to "Session.State" property to update tray icon.
+            // Bind to "Sessions[0].State" property to update tray icon.
             view_model.PropertyChanged += (object sender_DataContext, PropertyChangedEventArgs e_DataContext) =>
             {
-                if (e_DataContext.PropertyName == "Session")
+                if (e_DataContext.PropertyName == "Sessions")
                 {
-                    if (view_model.Session != null)
+                    if (view_model.Sessions != null && view_model.Sessions.Count > 0)
                     {
                         // Bind to the session for property changes.
-                        view_model.Session.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
+                        view_model.Sessions[0].PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
                         {
                             if (e_Session.PropertyName == "State")
-                                _tray_icon.Icon = _icons[view_model.Session.State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+                                _tray_icon.Icon = _icons[view_model.Sessions[0].State == Models.VPNSessionStatusType.Connected ? 1 : 0];
                         };
                     }
                     else

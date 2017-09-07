@@ -69,9 +69,9 @@
                 MaxHeight="16"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Source="{Binding Path=DataContext.Parent.Session.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
-                ToolTip="{Binding Path=DataContext.Parent.Session.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.Session.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
+                Source="{Binding Path=DataContext.Parent.Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
@@ -82,10 +82,10 @@
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}"/>
                         <Binding/>
                         <Binding
-                            Path="DataContext.Parent.Session.Configuration.ConnectingInstance"
+                            Path="DataContext.Parent.Sessions[0].Configuration.ConnectingInstance"
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}"/>
                         <Binding
-                            Path="DataContext.Parent.Session.Configuration.ConnectingProfile"
+                            Path="DataContext.Parent.Sessions[0].Configuration.ConnectingProfile"
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
@@ -145,9 +145,9 @@
                 MaxHeight="16"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Source="{Binding Path=DataContext.Parent.Session.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
-                ToolTip="{Binding Path=DataContext.Parent.Session.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.Session.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
+                Source="{Binding Path=DataContext.Parent.Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
+                ToolTip="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
@@ -158,10 +158,10 @@
                         <Binding
                             Path="ConnectingProfile"/>
                         <Binding
-                            Path="DataContext.Parent.Session.Configuration.ConnectingInstance"
+                            Path="DataContext.Parent.Sessions[0].Configuration.ConnectingInstance"
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectWizardPage}}"/>
                         <Binding
-                            Path="DataContext.Parent.Session.Configuration.ConnectingProfile"
+                            Path="DataContext.Parent.Sessions[0].Configuration.ConnectingProfile"
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectWizardPage}}"/>
                     </MultiBinding>
                 </Image.Visibility>

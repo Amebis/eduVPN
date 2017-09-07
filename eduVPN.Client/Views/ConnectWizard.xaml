@@ -17,7 +17,7 @@
     Title="{x:Static res:Strings.MainWindowTitle}"
     Height="460"
     Width="300"
-    Icon="{Binding Path=Session.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}}"
+    Icon="{Binding Path=Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}}"
     Style="{StaticResource eduVPNWindow}"
     Loaded="Window_Loaded"
     Closing="Window_Closing">
@@ -73,7 +73,7 @@
     </Window.Resources>
 
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo Overlay="{Binding Path=Session.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"/>
+        <TaskbarItemInfo Overlay="{Binding Path=Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"/>
     </Window.TaskbarItemInfo>
 
     <Grid>
