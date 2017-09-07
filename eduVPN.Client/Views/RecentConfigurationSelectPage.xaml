@@ -42,8 +42,8 @@
         VerticalAlignment="Top"
         Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="{Binding Path=Parent.ConfigurationHistories, Converter={StaticResource HistorySourceRowHeightConverter}, ConverterParameter={x:Static model:InstanceSourceType.SecureInternet}, FallbackValue={StaticResource AutoGridLength}}"/>
+            <RowDefinition Height="{Binding Path=Parent.ConfigurationHistories, Converter={StaticResource HistorySourceRowHeightConverter}, ConverterParameter={x:Static model:InstanceSourceType.InstituteAccess}, FallbackValue={StaticResource AutoGridLength}}"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 

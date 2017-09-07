@@ -10,4 +10,5 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:Int32 x:Key="MetricPrefixBase">1024</sys:Int32>
+    <GridLength x:Key="AutoGridLength">Auto</GridLength>
 </ResourceDictionary>

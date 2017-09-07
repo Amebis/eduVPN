@@ -45,6 +45,7 @@
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\HistorySourceInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\HistorySourceRowHeightConverter.cs" />
     <Compile Include="Converters\HistorySourceVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
