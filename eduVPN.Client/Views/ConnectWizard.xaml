@@ -146,17 +146,26 @@
                     Content="{StaticResource eduVPNExclamationIcon}"/>
             </StatusBarItem>
             <StatusBarItem>
-                <TextBlock
-                    TextWrapping="Wrap"
-                    Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <Button
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Style="{StaticResource eduVPNLinkButtonStyle}"
-                    Command="{Binding Path=CopyError}"
-                    Content="{x:Static res:Strings.ButtonCopy}"/>
+                <Grid
+                    Margin="-5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Margin="5"
+                        TextWrapping="Wrap"
+                        Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
+
+                    <Button
+                        Grid.Column="1"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        Style="{StaticResource eduVPNLinkButtonStyle}"
+                        Command="{Binding Path=CopyError}"
+                        Content="{x:Static res:Strings.ButtonCopy}"/>
+                </Grid>
             </StatusBarItem>
         </StatusBar>
 
