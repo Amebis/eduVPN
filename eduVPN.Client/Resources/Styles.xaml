@@ -284,22 +284,20 @@
     <Style x:Key="eduVPNHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
-        <Setter Property="Margin" Value="5"/>
         <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
-                        Name="Border"
+                        x:Name="Border"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         BorderThickness="0"
                         CornerRadius="4">
-
                         <ContentPresenter
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -470,12 +468,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
-                        Name="Border"
+                        x:Name="Border"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         BorderThickness="0"
                         CornerRadius="4">
-
                         <ContentPresenter
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>

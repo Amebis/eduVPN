@@ -259,4 +259,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>Brez elementov</value>
   </data>
+  <data name="ButtonCopy" xml:space="preserve">
+    <value>Kopiraj</value>
+  </data>
 </root>

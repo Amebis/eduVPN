@@ -5,9 +5,11 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Threading;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -39,7 +41,15 @@ namespace eduVPN.ViewModels
         public Exception Error
         {
             get { return _error; }
-            set { if (value != _error) { _error = value; RaisePropertyChanged(); } }
+            set
+            {
+                if (value != _error)
+                {
+                    _error = value;
+                    RaisePropertyChanged();
+                    CopyError.RaiseCanExecuteChanged();
+                }
+            }
         }
         private Exception _error;
 
@@ -60,6 +70,31 @@ namespace eduVPN.ViewModels
         }
         private int _task_count;
         private object _task_count_lock = new object();
+
+        /// <summary>
+        /// Copies current error information to the clipboard
+        /// </summary>
+        public DelegateCommand CopyError
+        {
+            get
+            {
+                if (_copy_error == null)
+                    _copy_error = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            ChangeTaskCount(+1);
+                            try { Clipboard.SetText(Error.ToString()); }
+                            finally { ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () => Error != null);
+
+                return _copy_error;
+            }
+        }
+        private DelegateCommand _copy_error;
 
         #endregion
 
