@@ -356,20 +356,15 @@ namespace eduVPN.ViewModels
             {
                 if (disposing)
                 {
-                    _disconnect.Dispose();
-                    _finished.Dispose();
-                }
+                    if (_disconnect != null)
+                        _disconnect.Dispose();
 
-                _disconnect.Cancel();
+                    if (_finished != null)
+                        _finished.Dispose();
+                }
 
                 disposedValue = true;
             }
-        }
-
-        ~VPNSession()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(false);
         }
 
         // This code added to correctly implement the disposable pattern.
@@ -377,7 +372,6 @@ namespace eduVPN.ViewModels
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
         #endregion
     }

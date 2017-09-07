@@ -203,16 +203,12 @@ namespace eduVPN.Views
                 if (disposing)
                 {
                     if (_tray_icon != null)
-                    {
                         _tray_icon.Dispose();
-                        _tray_icon = null;
-                    }
+
                     if (_icons != null)
-                    {
                         foreach (var i in _icons)
-                            i?.Dispose();
-                        _icons = null;
-                    }
+                            if (i != null)
+                                i.Dispose();
                 }
 
                 disposedValue = true;
