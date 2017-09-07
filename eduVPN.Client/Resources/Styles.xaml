@@ -49,7 +49,7 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -80,7 +80,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -176,7 +176,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -204,10 +204,10 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -529,7 +529,7 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNChoiceButtonHoverBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
