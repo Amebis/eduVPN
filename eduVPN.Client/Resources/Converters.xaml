@@ -15,6 +15,7 @@
     <conv:HistorySourceInverseVisibilityConverter x:Key="HistorySourceInverseVisibilityConverter"/>
     <conv:HistorySourceRowHeightConverter x:Key="HistorySourceRowHeightConverter"/>
     <conv:HistorySourceVisibilityConverter x:Key="HistorySourceVisibilityConverter"/>
+    <conv:MessageListRowHeightConverter x:Key="MessageListRowHeightConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
     <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>

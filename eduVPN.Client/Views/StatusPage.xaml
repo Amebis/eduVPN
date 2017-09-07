@@ -28,11 +28,13 @@
         </CollectionViewSource>
     </Page.Resources>
 
-    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
+    <Grid
+        VerticalAlignment="Top"
+        Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="{Binding Path=Parent.Sessions[0].MessageList.Count, Converter={StaticResource MessageListRowHeightConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
