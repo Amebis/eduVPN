@@ -251,7 +251,7 @@ namespace eduVPN.Models
                             _access_token = access_token;
                         }
                     }
-                    catch (Exception) { }
+                    catch { }
                 }
 
                 return _access_token;
@@ -326,7 +326,7 @@ namespace eduVPN.Models
                             return;
                         }
                     }
-                    catch (Exception) { }
+                    catch { }
                 }
 
                 // Remove access token from our internal state and from settings.

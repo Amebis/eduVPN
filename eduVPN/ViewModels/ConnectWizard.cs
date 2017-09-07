@@ -538,7 +538,7 @@ namespace eduVPN.ViewModels
 
                                             bool rollback = false;
                                             try { rollback = (uint)eduJSON.Parser.GetValue<int>(obj_cache, "seq") > (uint)eduJSON.Parser.GetValue<int>(obj_web, "seq"); }
-                                            catch (Exception) { rollback = true; }
+                                            catch { rollback = true; }
                                             if (rollback)
                                             {
                                                 // Sequence rollback detected. Revert to cached version.
@@ -546,7 +546,7 @@ namespace eduVPN.ViewModels
                                                 response_web = response_cache;
                                             }
                                         }
-                                        catch (Exception) { }
+                                        catch { }
                                     }
 
                                     // Save response to cache.
@@ -617,7 +617,7 @@ namespace eduVPN.ViewModels
 
                                             cfg.Popularity = h.Popularity;
                                         }
-                                        catch (Exception) { return; }
+                                        catch { return; }
 
                                         // Configuration successfuly restored. Add it.
                                         lock (_configuration_histories[source_index])

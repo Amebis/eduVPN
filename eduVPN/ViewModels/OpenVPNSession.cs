@@ -103,7 +103,7 @@ namespace eduVPN.ViewModels
                         openvpn_interactive_service.Status == ServiceControllerStatus.Paused)
                         openvpn_interactive_service.Start();
                 }
-                catch (Exception) { openvpn_interactive_service = null; }
+                catch { openvpn_interactive_service = null; }
 
                 // Get profile's OpenVPN configuration and instance client certificate (in parallel).
                 Exception error = null;
@@ -136,7 +136,7 @@ namespace eduVPN.ViewModels
                     {
                         try { openvpn_interactive_service.WaitForStatus(ServiceControllerStatus.Running, refresh_interval); }
                         catch (System.ServiceProcess.TimeoutException) { }
-                        catch (Exception) { break; }
+                        catch { break; }
                     }
                 }
 
@@ -258,7 +258,7 @@ namespace eduVPN.ViewModels
 
                                 // Delete OpenVPN log file. If possible.
                                 try { File.Delete(LogPath); }
-                                catch (Exception) { }
+                                catch { }
                             }
                         }
                     }
@@ -268,7 +268,7 @@ namespace eduVPN.ViewModels
                 {
                     // Delete profile configuration file. If possible.
                     try { File.Delete(ConfigurationPath); }
-                    catch (Exception) { }
+                    catch { }
                 }
             }
             finally

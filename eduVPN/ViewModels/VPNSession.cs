@@ -294,7 +294,7 @@ namespace eduVPN.ViewModels
                                         }));
                                     }
                                 }
-                                catch (Exception) { }
+                                catch { }
                                 finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
                             })).Start();
                     }

@@ -74,7 +74,7 @@ namespace eduVPN.ViewModels
                         () =>
                         {
                             try { new Uri(BaseURI); }
-                            catch (Exception) { return false; }
+                            catch { return false; }
                             return true;
                         });
                 }

@@ -169,7 +169,7 @@ namespace eduVPN.ViewModels
                             if (param == null) return false;
                             // - Valid URI (parsable)
                             try { uri = new Uri(param); }
-                            catch (Exception) { return false; }
+                            catch { return false; }
                             // - Must match the redirect endpoint provided in request.
                             if (uri.Scheme + ":" + uri.AbsolutePath != _redirect_endpoint) return false;
 
