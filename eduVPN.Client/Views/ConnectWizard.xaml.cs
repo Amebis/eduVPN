@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
@@ -71,26 +72,34 @@ namespace eduVPN.Views
             _tray_icon.Click += TrayIcon_Click;
 
             // Bind to "Sessions[0].State" property to update tray icon.
-            view_model.PropertyChanged += (object sender_DataContext, PropertyChangedEventArgs e_DataContext) =>
-            {
-                if (e_DataContext.PropertyName == "Sessions")
+            view_model.Sessions.CollectionChanged +=
+                (object sender_Sessions, NotifyCollectionChangedEventArgs e_Sessions) =>
                 {
-                    if (view_model.Sessions != null && view_model.Sessions.Count > 0)
+                    void UpdateState(object sender_Session, PropertyChangedEventArgs e_Session)
                     {
-                        // Bind to the session for property changes.
-                        view_model.Sessions[0].PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
+                        if (e_Session.PropertyName == "State")
+                            _tray_icon.Icon = _icons[view_model.Sessions[0].State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+                    }
+
+                    if (e_Sessions.NewStartingIndex == 0)
+                    {
+                        // First session added: Bind to the session for property changes.
+                        view_model.Sessions[0].PropertyChanged += UpdateState;
+                    }
+                    else if (e_Sessions.OldStartingIndex == 0)
+                    {
+                        if (view_model.Sessions.Count > 0)
                         {
-                            if (e_Session.PropertyName == "State")
-                                _tray_icon.Icon = _icons[view_model.Sessions[0].State == Models.VPNSessionStatusType.Connected ? 1 : 0];
-                        };
+                            // First session removed, next snapped into its place: Bind to the session for property changes.
+                            view_model.Sessions[0].PropertyChanged += UpdateState;
+                        }
+                        else
+                        {
+                            // First session removed, no more sessions: Reset tray icon to default.
+                            _tray_icon.Icon = _icons[0];
+                        }
                     }
-                    else
-                    {
-                        // Session is gone. Reset tray icon to default.
-                        _tray_icon.Icon = _icons[0];
-                    }
-                }
-            };
+                };
 
             // Set context menu data context to allow bindings to work.
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
