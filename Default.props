@@ -13,7 +13,6 @@
   <PropertyGroup>
     <OutputPath>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
     <ErrorReport>prompt</ErrorReport>
     <DefineConstants>TRACE;PLATFORM_$(Platform)</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
@@ -23,12 +22,14 @@
     Configuration specific settings
   -->
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <RunCodeAnalysis>true</RunCodeAnalysis>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <DebugSymbols>false</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
