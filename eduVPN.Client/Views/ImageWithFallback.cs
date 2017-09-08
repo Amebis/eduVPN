@@ -64,10 +64,19 @@ namespace eduVPN.Views
         {
             if (d is ImageWithFallback _this)
             {
-                if (e.NewValue is Uri uri)
-                    _this.LoadImage(uri);
-                else
+                if (e.OldValue == null || !e.OldValue.Equals(e.NewValue))
+                {
+                    // Value changed.
+                    if (e.NewValue is Uri uri)
+                        _this.LoadImage(uri);
+                    else
+                        _this.LoadFallbackImage();
+                }
+                else if (e.OldValue != null && e.NewValue == null)
+                {
+                    // Value changed to null.
                     _this.LoadFallbackImage();
+                }
             }
         }
 
@@ -94,33 +103,30 @@ namespace eduVPN.Views
             worker.DoWork +=
                 (object sender, DoWorkEventArgs e) =>
                 {
-                    // Download the specified image.
-                    using (var web_client = new WebClient())
+                    try
                     {
-                        web_client.CachePolicy = _default_request_cache_policy;
-                        try
+                        // Download the specified image.
+                        var request = WebRequest.Create(uri);
+                        request.CachePolicy = _default_request_cache_policy;
+                        using (var response = request.GetResponse())
+                        using (var stream = response.GetResponseStream())
                         {
-                            var data = web_client.DownloadData(uri);
-                            if (data == null)
+                            // Read to memory. BitmapImage doesn't fancy non-seekable streams.
+                            var data = new byte[2097152]; // Limit to 2MiB
+                            using (var memory_stream = new MemoryStream(data, 0, stream.Read(data, 0, data.Length)))
                             {
-                                e.Result = null;
-                                return;
-                            }
-
-                            // Decode image.
-                            var bitmap_image = new BitmapImage();
-                            using (var imageStream = new MemoryStream(data))
-                            {
+                                // Decode image.
+                                var bitmap_image = new BitmapImage();
                                 bitmap_image.BeginInit();
-                                bitmap_image.StreamSource = imageStream;
+                                bitmap_image.StreamSource = memory_stream;
                                 bitmap_image.CacheOption = BitmapCacheOption.OnLoad;
                                 bitmap_image.EndInit();
                                 bitmap_image.Freeze();
+                                e.Result = bitmap_image;
                             }
-                            e.Result = bitmap_image;
                         }
-                        catch { e.Result = null; }
                     }
+                    catch (Exception ex) { e.Result = ex; }
                 };
 
             worker.RunWorkerCompleted +=
