@@ -16,4 +16,5 @@
     <String Id="SummaryCodepage">1252</String>
 
     <String Id="DotNETFrameworkMissing">This application requires .NET Framework 4.5. Please install the .NET Framework 4.5 then run this installer again.</String>
+    <String Id="OpenVPNMissing">This application requires OpenVPN 2.4 or later. Please install the OpenVPN 2.4 or later then run this installer again.</String>
 </WixLocalization>
