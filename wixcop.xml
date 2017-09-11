@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduEd25519 - High-speed high-security signatures
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Settings>
+    <IgnoreErrors>
+        <!--
+        <Test Id="WhitespacePrecedingNodeWrong"/>
+        <Test Id="WhitespacePrecedingEndElementWrong"/>
+        -->
+    </IgnoreErrors> 
+ </Settings>

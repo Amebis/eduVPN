@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    xmlns="http://schemas.microsoft.com/wix/2006/localization"
+    Culture="en-us"
+    Codepage="1252">
+    <String Id="ApplicationName">eduVPN Client</String>
+    <String Id="ApplicationNameFull">eduVPN Client for Windows</String>
+    <String Id="ApplicationDescription">End-user friendly VPN</String>
+    <String Id="ManufacturerName">SURFnet</String>
+    <String Id="SummaryCodepage">1252</String>
+</WixLocalization>

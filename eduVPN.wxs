@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product
+        Id="*"
+        UpgradeCode="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}"
+        Version="1.0.3"
+        Language="0"
+        Name="!(loc.ApplicationNameFull)"
+        Manufacturer="!(loc.ManufacturerName)">
+
+        <Package
+            InstallerVersion="400"
+            Compressed="yes"
+            SummaryCodepage="!(loc.SummaryCodepage)"
+            ReadOnly="yes"/>
+
+        <Media
+            Id="1"
+            Cabinet="eduVPN.cab"
+            EmbedCab="yes"/>
+
+        <Icon
+            Id="eduVPN.ico"
+            SourceFile="eduVPN.Client\Resources\eduVPN.ico"/>
+
+        <Property Id="ARPPRODUCTICON" Value="eduVPN.ico"/>
+        <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+
+
+        <!--
+            Folders
+        -->
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
+                <Directory Id="INSTALLDIR" Name="!(loc.ApplicationName)" FileSource="$(var.eduVPN.TargetDir)">
+                    <Directory Id="RESOURCEDIRSL" Name="sl"/>
+                </Directory>
+            </Directory>
+            <Directory Id="ProgramMenuFolder"/>
+        </Directory>
+
+
+        <!--
+            Features
+        -->
+        <Feature Id="eduVPN.Client" Title="!(loc.ApplicationName)" Level="1">
+            <MergeRef Id="VC150Redist"/>
+
+            <ComponentGroupRef Id="eduVPN.Client.exe"/>
+        </Feature>
+    </Product>
+</Wix>
