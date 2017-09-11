@@ -54,5 +54,18 @@
 
             <ComponentGroupRef Id="eduVPN.Client.exe"/>
         </Feature>
+
+
+        <!--
+            Prism
+        -->
+        <DirectoryRef Id="INSTALLDIR">
+            <Component Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}">
+                <File Source="Prism.dll"/>
+            </Component>
+        </DirectoryRef>
+        <ComponentGroup Id="Prism">
+            <ComponentRef Id="Prism.dll"/>
+        </ComponentGroup>
     </Product>
 </Wix>

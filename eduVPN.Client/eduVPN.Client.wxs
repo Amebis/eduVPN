@@ -51,6 +51,7 @@
             <ComponentGroupRef Id="eduOAuth.dll"/>
             <ComponentGroupRef Id="eduOpenVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.dll"/>
+            <ComponentGroupRef Id="Prism"/>
 
             <ComponentRef Id="eduVPN.Client.exe"/>
             <ComponentRef Id="eduVPN.Client.exe.config"/>
