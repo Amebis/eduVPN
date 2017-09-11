@@ -14,4 +14,6 @@
     <String Id="ApplicationDescription">End-user friendly VPN</String>
     <String Id="ManufacturerName">SURFnet</String>
     <String Id="SummaryCodepage">1252</String>
+
+    <String Id="DotNETFrameworkMissing">This application requires .NET Framework 4.5. Please install the .NET Framework 4.5 then run this installer again.</String>
 </WixLocalization>

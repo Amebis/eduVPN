@@ -5,7 +5,9 @@
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix
+    xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
         Id="*"
         UpgradeCode="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}"
@@ -31,6 +33,14 @@
 
         <Property Id="ARPPRODUCTICON" Value="eduVPN.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+
+
+        <!--
+            .NET Framework check
+            TODO: Once .NET Framework installation as a prerequisite (WiX bundles) is supported, remove the check.
+        -->
+        <PropertyRef Id="NETFRAMEWORK45"/>
+        <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
 
 
         <!--
