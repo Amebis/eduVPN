@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <!--
+            Components
+        -->
+        <DirectoryRef Id="INSTALLDIR">
+            <Component Id="eduVPN.Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}">
+                <File Source="eduVPN.Client.exe" KeyPath="yes"/>
+
+                <RegistryKey Root="HKCR" Key="org.eduvpn.app\shell\open\command">
+                    <RegistryValue Type="string" Value="[#eduVPN.Client.exe],1"/>
+                </RegistryKey>
+                <RegistryKey Root="HKCR" Key="org.eduvpn.app\DefaultIcon">
+                    <RegistryValue Type="string" Value="&quot;[#eduVPN.Client.exe]&quot; &quot;%1&quot;"/>
+                </RegistryKey>
+
+                <!-- Note: "eduVPN.Client" feature and "eduVPN.ico" icon are defined elsewhere. -->
+                <Shortcut
+                    Id="eduVPN.Client.exe"
+                    Directory="ProgramMenuFolder"
+                    Name="!(loc.ApplicationName)"
+                    Description="!(loc.ApplicationDescription)"
+                    Target="eduVPN.Client"
+                    WorkingDirectory="INSTALLDIR"
+                    Icon="eduVPN.ico"/>
+            </Component>
+            <Component Id="eduVPN.Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}">
+                <File Source="eduVPN.Client.exe.config"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESOURCEDIRSL">
+            <Component Id="eduVPN.Client.resources.dll.sl" Guid="{662C9FC3-23A8-4174-8AD7-86EC67F916B4}">
+                <File Id="eduVPN.Client.resources.dll.sl" Source="sl\eduVPN.Client.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+
+
+        <!--
+            Component groups
+        -->
+        <ComponentGroup Id="eduVPN.Client.exe">
+            <ComponentGroupRef Id="eduEd25519.dll"/>
+            <ComponentGroupRef Id="eduJSON.dll"/>
+            <ComponentGroupRef Id="eduOAuth.dll"/>
+            <ComponentGroupRef Id="eduOpenVPN.dll"/>
+            <ComponentGroupRef Id="eduVPN.dll"/>
+
+            <ComponentRef Id="eduVPN.Client.exe"/>
+            <ComponentRef Id="eduVPN.Client.exe.config"/>
+            <ComponentRef Id="eduVPN.Client.resources.dll.sl"/>
+        </ComponentGroup>
+    </Fragment>
+</Wix>
