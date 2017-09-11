@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("eduVPN View Model Library")]
-[assembly: AssemblyCompany("SURF")]
+[assembly: AssemblyCompany("SURFnet")]
 [assembly: AssemblyProduct("eduVPN")]
 [assembly: AssemblyCopyright("Copyright © The Commons Conservancy eduVPN Programme 2017")]
 [assembly: NeutralResourcesLanguage("en-US")]
