@@ -12,7 +12,7 @@
     <String Id="ApplicationName">Odjemalec eduVPN</String>
     <String Id="ApplicationNameFull">eduVPN - Odjemalec za Windowse</String>
     <String Id="ApplicationDescription">Uporabniku prijazen VPN</String>
-    <String Id="ManufacturerName">SURFnet</String>
+    <String Id="ManufacturerName">SURF</String>
     <String Id="SummaryCodepage">1250</String>
 
     <String Id="DotNETFrameworkMissing">Aplikacija potrebuje .NET Framework 4.5. Namestite .NET Framework 4.5 in ponovno poženite to namestitev.</String>
