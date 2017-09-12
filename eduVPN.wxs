@@ -17,7 +17,7 @@
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
-            InstallerVersion="400"
+            InstallerVersion="500"
             Compressed="yes"
             SummaryCodepage="!(loc.SummaryCodepage)"
             ReadOnly="yes"/>

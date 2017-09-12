@@ -7,6 +7,7 @@
 
 using eduOpenVPN;
 using eduOpenVPN.Management;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -72,8 +73,25 @@ namespace eduVPN.ViewModels
         public OpenVPNSession(ConnectWizard parent, Models.VPNConfiguration configuration) :
             base(parent, configuration)
         {
-            _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
-            _working_folder = Path.GetTempPath();
+            try
+            {
+                // Use OpenVPN configuration folder.
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE\\OpenVPN", false);
+                _working_folder = key.GetValue("config_dir").ToString().TrimEnd();
+                string path_separator = Path.DirectorySeparatorChar.ToString();
+                if (!_working_folder.EndsWith(path_separator))
+                    _working_folder += path_separator;
+                _working_folder += "eduVPN\\Spool\\";
+                if (!Directory.Exists(_working_folder))
+                    throw new FileNotFoundException();
+                _connection_id = Guid.NewGuid().ToString();
+            }
+            catch
+            {
+                // Use temporary folder.
+                _working_folder = Path.GetTempPath();
+                _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
+            }
 
             // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
             new DispatcherTimer(
