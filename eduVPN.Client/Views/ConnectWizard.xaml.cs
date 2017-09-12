@@ -184,6 +184,12 @@ namespace eduVPN.Views
         /// <param name="e">Authorization request event arguments</param>
         private void ConnectWizard_RequestInstanceAuthorization(object sender, ViewModels.RequestInstanceAuthorizationEventArgs e)
         {
+            if (AuthorizationPopup != null)
+            {
+                // Close previous authorization pop-up.
+                AuthorizationPopup.Close();
+            }
+
             // Create a new authorization pop-up.
             AuthorizationPopup = new AuthorizationPopup() { Owner = this };
 
@@ -194,10 +200,9 @@ namespace eduVPN.Views
 
             // Run the authorization pop-up and pass the access token to be returned to the event sender.
             if (AuthorizationPopup.ShowDialog() == true)
-            {
                 e.AccessToken = view_model.AccessToken;
-                AuthorizationPopup = null;
-            }
+
+            AuthorizationPopup = null;
         }
 
         #endregion
