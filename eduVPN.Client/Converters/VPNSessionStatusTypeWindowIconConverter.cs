@@ -20,10 +20,20 @@ namespace eduVPN.Client.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is VPNSessionStatusType status_type && status_type == VPNSessionStatusType.Connected)
-                return new BitmapImage(new Uri("pack://application:,,,/Resources/eduVPNConnected.ico"));
-            else
-                return new BitmapImage(new Uri("pack://application:,,,/Resources/eduVPN.ico"));
+            if (value is VPNSessionStatusType status_type)
+            {
+                try
+                {
+                    return new BitmapImage(
+                        new Uri(
+                            String.Format(
+                                "pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico",
+                                Enum.GetName(typeof(Models.VPNSessionStatusType), status_type))));
+                }
+                catch { }
+            }
+
+            return new BitmapImage(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

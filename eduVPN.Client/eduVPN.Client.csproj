@@ -253,8 +253,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\eduVPN.ico" />
-    <Resource Include="Resources\eduVPNConnected.ico" />
+    <None Include="Resources\eduVPN.ico" />
     <Resource Include="Resources\InstituteAccess.png" />
     <Resource Include="Resources\InstituteAccessBlue.png" />
     <Resource Include="Resources\SecureInternet.png" />
@@ -264,6 +263,11 @@
     <Resource Include="Resources\VPNSessionStatusTypeIconError.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.png" />
     <Resource Include="Resources\GenericInstance.png" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
     <Resource Include="Resources\Blank.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

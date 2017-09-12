@@ -6,9 +6,11 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,7 +24,7 @@ namespace eduVPN.Views
         #region Fields
 
         private System.Windows.Forms.NotifyIcon _tray_icon;
-        private Icon[] _icons;
+        private Dictionary<Models.VPNSessionStatusType, Icon> _icons;
         private bool _do_close = false;
 
         #endregion
@@ -57,18 +59,20 @@ namespace eduVPN.Views
         {
             // Preload icons to be used on system tray.
             var icon_size = System.Windows.Forms.SystemInformation.SmallIconSize;
-            _icons = new Icon[]
+            _icons = new Dictionary<Models.VPNSessionStatusType, Icon>();
+            foreach (var status_type in Enum.GetValues(typeof(Models.VPNSessionStatusType)).Cast<Models.VPNSessionStatusType>())
             {
-                new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/eduVPN.ico")).Stream, icon_size),
-                new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/eduVPNConnected.ico")).Stream, icon_size)
-            };
+                var icon_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico", Enum.GetName(typeof(Models.VPNSessionStatusType), status_type)));
+                try { _icons.Add(status_type, new Icon(Application.GetResourceStream(icon_uri).Stream, icon_size)); }
+                catch { _icons.Add(status_type, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico")).Stream, icon_size)); }
+            }
 
             var view_model = (ViewModels.ConnectWizard)DataContext;
 
             // Create notify icon, set default icon, and setup events.
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
             _tray_icon = new System.Windows.Forms.NotifyIcon();
-            _tray_icon.Icon = _icons[view_model.Sessions.Count > 0 && view_model.Sessions[0] != null && view_model.Sessions[0].State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+            _tray_icon.Icon = view_model.Sessions.Count > 0 && view_model.Sessions[0] != null ? _icons[view_model.Sessions[0].State] : _icons[Models.VPNSessionStatusType.Initializing];
             _tray_icon.Click += TrayIcon_Click;
 
             // Bind to "Sessions[0].State" property to update tray icon.
@@ -78,7 +82,7 @@ namespace eduVPN.Views
                     void UpdateState(object sender_Session, PropertyChangedEventArgs e_Session)
                     {
                         if (e_Session.PropertyName == "State")
-                            _tray_icon.Icon = _icons[view_model.Sessions[0].State == Models.VPNSessionStatusType.Connected ? 1 : 0];
+                            _tray_icon.Icon = _icons[view_model.Sessions[0].State];
                     }
 
                     if (e_Sessions.NewStartingIndex == 0)
@@ -96,7 +100,7 @@ namespace eduVPN.Views
                         else
                         {
                             // First session removed, no more sessions: Reset tray icon to default.
-                            _tray_icon.Icon = _icons[0];
+                            _tray_icon.Icon = _icons[Models.VPNSessionStatusType.Initializing];
                         }
                     }
                 };
@@ -221,8 +225,8 @@ namespace eduVPN.Views
 
                     if (_icons != null)
                         foreach (var i in _icons)
-                            if (i != null)
-                                i.Dispose();
+                            if (i.Value != null)
+                                i.Value.Dispose();
                 }
 
                 disposedValue = true;
