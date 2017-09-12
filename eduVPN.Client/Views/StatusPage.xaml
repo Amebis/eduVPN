@@ -102,7 +102,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 UriSource="{Binding Path=Parent.Sessions[0].Configuration.ConnectingInstance.Logo}"
-                UriFallbackSource="pack://application:,,,/Resources/GenericInstanceBlue.png"
+                UriFallbackSource="pack://application:,,,/Resources/GenericInstance.png"
                 ToolTip="{Binding Path=Parent.Sessions[0].Configuration.ConnectingInstance.DisplayName}"
                 AutomationProperties.Name="{Binding Path=Parent.Sessions[0].Configuration.ConnectingInstance.DisplayName}"
                 RenderOptions.BitmapScalingMode="Fant"/>

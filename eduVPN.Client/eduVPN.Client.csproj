@@ -263,7 +263,7 @@
     <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconError.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.png" />
-    <Resource Include="Resources\GenericInstanceBlue.png" />
+    <Resource Include="Resources\GenericInstance.png" />
     <Resource Include="Resources\Blank.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
