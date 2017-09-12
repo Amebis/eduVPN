@@ -27,16 +27,16 @@ In order to have the build process digitally sign the output files, one should p
   - `ManifestTimestampRFC3161Url` - set the value to URL used to perform timestamp signature (i.e. `http://sha256timestamp.ws.symantec.com/sha256/timestamp`). In order to perform the timestamp signing successfully, the computer running the build should be online and able to access this URL.
 
 ## Initial Registration
-1. Start the _Developer Command Prompt for VS2017_ elevated (_Start_ » _Run as Administrator_).
-2. `cd` to the project folder. The one where `eduVPN.sln` and `Makefile` files are located.
+1. Start the _Developer Command Prompt for VS2017_ elevated (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » Right click _Developer Command Prompt for VS2017_ » _Run as Administrator_).
+2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the initial build and registration using `nmake Register` command. This command will:
-   a) Build the Debug version for your architecture as defined by the `PROCESSOR_ARCHITECTURE` environment variable.
-   b) Register the `org.eduvpn.app` custom URI scheme.
-   c) Create a Start menu eduVPN Client shortcut.
+   - Build the Debug version for your architecture as defined by the `PROCESSOR_ARCHITECTURE` environment variable.
+   - Register the `org.eduvpn.app` custom URI scheme.
+   - Create a Start menu eduVPN Client shortcut.
 4. The client can now be started using the Start menu shortcut.
 
 ## Debugging eduVPN Client
-1. Perform the [initial registration](#initial-registration).
+1. Perform the [initial registration](#initial-registration) described above.
 2. Open the `eduVPN.sln` file (with VS2017).
 3. _Build_ » _Configuration Manager..._: Select desired active solution and platform. Please note _AnyCPU_ is not supported (yet).
 4. In the _Solution Explorer_ pane, locate _eduVPN.Client_ project, right click on it, and _Set as StartUp Project_.
@@ -48,9 +48,9 @@ In order to have the build process digitally sign the output files, one should p
 ### Pre-requisites
 - [WiX Toolset 3.11](http://wixtoolset.org/releases/v3.11/stable)
 
-## Building
-1. Start the _Developer Command Prompt for VS2017_. The elevation is not required.
-2. `cd` to the project folder. The one where `eduVPN.sln` and `Makefile` files are located.
-3. Start building using `nmake Setup` command.
+### Building
+1. Start the _Developer Command Prompt for VS2017_ (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _Developer Command Prompt for VS2017_).
+2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
+3. Start the MSI build using `nmake Setup` command.
 4. The MSI packages will be saved to `bin\Setup` folder.
  
