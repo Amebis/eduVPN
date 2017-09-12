@@ -14,10 +14,13 @@
             <Component Id="eduVPN.Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}">
                 <File Source="eduVPN.Client.exe" KeyPath="yes"/>
 
-                <RegistryKey Root="HKCR" Key="org.eduvpn.app\shell\open\command">
-                    <RegistryValue Type="string" Value="[#eduVPN.Client.exe],1"/>
+                <RegistryKey Root="HKCR" Key="org.eduvpn.app">
+                    <RegistryValue Type="string" Name="URL Protocol" Value=""/>
                 </RegistryKey>
                 <RegistryKey Root="HKCR" Key="org.eduvpn.app\DefaultIcon">
+                    <RegistryValue Type="string" Value="[#eduVPN.Client.exe],1"/>
+                </RegistryKey>
+                <RegistryKey Root="HKCR" Key="org.eduvpn.app\shell\open\command">
                     <RegistryValue Type="string" Value="&quot;[#eduVPN.Client.exe]&quot; &quot;%1&quot;"/>
                 </RegistryKey>
 
