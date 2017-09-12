@@ -15,7 +15,7 @@ Windows eduVPN Client
 
 # Building
 ## Pre-requisites
-- libsodium: Download libsodium [pre-compiled MSVC binaries](https://download.libsodium.org/libsodium/releases/) and extract them to `C:\SDK\libsodium`. (Or change `LIBSODIUM_SDK` in `eduEd25519\eduEd25519.props` to the folder of your choice.) Include files should be in `C:\SDK\libsodium\include`.
+- libsodium: Download libsodium [pre-compiled MSVC binaries](https://download.libsodium.org/libsodium/releases/) and extract them to `C:\SDK\libsodium`. (Or change `LIBSODIUM_SDK` in `eduEd25519\eduEd25519.props` to the folder of your choice.) `sodium.h` include file should be at `C:\SDK\libsodium\include\sodium.h`.
 - Visual Studio 2017 Community Edition: The required VS2017 feature set to be announced later...
 
 ## Code Signing
@@ -46,7 +46,7 @@ In order to have the build process digitally sign the output files, one should p
 ## Building MSI Packages
 
 ### Pre-requisites
-- WiX Toolset 3.11
+- [WiX Toolset 3.11](http://wixtoolset.org/releases/v3.11/stable)
 
 ## Building
 1. Start the _Developer Command Prompt for VS2017_. The elevation is not required.
