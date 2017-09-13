@@ -356,6 +356,21 @@ namespace eduVPN.ViewModels
         private ConnectWizardPage _current_page;
 
         /// <summary>
+        /// The first page of the wizard
+        /// </summary>
+        public ConnectWizardPage StartingPage
+        {
+            get
+            {
+                if (_configuration_histories[(int)Models.InstanceSourceType.SecureInternet].Count > 0 ||
+                    _configuration_histories[(int)Models.InstanceSourceType.InstituteAccess].Count > 0)
+                    return RecentConfigurationSelectPage;
+                else
+                    return InstanceSourceSelectPage;
+            }
+        }
+
+        /// <summary>
         /// Initializing wizard page
         /// </summary>
         public InitializingPage InitializingPage
@@ -700,11 +715,8 @@ namespace eduVPN.ViewModels
                         return;
 
                     // Proceed to the "first" page.
-                    if (_configuration_histories[(int)Models.InstanceSourceType.SecureInternet].Count > 0 ||
-                        _configuration_histories[(int)Models.InstanceSourceType.InstituteAccess].Count > 0)
-                        CurrentPage = RecentConfigurationSelectPage;
-                    else
-                        CurrentPage = InstanceSourceSelectPage;
+                    RaisePropertyChanged("StartingPage");
+                    CurrentPage = StartingPage;
                 }
                 finally { ChangeTaskCount(-1); }
 
