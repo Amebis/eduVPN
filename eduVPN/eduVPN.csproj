@@ -54,6 +54,7 @@
     <Compile Include="Models\MessageNotification.cs" />
     <Compile Include="Models\MessageOfTheDay.cs" />
     <Compile Include="Range.cs" />
+    <Compile Include="ViewModels\AboutPage.cs" />
     <Compile Include="ViewModels\OpenVPNSession.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />

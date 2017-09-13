@@ -136,6 +136,29 @@ namespace eduVPN.ViewModels
         private DelegateCommand _session_info;
 
         /// <summary>
+        /// About command
+        /// </summary>
+        public DelegateCommand About
+        {
+            get
+            {
+                if (_about == null)
+                    _about = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            ChangeTaskCount(+1);
+                            try { CurrentPage = AboutPage; }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
+                        });
+
+                return _about;
+            }
+        }
+        private DelegateCommand _about;
+
+        /// <summary>
         /// Starts VPN session
         /// </summary>
         public DelegateCommand<StartSessionParams> StartSession
@@ -514,6 +537,20 @@ namespace eduVPN.ViewModels
             }
         }
         private StatusPage _status_page;
+
+        /// <summary>
+        /// About wizard page
+        /// </summary>
+        public AboutPage AboutPage
+        {
+            get
+            {
+                if (_about_page == null)
+                    _about_page = new AboutPage(this);
+                return _about_page;
+            }
+        }
+        private AboutPage _about_page;
 
         #endregion
 

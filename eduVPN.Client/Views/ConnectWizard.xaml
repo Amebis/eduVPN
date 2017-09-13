@@ -59,6 +59,9 @@
         <DataTemplate DataType="{x:Type viewModel:StatusPage}">
             <view:StatusPage/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AboutPage}">
+            <view:AboutPage/>
+        </DataTemplate>
 
         <ContextMenu x:Key="SystemTrayMenu">
             <MenuItem
@@ -69,6 +72,10 @@
                 Header="{x:Static res:Strings.SystemTrayMenuStatus}"
                 Command="{Binding Path=SessionInfo}"
                 Click="Open_Click"/>
+            <Separator/>
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuAbout}"
+                Command="{Binding Path=About}"/>
             <Separator/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuExit}"

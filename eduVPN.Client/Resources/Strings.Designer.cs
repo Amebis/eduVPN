@@ -61,6 +61,44 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copyright © 2017
+        ///The Commons Conservancy eduVPN Programme.
+        /// </summary>
+        public static string AboutPageCopyright {
+            get {
+                return ResourceManager.GetString("AboutPageCopyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to eduVPN
+        ///Powered by SURFnet.
+        /// </summary>
+        public static string AboutPageeduVPN {
+            get {
+                return ResourceManager.GetString("AboutPageeduVPN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutPageTitle {
+            get {
+                return ResourceManager.GetString("AboutPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0}.
+        /// </summary>
+        public static string AboutPageVersion {
+            get {
+                return ResourceManager.GetString("AboutPageVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select your institution&apos;s country here. You can select VPN endpoints in other countries after signing in with your institution credentials..
         /// </summary>
         public static string AuthenticatingCountrySelectPageDescription {
@@ -427,6 +465,15 @@ namespace eduVPN.Client.Resources {
         public static string StatusPageTitle {
             get {
                 return ResourceManager.GetString("StatusPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _About.
+        /// </summary>
+        public static string SystemTrayMenuAbout {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuAbout", resourceCulture);
             }
         }
         

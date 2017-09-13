@@ -265,4 +265,21 @@ The client will continue after you complete the authorization...</value>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Open</value>
   </data>
+  <data name="AboutPageTitle" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutPageCopyright" xml:space="preserve">
+    <value>Copyright © 2017
+The Commons Conservancy eduVPN Programme</value>
+  </data>
+  <data name="AboutPageeduVPN" xml:space="preserve">
+    <value>eduVPN
+Powered by SURFnet</value>
+  </data>
+  <data name="AboutPageVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="SystemTrayMenuAbout" xml:space="preserve">
+    <value>_About</value>
+  </data>
 </root>

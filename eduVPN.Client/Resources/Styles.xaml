@@ -133,6 +133,14 @@
         <Setter Property="FontStyle" Value="Italic"/>
     </Style>
 
+    <Style x:Key="eduVPNVersionTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    </Style>
+
+    <Style x:Key="eduVPNCopyrightTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+
+
     <!--
         eduVPN Separator Styles
     -->
