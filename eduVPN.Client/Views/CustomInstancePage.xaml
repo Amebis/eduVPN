@@ -18,7 +18,7 @@
     d:DesignHeight="373"
     Title="{x:Static res:Strings.CustomInstancePageTitle}"
     Description="{x:Static res:Strings.CustomInstancePageDescription}"
-    Style="{StaticResource eduVPNConnectWizardPageWithTitleAndBack}">
+    Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Grid
         VerticalAlignment="Top"

@@ -349,49 +349,11 @@
         ConnectWizard Page Templates
     -->
 
-    <Style x:Key="eduVPNConnectWizardPage" TargetType="{x:Type Page}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
-    </Style>
-
     <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
         <Setter Property="FontSize" Value="16"/>
-    </Style>
-
-    <Style x:Key="eduVPNConnectWizardPageWithTitle" TargetType="{x:Type view:ConnectWizardPage}" BasedOn="{StaticResource eduVPNConnectWizardPage}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type view:ConnectWizardPage}">
-                    <Grid Margin="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock
-                            Margin="10"
-                            VerticalAlignment="Top"
-                            Style="{StaticResource eduVPNPageTitleStyle}"
-                            Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                        <TextBlock
-                            Grid.Row="1"
-                            Margin="30,10"
-                            Style="{StaticResource eduVPNTextBlockStyle}"
-                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                            Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                        <ContentPresenter
-                            Grid.Row="2"
-                            Margin="10"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
@@ -440,12 +402,14 @@
                 <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.25"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="eduVPNConnectWizardPageWithTitleAndBack" TargetType="{x:Type view:ConnectWizardPage}" BasedOn="{StaticResource eduVPNConnectWizardPage}">
+    <Style x:Key="eduVPNConnectWizardPage" TargetType="{x:Type Page}">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:ConnectWizardPage}">

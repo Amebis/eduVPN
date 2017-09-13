@@ -14,7 +14,7 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Style="{StaticResource eduVPNConnectWizardPageWithTitleAndBack}">
+    Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>

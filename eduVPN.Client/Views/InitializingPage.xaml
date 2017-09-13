@@ -16,7 +16,7 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{x:Static res:Strings.InitializingPageTitle}"
-    Style="{StaticResource eduVPNConnectWizardPageWithTitle}">
+    Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Grid
         VerticalAlignment="Top"

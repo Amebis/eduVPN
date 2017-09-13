@@ -17,7 +17,7 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{x:Static res:Strings.StatusPageTitle}"
-    Style="{StaticResource eduVPNConnectWizardPageWithTitleAndBack}">
+    Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Page.Resources>
         <!-- eduVPN collection view sources -->
