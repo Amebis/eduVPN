@@ -76,15 +76,20 @@ namespace eduVPN.ViewModels
             try
             {
                 // Use OpenVPN configuration folder.
-                RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE\\OpenVPN", false);
-                _working_folder = key.GetValue("config_dir").ToString().TrimEnd();
-                string path_separator = Path.DirectorySeparatorChar.ToString();
-                if (!_working_folder.EndsWith(path_separator))
-                    _working_folder += path_separator;
-                _working_folder += "eduVPN\\Spool\\";
-                if (!Directory.Exists(_working_folder))
-                    throw new FileNotFoundException();
-                _connection_id = Guid.NewGuid().ToString();
+                using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                {
+                    using (var key = hklm_key.OpenSubKey("SOFTWARE\\OpenVPN", false))
+                    {
+                        _working_folder = key.GetValue("config_dir").ToString().TrimEnd();
+                        string path_separator = Path.DirectorySeparatorChar.ToString();
+                        if (!_working_folder.EndsWith(path_separator))
+                            _working_folder += path_separator;
+                        _working_folder += "eduVPN\\Spool\\";
+                        if (!Directory.Exists(_working_folder))
+                            throw new FileNotFoundException();
+                        _connection_id = Guid.NewGuid().ToString();
+                    }
+                }
             }
             catch
             {
