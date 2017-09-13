@@ -53,6 +53,8 @@
                 </Directory>
             </Directory>
             <Directory Id="ProgramMenuFolder"/>
+
+            <Merge Id="VC150Redist" SourceFile="$(var.eduVPN.VC150RedistMSM)" DiskId="1" Language="0"/>
         </Directory>
 
 
