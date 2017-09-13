@@ -347,6 +347,9 @@ namespace eduVPN.ViewModels
             {
                 if (value != _current_page)
                 {
+                    _previous_page = _current_page;
+                    RaisePropertyChanged("PreviousPage");
+
                     _current_page = value;
                     RaisePropertyChanged();
                     _current_page.OnActivate();
@@ -354,6 +357,15 @@ namespace eduVPN.ViewModels
             }
         }
         private ConnectWizardPage _current_page;
+
+        /// <summary>
+        /// The previous page of the wizard
+        /// </summary>
+        public ConnectWizardPage PreviousPage
+        {
+            get { return _previous_page; }
+        }
+        private ConnectWizardPage _previous_page;
 
         /// <summary>
         /// The first page of the wizard
