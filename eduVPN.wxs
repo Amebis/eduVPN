@@ -12,7 +12,7 @@
         Id="*"
         UpgradeCode="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}"
         Version="$(var.eduVPN.Version)"
-        Language="0"
+        Language="!(loc.ProductLanguage)"
         Name="!(loc.ApplicationNameFull) $(var.eduVPN.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
