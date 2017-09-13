@@ -155,5 +155,21 @@ namespace eduVPN.ViewModels
         }
 
         #endregion
+
+        #region Members
+
+        protected override void DoNavigateBack()
+        {
+            base.DoNavigateBack();
+
+            Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+        }
+
+        protected override bool CanNavigateBack()
+        {
+            return Parent.StartingPage != this;
+        }
+
+        #endregion
     }
 }
