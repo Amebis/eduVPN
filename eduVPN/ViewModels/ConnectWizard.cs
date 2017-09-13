@@ -9,6 +9,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -505,7 +506,8 @@ namespace eduVPN.ViewModels
                 Properties.Settings.Default.SettingsVersion = 1;
             }
 
-            Dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
+            Dispatcher.ShutdownStarted += (object sender, EventArgs e) =>
+            {
                 // Persist settings to disk.
                 Properties.Settings.Default.Save();
             };
@@ -516,21 +518,26 @@ namespace eduVPN.ViewModels
             // Show initializing wizard page.
             CurrentPage = InitializingPage;
 
-            var source_type_length = (int)Models.InstanceSourceType._end;
-            _instance_sources = new Models.InstanceSourceInfo[source_type_length];
-            _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[source_type_length];
-
-            // Spawn instance source loading threads.
-            var threads = new Thread[source_type_length];
-            for (var i = (int)Models.InstanceSourceType._start; i < source_type_length; i++)
+            // Setup initialization.
+            var worker = new BackgroundWorker() { WorkerReportsProgress = true };
+            worker.DoWork += (object sender, DoWorkEventArgs e) =>
             {
-                // Launch instance source load in the background.
-                threads[i] = new Thread(new ParameterizedThreadStart(
-                    param =>
+                var source_type_length = (int)Models.InstanceSourceType._end;
+                _instance_sources = new Models.InstanceSourceInfo[source_type_length];
+                _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[source_type_length];
+
+                // Setup progress feedback. Each instance will add 10 ticks of progress.
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, (source_type_length - (int)Models.InstanceSourceType._start) * 10, 0)));
+
+                // Spawn instance source loading threads.
+                Parallel.For((int)Models.InstanceSourceType._start, source_type_length, source_index =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
+                    try
                     {
-                        var source_index = (int)param;
                         for (;;)
                         {
+                            int ticks = 0;
                             try
                             {
                                 var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"];
@@ -541,6 +548,10 @@ namespace eduVPN.ViewModels
                                     pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryPubKey"]),
                                     ct: Abort.Token,
                                     previous: response_cache);
+
+                                // Add 5/10 ticks.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 5));
+                                ticks += 5;
 
                                 // Parse instance source JSON.
                                 var obj_web = (Dictionary<string, object>)eduJSON.Parser.Parse(
@@ -574,6 +585,10 @@ namespace eduVPN.ViewModels
                                     // Save response to cache.
                                     Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"] = response_web;
                                 }
+
+                                // Add 2/10 ticks.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 2));
+                                ticks += 2;
 
                                 // Load instance source.
                                 _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj_web);
@@ -645,48 +660,59 @@ namespace eduVPN.ViewModels
                                             _configuration_histories[source_index].Add(cfg);
                                     });
 
+                                // Add 3/10 ticks.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 3));
+                                ticks += 3;
+
                                 break;
                             }
                             catch (OperationCanceledException) { break; }
                             catch (Exception ex)
                             {
-                                // Do not re-throw the exception. Notify the sender the instance source loading failed.
-                                // This will overwrite all previous error messages.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, _instance_directory_id[source_index]), ex)));
+                                // Do not re-throw the exception.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                {
+                                    // Notify the sender the instance source loading failed.
+                                    // This will overwrite all previous error messages.
+                                    Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, _instance_directory_id[source_index]), ex);
+
+                                    // Revert progress indicator value.
+                                    InitializingPage.Progress.Value -= ticks;
+                                }));
                             }
 
                             // Sleep for 3s, then retry.
                             if (Abort.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(3)))
                                 break;
                         }
-                    }));
-                threads[i].Start(i);
-            }
-
-            // Spawn monitor thread to wait for initialization to complete.
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
-                    try
-                    {
-                        // Wait for all threads.
-                        foreach (var thread in threads)
-                            if (thread != null)
-                                thread.Join();
-
-                        if (Abort.Token.IsCancellationRequested)
-                            return;
-
-                        // Proceed to the "first" page.
-                        if (_configuration_histories[(int)Models.InstanceSourceType.SecureInternet].Count > 0 ||
-                            _configuration_histories[(int)Models.InstanceSourceType.InstituteAccess].Count > 0)
-                            CurrentPage = RecentConfigurationSelectPage;
-                        else
-                            CurrentPage = InstanceSourceSelectPage;
                     }
                     finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
-                })).Start();
+                });
+            };
+
+            // Setup initialization completition.
+            worker.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
+            {
+                ChangeTaskCount(+1);
+                try
+                {
+                    if (Abort.Token.IsCancellationRequested)
+                        return;
+
+                    // Proceed to the "first" page.
+                    if (_configuration_histories[(int)Models.InstanceSourceType.SecureInternet].Count > 0 ||
+                        _configuration_histories[(int)Models.InstanceSourceType.InstituteAccess].Count > 0)
+                        CurrentPage = RecentConfigurationSelectPage;
+                    else
+                        CurrentPage = InstanceSourceSelectPage;
+                }
+                finally { ChangeTaskCount(-1); }
+
+                // Self-dispose.
+                (sender as BackgroundWorker)?.Dispose();
+            };
+
+            worker.RunWorkerAsync();
         }
 
         #endregion

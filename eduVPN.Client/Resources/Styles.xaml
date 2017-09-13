@@ -265,6 +265,17 @@
 
 
     <!--
+        eduVPN Progress Bars
+    -->
+    <Style x:Key="eduVPNProgressBarStyle" TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+
+    <!--
         Windows
     -->
 

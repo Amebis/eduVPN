@@ -12,6 +12,20 @@ namespace eduVPN.ViewModels
     /// </summary>
     public class InitializingPage : ConnectWizardPage
     {
+        #region Properties
+
+        /// <summary>
+        /// Initialization progress value
+        /// </summary>
+        public Range<int> Progress
+        {
+            get { return _progress; }
+            set { if (value != _progress) { _progress = value; RaisePropertyChanged(); } }
+        }
+        private Range<int> _progress;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>

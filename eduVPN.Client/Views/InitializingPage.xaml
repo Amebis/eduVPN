@@ -18,4 +18,18 @@
     Title="{x:Static res:Strings.InitializingPageTitle}"
     Style="{StaticResource eduVPNConnectWizardPageWithTitle}">
 
+    <Grid
+        VerticalAlignment="Top"
+        Style="{StaticResource eduVPNPageContentGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ProgressBar
+            Margin="5"
+            Style="{StaticResource eduVPNProgressBarStyle}"
+            Minimum="{Binding Path=Progress.Minimum}"
+            Maximum="{Binding Path=Progress.Maximum}"
+            Value="{Binding Path=Progress.Value}"/>
+    </Grid>
 </view:ConnectWizardPage>
