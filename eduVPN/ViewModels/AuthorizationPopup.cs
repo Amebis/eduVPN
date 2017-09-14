@@ -74,11 +74,17 @@ namespace eduVPN.ViewModels
                         // execute
                         param =>
                         {
-                            AuthenticatingInstance = param;
+                            ChangeTaskCount(+1);
+                            try
+                            {
+                                AuthenticatingInstance = param;
 
-                            // Let retry authorization command do the job.
-                            if (RetryAuthorization.CanExecute(null))
-                                RetryAuthorization.Execute(null);
+                                // Let retry authorization command do the job.
+                                if (RetryAuthorization.CanExecute(null))
+                                    RetryAuthorization.Execute(null);
+                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
                         },
 
                         // canExecute
