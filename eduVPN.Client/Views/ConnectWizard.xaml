@@ -75,7 +75,8 @@
             <Separator/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuAbout}"
-                Command="{Binding Path=About}"/>
+                Command="{Binding Path=NavigateTo}"
+                CommandParameter="{Binding Path=AboutPage}"/>
             <Separator/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuExit}"

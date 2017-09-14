@@ -119,16 +119,10 @@ namespace eduVPN.ViewModels
                 if (_session_info == null)
                     _session_info = new DelegateCommand(
                         // execute
-                        () =>
-                        {
-                            ChangeTaskCount(+1);
-                            try { CurrentPage = StatusPage; }
-                            catch (Exception ex) { Error = ex; }
-                            finally { ChangeTaskCount(-1); }
-                        },
+                        () => NavigateTo.Execute(StatusPage),
 
                         // canExecute
-                        () => Sessions.Count > 0);
+                        () => Sessions.Count > 0 && NavigateTo.CanExecute(StatusPage));
 
                 return _session_info;
             }
@@ -136,27 +130,27 @@ namespace eduVPN.ViewModels
         private DelegateCommand _session_info;
 
         /// <summary>
-        /// About command
+        /// Navigate to page command
         /// </summary>
-        public DelegateCommand About
+        public DelegateCommand<ConnectWizardPage> NavigateTo
         {
             get
             {
-                if (_about == null)
-                    _about = new DelegateCommand(
+                if (_navigate_to == null)
+                    _navigate_to = new DelegateCommand<ConnectWizardPage>(
                         // execute
-                        () =>
+                        page =>
                         {
                             ChangeTaskCount(+1);
-                            try { CurrentPage = AboutPage; }
+                            try { CurrentPage = page; }
                             catch (Exception ex) { Error = ex; }
                             finally { ChangeTaskCount(-1); }
                         });
 
-                return _about;
+                return _navigate_to;
             }
         }
-        private DelegateCommand _about;
+        private DelegateCommand<ConnectWizardPage> _navigate_to;
 
         /// <summary>
         /// Starts VPN session
