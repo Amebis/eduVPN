@@ -535,6 +535,104 @@
         </Setter>
     </Style>
 
+    <Style x:Key="eduVPNConnectWizardPageWithSettings" TargetType="{x:Type Page}" BasedOn="{StaticResource eduVPNConnectWizardPage}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type view:ConnectWizardPage}">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="45"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Button
+                            Style="{StaticResource eduVPNNavigationButtonStyle}"
+                            AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
+                            ToolTip="{x:Static res:Strings.ButtonBackTitle}"
+                            Command="{Binding Path=NavigateBack}">&lt;</Button>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="-35,10,-35,10"
+                            VerticalAlignment="Top"
+                            Style="{StaticResource eduVPNPageTitleStyle}"
+                            Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                        <Button
+                            Grid.Column="2"
+                            Style="{StaticResource eduVPNNavigationButtonStyle}"
+                            AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
+                            ToolTip="{x:Static res:Strings.ButtonSettingsTitle}"
+                            Command="{Binding Path=Parent.NavigateTo}"
+                            CommandParameter="{Binding Path=Parent.SettingsPage}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Grid>
+                                        <Ellipse
+                                            x:Name="Border"
+                                            Fill="{x:Null}"
+                                            Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+
+                                        <Image
+                                            x:Name="Image"
+                                            MaxHeight="14"
+                                            MaxWidth="14"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Source="pack://application:,,,/Resources/SettingsBlue.png"
+                                            RenderOptions.BitmapScalingMode="Fant"/>
+                                    </Grid>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter
+                                                TargetName="Border"
+                                                Property="Fill"
+                                                Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                                            <Setter
+                                                TargetName="Image"
+                                                Property="Source"
+                                                Value="pack://application:,,,/Resources/Settings.png"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter
+                                                TargetName="Border"
+                                                Property="Fill"
+                                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                            <Setter
+                                                TargetName="Border"
+                                                Property="Stroke"
+                                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <TextBlock
+                            Grid.ColumnSpan="3"
+                            Grid.Row="1"
+                            Margin="30,10"
+                            Style="{StaticResource eduVPNTextBlockStyle}"
+                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                            Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                        <ContentPresenter
+                            Grid.ColumnSpan="3"
+                            Grid.Row="2"
+                            Margin="10"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <!--
         Popups

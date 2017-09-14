@@ -186,4 +186,7 @@
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
     <value>Čakam na uvodni odgovor strežnika ...</value>
   </data>
+  <data name="InterfaceNameAutomatic" xml:space="preserve">
+    <value>&lt;Samodejno&gt;</value>
+  </data>
 </root>

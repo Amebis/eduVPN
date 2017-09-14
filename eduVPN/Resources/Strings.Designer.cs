@@ -178,6 +178,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;Automatic&gt;.
+        /// </summary>
+        internal static string InterfaceNameAutomatic {
+            get {
+                return ResourceManager.GetString("InterfaceNameAutomatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adding routes to system....
         /// </summary>
         internal static string OpenVPNStateTypeAddingRoutes {

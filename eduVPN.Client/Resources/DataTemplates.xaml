@@ -305,4 +305,24 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="eduVPNInterfaceSelectionItemTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <TextBlock
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="0,5"
+                HorizontalAlignment="Center"
+                Text="{Binding Path=DisplayName}"
+                Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
+        </Grid>
+    </DataTemplate>
+
 </ResourceDictionary>

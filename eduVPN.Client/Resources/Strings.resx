@@ -282,4 +282,19 @@ Powered by SURFnet</value>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
     <value>_About...</value>
   </data>
+  <data name="SettingsPageInterfaceDescription" xml:space="preserve">
+    <value>When you need multiple simultaneous OpenVPN connections at once, select the TAP interface for eduVPN below.</value>
+  </data>
+  <data name="SettingsPageInterfaceTitle" xml:space="preserve">
+    <value>Select TAP interface</value>
+  </data>
+  <data name="SystemTrayMenuSettings" xml:space="preserve">
+    <value>_Settings...</value>
+  </data>
+  <data name="ButtonSettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

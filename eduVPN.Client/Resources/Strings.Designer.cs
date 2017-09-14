@@ -190,6 +190,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string ButtonSettingsTitle {
+            get {
+                return ResourceManager.GetString("ButtonSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string ConnectingProfileSelectPageTitle {
@@ -361,6 +370,33 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections at once, select the TAP interface for eduVPN below..
+        /// </summary>
+        public static string SettingsPageInterfaceDescription {
+            get {
+                return ResourceManager.GetString("SettingsPageInterfaceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select TAP interface.
+        /// </summary>
+        public static string SettingsPageInterfaceTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageInterfaceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsPageTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnect.
         /// </summary>
         public static string StatusPageDisconnect {
@@ -492,6 +528,15 @@ namespace eduVPN.Client.Resources {
         public static string SystemTrayMenuOpen {
             get {
                 return ResourceManager.GetString("SystemTrayMenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Settings....
+        /// </summary>
+        public static string SystemTrayMenuSettings {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuSettings", resourceCulture);
             }
         }
         

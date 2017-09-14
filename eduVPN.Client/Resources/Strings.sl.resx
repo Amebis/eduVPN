@@ -282,4 +282,19 @@ Omogoča SURFnet</value>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
     <value>O progr_amu ...</value>
   </data>
+  <data name="SettingsPageInterfaceDescription" xml:space="preserve">
+    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za eduVPN.</value>
+  </data>
+  <data name="SettingsPageInterfaceTitle" xml:space="preserve">
+    <value>Izberite vmesnik TAP</value>
+  </data>
+  <data name="SystemTrayMenuSettings" xml:space="preserve">
+    <value>Na_stavitve ...</value>
+  </data>
+  <data name="ButtonSettingsTitle" xml:space="preserve">
+    <value>Nastavitve</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Nastavitve</value>
+  </data>
 </root>

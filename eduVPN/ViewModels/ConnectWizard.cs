@@ -533,6 +533,20 @@ namespace eduVPN.ViewModels
         private StatusPage _status_page;
 
         /// <summary>
+        /// Settings wizard page
+        /// </summary>
+        public SettingsPage SettingsPage
+        {
+            get
+            {
+                if (_settings_page == null)
+                    _settings_page = new SettingsPage(this);
+                return _settings_page;
+            }
+        }
+        private SettingsPage _settings_page;
+
+        /// <summary>
         /// About wizard page
         /// </summary>
         public AboutPage AboutPage

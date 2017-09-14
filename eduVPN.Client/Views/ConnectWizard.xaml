@@ -59,6 +59,9 @@
         <DataTemplate DataType="{x:Type viewModel:StatusPage}">
             <view:StatusPage/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SettingsPage}">
+            <view:SettingsPage/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:AboutPage}">
             <view:AboutPage/>
         </DataTemplate>
@@ -73,6 +76,10 @@
                 Command="{Binding Path=SessionInfo}"
                 Click="Open_Click"/>
             <Separator/>
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuSettings}"
+                Command="{Binding Path=NavigateTo}"
+                CommandParameter="{Binding Path=SettingsPage}"/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuAbout}"
                 Command="{Binding Path=NavigateTo}"
