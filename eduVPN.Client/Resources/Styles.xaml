@@ -414,6 +414,80 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="eduVPNErrorStatusBar" TargetType="{x:Type Control}">
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Visibility" Value="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StatusBar
+                        x:Name="StatusBar"
+                        Height="Auto"
+                        Style="{StaticResource eduVPNInfoBarStyle}">
+                        <StatusBarItem>
+                            <ContentControl
+                                IsTabStop="False"
+                                Content="{StaticResource eduVPNExclamationIcon}"/>
+                        </StatusBarItem>
+                        <StatusBarItem>
+                            <Grid
+                                Margin="-5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Margin="5"
+                                    TextWrapping="Wrap"
+                                    Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
+
+                                <Button
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    VerticalAlignment="Top"
+                                    Style="{StaticResource eduVPNLinkButtonStyle}"
+                                    Command="{Binding Path=CopyError}"
+                                    Content="{x:Static res:Strings.ButtonCopy}"/>
+                            </Grid>
+                        </StatusBarItem>
+                    </StatusBar>
+
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Path=Error}" Value="{x:Null}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="StatusBar"
+                                            Storyboard.TargetProperty="MaxHeight"
+                                            From="200"
+                                            To="0"
+                                            Duration="0:0:1"
+                                            AutoReverse="False"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="StatusBar"
+                                            Storyboard.TargetProperty="MaxHeight"
+                                            From="0"
+                                            To="200"
+                                            Duration="0:0:1"
+                                            AutoReverse="False"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="eduVPNConnectWizardPage" TargetType="{x:Type Page}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>

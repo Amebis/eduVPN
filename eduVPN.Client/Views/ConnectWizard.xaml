@@ -148,39 +148,11 @@
             AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}"
             Click="Hide_Click">×</Button>
 
-        <StatusBar
+        <Control
             Grid.Row="1"
             Grid.ColumnSpan="3"
-            Style="{StaticResource eduVPNInfoBarStyle}"
-            Visibility="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-            <StatusBarItem>
-                <ContentControl
-                    IsTabStop="False"
-                    Content="{StaticResource eduVPNExclamationIcon}"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <Grid
-                    Margin="-5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock
-                        Margin="5"
-                        TextWrapping="Wrap"
-                        Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
-
-                    <Button
-                        Grid.Column="1"
-                        Margin="5"
-                        VerticalAlignment="Top"
-                        Style="{StaticResource eduVPNLinkButtonStyle}"
-                        Command="{Binding Path=CopyError}"
-                        Content="{x:Static res:Strings.ButtonCopy}"/>
-                </Grid>
-            </StatusBarItem>
-        </StatusBar>
+            Style="{StaticResource eduVPNErrorStatusBar}">
+        </Control>
 
         <DockPanel
             Grid.Row="2"
