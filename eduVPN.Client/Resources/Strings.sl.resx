@@ -254,7 +254,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Dodaj drug profil</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Podatk_i povezave...</value>
+    <value>Podatk_i povezave ...</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>Brez elementov</value>
@@ -280,6 +280,6 @@ Omogoča SURFnet</value>
     <value>Verzija {0}</value>
   </data>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
-    <value>O progr_amu</value>
+    <value>O progr_amu ...</value>
   </data>
 </root>

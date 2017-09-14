@@ -469,7 +469,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _About.
+        ///   Looks up a localized string similar to _About....
         /// </summary>
         public static string SystemTrayMenuAbout {
             get {

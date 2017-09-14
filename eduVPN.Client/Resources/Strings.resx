@@ -280,6 +280,6 @@ Powered by SURFnet</value>
     <value>Version {0}</value>
   </data>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
-    <value>_About</value>
+    <value>_About...</value>
   </data>
 </root>
