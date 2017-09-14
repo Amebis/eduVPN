@@ -51,7 +51,7 @@ namespace eduVPN.ViewModels
         {
             base.DoNavigateBack();
 
-            Parent.CurrentPage = Parent.PreviousPage != null ? Parent.PreviousPage : Parent.StartingPage;
+            Parent.CurrentPage = Parent.PreviousPage ?? Parent.StartingPage;
         }
 
         protected override bool CanNavigateBack()
