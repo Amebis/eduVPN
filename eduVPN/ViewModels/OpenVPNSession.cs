@@ -204,6 +204,7 @@ namespace eduVPN.ViewModels
                                 sw.WriteLine("management-client");
                                 sw.WriteLine("management-hold");
                                 sw.WriteLine("management-query-passwords");
+                                sw.WriteLine("management-query-remote");
 
                                 // Configure client certificate.
                                 //sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
@@ -393,6 +394,14 @@ namespace eduVPN.ViewModels
         {
             // TODO: Implement.
             throw new NotImplementedException();
+        }
+
+        public RemoteAction OnRemote(string host, int port, ProtoType protocol)
+        {
+            if (protocol == ProtoType.UDP && Properties.Settings.Default.OpenVPNForceTCP)
+                return new RemoteSkipAction();
+            else
+                return new RemoteAcceptAction();
         }
 
         public byte[] OnRSASign(byte[] data)

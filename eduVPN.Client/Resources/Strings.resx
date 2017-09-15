@@ -297,4 +297,10 @@ Powered by SURFnet</value>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="SettingsPageForceTCPDescription" xml:space="preserve">
+    <value>Sometimes, eduVPN can't connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances.</value>
+  </data>
+  <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
+    <value>Force TCP</value>
+  </data>
 </root>

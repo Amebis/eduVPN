@@ -154,5 +154,17 @@ namespace eduVPN.Properties {
                 this["SecureInternetConfigHistory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OpenVPNForceTCP {
+            get {
+                return ((bool)(this["OpenVPNForceTCP"]));
+            }
+            set {
+                this["OpenVPNForceTCP"] = value;
+            }
+        }
     }
 }

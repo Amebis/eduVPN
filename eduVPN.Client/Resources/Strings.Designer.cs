@@ -370,6 +370,24 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sometimes, eduVPN can&apos;t connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances..
+        /// </summary>
+        public static string SettingsPageForceTCPDescription {
+            get {
+                return ResourceManager.GetString("SettingsPageForceTCPDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force TCP.
+        /// </summary>
+        public static string SettingsPageForceTCPInterfaceTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageForceTCPInterfaceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections at once, select the TAP interface for eduVPN below..
         /// </summary>
         public static string SettingsPageInterfaceDescription {

@@ -297,4 +297,10 @@ Omogoča SURFnet</value>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Nastavitve</value>
   </data>
+  <data name="SettingsPageForceTCPDescription" xml:space="preserve">
+    <value>Včasih se eduVPN ne more pravilno povezati zaradi zelo strogih požarnih zidov. Uporaba protokola TCP lahko v takih okoliščinah olajša povezovanje.</value>
+  </data>
+  <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
+    <value>Vsili TCP</value>
+  </data>
 </root>

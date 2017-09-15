@@ -34,9 +34,55 @@
         Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid
+            Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid
+                Margin="-5,-2,-5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Margin="5,2,2,2"
+                    Style="{StaticResource eduVPNSectionTitleStyle}"
+                    Text="{x:Static res:Strings.SettingsPageForceTCPInterfaceTitle}"/>
+
+                <CheckBox
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="2,2,5,2"
+                    IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNForceTCP}"/>
+
+                <Separator
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Margin="5,2"
+                    Style="{StaticResource eduVPNSeparatorStyle}"/>
+            </Grid>
+
+            <TextBlock
+                Grid.Row="1"
+                Margin="0,2,0,0"
+                Style="{StaticResource eduVPNTextBlockStyle}"
+                Text="{x:Static res:Strings.SettingsPageForceTCPDescription}"/>
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
             Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
