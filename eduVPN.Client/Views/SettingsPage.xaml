@@ -65,6 +65,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Margin="2,2,5,2"
+                    Style="{StaticResource eduVPNCheckBox}"
                     IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNForceTCP}"/>
 
                 <Separator

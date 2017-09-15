@@ -283,6 +283,93 @@
 
 
     <!--
+        eduVPN Check Boxes
+    -->
+    <Style x:Key="eduVPNCheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid Width="27">
+                        <Border
+                            x:Name="Slot"
+                            Margin="3"
+                            CornerRadius="6">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource eduVPNLightGray}"/>
+                            </Border.Background>
+                        </Border>
+
+                        <Ellipse
+                            x:Name="Knob"
+                            HorizontalAlignment="Left"
+                            Width="15"
+                            Height="15"
+                            Fill="{StaticResource eduVPNCheckboxKnobBrushKey}">
+                            <Ellipse.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </TransformGroup>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <BeginStoryboard.Storyboard>
+                                        <Storyboard
+                                            Duration="0:0:0.1"
+                                            AutoReverse="False">
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="Knob"
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"
+                                                From="0"
+                                                To="12"/>
+
+                                            <ColorAnimation
+                                                Storyboard.TargetName="Slot"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                From="{StaticResource eduVPNLightGray}"
+                                                To="{StaticResource eduVPNLightBlue}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard.Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <BeginStoryboard.Storyboard>
+                                        <Storyboard
+                                            Duration="0:0:0.1"
+                                            AutoReverse="False">
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="Knob"
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"
+                                                From="12"
+                                                To="0"/>
+
+                                            <ColorAnimation
+                                                Storyboard.TargetName="Slot"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                From="{StaticResource eduVPNLightBlue}"
+                                                To="{StaticResource eduVPNLightGray}"/>
+                                        </Storyboard>
+                                    </BeginStoryboard.Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.25"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--
         Windows
     -->
 

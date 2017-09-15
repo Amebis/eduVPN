@@ -10,6 +10,7 @@
 
     <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
     <Color x:Key="eduVPNBlueLight">#CC02B4D2</Color>
+    <Color x:Key="eduVPNLightBlue">#FFB2E3EE</Color>
     <Color x:Key="eduVPNOrange">#FFED6B06</Color>
     <Color x:Key="eduVPNGreen">#FF54B948</Color>
     <Color x:Key="eduVPNRed">#FFE31B23</Color>
