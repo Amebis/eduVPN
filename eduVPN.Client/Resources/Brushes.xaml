@@ -15,6 +15,7 @@
     <SolidColorBrush x:Key="eduVPNWindowBorderKey" Color="{StaticResource eduVPNGray}"/>
     <SolidColorBrush x:Key="eduVPNControlBorderKey" Color="{StaticResource eduVPNLightGray}"/>
     <SolidColorBrush x:Key="eduVPNCheckboxKnobBrushKey" Color="{StaticResource eduVPNBlue}"/>
+    <SolidColorBrush x:Key="eduVPNCheckboxSlotBrushKey" Color="{StaticResource eduVPNLightBlue}"/>
     <SolidColorBrush x:Key="eduVPNLogoOrangeKey" Color="{StaticResource eduVPNOrange}"/>
     <SolidColorBrush x:Key="eduVPNLogoGreenKey" Color="{StaticResource eduVPNGreen}"/>
     <SolidColorBrush x:Key="eduVPNLogoRedKey" Color="{StaticResource eduVPNRed}"/>

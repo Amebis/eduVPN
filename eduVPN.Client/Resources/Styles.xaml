@@ -293,11 +293,8 @@
                         <Border
                             x:Name="Slot"
                             Margin="3"
-                            CornerRadius="6">
-                            <Border.Background>
-                                <SolidColorBrush Color="{StaticResource eduVPNLightGray}"/>
-                            </Border.Background>
-                        </Border>
+                            Background="{StaticResource eduVPNCheckboxSlotBrushKey}"
+                            CornerRadius="6"/>
 
                         <Ellipse
                             x:Name="Knob"
@@ -318,20 +315,14 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <BeginStoryboard.Storyboard>
-                                        <Storyboard
-                                            Duration="0:0:0.1"
-                                            AutoReverse="False">
+                                        <Storyboard>
                                             <DoubleAnimation
                                                 Storyboard.TargetName="Knob"
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"
                                                 From="0"
-                                                To="12"/>
-
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Slot"
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                From="{StaticResource eduVPNLightGray}"
-                                                To="{StaticResource eduVPNLightBlue}"/>
+                                                To="12"
+                                                Duration="0:0:0.1"
+                                                AutoReverse="False"/>
                                         </Storyboard>
                                     </BeginStoryboard.Storyboard>
                                 </BeginStoryboard>
@@ -340,20 +331,14 @@
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <BeginStoryboard.Storyboard>
-                                        <Storyboard
-                                            Duration="0:0:0.1"
-                                            AutoReverse="False">
+                                        <Storyboard>
                                             <DoubleAnimation
                                                 Storyboard.TargetName="Knob"
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"
                                                 From="12"
-                                                To="0"/>
-
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Slot"
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                From="{StaticResource eduVPNLightBlue}"
-                                                To="{StaticResource eduVPNLightGray}"/>
+                                                To="0"
+                                                Duration="0:0:0.1"
+                                                AutoReverse="False"/>
                                         </Storyboard>
                                     </BeginStoryboard.Storyboard>
                                 </BeginStoryboard>
