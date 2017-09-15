@@ -34,6 +34,20 @@
         <Property Id="ARPPRODUCTICON" Value="eduVPN.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
 
+        <!--
+            Upgrading functionality
+        -->
+        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
+        <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
+            <UpgradeVersion
+                Minimum="1.0.0"
+                Property="PREVIOUSVERSIONSINSTALLED"
+                IncludeMinimum="yes"
+                MigrateFeatures="yes"/>
+        </Upgrade>
+        <InstallExecuteSequence>
+            <RemoveExistingProducts Before="InstallInitialize"/>
+        </InstallExecuteSequence>
 
         <!--
             .NET Framework check
