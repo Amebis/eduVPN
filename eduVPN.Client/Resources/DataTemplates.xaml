@@ -190,7 +190,7 @@
             </Grid>
 
             <ContentControl
-                Grid.Column="1"
+                Grid.Column="2"
                 Grid.Row="2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
