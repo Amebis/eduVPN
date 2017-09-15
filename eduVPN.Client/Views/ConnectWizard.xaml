@@ -79,11 +79,13 @@
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuSettings}"
                 Command="{Binding Path=NavigateTo}"
-                CommandParameter="{Binding Path=SettingsPage}"/>
+                CommandParameter="{Binding Path=SettingsPage}"
+                Click="Open_Click"/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuAbout}"
                 Command="{Binding Path=NavigateTo}"
-                CommandParameter="{Binding Path=AboutPage}"/>
+                CommandParameter="{Binding Path=AboutPage}"
+                Click="Open_Click"/>
             <Separator/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuExit}"
