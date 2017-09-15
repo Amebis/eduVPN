@@ -18,39 +18,14 @@ namespace eduVPN.ViewModels
     {
         #region Properties
 
+        /// <summary>
+        /// List of installed TAP network interfaces
+        /// </summary>
         public ObservableCollection<Models.InterfaceInfo> InterfaceList
         {
             get { return _interface_list; }
         }
         private ObservableCollection<Models.InterfaceInfo> _interface_list;
-
-        /// <summary>
-        /// Selected interface
-        /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.InterfaceInfo SelectedInterface
-        {
-            get
-            {
-                // Find matching interface.
-                foreach (var nic in _interface_list)
-                    if (nic.DisplayName == Properties.Settings.Default.OpenVPNInterface)
-                        return nic;
-
-                // Return "Automatic".
-                return _interface_list[0];
-            }
-
-            set
-            {
-                // When the page is navigated away the combo box resets selection (value is null). Ignore it.
-                if (value != null)
-                {
-                    Properties.Settings.Default.OpenVPNInterface = value.Id != Guid.Empty ? value.DisplayName : null;
-                    RaisePropertyChanged();
-                }
-            }
-        }
 
         #endregion
 

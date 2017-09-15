@@ -133,6 +133,24 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network interface with {0} ID not found..
+        /// </summary>
+        internal static string ErrorNetworkInterfaceIDNotFound {
+            get {
+                return ResourceManager.GetString("ErrorNetworkInterfaceIDNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network interface {0} not found..
+        /// </summary>
+        internal static string ErrorNetworkInterfaceNameNotFound {
+            get {
+                return ResourceManager.GetString("ErrorNetworkInterfaceNameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No access token granted..
         /// </summary>
         internal static string ErrorNullAccessToken {

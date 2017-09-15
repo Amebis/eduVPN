@@ -20,8 +20,8 @@
     <Setting Name="SecureInternetDiscoveryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenVPNInterface" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="OpenVPNInterfaceID" Type="System.Guid" Scope="User">
+      <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>
     </Setting>
     <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

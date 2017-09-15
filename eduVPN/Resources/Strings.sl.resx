@@ -189,4 +189,10 @@
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>&lt;Samodejno&gt;</value>
   </data>
+  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
+    <value>Omrežni vmesnik z ID-jem {0} ni najden.</value>
+  </data>
+  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
+    <value>Omrežni vmesnik {0} ni najden.</value>
+  </data>
 </root>

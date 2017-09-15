@@ -214,8 +214,8 @@ namespace eduVPN.ViewModels
                                 sw.WriteLine("auth-retry interact");
 
                                 // Set TAP interface to be used.
-                                if (Properties.Settings.Default.OpenVPNInterface != null && Properties.Settings.Default.OpenVPNInterface != "")
-                                    sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(Properties.Settings.Default.OpenVPNInterface) + "\n");
+                                if (Models.InterfaceInfo.TryFromId(Properties.Settings.Default.OpenVPNInterfaceID, out var iface))
+                                    sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(iface.Name) + "\n");
                             }
                         }
                         catch (OperationCanceledException) { throw; }

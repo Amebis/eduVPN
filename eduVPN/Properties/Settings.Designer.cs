@@ -85,13 +85,13 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string OpenVPNInterface {
+        [global::System.Configuration.DefaultSettingValueAttribute("00000000-0000-0000-0000-000000000000")]
+        public global::System.Guid OpenVPNInterfaceID {
             get {
-                return ((string)(this["OpenVPNInterface"]));
+                return ((global::System.Guid)(this["OpenVPNInterfaceID"]));
             }
             set {
-                this["OpenVPNInterface"] = value;
+                this["OpenVPNInterfaceID"] = value;
             }
         }
         

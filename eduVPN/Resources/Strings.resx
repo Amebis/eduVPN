@@ -189,4 +189,10 @@
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>&lt;Automatic&gt;</value>
   </data>
+  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
+    <value>Network interface with {0} ID not found.</value>
+  </data>
+  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
+    <value>Network interface {0} not found.</value>
+  </data>
 </root>

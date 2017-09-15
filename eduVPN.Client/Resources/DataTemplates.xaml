@@ -320,7 +320,7 @@
                 Grid.Row="1"
                 Margin="0,5"
                 HorizontalAlignment="Center"
-                Text="{Binding Path=DisplayName}"
+                Text="{Binding Path=Name}"
                 Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
         </Grid>
     </DataTemplate>

@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:view="clr-namespace:eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
@@ -23,7 +24,7 @@
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="InterfaceListView" Source="{Binding Path=InterfaceList}">
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="DisplayName" Direction="Ascending"/>
+                <scm:SortDescription PropertyName="Name" Direction="Ascending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Page.Resources>
@@ -43,7 +44,7 @@
             </Grid.RowDefinitions>
 
             <Grid
-                Margin="-5,-2">
+                Margin="-5,-2,-5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -62,7 +63,7 @@
 
             <Grid
                 Grid.Row="1"
-                Margin="-5,-2">
+                Margin="-5,0,-5,-2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -81,7 +82,8 @@
                     ItemTemplate="{StaticResource eduVPNInterfaceSelectionItemTemplate}"
                     ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
                     ItemsSource="{Binding Source={StaticResource InterfaceListView}}"
-                    SelectedItem="{Binding Path=SelectedInterface}"/>
+                    SelectedValue="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNInterfaceID}"
+                    SelectedValuePath="Id"/>
             </Grid>
         </Grid>
     </Grid>
