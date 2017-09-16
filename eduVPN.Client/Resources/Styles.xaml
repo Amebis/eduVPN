@@ -301,7 +301,11 @@
                             HorizontalAlignment="Left"
                             Width="15"
                             Height="15"
-                            Fill="{StaticResource eduVPNCheckboxKnobBrushKey}">
+                            Stroke="{StaticResource eduVPNCheckboxKnobBorderBrushKey}"
+                            StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="{StaticResource eduVPNWhite}"/>
+                            </Ellipse.Fill>
                             <Ellipse.RenderTransform>
                                 <TransformGroup>
                                     <TranslateTransform X="0" Y="0"/>
@@ -323,6 +327,14 @@
                                                 To="12"
                                                 Duration="0:0:0.1"
                                                 AutoReverse="False"/>
+
+                                            <ColorAnimation
+                                                Storyboard.TargetName="Knob"
+                                                Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
+                                                From="{StaticResource eduVPNWhite}"
+                                                To="{StaticResource eduVPNBlue}"
+                                                Duration="0:0:0.1"
+                                                AutoReverse="False"/>
                                         </Storyboard>
                                     </BeginStoryboard.Storyboard>
                                 </BeginStoryboard>
@@ -337,6 +349,14 @@
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"
                                                 From="12"
                                                 To="0"
+                                                Duration="0:0:0.1"
+                                                AutoReverse="False"/>
+
+                                            <ColorAnimation
+                                                Storyboard.TargetName="Knob"
+                                                Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
+                                                From="{StaticResource eduVPNBlue}"
+                                                To="{StaticResource eduVPNWhite}"
                                                 Duration="0:0:0.1"
                                                 AutoReverse="False"/>
                                         </Storyboard>
