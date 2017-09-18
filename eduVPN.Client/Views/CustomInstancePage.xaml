@@ -18,6 +18,7 @@
     d:DesignHeight="373"
     Title="{x:Static res:Strings.CustomInstancePageTitle}"
     Description="{x:Static res:Strings.CustomInstancePageDescription}"
+    FocusManager.FocusedElement="{Binding ElementName=InstanceSourceURI}"
     Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Grid
@@ -40,10 +41,10 @@
         <Button
             Grid.Row="1"
             Margin="5"
+            IsDefault="True"
             Style="{StaticResource eduVPNButtonStyle}"
             Content="{x:Static res:Strings.ButtonNextTitle}"
             Command="{Binding Path=SelectCustomInstance}"
-            Click="Button_Click"
-            IsDefault="True"/>
+            Click="Button_Click"/>
     </Grid>
 </view:ConnectWizardPage>

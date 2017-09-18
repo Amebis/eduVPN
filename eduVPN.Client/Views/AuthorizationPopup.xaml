@@ -29,7 +29,7 @@
         VerticalAlignment="Top"
         Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Button
