@@ -188,16 +188,5 @@ namespace eduVPN.ViewModels
         private DelegateCommand<string> _authorize;
 
         #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Constructs an authorization pop-up.
-        /// </summary>
-        public AuthorizationPopup()
-        {
-        }
-
-        #endregion
     }
 }
