@@ -6,6 +6,7 @@
 */
 
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace eduVPN.Views
@@ -22,10 +23,10 @@ namespace eduVPN.Views
         /// </summary>
         public string Description
         {
-            get { return _description; }
-            set { if (value != _description) { _description = value; OnPropertyChanged("Description"); } }
+            get { return GetValue(DescriptionProperty) as string; }
+            set { SetValue(DescriptionProperty, value); }
         }
-        private string _description;
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ConnectWizardPage), null);
 
         #endregion
 
