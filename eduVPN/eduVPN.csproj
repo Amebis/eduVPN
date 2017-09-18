@@ -57,6 +57,7 @@
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />
     <Compile Include="ViewModels\AboutPage.cs" />
+    <Compile Include="ViewModels\AuthenticationPopup.cs" />
     <Compile Include="ViewModels\OpenVPNSession.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />

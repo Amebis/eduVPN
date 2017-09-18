@@ -45,6 +45,11 @@ namespace eduVPN.Views
                 };
         }
 
+        protected void OK_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
         #endregion
     }
 }

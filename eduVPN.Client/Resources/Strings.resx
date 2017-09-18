@@ -303,4 +303,30 @@ Powered by SURFnet</value>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>Force TCP</value>
   </data>
+  <data name="PasswordPopupMessage" xml:space="preserve">
+    <value>Enter your password for "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="PasswordPopupTitle" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="UsernamePasswordPopupMessage" xml:space="preserve">
+    <value>Enter your username and password for "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="UsernamePasswordPopupTitle" xml:space="preserve">
+    <value>Authentication</value>
+  </data>
+  <data name="ButtonOKTitle" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="PasswordPopupPasswordTitle" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="UserPasswordPopupPasswordTitle" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="UserPasswordPopupUsernameTitle" xml:space="preserve">
+    <value>User name:</value>
+  </data>
 </root>

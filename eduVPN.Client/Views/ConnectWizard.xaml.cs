@@ -11,6 +11,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -207,6 +208,47 @@ namespace eduVPN.Views
                 e.AccessToken = view_model.AccessToken;
 
             AuthorizationPopup = null;
+        }
+
+        /// <summary>
+        /// Called when an OpenVPN session requests a password authentication
+        /// </summary>
+        /// <param name="sender"><c>eduVPN.ViewModels.ConnectWizard</c> requiring authentication</param>
+        /// <param name="e">Authentication request event arguments</param>
+        private void ConnectWizard_RequestOpenVPNPasswordAuthentication(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
+        {
+            // Create a new authentication pop-up.
+            PasswordPopup popup = new PasswordPopup() { Owner = this };
+
+            // Set authenticating realm.
+            var view_model = (ViewModels.AuthenticationPopup)popup.DataContext;
+            view_model.Realm = e.Realm;
+
+            // Run the authentication pop-up and pass the credentials to be returned to the event sender.
+            if (popup.ShowDialog() == true)
+                e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
+        }
+
+        /// <summary>
+        /// Called when an OpenVPN session requests a password authentication
+        /// </summary>
+        /// <param name="sender"><c>eduVPN.ViewModels.ConnectWizard</c> requiring authentication</param>
+        /// <param name="e">Authentication request event arguments</param>
+        private void ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
+        {
+            // Create a new authentication pop-up.
+            UsernamePasswordPopup popup = new UsernamePasswordPopup() { Owner = this };
+
+            // Set authenticating realm.
+            var view_model = (ViewModels.AuthenticationPopup)popup.DataContext;
+            view_model.Realm = e.Realm;
+
+            // Run the authentication pop-up and pass the credentials to be returned to the event sender.
+            if (popup.ShowDialog() == true)
+            {
+                e.UserName = view_model.UserName;
+                e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
+            }
         }
 
         #endregion

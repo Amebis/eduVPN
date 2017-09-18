@@ -303,4 +303,30 @@ Omogoča SURFnet</value>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>Vsili TCP</value>
   </data>
+  <data name="PasswordPopupMessage" xml:space="preserve">
+    <value>Vnesite svoje geslo za »{0}«:</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="PasswordPopupTitle" xml:space="preserve">
+    <value>Geslo</value>
+  </data>
+  <data name="UsernamePasswordPopupMessage" xml:space="preserve">
+    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="UsernamePasswordPopupTitle" xml:space="preserve">
+    <value>Overovitev</value>
+  </data>
+  <data name="ButtonOKTitle" xml:space="preserve">
+    <value>V redu</value>
+  </data>
+  <data name="PasswordPopupPasswordTitle" xml:space="preserve">
+    <value>Geslo:</value>
+  </data>
+  <data name="UserPasswordPopupPasswordTitle" xml:space="preserve">
+    <value>Geslo:</value>
+  </data>
+  <data name="UserPasswordPopupUsernameTitle" xml:space="preserve">
+    <value>Up. ime:</value>
+  </data>
 </root>

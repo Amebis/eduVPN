@@ -24,7 +24,9 @@
 
     <Window.DataContext>
         <viewModel:ConnectWizard
-            RequestInstanceAuthorization="ConnectWizard_RequestInstanceAuthorization"/>
+            RequestInstanceAuthorization="ConnectWizard_RequestInstanceAuthorization"
+            RequestOpenVPNPasswordAuthentication="ConnectWizard_RequestOpenVPNPasswordAuthentication"
+            RequestOpenVPNUsernamePasswordAuthentication="ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication"/>
     </Window.DataContext>
 
     <Window.Resources>

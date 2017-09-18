@@ -269,6 +269,9 @@ namespace eduVPN.ViewModels
 
                                     mgmt_session.CertificateRequested += (object sender, CertificateRequestedEventArgs e) => e.Certificate = _client_certificate;
 
+                                    mgmt_session.PasswordAuthenticationRequested += Parent.OpenVPNSession_RequestPasswordAuthentication;
+                                    mgmt_session.UsernamePasswordAuthenticationRequested += Parent.OpenVPNSession_RequestUsernamePasswordAuthentication;
+
                                     mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
                                     {
                                         if (e.Protocol == ProtoType.UDP && Properties.Settings.Default.OpenVPNForceTCP)

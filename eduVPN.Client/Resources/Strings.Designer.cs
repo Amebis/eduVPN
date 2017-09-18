@@ -190,6 +190,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string ButtonOKTitle {
+            get {
+                return ResourceManager.GetString("ButtonOKTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string ButtonSettingsTitle {
@@ -339,6 +348,33 @@ namespace eduVPN.Client.Resources {
         public static string NumberToHumanReadable {
             get {
                 return ResourceManager.GetString("NumberToHumanReadable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your password for &quot;{0}&quot;:.
+        /// </summary>
+        public static string PasswordPopupMessage {
+            get {
+                return ResourceManager.GetString("PasswordPopupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        public static string PasswordPopupPasswordTitle {
+            get {
+                return ResourceManager.GetString("PasswordPopupPasswordTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string PasswordPopupTitle {
+            get {
+                return ResourceManager.GetString("PasswordPopupTitle", resourceCulture);
             }
         }
         
@@ -600,6 +636,42 @@ namespace eduVPN.Client.Resources {
         public static string UserDisabledMessage {
             get {
                 return ResourceManager.GetString("UserDisabledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your username and password for &quot;{0}&quot;:.
+        /// </summary>
+        public static string UsernamePasswordPopupMessage {
+            get {
+                return ResourceManager.GetString("UsernamePasswordPopupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication.
+        /// </summary>
+        public static string UsernamePasswordPopupTitle {
+            get {
+                return ResourceManager.GetString("UsernamePasswordPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        public static string UserPasswordPopupPasswordTitle {
+            get {
+                return ResourceManager.GetString("UserPasswordPopupPasswordTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name:.
+        /// </summary>
+        public static string UserPasswordPopupUsernameTitle {
+            get {
+                return ResourceManager.GetString("UserPasswordPopupUsernameTitle", resourceCulture);
             }
         }
     }

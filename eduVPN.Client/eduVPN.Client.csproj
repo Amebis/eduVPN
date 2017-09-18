@@ -56,6 +56,12 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
+    <Compile Include="Views\UsernamePasswordPopup.xaml.cs">
+      <DependentUpon>UsernamePasswordPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PasswordPopup.xaml.cs">
+      <DependentUpon>PasswordPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectingInstanceAndProfileSelectBasePanel.cs" />
     <Compile Include="Views\ConnectingProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
@@ -130,6 +136,14 @@
     <Page Include="Resources\UserDisabledIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UsernamePasswordPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PasswordPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConnectingProfileSelectPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

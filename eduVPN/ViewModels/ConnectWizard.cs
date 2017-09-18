@@ -352,6 +352,16 @@ namespace eduVPN.ViewModels
         /// </summary>
         public event EventHandler<RequestInstanceAuthorizationEventArgs> RequestInstanceAuthorization;
 
+        /// <summary>
+        /// OpenVPN requested a password
+        /// </summary>
+        public event EventHandler<eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs> RequestOpenVPNPasswordAuthentication;
+
+        /// <summary>
+        /// OpenVPN requested a username and password
+        /// </summary>
+        public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestOpenVPNUsernamePasswordAuthentication;
+
         #region Pages
 
         /// <summary>
@@ -819,6 +829,38 @@ namespace eduVPN.ViewModels
                         RequestInstanceAuthorization?.Invoke(this, e_instance);
                         e.AccessToken = e_instance.AccessToken;
                     }));
+            }
+        }
+
+        public void OpenVPNSession_RequestPasswordAuthentication(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
+        {
+            // Re-raise this event as ConnectWizard event, to simplify view.
+            // This way the view can listen ConnectWizard for authentication events only.
+            if (Dispatcher.CurrentDispatcher == Dispatcher)
+            {
+                // We're in the GUI thread.
+                RequestOpenVPNPasswordAuthentication?.Invoke(this, e);
+            }
+            else
+            {
+                // We're in the background thread - raise event via dispatcher.
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNPasswordAuthentication?.Invoke(this, e)));
+            }
+        }
+
+        public void OpenVPNSession_RequestUsernamePasswordAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
+        {
+            // Re-raise this event as ConnectWizard event, to simplify view.
+            // This way the view can listen ConnectWizard for authentication events only.
+            if (Dispatcher.CurrentDispatcher == Dispatcher)
+            {
+                // We're in the GUI thread.
+                RequestOpenVPNUsernamePasswordAuthentication?.Invoke(this, e);
+            }
+            else
+            {
+                // We're in the background thread - raise event via dispatcher.
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNUsernamePasswordAuthentication?.Invoke(this, e)));
             }
         }
 
