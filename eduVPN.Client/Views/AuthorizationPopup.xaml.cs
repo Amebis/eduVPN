@@ -31,14 +31,5 @@ namespace eduVPN.Views
         }
 
         #endregion
-
-        #region Methods
-
-        private void Close_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            DialogResult = false;
-        }
-
-        #endregion
     }
 }
