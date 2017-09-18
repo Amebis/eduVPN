@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Web;
-using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace eduVPN.Models
 {
@@ -55,7 +55,7 @@ namespace eduVPN.Models
         private string _display_name;
 
         /// <summary>
-        /// Is two-factor authentication enabled for this profile?
+        /// Is 2-Factor authentication enabled for this profile?
         /// </summary>
         public bool IsTwoFactorAuthentication
         {
@@ -63,6 +63,16 @@ namespace eduVPN.Models
             set { if (value != _is_two_factor_authentication) { _is_two_factor_authentication = value; RaisePropertyChanged(); } }
         }
         private bool _is_two_factor_authentication;
+
+        /// <summary>
+        /// Supported 2-Factor authentication methods
+        /// </summary>
+        public TwoFactorAuthenticationMethods TwoFactorMethods
+        {
+            get { return _two_factor_methods; }
+            set { if (value != _two_factor_methods) { _two_factor_methods = value; RaisePropertyChanged(); } }
+        }
+        private TwoFactorAuthenticationMethods _two_factor_methods;
 
         #endregion
 
@@ -166,6 +176,24 @@ namespace eduVPN.Models
 
                 // Set two-factor authentication.
                 IsTwoFactorAuthentication = eduJSON.Parser.GetValue(obj2, "two_factor", out bool two_factor) ? two_factor : false;
+                if (IsTwoFactorAuthentication)
+                {
+                    if (eduJSON.Parser.GetValue(obj2, "two_factor_method", out List<object> two_factor_method))
+                    {
+                        TwoFactorMethods = TwoFactorAuthenticationMethods.None;
+                        foreach (var method in two_factor_method)
+                            if (method is string method_str)
+                                switch (method_str)
+                                {
+                                    case "totp": TwoFactorMethods |= TwoFactorAuthenticationMethods.TOTP; break;
+                                    case "yubi": TwoFactorMethods |= TwoFactorAuthenticationMethods.YubiKey; break;
+                                }
+                    }
+                    else
+                        TwoFactorMethods = TwoFactorAuthenticationMethods.Any;
+                }
+                else
+                    TwoFactorMethods = TwoFactorAuthenticationMethods.None;
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
@@ -187,6 +215,7 @@ namespace eduVPN.Models
             ID = (v = reader.GetAttribute("ID")) != null ? v : null;
             DisplayName = reader.GetAttribute("DisplayName");
             IsTwoFactorAuthentication = (v = reader.GetAttribute("IsTwoFactorAuthentication")) != null && bool.TryParse(v, out var v_bool) ? v_bool : false;
+            TwoFactorMethods = (v = reader.GetAttribute("TwoFactorMethods")) != null && int.TryParse(v, out var v_int) ? (TwoFactorAuthenticationMethods)v_int : TwoFactorAuthenticationMethods.None;
         }
 
         public void WriteXml(XmlWriter writer)
@@ -195,6 +224,7 @@ namespace eduVPN.Models
             if (DisplayName != null)
                 writer.WriteAttributeString("DisplayName", DisplayName);
             writer.WriteAttributeString("IsTwoFactorAuthentication", IsTwoFactorAuthentication ? "true" : "false");
+            writer.WriteAttributeString("TwoFactorMethods", ((int)TwoFactorMethods).ToString());
         }
 
         #endregion

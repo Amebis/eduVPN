@@ -37,6 +37,16 @@ namespace eduVPN.Models
         }
         private bool _is_two_factor_authentication;
 
+        /// <summary>
+        /// Enrolled 2-Factor authentication methods
+        /// </summary>
+        public TwoFactorAuthenticationMethods TwoFactorMethods
+        {
+            get { return _two_factor_methods; }
+            set { if (value != _two_factor_methods) { _two_factor_methods = value; RaisePropertyChanged(); } }
+        }
+        private TwoFactorAuthenticationMethods _two_factor_methods;
+
         #endregion
 
         #region Constructors
@@ -67,6 +77,19 @@ namespace eduVPN.Models
 
                 // Set two-factor authentication.
                 IsTwoFactorAuthentication = eduJSON.Parser.GetValue(obj2, "two_factor_enrolled", out bool two_factor_enrolled) ? two_factor_enrolled : false;
+                if (IsTwoFactorAuthentication && eduJSON.Parser.GetValue(obj2, "two_factor_enrolled_with", out List<object> two_factor_enrolled_with))
+                {
+                    TwoFactorMethods = TwoFactorAuthenticationMethods.None;
+                    foreach (var method in two_factor_enrolled_with)
+                        if (method is string method_str)
+                            switch (method_str)
+                            {
+                                case "totp": TwoFactorMethods |= TwoFactorAuthenticationMethods.TOTP; break;
+                                case "yubi": TwoFactorMethods |= TwoFactorAuthenticationMethods.YubiKey; break;
+                            }
+                }
+                else
+                    TwoFactorMethods = TwoFactorAuthenticationMethods.None;
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());

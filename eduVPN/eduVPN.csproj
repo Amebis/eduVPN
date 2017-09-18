@@ -54,6 +54,7 @@
     <Compile Include="Models\MessageMaintenance.cs" />
     <Compile Include="Models\MessageNotification.cs" />
     <Compile Include="Models\MessageOfTheDay.cs" />
+    <Compile Include="Models\TwoFactorAuthenticationMethods.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />
     <Compile Include="ViewModels\AboutPage.cs" />
