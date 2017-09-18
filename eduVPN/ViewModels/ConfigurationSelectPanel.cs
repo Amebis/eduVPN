@@ -68,6 +68,32 @@ namespace eduVPN.ViewModels
         }
         private DelegateCommand<Models.VPNConfiguration> _connect_configuration;
 
+        /// <summary>
+        /// Forget configuration command
+        /// </summary>
+        public DelegateCommand<Models.VPNConfiguration> ForgetConfiguration
+        {
+            get
+            {
+                if (_forget_configuration == null)
+                    _forget_configuration = new DelegateCommand<Models.VPNConfiguration>(
+                        // execute
+                        configuration =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try { ConfigurationHistory.Remove(configuration); }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        configuration => configuration != null && ConfigurationHistory.IndexOf(configuration) >= 0);
+
+                return _forget_configuration;
+            }
+        }
+        private DelegateCommand<Models.VPNConfiguration> _forget_configuration;
+
         #endregion
 
         #region Constructors
