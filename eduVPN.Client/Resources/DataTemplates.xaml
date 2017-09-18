@@ -145,9 +145,9 @@
                 MaxHeight="16"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Source="{Binding Path=DataContext.Parent.Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
-                ToolTip="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectWizardPage}}}"
+                Source="{Binding Path=DataContext.Parent.Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.Sessions[0].StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
@@ -159,10 +159,10 @@
                             Path="ConnectingProfile"/>
                         <Binding
                             Path="DataContext.Parent.Sessions[0].Configuration.ConnectingInstance"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectWizardPage}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}"/>
                         <Binding
                             Path="DataContext.Parent.Sessions[0].Configuration.ConnectingProfile"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectWizardPage}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
