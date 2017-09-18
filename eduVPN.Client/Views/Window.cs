@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace eduVPN.Views
@@ -15,6 +16,20 @@ namespace eduVPN.Views
     /// </summary>
     public class Window : System.Windows.Window
     {
+        #region Properties
+
+        /// <summary>
+        /// Brief text describing window intent
+        /// </summary>
+        public string Description
+        {
+            get { return GetValue(DescriptionProperty) as string; }
+            set { SetValue(DescriptionProperty, value); }
+        }
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(Window), null);
+
+        #endregion
+
         #region Methods
 
         protected override void OnInitialized(EventArgs e)

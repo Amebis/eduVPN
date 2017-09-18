@@ -767,6 +767,58 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="eduVPNPopupWindow" TargetType="{x:Type view:Window}" BasedOn="{StaticResource eduVPNWindow}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type view:Window}">
+                    <Border
+                        BorderBrush="{StaticResource eduVPNWindowBorderKey}"
+                        BorderThickness="1">
+                        <Grid Background="{StaticResource eduVPNWindowBrushKey}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock
+                                    Margin="5"
+                                    Style="{StaticResource eduVPNPageTitleStyle}"
+                                    Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                <Control
+                                    Grid.Row="1"
+                                    Style="{StaticResource eduVPNErrorStatusBar}">
+                                </Control>
+
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="30,10"
+                                    Style="{StaticResource eduVPNTextBlockStyle}"
+                                    Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                                    Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                <ContentPresenter
+                                    Grid.Row="3"
+                                    Margin="10"/>
+                            </Grid>
+
+                            <Button
+                                Margin="5"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                IsCancel="True"
+                                Style="{StaticResource eduVPNPopupHeaderButtonStyle}"
+                                AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}">×</Button>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <!--
         Choice Buttons
