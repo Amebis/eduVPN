@@ -296,12 +296,6 @@ namespace eduVPN.ViewModels
                             }
                             else
                                 throw new InvalidOperationException();
-
-                            // Update settings.
-                            var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
-                            foreach (var cfg in configuration_history)
-                                hist.Add(cfg.ToSettings(InstanceSources[(int)param.InstanceSourceType].GetType()));
-                            Properties.Settings.Default[_instance_directory_id[(int)param.InstanceSourceType] + "ConfigHistory"] = hist;
                         },
 
                         // canExecute
@@ -595,6 +589,16 @@ namespace eduVPN.ViewModels
 
             Dispatcher.ShutdownStarted += (object sender, EventArgs e) =>
             {
+                Parallel.For((int)Models.InstanceSourceType._start, (int)Models.InstanceSourceType._end, source_index =>
+                {
+                    // Update settings.
+                    var configuration_history = ConfigurationHistories[source_index];
+                    var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
+                    foreach (var cfg in configuration_history)
+                        hist.Add(cfg.ToSettings(InstanceSources[source_index].GetType()));
+                    Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"] = hist;
+                });
+
                 // Persist settings to disk.
                 Properties.Settings.Default.Save();
             };
