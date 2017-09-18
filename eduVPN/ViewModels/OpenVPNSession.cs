@@ -29,7 +29,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// OpenVPN session
     /// </summary>
-    public class OpenVPNSession : VPNSession, eduOpenVPN.Management.ISessionNotifications
+    public class OpenVPNSession : VPNSession
     {
         #region Fields
 
@@ -243,7 +243,171 @@ namespace eduVPN.ViewModels
                                 {
                                     // Start the management session.
                                     var mgmt_session = new eduOpenVPN.Management.Session();
-                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, this, ct_quit.Token);
+
+                                    // Set event handlers.
+                                    mgmt_session.ByteCountReported += (object sender, ByteCountReportedEventArgs e) =>
+                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                            () =>
+                                            {
+                                                BytesIn = e.BytesIn;
+                                                BytesOut = e.BytesOut;
+                                            }));
+
+                                    mgmt_session.FatalErrorReported += (object sender, MessageReportedEventArgs e) =>
+                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                            () =>
+                                            {
+                                                State = Models.VPNSessionStatusType.Error;
+                                                var msg = Resources.Strings.OpenVPNStateTypeFatalError;
+                                                if (e.Message != null && e.Message.Length > 0)
+                                                {
+                                                    // Append OpenVPN message.
+                                                    msg += "\r\n" + e.Message;
+                                                }
+                                                StateDescription = msg;
+                                            }));
+
+                                    mgmt_session.CertificateRequested += (object sender, CertificateRequestedEventArgs e) => e.Certificate = _client_certificate;
+
+                                    mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
+                                    {
+                                        if (e.Protocol == ProtoType.UDP && Properties.Settings.Default.OpenVPNForceTCP)
+                                            e.Action = new RemoteSkipAction();
+                                        else
+                                            e.Action = new RemoteAcceptAction();
+                                    };
+
+                                    mgmt_session.RSASignRequested += (object sender, RSASignRequestedEventArgs e) =>
+                                    {
+                                        var rsa = (RSACryptoServiceProvider)_client_certificate.PrivateKey;
+                                        var RSAFormatter = new RSAPKCS1SignatureFormatter(rsa);
+
+                                        // Parse message.
+                                        var stream = new MemoryStream(e.Data);
+                                        using (var reader = new BinaryReader(stream))
+                                        {
+                                            // SEQUENCE(DigestInfo)
+                                            if (reader.ReadByte() != 0x30)
+                                                throw new InvalidDataException();
+                                            long dgi_end = reader.ReadASN1Length() + reader.BaseStream.Position;
+
+                                            // SEQUENCE(AlgorithmIdentifier)
+                                            if (reader.ReadByte() != 0x30)
+                                                throw new InvalidDataException();
+                                            long alg_id_end = reader.ReadASN1Length() + reader.BaseStream.Position;
+
+                                            // OBJECT IDENTIFIER
+                                            switch (reader.ReadASN1ObjectID().Value)
+                                            {
+                                                case "2.16.840.1.101.3.4.2.1": RSAFormatter.SetHashAlgorithm("SHA256"); break;
+                                                case "2.16.840.1.101.3.4.2.2": RSAFormatter.SetHashAlgorithm("SHA384"); break;
+                                                case "2.16.840.1.101.3.4.2.3": RSAFormatter.SetHashAlgorithm("SHA512"); break;
+                                                case "2.16.840.1.101.3.4.2.4": RSAFormatter.SetHashAlgorithm("SHA224"); break;
+                                                default: throw new InvalidDataException();
+                                            }
+
+                                            reader.BaseStream.Seek(alg_id_end, SeekOrigin.Begin);
+
+                                            // OCTET STRING(Digest)
+                                            if (reader.ReadByte() != 0x04)
+                                                throw new InvalidDataException();
+
+                                            // Read, sign hash, and return.
+                                            e.Signature = RSAFormatter.CreateSignature(reader.ReadBytes(reader.ReadASN1Length()));
+                                        }
+                                    };
+
+                                    mgmt_session.StateReported += (object sender, StateReportedEventArgs e) =>
+                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                            () =>
+                                            {
+                                                string msg = null;
+
+                                                switch (e.State)
+                                                {
+                                                    case OpenVPNStateType.Connecting:
+                                                        State = Models.VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeConnecting;
+                                                        break;
+
+                                                    case OpenVPNStateType.Waiting:
+                                                        State = Models.VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeWaiting;
+                                                        break;
+
+                                                    case OpenVPNStateType.Authenticating:
+                                                        State = Models.VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeAuthenticating;
+                                                        break;
+
+                                                    case OpenVPNStateType.GettingConfiguration:
+                                                        State = Models.VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeGettingConfiguration;
+                                                        break;
+
+                                                    case OpenVPNStateType.AssigningIP:
+                                                        State = Models.VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeAssigningIP;
+                                                        break;
+
+                                                    case OpenVPNStateType.AddingRoutes:
+                                                        State = Models.VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeAddingRoutes;
+                                                        break;
+
+                                                    case OpenVPNStateType.Connected:
+                                                        State = Models.VPNSessionStatusType.Connected;
+                                                        msg = Resources.Strings.OpenVPNStateTypeConnected;
+                                                        break;
+
+                                                    case OpenVPNStateType.Reconnecting:
+                                                        State = Models.VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeReconnecting;
+                                                        break;
+
+                                                    case OpenVPNStateType.Exiting:
+                                                        State = Models.VPNSessionStatusType.Disconnecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeExiting;
+                                                        break;
+
+                                                    case OpenVPNStateType.FatalError:
+                                                        State = Models.VPNSessionStatusType.Error;
+                                                        msg = Resources.Strings.OpenVPNStateTypeFatalError;
+                                                        break;
+                                                }
+
+                                                if (e.Message != null && e.Message.Length > 0)
+                                                {
+                                                    if (msg != null)
+                                                    {
+                                                        // Append OpenVPN message.
+                                                        msg += "\r\n" + e.Message;
+                                                    }
+                                                    else
+                                                    {
+                                                        // Replace with OpenVPN message.
+                                                        msg = e.Message;
+                                                    }
+                                                }
+
+                                                StateDescription = msg;
+                                                TunnelAddress = e.Tunnel;
+                                                IPv6TunnelAddress = e.IPv6Tunnel;
+
+                                                // Update connected time.
+                                                if (e.State == OpenVPNStateType.Connected)
+                                                {
+                                                    ConnectedSince = e.TimeStamp;
+                                                    _connected_time_updater.Start();
+                                                }
+                                                else
+                                                {
+                                                    _connected_time_updater.Stop();
+                                                    ConnectedSince = null;
+                                                }
+                                            }));
+
+                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, ct_quit.Token);
 
                                     // Initialize session and release openvpn.exe to get started.
                                     mgmt_session.ReplayAndEnableState(ct_quit.Token);
@@ -321,219 +485,6 @@ namespace eduVPN.ViewModels
         protected override bool CanShowLog()
         {
             return File.Exists(LogPath);
-        }
-
-        #endregion
-
-        #region ISessionNotifications Support
-
-        public void OnByteCount(ulong bytes_in, ulong bytes_out)
-        {
-            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                () =>
-                {
-                    BytesIn = bytes_in;
-                    BytesOut = bytes_out;
-                }));
-        }
-
-        public void OnByteCountClient(uint cid, ulong bytes_in, ulong bytes_out)
-        {
-        }
-
-        public void OnEcho(DateTimeOffset timestamp, string command)
-        {
-        }
-
-        public void OnFatal(string message)
-        {
-            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                () =>
-                {
-                    State = Models.VPNSessionStatusType.Error;
-                    var msg = Resources.Strings.OpenVPNStateTypeFatalError;
-                    if (message != null && message.Length > 0)
-                    {
-                        // Append OpenVPN message.
-                        msg += "\r\n" + message;
-                    }
-                    StateDescription = msg;
-                }));
-        }
-
-        public void OnHold(string message, int wait_hint)
-        {
-        }
-
-        public void OnInfo(string message)
-        {
-        }
-
-        public void OnLog(DateTimeOffset timestamp, LogMessageFlags flags, string message)
-        {
-        }
-
-        public X509Certificate2 OnNeedCertificate(string hint)
-        {
-            return _client_certificate;
-        }
-
-        public void OnNeedAuthentication(string realm, out string password)
-        {
-            // TODO: Implement.
-            throw new NotImplementedException();
-        }
-
-        public void OnNeedAuthentication(string realm, out string username, out string password)
-        {
-            // TODO: Implement.
-            throw new NotImplementedException();
-        }
-
-        public void OnAuthenticationFailed(string realm)
-        {
-            // TODO: Implement.
-            throw new NotImplementedException();
-        }
-
-        public RemoteAction OnRemote(string host, int port, ProtoType protocol)
-        {
-            if (protocol == ProtoType.UDP && Properties.Settings.Default.OpenVPNForceTCP)
-                return new RemoteSkipAction();
-            else
-                return new RemoteAcceptAction();
-        }
-
-        public byte[] OnRSASign(byte[] data)
-        {
-            var rsa = (RSACryptoServiceProvider)_client_certificate.PrivateKey;
-            var RSAFormatter = new RSAPKCS1SignatureFormatter(rsa);
-
-            // Parse message.
-            var stream = new MemoryStream(data);
-            using (var reader = new BinaryReader(stream))
-            {
-                // SEQUENCE(DigestInfo)
-                if (reader.ReadByte() != 0x30)
-                    throw new InvalidDataException();
-                long dgi_end = reader.ReadASN1Length() + reader.BaseStream.Position;
-
-                // SEQUENCE(AlgorithmIdentifier)
-                if (reader.ReadByte() != 0x30)
-                    throw new InvalidDataException();
-                long alg_id_end = reader.ReadASN1Length() + reader.BaseStream.Position;
-
-                // OBJECT IDENTIFIER
-                switch (reader.ReadASN1ObjectID().Value)
-                {
-                    case "2.16.840.1.101.3.4.2.1": RSAFormatter.SetHashAlgorithm("SHA256"); break;
-                    case "2.16.840.1.101.3.4.2.2": RSAFormatter.SetHashAlgorithm("SHA384"); break;
-                    case "2.16.840.1.101.3.4.2.3": RSAFormatter.SetHashAlgorithm("SHA512"); break;
-                    case "2.16.840.1.101.3.4.2.4": RSAFormatter.SetHashAlgorithm("SHA224"); break;
-                    default: throw new InvalidDataException();
-                }
-
-                reader.BaseStream.Seek(alg_id_end, SeekOrigin.Begin);
-
-                // OCTET STRING(Digest)
-                if (reader.ReadByte() != 0x04)
-                    throw new InvalidDataException();
-
-                // Read, sign hash, and return.
-                return RSAFormatter.CreateSignature(reader.ReadBytes(reader.ReadASN1Length()));
-            }
-        }
-
-        public void OnState(DateTimeOffset timestamp, OpenVPNStateType state, string message, IPAddress tunnel, IPAddress ipv6_tunnel, IPEndPoint remote, IPEndPoint local)
-        {
-            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                () =>
-                {
-                    string msg = null;
-
-                    switch (state)
-                    {
-                        case OpenVPNStateType.Connecting:
-                            State = Models.VPNSessionStatusType.Connecting;
-                            msg = Resources.Strings.OpenVPNStateTypeConnecting;
-                            break;
-
-                        case OpenVPNStateType.Waiting:
-                            State = Models.VPNSessionStatusType.Connecting;
-                            msg = Resources.Strings.OpenVPNStateTypeWaiting;
-                            break;
-
-                        case OpenVPNStateType.Authenticating:
-                            State = Models.VPNSessionStatusType.Connecting;
-                            msg = Resources.Strings.OpenVPNStateTypeAuthenticating;
-                            break;
-
-                        case OpenVPNStateType.GettingConfiguration:
-                            State = Models.VPNSessionStatusType.Connecting;
-                            msg = Resources.Strings.OpenVPNStateTypeGettingConfiguration;
-                            break;
-
-                        case OpenVPNStateType.AssigningIP:
-                            State = Models.VPNSessionStatusType.Connecting;
-                            msg = Resources.Strings.OpenVPNStateTypeAssigningIP;
-                            break;
-
-                        case OpenVPNStateType.AddingRoutes:
-                            State = Models.VPNSessionStatusType.Connecting;
-                            msg = Resources.Strings.OpenVPNStateTypeAddingRoutes;
-                            break;
-
-                        case OpenVPNStateType.Connected:
-                            State = Models.VPNSessionStatusType.Connected;
-                            msg = Resources.Strings.OpenVPNStateTypeConnected;
-                            break;
-
-                        case OpenVPNStateType.Reconnecting:
-                            State = Models.VPNSessionStatusType.Connecting;
-                            msg = Resources.Strings.OpenVPNStateTypeReconnecting;
-                            break;
-
-                        case OpenVPNStateType.Exiting:
-                            State = Models.VPNSessionStatusType.Disconnecting;
-                            msg = Resources.Strings.OpenVPNStateTypeExiting;
-                            break;
-
-                        case OpenVPNStateType.FatalError:
-                            State = Models.VPNSessionStatusType.Error;
-                            msg = Resources.Strings.OpenVPNStateTypeFatalError;
-                            break;
-                    }
-
-                    if (message != null && message.Length > 0)
-                    {
-                        if (msg != null)
-                        {
-                            // Append OpenVPN message.
-                            msg += "\r\n" + message;
-                        }
-                        else
-                        {
-                            // Replace with OpenVPN message.
-                            msg = message;
-                        }
-                    }
-
-                    StateDescription = msg;
-                    TunnelAddress = tunnel;
-                    IPv6TunnelAddress = ipv6_tunnel;
-
-                    // Update connected time.
-                    if (state == OpenVPNStateType.Connected)
-                    {
-                        ConnectedSince = timestamp;
-                        _connected_time_updater.Start();
-                    }
-                    else
-                    {
-                        _connected_time_updater.Stop();
-                        ConnectedSince = null;
-                    }
-                }));
         }
 
         #endregion
