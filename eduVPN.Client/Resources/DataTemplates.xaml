@@ -114,6 +114,11 @@
 
     <DataTemplate x:Key="eduVPNConfigurationSelectionItemTemplate">
         <Grid>
+            <Grid.Resources>
+                <view:BindingProxy x:Key="ConfigurationBinding" Data="{Binding}"/>
+                <view:BindingProxy x:Key="ConfigurationSelectPanelBinding" Data="{Binding RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"/>
+            </Grid.Resources>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition/>
@@ -199,6 +204,15 @@
                 Visibility="{Binding Path=ConnectingProfile.IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
                 AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"/>
+
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Header="Forget"
+                        Command="{Binding Path=Data.DataContext.ForgetConfiguration, Source={StaticResource ConfigurationSelectPanelBinding}}"
+                        CommandParameter="{Binding Path=Data, Source={StaticResource ConfigurationBinding}}"/>
+                </ContextMenu>
+            </Grid.ContextMenu>
         </Grid>
     </DataTemplate>
 
