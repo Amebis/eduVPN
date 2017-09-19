@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels
@@ -28,6 +29,17 @@ namespace eduVPN.ViewModels
         /// Terminate connection token
         /// </summary>
         protected CancellationTokenSource _disconnect;
+
+        /// <summary>
+        /// Quit token
+        /// </summary>
+        protected CancellationTokenSource _quit;
+
+        /// <summary>
+        /// List of actions to run prior running the session
+        /// </summary>
+        /// <remarks>Actions will be run in parallel and session run will wait for all to finish.</remarks>
+        protected List<Action> _pre_run_actions;
 
         #endregion
 
@@ -223,10 +235,12 @@ namespace eduVPN.ViewModels
         public VPNSession(ConnectWizard parent, Models.VPNConfiguration configuration)
         {
             _disconnect = new CancellationTokenSource();
+            _quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
             _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Parent = parent;
             Configuration = configuration;
+            MessageList = new Models.MessageList();
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(
@@ -234,69 +248,55 @@ namespace eduVPN.ViewModels
                 DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged("ConnectedTime"),
                 Parent.Dispatcher);
 
-            // Launch user info load in the background.
-            new Thread(new ThreadStart(
+            _pre_run_actions = new List<Action>()
+            {
+                // Launch user info load in the background.
                 () =>
                 {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
-                    try
-                    {
-                        var user_info = Configuration.AuthenticatingInstance.GetUserInfo(Configuration.AuthenticatingInstance, Window.Abort.Token);
-                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
-                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-                })).Start();
+                    var user_info = Configuration.AuthenticatingInstance.GetUserInfo(Configuration.AuthenticatingInstance, _quit.Token);
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
+                },
 
-            // Load messages from all possible sources: authenticating/connecting instance, user/system list.
-            // Any errors shall be ignored.
-            MessageList = new Models.MessageList();
-            new Thread(new ThreadStart(
+                // Load messages from all possible sources: authenticating/connecting instance, user/system list.
+                // Any errors shall be ignored.
                 () =>
                 {
-                    var api_authenticating = Configuration.AuthenticatingInstance.GetEndpoints(Window.Abort.Token);
-                    var api_connecting = Configuration.ConnectingInstance.GetEndpoints(Window.Abort.Token);
-                    foreach (
-                        var list in new List<KeyValuePair<Uri, string>>() {
+                    var api_authenticating = Configuration.AuthenticatingInstance.GetEndpoints(_quit.Token);
+                    var api_connecting = Configuration.ConnectingInstance.GetEndpoints(_quit.Token);
+                    Parallel.ForEach(new List<KeyValuePair<Uri, string>>() {
                             new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
                             new KeyValuePair<Uri, string>(api_connecting.UserMessages, "user_messages"),
                             new KeyValuePair<Uri, string>(api_authenticating.SystemMessages, "system_messages"),
                             new KeyValuePair<Uri, string>(api_connecting.SystemMessages, "system_messages"),
                         }
                         .Where(list => list.Key != null)
-                        .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)))
-                    {
-                        new Thread(new ThreadStart(
-                            () =>
+                        .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)),
+                        list =>
+                        {
+                            try
                             {
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
-                                try
-                                {
-                                    // Get and load user messages.
-                                    var message_list = new Models.MessageList();
-                                    message_list.LoadJSONAPIResponse(
-                                        JSON.Response.Get(
-                                            uri: list.Key,
-                                            token: Configuration.AuthenticatingInstance.PeekAccessToken(Window.Abort.Token),
-                                            ct: Window.Abort.Token).Value,
-                                        list.Value,
-                                        Window.Abort.Token);
+                                // Get and load messages.
+                                var message_list = new Models.MessageList();
+                                message_list.LoadJSONAPIResponse(
+                                    JSON.Response.Get(
+                                        uri: list.Key,
+                                        token: Configuration.AuthenticatingInstance.PeekAccessToken(_quit.Token),
+                                        ct: _quit.Token).Value,
+                                    list.Value,
+                                    _quit.Token);
 
-                                    if (message_list.Count > 0)
+                                if (message_list.Count > 0)
+                                {
+                                    // Add messages.
+                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                     {
-                                        // Add user messages.
-                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                        {
-                                            foreach (var msg in message_list)
-                                                MessageList.Add(msg);
-                                        }));
-                                    }
+                                        foreach (var msg in message_list)
+                                            MessageList.Add(msg);
+                                    }));
                                 }
-                                catch { }
-                                finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-                            })).Start();
-                    }
+                            }
+                            catch { }
+                        });
 
                     //// Add test messages.
                     //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
@@ -309,7 +309,8 @@ namespace eduVPN.ViewModels
                     //        End = new DateTime(2017, 7, 31, 23, 59, 00)
                     //    });
                     //}));
-                })).Start();
+                },
+            };
         }
 
         #endregion
@@ -319,10 +320,26 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Run the session
         /// </summary>
-        public virtual void Run()
+        public void Run()
+        {
+            Parallel.ForEach(_pre_run_actions,
+                action =>
+                {
+                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                    try { action(); }
+                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                });
+
+            DoRun();
+        }
+
+        /// <summary>
+        /// Run the session
+        /// </summary>
+        protected virtual void DoRun()
         {
             // Do nothing but wait.
-            CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token).Token.WaitHandle.WaitOne();
+            _quit.Token.WaitHandle.WaitOne();
 
             // Signal session finished.
             Finished.Set();
@@ -357,6 +374,9 @@ namespace eduVPN.ViewModels
                 {
                     if (_disconnect != null)
                         _disconnect.Dispose();
+
+                    if (_quit != null)
+                        _quit.Dispose();
 
                     if (_finished != null)
                         _finished.Dispose();

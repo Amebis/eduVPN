@@ -9,7 +9,6 @@ using eduOpenVPN;
 using eduOpenVPN.Management;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -20,7 +19,6 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceProcess;
-using System.Threading;
 using System.Web.Security;
 using System.Windows.Threading;
 
@@ -48,6 +46,16 @@ namespace eduVPN.ViewModels
         /// Client certificate
         /// </summary>
         private X509Certificate2 _client_certificate;
+
+        /// <summary>
+        /// Profile configuration
+        /// </summary>
+        private string _profile_config;
+
+        /// <summary>
+        /// OpenVPN Interactive Service Controller
+        /// </summary>
+        ServiceController _openvpn_interactive_service;
 
         #endregion
 
@@ -103,6 +111,34 @@ namespace eduVPN.ViewModels
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => ShowLog.RaiseCanExecuteChanged(),
                 Parent.Dispatcher).Start();
+
+            _pre_run_actions.Add(() =>
+            {
+                // Get profile's OpenVPN configuration.
+                _profile_config = Configuration.ConnectingProfile.GetOpenVPNConfig(Configuration.ConnectingInstance, Configuration.AuthenticatingInstance, _quit.Token);
+            });
+
+            _pre_run_actions.Add(() =>
+            {
+                // Get instance client certificate.
+                _client_certificate = Configuration.ConnectingInstance.GetClientCertificate(Configuration.AuthenticatingInstance, _quit.Token);
+            });
+
+            _openvpn_interactive_service = new ServiceController("OpenVPNServiceInteractive");
+            _pre_run_actions.Add(() =>
+            {
+                try
+                {
+                    // Check if the Interactive Service is started.
+                    // In case we hit "Access Denied" (or another error) give up on SCM.
+                    if (_openvpn_interactive_service.Status == ServiceControllerStatus.Stopped ||
+                        _openvpn_interactive_service.Status == ServiceControllerStatus.Paused)
+                    {
+                        _openvpn_interactive_service.Start();
+                    }
+                }
+                catch { _openvpn_interactive_service = null; }
+            });
         }
 
         #endregion
@@ -110,54 +146,23 @@ namespace eduVPN.ViewModels
         #region Methods
 
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "FileStream tolerates multiple disposes.")]
-        public override void Run()
+        protected override void DoRun()
         {
             Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
             try
             {
-                var ct_quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
-
-                // Check if the Interactive Service is started.
-                // In case we hit "Access Denied" (or another error) give up on SCM.
-                ServiceController openvpn_interactive_service = new ServiceController("OpenVPNServiceInteractive");
-                try
-                {
-                    if (openvpn_interactive_service.Status == ServiceControllerStatus.Stopped ||
-                        openvpn_interactive_service.Status == ServiceControllerStatus.Paused)
-                        openvpn_interactive_service.Start();
-                }
-                catch { openvpn_interactive_service = null; }
-
-                // Get profile's OpenVPN configuration and instance client certificate (in parallel).
-                Exception error = null;
-                string profile_config = null;
-                new List<Action>()
-                            {
-                                () => { profile_config = Configuration.ConnectingProfile.GetOpenVPNConfig(Configuration.ConnectingInstance, Configuration.AuthenticatingInstance, ct_quit.Token); },
-                                () => { _client_certificate = Configuration.ConnectingInstance.GetClientCertificate(Configuration.AuthenticatingInstance, ct_quit.Token); }
-                            }.Select(
-                    action =>
-                    {
-                        var t = new Thread(new ThreadStart(
-                            () =>
-                            {
-                                try { action(); }
-                                catch (Exception ex) { error = ex; }
-                            }));
-                        t.Start();
-                        return t;
-                    }).ToList().ForEach(t => t.Join());
-                if (error != null)
-                    throw error;
-
-                if (openvpn_interactive_service != null)
+                if (_openvpn_interactive_service != null)
                 {
                     // Wait for OpenVPN Interactive Service to report "running" status.
                     // Maximum 30 times 100ms = 3s.
                     var refresh_interval = TimeSpan.FromMilliseconds(100);
-                    for (var i = 0; i < 30 && !ct_quit.Token.IsCancellationRequested; i++)
+                    for (var i = 0; i < 30 && !_quit.Token.IsCancellationRequested; i++)
                     {
-                        try { openvpn_interactive_service.WaitForStatus(ServiceControllerStatus.Running, refresh_interval); }
+                        try
+                        {
+                            _openvpn_interactive_service.WaitForStatus(ServiceControllerStatus.Running, refresh_interval);
+                            break;
+                        }
                         catch (System.ServiceProcess.TimeoutException) { }
                         catch { break; }
                     }
@@ -183,7 +188,7 @@ namespace eduVPN.ViewModels
                             using (var sw = new StreamWriter(fs))
                             {
                                 // Save profile's configuration to file.
-                                sw.Write(profile_config);
+                                sw.Write(_profile_config);
 
                                 // Append eduVPN Client specific configuration directives.
                                 sw.WriteLine();
@@ -231,12 +236,12 @@ namespace eduVPN.ViewModels
                                     new string[] { "--config", _connection_id + ".ovpn", },
                                     mgmt_password + "\n",
                                     3000,
-                                    ct_quit.Token);
+                                    _quit.Token);
                             try
                             {
                                 // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
                                 var mgmt_client_task = mgmt_server.AcceptTcpClientAsync();
-                                try { mgmt_client_task.Wait(ct_quit.Token); }
+                                try { mgmt_client_task.Wait(_quit.Token); }
                                 catch (AggregateException ex) { throw ex.InnerException; }
                                 var mgmt_client = mgmt_client_task.Result;
                                 try
@@ -410,13 +415,13 @@ namespace eduVPN.ViewModels
                                                 }
                                             }));
 
-                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, ct_quit.Token);
+                                    mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, _quit.Token);
 
                                     // Initialize session and release openvpn.exe to get started.
-                                    mgmt_session.ReplayAndEnableState(ct_quit.Token);
-                                    mgmt_session.SetByteCount(5, ct_quit.Token);
-                                    mgmt_session.EnableHold(false, ct_quit.Token);
-                                    mgmt_session.ReleaseHold(ct_quit.Token);
+                                    mgmt_session.ReplayAndEnableState(_quit.Token);
+                                    mgmt_session.SetByteCount(5, _quit.Token);
+                                    mgmt_session.EnableHold(false, _quit.Token);
+                                    mgmt_session.ReleaseHold(_quit.Token);
 
                                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1)));
                                     try
@@ -490,6 +495,6 @@ namespace eduVPN.ViewModels
             return File.Exists(LogPath);
         }
 
-        #endregion
+#endregion
     }
 }
