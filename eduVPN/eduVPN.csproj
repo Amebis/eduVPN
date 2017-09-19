@@ -58,7 +58,6 @@
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />
     <Compile Include="ViewModels\AboutPage.cs" />
-    <Compile Include="ViewModels\AuthenticationPopup.cs" />
     <Compile Include="ViewModels\OpenVPNSession.cs" />
     <Compile Include="Models\ProfileInfo.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
@@ -68,7 +67,9 @@
     <Compile Include="Models\FederatedVPNConfigurationSettings.cs" />
     <Compile Include="Models\VPNConfigurationSettings.cs" />
     <Compile Include="Models\VPNConfigurationSettingsList.cs" />
+    <Compile Include="ViewModels\PasswordPopup.cs" />
     <Compile Include="ViewModels\SettingsPage.cs" />
+    <Compile Include="ViewModels\UsernamePasswordPopup.cs" />
     <Compile Include="ViewModels\VPNSession.cs" />
     <Compile Include="Models\VPNSessionStatusType.cs" />
     <Compile Include="SerializableStringDictionary.cs" />

@@ -8,9 +8,9 @@
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Authentication pop-up
+    /// Password authentication pop-up
     /// </summary>
-    public class AuthenticationPopup : Window
+    public class PasswordPopup : Window
     {
         #region Properties
 
@@ -34,15 +34,20 @@ namespace eduVPN.ViewModels
         }
         private string _realm;
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// User name
+        /// Creates a pop-up window
         /// </summary>
-        public string UserName
+        /// <param name="sender">VPN session</param>
+        /// <param name="e"></param>
+        public PasswordPopup(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
         {
-            get { return _username; }
-            set { if (value != _username) { _username = value; RaisePropertyChanged(); } }
+            Session = sender as ViewModels.VPNSession;
+            Realm = e.Realm;
         }
-        private string _username;
 
         #endregion
     }

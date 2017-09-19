@@ -217,13 +217,10 @@ namespace eduVPN.Views
         /// <param name="e">Authentication request event arguments</param>
         private void ConnectWizard_RequestOpenVPNPasswordAuthentication(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
         {
-            // Create a new authentication pop-up.
-            PasswordPopup popup = new PasswordPopup() { Owner = this };
+            var view_model = new ViewModels.PasswordPopup(sender, e);
 
-            // Set authenticating realm.
-            var view_model = (ViewModels.AuthenticationPopup)popup.DataContext;
-            view_model.Session = sender as ViewModels.VPNSession;
-            view_model.Realm = e.Realm;
+            // Create a new authentication pop-up.
+            PasswordPopup popup = new PasswordPopup() { Owner = this, DataContext = view_model };
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
@@ -237,15 +234,11 @@ namespace eduVPN.Views
         /// <param name="e">Authentication request event arguments</param>
         private void ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
         {
-            // Create a new authentication pop-up.
-            UsernamePasswordPopup popup = new UsernamePasswordPopup() { Owner = this };
-
-            // Set authenticating realm.
-            var view_model = (ViewModels.AuthenticationPopup)popup.DataContext;
-            view_model.Session = sender as ViewModels.VPNSession;
-            view_model.Realm = e.Realm;
-
             // TODO: Load previous user name and change initial focus to the "Password" field.
+            var view_model = new ViewModels.UsernamePasswordPopup(sender, e);
+
+            // Create a new authentication pop-up.
+            UsernamePasswordPopup popup = new UsernamePasswordPopup() { Owner = this, DataContext = view_model };
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
