@@ -28,13 +28,11 @@ namespace eduVPN.Views
 
         #endregion
 
-        #region Methods
-
+        #region Freezable support
         protected override Freezable CreateInstanceCore()
         {
             return new BindingProxy();
         }
-
         #endregion
     }
 }
