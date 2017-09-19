@@ -239,7 +239,7 @@ namespace eduVPN.Views
             // Load previous username.
             var session = (ViewModels.VPNSession)sender;
             var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
-            try { view_model.Username = eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id]; }
+            try { view_model.Username = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id]; }
             catch { view_model.Username = null; }
 
             // Create a new authentication pop-up.
@@ -258,7 +258,7 @@ namespace eduVPN.Views
             {
                 var username = view_model.Username;
                 e.Username = username;
-                eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id] = username;
+                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = username;
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
             }
         }
@@ -272,7 +272,7 @@ namespace eduVPN.Views
             var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
             try
             {
-                var username = eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id];
+                var username = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id];
                 if (view_model.MethodList.Any(method => method.ID == username))
                     view_model.Username = username;
             }
@@ -286,7 +286,7 @@ namespace eduVPN.Views
             {
                 var username = view_model.Username;
                 e.Username = username;
-                eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id] = username;
+                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = username;
                 e.Password = (new NetworkCredential("", popup.Password/*.Password*/.Text)).SecurePassword;
             }
         }

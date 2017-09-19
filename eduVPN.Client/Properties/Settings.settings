@@ -14,7 +14,7 @@
     <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="RecentUsernames" Type="eduVPN.SerializableStringDictionary" Scope="User">
+    <Setting Name="UsernameHistory" Type="eduVPN.SerializableStringDictionary" Scope="User">
       <Value Profile="(Default)">&lt;SerializableStringDictionary/&gt;</Value>
     </Setting>
   </Settings>

@@ -73,12 +73,12 @@ namespace eduVPN.Client.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
-        public global::eduVPN.SerializableStringDictionary RecentUsernames {
+        public global::eduVPN.SerializableStringDictionary UsernameHistory {
             get {
-                return ((global::eduVPN.SerializableStringDictionary)(this["RecentUsernames"]));
+                return ((global::eduVPN.SerializableStringDictionary)(this["UsernameHistory"]));
             }
             set {
-                this["RecentUsernames"] = value;
+                this["UsernameHistory"] = value;
             }
         }
     }
