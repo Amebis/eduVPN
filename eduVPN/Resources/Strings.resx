@@ -123,8 +123,9 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>API server replied with an error.</value>
   </data>
-  <data name="CertificateTitle" xml:space="preserve">
-    <value>eduVPN for Windows</value>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>eduVPN for Windows@{0}</value>
+    <comment>{0}=Computer name</comment>
   </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value>Private key is invalid or of unsupported format.</value>

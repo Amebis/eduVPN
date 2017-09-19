@@ -61,15 +61,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eduVPN for Windows.
-        /// </summary>
-        internal static string CertificateTitle {
-            get {
-                return ResourceManager.GetString("CertificateTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to API server replied with an error..
         /// </summary>
         internal static string ErrorAPIServerReply {
@@ -291,6 +282,15 @@ namespace eduVPN.Resources {
         internal static string OpenVPNStateTypeWaiting {
             get {
                 return ResourceManager.GetString("OpenVPNStateTypeWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to eduVPN for Windows@{0}.
+        /// </summary>
+        internal static string ProfileTitle {
+            get {
+                return ResourceManager.GetString("ProfileTitle", resourceCulture);
             }
         }
     }
