@@ -161,12 +161,12 @@ namespace eduVPN.JSON
                     response_sig_task = request.GetResponseAsync();
                 }
 
-                var data = new byte[1048576]; // Limit to 1MiB
-                int data_size;
+                var data = new byte[0];
+                var buffer = new byte[1048576];
                 using (var stream = response.GetResponseStream())
                 {
-                    // Spawn data read.
-                    var read_task = stream.ReadAsync(data, 0, data.Length, ct);
+                    // Spawn data chunk read.
+                    var read_task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
 
                     if (pub_key != null)
                     {
@@ -177,10 +177,24 @@ namespace eduVPN.JSON
                             signature = Convert.FromBase64String(await reader_sig.ReadToEndAsync());
                     }
 
-                    // Wait for the data to arrive.
-                    data_size = await read_task;
-                    if (read_task.IsCanceled)
-                        throw new OperationCanceledException(ct);
+                    for (;;)
+                    {
+                        // Wait for the data to arrive.
+                        await read_task;
+                        if (read_task.IsCanceled)
+                            throw new OperationCanceledException(ct);
+                        if (read_task.Result == 0)
+                            break;
+
+                        // Append it to the data.
+                        var data_new = new byte[data.LongLength + read_task.Result];
+                        Array.Copy(data, data_new, data.LongLength);
+                        Array.Copy(buffer, 0, data_new, data.LongLength, read_task.Result);
+                        data = data_new;
+
+                        // Respawn data chunk read.
+                        read_task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
+                    }
 
                     if (pub_key != null)
                     {
@@ -188,14 +202,14 @@ namespace eduVPN.JSON
 
                         // Verify signature.
                         using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
-                            if (!key.VerifyDetached(data, 0, data_size, signature))
+                            if (!key.VerifyDetached(data, signature))
                                 throw new System.Security.SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, uri));
                     }
                 }
 
                 return new Response()
                 {
-                    Value = Encoding.UTF8.GetString(data, 0, data_size),
+                    Value = Encoding.UTF8.GetString(data),
                     Timestamp = DateTime.TryParse(response.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
                     ETag = response.GetResponseHeader("ETag"),
                     IsFresh = true
