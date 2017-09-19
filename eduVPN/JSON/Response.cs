@@ -162,10 +162,10 @@ namespace eduVPN.JSON
                 }
 
                 var data = new byte[0];
-                var buffer = new byte[1048576];
                 using (var stream = response.GetResponseStream())
                 {
                     // Spawn data chunk read.
+                    var buffer = new byte[1048576];
                     var read_task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
 
                     if (pub_key != null)
