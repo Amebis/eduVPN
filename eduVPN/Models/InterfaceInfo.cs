@@ -21,7 +21,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Interface ID
         /// </summary>
-        public Guid Id { get; }
+        public Guid ID { get; }
 
         /// <summary>
         /// Interface name
@@ -39,7 +39,7 @@ namespace eduVPN.Models
         /// <param name="name">Interface name</param>
         public InterfaceInfo(Guid id, string name)
         {
-            Id = id;
+            ID = id;
             Name = name;
         }
 
@@ -58,7 +58,7 @@ namespace eduVPN.Models
         /// <param name="id">Interface ID</param>
         /// <param name="iface">Network interface</param>
         /// <returns><c>true</c> if interface found; <c>false</c> otherwise</returns>
-        public static bool TryFromId(Guid id, out InterfaceInfo iface)
+        public static bool TryFromID(Guid id, out InterfaceInfo iface)
         {
             foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
             {
@@ -79,9 +79,9 @@ namespace eduVPN.Models
         /// <param name="id">Interface ID</param>
         /// <returns>Network interface</returns>
         /// <exception cref="ArgumentOutOfRangeException">Network interface with given ID not found.</exception>
-        public static InterfaceInfo FromId(Guid id)
+        public static InterfaceInfo FromID(Guid id)
         {
-            if (TryFromId(id, out var iface))
+            if (TryFromID(id, out var iface))
                 return iface;
 
             throw new ArgumentOutOfRangeException("id", String.Format(Resources.Strings.ErrorNetworkInterfaceIDNotFound, id));

@@ -584,7 +584,7 @@ namespace eduVPN.ViewModels
                 // Versions before 1.0.4 used interface name, instead of ID.
                 if (Properties.Settings.Default.GetPreviousVersion("OpenVPNInterface") is string iface_name &&
                     Models.InterfaceInfo.TryFromName(iface_name, out var iface))
-                    Properties.Settings.Default.OpenVPNInterfaceID = iface.Id;
+                    Properties.Settings.Default.OpenVPNInterfaceID = iface.ID;
             }
 
             Dispatcher.ShutdownStarted += (object sender, EventArgs e) =>
