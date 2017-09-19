@@ -319,7 +319,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="eduVPNIdNameSelectionItemTemplate">
+    <DataTemplate x:Key="eduVPNSelectionItemTemplate">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>

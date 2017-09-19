@@ -32,6 +32,7 @@
         <ComboBox
             x:Name="InstanceSourceURI"
             Margin="5"
+            Style="{StaticResource eduVPNComboBoxStyle}"
             Text="{Binding Path=BaseURI}"
             TextSearch.TextPath=""
             ItemsSource="{Binding Source={x:Static prop:Settings.Default}, Path=CustomInstanceHistory}"
