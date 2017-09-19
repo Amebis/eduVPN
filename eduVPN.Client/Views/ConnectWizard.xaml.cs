@@ -234,16 +234,31 @@ namespace eduVPN.Views
         /// <param name="e">Authentication request event arguments</param>
         private void ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
         {
-            // TODO: Load previous user name and change initial focus to the "Password" field.
             var view_model = new ViewModels.UsernamePasswordPopup(sender, e);
+
+            // Load previous user name.
+            var session = (ViewModels.VPNSession)sender;
+            var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
+            try { view_model.UserName = eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id]; }
+            catch { view_model.UserName = null; }
 
             // Create a new authentication pop-up.
             UsernamePasswordPopup popup = new UsernamePasswordPopup() { Owner = this, DataContext = view_model };
+            popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
+            {
+                // Set initial focus.
+                if (view_model.UserName == null)
+                    popup.UserName.Focus();
+                else
+                    popup.Password.Focus();
+            };
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
             {
-                e.UserName = view_model.UserName;
+                var username = view_model.UserName;
+                e.UserName = username;
+                eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id] = username;
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
             }
         }
