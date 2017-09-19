@@ -66,16 +66,16 @@ namespace eduVPN.Client.Converters
                 return null;
 
             double number = System.Convert.ToDouble(value);
-            int _base = parameter != null ? System.Convert.ToInt32(parameter) : 1000;
+            int b = parameter != null ? System.Convert.ToInt32(parameter) : _base;
 
             if (number <= 0.5 && _empty_if_zero)
                 return "";
 
-            int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(_base) + 0.2), _prefixes.Length) : 0;
+            int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(b)), _prefixes.Length) : 0;
             return String.Format(
                 Resources.Strings.NumberToHumanReadable,
                 n > 0 ?
-                    Math.Truncate(number / Math.Pow(_base, n)) :
+                    Math.Truncate(number / Math.Pow(b, n)) :
                     number,
                 _prefixes[n],
                 _unit);
