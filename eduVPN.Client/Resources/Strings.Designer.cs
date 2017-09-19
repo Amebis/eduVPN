@@ -667,7 +667,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User name:.
+        ///   Looks up a localized string similar to Username:.
         /// </summary>
         public static string UsernamePasswordPopupUsernameTitle {
             get {

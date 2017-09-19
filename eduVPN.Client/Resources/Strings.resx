@@ -327,6 +327,6 @@ Powered by SURFnet</value>
     <value>Password:</value>
   </data>
   <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
-    <value>User name:</value>
+    <value>Username:</value>
   </data>
 </root>

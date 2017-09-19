@@ -15,9 +15,9 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// User name
+        /// Username
         /// </summary>
-        public string UserName
+        public string Username
         {
             get { return _username; }
             set { if (value != _username) { _username = value; RaisePropertyChanged(); } }

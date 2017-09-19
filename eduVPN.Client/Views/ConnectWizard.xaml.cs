@@ -236,19 +236,19 @@ namespace eduVPN.Views
         {
             var view_model = new ViewModels.UsernamePasswordPopup(sender, e);
 
-            // Load previous user name.
+            // Load previous username.
             var session = (ViewModels.VPNSession)sender;
             var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
-            try { view_model.UserName = eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id]; }
-            catch { view_model.UserName = null; }
+            try { view_model.Username = eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id]; }
+            catch { view_model.Username = null; }
 
             // Create a new authentication pop-up.
             UsernamePasswordPopup popup = new UsernamePasswordPopup() { Owner = this, DataContext = view_model };
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
             {
                 // Set initial focus.
-                if (view_model.UserName == null)
-                    popup.UserName.Focus();
+                if (view_model.Username == null)
+                    popup.Username.Focus();
                 else
                     popup.Password.Focus();
             };
@@ -256,8 +256,8 @@ namespace eduVPN.Views
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
             {
-                var username = view_model.UserName;
-                e.UserName = username;
+                var username = view_model.Username;
+                e.Username = username;
                 eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id] = username;
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
             }
