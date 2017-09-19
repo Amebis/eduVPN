@@ -112,8 +112,23 @@ namespace eduVPN.Views
                         using (var stream = response.GetResponseStream())
                         {
                             // Read to memory. BitmapImage doesn't fancy non-seekable streams.
-                            var data = new byte[2097152]; // Limit to 2MiB
-                            using (var memory_stream = new MemoryStream(data, 0, stream.Read(data, 0, data.Length)))
+                            var data = new byte[0];
+                            var buffer = new byte[1048576];
+                            for (;;)
+                            {
+                                // Wait for the data to arrive.
+                                var buffer_length = stream.Read(buffer, 0, buffer.Length);
+                                if (buffer_length == 0)
+                                    break;
+
+                                // Append it to the data.
+                                var data_new = new byte[data.LongLength + buffer_length];
+                                Array.Copy(data, data_new, data.LongLength);
+                                Array.Copy(buffer, 0, data_new, data.LongLength, buffer_length);
+                                data = data_new;
+                            }
+
+                            using (var memory_stream = new MemoryStream(data))
                             {
                                 // Decode image.
                                 var bitmap_image = new BitmapImage();
