@@ -319,7 +319,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="eduVPNInterfaceSelectionItemTemplate">
+    <DataTemplate x:Key="eduVPNIdNameSelectionItemTemplate">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -334,7 +334,7 @@
                 Grid.Row="1"
                 Margin="0,5"
                 HorizontalAlignment="Center"
-                Text="{Binding Path=Name}"
+                Text="{Binding}"
                 Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
         </Grid>
     </DataTemplate>
