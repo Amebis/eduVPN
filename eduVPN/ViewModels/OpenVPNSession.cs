@@ -275,7 +275,9 @@ namespace eduVPN.ViewModels
                                     mgmt_session.CertificateRequested += (object sender, CertificateRequestedEventArgs e) => e.Certificate = _client_certificate;
 
                                     mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestPasswordAuthentication(this, e);
-                                    mgmt_session.UsernamePasswordAuthenticationRequested += (object sender, UsernamePasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestUsernamePasswordAuthentication(this, e);
+
+                                    // OpenVPN username/password prompts are actually 2FA for eduVPN use-case. Relay them as such.
+                                    mgmt_session.UsernamePasswordAuthenticationRequested += (object sender, UsernamePasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestTwoFactorAuthentication(this, e);
 
                                     mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
                                     {

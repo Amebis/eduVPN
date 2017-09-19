@@ -196,4 +196,10 @@
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Network interface {0} not found.</value>
   </data>
+  <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
+    <value>Time-based One-Time Password (TOTP)</value>
+  </data>
+  <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
+    <value>YubiKey</value>
+  </data>
 </root>

@@ -263,6 +263,34 @@ namespace eduVPN.Views
             }
         }
 
+        private void ConnectWizard_RequestTwoFactorAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
+        {
+            var view_model = new ViewModels.TwoFactorAuthenticationPopup(sender, e);
+
+            // Load previous "username". 2-Factor Authentication method actually.
+            var session = (ViewModels.VPNSession)sender;
+            var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
+            try
+            {
+                var username = eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id];
+                if (view_model.MethodList.Any(method => method.ID == username))
+                    view_model.Username = username;
+            }
+            catch { }
+
+            // Create a new authentication pop-up.
+            TwoFactorAuthenticationPopup popup = new TwoFactorAuthenticationPopup() { Owner = this, DataContext = view_model };
+
+            // Run the authentication pop-up and pass the credentials to be returned to the event sender.
+            if (popup.ShowDialog() == true)
+            {
+                var username = view_model.Username;
+                e.Username = username;
+                eduVPN.Client.Properties.Settings.Default.RecentUsernames[profile_id] = username;
+                e.Password = (new NetworkCredential("", popup.Password/*.Password*/.Text)).SecurePassword;
+            }
+        }
+
         #endregion
 
         #region IDisposable Support

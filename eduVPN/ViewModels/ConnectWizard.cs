@@ -356,6 +356,11 @@ namespace eduVPN.ViewModels
         /// </summary>
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestOpenVPNUsernamePasswordAuthentication;
 
+        /// <summary>
+        /// 2-Factor Authentication requested
+        /// </summary>
+        public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestTwoFactorAuthentication;
+
         #region Pages
 
         /// <summary>
@@ -865,6 +870,22 @@ namespace eduVPN.ViewModels
             {
                 // We're in the background thread - raise event via dispatcher.
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNUsernamePasswordAuthentication?.Invoke(sender, e)));
+            }
+        }
+
+        public void OpenVPNSession_RequestTwoFactorAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
+        {
+            // Re-raise this event as ConnectWizard event, to simplify view.
+            // This way the view can listen ConnectWizard for authentication events only.
+            if (Dispatcher.CurrentDispatcher == Dispatcher)
+            {
+                // We're in the GUI thread.
+                RequestTwoFactorAuthentication?.Invoke(sender, e);
+            }
+            else
+            {
+                // We're in the background thread - raise event via dispatcher.
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestTwoFactorAuthentication?.Invoke(sender, e)));
             }
         }
 

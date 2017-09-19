@@ -329,4 +329,10 @@ Omogoča SURFnet</value>
   <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
     <value>Up. ime:</value>
   </data>
+  <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
+    <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostni žeton:</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
+    <value>2-stopenjsko overovljanje</value>
+  </data>
 </root>

@@ -329,4 +329,10 @@ Powered by SURFnet</value>
   <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
     <value>Username:</value>
   </data>
+  <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
+    <value>Select your enrolled authentication method and enter the security token:</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
+    <value>2-Factor Authentication</value>
+  </data>
 </root>

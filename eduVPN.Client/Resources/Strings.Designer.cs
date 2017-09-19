@@ -622,6 +622,24 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select your enrolled authentication method and enter the security token:.
+        /// </summary>
+        public static string TwoFactorAuthenticationPopupMessage {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthenticationPopupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2-Factor Authentication.
+        /// </summary>
+        public static string TwoFactorAuthenticationPopupTitle {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthenticationPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requires two-factor authentication.
         /// </summary>
         public static string TwoFactorAuthenticationRequired {

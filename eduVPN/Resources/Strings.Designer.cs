@@ -293,5 +293,23 @@ namespace eduVPN.Resources {
                 return ResourceManager.GetString("ProfileTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time-based One-Time Password (TOTP).
+        /// </summary>
+        internal static string TwoFactorAuthenticationMethodTOTP {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthenticationMethodTOTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YubiKey.
+        /// </summary>
+        internal static string TwoFactorAuthenticationMethodYubiKey {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthenticationMethodYubiKey", resourceCulture);
+            }
+        }
     }
 }
