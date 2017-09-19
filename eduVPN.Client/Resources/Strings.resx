@@ -323,10 +323,10 @@ Powered by SURFnet</value>
   <data name="PasswordPopupPasswordTitle" xml:space="preserve">
     <value>Password:</value>
   </data>
-  <data name="UserPasswordPopupPasswordTitle" xml:space="preserve">
+  <data name="UsernamePasswordPopupPasswordTitle" xml:space="preserve">
     <value>Password:</value>
   </data>
-  <data name="UserPasswordPopupUsernameTitle" xml:space="preserve">
+  <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
     <value>User name:</value>
   </data>
 </root>

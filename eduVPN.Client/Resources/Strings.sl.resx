@@ -323,10 +323,10 @@ Omogoča SURFnet</value>
   <data name="PasswordPopupPasswordTitle" xml:space="preserve">
     <value>Geslo:</value>
   </data>
-  <data name="UserPasswordPopupPasswordTitle" xml:space="preserve">
+  <data name="UsernamePasswordPopupPasswordTitle" xml:space="preserve">
     <value>Geslo:</value>
   </data>
-  <data name="UserPasswordPopupUsernameTitle" xml:space="preserve">
+  <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
     <value>Up. ime:</value>
   </data>
 </root>

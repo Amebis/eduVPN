@@ -649,6 +649,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        public static string UsernamePasswordPopupPasswordTitle {
+            get {
+                return ResourceManager.GetString("UsernamePasswordPopupPasswordTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authentication.
         /// </summary>
         public static string UsernamePasswordPopupTitle {
@@ -658,20 +667,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password:.
-        /// </summary>
-        public static string UserPasswordPopupPasswordTitle {
-            get {
-                return ResourceManager.GetString("UserPasswordPopupPasswordTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to User name:.
         /// </summary>
-        public static string UserPasswordPopupUsernameTitle {
+        public static string UsernamePasswordPopupUsernameTitle {
             get {
-                return ResourceManager.GetString("UserPasswordPopupUsernameTitle", resourceCulture);
+                return ResourceManager.GetString("UsernamePasswordPopupUsernameTitle", resourceCulture);
             }
         }
     }
