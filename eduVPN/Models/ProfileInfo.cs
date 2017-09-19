@@ -8,6 +8,7 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -29,6 +30,12 @@ namespace eduVPN.Models
         /// </summary>
         private string _openvpn_config;
         private object _openvpn_config_lock = new object();
+
+        /// <summary>
+        /// Profile complete OpenVPN configuration
+        /// </summary>
+        private string _openvpn_complete_config;
+        private object _openvpn_complete_config_lock = new object();
 
         #endregion
 
@@ -152,6 +159,59 @@ namespace eduVPN.Models
                 }
 
                 return _openvpn_config;
+            }
+        }
+
+        /// <summary>
+        /// Gets profile OpenVPN complete configuration
+        /// </summary>
+        /// <param name="connecting_instance">Instance this profile is part of</param>
+        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Profile configuration</returns>
+        public string GetCompleteOpenVPNConfig(InstanceInfo connecting_instance, InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        {
+            lock (_openvpn_complete_config_lock)
+            {
+                if (_openvpn_complete_config == null)
+                {
+                    // Get API endpoints.
+                    var api = connecting_instance.GetEndpoints(ct);
+
+                    retry:
+                    try
+                    {
+                        // Get complete profile config.
+                        var openvpn_complete_config = JSON.Response.Get(
+                            uri: api.ProfileCompleteConfig,
+                            param: new NameValueCollection
+                            {
+                                { "display_name", String.Format(Resources.Strings.ProfileTitle, Environment.MachineName) },
+                                { "profile_id", ID }
+                            },
+                            token: authenticating_instance.GetAccessToken(ct),
+                            response_type: "application/x-openvpn-profile",
+                            ct: ct).Value;
+
+                        // If we got here, save the config.
+                        _openvpn_complete_config = openvpn_complete_config;
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (WebException ex)
+                    {
+                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // Access token was rejected (401 Unauthorized): reset access token and retry.
+                            authenticating_instance.RefreshOrResetAccessToken(ct);
+                            goto retry;
+                        }
+                        else
+                            throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex);
+                    }
+                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
+                }
+
+                return _openvpn_complete_config;
             }
         }
 

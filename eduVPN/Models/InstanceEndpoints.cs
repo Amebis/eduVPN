@@ -43,7 +43,13 @@ namespace eduVPN.Models
         private Uri _create_certificate;
 
         /// <summary>
-        /// Profile configuration URI
+        /// Profile complete OpenVPN configuration URI
+        /// </summary>
+        public Uri ProfileCompleteConfig { get => _profile_complete_config; }
+        private Uri _profile_complete_config;
+
+        /// <summary>
+        /// Profile OpenVPN configuration URI
         /// </summary>
         public Uri ProfileConfig { get => _profile_config; }
         private Uri _profile_config;
@@ -104,6 +110,10 @@ namespace eduVPN.Models
                 _create_certificate = eduJSON.Parser.GetValue(api, "create_certificate", out string create_certificate) ?
                     new Uri(create_certificate) :
                     _base_uri != null ? AppendPath(_base_uri, "/create_keypair") : null;
+
+                _profile_complete_config = eduJSON.Parser.GetValue(api, "create_config", out string profile_complete_config) ?
+                    new Uri(profile_complete_config) :
+                    _base_uri != null ? AppendPath(_base_uri, "/create_config") : null;
 
                 _profile_config = eduJSON.Parser.GetValue(api, "profile_config", out string profile_config) ?
                     new Uri(profile_config) :
