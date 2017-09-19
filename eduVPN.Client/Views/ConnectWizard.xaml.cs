@@ -222,6 +222,7 @@ namespace eduVPN.Views
 
             // Set authenticating realm.
             var view_model = (ViewModels.AuthenticationPopup)popup.DataContext;
+            view_model.Session = sender as ViewModels.VPNSession;
             view_model.Realm = e.Realm;
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
@@ -241,7 +242,10 @@ namespace eduVPN.Views
 
             // Set authenticating realm.
             var view_model = (ViewModels.AuthenticationPopup)popup.DataContext;
+            view_model.Session = sender as ViewModels.VPNSession;
             view_model.Realm = e.Realm;
+
+            // TODO: Load previous user name and change initial focus to the "Password" field.
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)

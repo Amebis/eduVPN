@@ -274,8 +274,8 @@ namespace eduVPN.ViewModels
 
                                     mgmt_session.CertificateRequested += (object sender, CertificateRequestedEventArgs e) => e.Certificate = _client_certificate;
 
-                                    mgmt_session.PasswordAuthenticationRequested += Parent.OpenVPNSession_RequestPasswordAuthentication;
-                                    mgmt_session.UsernamePasswordAuthenticationRequested += Parent.OpenVPNSession_RequestUsernamePasswordAuthentication;
+                                    mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestPasswordAuthentication(this, e);
+                                    mgmt_session.UsernamePasswordAuthenticationRequested += (object sender, UsernamePasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestUsernamePasswordAuthentication(this, e);
 
                                     mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
                                     {

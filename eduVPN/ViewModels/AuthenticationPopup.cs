@@ -15,6 +15,16 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
+        /// VPN session
+        /// </summary>
+        public VPNSession Session
+        {
+            get { return _session; }
+            set { if (value != _session) { _session = value; RaisePropertyChanged(); } }
+        }
+        private VPNSession _session;
+
+        /// <summary>
         /// Authenticating realm
         /// </summary>
         public string Realm

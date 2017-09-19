@@ -843,12 +843,12 @@ namespace eduVPN.ViewModels
             if (Dispatcher.CurrentDispatcher == Dispatcher)
             {
                 // We're in the GUI thread.
-                RequestOpenVPNPasswordAuthentication?.Invoke(this, e);
+                RequestOpenVPNPasswordAuthentication?.Invoke(sender, e);
             }
             else
             {
                 // We're in the background thread - raise event via dispatcher.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNPasswordAuthentication?.Invoke(this, e)));
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNPasswordAuthentication?.Invoke(sender, e)));
             }
         }
 
@@ -859,12 +859,12 @@ namespace eduVPN.ViewModels
             if (Dispatcher.CurrentDispatcher == Dispatcher)
             {
                 // We're in the GUI thread.
-                RequestOpenVPNUsernamePasswordAuthentication?.Invoke(this, e);
+                RequestOpenVPNUsernamePasswordAuthentication?.Invoke(sender, e);
             }
             else
             {
                 // We're in the background thread - raise event via dispatcher.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNUsernamePasswordAuthentication?.Invoke(this, e)));
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNUsernamePasswordAuthentication?.Invoke(sender, e)));
             }
         }
 
