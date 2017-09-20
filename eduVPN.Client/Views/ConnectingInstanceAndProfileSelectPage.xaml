@@ -19,13 +19,6 @@
     Style="{StaticResource eduVPNConnectWizardPageWithSettings}"
     FocusManager.FocusedElement="{Binding ElementName=ConnectingInstanceAndProfileSelectPanel}">
 
-    <!--<view:ConnectWizardPage.Resources>
-        <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPanel}">
-            <view:ConnectingInstanceAndProfileSelectPanel/>
-        </DataTemplate>
-    </view:ConnectWizardPage.Resources>
-    -->
-
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -36,10 +29,5 @@
             Margin="5"
             IsTabStop="False"
             DataContext="{Binding Path=Panel}"/>
-
-        <!--<ContentControl
-            Margin="5"
-            IsTabStop="False"
-            Content="{Binding Path=Panel}"/>-->
     </Grid>
 </view:ConnectWizardPage>
