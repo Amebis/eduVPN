@@ -18,7 +18,8 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{x:Static res:Strings.SettingsPageTitle}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource eduVPNConnectWizardPage}"
+    FocusManager.FocusedElement="{Binding ElementName=ForceTCP}">
 
     <Page.Resources>
         <!-- eduVPN collection view sources -->
@@ -61,6 +62,7 @@
                     Text="{x:Static res:Strings.SettingsPageForceTCPInterfaceTitle}"/>
 
                 <CheckBox
+                    x:Name="ForceTCP"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
@@ -122,6 +124,7 @@
                     Text="{x:Static res:Strings.SettingsPageInterfaceDescription}"/>
 
                 <ComboBox
+                    x:Name="OpenVPNInterface"
                     Grid.Row="1"
                     Margin="5,2"
                     HorizontalContentAlignment="Center"

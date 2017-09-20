@@ -17,7 +17,8 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{x:Static res:Strings.StatusPageTitle}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource eduVPNConnectWizardPage}"
+    FocusManager.FocusedElement="{Binding ElementName=ShowLog}">
 
     <Page.Resources>
         <!-- eduVPN collection view sources -->
@@ -118,6 +119,7 @@
         </Grid>
 
         <ListBox
+            x:Name="Messages"
             Grid.Row="2"
             Margin="5"
             Style="{StaticResource eduVPNListStyle}"
@@ -218,6 +220,7 @@
                 Text="{Binding Path=Parent.Sessions[0].BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <Button
+                x:Name="ShowLog"
                 Grid.Row="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
@@ -230,6 +233,7 @@
         </Grid>
 
         <Button
+            x:Name="Disconnect"
             Grid.Row="4"
             Margin="5"
             Width="170"

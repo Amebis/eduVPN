@@ -14,7 +14,16 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource eduVPNConnectWizardPage}"
+    FocusManager.FocusedElement="{Binding ElementName=InstanceList}">
+
+    <view:ConnectWizardPage.Resources>
+        <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstanceList_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="InstanceList_PreviewKeyDown"/>
+            <!-- TODO: Add event handlers for touch and stylus support. -->
+        </Style>
+    </view:ConnectWizardPage.Resources>
 
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
@@ -22,12 +31,11 @@
         </Grid.RowDefinitions>
 
         <ListBox
+            x:Name="InstanceList"
             Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-            ItemsSource="{Binding Path=Parent.InstanceSource}"
-            SelectedItem="{Binding Path=SelectedInstance}"
-            SelectionChanged="InstanceSource_SelectionChanged"/>
+            ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+            ItemsSource="{Binding Path=Parent.InstanceSource}"/>
     </Grid>
 </view:ConnectWizardPage>

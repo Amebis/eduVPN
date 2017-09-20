@@ -7,7 +7,8 @@
     xmlns:view="clr-namespace:eduVPN.Views"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="300">
+    d:DesignWidth="300"
+    FocusManager.FocusedElement="{Binding ElementName=InstanceList}">
 
     <Grid Margin="-5">
         <Grid.RowDefinitions>
@@ -16,6 +17,7 @@
         </Grid.RowDefinitions>
 
         <ComboBox
+            x:Name="InstanceList"
             Margin="5"
             Style="{StaticResource eduVPNComboBoxStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
@@ -24,6 +26,7 @@
             SelectedItem="{Binding Path=SelectedInstance}"/>
 
         <ListBox
+            x:Name="ProfileList"
             Grid.Row="1"
             Margin="5"
             Style="{StaticResource eduVPNListStyle}"

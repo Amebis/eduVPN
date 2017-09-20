@@ -614,6 +614,7 @@
                         </Grid.RowDefinitions>
 
                         <Button
+                            x:Name="eduVPNBackButton"
                             Style="{StaticResource eduVPNNavigationButtonStyle}"
                             AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                             Command="{Binding Path=NavigateBack}">&lt;</Button>
