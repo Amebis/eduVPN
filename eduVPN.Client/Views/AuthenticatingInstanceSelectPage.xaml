@@ -14,8 +14,7 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Style="{StaticResource eduVPNConnectWizardPage}"
-    FocusManager.FocusedElement="{Binding ElementName=InstanceList}">
+    Style="{StaticResource eduVPNConnectWizardPage}">
 
     <view:ConnectWizardPage.Resources>
         <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">

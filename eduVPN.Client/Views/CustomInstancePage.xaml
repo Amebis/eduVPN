@@ -18,8 +18,8 @@
     d:DesignHeight="373"
     Title="{x:Static res:Strings.CustomInstancePageTitle}"
     Description="{x:Static res:Strings.CustomInstancePageDescription}"
-    FocusManager.FocusedElement="{Binding ElementName=InstanceSourceURI}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource eduVPNConnectWizardPage}"
+    FocusManager.FocusedElement="{Binding ElementName=InstanceSourceURI}">
 
     <Grid
         VerticalAlignment="Top"

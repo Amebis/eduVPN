@@ -247,7 +247,7 @@ namespace eduVPN.Views
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
             {
                 // Set initial focus.
-                if (view_model.Username == null)
+                if (view_model.Username == null || view_model.Username.Length == 0)
                     popup.Username.Focus();
                 else
                     popup.Password.Focus();
@@ -256,9 +256,8 @@ namespace eduVPN.Views
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
             {
-                var username = view_model.Username;
-                e.Username = username;
-                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = username;
+                e.Username = view_model.Username;
+                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.Username;
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
             }
         }
@@ -270,16 +269,28 @@ namespace eduVPN.Views
             // Load previous "username". 2-Factor Authentication method actually.
             var session = (ViewModels.VPNSession)sender;
             var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
+            var previous_method_selected = false;
             try
             {
                 var username = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id];
                 if (view_model.MethodList.Any(method => method.ID == username))
+                {
                     view_model.Username = username;
+                    previous_method_selected = true;
+                }
             }
             catch { }
 
             // Create a new authentication pop-up.
             TwoFactorAuthenticationPopup popup = new TwoFactorAuthenticationPopup() { Owner = this, DataContext = view_model };
+            popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
+            {
+                // Set initial focus.
+                if (!previous_method_selected && view_model.MethodList.Count > 1)
+                    popup.Username.Focus();
+                else
+                    popup.Password.Focus();
+            };
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)

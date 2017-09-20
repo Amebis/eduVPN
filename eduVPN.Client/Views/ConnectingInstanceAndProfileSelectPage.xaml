@@ -16,8 +16,7 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{x:Static res:Strings.ConnectingProfileSelectPageTitle}"
-    Style="{StaticResource eduVPNConnectWizardPageWithSettings}"
-    FocusManager.FocusedElement="{Binding ElementName=ConnectingInstanceAndProfileSelectPanel}">
+    Style="{StaticResource eduVPNConnectWizardPageWithSettings}">
 
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>

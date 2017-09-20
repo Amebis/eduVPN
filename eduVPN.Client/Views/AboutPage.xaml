@@ -16,8 +16,7 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{x:Static res:Strings.AboutPageTitle}"
-    Style="{StaticResource eduVPNConnectWizardPage}"
-    FocusManager.FocusedElement="{Binding ElementName=eduVPNBackButton}">
+    Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>

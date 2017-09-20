@@ -7,8 +7,7 @@
     xmlns:view="clr-namespace:eduVPN.Views"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="300"
-    FocusManager.FocusedElement="{Binding ElementName=ProfileList}">
+    d:DesignWidth="300">
 
     <UserControl.Resources>
         <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">

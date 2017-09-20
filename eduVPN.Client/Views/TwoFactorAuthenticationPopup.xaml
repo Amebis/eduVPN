@@ -19,7 +19,6 @@
     Title="{x:Static res:Strings.TwoFactorAuthenticationPopupTitle}"
     Description="{x:Static res:Strings.TwoFactorAuthenticationPopupMessage}"
     WindowStartupLocation="CenterOwner"
-    FocusManager.FocusedElement="{Binding ElementName=Password}"
     Style="{StaticResource eduVPNPopupWindow}">
 
     <Window.Resources>

@@ -8,8 +8,7 @@
     xmlns:view="clr-namespace:eduVPN.Views"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="300"
-    FocusManager.FocusedElement="{Binding ElementName=ConfigurationList}">
+    d:DesignWidth="300">
 
     <UserControl.Resources>
         <!-- eduVPN collection view sources -->
