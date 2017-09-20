@@ -480,9 +480,6 @@ namespace eduVPN.ViewModels
 
                         Parent.ChangeTaskCount(-1);
                     }));
-
-                // Signal session finished.
-                Finished.Set();
             }
         }
 
