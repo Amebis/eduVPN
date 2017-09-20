@@ -467,11 +467,11 @@ namespace eduVPN.ViewModels
                             return _authenticating_institute_select_page;
 
                         default:
-                            throw new InvalidOperationException();
+                            return null;
                     }
                 }
                 else
-                    throw new InvalidOperationException();
+                    return null;
             }
         }
         private AuthenticatingCountrySelectPage _authenticating_country_select_page;
