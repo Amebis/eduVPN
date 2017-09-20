@@ -44,9 +44,9 @@
     <Compile Include="Converters\ConnectingInstanceAndProfileEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
+    <Compile Include="Converters\HistorySourceCountRowHeightConverter.cs" />
+    <Compile Include="Converters\HistorySourceCountVisibilityConverter.cs" />
     <Compile Include="Converters\HistorySourceInverseVisibilityConverter.cs" />
-    <Compile Include="Converters\HistorySourceRowHeightConverter.cs" />
-    <Compile Include="Converters\HistorySourceVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListRowHeightConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />

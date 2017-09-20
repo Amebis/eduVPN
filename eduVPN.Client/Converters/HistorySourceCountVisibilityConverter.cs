@@ -6,7 +6,6 @@
 */
 
 using System;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -14,16 +13,15 @@ using System.Windows.Data;
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns <c>1*</c> if configuration histories contains any records; or <c>Auto</c> otherwise.
+    /// Returns <c>Visibility.Visible</c> if configuration histories contains any records; or <c>Visibility.Collapsed</c> otherwise.
     /// </summary>
-    class HistorySourceRowHeightConverter : IValueConverter
+    class HistorySourceCountVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return
-                value is ObservableCollection<Models.VPNConfiguration>[] configuration_histories &&
-                parameter is Models.InstanceSourceType instance_source_type &&
-                configuration_histories[(int)instance_source_type].Count > 0 ? new GridLength(1.0, GridUnitType.Star) : GridLength.Auto;
+                value is int count &&
+                count > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
