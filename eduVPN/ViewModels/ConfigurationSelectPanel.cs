@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using System;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
@@ -76,6 +77,7 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_forget_configuration == null)
+                {
                     _forget_configuration = new DelegateCommand<Models.VPNConfiguration>(
                         // execute
                         configuration =>
@@ -88,6 +90,10 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         configuration => configuration != null && ConfigurationHistory.IndexOf(configuration) >= 0);
+
+                    // Setup canExecute refreshing.
+                    ConfigurationHistory.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_configuration.RaiseCanExecuteChanged();
+                }
 
                 return _forget_configuration;
             }

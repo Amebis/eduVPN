@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
@@ -30,7 +31,6 @@ namespace eduVPN.ViewModels
                 {
                     _uri = value;
                     RaisePropertyChanged();
-                    SelectCustomInstance.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -88,6 +88,9 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         () => TryParseUri(BaseURI, out var uri));
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "BaseURI") _select_custom_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _select_custom_instance;

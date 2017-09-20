@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -42,7 +43,6 @@ namespace eduVPN.ViewModels
                 {
                     _selected_instance = value;
                     RaisePropertyChanged();
-                    ConnectProfile.RaiseCanExecuteChanged();
 
                     ProfileList = null;
                     if (_selected_instance != null)
@@ -114,6 +114,7 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_connect_profile == null)
+                {
                     _connect_profile = new DelegateCommand<Models.ProfileInfo>(
                         // execute
                         profile =>
@@ -139,6 +140,10 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         profile => SelectedInstance != null && profile != null);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedInstance") _connect_profile.RaiseCanExecuteChanged(); };
+                }
 
                 return _connect_profile;
             }

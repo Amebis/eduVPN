@@ -100,6 +100,9 @@ namespace eduVPN.ViewModels
                             param != null &&
                             Parent.InstanceSources != null &&
                             Parent.InstanceSources[(int)param] != null);
+
+                    // Setup canExecute refreshing.
+                    // Note: Parent.InstanceSources is pseudo-static. We don't need to monitor it for changes.
                 }
 
                 return _select_instance_source;
@@ -130,10 +133,7 @@ namespace eduVPN.ViewModels
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        param => true);
+                        });
                 }
 
                 return _select_custom_instance;

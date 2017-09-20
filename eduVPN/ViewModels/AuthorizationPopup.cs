@@ -9,6 +9,7 @@ using eduOAuth;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Web;
 
 namespace eduVPN.ViewModels
@@ -46,7 +47,6 @@ namespace eduVPN.ViewModels
                 {
                     _authenticating_instance = value;
                     RaisePropertyChanged();
-                    RetryAuthorization.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -103,6 +103,7 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_retry_authorization == null)
+                {
                     _retry_authorization = new DelegateCommand<Models.InstanceInfo>(
                         // execute
                         param =>
@@ -131,6 +132,10 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         param => AuthenticatingInstance != null);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "AuthenticatingInstance") _retry_authorization.RaiseCanExecuteChanged(); };
+                }
 
                 return _retry_authorization;
             }

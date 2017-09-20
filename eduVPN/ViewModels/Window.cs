@@ -8,6 +8,7 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -47,7 +48,6 @@ namespace eduVPN.ViewModels
                 {
                     _error = value;
                     RaisePropertyChanged();
-                    CopyError.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -79,6 +79,7 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_copy_error == null)
+                {
                     _copy_error = new DelegateCommand(
                         // execute
                         () =>
@@ -90,6 +91,10 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         () => Error != null);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "Error") _copy_error.RaiseCanExecuteChanged(); };
+                }
 
                 return _copy_error;
             }

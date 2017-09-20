@@ -9,6 +9,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -117,12 +118,18 @@ namespace eduVPN.ViewModels
             get
             {
                 if (_session_info == null)
+                {
                     _session_info = new DelegateCommand(
                         // execute
                         () => NavigateTo.Execute(StatusPage),
 
                         // canExecute
                         () => Sessions.Count > 0 && NavigateTo.CanExecute(StatusPage));
+
+                    // Setup canExecute refreshing.
+                    Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _session_info.RaiseCanExecuteChanged();
+                    NavigateTo.CanExecuteChanged += (object sender, EventArgs e) => _session_info.RaiseCanExecuteChanged();
+                }
 
                 return _session_info;
             }
@@ -199,7 +206,6 @@ namespace eduVPN.ViewModels
 
                                                     // Add our session to the queue.
                                                     Sessions.Add(session);
-                                                    SessionInfo.RaiseCanExecuteChanged();
                                                 }));
                                             try
                                             {
@@ -222,7 +228,6 @@ namespace eduVPN.ViewModels
                                                     () =>
                                                     {
                                                         Sessions.Remove(session);
-                                                        SessionInfo.RaiseCanExecuteChanged();
 
                                                         if (Sessions.Count <= 0 && CurrentPage == StatusPage)
                                                         {
