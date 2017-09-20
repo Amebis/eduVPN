@@ -19,17 +19,6 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// Selected instance
-        /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.InstanceInfo SelectedInstance
-        {
-            get { return _selected_instance; }
-            set { if (value != _selected_instance) { _selected_instance = value; RaisePropertyChanged(); } }
-        }
-        private Models.InstanceInfo _selected_instance;
-
-        /// <summary>
         /// Authorize selected instance command
         /// </summary>
         public DelegateCommand<Models.InstanceInfo> AuthorizeInstance

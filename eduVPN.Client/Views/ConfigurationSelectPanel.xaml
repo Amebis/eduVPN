@@ -17,14 +17,18 @@
                 <scm:SortDescription PropertyName="Popularity" Direction="Descending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+
+        <Style x:Key="ConfigurationListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ConfigurationList_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="ConfigurationList_PreviewKeyDown"/>
+            <!-- TODO: Add event handlers for touch and stylus support. -->
+        </Style>
     </UserControl.Resources>
 
     <ListBox
         x:Name="ConfigurationList"
         Style="{StaticResource eduVPNListStyle}"
         ItemTemplate="{StaticResource eduVPNConfigurationSelectionItemTemplate}"
-        ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-        ItemsSource="{Binding Source={StaticResource ConfigurationListView}}"
-        SelectedItem="{Binding Path=SelectedConfiguration}"
-        SelectionChanged="ConfigurationList_SelectionChanged"/>
+        ItemContainerStyle="{StaticResource ConfigurationListBoxStyle}"
+        ItemsSource="{Binding Source={StaticResource ConfigurationListView}}"/>
 </UserControl>

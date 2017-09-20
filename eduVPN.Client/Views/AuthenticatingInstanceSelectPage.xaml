@@ -18,7 +18,7 @@
     FocusManager.FocusedElement="{Binding ElementName=InstanceList}">
 
     <view:ConnectWizardPage.Resources>
-        <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+        <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstanceList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="InstanceList_PreviewKeyDown"/>
             <!-- TODO: Add event handlers for touch and stylus support. -->
@@ -35,7 +35,7 @@
             Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+            ItemContainerStyle="{StaticResource InstanceListBoxStyle}"
             ItemsSource="{Binding Path=Parent.InstanceSource}"/>
     </Grid>
 </view:ConnectWizardPage>

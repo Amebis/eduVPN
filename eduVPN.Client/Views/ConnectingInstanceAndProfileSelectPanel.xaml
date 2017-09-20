@@ -10,6 +10,14 @@
     d:DesignWidth="300"
     FocusManager.FocusedElement="{Binding ElementName=InstanceList}">
 
+    <view:ConnectingInstanceAndProfileSelectBasePanel.Resources>
+        <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
+            <!-- TODO: Add event handlers for touch and stylus support. -->
+        </Style>
+    </view:ConnectingInstanceAndProfileSelectBasePanel.Resources>
+
     <Grid Margin="-5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -31,9 +39,7 @@
             Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
-            ItemsSource="{Binding Path=ProfileList}"
-            SelectedItem="{Binding Path=SelectedProfile}"
-            SelectionChanged="ProfileList_SelectionChanged"/>
+            ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
+            ItemsSource="{Binding Path=ProfileList}"/>
     </Grid>
 </view:ConnectingInstanceAndProfileSelectBasePanel>

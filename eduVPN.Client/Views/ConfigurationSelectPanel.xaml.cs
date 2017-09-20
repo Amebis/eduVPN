@@ -6,6 +6,7 @@
 */
 
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace eduVPN.Views
 {
@@ -25,23 +26,25 @@ namespace eduVPN.Views
 
         #region Methods
 
-        private void ConfigurationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected void ConfigurationList_SelectItem(object sender, InputEventArgs e)
         {
-            // TODO: Using SelectionChanged of a ListBox renders the UI accessibility unfriendly. Discuss other options with Rogier.
-            // Either:
-            // 1. Change the UI to provide separate button after the selection is made.
-            // 2. Change the list of profiles to a stack of buttons of profiles
-
-            if (e.AddedItems.Count > 0 &&
-                DataContext is ViewModels.ConfigurationSelectPanel view_model &&
-                view_model.ConnectConfiguration.CanExecute(view_model.SelectedConfiguration))
+            if (sender is ListBoxItem listbox_item &&
+                listbox_item.DataContext is Models.VPNConfiguration configuration &&
+                DataContext is ViewModels.ConfigurationSelectPanel view_model)
             {
                 // Connect selected configuration.
-                view_model.ConnectConfiguration.Execute(view_model.SelectedConfiguration);
+                if (view_model.ConnectConfiguration.CanExecute(configuration))
+                    view_model.ConnectConfiguration.Execute(configuration);
 
-                // Reset selected configuration, to prevent repetitive triggering.
-                view_model.SelectedConfiguration = null;
+                e.Handled = true;
             }
+        }
+
+        protected void ConfigurationList_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter ||
+                e.Key == Key.Space)
+                ConfigurationList_SelectItem(sender, e);
         }
 
         #endregion

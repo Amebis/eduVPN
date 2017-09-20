@@ -87,24 +87,10 @@ namespace eduVPN.ViewModels
                 {
                     _profile_list = value;
                     RaisePropertyChanged();
-
-                    // The list of profiles changed, reset selected profile.
-                    SelectedProfile = null;
                 }
             }
         }
         private JSON.Collection<Models.ProfileInfo> _profile_list;
-
-        /// <summary>
-        /// Selected profile
-        /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.ProfileInfo SelectedProfile
-        {
-            get { return _selected_profile; }
-            set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); } }
-        }
-        protected Models.ProfileInfo _selected_profile;
 
         /// <summary>
         /// Connect selected profile command

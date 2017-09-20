@@ -6,6 +6,7 @@
 */
 
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace eduVPN.Views
 {
@@ -28,23 +29,25 @@ namespace eduVPN.Views
 
         #region Methods
 
-        private void InstanceSource_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void InstanceList_SelectItem(object sender, InputEventArgs e)
         {
-            // TODO: Using SelectionChanged of a ListBox renders the UI accessibility unfriendly. Discuss other options with Rogier.
-            // Either:
-            // 1. Change the UI to provide separate button after the selection is made.
-            // 2. Change the list of instances to a stack of buttons of instances
-
-            if (e.AddedItems.Count > 0 &&
-                DataContext is ViewModels.AuthenticatingInstanceSelectPage view_model &&
-                view_model.AuthorizeInstance.CanExecute(view_model.SelectedInstance))
+            if (sender is ListBoxItem listbox_item &&
+                listbox_item.DataContext is Models.InstanceInfo instance &&
+                DataContext is ViewModels.AuthenticatingInstanceSelectPage view_model)
             {
                 // Authorize selected instance.
-                view_model.AuthorizeInstance.Execute(view_model.SelectedInstance);
+                if (view_model.AuthorizeInstance.CanExecute(instance))
+                    view_model.AuthorizeInstance.Execute(instance);
 
-                // Reset selected instance, to prevent repetitive triggering.
-                view_model.SelectedInstance = null;
+                e.Handled = true;
             }
+        }
+
+        private void InstanceList_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter ||
+                e.Key == Key.Space)
+                InstanceList_SelectItem(sender, e);
         }
 
         #endregion

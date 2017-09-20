@@ -6,6 +6,7 @@
 */
 
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace eduVPN.Views
 {
@@ -16,23 +17,25 @@ namespace eduVPN.Views
     {
         #region Methods
 
-        protected void ProfileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected void ProfileList_SelectItem(object sender, InputEventArgs e)
         {
-            // TODO: Using SelectionChanged of a ListBox renders the UI accessibility unfriendly. Discuss other options with Rogier.
-            // Either:
-            // 1. Change the UI to provide separate button after the selection is made.
-            // 2. Change the list of profiles to a stack of buttons of profiles
-
-            if (e.AddedItems.Count > 0 &&
-                DataContext is ViewModels.ConnectingInstanceAndProfileSelectPanel view_model &&
-                view_model.ConnectProfile.CanExecute(view_model.SelectedProfile))
+            if (sender is ListBoxItem listbox_item &&
+                listbox_item.DataContext is Models.ProfileInfo profile &&
+                DataContext is ViewModels.ConnectingInstanceAndProfileSelectPanel view_model)
             {
                 // Connect selected profile.
-                view_model.ConnectProfile.Execute(view_model.SelectedProfile);
+                if (view_model.ConnectProfile.CanExecute(profile))
+                    view_model.ConnectProfile.Execute(profile);
 
-                // Reset selected profile, to prevent repetitive triggering.
-                view_model.SelectedProfile = null;
+                e.Handled = true;
             }
+        }
+
+        protected void ProfileList_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter ||
+                e.Key == Key.Space)
+                ProfileList_SelectItem(sender, e);
         }
 
         #endregion

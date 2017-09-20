@@ -21,17 +21,6 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// Selected VPN configuration
-        /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.VPNConfiguration SelectedConfiguration
-        {
-            get { return _selected_configuration; }
-            set { if (value != _selected_configuration) { _selected_configuration = value; RaisePropertyChanged(); } }
-        }
-        private Models.VPNConfiguration _selected_configuration;
-
-        /// <summary>
         /// Connect configuration command
         /// </summary>
         public DelegateCommand<Models.VPNConfiguration> ConnectConfiguration
