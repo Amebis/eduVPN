@@ -8,6 +8,7 @@
 using Prism.Commands;
 using System;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
@@ -89,10 +90,11 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        configuration => configuration != null && ConfigurationHistory.IndexOf(configuration) >= 0);
+                        configuration => configuration != null && ConfigurationHistory.IndexOf(configuration) >= 0 && !Parent.Sessions.Any(session => session.Configuration.Equals(configuration)));
 
                     // Setup canExecute refreshing.
                     ConfigurationHistory.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_configuration.RaiseCanExecuteChanged();
+                    Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_configuration.RaiseCanExecuteChanged();
                 }
 
                 return _forget_configuration;
