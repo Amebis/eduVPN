@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:view="clr-namespace:eduVPN.Views"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -30,5 +31,20 @@
         Style="{StaticResource eduVPNListStyle}"
         ItemTemplate="{StaticResource eduVPNConfigurationSelectionItemTemplate}"
         ItemContainerStyle="{StaticResource ConfigurationListBoxStyle}"
-        ItemsSource="{Binding Source={StaticResource ConfigurationListView}}"/>
+        ItemsSource="{Binding Source={StaticResource ConfigurationListView}}">
+
+        <ListBox.Resources>
+            <view:BindingProxy x:Key="ConfigurationBinding" Data="{Binding SelectedItem, ElementName=ConfigurationList}"/>
+            <view:BindingProxy x:Key="ConfigurationSelectPanelBinding" Data="{Binding RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"/>
+        </ListBox.Resources>
+
+        <ListBox.ContextMenu>
+            <ContextMenu>
+                <MenuItem
+                    Header="Forget"
+                    Command="{Binding Path=Data.DataContext.ForgetConfiguration, Source={StaticResource ConfigurationSelectPanelBinding}}"
+                    CommandParameter="{Binding Path=Data, Source={StaticResource ConfigurationBinding}}"/>
+            </ContextMenu>
+        </ListBox.ContextMenu>
+    </ListBox>
 </UserControl>
