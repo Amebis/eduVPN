@@ -322,13 +322,30 @@ namespace eduVPN.ViewModels
         /// </summary>
         public void Run()
         {
-            Parallel.ForEach(_pre_run_actions,
-                action =>
+            try
+            {
+                Parallel.ForEach(_pre_run_actions,
+                    action =>
+                    {
+                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                        try { action(); }
+                        finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                    });
+            }
+            catch (AggregateException ex)
+            {
+                var ex_non_cancelled = ex.InnerExceptions.Where(ex_inner => !(ex_inner is OperationCanceledException));
+                if (ex_non_cancelled.Any())
                 {
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
-                    try { action(); }
-                    finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-                });
+                    // Some exceptions were issues beyond OperationCanceledException.
+                    throw new AggregateException(ex.Message, ex_non_cancelled.ToArray());
+                }
+                else
+                {
+                    // All exceptions were OperationCanceledException.
+                    throw new OperationCanceledException();
+                }
+            }
 
             DoRun();
         }
