@@ -30,12 +30,12 @@ namespace eduVPN.ViewModels
                 {
                     _select_instance_source = new DelegateCommand<Models.InstanceSourceType?>(
                         // execute
-                        async param =>
+                        async instance_source_type =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.InstanceSourceType = param.Value;
+                                Parent.InstanceSourceType = instance_source_type.Value;
 
                                 if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
                                 {
@@ -96,10 +96,10 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        param =>
-                            param != null &&
+                        instance_source_type =>
+                            instance_source_type != null &&
                             Parent.InstanceSources != null &&
-                            Parent.InstanceSources[(int)param] != null);
+                            Parent.InstanceSources[(int)instance_source_type] != null);
 
                     // Setup canExecute refreshing.
                     // Note: Parent.InstanceSources is pseudo-static. We don't need to monitor it for changes.
@@ -113,15 +113,15 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Select custom instance source
         /// </summary>
-        public DelegateCommand<Models.InstanceSourceInfo> SelectCustomInstance
+        public DelegateCommand SelectCustomInstance
         {
             get
             {
                 if (_select_custom_instance == null)
                 {
-                    _select_custom_instance = new DelegateCommand<Models.InstanceSourceInfo>(
+                    _select_custom_instance = new DelegateCommand(
                         // execute
-                        param =>
+                        () =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
@@ -139,7 +139,7 @@ namespace eduVPN.ViewModels
                 return _select_custom_instance;
             }
         }
-        private DelegateCommand<Models.InstanceSourceInfo> _select_custom_instance;
+        private DelegateCommand _select_custom_instance;
 
         #endregion
 

@@ -40,18 +40,18 @@ namespace eduVPN.ViewModels
                 {
                     _authorize_instance = new DelegateCommand<Models.InstanceInfo>(
                         // execute
-                        async selected_instance =>
+                        async instance =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
                             {
                                 // Trigger initial authorization request.
-                                var authorization_task = new Task(() => selected_instance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                var authorization_task = new Task(() => instance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
                                 authorization_task.Start();
                                 await authorization_task;
 
                                 // Save selected instance.
-                                Parent.AuthenticatingInstance = selected_instance;
+                                Parent.AuthenticatingInstance = instance;
 
                                 // Go to (instance and) profile selection page.
                                 Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
@@ -61,7 +61,7 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        selected_instance => selected_instance != null);
+                        instance => instance != null);
                 }
 
                 return _authorize_instance;

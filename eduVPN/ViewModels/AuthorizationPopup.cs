@@ -72,23 +72,23 @@ namespace eduVPN.ViewModels
                 if (_request_authorization == null)
                     _request_authorization = new DelegateCommand<Models.InstanceInfo>(
                         // execute
-                        param =>
+                        instance =>
                         {
                             ChangeTaskCount(+1);
                             try
                             {
-                                AuthenticatingInstance = param;
+                                AuthenticatingInstance = instance;
 
                                 // Let retry authorization command do the job.
-                                if (RetryAuthorization.CanExecute(null))
-                                    RetryAuthorization.Execute(null);
+                                if (RetryAuthorization.CanExecute())
+                                    RetryAuthorization.Execute();
                             }
                             catch (Exception ex) { Error = ex; }
                             finally { ChangeTaskCount(-1); }
                         },
 
                         // canExecute
-                        param => param is Models.InstanceInfo);
+                        instance => instance != null);
 
                 return _request_authorization;
             }
@@ -98,15 +98,15 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Retry authorization command
         /// </summary>
-        public DelegateCommand<Models.InstanceInfo> RetryAuthorization
+        public DelegateCommand RetryAuthorization
         {
             get
             {
                 if (_retry_authorization == null)
                 {
-                    _retry_authorization = new DelegateCommand<Models.InstanceInfo>(
+                    _retry_authorization = new DelegateCommand(
                         // execute
-                        param =>
+                        () =>
                         {
                             ChangeTaskCount(+1);
                             try
@@ -131,7 +131,7 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        param => AuthenticatingInstance != null);
+                        () => AuthenticatingInstance != null);
 
                     // Setup canExecute refreshing.
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "AuthenticatingInstance") _retry_authorization.RaiseCanExecuteChanged(); };
@@ -140,7 +140,7 @@ namespace eduVPN.ViewModels
                 return _retry_authorization;
             }
         }
-        private DelegateCommand<Models.InstanceInfo> _retry_authorization;
+        private DelegateCommand _retry_authorization;
 
         /// <summary>
         /// Authorize command
@@ -152,14 +152,14 @@ namespace eduVPN.ViewModels
                 if (_authorize == null)
                     _authorize = new DelegateCommand<string>(
                         // execute
-                        async param =>
+                        async uri =>
                         {
                             ChangeTaskCount(+1);
                             try
                             {
                                 // Process response and get access token.
                                 AccessToken = await _authorization_grant.ProcessResponseAsync(
-                                    HttpUtility.ParseQueryString(new Uri(param).Query),
+                                    HttpUtility.ParseQueryString(new Uri(uri).Query),
                                     AuthenticatingInstance.GetEndpoints(Abort.Token).TokenEndpoint,
                                     null,
                                     Abort.Token);
@@ -171,18 +171,18 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        param =>
+                        uri =>
                         {
-                            Uri uri;
+                            Uri parsed_uri;
 
                             // URI must be:
                             // - non-NULL
-                            if (param == null) return false;
+                            if (uri == null) return false;
                             // - Valid URI (parsable)
-                            try { uri = new Uri(param); }
+                            try { parsed_uri = new Uri(uri); }
                             catch { return false; }
                             // - Must match the redirect endpoint provided in request.
-                            if (uri.Scheme + ":" + uri.AbsolutePath != _redirect_endpoint) return false;
+                            if (parsed_uri.Scheme + ":" + parsed_uri.AbsolutePath != _redirect_endpoint) return false;
 
                             return true;
                         });
