@@ -181,7 +181,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to Next &gt;.
         /// </summary>
         public static string ButtonNextTitle {
             get {

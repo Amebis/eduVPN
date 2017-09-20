@@ -137,7 +137,7 @@ The client will continue after you complete the authorization...</value>
     <value>Close</value>
   </data>
   <data name="ButtonNextTitle" xml:space="preserve">
-    <value>Next</value>
+    <value>Next &gt;</value>
   </data>
   <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
     <value>Select your Country</value>
