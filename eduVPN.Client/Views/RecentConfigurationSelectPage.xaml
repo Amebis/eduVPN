@@ -11,7 +11,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     xmlns:viewModel="clr-namespace:eduVPN.ViewModels;assembly=eduVPN"
     xmlns:view="clr-namespace:eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
@@ -29,7 +28,7 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
-        <!-- Page view model to view mapping -->
+        <!-- Panel view model to view mapping -->
         <DataTemplate DataType="{x:Type viewModel:ConfigurationSelectPanel}">
             <view:ConfigurationSelectPanel/>
         </DataTemplate>
