@@ -57,6 +57,9 @@
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Views\BindingProxy.cs" />
+    <Compile Include="Views\YubiKeyAuthenticationPanel.xaml.cs">
+      <DependentUpon>YubiKeyAuthenticationPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TwoFactorAuthenticationPopup.xaml.cs">
       <DependentUpon>TwoFactorAuthenticationPopup.xaml</DependentUpon>
     </Compile>
@@ -72,6 +75,9 @@
     </Compile>
     <Compile Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TOTPAuthenticationPanel.xaml.cs">
+      <DependentUpon>TOTPAuthenticationPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImageWithFallback.cs" />
     <Compile Include="Views\ConfigurationSelectPanel.xaml.cs">
@@ -141,6 +147,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\YubiKeyAuthenticationPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\TwoFactorAuthenticationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -158,6 +168,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TOTPAuthenticationPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

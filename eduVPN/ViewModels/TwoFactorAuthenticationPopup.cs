@@ -6,26 +6,37 @@
 */
 
 using eduVPN.Models;
+using Prism.Commands;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace eduVPN.ViewModels
 {
     /// <summary>
     /// 2-Factor Authentication pop-up
     /// </summary>
-    public class TwoFactorAuthenticationPopup : UsernamePasswordPopup
+    public class TwoFactorAuthenticationPopup : PasswordPopup
     {
         #region Properties
 
         /// <summary>
         /// Authentication method list
         /// </summary>
-        public ObservableCollection<Models.TwoFactorAuthenticationMethodInfo> MethodList
+        public ObservableCollection<TwoFactorAuthenticationBasePanel> MethodList
         {
             get { return _method_list; }
-            set { if (value != _method_list) { _method_list = value; RaisePropertyChanged(); } }
         }
-        private ObservableCollection<Models.TwoFactorAuthenticationMethodInfo> _method_list;
+        private ObservableCollection<TwoFactorAuthenticationBasePanel> _method_list;
+
+        /// <summary>
+        /// 2-Factor authentication method
+        /// </summary>
+        public TwoFactorAuthenticationBasePanel SelectedMethod
+        {
+            get { return _selected_method; }
+            set { if (value != _selected_method) { _selected_method = value; RaisePropertyChanged(); } }
+        }
+        private TwoFactorAuthenticationBasePanel _selected_method;
 
         #endregion
 
@@ -47,15 +58,15 @@ namespace eduVPN.ViewModels
                 methods &= Session.UserInfo.TwoFactorMethods;
 
             // Prepare the list of methods.
-            MethodList = new ObservableCollection<TwoFactorAuthenticationMethodInfo>();
+            _method_list = new ObservableCollection<TwoFactorAuthenticationBasePanel>();
             if (methods.HasFlag(TwoFactorAuthenticationMethods.TOTP))
-                MethodList.Add(new TwoFactorAuthenticationMethodInfo("totp", Resources.Strings.TwoFactorAuthenticationMethodTOTP));
+                _method_list.Add(new TOTPAuthenticationPanel());
             if (methods.HasFlag(TwoFactorAuthenticationMethods.YubiKey))
-                MethodList.Add(new TwoFactorAuthenticationMethodInfo("yubi", Resources.Strings.TwoFactorAuthenticationMethodYubiKey));
+                _method_list.Add(new YubiKeyAuthenticationPanel());
 
             // Initially select the first method.
-            if (MethodList.Count > 0)
-                Username = MethodList[0].ID;
+            if (_method_list.Count > 0)
+                SelectedMethod = _method_list[0];
         }
 
         #endregion

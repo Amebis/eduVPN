@@ -12,6 +12,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
+    xmlns:viewModel="clr-namespace:eduVPN.ViewModels;assembly=eduVPN"
     xmlns:view="clr-namespace:eduVPN.Views"
     mc:Ignorable="d"
     Width="350"
@@ -25,9 +26,17 @@
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="MethodListView" Source="{Binding Path=MethodList}">
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="DisplayName" Direction="Ascending"/>
+                <scm:SortDescription Direction="Ascending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+
+        <!-- Panel view model to view mapping -->
+        <DataTemplate DataType="{x:Type viewModel:TOTPAuthenticationPanel}">
+            <view:TOTPAuthenticationPanel/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:YubiKeyAuthenticationPanel}">
+            <view:YubiKeyAuthenticationPanel/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid
@@ -40,29 +49,20 @@
         </Grid.RowDefinitions>
 
         <ComboBox
-            x:Name="Username"
+            x:Name="Method"
             Margin="5"
             HorizontalContentAlignment="Center"
             Style="{StaticResource eduVPNComboBoxStyle}"
             ItemTemplate="{StaticResource eduVPNSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MethodListView}}"
-            SelectedValue="{Binding Path=Username}"
-            SelectedValuePath="ID"/>
+            SelectedValue="{Binding Path=SelectedMethod}"/>
 
-        <!--<PasswordBox
-            x:Name="Password"
-            HorizontalContentAlignment="Center"
+        <ContentControl
             Grid.Row="1"
             Margin="5"
-            Style="{StaticResource eduVPNPasswordBoxStyle}"/>-->
-
-        <TextBox
-            x:Name="Password"
-            HorizontalContentAlignment="Center"
-            Grid.Row="1"
-            Margin="5"
-            Style="{StaticResource eduVPNTextBoxStyle}"/>
+            IsTabStop="False"
+            Content="{Binding Path=SelectedMethod}"/>
 
         <Button
             Grid.Row="2"

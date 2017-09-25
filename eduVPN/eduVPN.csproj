@@ -47,7 +47,6 @@
     <Compile Include="Models\InstanceSourceInfo.cs" />
     <Compile Include="Models\DistributedVPNConfigurationSettings.cs" />
     <Compile Include="Models\InstanceSourceType.cs" />
-    <Compile Include="Models\TwoFactorAuthenticationMethodInfo.cs" />
     <Compile Include="Models\InterfaceInfo.cs" />
     <Compile Include="Models\LocalInstanceSourceInfo.cs" />
     <Compile Include="Models\Message.cs" />
@@ -70,6 +69,8 @@
     <Compile Include="Models\VPNConfigurationSettingsList.cs" />
     <Compile Include="ViewModels\PasswordPopup.cs" />
     <Compile Include="ViewModels\SettingsPage.cs" />
+    <Compile Include="ViewModels\TOTPAuthenticationPanel.cs" />
+    <Compile Include="ViewModels\TwoFactorAuthenticationBasePanel.cs" />
     <Compile Include="ViewModels\TwoFactorAuthenticationPopup.cs" />
     <Compile Include="ViewModels\UsernamePasswordPopup.cs" />
     <Compile Include="ViewModels\VPNSession.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="ViewModels\RequestInstanceAuthorizationEventArgs.cs" />
     <Compile Include="ViewModels\StatusPage.cs" />
     <Compile Include="ViewModels\Window.cs" />
+    <Compile Include="ViewModels\YubiKeyAuthenticationPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx">

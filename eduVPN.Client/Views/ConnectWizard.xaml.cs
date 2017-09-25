@@ -272,10 +272,11 @@ namespace eduVPN.Views
             var previous_method_selected = false;
             try
             {
-                var username = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id];
-                if (view_model.MethodList.Any(method => method.ID == username))
+                var method_id = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id];
+                var method = view_model.MethodList.FirstOrDefault(m => m.ID == method_id);
+                if (method != null)
                 {
-                    view_model.Username = username;
+                    view_model.SelectedMethod = method;
                     previous_method_selected = true;
                 }
             }
@@ -287,18 +288,15 @@ namespace eduVPN.Views
             {
                 // Set initial focus.
                 if (!previous_method_selected && view_model.MethodList.Count > 1)
-                    popup.Username.Focus();
-                else
-                    popup.Password.Focus();
+                    popup.Method.Focus();
             };
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
             {
-                var username = view_model.Username;
-                e.Username = username;
-                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = username;
-                e.Password = (new NetworkCredential("", popup.Password/*.Password*/.Text)).SecurePassword;
+                e.Username = view_model.SelectedMethod.ID;
+                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.SelectedMethod.ID;
+                e.Password = (new NetworkCredential("", view_model.SelectedMethod.Response)).SecurePassword;
             }
         }
 
