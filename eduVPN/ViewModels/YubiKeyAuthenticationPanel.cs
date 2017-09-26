@@ -14,16 +14,9 @@ namespace eduVPN.ViewModels
     {
         #region Properties
 
-        public override string ID { get { return "yubi"; } }
+        public override string ID { get => "yubi"; }
 
-        #endregion
-
-        #region Methods
-
-        public override string ToString()
-        {
-            return Resources.Strings.TwoFactorAuthenticationMethodYubiKey;
-        }
+        public override string DisplayName { get => Resources.Strings.TwoFactorAuthenticationMethodYubiKey; }
 
         #endregion
     }

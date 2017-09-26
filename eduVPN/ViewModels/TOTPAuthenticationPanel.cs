@@ -14,16 +14,9 @@ namespace eduVPN.ViewModels
     {
         #region Properties
 
-        public override string ID { get { return "totp"; } }
+        public override string ID { get => "totp"; }
 
-        #endregion
-
-        #region Methods
-
-        public override string ToString()
-        {
-            return Resources.Strings.TwoFactorAuthenticationMethodTOTP;
-        }
+        public override string DisplayName { get => Resources.Strings.TwoFactorAuthenticationMethodTOTP; }
 
         #endregion
     }

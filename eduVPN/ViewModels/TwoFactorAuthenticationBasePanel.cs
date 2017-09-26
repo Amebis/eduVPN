@@ -19,7 +19,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Method ID to be used as username
         /// </summary>
-        public virtual string ID { get; }
+        public virtual string ID { get => null; }
+
+        /// <summary>
+        /// Method name to display in GUI
+        /// </summary>
+        public virtual string DisplayName { get => null; }
 
         /// <summary>
         /// Token generator response
@@ -30,6 +35,15 @@ namespace eduVPN.ViewModels
             set { if (value != _response) { _response = value; RaisePropertyChanged(); } }
         }
         private string _response;
+
+        #endregion
+
+        #region Methods
+
+        public override string ToString()
+        {
+            return DisplayName;
+        }
 
         #endregion
     }

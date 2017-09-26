@@ -26,7 +26,7 @@
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="MethodListView" Source="{Binding Path=MethodList}">
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription Direction="Ascending"/>
+                <scm:SortDescription PropertyName="DisplayName" Direction="Ascending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
