@@ -56,7 +56,6 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
-    <Compile Include="Views\BindingProxy.cs" />
     <Compile Include="Views\YubiKeyAuthenticationPanel.xaml.cs">
       <DependentUpon>YubiKeyAuthenticationPanel.xaml</DependentUpon>
     </Compile>

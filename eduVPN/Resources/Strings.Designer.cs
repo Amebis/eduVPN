@@ -295,6 +295,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid TOTP response: it should contain exactly six (6) decimal numbers. No spaces or hyphens are allowed..
+        /// </summary>
+        internal static string TOTPAuthenticationMethodInvalid {
+            get {
+                return ResourceManager.GetString("TOTPAuthenticationMethodInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time-based One-Time Password (TOTP).
         /// </summary>
         internal static string TwoFactorAuthenticationMethodTOTP {

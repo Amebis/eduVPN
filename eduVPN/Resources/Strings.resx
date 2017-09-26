@@ -202,4 +202,7 @@
   <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
     <value>YubiKey</value>
   </data>
+  <data name="TOTPAuthenticationMethodInvalid" xml:space="preserve">
+    <value>Invalid TOTP response: it should contain exactly six (6) decimal numbers. No spaces or hyphens are allowed.</value>
+  </data>
 </root>

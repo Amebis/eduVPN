@@ -8,6 +8,7 @@
 using Prism.Commands;
 using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -60,39 +61,50 @@ namespace eduVPN.ViewModels
         private DelegateCommand<Models.VPNConfiguration> _connect_configuration;
 
         /// <summary>
-        /// Forget configuration command
+        /// Currently selected configuration
         /// </summary>
-        public DelegateCommand<Models.VPNConfiguration> ForgetConfiguration
+        public Models.VPNConfiguration SelectedConfiguration
+        {
+            get { return _selected_configuration; }
+            set { if (value != _selected_configuration) { _selected_configuration = value; RaisePropertyChanged(); } }
+        }
+        private Models.VPNConfiguration _selected_configuration;
+
+        /// <summary>
+        /// Forget selected configuration command
+        /// </summary>
+        public DelegateCommand ForgetSelectedConfiguration
         {
             get
             {
-                if (_forget_configuration == null)
+                if (_forget_selected_configuration == null)
                 {
-                    _forget_configuration = new DelegateCommand<Models.VPNConfiguration>(
+                    _forget_selected_configuration = new DelegateCommand(
                         // execute
-                        configuration =>
+                        () =>
                         {
                             Parent.ChangeTaskCount(+1);
-                            try { ConfigurationHistory.Remove(configuration); }
+                            try { ConfigurationHistory.Remove(SelectedConfiguration); }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
-                        configuration =>
-                            configuration is Models.VPNConfiguration &&
-                            ConfigurationHistory.IndexOf(configuration) >= 0 &&
-                            !Parent.Sessions.Any(session => session.Configuration.Equals(configuration)));
+                        () =>
+                            SelectedConfiguration != null &&
+                            ConfigurationHistory.IndexOf(SelectedConfiguration) >= 0 &&
+                            !Parent.Sessions.Any(session => session.Configuration.Equals(SelectedConfiguration)));
 
                     // Setup canExecute refreshing.
-                    ConfigurationHistory.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_configuration.RaiseCanExecuteChanged();
-                    Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_configuration.RaiseCanExecuteChanged();
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedConfiguration") _forget_selected_configuration.RaiseCanExecuteChanged(); };
+                    ConfigurationHistory.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_configuration.RaiseCanExecuteChanged();
+                    Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_configuration.RaiseCanExecuteChanged();
                 }
 
-                return _forget_configuration;
+                return _forget_selected_configuration;
             }
         }
-        private DelegateCommand<Models.VPNConfiguration> _forget_configuration;
+        private DelegateCommand _forget_selected_configuration;
 
         #endregion
 

@@ -202,4 +202,7 @@
   <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
     <value>YubiKey</value>
   </data>
+  <data name="TOTPAuthenticationMethodInvalid" xml:space="preserve">
+    <value>Neveljaven odgovor TOTP: vsebovati mora točno šest (6) desetiških števk. Presledki ali vezaji niso dovoljeni.</value>
+  </data>
 </root>
