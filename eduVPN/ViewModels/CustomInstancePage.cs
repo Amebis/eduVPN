@@ -20,21 +20,21 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// Instance base URI
+        /// Instance host name
         /// </summary>
-        public string BaseURI
+        public string Hostname
         {
-            get { return _uri; }
+            get { return _host_name; }
             set
             {
-                if (value != _uri)
+                if (value != _host_name)
                 {
-                    _uri = value;
+                    _host_name = value;
                     RaisePropertyChanged();
                 }
             }
         }
-        private string _uri;
+        private string _host_name;
 
         /// <summary>
         /// Authorize other instance command
@@ -67,7 +67,7 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                TryParseUri(BaseURI, out var uri);
+                                TryParseUri(Hostname, out var uri);
                                 var selected_instance = new Models.InstanceInfo(uri);
                                 selected_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
@@ -87,10 +87,10 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () => TryParseUri(BaseURI, out var uri));
+                        () => TryParseUri(Hostname, out var uri));
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "BaseURI") _select_custom_instance.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "Hostname") _select_custom_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _select_custom_instance;
