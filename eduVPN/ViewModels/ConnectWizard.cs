@@ -726,9 +726,10 @@ namespace eduVPN.ViewModels
                                                 }
                                                 cfg.ConnectingInstance = cfg.AuthenticatingInstance;
 
-                                                // Don't try to match profile with existing profiles, or risk triggering OAuth in GetProfileList(). Use stored version from settings directly.
-                                                //cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AuthenticatingInstance, Abort.Token).Where(p => p.ID == h_local.Profile.ID).FirstOrDefault();
-                                                cfg.ConnectingProfile = h_local.Profile;
+                                                // Matching profile with existing profiles might trigger OAuth in GetProfileList().
+                                                // Unfortunately, we can't rely to stored version from settings, since available profiles and their 2FA settings might have changed.
+                                                cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AuthenticatingInstance, Abort.Token).Where(p => p.ID == h_local.Profile.ID).FirstOrDefault();
+                                                //cfg.ConnectingProfile = h_local.Profile;
                                                 if (cfg.ConnectingProfile == null) return;
                                             }
                                             else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed &&
