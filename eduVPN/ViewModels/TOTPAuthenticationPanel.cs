@@ -7,6 +7,8 @@
 
 using eduOpenVPN.Management;
 using Prism.Commands;
+using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -37,6 +39,10 @@ namespace eduVPN.ViewModels
                         e =>
                             base.ApplyResponse.CanExecute(e) &&
                             Response != null && new Regex(@"^\d{6}$", RegexOptions.Compiled).IsMatch(Response));
+
+                    // Setup canExecute refreshing.
+                    base.ApplyResponse.CanExecuteChanged += (object sender, EventArgs e) => _apply_response.RaiseCanExecuteChanged();
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "Response") _apply_response.RaiseCanExecuteChanged(); };
                 }
 
                 return _apply_response;

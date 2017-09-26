@@ -42,13 +42,7 @@ namespace eduVPN.ViewModels
         public Models.InstanceInfo AuthenticatingInstance
         {
             get { return _authenticating_instance; }
-            set {
-                if (value != _authenticating_instance)
-                {
-                    _authenticating_instance = value;
-                    RaisePropertyChanged();
-                }
-            }
+            set { if (value != _authenticating_instance) { _authenticating_instance = value; RaisePropertyChanged(); } }
         }
         private Models.InstanceInfo _authenticating_instance;
 

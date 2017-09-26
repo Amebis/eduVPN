@@ -81,14 +81,7 @@ namespace eduVPN.ViewModels
         public JSON.Collection<Models.ProfileInfo> ProfileList
         {
             get { return _profile_list; }
-            set
-            {
-                if (value != _profile_list)
-                {
-                    _profile_list = value;
-                    RaisePropertyChanged();
-                }
-            }
+            set { if (value != _profile_list) { _profile_list = value; RaisePropertyChanged(); } }
         }
         private JSON.Collection<Models.ProfileInfo> _profile_list;
 

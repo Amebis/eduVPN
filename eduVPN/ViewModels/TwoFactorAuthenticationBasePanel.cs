@@ -8,6 +8,7 @@
 using eduOpenVPN.Management;
 using Prism.Commands;
 using Prism.Mvvm;
+using System.ComponentModel;
 using System.Net;
 using System.Windows.Input;
 
@@ -36,15 +37,7 @@ namespace eduVPN.ViewModels
         public virtual string Response
         {
             get { return _response; }
-            set
-            {
-                if (value != _response)
-                {
-                    _response = value;
-                    RaisePropertyChanged();
-                    ((DelegateCommandBase)ApplyResponse).RaiseCanExecuteChanged();
-                }
-            }
+            set { if (value != _response) { _response = value; RaisePropertyChanged(); } }
         }
         private string _response;
 
@@ -67,8 +60,11 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         e =>
-                            e != null && e is UsernamePasswordAuthenticationRequestedEventArgs &&
+                            e is UsernamePasswordAuthenticationRequestedEventArgs &&
                             Response != null && Response.Length > 0);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "Response") _apply_response.RaiseCanExecuteChanged(); };
                 }
 
                 return _apply_response;
