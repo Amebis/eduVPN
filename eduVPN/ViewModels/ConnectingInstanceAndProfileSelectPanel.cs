@@ -81,22 +81,42 @@ namespace eduVPN.ViewModels
         public JSON.Collection<Models.ProfileInfo> ProfileList
         {
             get { return _profile_list; }
-            set { if (value != _profile_list) { _profile_list = value; RaisePropertyChanged(); } }
+            set
+            {
+                if (value != _profile_list)
+                {
+                    _profile_list = value;
+                    RaisePropertyChanged();
+
+                    // Reset selested profile.
+                    SelectedProfile = null;
+                }
+            }
         }
         private JSON.Collection<Models.ProfileInfo> _profile_list;
 
         /// <summary>
+        /// Selected profile
+        /// </summary>
+        public Models.ProfileInfo SelectedProfile
+        {
+            get { return _selected_profile; }
+            set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); } }
+        }
+        private Models.ProfileInfo _selected_profile;
+
+        /// <summary>
         /// Connect selected profile command
         /// </summary>
-        public DelegateCommand<Models.ProfileInfo> ConnectProfile
+        public DelegateCommand ConnectSelectedProfile
         {
             get
             {
-                if (_connect_profile == null)
+                if (_connect_selected_profile == null)
                 {
-                    _connect_profile = new DelegateCommand<Models.ProfileInfo>(
+                    _connect_selected_profile = new DelegateCommand(
                         // execute
-                        profile =>
+                        () =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
@@ -108,7 +128,7 @@ namespace eduVPN.ViewModels
                                     {
                                         AuthenticatingInstance = AuthenticatingInstance,
                                         ConnectingInstance = SelectedInstance,
-                                        ConnectingProfile = profile
+                                        ConnectingProfile = SelectedProfile,
                                     });
                                 if (Parent.StartSession.CanExecute(param))
                                     Parent.StartSession.Execute(param);
@@ -118,18 +138,18 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        profile =>
-                            profile is Models.ProfileInfo &&
-                            SelectedInstance != null);
+                        () =>
+                            SelectedInstance != null&&
+                            SelectedProfile != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedInstance") _connect_profile.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedInstance" || e.PropertyName == "SelectedProfile") _connect_selected_profile.RaiseCanExecuteChanged(); };
                 }
 
-                return _connect_profile;
+                return _connect_selected_profile;
             }
         }
-        private DelegateCommand<Models.ProfileInfo> _connect_profile;
+        private DelegateCommand _connect_selected_profile;
 
         #endregion
 

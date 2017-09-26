@@ -7,6 +7,7 @@
 
 using Prism.Commands;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
@@ -19,28 +20,38 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
+        /// Selected instance
+        /// </summary>
+        public Models.InstanceInfo SelectedInstance
+        {
+            get { return _selected_instance; }
+            set { if (value != _selected_instance) { _selected_instance = value; RaisePropertyChanged(); } }
+        }
+        private Models.InstanceInfo _selected_instance;
+
+        /// <summary>
         /// Authorize selected instance command
         /// </summary>
-        public DelegateCommand<Models.InstanceInfo> AuthorizeInstance
+        public DelegateCommand AuthorizeSelectedInstance
         {
             get
             {
-                if (_authorize_instance == null)
+                if (_authorize_selected_instance == null)
                 {
-                    _authorize_instance = new DelegateCommand<Models.InstanceInfo>(
+                    _authorize_selected_instance = new DelegateCommand(
                         // execute
-                        async instance =>
+                        async () =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
                             {
                                 // Trigger initial authorization request.
-                                var authorization_task = new Task(() => instance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                var authorization_task = new Task(() => SelectedInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
                                 authorization_task.Start();
                                 await authorization_task;
 
                                 // Save selected instance.
-                                Parent.AuthenticatingInstance = instance;
+                                Parent.AuthenticatingInstance = SelectedInstance;
 
                                 // Go to (instance and) profile selection page.
                                 Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
@@ -50,13 +61,16 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        instance => instance is Models.InstanceInfo);
+                        () => SelectedInstance != null);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedInstance") _authorize_selected_instance.RaiseCanExecuteChanged(); };
                 }
 
-                return _authorize_instance;
+                return _authorize_selected_instance;
             }
         }
-        private DelegateCommand<Models.InstanceInfo> _authorize_instance;
+        private DelegateCommand _authorize_selected_instance;
 
         #endregion
 

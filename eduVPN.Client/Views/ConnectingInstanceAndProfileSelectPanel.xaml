@@ -39,6 +39,7 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
-            ItemsSource="{Binding Path=ProfileList}"/>
+            ItemsSource="{Binding Path=ProfileList}"
+            SelectedItem="{Binding Path=SelectedProfile}"/>
     </Grid>
 </view:ConnectingInstanceAndProfileSelectBasePanel>

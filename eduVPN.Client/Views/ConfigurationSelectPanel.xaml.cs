@@ -28,13 +28,11 @@ namespace eduVPN.Views
 
         protected void ConfigurationList_SelectItem(object sender, InputEventArgs e)
         {
-            if (sender is ListBoxItem listbox_item &&
-                listbox_item.DataContext is Models.VPNConfiguration configuration &&
-                DataContext is ViewModels.ConfigurationSelectPanel view_model)
+            if (DataContext is ViewModels.ConfigurationSelectPanel view_model)
             {
                 // Connect selected configuration.
-                if (view_model.ConnectConfiguration.CanExecute(configuration))
-                    view_model.ConnectConfiguration.Execute(configuration);
+                if (view_model.ConnectSelectedConfiguration.CanExecute())
+                    view_model.ConnectSelectedConfiguration.Execute();
 
                 e.Handled = true;
             }

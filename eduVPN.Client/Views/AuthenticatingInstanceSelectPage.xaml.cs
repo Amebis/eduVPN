@@ -31,13 +31,11 @@ namespace eduVPN.Views
 
         private void InstanceList_SelectItem(object sender, InputEventArgs e)
         {
-            if (sender is ListBoxItem listbox_item &&
-                listbox_item.DataContext is Models.InstanceInfo instance &&
-                DataContext is ViewModels.AuthenticatingInstanceSelectPage view_model)
+            if (DataContext is ViewModels.AuthenticatingInstanceSelectPage view_model)
             {
                 // Authorize selected instance.
-                if (view_model.AuthorizeInstance.CanExecute(instance))
-                    view_model.AuthorizeInstance.Execute(instance);
+                if (view_model.AuthorizeSelectedInstance.CanExecute())
+                    view_model.AuthorizeSelectedInstance.Execute();
 
                 e.Handled = true;
             }

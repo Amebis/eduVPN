@@ -19,13 +19,11 @@ namespace eduVPN.Views
 
         protected void ProfileList_SelectItem(object sender, InputEventArgs e)
         {
-            if (sender is ListBoxItem listbox_item &&
-                listbox_item.DataContext is Models.ProfileInfo profile &&
-                DataContext is ViewModels.ConnectingInstanceAndProfileSelectPanel view_model)
+            if (DataContext is ViewModels.ConnectingInstanceAndProfileSelectPanel view_model)
             {
                 // Connect selected profile.
-                if (view_model.ConnectProfile.CanExecute(profile))
-                    view_model.ConnectProfile.Execute(profile);
+                if (view_model.ConnectSelectedProfile.CanExecute())
+                    view_model.ConnectSelectedProfile.Execute();
 
                 e.Handled = true;
             }

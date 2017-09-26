@@ -22,45 +22,6 @@ namespace eduVPN.ViewModels
         #region Properties
 
         /// <summary>
-        /// Connect configuration command
-        /// </summary>
-        public DelegateCommand<Models.VPNConfiguration> ConnectConfiguration
-        {
-            get
-            {
-                if (_connect_configuration == null)
-                    _connect_configuration = new DelegateCommand<Models.VPNConfiguration>(
-                        // execute
-                        async configuration =>
-                        {
-                            Parent.ChangeTaskCount(+1);
-                            try
-                            {
-                                // Trigger initial authorization request.
-                                var authorization_task = new Task(() => configuration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
-                                authorization_task.Start();
-                                await authorization_task;
-
-                                // Start VPN session.
-                                var param = new ConnectWizard.StartSessionParams(
-                                    InstanceSourceType,
-                                    (Models.VPNConfiguration)configuration.Clone());
-                                if (Parent.StartSession.CanExecute(param))
-                                    Parent.StartSession.Execute(param);
-                            }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        configuration => configuration is Models.VPNConfiguration);
-
-                return _connect_configuration;
-            }
-        }
-        private DelegateCommand<Models.VPNConfiguration> _connect_configuration;
-
-        /// <summary>
         /// Currently selected configuration
         /// </summary>
         public Models.VPNConfiguration SelectedConfiguration
@@ -69,6 +30,50 @@ namespace eduVPN.ViewModels
             set { if (value != _selected_configuration) { _selected_configuration = value; RaisePropertyChanged(); } }
         }
         private Models.VPNConfiguration _selected_configuration;
+
+        /// <summary>
+        /// Connect selected configuration command
+        /// </summary>
+        public DelegateCommand ConnectSelectedConfiguration
+        {
+            get
+            {
+                if (_connect_selected_configuration == null)
+                {
+                    _connect_selected_configuration = new DelegateCommand(
+                        // execute
+                        async () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try
+                            {
+                                // Trigger initial authorization request.
+                                var authorization_task = new Task(() => SelectedConfiguration.AuthenticatingInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                authorization_task.Start();
+                                await authorization_task;
+
+                                // Start VPN session.
+                                var param = new ConnectWizard.StartSessionParams(
+                                    InstanceSourceType,
+                                    (Models.VPNConfiguration)SelectedConfiguration.Clone());
+                                if (Parent.StartSession.CanExecute(param))
+                                    Parent.StartSession.Execute(param);
+                            }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () => SelectedConfiguration != null);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedConfiguration") _connect_selected_configuration.RaiseCanExecuteChanged(); };
+                }
+
+                return _connect_selected_configuration;
+            }
+        }
+        private DelegateCommand _connect_selected_configuration;
 
         /// <summary>
         /// Forget selected configuration command
