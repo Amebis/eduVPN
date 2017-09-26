@@ -50,7 +50,7 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        instance => instance != null);
+                        instance => instance is Models.InstanceInfo);
                 }
 
                 return _authorize_instance;

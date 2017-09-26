@@ -97,7 +97,7 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         instance_source_type =>
-                            instance_source_type != null &&
+                            instance_source_type is Models.InstanceSourceType &&
                             Parent.InstanceSources != null &&
                             Parent.InstanceSources[(int)instance_source_type] != null);
 

@@ -52,7 +52,7 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        configuration => configuration != null);
+                        configuration => configuration is Models.VPNConfiguration);
 
                 return _connect_configuration;
             }
@@ -79,7 +79,10 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        configuration => configuration != null && ConfigurationHistory.IndexOf(configuration) >= 0 && !Parent.Sessions.Any(session => session.Configuration.Equals(configuration)));
+                        configuration =>
+                            configuration is Models.VPNConfiguration &&
+                            ConfigurationHistory.IndexOf(configuration) >= 0 &&
+                            !Parent.Sessions.Any(session => session.Configuration.Equals(configuration)));
 
                     // Setup canExecute refreshing.
                     ConfigurationHistory.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_configuration.RaiseCanExecuteChanged();

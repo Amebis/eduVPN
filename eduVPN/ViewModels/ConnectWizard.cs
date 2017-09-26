@@ -304,7 +304,9 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        param => param != null && param.Configuration != null);
+                        param =>
+                            param is StartSessionParams &&
+                            param.Configuration != null);
 
                 return _start_session;
             }

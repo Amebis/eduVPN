@@ -88,7 +88,7 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        instance => instance != null);
+                        instance => instance is Models.InstanceInfo);
 
                 return _request_authorization;
             }
@@ -176,8 +176,8 @@ namespace eduVPN.ViewModels
                             Uri parsed_uri;
 
                             // URI must be:
-                            // - non-NULL
-                            if (uri == null) return false;
+                            // - A non-NULL string
+                            if (!(uri is string)) return false;
                             // - Valid URI (parsable)
                             try { parsed_uri = new Uri(uri); }
                             catch { return false; }
