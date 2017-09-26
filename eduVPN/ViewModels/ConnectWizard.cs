@@ -629,8 +629,11 @@ namespace eduVPN.ViewModels
                 _instance_sources = new Models.InstanceSourceInfo[source_type_length];
                 _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[source_type_length];
 
-                // Setup progress feedback. Each instance will add 10 ticks of progress.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, (source_type_length - (int)Models.InstanceSourceType._start) * 10, 0)));
+                // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
+                int total_ticks = (source_type_length - (int)Models.InstanceSourceType._start) * 2;
+                for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
+                    total_ticks += ((Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"]).Count();
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, total_ticks, 0)));
 
                 // Spawn instance source loading threads.
                 Parallel.For((int)Models.InstanceSourceType._start, source_type_length, source_index =>
@@ -641,6 +644,7 @@ namespace eduVPN.ViewModels
                         for (;;)
                         {
                             int ticks = 0;
+                            object ticks_lock = new object();
                             try
                             {
                                 var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"];
@@ -652,9 +656,9 @@ namespace eduVPN.ViewModels
                                     ct: Abort.Token,
                                     previous: response_cache);
 
-                                // Add 5/10 ticks.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 5));
-                                ticks += 5;
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
 
                                 // Parse instance source JSON.
                                 var obj_web = (Dictionary<string, object>)eduJSON.Parser.Parse(
@@ -689,9 +693,9 @@ namespace eduVPN.ViewModels
                                     Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"] = response_web;
                                 }
 
-                                // Add 2/10 ticks.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 2));
-                                ticks += 2;
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
 
                                 // Load instance source.
                                 _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj_web);
@@ -703,8 +707,7 @@ namespace eduVPN.ViewModels
                                 _configuration_histories[source_index] = new ObservableCollection<Models.VPNConfiguration>();
 
                                 // Load configuration histories from settings.
-                                var hist = (Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"];
-                                Parallel.ForEach(hist,
+                                Parallel.ForEach((Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"],
                                     h =>
                                     {
                                         var cfg = new Models.VPNConfiguration();
@@ -758,15 +761,17 @@ namespace eduVPN.ViewModels
                                             cfg.Popularity = h.Popularity;
                                         }
                                         catch { return; }
+                                        finally
+                                        {
+                                            // Add a tick.
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 1));
+                                            lock (ticks_lock) ticks += 1;
+                                        }
 
                                         // Configuration successfuly restored. Add it.
                                         lock (_configuration_histories[source_index])
                                             _configuration_histories[source_index].Add(cfg);
                                     });
-
-                                // Add 3/10 ticks.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 3));
-                                ticks += 3;
 
                                 break;
                             }
