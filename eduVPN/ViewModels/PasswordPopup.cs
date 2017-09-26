@@ -5,6 +5,10 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOpenVPN.Management;
+using Prism.Commands;
+using System.Windows.Input;
+
 namespace eduVPN.ViewModels
 {
     /// <summary>
@@ -34,6 +38,31 @@ namespace eduVPN.ViewModels
         }
         private string _realm;
 
+        /// <summary>
+        /// Apply response command
+        /// </summary>
+        public virtual ICommand ApplyResponse
+        {
+            get
+            {
+                if (_apply_response == null)
+                {
+                    _apply_response = new DelegateCommand<PasswordAuthenticationRequestedEventArgs>(
+                        // execute
+                        e =>
+                        {
+                            // Password cannot be set using MVVP, since <PasswordBox> control does not support binding.
+                        },
+
+                        // canExecute
+                        e => e is PasswordAuthenticationRequestedEventArgs);
+                }
+
+                return _apply_response;
+            }
+        }
+        private DelegateCommand<PasswordAuthenticationRequestedEventArgs> _apply_response;
+
         #endregion
 
         #region Constructors
@@ -43,9 +72,9 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="sender">VPN session</param>
         /// <param name="e"></param>
-        public PasswordPopup(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
+        public PasswordPopup(object sender, PasswordAuthenticationRequestedEventArgs e)
         {
-            Session = sender as ViewModels.VPNSession;
+            Session = sender as VPNSession;
             Realm = e.Realm;
         }
 

@@ -5,6 +5,10 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOpenVPN.Management;
+using Prism.Commands;
+using System.Windows.Input;
+
 namespace eduVPN.ViewModels
 {
     /// <summary>
@@ -20,9 +24,43 @@ namespace eduVPN.ViewModels
         public string Username
         {
             get { return _username; }
-            set { if (value != _username) { _username = value; RaisePropertyChanged(); } }
+            set
+            {
+                if (value != _username)
+                {
+                    _username = value;
+                    RaisePropertyChanged();
+                    ((DelegateCommandBase)ApplyResponse).RaiseCanExecuteChanged();
+                }
+            }
         }
         private string _username;
+
+        public override ICommand ApplyResponse
+        {
+            get
+            {
+                if (_apply_response == null)
+                {
+                    _apply_response = new DelegateCommand<UsernamePasswordAuthenticationRequestedEventArgs>(
+                        // execute
+                        e =>
+                        {
+                            base.ApplyResponse.Execute(e);
+                            e.Username = Username;
+                        },
+
+                        // canExecute
+                        e =>
+                            base.ApplyResponse.CanExecute(e) &&
+                            e is UsernamePasswordAuthenticationRequestedEventArgs &&
+                            Username != null && Username.Length > 0);
+                }
+
+                return _apply_response;
+            }
+        }
+        private DelegateCommand<UsernamePasswordAuthenticationRequestedEventArgs> _apply_response;
 
         #endregion
 
@@ -33,7 +71,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public UsernamePasswordPopup(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e) :
+        public UsernamePasswordPopup(object sender, UsernamePasswordAuthenticationRequestedEventArgs e) :
             base(sender, e)
         {
         }

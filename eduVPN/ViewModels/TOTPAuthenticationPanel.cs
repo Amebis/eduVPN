@@ -5,6 +5,11 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOpenVPN.Management;
+using Prism.Commands;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
+
 namespace eduVPN.ViewModels
 {
     /// <summary>
@@ -17,6 +22,27 @@ namespace eduVPN.ViewModels
         public override string ID { get => "totp"; }
 
         public override string DisplayName { get => Resources.Strings.TwoFactorAuthenticationMethodTOTP; }
+
+        public override ICommand ApplyResponse
+        {
+            get
+            {
+                if (_apply_response == null)
+                {
+                    _apply_response = new DelegateCommand<UsernamePasswordAuthenticationRequestedEventArgs>(
+                        // execute
+                        e => base.ApplyResponse.Execute(e),
+
+                        // canExecute
+                        e =>
+                            base.ApplyResponse.CanExecute(e) &&
+                            Response != null && new Regex(@"^\d{6}$", RegexOptions.Compiled).IsMatch(Response));
+                }
+
+                return _apply_response;
+            }
+        }
+        private DelegateCommand<UsernamePasswordAuthenticationRequestedEventArgs> _apply_response;
 
         #endregion
     }

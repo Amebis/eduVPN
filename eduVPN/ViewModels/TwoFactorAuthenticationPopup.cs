@@ -5,10 +5,10 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOpenVPN.Management;
 using eduVPN.Models;
-using Prism.Commands;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Windows.Input;
 
 namespace eduVPN.ViewModels
 {
@@ -34,9 +34,22 @@ namespace eduVPN.ViewModels
         public TwoFactorAuthenticationBasePanel SelectedMethod
         {
             get { return _selected_method; }
-            set { if (value != _selected_method) { _selected_method = value; RaisePropertyChanged(); } }
+            set
+            {
+                if (value != _selected_method)
+                {
+                    _selected_method = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("ApplyResponse");
+                }
+            }
         }
         private TwoFactorAuthenticationBasePanel _selected_method;
+
+        public override ICommand ApplyResponse
+        {
+            get { return SelectedMethod != null ? SelectedMethod.ApplyResponse : base.ApplyResponse; }
+        }
 
         #endregion
 
@@ -47,10 +60,10 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public TwoFactorAuthenticationPopup(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e) :
+        public TwoFactorAuthenticationPopup(object sender, UsernamePasswordAuthenticationRequestedEventArgs e) :
             base(sender, e)
         {
-            // Query supported & enrolled 2-Factor authentication methods.
+            // Query profile supported & user enrolled 2-Factor authentication methods.
             TwoFactorAuthenticationMethods methods = TwoFactorAuthenticationMethods.Any;
             if (Session.Configuration.ConnectingProfile.IsTwoFactorAuthentication)
                 methods &= Session.Configuration.ConnectingProfile.TwoFactorMethods;

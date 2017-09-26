@@ -19,6 +19,6 @@
             Margin="5"
             HorizontalContentAlignment="Center"
             Style="{StaticResource eduVPNTextBoxStyle}"
-            Text="{Binding Path=Response}"/>
+            Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

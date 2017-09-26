@@ -222,9 +222,15 @@ namespace eduVPN.Views
             // Create a new authentication pop-up.
             PasswordPopup popup = new PasswordPopup() { Owner = this, DataContext = view_model };
 
+            // Set the event args to fill with data.
+            popup.OK.CommandParameter = e;
+
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
+            {
+                // Password was not set using MVVP, since <PasswordBox> control does not support binding.
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
+            }
         }
 
         /// <summary>
@@ -253,12 +259,17 @@ namespace eduVPN.Views
                     popup.Password.Focus();
             };
 
+            // Set the event args to fill with data.
+            popup.OK.CommandParameter = e;
+
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
             {
-                e.Username = view_model.Username;
-                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.Username;
+                // Password was not set using MVVP, since <PasswordBox> control does not support binding.
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
+
+                // Save username for the next time.
+                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.Username;
             }
         }
 
@@ -291,12 +302,14 @@ namespace eduVPN.Views
                     popup.Method.Focus();
             };
 
+            // Set the event args to fill with data.
+            popup.OK.CommandParameter = e;
+
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
             if (popup.ShowDialog() == true)
             {
-                e.Username = view_model.SelectedMethod.ID;
+                // Save "username" for the next time.
                 eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.SelectedMethod.ID;
-                e.Password = (new NetworkCredential("", view_model.SelectedMethod.Response)).SecurePassword;
             }
         }
 

@@ -65,11 +65,13 @@
             Content="{Binding Path=SelectedMethod}"/>
 
         <Button
+            x:Name="OK"
             Grid.Row="2"
             Margin="5"
             IsDefault="True"
             Style="{StaticResource eduVPNButtonStyle}"
             Content="{x:Static res:Strings.ButtonOKTitle}"
+            Command="{Binding Path=ApplyResponse}"
             Click="OK_Click"/>
     </Grid>
 </view:Window>
