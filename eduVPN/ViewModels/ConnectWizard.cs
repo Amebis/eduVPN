@@ -70,10 +70,8 @@ namespace eduVPN.ViewModels
             get { return _instance_source_type; }
             set
             {
-                if (value != _instance_source_type)
+                if (SetProperty(ref _instance_source_type, value))
                 {
-                    _instance_source_type = value;
-                    RaisePropertyChanged();
                     RaisePropertyChanged("InstanceSource");
                     RaisePropertyChanged("AuthenticatingInstanceSelectPage");
                     RaisePropertyChanged("ConnectingProfileSelectPage");
@@ -97,7 +95,7 @@ namespace eduVPN.ViewModels
         public Models.InstanceInfo AuthenticatingInstance
         {
             get { return _authenticating_instance; }
-            set { if (value != _authenticating_instance) { _authenticating_instance = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _authenticating_instance, value); }
         }
         private Models.InstanceInfo _authenticating_instance;
 
@@ -378,7 +376,7 @@ namespace eduVPN.ViewModels
             get { return _current_page; }
             set
             {
-                if (value != _current_page)
+                if (_current_page != value)
                 {
                     _previous_page = _current_page;
                     RaisePropertyChanged("PreviousPage");

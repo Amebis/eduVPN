@@ -20,7 +20,7 @@ namespace eduVPN.ViewModels
         public ConnectingInstanceAndProfileSelectPanel Panel
         {
             get { return _panel; }
-            set { if (value != _panel) { _panel = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _panel, value); }
         }
         private ConnectingInstanceAndProfileSelectPanel _panel;
 
@@ -35,7 +35,7 @@ namespace eduVPN.ViewModels
         public ConnectingInstanceAndProfileSelectBasePage(ConnectWizard parent) :
             base(parent)
         {
-            Panel = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.InstanceSourceType);
+            _panel = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.InstanceSourceType);
         }
 
         #endregion

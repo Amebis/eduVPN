@@ -27,7 +27,7 @@ namespace eduVPN.ViewModels
         public Models.VPNConfiguration SelectedConfiguration
         {
             get { return _selected_configuration; }
-            set { if (value != _selected_configuration) { _selected_configuration = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _selected_configuration, value); }
         }
         private Models.VPNConfiguration _selected_configuration;
 

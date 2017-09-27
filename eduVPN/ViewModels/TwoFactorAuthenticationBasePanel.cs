@@ -37,7 +37,7 @@ namespace eduVPN.ViewModels
         public virtual string Response
         {
             get { return _response; }
-            set { if (value != _response) { _response = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _response, value); }
         }
         private string _response;
 

@@ -25,7 +25,7 @@ namespace eduVPN.ViewModels
         public Models.InstanceInfo SelectedInstance
         {
             get { return _selected_instance; }
-            set { if (value != _selected_instance) { _selected_instance = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _selected_instance, value); }
         }
         private Models.InstanceInfo _selected_instance;
 

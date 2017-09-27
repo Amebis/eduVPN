@@ -26,7 +26,7 @@ namespace eduVPN.ViewModels
         public string Username
         {
             get { return _username; }
-            set { if (value != _username) { _username = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _username, value); }
         }
         private string _username;
 

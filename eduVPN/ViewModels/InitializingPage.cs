@@ -20,7 +20,7 @@ namespace eduVPN.ViewModels
         public Range<int> Progress
         {
             get { return _progress; }
-            set { if (value != _progress) { _progress = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _progress, value); }
         }
         private Range<int> _progress;
 

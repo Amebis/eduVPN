@@ -42,7 +42,7 @@ namespace eduVPN.ViewModels
         public Exception Error
         {
             get { return _error; }
-            set { if (value != _error) { _error = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _error, value); }
         }
         private Exception _error;
 

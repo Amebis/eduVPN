@@ -24,7 +24,7 @@ namespace eduVPN.ViewModels
         public VPNSession Session
         {
             get { return _session; }
-            set { if (value != _session) { _session = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _session, value); }
         }
         private VPNSession _session;
 
@@ -34,7 +34,7 @@ namespace eduVPN.ViewModels
         public string Realm
         {
             get { return _realm; }
-            set { if (value != _realm) { _realm = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _realm, value); }
         }
         private string _realm;
 
@@ -74,8 +74,8 @@ namespace eduVPN.ViewModels
         /// <param name="e"></param>
         public PasswordPopup(object sender, PasswordAuthenticationRequestedEventArgs e)
         {
-            Session = sender as VPNSession;
-            Realm = e.Realm;
+            _session = sender as VPNSession;
+            _realm = e.Realm;
         }
 
         #endregion

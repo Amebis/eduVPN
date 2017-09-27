@@ -47,7 +47,7 @@ namespace eduVPN.Models
         public string ID
         {
             get { return _id; }
-            set { if (value != _id) { _id = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _id, value); }
         }
         private string _id;
 
@@ -57,7 +57,7 @@ namespace eduVPN.Models
         public string DisplayName
         {
             get { return _display_name; }
-            set { if (value != _display_name) { _display_name = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _display_name, value); }
         }
         private string _display_name;
 
@@ -67,7 +67,7 @@ namespace eduVPN.Models
         public bool IsTwoFactorAuthentication
         {
             get { return _is_two_factor_authentication;  }
-            set { if (value != _is_two_factor_authentication) { _is_two_factor_authentication = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _is_two_factor_authentication, value); }
         }
         private bool _is_two_factor_authentication;
 
@@ -77,7 +77,7 @@ namespace eduVPN.Models
         public TwoFactorAuthenticationMethods TwoFactorMethods
         {
             get { return _two_factor_methods; }
-            set { if (value != _two_factor_methods) { _two_factor_methods = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _two_factor_methods, value); }
         }
         private TwoFactorAuthenticationMethods _two_factor_methods;
 

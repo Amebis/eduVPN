@@ -26,7 +26,7 @@ namespace eduVPN.ViewModels
         public Models.InstanceInfo AuthenticatingInstance
         {
             get { return _authenticating_instance; }
-            set { if (value != _authenticating_instance) { _authenticating_instance = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _authenticating_instance, value); }
         }
         private Models.InstanceInfo _authenticating_instance;
 
@@ -39,11 +39,8 @@ namespace eduVPN.ViewModels
             get { return _selected_instance; }
             set
             {
-                if (value != _selected_instance)
+                if (SetProperty(ref _selected_instance, value))
                 {
-                    _selected_instance = value;
-                    RaisePropertyChanged();
-
                     ProfileList = null;
                     if (_selected_instance != null)
                     {
@@ -83,11 +80,8 @@ namespace eduVPN.ViewModels
             get { return _profile_list; }
             set
             {
-                if (value != _profile_list)
+                if (SetProperty(ref _profile_list, value))
                 {
-                    _profile_list = value;
-                    RaisePropertyChanged();
-
                     // Reset selested profile.
                     SelectedProfile = null;
                 }
@@ -101,7 +95,7 @@ namespace eduVPN.ViewModels
         public Models.ProfileInfo SelectedProfile
         {
             get { return _selected_profile; }
-            set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _selected_profile, value); }
         }
         private Models.ProfileInfo _selected_profile;
 

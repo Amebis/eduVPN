@@ -36,12 +36,8 @@ namespace eduVPN.ViewModels
             get { return _selected_method; }
             set
             {
-                if (value != _selected_method)
-                {
-                    _selected_method = value;
-                    RaisePropertyChanged();
+                if (SetProperty(ref _selected_method, value))
                     RaisePropertyChanged("ApplyResponse");
-                }
             }
         }
         private TwoFactorAuthenticationBasePanel _selected_method;
@@ -79,7 +75,7 @@ namespace eduVPN.ViewModels
 
             // Initially select the first method.
             if (_method_list.Count > 0)
-                SelectedMethod = _method_list[0];
+                _selected_method = _method_list[0];
         }
 
         #endregion

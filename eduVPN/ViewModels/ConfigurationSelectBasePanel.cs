@@ -30,10 +30,8 @@ namespace eduVPN.ViewModels
             get { return _instance_source_type; }
             set
             {
-                if (value != _instance_source_type)
+                if (SetProperty(ref _instance_source_type, value))
                 {
-                    _instance_source_type = value;
-                    RaisePropertyChanged();
                     RaisePropertyChanged("InstanceSource");
                     RaisePropertyChanged("ConfigurationHistory");
                 }
@@ -69,7 +67,7 @@ namespace eduVPN.ViewModels
         public ConfigurationSelectBasePanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type)
         {
             Parent = parent;
-            InstanceSourceType = instance_source_type;
+            _instance_source_type = instance_source_type;
         }
 
         #endregion

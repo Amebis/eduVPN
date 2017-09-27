@@ -25,7 +25,7 @@ namespace eduVPN.ViewModels
         public string Hostname
         {
             get { return _host_name; }
-            set { if (value != _host_name) { _host_name = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _host_name, value); }
         }
         private string _host_name;
 

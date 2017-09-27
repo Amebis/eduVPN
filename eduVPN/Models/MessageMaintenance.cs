@@ -23,7 +23,7 @@ namespace eduVPN.Models
         public DateTime? Begin
         {
             get { return _begin; }
-            set { if (value != _begin) { _begin = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _begin, value); }
         }
         private DateTime? _begin;
 
@@ -33,7 +33,7 @@ namespace eduVPN.Models
         public DateTime? End
         {
             get { return _end; }
-            set { if (value != _end) { _end = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _end, value); }
         }
         private DateTime? _end;
 

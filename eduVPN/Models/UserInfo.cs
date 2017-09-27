@@ -23,9 +23,9 @@ namespace eduVPN.Models
         public bool IsEnabled
         {
             get { return _is_enabled; }
-            set { if (value != _is_enabled) { _is_enabled = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _is_enabled, value); }
         }
-        private bool _is_enabled;
+        private bool _is_enabled = true;
 
         /// <summary>
         /// Is two-factor authentication enrolled for this user?
@@ -33,7 +33,7 @@ namespace eduVPN.Models
         public bool IsTwoFactorAuthentication
         {
             get { return _is_two_factor_authentication; }
-            set { if (value != _is_two_factor_authentication) { _is_two_factor_authentication = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _is_two_factor_authentication, value); }
         }
         private bool _is_two_factor_authentication;
 
@@ -43,21 +43,9 @@ namespace eduVPN.Models
         public TwoFactorAuthenticationMethods TwoFactorMethods
         {
             get { return _two_factor_methods; }
-            set { if (value != _two_factor_methods) { _two_factor_methods = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _two_factor_methods, value); }
         }
         private TwoFactorAuthenticationMethods _two_factor_methods;
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Constructs user info
-        /// </summary>
-        public UserInfo()
-        {
-            IsEnabled = true;
-        }
 
         #endregion
 

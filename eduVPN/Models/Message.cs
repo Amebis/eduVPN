@@ -24,7 +24,7 @@ namespace eduVPN.Models
         public string Text
         {
             get { return _text; }
-            set { if (value != _text) { _text = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _text, value); }
         }
         private string _text;
 
@@ -34,7 +34,7 @@ namespace eduVPN.Models
         public DateTime Date
         {
             get { return _date; }
-            set { if (value != _date) { _date = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _date, value); }
         }
         private DateTime _date;
 

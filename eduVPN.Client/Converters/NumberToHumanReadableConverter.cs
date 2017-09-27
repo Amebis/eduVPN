@@ -32,7 +32,7 @@ namespace eduVPN.Client.Converters
         public string Unit
         {
             get { return _unit; }
-            set { if (value != _unit) { _unit = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _unit, value); }
         }
         private string _unit = "";
 
@@ -42,7 +42,7 @@ namespace eduVPN.Client.Converters
         public int Base
         {
             get { return _base; }
-            set { if (value != _base) { _base = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _base, value); }
         }
         private int _base = 1000;
 
@@ -52,7 +52,7 @@ namespace eduVPN.Client.Converters
         public bool EmptyIfZero
         {
             get { return _empty_if_zero; }
-            set { if (value != _empty_if_zero) { _empty_if_zero = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _empty_if_zero, value); }
         }
         private bool _empty_if_zero = false;
 

@@ -67,7 +67,7 @@ namespace eduVPN.ViewModels
         public Models.UserInfo UserInfo
         {
             get { return _user_info; }
-            set { if (value != _user_info) { _user_info = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _user_info, value); }
         }
         private Models.UserInfo _user_info;
 
@@ -77,7 +77,7 @@ namespace eduVPN.ViewModels
         public Models.MessageList MessageList
         {
             get { return _message_list; }
-            set { if (value != _message_list) { _message_list = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _message_list, value); }
         }
         private Models.MessageList _message_list;
 
@@ -87,7 +87,7 @@ namespace eduVPN.ViewModels
         public Models.VPNSessionStatusType State
         {
             get { return _state; }
-            set { if (value != _state) { _state = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _state, value); }
         }
         private Models.VPNSessionStatusType _state;
 
@@ -97,7 +97,7 @@ namespace eduVPN.ViewModels
         public string StateDescription
         {
             get { return _state_description; }
-            set { if (value != _state_description) { _state_description = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _state_description, value); }
         }
         private string _state_description;
 
@@ -108,7 +108,7 @@ namespace eduVPN.ViewModels
         public IPAddress TunnelAddress
         {
             get { return _tunnel_address; }
-            set { if (value != _tunnel_address) { _tunnel_address = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _tunnel_address, value); }
         }
         private IPAddress _tunnel_address;
 
@@ -119,7 +119,7 @@ namespace eduVPN.ViewModels
         public IPAddress IPv6TunnelAddress
         {
             get { return _ipv6_tunnel_address; }
-            set { if (value != _ipv6_tunnel_address) { _ipv6_tunnel_address = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _ipv6_tunnel_address, value); }
         }
         private IPAddress _ipv6_tunnel_address;
 
@@ -132,12 +132,8 @@ namespace eduVPN.ViewModels
             get { return _connected_since; }
             set
             {
-                if (value != _connected_since)
-                {
-                    _connected_since = value;
-                    RaisePropertyChanged();
+                if (SetProperty(ref _connected_since, value))
                     RaisePropertyChanged("ConnectedTime");
-                }
             }
         }
         private DateTimeOffset? _connected_since;
@@ -159,7 +155,7 @@ namespace eduVPN.ViewModels
         public ulong? BytesIn
         {
             get { return _bytes_in; }
-            set { if (value != _bytes_in) { _bytes_in = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _bytes_in, value); }
         }
         private ulong? _bytes_in;
 
@@ -170,7 +166,7 @@ namespace eduVPN.ViewModels
         public ulong? BytesOut
         {
             get { return _bytes_out; }
-            set { if (value != _bytes_out) { _bytes_out = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _bytes_out, value); }
         }
         private ulong? _bytes_out;
 
@@ -240,7 +236,7 @@ namespace eduVPN.ViewModels
 
             Parent = parent;
             Configuration = configuration;
-            MessageList = new Models.MessageList();
+            _message_list = new Models.MessageList();
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(

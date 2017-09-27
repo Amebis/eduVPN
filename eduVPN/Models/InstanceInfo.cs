@@ -84,7 +84,7 @@ namespace eduVPN.Models
         public string DisplayName
         {
             get { return _display_name; }
-            set { if (value != _display_name) { _display_name = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _display_name, value); }
         }
         private string _display_name;
 
@@ -94,7 +94,7 @@ namespace eduVPN.Models
         public Uri Logo
         {
             get { return _logo; }
-            set { if (value != _logo) { _logo = value; RaisePropertyChanged(); } }
+            set { SetProperty(ref _logo, value); }
         }
         private Uri _logo;
 
@@ -118,17 +118,17 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs a custom instance info
         /// </summary>
-        /// <param name="_base"></param>
-        public InstanceInfo(Uri _base)
+        /// <param name="b">Instance base URI</param>
+        public InstanceInfo(Uri b)
         {
             // Set base.
-            Base = _base;
+            _base = b;
 
             // Set display name to base URI hostname.
-            DisplayName = _base.Host;
+            _display_name = b.Host;
 
             // Set instance logo to /favicon.ico, perhaps we might get lucky.
-            Logo = new UriBuilder(_base) { Path = "/favicon.ico" }.Uri;
+            _logo = new UriBuilder(b) { Path = "/favicon.ico" }.Uri;
         }
 
         /// <summary>
@@ -139,10 +139,10 @@ namespace eduVPN.Models
             this()
         {
             // Set display name to authorization URI hostname.
-            DisplayName = instance_source.AuthorizationEndpoint.Host;
+            _display_name = instance_source.AuthorizationEndpoint.Host;
 
             // Set instance logo to /favicon.ico, perhaps we might get lucky.
-            Logo = new UriBuilder(instance_source.AuthorizationEndpoint) { Path = "/favicon.ico" }.Uri;
+            _logo = new UriBuilder(instance_source.AuthorizationEndpoint) { Path = "/favicon.ico" }.Uri;
 
             // Set API endpoints manually.
             _endpoints = new InstanceEndpoints()

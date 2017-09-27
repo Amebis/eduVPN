@@ -22,7 +22,7 @@ namespace eduVPN
         public T Minimum
         {
             get { return _minimum; }
-            set { _minimum = value; RaisePropertyChanged(); }
+            set { SetProperty(ref _minimum, value); }
         }
         private T _minimum;
 
@@ -32,7 +32,7 @@ namespace eduVPN
         public T Maximum
         {
             get { return _maximum; }
-            set { _maximum = value; RaisePropertyChanged(); }
+            set { SetProperty(ref _maximum, value); }
         }
         private T _maximum;
 
@@ -42,7 +42,7 @@ namespace eduVPN
         public T Value
         {
             get { return _value; }
-            set { _value = value; RaisePropertyChanged(); }
+            set { SetProperty(ref _value, value); }
         }
         private T _value;
 
@@ -62,8 +62,8 @@ namespace eduVPN
         /// </summary>
         public Range(T min, T max)
         {
-            Minimum = min;
-            Maximum = max;
+            _minimum = min;
+            _maximum = max;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace eduVPN
         public Range(T min, T max, T val) :
             this(min, max)
         {
-            Value = val;
+            _value = val;
         }
 
         #endregion
