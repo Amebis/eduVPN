@@ -19,7 +19,7 @@
     Title="{x:Static res:Strings.CustomInstancePageTitle}"
     Description="{x:Static res:Strings.CustomInstancePageDescription}"
     Style="{StaticResource eduVPNConnectWizardPage}"
-    FocusManager.FocusedElement="{Binding ElementName=InstanceSourceURI}">
+    FocusManager.FocusedElement="{Binding ElementName=InstanceHostname}">
 
     <Grid
         VerticalAlignment="Top"
@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <ComboBox
-            x:Name="InstanceSourceURI"
+            x:Name="InstanceHostname"
             Margin="5"
             Style="{StaticResource eduVPNComboBoxStyle}"
             Text="{Binding Path=Hostname}"

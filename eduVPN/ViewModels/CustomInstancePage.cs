@@ -24,10 +24,10 @@ namespace eduVPN.ViewModels
         /// </summary>
         public string Hostname
         {
-            get { return _host_name; }
-            set { SetProperty(ref _host_name, value); }
+            get { return _hostname; }
+            set { SetProperty(ref _hostname, value); }
         }
-        private string _host_name;
+        private string _hostname;
 
         /// <summary>
         /// Authorize other instance command

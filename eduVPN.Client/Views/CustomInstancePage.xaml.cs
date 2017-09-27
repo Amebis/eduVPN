@@ -31,10 +31,10 @@ namespace eduVPN.Views
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var instance_uri = InstanceSourceURI.Text;
+            var hostname = InstanceHostname.Text;
 
-            if (!eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Contains(instance_uri))
-                eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, instance_uri);
+            if (!eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Contains(hostname))
+                eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, hostname);
         }
 
         #endregion
