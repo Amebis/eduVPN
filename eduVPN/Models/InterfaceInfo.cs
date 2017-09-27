@@ -47,6 +47,7 @@ namespace eduVPN.Models
 
         #region Methods
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return Name;

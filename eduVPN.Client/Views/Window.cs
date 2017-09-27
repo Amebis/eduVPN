@@ -32,6 +32,7 @@ namespace eduVPN.Views
 
         #region Methods
 
+        /// <inheritdoc/>
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);

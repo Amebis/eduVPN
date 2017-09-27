@@ -145,6 +145,7 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
+        /// <inheritdoc/>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "FileStream tolerates multiple disposes.")]
         protected override void DoRun()
         {
@@ -483,12 +484,14 @@ namespace eduVPN.ViewModels
             }
         }
 
+        /// <inheritdoc/>
         protected override void DoShowLog()
         {
             // Open log file in registered application.
             Process.Start(LogPath);
         }
 
+        /// <inheritdoc/>
         protected override bool CanShowLog()
         {
             return File.Exists(LogPath);

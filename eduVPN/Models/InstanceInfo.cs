@@ -155,11 +155,13 @@ namespace eduVPN.Models
 
         #region Methods
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return DisplayName;
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (this == obj)
@@ -174,6 +176,7 @@ namespace eduVPN.Models
             return true;
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return

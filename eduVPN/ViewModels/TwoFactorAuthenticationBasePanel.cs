@@ -76,6 +76,7 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return DisplayName;

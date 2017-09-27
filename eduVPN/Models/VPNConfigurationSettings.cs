@@ -28,6 +28,7 @@ namespace eduVPN.Models
 
         #region Methods
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -36,6 +37,7 @@ namespace eduVPN.Models
             return true;
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return base.GetHashCode();

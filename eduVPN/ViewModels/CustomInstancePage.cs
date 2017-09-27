@@ -107,6 +107,7 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
+        /// <inheritdoc/>
         protected override void DoNavigateBack()
         {
             base.DoNavigateBack();
@@ -114,6 +115,7 @@ namespace eduVPN.ViewModels
             Parent.CurrentPage = Parent.InstanceSourceSelectPage;
         }
 
+        /// <inheritdoc/>
         protected override bool CanNavigateBack()
         {
             return true;

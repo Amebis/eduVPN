@@ -42,6 +42,7 @@ namespace eduVPN.ViewModels
 
         #region Methods
 
+        /// <inheritdoc/>
         public override void OnActivate()
         {
             base.OnActivate();
@@ -54,6 +55,7 @@ namespace eduVPN.ViewModels
             _panel.SelectedInstance = Parent.AuthenticatingInstance;
         }
 
+        /// <inheritdoc/>
         protected override void DoNavigateBack()
         {
             base.DoNavigateBack();
@@ -69,6 +71,7 @@ namespace eduVPN.ViewModels
                 Parent.CurrentPage = Parent.InstanceSourceSelectPage;
         }
 
+        /// <inheritdoc/>
         protected override bool CanNavigateBack()
         {
             return true;

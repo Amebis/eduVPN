@@ -56,6 +56,7 @@ namespace eduVPN.Client
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnStartup(StartupEventArgs e)
         {
             // .NET 3.5 allows Schannel to use SSL 3 and TLS 1.0 by default. Instead of hacking user computer's registry, extend it in runtime.
@@ -72,6 +73,7 @@ namespace eduVPN.Client
             base.OnStartup(e);
         }
 
+        /// <inheritdoc/>
         protected override void OnExit(ExitEventArgs e)
         {
             eduVPN.Client.Properties.Settings.Default.Save();

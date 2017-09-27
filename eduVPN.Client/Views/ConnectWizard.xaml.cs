@@ -56,6 +56,7 @@ namespace eduVPN.Views
 
         #region Methods
 
+        /// <inheritdoc/>
         protected override void OnInitialized(EventArgs e)
         {
             // Preload icons to be used on system tray.

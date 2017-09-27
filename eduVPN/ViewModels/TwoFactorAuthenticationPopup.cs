@@ -42,6 +42,7 @@ namespace eduVPN.ViewModels
         }
         private TwoFactorAuthenticationBasePanel _selected_method;
 
+        /// <inheritdoc/>
         public override ICommand ApplyResponse
         {
             get { return SelectedMethod != null ? SelectedMethod.ApplyResponse : base.ApplyResponse; }

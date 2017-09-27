@@ -30,6 +30,7 @@ namespace eduVPN.ViewModels
         }
         private string _username;
 
+        /// <inheritdoc/>
         public override ICommand ApplyResponse
         {
             get

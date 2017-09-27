@@ -30,6 +30,7 @@ namespace eduVPN.Models
 
         #region Methods
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -43,6 +44,7 @@ namespace eduVPN.Models
             return base.Equals(obj);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return base.GetHashCode() ^ Instance.Base.GetHashCode() ^ Profile.ID.GetHashCode();
@@ -52,6 +54,7 @@ namespace eduVPN.Models
 
         #region IXmlSerializable Support
 
+        /// <inheritdoc/>
         public override void ReadXml(XmlReader reader)
         {
             Instance = null;
@@ -88,6 +91,7 @@ namespace eduVPN.Models
             }
         }
 
+        /// <inheritdoc/>
         public override void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement("VPNConfigurationSettings");

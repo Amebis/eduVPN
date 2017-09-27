@@ -36,6 +36,7 @@ namespace eduVPN.Models
 
         #region ILoadableItem Support
 
+        /// <inheritdoc/>
         public override void Load(object obj)
         {
             base.Load(obj);

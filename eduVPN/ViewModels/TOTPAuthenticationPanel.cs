@@ -21,10 +21,13 @@ namespace eduVPN.ViewModels
     {
         #region Properties
 
+        /// <inheritdoc/>
         public override string ID { get => "totp"; }
 
+        /// <inheritdoc/>
         public override string DisplayName { get => Resources.Strings.TwoFactorAuthenticationMethodTOTP; }
 
+        /// <inheritdoc/>
         public override ICommand ApplyResponse
         {
             get
