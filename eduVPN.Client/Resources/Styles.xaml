@@ -17,6 +17,40 @@
     <Style x:Key="eduVPNBaseStyle" TargetType="{x:Type Control}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <AdornedElementPlaceholder x:Name="ErrorAdorner"/>
+                        <Grid
+                            Margin="-5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top">
+                            <Ellipse
+                                Width="14"
+                                Height="14"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Fill="{StaticResource eduVPNErrorBrush}"
+                                ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+
+                            <TextBlock
+                                Foreground="{StaticResource eduVPNErrorTextBrush}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                FontSize="11"
+                                ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">!</TextBlock>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 
@@ -34,15 +68,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border
-                        x:Name="Border"
-                        Background="{StaticResource eduVPNHeaderBrushKey}"
-                        CornerRadius="6">
-                        <ContentPresenter
-                            Margin="3"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </Border>
+                    <AdornerDecorator>
+                        <Border
+                            x:Name="Border"
+                            Background="{StaticResource eduVPNHeaderBrushKey}"
+                            CornerRadius="6">
+                            <ContentPresenter
+                                Margin="3"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </AdornerDecorator>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -77,10 +113,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border
-                        Background="{x:Null}">
-                        <ContentPresenter/>
-                    </Border>
+                    <AdornerDecorator>
+                        <Border
+                            Background="{x:Null}">
+                            <ContentPresenter/>
+                        </Border>
+                    </AdornerDecorator>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -427,16 +465,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border
-                        x:Name="Border"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        BorderThickness="0"
-                        CornerRadius="4">
-                        <ContentPresenter
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </Border>
+                    <AdornerDecorator>
+                        <Border
+                            x:Name="Border"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
+                            CornerRadius="4">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </AdornerDecorator>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -480,16 +520,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid>
-                        <Ellipse
-                            x:Name="Border"
-                            Fill="{x:Null}"
-                            Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+                    <AdornerDecorator>
+                        <Grid>
+                            <Ellipse
+                                x:Name="Border"
+                                Fill="{x:Null}"
+                                Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
 
-                        <ContentPresenter
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </Grid>
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </AdornerDecorator>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -602,43 +644,45 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:ConnectWizardPage}">
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                    <AdornerDecorator>
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <Button
-                            x:Name="eduVPNBackButton"
-                            Style="{StaticResource eduVPNNavigationButtonStyle}"
-                            AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                            Command="{Binding Path=NavigateBack}">&lt;</Button>
+                            <Button
+                                x:Name="eduVPNBackButton"
+                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
+                                Command="{Binding Path=NavigateBack}">&lt;</Button>
 
-                        <TextBlock
-                            Grid.Column="1"
-                            Margin="-35,10,10,10"
-                            VerticalAlignment="Top"
-                            Style="{StaticResource eduVPNPageTitleStyle}"
-                            Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="-35,10,10,10"
+                                VerticalAlignment="Top"
+                                Style="{StaticResource eduVPNPageTitleStyle}"
+                                Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
 
-                        <TextBlock
-                            Grid.ColumnSpan="2"
-                            Grid.Row="1"
-                            Margin="30,10"
-                            Style="{StaticResource eduVPNTextBlockStyle}"
-                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                            Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <TextBlock
+                                Grid.ColumnSpan="2"
+                                Grid.Row="1"
+                                Margin="30,10"
+                                Style="{StaticResource eduVPNTextBlockStyle}"
+                                Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                                Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
-                        <ContentPresenter
-                            Grid.ColumnSpan="2"
-                            Grid.Row="2"
-                            Margin="10"/>
-                    </Grid>
+                            <ContentPresenter
+                                Grid.ColumnSpan="2"
+                                Grid.Row="2"
+                                Margin="10"/>
+                        </Grid>
+                    </AdornerDecorator>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -648,95 +692,97 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:ConnectWizardPage}">
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="45"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                    <AdornerDecorator>
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="45"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <Button
-                            Style="{StaticResource eduVPNNavigationButtonStyle}"
-                            AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                            ToolTip="{x:Static res:Strings.ButtonBackTitle}"
-                            Command="{Binding Path=NavigateBack}">&lt;</Button>
+                            <Button
+                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
+                                ToolTip="{x:Static res:Strings.ButtonBackTitle}"
+                                Command="{Binding Path=NavigateBack}">&lt;</Button>
 
-                        <TextBlock
-                            Grid.Column="1"
-                            Margin="-35,10,-35,10"
-                            VerticalAlignment="Top"
-                            Style="{StaticResource eduVPNPageTitleStyle}"
-                            Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="-35,10,-35,10"
+                                VerticalAlignment="Top"
+                                Style="{StaticResource eduVPNPageTitleStyle}"
+                                Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
 
-                        <Button
-                            Grid.Column="2"
-                            Style="{StaticResource eduVPNNavigationButtonStyle}"
-                            AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
-                            ToolTip="{x:Static res:Strings.ButtonSettingsTitle}"
-                            Command="{Binding Path=Parent.NavigateTo}"
-                            CommandParameter="{Binding Path=Parent.SettingsPage}">
-                            <Button.Template>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Grid>
-                                        <Ellipse
-                                            x:Name="Border"
-                                            Fill="{x:Null}"
-                                            Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+                            <Button
+                                Grid.Column="2"
+                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
+                                ToolTip="{x:Static res:Strings.ButtonSettingsTitle}"
+                                Command="{Binding Path=Parent.NavigateTo}"
+                                CommandParameter="{Binding Path=Parent.SettingsPage}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid>
+                                            <Ellipse
+                                                x:Name="Border"
+                                                Fill="{x:Null}"
+                                                Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
 
-                                        <Image
-                                            x:Name="Image"
-                                            MaxHeight="14"
-                                            MaxWidth="14"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Source="pack://application:,,,/Resources/SettingsBlue.png"
-                                            RenderOptions.BitmapScalingMode="Fant"/>
-                                    </Grid>
+                                            <Image
+                                                x:Name="Image"
+                                                MaxHeight="14"
+                                                MaxWidth="14"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Source="pack://application:,,,/Resources/SettingsBlue.png"
+                                                RenderOptions.BitmapScalingMode="Fant"/>
+                                        </Grid>
 
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter
-                                                TargetName="Border"
-                                                Property="Fill"
-                                                Value="{StaticResource eduVPNHeaderBrushKey}"/>
-                                            <Setter
-                                                TargetName="Image"
-                                                Property="Source"
-                                                Value="pack://application:,,,/Resources/Settings.png"/>
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="True">
-                                            <Setter
-                                                TargetName="Border"
-                                                Property="Fill"
-                                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
-                                            <Setter
-                                                TargetName="Border"
-                                                Property="Stroke"
-                                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter
+                                                    TargetName="Border"
+                                                    Property="Fill"
+                                                    Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                                                <Setter
+                                                    TargetName="Image"
+                                                    Property="Source"
+                                                    Value="pack://application:,,,/Resources/Settings.png"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter
+                                                    TargetName="Border"
+                                                    Property="Fill"
+                                                    Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                                <Setter
+                                                    TargetName="Border"
+                                                    Property="Stroke"
+                                                    Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
 
-                        <TextBlock
-                            Grid.ColumnSpan="3"
-                            Grid.Row="1"
-                            Margin="30,10"
-                            Style="{StaticResource eduVPNTextBlockStyle}"
-                            Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                            Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <TextBlock
+                                Grid.ColumnSpan="3"
+                                Grid.Row="1"
+                                Margin="30,10"
+                                Style="{StaticResource eduVPNTextBlockStyle}"
+                                Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                                Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
-                        <ContentPresenter
-                            Grid.ColumnSpan="3"
-                            Grid.Row="2"
-                            Margin="10"/>
-                    </Grid>
+                            <ContentPresenter
+                                Grid.ColumnSpan="3"
+                                Grid.Row="2"
+                                Margin="10"/>
+                        </Grid>
+                    </AdornerDecorator>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -752,16 +798,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border
-                        x:Name="Border"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        BorderThickness="0"
-                        CornerRadius="4">
-                        <ContentPresenter
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </Border>
+                    <AdornerDecorator>
+                        <Border
+                            x:Name="Border"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
+                            CornerRadius="4">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </AdornerDecorator>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -791,45 +839,47 @@
                     <Border
                         BorderBrush="{StaticResource eduVPNWindowBorderKey}"
                         BorderThickness="1">
-                        <Grid Background="{StaticResource eduVPNWindowBrushKey}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+                        <AdornerDecorator>
+                            <Grid Background="{StaticResource eduVPNWindowBrushKey}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
 
-                                <TextBlock
+                                    <TextBlock
+                                        Margin="5"
+                                        Style="{StaticResource eduVPNPageTitleStyle}"
+                                        Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                    <Control
+                                        Grid.Row="1"
+                                        Style="{StaticResource eduVPNErrorStatusBar}">
+                                    </Control>
+
+                                    <TextBlock
+                                        Grid.Row="2"
+                                        Margin="30,10"
+                                        Style="{StaticResource eduVPNTextBlockStyle}"
+                                        Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                                        Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                    <ContentPresenter
+                                        Grid.Row="3"
+                                        Margin="10"/>
+                                </Grid>
+
+                                <Button
                                     Margin="5"
-                                    Style="{StaticResource eduVPNPageTitleStyle}"
-                                    Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                                <Control
-                                    Grid.Row="1"
-                                    Style="{StaticResource eduVPNErrorStatusBar}">
-                                </Control>
-
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Margin="30,10"
-                                    Style="{StaticResource eduVPNTextBlockStyle}"
-                                    Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                                    Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                                <ContentPresenter
-                                    Grid.Row="3"
-                                    Margin="10"/>
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    IsCancel="True"
+                                    Style="{StaticResource eduVPNPopupHeaderButtonStyle}"
+                                    AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}">×</Button>
                             </Grid>
-
-                            <Button
-                                Margin="5"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                IsCancel="True"
-                                Style="{StaticResource eduVPNPopupHeaderButtonStyle}"
-                                AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}">×</Button>
-                        </Grid>
+                        </AdornerDecorator>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -851,15 +901,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border
-                        x:Name="Border"
-                        Background="{StaticResource eduVPNHeaderBrushKey}"
-                        CornerRadius="6">
-                        <ContentPresenter
-                            Margin="3"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"/>
-                    </Border>
+                    <AdornerDecorator>
+                        <Border
+                            x:Name="Border"
+                            Background="{StaticResource eduVPNHeaderBrushKey}"
+                            CornerRadius="6">
+                            <ContentPresenter
+                                Margin="3"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </AdornerDecorator>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

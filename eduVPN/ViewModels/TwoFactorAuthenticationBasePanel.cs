@@ -7,7 +7,6 @@
 
 using eduOpenVPN.Management;
 using Prism.Commands;
-using Prism.Mvvm;
 using System.ComponentModel;
 using System.Net;
 using System.Windows.Input;
@@ -17,7 +16,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// 2-Factor authentication response panel base class
     /// </summary>
-    public class TwoFactorAuthenticationBasePanel : BindableBase
+    public class TwoFactorAuthenticationBasePanel : Models.ValidatableBindableBase
     {
         #region Properties
 
@@ -61,10 +60,11 @@ namespace eduVPN.ViewModels
                         // canExecute
                         e =>
                             e is UsernamePasswordAuthenticationRequestedEventArgs &&
-                            Response != null && Response.Length > 0);
+                            !string.IsNullOrEmpty(Response) &&
+                            !HasErrors);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Response)) _apply_response.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Response) || e.PropertyName == nameof(HasErrors)) _apply_response.RaiseCanExecuteChanged(); };
                 }
 
                 return _apply_response;

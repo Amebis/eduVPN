@@ -8,6 +8,7 @@
 using Prism.Commands;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
@@ -22,6 +23,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Instance host name
         /// </summary>
+        [CustomValidation(typeof(CustomInstancePage), nameof(CheckHostname))]
         public string Hostname
         {
             get { return _hostname; }
@@ -38,21 +40,6 @@ namespace eduVPN.ViewModels
             {
                 if (_select_custom_instance == null)
                 {
-                    bool TryParseUri(string input, out Uri output)
-                    {
-                        try
-                        {
-                            // Convert hostname to https://hostname.
-                            output = new UriBuilder("https", input).Uri;
-                            return true;
-                        }
-                        catch
-                        {
-                            output = null;
-                            return false;
-                        }
-                    };
-
                     _select_custom_instance = new DelegateCommand(
                         // execute
                         async () =>
@@ -80,10 +67,12 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () => TryParseUri(Hostname, out var uri));
+                        () =>
+                            !string.IsNullOrEmpty(Hostname) &&
+                            !HasErrors);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Hostname)) _select_custom_instance.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Hostname) || e.PropertyName == nameof(HasErrors)) _select_custom_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _select_custom_instance;
@@ -119,6 +108,41 @@ namespace eduVPN.ViewModels
         protected override bool CanNavigateBack()
         {
             return true;
+        }
+
+        /// <summary>
+        /// Validates the hostname
+        /// </summary>
+        /// <param name="input">Hostname</param>
+        /// <param name="output">Base URI</param>
+        /// <returns><c>true</c> if valid hostname; <c>false</c> otherwise</returns>
+        private static bool TryParseUri(string input, out Uri output)
+        {
+            try
+            {
+                // Convert hostname to https://hostname.
+                output = new UriBuilder("https", input).Uri;
+                return true;
+            }
+            catch
+            {
+                output = null;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Validates the hostname
+        /// </summary>
+        /// <param name="value">Hostname</param>
+        /// <param name="context">Validation context</param>
+        /// <returns><c>ValidationResult.Success</c> if valid hostname; <c>ValidationResult</c> issue descriptor otherwise</returns>
+        public static ValidationResult CheckHostname(string value, ValidationContext context)
+        {
+            if (!string.IsNullOrEmpty(value) && !TryParseUri(value, out var output))
+                return new ValidationResult(Resources.Strings.ErrorInvalidHostname);
+
+            return ValidationResult.Success;
         }
 
         #endregion

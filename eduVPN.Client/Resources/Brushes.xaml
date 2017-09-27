@@ -23,4 +23,6 @@
     <SolidColorBrush x:Key="eduVPNLogoBlackKey" Color="{StaticResource eduVPNBlack}"/>
     <SolidColorBrush x:Key="eduVPNButtonHoverBrushKey" Color="{StaticResource eduVPNBlueLight}"/>
     <SolidColorBrush x:Key="eduVPNButtonPressedBrushKey" Color="{StaticResource eduVPNOrange}"/>
+    <SolidColorBrush x:Key="eduVPNErrorBrush" Color="{StaticResource eduVPNRed}"/>
+    <SolidColorBrush x:Key="eduVPNErrorTextBrush" Color="{StaticResource eduVPNWhite}"/>
 </ResourceDictionary>

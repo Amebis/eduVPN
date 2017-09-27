@@ -6,7 +6,6 @@
 */
 
 using Prism.Commands;
-using Prism.Mvvm;
 using System;
 
 namespace eduVPN.ViewModels
@@ -14,7 +13,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Base class for all wizard pages
     /// </summary>
-    public class ConnectWizardPage : BindableBase
+    public class ConnectWizardPage : Models.ValidatableBindableBase
     {
         #region Properties
 

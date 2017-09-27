@@ -26,6 +26,7 @@
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
@@ -55,6 +56,7 @@
     <Compile Include="Models\MessageNotification.cs" />
     <Compile Include="Models\MessageOfTheDay.cs" />
     <Compile Include="Models\TwoFactorAuthenticationMethods.cs" />
+    <Compile Include="Models\ValidatableBindableBase.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />
     <Compile Include="ViewModels\AboutPage.cs" />

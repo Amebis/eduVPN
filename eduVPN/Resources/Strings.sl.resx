@@ -202,7 +202,14 @@
   <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
     <value>YubiKey</value>
   </data>
-  <data name="TOTPAuthenticationMethodInvalid" xml:space="preserve">
-    <value>Neveljaven odgovor TOTP: vsebovati mora točno šest (6) desetiških števk. Presledki ali vezaji niso dovoljeni.</value>
+  <data name="ErrorInvalidTOTP" xml:space="preserve">
+    <value>Neveljaven odgovor TOTP: vsebovati mora točno šest (6) desetiških števk; presledki ali vezaji niso dovoljeni.</value>
+  </data>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Neveljavno ime gostitelja: imena gostiteljev vsebujejo črke, številke, vezaje in pike.</value>
+  </data>
+  <data name="ErrorInvalidPropertyName" xml:space="preserve">
+    <value>Ime lastnosti {0} ni veljavno.</value>
+    <comment>{0}=Property name</comment>
   </data>
 </root>

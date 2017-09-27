@@ -106,6 +106,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid hostname: hostnames contain letters, numbers, hyphens and dots..
+        /// </summary>
+        internal static string ErrorInvalidHostname {
+            get {
+                return ResourceManager.GetString("ErrorInvalidHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Private key is invalid or of unsupported format..
         /// </summary>
         internal static string ErrorInvalidPrivateKey {
@@ -115,11 +124,29 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Property name {0} is not valid..
+        /// </summary>
+        internal static string ErrorInvalidPropertyName {
+            get {
+                return ResourceManager.GetString("ErrorInvalidPropertyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verifying signature failed. Integrity of {0} is not valid..
         /// </summary>
         internal static string ErrorInvalidSignature {
             get {
                 return ResourceManager.GetString("ErrorInvalidSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid TOTP response: it should contain exactly six (6) decimal numbers; no spaces or hyphens are allowed..
+        /// </summary>
+        internal static string ErrorInvalidTOTP {
+            get {
+                return ResourceManager.GetString("ErrorInvalidTOTP", resourceCulture);
             }
         }
         
@@ -291,15 +318,6 @@ namespace eduVPN.Resources {
         internal static string ProfileTitle {
             get {
                 return ResourceManager.GetString("ProfileTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid TOTP response: it should contain exactly six (6) decimal numbers. No spaces or hyphens are allowed..
-        /// </summary>
-        internal static string TOTPAuthenticationMethodInvalid {
-            get {
-                return ResourceManager.GetString("TOTPAuthenticationMethodInvalid", resourceCulture);
             }
         }
         

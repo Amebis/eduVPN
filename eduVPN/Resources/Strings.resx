@@ -202,7 +202,14 @@
   <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
     <value>YubiKey</value>
   </data>
-  <data name="TOTPAuthenticationMethodInvalid" xml:space="preserve">
-    <value>Invalid TOTP response: it should contain exactly six (6) decimal numbers. No spaces or hyphens are allowed.</value>
+  <data name="ErrorInvalidTOTP" xml:space="preserve">
+    <value>Invalid TOTP response: it should contain exactly six (6) decimal numbers; no spaces or hyphens are allowed.</value>
+  </data>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Invalid hostname: hostnames contain letters, numbers, hyphens and dots.</value>
+  </data>
+  <data name="ErrorInvalidPropertyName" xml:space="preserve">
+    <value>Property name {0} is not valid.</value>
+    <comment>{0}=Property name</comment>
   </data>
 </root>
