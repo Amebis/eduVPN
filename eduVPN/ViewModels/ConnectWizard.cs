@@ -381,8 +381,7 @@ namespace eduVPN.ViewModels
                     _previous_page = _current_page;
                     RaisePropertyChanged("PreviousPage");
 
-                    _current_page = value;
-                    RaisePropertyChanged();
+                    SetProperty(ref _current_page, value);
                     _current_page.OnActivate();
                 }
             }
@@ -617,7 +616,7 @@ namespace eduVPN.ViewModels
             _sessions = new ObservableCollection<VPNSession>();
 
             // Show initializing wizard page.
-            CurrentPage = InitializingPage;
+            _current_page = InitializingPage;
 
             // Setup initialization.
             var worker = new BackgroundWorker() { WorkerReportsProgress = true };

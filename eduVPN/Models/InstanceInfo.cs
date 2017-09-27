@@ -71,8 +71,7 @@ namespace eduVPN.Models
                     _profile_list = null;
                     _client_certificate = null;
 
-                    _base = value;
-                    RaisePropertyChanged();
+                    SetProperty(ref _base, value);
                 }
             }
         }
