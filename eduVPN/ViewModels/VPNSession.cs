@@ -133,7 +133,7 @@ namespace eduVPN.ViewModels
             set
             {
                 if (SetProperty(ref _connected_since, value))
-                    RaisePropertyChanged("ConnectedTime");
+                    RaisePropertyChanged(nameof(ConnectedTime));
             }
         }
         private DateTimeOffset? _connected_since;
@@ -241,7 +241,7 @@ namespace eduVPN.ViewModels
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged("ConnectedTime"),
+                DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
                 Parent.Dispatcher);
 
             _pre_run_actions = new List<Action>()

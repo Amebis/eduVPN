@@ -64,7 +64,7 @@ namespace eduVPN.ViewModels
                         () => SelectedInstance != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedInstance") _authorize_selected_instance.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _authorize_selected_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _authorize_selected_instance;

@@ -37,7 +37,7 @@ namespace eduVPN.ViewModels
             set
             {
                 if (SetProperty(ref _selected_method, value))
-                    RaisePropertyChanged("ApplyResponse");
+                    RaisePropertyChanged(nameof(ApplyResponse));
             }
         }
         private TwoFactorAuthenticationBasePanel _selected_method;

@@ -64,7 +64,7 @@ namespace eduVPN.ViewModels
                             Response != null && Response.Length > 0);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "Response") _apply_response.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Response)) _apply_response.RaiseCanExecuteChanged(); };
                 }
 
                 return _apply_response;

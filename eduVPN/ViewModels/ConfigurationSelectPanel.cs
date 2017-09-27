@@ -67,7 +67,7 @@ namespace eduVPN.ViewModels
                         () => SelectedConfiguration != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedConfiguration") _connect_selected_configuration.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedConfiguration)) _connect_selected_configuration.RaiseCanExecuteChanged(); };
                 }
 
                 return _connect_selected_configuration;
@@ -101,7 +101,7 @@ namespace eduVPN.ViewModels
                             !Parent.Sessions.Any(session => session.Configuration.Equals(SelectedConfiguration)));
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedConfiguration") _forget_selected_configuration.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedConfiguration)) _forget_selected_configuration.RaiseCanExecuteChanged(); };
                     ConfigurationHistory.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_configuration.RaiseCanExecuteChanged();
                     Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_configuration.RaiseCanExecuteChanged();
                 }

@@ -72,9 +72,9 @@ namespace eduVPN.ViewModels
             {
                 if (SetProperty(ref _instance_source_type, value))
                 {
-                    RaisePropertyChanged("InstanceSource");
-                    RaisePropertyChanged("AuthenticatingInstanceSelectPage");
-                    RaisePropertyChanged("ConnectingProfileSelectPage");
+                    RaisePropertyChanged(nameof(InstanceSource));
+                    RaisePropertyChanged(nameof(AuthenticatingInstanceSelectPage));
+                    RaisePropertyChanged(nameof(ConnectingProfileSelectPage));
                 }
             }
         }
@@ -379,7 +379,7 @@ namespace eduVPN.ViewModels
                 if (_current_page != value)
                 {
                     _previous_page = _current_page;
-                    RaisePropertyChanged("PreviousPage");
+                    RaisePropertyChanged(nameof(PreviousPage));
 
                     SetProperty(ref _current_page, value);
                     _current_page.OnActivate();
@@ -806,7 +806,7 @@ namespace eduVPN.ViewModels
                         return;
 
                     // Proceed to the "first" page.
-                    RaisePropertyChanged("StartingPage");
+                    RaisePropertyChanged(nameof(StartingPage));
                     CurrentPage = StartingPage;
                 }
                 finally { ChangeTaskCount(-1); }

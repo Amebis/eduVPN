@@ -128,7 +128,7 @@ namespace eduVPN.ViewModels
                         () => AuthenticatingInstance != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "AuthenticatingInstance") _retry_authorization.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(AuthenticatingInstance)) _retry_authorization.RaiseCanExecuteChanged(); };
                 }
 
                 return _retry_authorization;

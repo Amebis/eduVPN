@@ -137,7 +137,7 @@ namespace eduVPN.ViewModels
                             SelectedProfile != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "SelectedInstance" || e.PropertyName == "SelectedProfile") _connect_selected_profile.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance) || e.PropertyName == nameof(SelectedProfile)) _connect_selected_profile.RaiseCanExecuteChanged(); };
                 }
 
                 return _connect_selected_profile;

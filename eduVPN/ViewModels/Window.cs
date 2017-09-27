@@ -86,7 +86,7 @@ namespace eduVPN.ViewModels
                         () => Error != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "Error") _copy_error.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Error)) _copy_error.RaiseCanExecuteChanged(); };
                 }
 
                 return _copy_error;
@@ -131,9 +131,9 @@ namespace eduVPN.ViewModels
                     is_busy_changed = true;
             }
 
-            RaisePropertyChanged("TaskCount");
+            RaisePropertyChanged(nameof(TaskCount));
             if (is_busy_changed)
-                RaisePropertyChanged("IsBusy");
+                RaisePropertyChanged(nameof(IsBusy));
         }
 
         #endregion

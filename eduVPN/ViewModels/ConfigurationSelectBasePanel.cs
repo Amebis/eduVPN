@@ -32,8 +32,8 @@ namespace eduVPN.ViewModels
             {
                 if (SetProperty(ref _instance_source_type, value))
                 {
-                    RaisePropertyChanged("InstanceSource");
-                    RaisePropertyChanged("ConfigurationHistory");
+                    RaisePropertyChanged(nameof(InstanceSource));
+                    RaisePropertyChanged(nameof(ConfigurationHistory));
                 }
             }
         }

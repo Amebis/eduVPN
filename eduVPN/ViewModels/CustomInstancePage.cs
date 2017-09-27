@@ -83,7 +83,7 @@ namespace eduVPN.ViewModels
                         () => TryParseUri(Hostname, out var uri));
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == "Hostname") _select_custom_instance.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Hostname)) _select_custom_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _select_custom_instance;
