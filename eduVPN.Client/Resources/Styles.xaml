@@ -61,7 +61,7 @@
     <Style x:Key="eduVPNButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
         <Setter Property="Width" Value="100"/>
         <Setter Property="Height" Value="32"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -71,7 +71,7 @@
                     <AdornerDecorator>
                         <Border
                             x:Name="Border"
-                            Background="{StaticResource eduVPNHeaderBrushKey}"
+                            Background="{StaticResource eduVPNHeaderBrush}"
                             CornerRadius="6">
                             <ContentPresenter
                                 Margin="3"
@@ -85,13 +85,13 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -106,7 +106,7 @@
 
     <Style x:Key="eduVPNLinkButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -124,10 +124,10 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -185,7 +185,7 @@
 
     <Style x:Key="eduVPNSeparatorStyle" TargetType="{x:Type Separator}">
         <Setter Property="Margin" Value="0"/>
-        <Setter Property="Background" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+        <Setter Property="Background" Value="{StaticResource eduVPNHeaderBrush}"/>
     </Style>
 
     <Style x:Key="eduVPNListBoxItemSeparatorStyle" TargetType="{x:Type Separator}" BasedOn="{StaticResource eduVPNSeparatorStyle}">
@@ -230,10 +230,10 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -246,13 +246,13 @@
         eduVPN Text Boxes
     -->
     <Style x:Key="eduVPNTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderKey}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="3"/>
     </Style>
 
     <Style x:Key="eduVPNPasswordBoxStyle" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderKey}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="3"/>
     </Style>
@@ -264,7 +264,7 @@
 
     <Style x:Key="eduVPNComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
         <Setter Property="Background" Value="{x:Null}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderKey}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -277,10 +277,10 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -347,7 +347,7 @@
                         <Border
                             x:Name="Slot"
                             Margin="3"
-                            Background="{StaticResource eduVPNCheckboxSlotBrushKey}"
+                            Background="{StaticResource eduVPNCheckboxSlotBrush}"
                             CornerRadius="6"/>
 
                         <Ellipse
@@ -355,10 +355,10 @@
                             HorizontalAlignment="Left"
                             Width="15"
                             Height="15"
-                            Stroke="{StaticResource eduVPNCheckboxKnobBorderBrushKey}"
+                            Stroke="{StaticResource eduVPNCheckboxKnobBorderBrush}"
                             StrokeThickness="1">
                             <Ellipse.Fill>
-                                <SolidColorBrush Color="{StaticResource eduVPNWhite}"/>
+                                <SolidColorBrush Color="{StaticResource eduVPNWhiteColor}"/>
                             </Ellipse.Fill>
                             <Ellipse.RenderTransform>
                                 <TransformGroup>
@@ -385,8 +385,8 @@
                                             <ColorAnimation
                                                 Storyboard.TargetName="Knob"
                                                 Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
-                                                From="{StaticResource eduVPNWhite}"
-                                                To="{StaticResource eduVPNBlue}"
+                                                From="{StaticResource eduVPNWhiteColor}"
+                                                To="{StaticResource eduVPNBlueColor}"
                                                 Duration="0:0:0.1"
                                                 AutoReverse="False"/>
                                         </Storyboard>
@@ -409,8 +409,8 @@
                                             <ColorAnimation
                                                 Storyboard.TargetName="Knob"
                                                 Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
-                                                From="{StaticResource eduVPNBlue}"
-                                                To="{StaticResource eduVPNWhite}"
+                                                From="{StaticResource eduVPNBlueColor}"
+                                                To="{StaticResource eduVPNWhiteColor}"
                                                 Duration="0:0:0.1"
                                                 AutoReverse="False"/>
                                         </Storyboard>
@@ -435,9 +435,9 @@
     <Style x:Key="eduVPNWindow" TargetType="{x:Type view:Window}" BasedOn="{StaticResource eduVPNBaseStyle}">
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
-        <Setter Property="Background" Value="{StaticResource eduVPNWindowBrushKey}"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNWindowTextBrushKey}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNWindowBorderKey}"/>
+        <Setter Property="Background" Value="{StaticResource eduVPNWindowBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNWindowTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource eduVPNWindowBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=IsBusy}" Value="True">
@@ -452,7 +452,7 @@
     -->
 
     <Style x:Key="eduVPNHeaderTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
@@ -460,7 +460,7 @@
     <Style x:Key="eduVPNHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -483,7 +483,7 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+                                Value="{StaticResource eduVPNHeaderTextBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -491,7 +491,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -507,14 +507,14 @@
     <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
     <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
         <Setter Property="Width" Value="22"/>
         <Setter Property="Height" Value="22"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="Template">
@@ -525,7 +525,7 @@
                             <Ellipse
                                 x:Name="Border"
                                 Fill="{x:Null}"
-                                Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+                                Stroke="{StaticResource eduVPNHeaderBrush}"/>
 
                             <ContentPresenter
                                 HorizontalAlignment="Center"
@@ -538,17 +538,17 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Fill"
-                                Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                                Value="{StaticResource eduVPNHeaderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter
                                 TargetName="Border"
                                 Property="Fill"
-                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
                             <Setter
                                 TargetName="Border"
                                 Property="Stroke"
-                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -556,7 +556,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -731,7 +731,7 @@
                                             <Ellipse
                                                 x:Name="Border"
                                                 Fill="{x:Null}"
-                                                Stroke="{StaticResource eduVPNHeaderBrushKey}"/>
+                                                Stroke="{StaticResource eduVPNHeaderBrush}"/>
 
                                             <Image
                                                 x:Name="Image"
@@ -748,7 +748,7 @@
                                                 <Setter
                                                     TargetName="Border"
                                                     Property="Fill"
-                                                    Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                                                    Value="{StaticResource eduVPNHeaderBrush}"/>
                                                 <Setter
                                                     TargetName="Image"
                                                     Property="Source"
@@ -758,11 +758,11 @@
                                                 <Setter
                                                     TargetName="Border"
                                                     Property="Fill"
-                                                    Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                                    Value="{StaticResource eduVPNButtonPressedBrush}"/>
                                                 <Setter
                                                     TargetName="Border"
                                                     Property="Stroke"
-                                                    Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                                    Value="{StaticResource eduVPNButtonPressedBrush}"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -794,7 +794,7 @@
     -->
 
     <Style x:Key="eduVPNPopupHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNHeaderButtonStyle}">
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -816,7 +816,7 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNHeaderBrushKey}"/>
+                                Value="{StaticResource eduVPNHeaderBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -824,7 +824,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -837,10 +837,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:Window}">
                     <Border
-                        BorderBrush="{StaticResource eduVPNWindowBorderKey}"
+                        BorderBrush="{StaticResource eduVPNWindowBorderBrush}"
                         BorderThickness="1">
                         <AdornerDecorator>
-                            <Grid Background="{StaticResource eduVPNWindowBrushKey}">
+                            <Grid Background="{StaticResource eduVPNWindowBrush}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -904,7 +904,7 @@
                     <AdornerDecorator>
                         <Border
                             x:Name="Border"
-                            Background="{StaticResource eduVPNHeaderBrushKey}"
+                            Background="{StaticResource eduVPNHeaderBrush}"
                             CornerRadius="6">
                             <ContentPresenter
                                 Margin="3"
@@ -918,13 +918,13 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonHoverBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonPressedBrushKey}"/>
+                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -941,7 +941,7 @@
     <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
     </Style>
 
 
@@ -950,7 +950,7 @@
     -->
 
     <Style x:Key="eduVPNSectionTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrushKey}"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
     </Style>
 
 </ResourceDictionary>

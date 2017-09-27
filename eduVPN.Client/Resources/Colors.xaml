@@ -8,14 +8,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="eduVPNBlue">#FF02B4D2</Color>
-    <Color x:Key="eduVPNBlueLight">#CC02B4D2</Color>
-    <Color x:Key="eduVPNLightBlue">#FFB2E3EE</Color>
-    <Color x:Key="eduVPNOrange">#FFED6B06</Color>
-    <Color x:Key="eduVPNGreen">#FF54B948</Color>
-    <Color x:Key="eduVPNRed">#FFE31B23</Color>
-    <Color x:Key="eduVPNWhite">#FFFFFFFF</Color>
-    <Color x:Key="eduVPNBlack">#FF000000</Color>
-    <Color x:Key="eduVPNGray">#FF666666</Color>
-    <Color x:Key="eduVPNLightGray">#FFCCCCCC</Color>
+    <Color x:Key="eduVPNBlueColor">#FF02B4D2</Color>
+    <Color x:Key="eduVPNBlueLightColor">#CC02B4D2</Color>
+    <Color x:Key="eduVPNLightBlueColor">#FFB2E3EE</Color>
+    <Color x:Key="eduVPNOrangeColor">#FFED6B06</Color>
+    <Color x:Key="eduVPNGreenColor">#FF54B948</Color>
+    <Color x:Key="eduVPNRedColor">#FFE31B23</Color>
+    <Color x:Key="eduVPNWhiteColor">#FFFFFFFF</Color>
+    <Color x:Key="eduVPNBlackColor">#FF000000</Color>
+    <Color x:Key="eduVPNGrayColor">#FF666666</Color>
+    <Color x:Key="eduVPNLightGrayColor">#FFCCCCCC</Color>
 </ResourceDictionary>
