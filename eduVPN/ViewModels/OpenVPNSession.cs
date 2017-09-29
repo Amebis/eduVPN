@@ -427,6 +427,7 @@ namespace eduVPN.ViewModels
 
                                     // Initialize session and release openvpn.exe to get started.
                                     mgmt_session.ReplayAndEnableState(_quit.Token);
+                                    mgmt_session.ReplayAndEnableEcho(_quit.Token);
                                     mgmt_session.SetByteCount(5, _quit.Token);
                                     mgmt_session.EnableHold(false, _quit.Token);
                                     mgmt_session.ReleaseHold(_quit.Token);
