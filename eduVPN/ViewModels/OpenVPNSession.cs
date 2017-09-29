@@ -223,6 +223,11 @@ namespace eduVPN.ViewModels
                                 // Set TAP interface to be used.
                                 if (Models.InterfaceInfo.TryFromID(Properties.Settings.Default.OpenVPNInterfaceID, out var iface))
                                     sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(iface.Name) + "\n");
+
+#if DEBUG
+                                // Renegotiate data channel every 5 minutes in debug versions.
+                                sw.WriteLine("reneg-sec 300");
+#endif
                             }
                         }
                         catch (OperationCanceledException) { throw; }
