@@ -20,7 +20,6 @@
         <Style x:Key="ConfigurationListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ConfigurationList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ConfigurationList_PreviewKeyDown"/>
-            <!-- TODO: Add event handlers for touch and stylus support. -->
         </Style>
     </UserControl.Resources>
 

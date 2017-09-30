@@ -20,7 +20,6 @@
         <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstanceList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="InstanceList_PreviewKeyDown"/>
-            <!-- TODO: Add event handlers for touch and stylus support. -->
         </Style>
     </view:ConnectWizardPage.Resources>
 

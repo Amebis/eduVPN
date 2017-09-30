@@ -13,7 +13,6 @@
         <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
-            <!-- TODO: Add event handlers for touch and stylus support. -->
         </Style>
     </UserControl.Resources>
 
