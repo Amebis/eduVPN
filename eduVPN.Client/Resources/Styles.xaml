@@ -458,8 +458,8 @@
     </Style>
 
     <Style x:Key="eduVPNHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
+        <Setter Property="Width" Value="26"/>
+        <Setter Property="Height" Value="26"/>
         <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
@@ -872,7 +872,7 @@
                                 </Grid>
 
                                 <Button
-                                    Margin="5"
+                                    Margin="2"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
                                     IsCancel="True"
