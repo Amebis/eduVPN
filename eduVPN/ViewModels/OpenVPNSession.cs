@@ -55,7 +55,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// OpenVPN Interactive Service Controller
         /// </summary>
-        ServiceController _openvpn_interactive_service;
+        private ServiceController _openvpn_interactive_service;
 
         #endregion
 
@@ -278,6 +278,12 @@ namespace eduVPN.ViewModels
                                                 StateDescription = msg;
                                             }));
 
+                                    mgmt_session.HoldReported += (object sender, HoldReportedEventArgs e) =>
+                                    {
+                                        if (e.WaitHint > 0)
+                                            _quit.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
+                                    };
+
                                     mgmt_session.CertificateRequested += (object sender, CertificateRequestedEventArgs e) => e.Certificate = _client_certificate;
 
                                     mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestPasswordAuthentication(this, e);
@@ -334,6 +340,7 @@ namespace eduVPN.ViewModels
                                     };
 
                                     mgmt_session.StateReported += (object sender, StateReportedEventArgs e) =>
+                                    {
                                         Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                             () =>
                                             {
@@ -423,13 +430,16 @@ namespace eduVPN.ViewModels
                                                 }
                                             }));
 
+                                        if (e.State == OpenVPNStateType.Reconnecting)
+                                            mgmt_session.QueueReleaseHold(_quit.Token);
+                                    };
+
                                     mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, _quit.Token);
 
                                     // Initialize session and release openvpn.exe to get started.
                                     mgmt_session.ReplayAndEnableState(_quit.Token);
                                     mgmt_session.ReplayAndEnableEcho(_quit.Token);
                                     mgmt_session.SetByteCount(5, _quit.Token);
-                                    mgmt_session.EnableHold(false, _quit.Token);
                                     mgmt_session.ReleaseHold(_quit.Token);
 
                                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1)));
