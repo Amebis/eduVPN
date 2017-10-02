@@ -513,6 +513,38 @@ namespace eduVPN.Models
             }
         }
 
+        /// <summary>
+        /// Refreshes client certificate
+        /// </summary>
+        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
+        public X509Certificate2 RefreshClientCertificate(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        {
+            lock (_client_certificate_lock)
+            {
+                if (Properties.Settings.Default.InstanceSettings.TryGetValue(Base.AbsoluteUri, out var instance_settings) && instance_settings.ClientCertificateHash != null)
+                {
+                    // Open eduVPN client certificate store.
+                    var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
+                    store.Open(OpenFlags.ReadWrite);
+                    try
+                    {
+                        // Delete previously issued client certificate from the certificate store.
+                        foreach (var cert in store.Certificates)
+                            if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
+                                store.Remove(cert);
+                    }
+                    finally { store.Close(); }
+                }
+
+                // Invalidate memory cache.
+                _client_certificate = null;
+
+                return GetClientCertificate(authenticating_instance, ct);
+            }
+        }
+
         #endregion
 
         #region ILoadableItem Support
