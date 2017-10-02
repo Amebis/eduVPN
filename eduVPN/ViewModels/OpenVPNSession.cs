@@ -53,6 +53,11 @@ namespace eduVPN.ViewModels
         private string _profile_config;
 
         /// <summary>
+        /// Should HOLD hint on reconnect be ignored?
+        /// </summary>
+        private bool _ignore_hold_hint;
+
+        /// <summary>
         /// OpenVPN Interactive Service Controller
         /// </summary>
         private ServiceController _openvpn_interactive_service;
@@ -280,7 +285,7 @@ namespace eduVPN.ViewModels
 
                                     mgmt_session.HoldReported += (object sender, HoldReportedEventArgs e) =>
                                     {
-                                        if (e.WaitHint > 0)
+                                        if (!_ignore_hold_hint && e.WaitHint > 0)
                                             _quit.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
                                     };
 
@@ -431,7 +436,18 @@ namespace eduVPN.ViewModels
                                             }));
 
                                         if (e.State == OpenVPNStateType.Reconnecting)
+                                        {
+                                            if (e.Message == "tls-error")
+                                            {
+                                                // TLS negotiation failed. Perhaps the cause was our cached password. Refresh it.
+                                                _client_certificate = Configuration.ConnectingInstance.RefreshClientCertificate(Configuration.AuthenticatingInstance, _quit.Token);
+                                                _ignore_hold_hint = true;
+                                            }
+                                            else
+                                                _ignore_hold_hint = false;
+
                                             mgmt_session.QueueReleaseHold(_quit.Token);
+                                        }
                                     };
 
                                     mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, _quit.Token);
