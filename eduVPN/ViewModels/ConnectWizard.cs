@@ -109,6 +109,14 @@ namespace eduVPN.ViewModels
         private ObservableCollection<VPNSession> _sessions;
 
         /// <summary>
+        /// Active VPN session
+        /// </summary>
+        public VPNSession ActiveSession
+        {
+            get { return _sessions.Count > 0 ? _sessions[0] : VPNSession.Blank; }
+        }
+
+        /// <summary>
         /// Connection info command
         /// </summary>
         public DelegateCommand SessionInfo
@@ -614,6 +622,7 @@ namespace eduVPN.ViewModels
 
             // Create session queue.
             _sessions = new ObservableCollection<VPNSession>();
+            _sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(ActiveSession));
 
             // Show initializing wizard page.
             _current_page = InitializingPage;
