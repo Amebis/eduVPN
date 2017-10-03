@@ -83,7 +83,7 @@ namespace eduVPN.Views
                 {
                     void UpdateState(object sender_Session, PropertyChangedEventArgs e_Session)
                     {
-                        if (e_Session.PropertyName == "State")
+                        if (e_Session.PropertyName == nameof(ViewModels.VPNSession.State))
                             _tray_icon.Icon = _icons[view_model.Sessions[0].State];
                     }
 

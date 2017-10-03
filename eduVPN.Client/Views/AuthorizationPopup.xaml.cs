@@ -25,7 +25,7 @@ namespace eduVPN.Views
             // Dismiss the dialog once access token is set.
             view_model.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
-                if (e.PropertyName == "AccessToken" && view_model.AccessToken != null)
+                if (e.PropertyName == nameof(view_model.AccessToken) && view_model.AccessToken != null)
                     DialogResult = true;
             };
         }
