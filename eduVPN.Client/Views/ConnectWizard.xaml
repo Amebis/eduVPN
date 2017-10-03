@@ -17,7 +17,7 @@
     Title="{x:Static res:Strings.MainWindowTitle}"
     Height="460"
     Width="300"
-    Icon="{Binding Path=Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource eduVPNVPNSessionStatusTypeIconInitializingImage}}"
+    Icon="{Binding Path=ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource eduVPNVPNSessionStatusTypeIconInitializingImage}}"
     Style="{StaticResource eduVPNWindow}"
     Loaded="Window_Loaded"
     Closing="Window_Closing">
@@ -98,7 +98,7 @@
 
     <!-- The window icon reflects all the VPN states and does not require an additional overlay from v1.0.3 on.
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo Overlay="{Binding Path=Sessions[0].State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"/>
+        <TaskbarItemInfo Overlay="{Binding Path=ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"/>
     </Window.TaskbarItemInfo>
     -->
 

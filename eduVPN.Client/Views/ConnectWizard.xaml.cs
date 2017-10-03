@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
@@ -74,35 +73,27 @@ namespace eduVPN.Views
             // Create notify icon, set default icon, and setup events.
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
             _tray_icon = new System.Windows.Forms.NotifyIcon();
-            _tray_icon.Icon = view_model.Sessions.Count > 0 && view_model.Sessions[0] != null ? _icons[view_model.Sessions[0].State] : _icons[Models.VPNSessionStatusType.Initializing];
+            _tray_icon.Icon = _icons[view_model.ActiveSession.State];
             _tray_icon.Click += TrayIcon_Click;
 
-            // Bind to "Sessions[0].State" property to update tray icon.
-            view_model.Sessions.CollectionChanged +=
-                (object sender_Sessions, NotifyCollectionChangedEventArgs e_Sessions) =>
+            // Bind to "ActiveSession.State" property to update tray icon.
+            view_model.PropertyChanged += (object sender, PropertyChangedEventArgs e2) =>
                 {
-                    void UpdateState(object sender_Session, PropertyChangedEventArgs e_Session)
+                    if (e2.PropertyName == nameof(view_model.ActiveSession))
                     {
-                        if (e_Session.PropertyName == nameof(ViewModels.VPNSession.State))
-                            _tray_icon.Icon = _icons[view_model.Sessions[0].State];
-                    }
-
-                    if (e_Sessions.NewStartingIndex == 0)
-                    {
-                        // First session added: Bind to the session for property changes.
-                        view_model.Sessions[0].PropertyChanged += UpdateState;
-                    }
-                    else if (e_Sessions.OldStartingIndex == 0)
-                    {
-                        if (view_model.Sessions.Count > 0)
+                        if (view_model.ActiveSession != ViewModels.VPNSession.Blank)
                         {
-                            // First session removed, next snapped into its place: Bind to the session for property changes.
-                            view_model.Sessions[0].PropertyChanged += UpdateState;
+                            // Active session changed: Bind to the session for property changes.
+                            view_model.ActiveSession.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
+                                {
+                                    if (e_Session.PropertyName == nameof(view_model.ActiveSession.State))
+                                        _tray_icon.Icon = _icons[view_model.ActiveSession.State];
+                                };
                         }
                         else
                         {
-                            // First session removed, no more sessions: Reset tray icon to default.
-                            _tray_icon.Icon = _icons[Models.VPNSessionStatusType.Initializing];
+                            // Active session ended, no more sessions: Reset tray icon to default.
+                            _tray_icon.Icon = _icons[view_model.ActiveSession.State];
                         }
                     }
                 };
