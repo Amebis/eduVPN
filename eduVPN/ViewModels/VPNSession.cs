@@ -26,6 +26,11 @@ namespace eduVPN.ViewModels
         #region Fields
 
         /// <summary>
+        /// Blank session
+        /// </summary>
+        public static readonly VPNSession Blank = new VPNSession();
+
+        /// <summary>
         /// Terminate connection token
         /// </summary>
         protected CancellationTokenSource _disconnect;
@@ -228,15 +233,24 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        public VPNSession(ConnectWizard parent, Models.VPNConfiguration configuration)
+        public VPNSession()
         {
             _disconnect = new CancellationTokenSource();
+            _state_description = "";
+            _message_list = new Models.MessageList();
+        }
+
+        /// <summary>
+        /// Creates a VPN session
+        /// </summary>
+        public VPNSession(ConnectWizard parent, Models.VPNConfiguration configuration) :
+            this()
+        {
             _quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
             _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Parent = parent;
             Configuration = configuration;
-            _message_list = new Models.MessageList();
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(
