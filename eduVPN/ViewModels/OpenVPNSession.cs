@@ -404,7 +404,7 @@ namespace eduVPN.ViewModels
                                                         break;
                                                 }
 
-                                                if (e.Message != null && e.Message.Length > 0)
+                                                if (!string.IsNullOrEmpty(e.Message))
                                                 {
                                                     if (msg != null)
                                                     {
@@ -417,6 +417,8 @@ namespace eduVPN.ViewModels
                                                         msg = e.Message;
                                                     }
                                                 }
+                                                else if (msg == null)
+                                                    msg = "";
 
                                                 StateDescription = msg;
                                                 TunnelAddress = e.Tunnel;
@@ -509,7 +511,7 @@ namespace eduVPN.ViewModels
                     {
                         // Cleanup status properties.
                         State = Models.VPNSessionStatusType.Initializing;
-                        StateDescription = null;
+                        StateDescription = "";
 
                         Parent.ChangeTaskCount(-1);
                     }));
