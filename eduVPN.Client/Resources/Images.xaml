@@ -8,6 +8,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <BitmapImage
+        x:Key="eduVPNVPNSessionStatusTypeIconInitializingImage"
+        UriSource="pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico"/>
+
     <Canvas x:Key="eduVPNExclamationIcon" Width="25" Height="25">
         <Canvas.RenderTransform>
             <TransformGroup>
