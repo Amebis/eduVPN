@@ -34,6 +34,7 @@
         <Property Id="ARPPRODUCTICON" Value="eduVPN.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
 
+
         <!--
             Upgrading functionality
         -->
@@ -55,7 +56,6 @@
         -->
         <PropertyRef Id="NETFRAMEWORK45"/>
         <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
-
 
         <!--
             Folders
