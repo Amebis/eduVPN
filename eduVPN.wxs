@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Wix
+    xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+    <Bundle
+        UpgradeCode="{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}"
+        Version="$(var.eduVPN.Version)"
+        Name="!(loc.ApplicationNameFull) $(var.eduVPN.VersionInformational)"
+        Manufacturer="!(loc.ManufacturerName)"
+        AboutUrl="https://eduvpn.org/"
+        Copyright="!(loc.LegalCopyright)"
+        IconSourceFile="eduVPN.Client\Resources\eduVPN.ico"
+        Compressed="yes">
+
+        <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense"/>
+
+        <Chain>
+            <!--
+            Prerequisites
+            -->
+            <PackageGroupRef Id="NetFx45Redist"/>
+            <PackageGroupRef Id="OpenVPN243Redist"/>
+
+            <!--
+                eduVPN Client
+            -->
+            <MsiPackage
+                Id="eduVPNClient_x86"
+                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x86_!(loc.Culture).msi"
+                InstallCondition="NOT VersionNT64"/>
+
+            <MsiPackage
+                Id="eduVPNClient_x64"
+                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x64_!(loc.Culture).msi"
+                InstallCondition="VersionNT64"/>
+        </Chain>
+    </Bundle>
+</Wix>
