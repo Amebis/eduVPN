@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <!--
+            Components
+        -->
+        <DirectoryRef Id="INSTALLDIR">
+            <Component Id="eduVPN.Resources.dll" Guid="{39778E20-4F27-40B2-90C3-FC16A28E70B5}">
+                <File Source="eduVPN.Resources.dll"/>
+            </Component>
+        </DirectoryRef>
+
+
+        <!--
+            Component groups
+        -->
+        <ComponentGroup Id="eduVPN.Resources.dll">
+            <ComponentRef Id="eduVPN.Resources.dll"/>
+        </ComponentGroup>
+    </Fragment>
+</Wix>
