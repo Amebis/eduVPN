@@ -290,7 +290,7 @@ namespace eduVPN.ViewModels
                                 message_list.LoadJSONAPIResponse(
                                     JSON.Response.Get(
                                         uri: list.Key,
-                                        token: Configuration.AuthenticatingInstance.PeekAccessToken(_quit.Token),
+                                        token: Configuration.AuthenticatingInstance.GetAccessToken(_quit.Token),
                                         ct: _quit.Token).Value,
                                     list.Value,
                                     _quit.Token);
