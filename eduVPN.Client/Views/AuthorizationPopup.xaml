@@ -37,6 +37,6 @@
             Margin="5"
             Style="{StaticResource eduVPNButtonStyle}"
             Content="{x:Static res:Strings.AuthorizationPopupRetry}"
-            Command="{Binding Path=RetryAuthorization}"/>
+            Command="{Binding Path=RequestAuthorization}"/>
     </Grid>
 </view:Window>

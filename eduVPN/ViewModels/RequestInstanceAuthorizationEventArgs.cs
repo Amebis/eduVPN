@@ -5,12 +5,15 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
+using System;
+
 namespace eduVPN.ViewModels
 {
     /// <summary>
     /// RequestInstanceAuthorization event arguments
     /// </summary>
-    public class RequestInstanceAuthorizationEventArgs : Models.RequestAuthorizationEventArgs
+    public class RequestInstanceAuthorizationEventArgs : EventArgs
     {
         #region Properties
 
@@ -19,17 +22,30 @@ namespace eduVPN.ViewModels
         /// </summary>
         public Models.InstanceInfo Instance { get; }
 
+        /// <summary>
+        /// Requested access token scope
+        /// </summary>
+        public string Scope { get; }
+
+        /// <summary>
+        /// Access token
+        /// </summary>
+        /// <remarks>Should be populated by access token on event end, or <c>null</c> if authorization failed.</remarks>
+        public AccessToken AccessToken { get; set; }
+
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs an RequestInstanceAuthorization event arguments
+        /// Constructs event arguments
         /// </summary>
-        /// <param name="instance"></param>
-        public RequestInstanceAuthorizationEventArgs(Models.InstanceInfo instance)
+        /// <param name="instance">Authenticating instance</param>
+        /// <param name="scope">Requested access token scope</param>
+        public RequestInstanceAuthorizationEventArgs(Models.InstanceInfo instance, string scope)
         {
             Instance = instance;
+            Scope = scope;
         }
 
         #endregion

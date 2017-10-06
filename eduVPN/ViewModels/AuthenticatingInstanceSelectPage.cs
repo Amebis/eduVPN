@@ -46,7 +46,7 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Trigger initial authorization request.
-                                var authorization_task = new Task(() => SelectedInstance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                var authorization_task = new Task(() => Parent.Instance_RequestAuthorization(SelectedInstance, new Models.RequestAuthorizationEventArgs("config")), Window.Abort.Token, TaskCreationOptions.LongRunning);
                                 authorization_task.Start();
                                 await authorization_task;
 

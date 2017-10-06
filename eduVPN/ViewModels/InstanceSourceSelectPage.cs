@@ -45,7 +45,7 @@ namespace eduVPN.ViewModels
                                 }
                                 else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo instance_source_distributed)
                                 {
-                                    // Check if we have access token for any of the instances.
+                                    // Check if we have saved access token for any of the instances.
                                     object authenticating_instance_lock = new object();
                                     Models.InstanceInfo authenticating_instance = null;
                                     await Task.WhenAll(Parent.InstanceSource.Select(instance =>
@@ -53,7 +53,9 @@ namespace eduVPN.ViewModels
                                         var authorization_task = new Task(
                                             () =>
                                             {
-                                                if (instance.PeekAccessToken(Window.Abort.Token) != null)
+                                                var e = new Models.RequestAuthorizationEventArgs("config") { SourcePolicy = Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly };
+                                                Parent.Instance_RequestAuthorization(instance, e);
+                                                if (e.AccessToken != null)
                                                     lock (authenticating_instance_lock)
                                                         authenticating_instance = instance;
                                             },
@@ -81,7 +83,7 @@ namespace eduVPN.ViewModels
                                     authenticating_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
                                     // Trigger initial authorization request.
-                                    var authorization_task = new Task(() => authenticating_instance.GetAccessToken(Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                    var authorization_task = new Task(() => Parent.Instance_RequestAuthorization(authenticating_instance, new Models.RequestAuthorizationEventArgs("config")), Window.Abort.Token, TaskCreationOptions.LongRunning);
                                     authorization_task.Start();
                                     await authorization_task;
 

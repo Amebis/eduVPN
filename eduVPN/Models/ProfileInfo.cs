@@ -81,6 +81,11 @@ namespace eduVPN.Models
         }
         private TwoFactorAuthenticationMethods _two_factor_methods;
 
+        /// <summary>
+        /// Request authorization event
+        /// </summary>
+        public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
+
         #endregion
 
         #region Methods
@@ -117,10 +122,9 @@ namespace eduVPN.Models
         /// Gets profile OpenVPN configuration
         /// </summary>
         /// <param name="connecting_instance">Instance this profile is part of</param>
-        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetOpenVPNConfig(InstanceInfo connecting_instance, InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public string GetOpenVPNConfig(InstanceInfo connecting_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_openvpn_config_lock)
             {
@@ -128,10 +132,16 @@ namespace eduVPN.Models
                 {
                     // Get API endpoints.
                     var api = connecting_instance.GetEndpoints(ct);
+                    var e = new RequestAuthorizationEventArgs("config");
 
                     retry:
                     try
                     {
+                        // Request authentication token.
+                        RequestAuthorization?.Invoke(this, e);
+                        if (e.AccessToken == null)
+                            throw new AccessTokenNullException();
+
                         // Get profile config.
                         var uri_builder = new UriBuilder(api.ProfileConfig);
                         var query = HttpUtility.ParseQueryString(uri_builder.Query);
@@ -139,7 +149,7 @@ namespace eduVPN.Models
                         uri_builder.Query = query.ToString();
                         var openvpn_config = JSON.Response.Get(
                             uri: uri_builder.Uri,
-                            token: authenticating_instance.GetAccessToken(ct),
+                            token: e.AccessToken,
                             response_type: "application/x-openvpn-profile",
                             ct: ct).Value;
 
@@ -151,8 +161,8 @@ namespace eduVPN.Models
                     {
                         if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                         {
-                            // Access token was rejected (401 Unauthorized): reset access token and retry.
-                            authenticating_instance.RefreshOrResetAccessToken(ct);
+                            // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
+                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
                             goto retry;
                         }
                         else
@@ -169,10 +179,9 @@ namespace eduVPN.Models
         /// Gets profile OpenVPN complete configuration
         /// </summary>
         /// <param name="connecting_instance">Instance this profile is part of</param>
-        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetCompleteOpenVPNConfig(InstanceInfo connecting_instance, InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public string GetCompleteOpenVPNConfig(InstanceInfo connecting_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_openvpn_complete_config_lock)
             {
@@ -180,10 +189,16 @@ namespace eduVPN.Models
                 {
                     // Get API endpoints.
                     var api = connecting_instance.GetEndpoints(ct);
+                    var e = new RequestAuthorizationEventArgs("config");
 
                     retry:
                     try
                     {
+                        // Request authentication token.
+                        RequestAuthorization?.Invoke(this, e);
+                        if (e.AccessToken == null)
+                            throw new AccessTokenNullException();
+
                         // Get complete profile config.
                         var openvpn_complete_config = JSON.Response.Get(
                             uri: api.ProfileCompleteConfig,
@@ -192,7 +207,7 @@ namespace eduVPN.Models
                                 { "display_name", String.Format(Resources.Strings.ProfileTitle, Environment.MachineName) },
                                 { "profile_id", ID }
                             },
-                            token: authenticating_instance.GetAccessToken(ct),
+                            token: e.AccessToken,
                             response_type: "application/x-openvpn-profile",
                             ct: ct).Value;
 
@@ -204,8 +219,8 @@ namespace eduVPN.Models
                     {
                         if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                         {
-                            // Access token was rejected (401 Unauthorized): reset access token and retry.
-                            authenticating_instance.RefreshOrResetAccessToken(ct);
+                            // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
+                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
                             goto retry;
                         }
                         else

@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,11 @@ namespace eduVPN.ViewModels
         /// The alpha factor to increase/decrease popularity
         /// </summary>
         private static readonly float _popularity_alpha = 0.1f;
+
+        /// <summary>
+        /// Access token cache serialization
+        /// </summary>
+        private static object _access_token_cache_lock = new object();
 
         #endregion
 
@@ -738,7 +744,6 @@ namespace eduVPN.ViewModels
                                                 // Matching profile with existing profiles might trigger OAuth in GetProfileList().
                                                 // Unfortunately, we can't rely to stored version from settings, since available profiles and their 2FA settings might have changed.
                                                 cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AuthenticatingInstance, Abort.Token).Where(p => p.ID == h_local.Profile.ID).FirstOrDefault();
-                                                //cfg.ConnectingProfile = h_local.Profile;
                                                 if (cfg.ConnectingProfile == null) return;
                                             }
                                             else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed &&
@@ -838,25 +843,71 @@ namespace eduVPN.ViewModels
         /// <param name="e">Authorization request event arguments</param>
         public void Instance_RequestAuthorization(object sender, Models.RequestAuthorizationEventArgs e)
         {
-            // Re-raise this event as ConnectWizard event, to simplify view.
-            // This way the view can listen ConnectWizard for authentication events only.
-            if (Dispatcher.CurrentDispatcher == Dispatcher)
+            if (sender is Models.InstanceInfo authenticating_instance)
+            lock (_access_token_cache_lock)
             {
-                // We're in the GUI thread.
-                var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender);
-                RequestInstanceAuthorization?.Invoke(this, e_instance);
-                e.AccessToken = e_instance.AccessToken;
-            }
-            else
-            {
-                // We're in the background thread - raise event via dispatcher.
-                Dispatcher.Invoke(DispatcherPriority.Normal,
-                    (Action)(() =>
+                // Get API endpoints.
+                var api = authenticating_instance.GetEndpoints(Abort.Token);
+
+                if (e.SourcePolicy != Models.RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
+                {
+                    try
                     {
-                        var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender);
+                        // Try to load the access token from the settings.
+                        var access_token = AccessToken.FromBase64String(Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri]);
+                        if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
+                        {
+                            // Token expired. Refresh it.
+                            access_token = access_token.RefreshToken(api.TokenEndpoint, null, Abort.Token);
+                            if (access_token != null)
+                            {
+                                // Update access token in the settings.
+                                Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = access_token.ToBase64String();
+
+                                // If we got here, return the token.
+                                e.AccessToken = access_token;
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            // If we got here, return the token.
+                            e.AccessToken = access_token;
+                            return;
+                        }
+                    }
+                    catch { }
+                }
+
+                if (e.SourcePolicy != Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly)
+                {
+                    // Re-raise this event as ConnectWizard event, to simplify view.
+                    // This way the view can listen ConnectWizard for authentication events only.
+                    if (Dispatcher.CurrentDispatcher == Dispatcher)
+                    {
+                        // We're in the GUI thread.
+                        var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
                         RequestInstanceAuthorization?.Invoke(this, e_instance);
                         e.AccessToken = e_instance.AccessToken;
-                    }));
+                    }
+                    else
+                    {
+                        // We're in the background thread - raise event via dispatcher.
+                        Dispatcher.Invoke(DispatcherPriority.Normal,
+                            (Action)(() =>
+                            {
+                                var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
+                                RequestInstanceAuthorization?.Invoke(this, e_instance);
+                                e.AccessToken = e_instance.AccessToken;
+                            }));
+                    }
+
+                    if (e.AccessToken != null)
+                    {
+                        // Save access token to the settings.
+                        Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = e.AccessToken.ToBase64String();
+                    }
+                }
             }
         }
 

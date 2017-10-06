@@ -47,6 +47,16 @@ namespace eduVPN.ViewModels
         private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
+        /// Requested access token scope
+        /// </summary>
+        public string Scope
+        {
+            get { return _scope; }
+            set { SetProperty(ref _scope, value); }
+        }
+        private string _scope;
+
+        /// <summary>
         /// OAuth access token
         /// </summary>
         public AccessToken AccessToken
@@ -57,42 +67,9 @@ namespace eduVPN.ViewModels
         private AccessToken _access_token;
 
         /// <summary>
-        /// Request authorization command
-        /// </summary>
-        public DelegateCommand<Models.InstanceInfo> RequestAuthorization
-        {
-            get
-            {
-                if (_request_authorization == null)
-                    _request_authorization = new DelegateCommand<Models.InstanceInfo>(
-                        // execute
-                        instance =>
-                        {
-                            ChangeTaskCount(+1);
-                            try
-                            {
-                                AuthenticatingInstance = instance;
-
-                                // Let retry authorization command do the job.
-                                if (RetryAuthorization.CanExecute())
-                                    RetryAuthorization.Execute();
-                            }
-                            catch (Exception ex) { Error = ex; }
-                            finally { ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        instance => instance is Models.InstanceInfo);
-
-                return _request_authorization;
-            }
-        }
-        private DelegateCommand<Models.InstanceInfo> _request_authorization;
-
-        /// <summary>
         /// Retry authorization command
         /// </summary>
-        public DelegateCommand RetryAuthorization
+        public DelegateCommand RequestAuthorization
         {
             get
             {
@@ -111,7 +88,7 @@ namespace eduVPN.ViewModels
                                     AuthorizationEndpoint = AuthenticatingInstance.GetEndpoints(Abort.Token).AuthorizationEndpoint,
                                     RedirectEndpoint = new Uri(_redirect_endpoint),
                                     ClientID = "org.eduvpn.app",
-                                    Scope = new List<string>() { "config" },
+                                    Scope = new List<string>() { Scope },
                                     CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
                                 };
 
@@ -125,10 +102,10 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () => AuthenticatingInstance != null);
+                        () => AuthenticatingInstance != null && Scope != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(AuthenticatingInstance)) _retry_authorization.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(AuthenticatingInstance) || e.PropertyName == nameof(Scope)) _retry_authorization.RaiseCanExecuteChanged(); };
                 }
 
                 return _retry_authorization;

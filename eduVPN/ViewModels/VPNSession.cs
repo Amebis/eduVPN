@@ -273,40 +273,45 @@ namespace eduVPN.ViewModels
                 {
                     var api_authenticating = Configuration.AuthenticatingInstance.GetEndpoints(_quit.Token);
                     var api_connecting = Configuration.ConnectingInstance.GetEndpoints(_quit.Token);
-                    Parallel.ForEach(new List<KeyValuePair<Uri, string>>() {
-                            new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
-                            new KeyValuePair<Uri, string>(api_connecting.UserMessages, "user_messages"),
-                            new KeyValuePair<Uri, string>(api_authenticating.SystemMessages, "system_messages"),
-                            new KeyValuePair<Uri, string>(api_connecting.SystemMessages, "system_messages"),
-                        }
-                        .Where(list => list.Key != null)
-                        .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)),
-                        list =>
-                        {
-                            try
-                            {
-                                // Get and load messages.
-                                var message_list = new Models.MessageList();
-                                message_list.LoadJSONAPIResponse(
-                                    JSON.Response.Get(
-                                        uri: list.Key,
-                                        token: Configuration.AuthenticatingInstance.GetAccessToken(_quit.Token),
-                                        ct: _quit.Token).Value,
-                                    list.Value,
-                                    _quit.Token);
-
-                                if (message_list.Count > 0)
-                                {
-                                    // Add messages.
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                    {
-                                        foreach (var msg in message_list)
-                                            MessageList.Add(msg);
-                                    }));
-                                }
+                    var e = new Models.RequestAuthorizationEventArgs("config");
+                    Parent.Instance_RequestAuthorization(Configuration.AuthenticatingInstance, e);
+                    if (e.AccessToken != null)
+                    {
+                        Parallel.ForEach(new List<KeyValuePair<Uri, string>>() {
+                                new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
+                                new KeyValuePair<Uri, string>(api_connecting.UserMessages, "user_messages"),
+                                new KeyValuePair<Uri, string>(api_authenticating.SystemMessages, "system_messages"),
+                                new KeyValuePair<Uri, string>(api_connecting.SystemMessages, "system_messages"),
                             }
-                            catch { }
-                        });
+                            .Where(list => list.Key != null)
+                            .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)),
+                            list =>
+                            {
+                                try
+                                {
+                                    // Get and load messages.
+                                    var message_list = new Models.MessageList();
+                                    message_list.LoadJSONAPIResponse(
+                                        JSON.Response.Get(
+                                            uri: list.Key,
+                                            token: e.AccessToken,
+                                            ct: _quit.Token).Value,
+                                        list.Value,
+                                        _quit.Token);
+
+                                    if (message_list.Count > 0)
+                                    {
+                                        // Add messages.
+                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                        {
+                                            foreach (var msg in message_list)
+                                                MessageList.Add(msg);
+                                        }));
+                                    }
+                                }
+                                catch { }
+                            });
+                    }
 
                     //// Add test messages.
                     //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>

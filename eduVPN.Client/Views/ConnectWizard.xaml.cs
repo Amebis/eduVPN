@@ -192,8 +192,10 @@ namespace eduVPN.Views
 
             // Trigger authorization.
             var view_model = AuthorizationPopup.DataContext as ViewModels.AuthorizationPopup;
-            if (view_model.RequestAuthorization.CanExecute(e.Instance))
-                view_model.RequestAuthorization.Execute(e.Instance);
+            view_model.AuthenticatingInstance = e.Instance;
+            view_model.Scope = e.Scope;
+            if (view_model.RequestAuthorization.CanExecute())
+                view_model.RequestAuthorization.Execute();
 
             // Run the authorization pop-up and pass the access token to be returned to the event sender.
             if (AuthorizationPopup.ShowDialog() == true)
