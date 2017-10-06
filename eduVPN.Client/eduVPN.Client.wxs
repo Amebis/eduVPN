@@ -28,8 +28,8 @@
                 <Shortcut
                     Id="eduVPN.Client.exe"
                     Directory="ProgramMenuFolder"
-                    Name="!(loc.ApplicationName)"
-                    Description="!(loc.ApplicationDescription)"
+                    Name="!(loc.ApplicationName)" DisplayResourceDll="[#eduVPN.Resources.dll]" DisplayResourceId="1"
+                    Description="!(loc.ApplicationDescription)" DescriptionResourceDll="[#eduVPN.Resources.dll]" DescriptionResourceId="2"
                     Target="eduVPN.Client"
                     WorkingDirectory="INSTALLDIR"
                     Icon="eduVPN.ico"/>
@@ -54,6 +54,7 @@
             <ComponentGroupRef Id="eduOAuth.dll"/>
             <ComponentGroupRef Id="eduOpenVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.dll"/>
+            <ComponentGroupRef Id="eduVPN.Resources.dll"/>
             <ComponentGroupRef Id="Prism"/>
 
             <ComponentRef Id="eduVPN.Client.exe"/>
