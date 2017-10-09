@@ -10,7 +10,6 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
 {
@@ -48,9 +47,7 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Trigger initial authorization request.
-                                var authorization_task = new Task(() => Parent.Instance_RequestAuthorization(SelectedConfiguration, new Models.RequestAuthorizationEventArgs("config")), Window.Abort.Token, TaskCreationOptions.LongRunning);
-                                authorization_task.Start();
-                                await authorization_task;
+                                await Parent.TriggerAuthorizationAsync(SelectedConfiguration.AuthenticatingInstance);
 
                                 // Start VPN session.
                                 var param = new ConnectWizard.StartSessionParams(

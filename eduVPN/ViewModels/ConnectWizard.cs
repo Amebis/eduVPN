@@ -837,6 +837,23 @@ namespace eduVPN.ViewModels
         #region Methods
 
         /// <summary>
+        /// Triggers authorization for selected instance asynchronously
+        /// </summary>
+        /// <param name="instance">Instance</param>
+        /// <returns>Asynchronous operation</returns>
+        /// <exception cref="AccessTokenNullException">Authorization failed</exception>
+        public async Task TriggerAuthorizationAsync(Models.InstanceInfo instance)
+        {
+            var e = new Models.RequestAuthorizationEventArgs("config");
+            var authorization_task = new Task(() => Instance_RequestAuthorization(instance, e), Abort.Token, TaskCreationOptions.LongRunning);
+            authorization_task.Start();
+            await authorization_task;
+
+            if (e.AccessToken == null)
+                throw new Models.AccessTokenNullException();
+        }
+
+        /// <summary>
         /// Called when an instance requests user authorization
         /// </summary>
         /// <param name="sender">Instance of type <c>eduVPN.Models.InstanceInfo</c> requiring authorization</param>

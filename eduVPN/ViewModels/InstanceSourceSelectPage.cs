@@ -83,9 +83,7 @@ namespace eduVPN.ViewModels
                                     authenticating_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
                                     // Trigger initial authorization request.
-                                    var authorization_task = new Task(() => Parent.Instance_RequestAuthorization(authenticating_instance, new Models.RequestAuthorizationEventArgs("config")), Window.Abort.Token, TaskCreationOptions.LongRunning);
-                                    authorization_task.Start();
-                                    await authorization_task;
+                                    await Parent.TriggerAuthorizationAsync(authenticating_instance);
 
                                     // Set authenticating instance.
                                     Parent.AuthenticatingInstance = authenticating_instance;

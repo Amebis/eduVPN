@@ -8,7 +8,6 @@
 using Prism.Commands;
 using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels
 {
@@ -46,9 +45,7 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Trigger initial authorization request.
-                                var authorization_task = new Task(() => Parent.Instance_RequestAuthorization(SelectedInstance, new Models.RequestAuthorizationEventArgs("config")), Window.Abort.Token, TaskCreationOptions.LongRunning);
-                                authorization_task.Start();
-                                await authorization_task;
+                                await Parent.TriggerAuthorizationAsync(SelectedInstance);
 
                                 // Save selected instance.
                                 Parent.AuthenticatingInstance = SelectedInstance;
