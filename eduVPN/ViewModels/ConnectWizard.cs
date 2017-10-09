@@ -8,6 +8,7 @@
 using eduOAuth;
 using Prism.Commands;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -42,9 +43,10 @@ namespace eduVPN.ViewModels
         private static readonly float _popularity_alpha = 0.1f;
 
         /// <summary>
-        /// Access token cache serialization
+        /// Access token cache
         /// </summary>
-        private static object _access_token_cache_lock = new object();
+        private Dictionary<string, AccessToken> _access_token_cache;
+        private object _access_token_cache_lock;
 
         #endregion
 
@@ -610,6 +612,10 @@ namespace eduVPN.ViewModels
                     Properties.Settings.Default.OpenVPNInterfaceID = iface.ID;
             }
 
+            // Create access token cache.
+            _access_token_cache = new Dictionary<string, AccessToken>();
+            _access_token_cache_lock = new object();
+
             // Create session queue.
             _sessions = new ObservableCollection<VPNSession>();
             _sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(ActiveSession));
@@ -626,10 +632,29 @@ namespace eduVPN.ViewModels
                 _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[source_type_length];
 
                 // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
-                int total_ticks = (source_type_length - (int)Models.InstanceSourceType._start) * 2;
+                int total_ticks = (Properties.Settings.Default.AccessTokens.Count + source_type_length - (int)Models.InstanceSourceType._start) * 2;
                 for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
                     total_ticks += ((Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"]).Count();
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, total_ticks, 0)));
+
+                // Load access tokens from settings.
+                Parallel.ForEach(Properties.Settings.Default.AccessTokens,
+                    token =>
+                    {
+                        try
+                        {
+                            // Try to load the access token from the settings.
+                            var access_token = AccessToken.FromBase64String(token.Value);
+                            lock (_access_token_cache_lock)
+                                _access_token_cache.Add(token.Key, access_token);
+                        }
+                        catch { }
+                        finally
+                        {
+                            // Add a tick.
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                        }
+                    });
 
                 // Spawn instance source loading threads.
                 Parallel.For((int)Models.InstanceSourceType._start, source_type_length, source_index =>
@@ -805,6 +830,12 @@ namespace eduVPN.ViewModels
 
                     Dispatcher.ShutdownStarted += (object sender2, EventArgs e2) =>
                     {
+                        // Update access token settings.
+                        Properties.Settings.Default.AccessTokens = new SerializableStringDictionary();
+                        lock (_access_token_cache_lock)
+                        foreach (var access_token in _access_token_cache)
+                            Properties.Settings.Default.AccessTokens[access_token.Key] = access_token.Value.ToBase64String();
+
                         Parallel.For((int)Models.InstanceSourceType._start, (int)Models.InstanceSourceType._end, source_index =>
                         {
                             // Update settings.
@@ -861,68 +892,68 @@ namespace eduVPN.ViewModels
         public void Instance_RequestAuthorization(object sender, Models.RequestAuthorizationEventArgs e)
         {
             if (sender is Models.InstanceInfo authenticating_instance)
-            lock (_access_token_cache_lock)
             {
-                // Get API endpoints.
-                var api = authenticating_instance.GetEndpoints(Abort.Token);
-
-                if (e.SourcePolicy != Models.RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
+                lock (_access_token_cache_lock)
                 {
-                    try
-                    {
-                        // Try to load the access token from the settings.
-                        var access_token = AccessToken.FromBase64String(Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri]);
-                        if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
-                        {
-                            // Token expired. Refresh it.
-                            access_token = access_token.RefreshToken(api.TokenEndpoint, null, Abort.Token);
-                            if (access_token != null)
-                            {
-                                // Update access token in the settings.
-                                Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = access_token.ToBase64String();
+                    // Get API endpoints.
+                    var api = authenticating_instance.GetEndpoints(Abort.Token);
 
+                    if (e.SourcePolicy != Models.RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
+                    {
+                        var key = api.AuthorizationEndpoint.AbsoluteUri;
+                        if (_access_token_cache.TryGetValue(key, out var access_token))
+                        {
+                            if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
+                            {
+                                // Token expired. Refresh it.
+                                access_token = access_token.RefreshToken(api.TokenEndpoint, null, Abort.Token);
+                                if (access_token != null)
+                                {
+                                    // Update access token cache.
+                                    _access_token_cache[key] = access_token;
+
+                                    // If we got here, return the token.
+                                    e.AccessToken = access_token;
+                                    return;
+                                }
+                            }
+                            else
+                            {
                                 // If we got here, return the token.
                                 e.AccessToken = access_token;
                                 return;
                             }
                         }
+                    }
+
+                    if (e.SourcePolicy != Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly)
+                    {
+                        // Re-raise this event as ConnectWizard event, to simplify view.
+                        // This way the view can listen ConnectWizard for authentication events only.
+                        if (Dispatcher.CurrentDispatcher == Dispatcher)
+                        {
+                            // We're in the GUI thread.
+                            var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
+                            RequestInstanceAuthorization?.Invoke(this, e_instance);
+                            e.AccessToken = e_instance.AccessToken;
+                        }
                         else
                         {
-                            // If we got here, return the token.
-                            e.AccessToken = access_token;
-                            return;
+                            // We're in the background thread - raise event via dispatcher.
+                            Dispatcher.Invoke(DispatcherPriority.Normal,
+                                (Action)(() =>
+                                {
+                                    var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
+                                    RequestInstanceAuthorization?.Invoke(this, e_instance);
+                                    e.AccessToken = e_instance.AccessToken;
+                                }));
                         }
-                    }
-                    catch { }
-                }
 
-                if (e.SourcePolicy != Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly)
-                {
-                    // Re-raise this event as ConnectWizard event, to simplify view.
-                    // This way the view can listen ConnectWizard for authentication events only.
-                    if (Dispatcher.CurrentDispatcher == Dispatcher)
-                    {
-                        // We're in the GUI thread.
-                        var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
-                        RequestInstanceAuthorization?.Invoke(this, e_instance);
-                        e.AccessToken = e_instance.AccessToken;
-                    }
-                    else
-                    {
-                        // We're in the background thread - raise event via dispatcher.
-                        Dispatcher.Invoke(DispatcherPriority.Normal,
-                            (Action)(() =>
-                            {
-                                var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
-                                RequestInstanceAuthorization?.Invoke(this, e_instance);
-                                e.AccessToken = e_instance.AccessToken;
-                            }));
-                    }
-
-                    if (e.AccessToken != null)
-                    {
-                        // Save access token to the settings.
-                        Properties.Settings.Default.AccessTokens[api.AuthorizationEndpoint.AbsoluteUri] = e.AccessToken.ToBase64String();
+                        if (e.AccessToken != null)
+                        {
+                            // Save access token to the cache.
+                            _access_token_cache[api.AuthorizationEndpoint.AbsoluteUri] = e.AccessToken;
+                        }
                     }
                 }
             }
