@@ -610,22 +610,6 @@ namespace eduVPN.ViewModels
                     Properties.Settings.Default.OpenVPNInterfaceID = iface.ID;
             }
 
-            Dispatcher.ShutdownStarted += (object sender, EventArgs e) =>
-            {
-                Parallel.For((int)Models.InstanceSourceType._start, (int)Models.InstanceSourceType._end, source_index =>
-                {
-                    // Update settings.
-                    var configuration_history = ConfigurationHistories[source_index];
-                    var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
-                    foreach (var cfg in configuration_history)
-                        hist.Add(cfg.ToSettings(InstanceSources[source_index].GetType()));
-                    Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"] = hist;
-                });
-
-                // Persist settings to disk.
-                Properties.Settings.Default.Save();
-            };
-
             // Create session queue.
             _sessions = new ObservableCollection<VPNSession>();
             _sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(ActiveSession));
@@ -818,6 +802,22 @@ namespace eduVPN.ViewModels
                 {
                     if (Abort.Token.IsCancellationRequested)
                         return;
+
+                    Dispatcher.ShutdownStarted += (object sender2, EventArgs e2) =>
+                    {
+                        Parallel.For((int)Models.InstanceSourceType._start, (int)Models.InstanceSourceType._end, source_index =>
+                        {
+                            // Update settings.
+                            var configuration_history = ConfigurationHistories[source_index];
+                            var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
+                            foreach (var cfg in configuration_history)
+                                hist.Add(cfg.ToSettings(InstanceSources[source_index].GetType()));
+                            Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"] = hist;
+                        });
+
+                        // Persist settings to disk.
+                        Properties.Settings.Default.Save();
+                    };
 
                     // Proceed to the "first" page.
                     RaisePropertyChanged(nameof(StartingPage));
