@@ -86,7 +86,15 @@ namespace eduVPN.ViewModels
                         () =>
                         {
                             Parent.ChangeTaskCount(+1);
-                            try { ConfigurationHistory.Remove(SelectedConfiguration); }
+                            try
+                            {
+                                // Remove configuration from history.
+                                ConfigurationHistory.Remove(SelectedConfiguration);
+
+                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                                if (Parent.StartingPage != Parent.CurrentPage)
+                                    Parent.CurrentPage = Parent.StartingPage;
+                            }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
                         },
