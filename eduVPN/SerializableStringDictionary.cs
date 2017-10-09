@@ -6,8 +6,8 @@
 */
 
 using System;
-using System.Collections;
-using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -17,7 +17,8 @@ namespace eduVPN
     /// <summary>
     /// Serializable string dictionary
     /// </summary>
-    public class SerializableStringDictionary : StringDictionary, IXmlSerializable
+    [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "DCS does not support IXmlSerializable types that are also marked as [Serializable]")]
+    public class SerializableStringDictionary : Dictionary<string, string>, IXmlSerializable
     {
         #region IXmlSerializable Support
 
@@ -35,23 +36,23 @@ namespace eduVPN
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "DictionaryEntry")
                 {
-                    var name = reader["Key"];
-                    if (name == null)
+                    var key = reader["Key"];
+                    if (key == null)
                         throw new FormatException();
 
                     var value = reader["Value"];
-                    this[name] = value;
+                    this[key] = value;
                 }
             }
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            foreach (DictionaryEntry entry in this)
+            foreach (var entry in this)
             {
                 writer.WriteStartElement("DictionaryEntry");
-                writer.WriteAttributeString("Key", (string)entry.Key);
-                writer.WriteAttributeString("Value", (string)entry.Value);
+                writer.WriteAttributeString("Key", entry.Key);
+                writer.WriteAttributeString("Value", entry.Value);
                 writer.WriteEndElement();
             }
         }
