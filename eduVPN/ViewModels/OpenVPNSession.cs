@@ -531,6 +531,6 @@ namespace eduVPN.ViewModels
             return File.Exists(LogPath);
         }
 
-#endregion
+        #endregion
     }
 }
