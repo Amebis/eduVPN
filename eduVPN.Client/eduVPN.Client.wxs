@@ -28,7 +28,7 @@
                 <Shortcut
                     Id="eduVPN.Client.exe"
                     Directory="ProgramMenuFolder"
-                    Name="!(loc.ApplicationName)" DisplayResourceDll="[#eduVPN.Resources.dll]" DisplayResourceId="1"
+                    Name="eduVPN Client" DisplayResourceDll="[#eduVPN.Resources.dll]" DisplayResourceId="1"
                     Description="!(loc.ApplicationDescription)" DescriptionResourceDll="[#eduVPN.Resources.dll]" DescriptionResourceId="2"
                     Target="eduVPN.Client"
                     WorkingDirectory="INSTALLDIR"
