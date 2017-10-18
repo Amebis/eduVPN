@@ -11,21 +11,31 @@
 			<description>Creates shortcut to a program - Amebis, Copyright © 2015-2017</description>
 			<unnamed name="&lt;Shortcut.lnk&gt;" required="true"  helpstring="Shortcut file to create"/>
 			<unnamed name="&lt;Target&gt;"       required="true"  helpstring="Target file the shortcut invokes"/>
-			<named name="A" type="string"        required="false" helpstring="Command line arguments"/>
-			<named name="F" type="string"        required="false" helpstring="Start in folder"/>
-			<named name="S" type="string"        required="false" helpstring="Shortcut key (Example: &quot;ALT+CTRL+F&quot;)"/>
-			<named name="R" type="string"        required="false" helpstring="Run (Valid values: 1=Normal Window, 3=Maximized, 7=Minimized)"/>
-			<named name="C" type="string"        required="false" helpstring="Comment"/>
-			<named name="I" type="string"        required="false" helpstring="Icon (Example: &quot;SHELL32.DLL,1&quot;)"/>
+			<named   name="A"  type="string"     required="false" helpstring="Command line arguments"/>
+			<named   name="F"  type="string"     required="false" helpstring="Start in folder"/>
+			<named   name="S"  type="string"     required="false" helpstring="Shortcut key (Example: &quot;ALT+CTRL+F&quot;)"/>
+			<named   name="R"  type="string"     required="false" helpstring="Run (Valid values: 1=Normal Window, 3=Maximized, 7=Minimized)"/>
+			<named   name="LN" type="string"     required="false" helpstring="Localized name (Example: &quot;@resource.dll,-3&quot;"/>
+			<named   name="C"  type="string"     required="false" helpstring="Comment"/>
+			<named   name="I"  type="string"     required="false" helpstring="Icon (Example: &quot;SHELL32.DLL,1&quot;)"/>
 			<example>
 Example:
 MkLnk.wsf &quot;%USERPROFILE%\Desktop\My shortcut.lnk&quot; &quot;%windir%\notepad.exe&quot; /R:3 /C:&quot;Starts the Notepad Maximized&quot;
 </example>
 		</runtime>
+		<reference object="WScript.Shell"/>
+		<reference object="Scripting.FileSystemObject"/>
 		<script language="JScript"><![CDATA[
 			if (WScript.Arguments.Unnamed.Length < 2) {
 				WScript.Arguments.ShowUsage();
 				WScript.Quit(1);
+			}
+
+			if (!String.prototype.trim) {
+				var String_trim_re = new RegExp("^[\\s\\uFEFF\\xA0]+|[\\s\\uFEFF\\xA0]+$", "g");
+				String.prototype.trim = function () {
+					return this.replace(String_trim_re, '');
+				};
 			}
 
 			var
@@ -67,6 +77,84 @@ MkLnk.wsf &quot;%USERPROFILE%\Desktop\My shortcut.lnk&quot; &quot;%windir%\notep
 				throw err;
 			}
 
+			if (WScript.Arguments.Named.Exists("LN")) {
+				// Localizing shortcut name is localizing filename using desktop.ini.
+				var fso = WScript.CreateObject("Scripting.FileSystemObject");
+				var
+					desktop_ini_filename = fso.GetParentFolderName(WScript.Arguments.Unnamed(0)) + "\\desktop.ini",
+					desktop_ini = "",
+					desktop_ini_section = "",
+					LocalizedFileNames_present = false;
+				
+				// Read desktop.ini file
+				var f = fso.OpenTextFile(desktop_ini_filename, ForReading, false, TristateTrue);
+				try {
+					var
+						re_comment = new RegExp("^\\s*;(.*)$", "i"),
+						re_section = new RegExp("^\\s*\\[([^\\]]*)\\]\\s*$", "i"),
+						re_value   = new RegExp("^([^=]*)=(.*)$");
+					var
+						shortcut_filename = fso.GetFileName(WScript.Arguments.Unnamed(0)),
+						shortcut_filename_lc = shortcut_filename.toLowerCase();
+						
+					while (!f.AtEndOfStream) {
+						var line = f.ReadLine(), m;
+						if (line.match(re_comment)) {
+							// ; comment found.
+							desktop_ini += line + "\r\n";
+							continue;
+						}
+
+						if (m = line.match(re_section)) {
+							// [section] found.
+							desktop_ini_section = m[1].trim().toLowerCase();
+							desktop_ini += line + "\r\n";
+							if (desktop_ini_section == "localizedfilenames") {
+								// Add our shortcut.
+								LocalizedFileNames_present = true;
+								desktop_ini += fso.GetFileName(WScript.Arguments.Unnamed(0)) + "=" + WScript.Arguments.Named("LN") + "\r\n";
+							}
+						} else if (m = line.match(re_value)) {
+							// name=value pair found.
+							if (desktop_ini_section == "localizedfilenames" && m[1].trim().toLowerCase() == shortcut_filename_lc) {
+								// Our shortcut was found from before. Skip it.
+							} else
+								desktop_ini += line + "\r\n";
+						} else {
+							// Copy everything else.
+							desktop_ini += line + "\r\n";
+						}
+					}
+				} finally {
+					f.Close();
+				}
+
+				if (!LocalizedFileNames_present)
+					desktop_ini +=
+						"[LocalizedFileNames]\r\n" +
+						fso.GetFileName(WScript.Arguments.Unnamed(0)) + "=" + WScript.Arguments.Named("LN") + "\r\n";
+
+				// desktop.ini files usually have hidden and/or system attributes. Reset them, or overwriting file will fail.
+				try {
+					var file = fso.GetFile(desktop_ini_filename);
+					file.Attributes = Normal;
+				} catch (err) {}
+
+				// Write desktop.ini.
+				var f = fso.OpenTextFile(desktop_ini_filename, ForWriting, true, TristateTrue);
+				try {
+					f.Write(desktop_ini);
+				} finally {
+					f.Close();
+				}
+
+				// Set hidden and system attributes.
+				try {
+					var file = fso.GetFile(desktop_ini_filename);
+					file.Attributes |= Hidden | System;
+				} catch (err) {}
+			}
+
 			WScript.Quit(0);
 		]]></script>
 	</job>
@@ -75,8 +163,8 @@ MkLnk.wsf &quot;%USERPROFILE%\Desktop\My shortcut.lnk&quot; &quot;%windir%\notep
 ** SIG ** MIIbIAYJKoZIhvcNAQcCoIIbETCCGw0CAQExCzAJBgUr
 ** SIG ** DgMCGgUAMGcGCisGAQQBgjcCAQSgWTBXMDIGCisGAQQB
 ** SIG ** gjcCAR4wJAIBAQQQcAVhGs441BGiowAQS9NQkAIBAAIB
-** SIG ** AAIBAAIBAAIBADAhMAkGBSsOAwIaBQAEFFGiUKmbVHrW
-** SIG ** odX8k7KjWrc6+DeYoIIKLzCCBM4wggO2oAMCAQICEDB6
+** SIG ** AAIBAAIBAAIBADAhMAkGBSsOAwIaBQAEFBh2HRc9TaFG
+** SIG ** 9inztrNtdjWQpwyXoIIKLzCCBM4wggO2oAMCAQICEDB6
 ** SIG ** NnqqPmiBpvlPCMs7OWQwDQYJKoZIhvcNAQELBQAwfzEL
 ** SIG ** MAkGA1UEBhMCVVMxHTAbBgNVBAoTFFN5bWFudGVjIENv
 ** SIG ** cnBvcmF0aW9uMR8wHQYDVQQLExZTeW1hbnRlYyBUcnVz
@@ -163,21 +251,21 @@ MkLnk.wsf &quot;%USERPROFILE%\Desktop\My shortcut.lnk&quot; &quot;%windir%\notep
 ** SIG ** qj5ogab5TwjLOzlkMAkGBSsOAwIaBQCgcDAQBgorBgEE
 ** SIG ** AYI3AgEMMQIwADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGC
 ** SIG ** NwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIB
-** SIG ** FTAjBgkqhkiG9w0BCQQxFgQUGG8dGcnPQfzO3x6FE4n+
-** SIG ** YNHdAQswDQYJKoZIhvcNAQEBBQAEggEAgLgTdTqkGWZ7
-** SIG ** xglEOegf1bYBqxyr91ezyGr6Chq0SOeoQPeA8XNKi/EU
-** SIG ** f75ZDouViwTtwCkIo6WQcZ1TUJRz7+lcMXS7IIXcL7t0
-** SIG ** g/bVgGJ/y3EhEFbQt26p+1EjLcSeQgXWNNP0gKZQ1pEr
-** SIG ** 5grADKX4fJPlfJd6nGk+jC6DQiqdOTXDsfhgO6YpZ23B
-** SIG ** LTSa2py+DB7tUmNcMKl9DfPekcVkT5JkzsOEU6MJo73t
-** SIG ** 2oD+82LQ8OEEn8DayORifTM40FrsGSYkCBNgFTSEJ5aY
-** SIG ** 4R9ucMofIDkdcHHnxxyEML0doFutJNQ4tUFRiuo3N1FX
-** SIG ** R9swzUm8hNwpUP31Wij/gaGCDiwwgg4oBgorBgEEAYI3
+** SIG ** FTAjBgkqhkiG9w0BCQQxFgQUWVaSAH2ZSW7PHrzlXHsc
+** SIG ** zcZUBVgwDQYJKoZIhvcNAQEBBQAEggEAhgxGZcSJASiE
+** SIG ** 7VYwQEM5uwPisSE8bwhrDyFEbeKjB2gyzMiMWpTLTYQI
+** SIG ** XIH2Ji79WDbAxMTxecyuVCx/yf0Uv6oLrioWmzMzR1+v
+** SIG ** HQuYRUZ1JKaJr4QZ2ZuziOy3KlArYmd5y3nRlR4NyhiH
+** SIG ** vlsVaFkN6Su8/bgUYZqrX2wgMKcKx3NBlOq5edYC6IAg
+** SIG ** WWVjBFyQnQ08LivN2CuGIQCT/ou/a5onPH3A62aA4hUm
+** SIG ** 2Oi1HrHNXohQh0Pij916PzQQ9DEyfrEaYXSGSvrLD3BU
+** SIG ** oRXm2WpQIFqeNctcWf6TLZITzH5RJ0tt7vlewRvbYS2C
+** SIG ** fpmKuKe7k9HiI28BMQV7z6GCDiwwgg4oBgorBgEEAYI3
 ** SIG ** AwMBMYIOGDCCDhQGCSqGSIb3DQEHAqCCDgUwgg4BAgED
 ** SIG ** MQ0wCwYJYIZIAWUDBAIBMIH/BgsqhkiG9w0BCRABBKCB
 ** SIG ** 7wSB7DCB6QIBAQYLYIZIAYb4RQEHFwMwITAJBgUrDgMC
-** SIG ** GgUABBQ2Bf9auN+Kw2UcjSmWMUFN7Eq1MQIVAOFAfpvr
-** SIG ** TJWMEWRutOho45MlHlAoGA8yMDE3MDcxMjA4NDYyNVow
+** SIG ** GgUABBRkLFObqSinz563E5qWjBBJcofI8AIVAN+8KCav
+** SIG ** me4VHoetRKAktKHW9kWvGA8yMDE3MTAxODEyNDE0NFow
 ** SIG ** AwIBHqCBhqSBgzCBgDELMAkGA1UEBhMCVVMxHTAbBgNV
 ** SIG ** BAoTFFN5bWFudGVjIENvcnBvcmF0aW9uMR8wHQYDVQQL
 ** SIG ** ExZTeW1hbnRlYyBUcnVzdCBOZXR3b3JrMTEwLwYDVQQD
@@ -270,18 +358,18 @@ MkLnk.wsf &quot;%USERPROFILE%\Desktop\My shortcut.lnk&quot; &quot;%windir%\notep
 ** SIG ** MSgwJgYDVQQDEx9TeW1hbnRlYyBTSEEyNTYgVGltZVN0
 ** SIG ** YW1waW5nIENBAhBUWPKq10HWRLyEqXugllLmMAsGCWCG
 ** SIG ** SAFlAwQCAaCBpDAaBgkqhkiG9w0BCQMxDQYLKoZIhvcN
-** SIG ** AQkQAQQwHAYJKoZIhvcNAQkFMQ8XDTE3MDcxMjA4NDYy
-** SIG ** NVowLwYJKoZIhvcNAQkEMSIEILB9inbg1PBbcpxlBblr
-** SIG ** u0ULNfUMPR21yFyYyzBAAPX3MDcGCyqGSIb3DQEJEAIv
+** SIG ** AQkQAQQwHAYJKoZIhvcNAQkFMQ8XDTE3MTAxODEyNDE0
+** SIG ** NFowLwYJKoZIhvcNAQkEMSIEIAyGlFhxhujzr5XvLSuD
+** SIG ** jgtF30gR/SWXsWecfFUE9ACXMDcGCyqGSIb3DQEJEAIv
 ** SIG ** MSgwJjAkMCIEIM96wXrQR+zV/cNoIgMbEtTvB4tvK0xe
-** SIG ** a6Qfj/LPS61nMAsGCSqGSIb3DQEBAQSCAQBVK57bF6pI
-** SIG ** +bKt+VwsJcFx6HNl9CVLbKTv+cGDa6u0138d2iXT1CaI
-** SIG ** GSp6g+aJclnxFNlr5GxDIPDqPT4GdgLcNt39sQpl5/Yw
-** SIG ** 59U6kkhgw1cjlqgIbGaYHhe1kJliQwR93tAR8lXrN8Eg
-** SIG ** m1GV05iLnb2MgteUde3+uYoIAMPmCJti6oqpahNVdTi7
-** SIG ** NmK9MW6YyDtir2FsK8gSOyri3RvPCIRvb728A/12aIDW
-** SIG ** mYQA862yG451ybP/WjQhhKbZwS5KoJlmKRcT46/ayyyP
-** SIG ** zOBdkHqujsiPlo5NUSwKavqZDsbQAbUX8UQ6Vq0zNgqt
-** SIG ** mAgz63Qz4xlsrmQBpjnU0tOV
+** SIG ** a6Qfj/LPS61nMAsGCSqGSIb3DQEBAQSCAQA9TcfZUtYC
+** SIG ** Dja0O+xLUxLpEtc5ZbMrJ2L2dTdNP7mPaWeCfrKcpVRe
+** SIG ** GR+orEZbAmYU/+7QOKXLmVJ/LFwaNRZxeyv5A4VB/OHK
+** SIG ** kPVGvWVN0yhGRnXWfSwVlFKBvocgUxTMwJOYyk0Cc5+S
+** SIG ** 5xLeamhGWFi2hxZC90Dv90pwNt79/4yAuPCKQbuVc4y+
+** SIG ** zxcGoNGiWv2AyIGqU0IdK3nW31jWM1tlZsCJW8HGd0my
+** SIG ** 2u3Pr0GUU4ZlaGilo8pbv2l0icWsgCfCV5NZ/H4GqDeN
+** SIG ** Zxiy68OHKdqipuq77kg6kBPY8MyOLUVQJS3D53R34r8W
+** SIG ** o4z9rQ1giBpcUoT63d1tfAFl
 </signature>
 </package>
