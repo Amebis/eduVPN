@@ -62,7 +62,7 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
-                <Directory Id="INSTALLDIR" Name="!(loc.ApplicationName)" FileSource="$(var.eduVPN.TargetDir)">
+                <Directory Id="INSTALLDIR" Name="eduVPN Client" FileSource="$(var.eduVPN.TargetDir)">
                     <Directory Id="RESOURCEDIRSL" Name="sl"/>
                 </Directory>
             </Directory>
