@@ -288,11 +288,6 @@
       <Project>{ddf40a25-1180-40b1-9bf1-8d3d66d734ad}</Project>
       <Name>eduOpenVPN</Name>
     </ProjectReference>
-    <ProjectReference Include="..\eduVPN.Resources\eduVPN.Resources.vcxproj">
-      <Project>{ca8a2358-f8bf-484e-ae07-1255630a52e2}</Project>
-      <Name>eduVPN.Resources</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\eduVPN\eduVPN.csproj">
       <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>
       <Name>eduVPN</Name>
