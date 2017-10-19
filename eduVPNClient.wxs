@@ -50,12 +50,14 @@
             <RemoveExistingProducts Before="InstallInitialize"/>
         </InstallExecuteSequence>
 
+
         <!--
             .NET Framework check
             TODO: Once .NET Framework installation as a prerequisite (WiX bundles) is supported, remove the check.
         -->
         <PropertyRef Id="NETFRAMEWORK45"/>
         <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
+
 
         <!--
             Folders
@@ -67,6 +69,7 @@
                 </Directory>
             </Directory>
             <Directory Id="ProgramMenuFolder"/>
+            <Directory Id="DesktopFolder"/>
 
             <Merge Id="VC150Redist" SourceFile="$(var.eduVPN.VC150RedistMSM)" DiskId="1" Language="0"/>
         </Directory>
