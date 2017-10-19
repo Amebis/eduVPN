@@ -13,7 +13,7 @@
         UpgradeCode="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}"
         Version="$(var.eduVPN.Version)"
         Language="!(loc.ProductLanguage)"
-        Name="!(loc.ApplicationNameFull) $(var.eduVPN.VersionInformational)"
+        Name="!(loc.ApplicationName) $(var.eduVPN.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
