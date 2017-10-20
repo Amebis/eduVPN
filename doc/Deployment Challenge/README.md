@@ -55,7 +55,7 @@ Using command line switches, one can select features to update, but we should de
 eduVPN client is bundled with OpenVPN and own version of OpenVPN Interactive Service, and is installed using an MSI package:  
 ![Extended eduVPN client MSI](../images/basic-eduVPN-MSI-2.svg "Extended eduVPN client MSI")
 
-OpenVPN binaries (including DLL libraries) are stock OpenVPN binaries:
+OpenVPN binaries (including DLL libraries) are upstream OpenVPN binaries:
 - openvpn.exe
 - libeay32.dll
 - liblzo2-2.dll
@@ -72,16 +72,16 @@ TUN/TAP drivers are installed using TUN/TAP installer EXE:
 
 eduVPN client becomes mostly independent of OpenVPN. Less dependency on external features bring more predictable behaviour on end user computer resulting in less help-desk cases.
 
-Furthermore, separating eduVPN's bundled OpenVPN version from stock OpenVPN allows user to run an old version of OpenVPN in parallel should user need a specific version for other VPN access.
+Furthermore, separating eduVPN's bundled OpenVPN version from upstream OpenVPN allows user to run an old version of OpenVPN in parallel should user need a specific version for other VPN access.
 
 
 ### 2.2.2 Cons
 
-The stock OpenVPN Interactive Service does not support instantiation. Only one OpenVPN Interactive Service can run at the same time on the same computer.
+The upstream OpenVPN Interactive Service does not support instantiation. Only one OpenVPN Interactive Service can run at the same time on the same computer.
 
-To prevent collision with the stock OpenVPN Interactive Service, the Interactive Service needs amends.
+To prevent collision with the upstream OpenVPN Interactive Service, the Interactive Service needs amends.
 
-First, Microsoft Visual C++ building of OpenVPN Interactive Service using the same building environment as eduVPN (Microsoft Visual Studio 2017 Community Edition) was established. Therefore, we can make our own fork of the Interactive Service not colliding with the stock one now.
+First, Microsoft Visual C++ building of OpenVPN Interactive Service using the same building environment as eduVPN (Microsoft Visual Studio 2017 Community Edition) was established. Therefore, we can make our own fork of the Interactive Service not colliding with the upstream one now.
 
 > Note: Our changes have been submitted to the OpenVPN development team for review. There is a good chance the most important ones will get acknowledged and become standard.
 
