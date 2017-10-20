@@ -52,8 +52,17 @@ Using command line switches, one can select features to update, but we should de
 
 ## 2.2 Plan B
 
-eduVPN client is bundled with own version of OpenVPN and OpenVPN Interactive Service, and is installed using an MSI package:  
+eduVPN client is bundled with OpenVPN and own version of OpenVPN Interactive Service, and is installed using an MSI package:  
 ![Extended eduVPN client MSI](../images/basic-eduVPN-MSI-2.svg "Extended eduVPN client MSI")
+
+OpenVPN binaries (including DLL libraries) are stock OpenVPN binaries:
+- openvpn.exe
+- libeay32.dll
+- liblzo2-2.dll
+- libpkcs11-helper-1.dll
+- ssleay32.dll
+
+The OpenVPN Interactive Service needs some amends to support multiple concurrent instances.
 
 TUN/TAP drivers are installed using TUN/TAP installer EXE:  
 ![TUN/TAP installer EXE](../images/basic-TUNTAP-EXE-1.svg "TUN/TAP installer EXE")
