@@ -15,7 +15,6 @@ Windows eduVPN Client
 
 # Building
 ## Pre-requisites
-- libsodium: Download [libsodium 1.0.14 pre-compiled MSVC binaries](https://download.libsodium.org/libsodium/releases/libsodium-1.0.14-msvc.zip) and extract them to `C:\SDK\libsodium\1.0.14`. (Or change `LIBSODIUM_SDK` in `eduEd25519\eduEd25519.props` to the folder of your choice.) `sodium.h` include file should be at `C:\SDK\libsodium\1.0.14\include\sodium.h`.
 - Visual Studio 2017 Community Edition: The required VS2017 feature set to be announced later...
 
 ## Code Signing
