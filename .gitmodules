@@ -10,3 +10,6 @@
 [submodule "eduOpenVPN"]
 	path = eduOpenVPN
 	url = https://github.com/Amebis/eduOpenVPN.git
+[submodule "openvpn"]
+	path = OpenVPN
+	url = https://github.com/Amebis/openvpn.git
