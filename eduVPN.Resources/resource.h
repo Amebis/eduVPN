@@ -5,6 +5,8 @@
 #define IDS_EDUVPN_CLIENT_TITLE         1
 #define IDS_EDUVPN_CLIENT_DESCRIPTION   2
 #define IDS_EDUVPN_CLIENT_PUBLISHER     3
+#define IDS_EDUVPN_INTERACTIVE_TITLE    4
+#define IDS_EDUVPN_INTERACTIVE_DESCRIPTION 5
 
 // Next default values for new objects
 // 

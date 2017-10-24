@@ -17,7 +17,7 @@
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
-            InstallerVersion="500"
+            InstallerVersion="400"
             Compressed="yes"
             SummaryCodepage="!(loc.SummaryCodepage)"
             ReadOnly="yes"/>
@@ -82,6 +82,7 @@
             <MergeRef Id="VC150Redist"/>
 
             <ComponentGroupRef Id="eduVPN.Client.exe"/>
+            <ComponentGroupRef Id="OpenVPN"/>
         </Feature>
 
 
@@ -95,6 +96,55 @@
         </DirectoryRef>
         <ComponentGroup Id="Prism">
             <ComponentRef Id="Prism.dll"/>
+        </ComponentGroup>
+
+
+        <!--
+            OpenVPN
+        -->
+        <DirectoryRef Id="INSTALLDIR">
+            <Component Id="libeay32.dll" Guid="{AE04C029-0B1B-4F2A-B810-58C8DEE72AE4}">
+                <File Source="libeay32.dll"/>
+            </Component>
+            <Component Id="liblzo2_2.dll" Guid="{4C072186-6C47-49B3-B945-D09503A20FB3}">
+                <File Source="liblzo2-2.dll"/>
+            </Component>
+            <Component Id="libpkcs11_helper_1.dll" Guid="{1D7D0360-15AD-466F-B667-840C8C8827C5}">
+                <File Source="libpkcs11-helper-1.dll"/>
+            </Component>
+            <Component Id="openvpn.exe" Guid="{101FF3BB-DD5A-41CB-8A8C-0B582F7BF1D7}">
+                <File Source="openvpn.exe"/>
+            </Component>
+            <Component Id="openvpnserv.exe" Guid="{1A38AF86-1516-49FA-91AE-D48EAE37468D}">
+                <File Source="openvpnserv.exe"/>
+                <ServiceControl
+                    Id="eduVPNServiceInteractive"
+                    Name="eduVPNServiceInteractive"
+                    Start="install"
+                    Stop="both"
+                    Remove="uninstall"/>
+                <ServiceInstall
+                    Name="eduVPNServiceInteractive"
+                    DisplayName="@[#eduVPN.Resources.dll],-4"
+                    Description="@[#eduVPN.Resources.dll],-5"
+                    Type="shareProcess"
+                    Start="auto"
+                    ErrorControl="normal">
+                    <ServiceDependency Id="tap0901"/>
+                    <ServiceDependency Id="Dhcp"/>
+                </ServiceInstall>
+            </Component>
+            <Component Id="ssleay32.dll" Guid="{72639C55-D063-4A57-B7B7-1CD60945B97A}">
+                <File Source="ssleay32.dll"/>
+            </Component>
+        </DirectoryRef>
+        <ComponentGroup Id="OpenVPN">
+            <ComponentRef Id="libeay32.dll"/>
+            <ComponentRef Id="liblzo2_2.dll"/>
+            <ComponentRef Id="libpkcs11_helper_1.dll"/>
+            <ComponentRef Id="openvpn.exe"/>
+            <ComponentRef Id="openvpnserv.exe"/>
+            <ComponentRef Id="ssleay32.dll"/>
         </ComponentGroup>
     </Product>
 </Wix>

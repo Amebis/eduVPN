@@ -7,7 +7,6 @@
 
 using eduOpenVPN;
 using eduOpenVPN.Management;
-using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -34,7 +33,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// OpenVPN connection ID
         /// </summary>
-        /// <remarks>Connection ID determines .ovpn and .log filenames.</remarks>
+        /// <remarks>Connection ID determines .conf and .log filenames.</remarks>
         private string _connection_id;
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// OpenVPN profile configuration file path
         /// </summary>
-        string ConfigurationPath { get => _working_folder + _connection_id + ".ovpn"; }
+        string ConfigurationPath { get => _working_folder + _connection_id + ".conf"; }
 
         /// <summary>
         /// OpenVPN connection log
@@ -86,30 +85,8 @@ namespace eduVPN.ViewModels
         public OpenVPNSession(ConnectWizard parent, Models.VPNConfiguration configuration) :
             base(parent, configuration)
         {
-            try
-            {
-                // Use OpenVPN configuration folder.
-                using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-                {
-                    using (var key = hklm_key.OpenSubKey("SOFTWARE\\OpenVPN", false))
-                    {
-                        _working_folder = key.GetValue("config_dir").ToString().TrimEnd();
-                        string path_separator = Path.DirectorySeparatorChar.ToString();
-                        if (!_working_folder.EndsWith(path_separator))
-                            _working_folder += path_separator;
-                        _working_folder += "eduVPN\\Spool\\";
-                        if (!Directory.Exists(_working_folder))
-                            throw new FileNotFoundException();
-                        _connection_id = Guid.NewGuid().ToString();
-                    }
-                }
-            }
-            catch
-            {
-                // Use temporary folder.
-                _working_folder = Path.GetTempPath();
-                _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
-            }
+            _working_folder = Path.GetTempPath();
+            _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
 
             // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
             new DispatcherTimer(
@@ -129,7 +106,7 @@ namespace eduVPN.ViewModels
                 _client_certificate = Configuration.ConnectingInstance.GetClientCertificate(Configuration.AuthenticatingInstance, _quit.Token);
             });
 
-            _openvpn_interactive_service = new ServiceController("OpenVPNServiceInteractive");
+            _openvpn_interactive_service = new ServiceController("eduVPNServiceInteractive");
             _pre_run_actions.Add(() =>
             {
                 try
@@ -243,8 +220,9 @@ namespace eduVPN.ViewModels
                         {
                             var mgmt_password = Membership.GeneratePassword(16, 6);
                             openvpn_interactive_service_connection.Connect(
+                                    "eduvpn\\service",
                                     _working_folder,
-                                    new string[] { "--config", _connection_id + ".ovpn", },
+                                    new string[] { "--config", _connection_id + ".conf", },
                                     mgmt_password + "\n",
                                     3000,
                                     _quit.Token);

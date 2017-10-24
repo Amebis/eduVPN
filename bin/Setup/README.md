@@ -1,11 +1,9 @@
 # MSI Packages
 
-eduVPN MSI packages install eduVPN client _without_ pre-requisites. The only pre-requisite installed by MSI package is Microsoft Visual C++ Run-time library.
-
-eduVPN MSI packages are provided for IT professionals looking to mass-deploy eduVPN in their organisation using Group Policy or similar. Deploying eduVPN client is deploying:
+eduVPN MSI packages install eduVPN client. eduVPN MSI packages are provided for IT professionals looking to mass-deploy eduVPN in their organisation using Group Policy or similar. Deploying eduVPN client is deploying:
 
 1. .NET Framework 4.5
-2. OpenVPN 2.4+
+2. Tap-windows drivers 9.21+
 3. eduVPN MSI
 
 Note: All eduVPN MSI packages have no GUI by design.

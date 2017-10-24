@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Wix
+    xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+    <Fragment>
+        <util:RegistrySearch
+            Id="TAPWindowsPath"
+            Root="HKLM"
+            Key="SOFTWARE\TAP-Windows"
+            Win64="yes"
+            Variable="TAPWindowsPath"/>
+        <util:FileSearch
+            Id="TAPWindowsDriverVersion"
+            After="TAPWindowsPath"
+            Path="[TAPWindowsPath]\driver\tap0901.sys"
+            Result="version"
+            Variable="TAPWindowsDriverVersion"/>
+
+        <PackageGroup
+            Id="TAPWindows921Web">
+            <ExePackage
+                Id="TAPWindows921Web"
+                DisplayName="TAP-Windows 9.21.2"
+                Cache="yes"
+                Compressed="no"
+                PerMachine="yes"
+                Permanent="yes"
+                Vital="yes"
+                Name="tap-windows-9.21.2.exe"
+                SourceFile="bin\Setup\tap-windows-9.21.2.exe"
+                DownloadUrl="https://swupdate.openvpn.org/community/releases/tap-windows-9.21.2.exe"
+                InstallCommand="/S"
+                DetectCondition="TAPWindowsDriverVersion &gt;= v9.0.0.21"/>
+        </PackageGroup>
+
+        <PackageGroup
+            Id="TAPWindows921Redist">
+            <ExePackage
+                Id="TAPWindows921Redist"
+                DisplayName="TAP-Windows 9.21.2"
+                Cache="yes"
+                Compressed="yes"
+                PerMachine="yes"
+                Permanent="yes"
+                Vital="yes"
+                Name="tap-windows-9.21.2.exe"
+                SourceFile="bin\Setup\tap-windows-9.21.2.exe"
+                InstallCommand="/S"
+                DetectCondition="TAPWindowsDriverVersion &gt;= v9.0.0.21"/>
+        </PackageGroup>
+    </Fragment>
+</Wix>

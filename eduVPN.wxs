@@ -25,7 +25,7 @@
             Prerequisites
             -->
             <PackageGroupRef Id="NetFx45Redist"/>
-            <PackageGroupRef Id="OpenVPN243Redist"/>
+            <PackageGroupRef Id="TAPWindows921Redist"/>
 
             <!--
                 eduVPN Client

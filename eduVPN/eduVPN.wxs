@@ -13,15 +13,6 @@
         <DirectoryRef Id="INSTALLDIR">
             <Component Id="eduVPN.dll" Guid="{363C4CCB-B18B-4BA8-AB89-797564B388C2}">
                 <File Source="eduVPN.dll"/>
-                <CreateFolder Directory="OpenVPNConfigDir.eduVPN.Spool">
-                    <!--
-                        SYSTEM (SY): full
-                        Administrators (BA): full
-                        Users (BU): create files
-                        CREATOR OWNER (CO): full
-                    -->
-                    <PermissionEx Id="OpenVPNConfigDir.eduVPN.Spool" Sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;;0x100003;;;BU)(A;OIIO;FA;;;CO)"/>
-                </CreateFolder>
             </Component>
             <Component Id="eduVPN.dll.config" Guid="{EDE7F8DE-521D-4034-8BB7-B6545CA7F49E}">
                 <File Source="eduVPN.dll.config"/>
@@ -48,25 +39,5 @@
             <ComponentRef Id="eduVPN.dll.config"/>
             <ComponentRef Id="eduVPN.resources.dll.sl"/>
         </ComponentGroup>
-
-
-        <!--
-            OpenVPN Configuration Folder
-        -->
-        <Property Id="OPENVPNCONFIGDIR">
-            <RegistrySearch
-                Id="OpenVPNConfigDir"
-                Root="HKLM"
-                Key="SOFTWARE\OpenVPN"
-                Name="config_dir"
-                Type="directory"/>
-        </Property>
-        <DirectoryRef Id="INSTALLDIR">
-            <Directory Id="OPENVPNCONFIGDIR" Name="config">
-                <Directory Id="OpenVPNConfigDir.eduVPN" Name="eduVPN">
-                    <Directory Id="OpenVPNConfigDir.eduVPN.Spool" Name="Spool"/>
-                </Directory>
-            </Directory>
-        </DirectoryRef>
     </Fragment>
 </Wix>
