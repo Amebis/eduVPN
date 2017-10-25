@@ -7,7 +7,8 @@
 -->
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
-    xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+    xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+    xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
     <Bundle
         UpgradeCode="{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}"
         Version="$(var.eduVPN.Version)"
@@ -18,7 +19,12 @@
         IconSourceFile="eduVPN.Client\Resources\eduVPN.ico"
         Compressed="yes">
 
-        <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense"/>
+        <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
+            <bal:WixStandardBootstrapperApplication
+                LicenseUrl=""
+                LogoFile="Clipart\eduVPN_64x64.png"
+                SuppressOptionsUI="yes"/>
+        </BootstrapperApplicationRef>
 
         <Chain>
             <!--

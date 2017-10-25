@@ -1,3 +1,12 @@
+The `nmake Setup` prepares distributable binaries in this folder.
+
+# EXE Installers
+
+*Naming convention: `eduVPN-Client-Win_<version>_<locale>.exe`*
+
+The EXE installers are provided for end-users. They install the eduVPN client for Windows and all required pre-requisites.
+
+
 # MSI Packages
 
 eduVPN MSI packages install eduVPN client. eduVPN MSI packages are provided for IT professionals looking to mass-deploy eduVPN in their organisation using Group Policy or similar. Deploying eduVPN client is deploying:
