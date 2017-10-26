@@ -1,0 +1,36 @@
+version: 1.0.8.{build}
+image: Visual Studio 2017
+before_build:
+  - git submodule update --init --recursive
+  - nuget restore eduVPN.sln
+configuration:
+  - Debug
+  - Release
+platform:
+  - x86
+  - x64
+build:
+  project: eduVPN.sln
+  parallel: true
+  verbosity: minimal
+artifacts:
+  - path: bin\$(configuration)\$(platform)\eduEd25519.dll
+  - path: bin\$(configuration)\$(platform)\eduEd25519.pdb
+  - path: bin\$(configuration)\$(platform)\sl\eduEd25519.resources.dll
+  - path: bin\$(configuration)\$(platform)\eduJSON.dll
+  - path: bin\$(configuration)\$(platform)\eduJSON.pdb
+  - path: bin\$(configuration)\$(platform)\sl\eduJSON.resources.dll
+  - path: bin\$(configuration)\$(platform)\eduOAuth.dll
+  - path: bin\$(configuration)\$(platform)\eduOAuth.pdb
+  - path: bin\$(configuration)\$(platform)\sl\eduOAuth.resources.dll
+  - path: bin\$(configuration)\$(platform)\eduOpenVPN.dll
+  - path: bin\$(configuration)\$(platform)\eduOpenVPN.pdb
+  - path: bin\$(configuration)\$(platform)\sl\eduOpenVPN.resources.dll
+  - path: bin\$(configuration)\$(platform)\eduVPN.dll
+  - path: bin\$(configuration)\$(platform)\eduVPN.pdb
+  - path: bin\$(configuration)\$(platform)\sl\eduVPN.resources.dll
+  - path: bin\$(configuration)\$(platform)\eduVPN.Client.exe
+  - path: bin\$(configuration)\$(platform)\eduVPN.Client.pdb
+  - path: bin\$(configuration)\$(platform)\sl\eduVPN.Client.resources.dll
+  - path: bin\$(configuration)\$(platform)\eduVPN.Resources.dll
+  - path: bin\$(configuration)\$(platform)\eduVPN.Resources.pdb
