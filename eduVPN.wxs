@@ -28,25 +28,25 @@
                 Id="thm"
                 Compressed="yes"
                 Name="thm.xml"
-                SourceFile="eduVPN.thm.xml"/>
+                SourceFile="eduVPN.Install\eduVPN.thm.xml"/>
 
             <Payload
                 Id="thm-en-US"
                 Compressed="yes"
                 Name="thm.wxl"
-                SourceFile="eduVPN.thm.wxl"/>
+                SourceFile="eduVPN.Install\eduVPN.thm.wxl"/>
 
             <Payload
                 Id="thm-sl-SI"
                 Compressed="yes"
                 Name="1060\thm.wxl"
-                SourceFile="eduVPN.thm.sl.wxl"/>
+                SourceFile="eduVPN.Install\eduVPN.thm.sl.wxl"/>
 
             <Payload
                 Id="logo"
                 Compressed="yes"
                 Name="logo.png"
-                SourceFile="eduVPN.logo.png"/>
+                SourceFile="eduVPN.Install\eduVPN.logo.png"/>
         </BootstrapperApplicationRef>
 
         <Chain>

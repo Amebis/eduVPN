@@ -12,6 +12,7 @@ Windows eduVPN Client
 - _eduOpenVPN_: OpenVPN IPC for C#/.NET
 - _eduVPN_: eduVPN client business logic (Model and View Model)
 - _eduVPN.Client_: eduVPN client UI (View)
+- _eduVPN.Install_: Theme files for WiX Standard Bootstrapper Application
 - _eduVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for Start Menu shortcuts, system services names etc.
 
 # Building

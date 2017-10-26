@@ -5,11 +5,7 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}"
 	ProjectSection(SolutionItems) = preProject
-		eduVPN.logo.png = eduVPN.logo.png
 		eduVPN.sl.wxl = eduVPN.sl.wxl
-		eduVPN.thm.sl.wxl = eduVPN.thm.sl.wxl
-		eduVPN.thm.wxl = eduVPN.thm.wxl
-		eduVPN.thm.xml = eduVPN.thm.xml
 		eduVPN.wxl = eduVPN.wxl
 		eduVPN.wxs = eduVPN.wxs
 		eduVPNClient.wxs = eduVPNClient.wxs
@@ -46,6 +42,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOpenVPN.Tests", "eduOpenVPN\eduOpenVPN.Tests\eduOpenVPN.Tests.csproj", "{EC9E752D-3228-47B1-AB68-9FCF0FAA3B8A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduVPN.Resources", "eduVPN.Resources\eduVPN.Resources.vcxproj", "{CA8A2358-F8BF-484E-AE07-1255630A52E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install", "Install", "{E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}"
+	ProjectSection(SolutionItems) = preProject
+		eduVPN.Install\eduVPN.logo.png = eduVPN.Install\eduVPN.logo.png
+		eduVPN.Install\eduVPN.thm.sl.wxl = eduVPN.Install\eduVPN.thm.sl.wxl
+		eduVPN.Install\eduVPN.thm.wxl = eduVPN.Install\eduVPN.thm.wxl
+		eduVPN.Install\eduVPN.thm.xml = eduVPN.Install\eduVPN.thm.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -201,5 +205,6 @@ Global
 		{76C596A7-D565-4000-95D5-C4ABC5B5EB32} = {34019D9B-CB1A-4C13-B6F8-992DE8AB6F39}
 		{DDF40A25-1180-40B1-9BF1-8D3D66D734AD} = {62C4825F-1F58-4BA1-BD10-DABB139FCC47}
 		{EC9E752D-3228-47B1-AB68-9FCF0FAA3B8A} = {34019D9B-CB1A-4C13-B6F8-992DE8AB6F39}
+		{E2BBEBA8-DA57-42E8-BB75-78F13BD05E86} = {DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}
 	EndGlobalSection
 EndGlobal
