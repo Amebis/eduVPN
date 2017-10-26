@@ -5,7 +5,8 @@ Windows eduVPN Client
 - _bin_: Automation scripts
    - _Debug_: Debug binaries
    - _Release_: Release binaries
-   - _Setup_: MSI packages
+   - _OpenVPN_: OpenVPN upstream binaries
+   - _Setup_: MSI packages and EXE installer
 - _eduEd25519_: libsodium wrapper providing Ed25519 signing and verifying support to C#/.NET
 - _eduJSON_: Lightweight JSON parser
 - _eduOAuth_: OAuth 2.0 library
@@ -28,12 +29,13 @@ In order to have the build process digitally sign the output files, one should p
   - `ManifestTimestampRFC3161Url` - set the value to URL used to perform timestamp signature (i.e. `http://sha256timestamp.ws.symantec.com/sha256/timestamp`). In order to perform the timestamp signing successfully, the computer running the build should be online and able to access this URL.
 
 ## Initial Registration
-1. Start the _Developer Command Prompt for VS2017_ elevated (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » Right click _Developer Command Prompt for VS2017_ » _Run as Administrator_).
+1. Start the _x64 Native Tools Command Prompt for VS 2017_ elevated (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2017_ » _Run as Administrator_). x86 build environment can be used if required too.
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the initial build and registration using `nmake Register` command. This command will:
    - Build the Debug version for your architecture as defined by the `PROCESSOR_ARCHITECTURE` environment variable.
    - Register the `org.eduvpn.app` custom URI scheme.
    - Create a Start menu eduVPN Client shortcut.
+   - Install eduVPN Interactive Service.
 4. The client can now be started using the Start menu shortcut.
 
 ## Debugging eduVPN Client
@@ -50,8 +52,8 @@ In order to have the build process digitally sign the output files, one should p
 - [WiX Toolset 3.11](http://wixtoolset.org/releases/v3.11/stable)
 
 ### Building
-1. Start the _Developer Command Prompt for VS2017_ (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _Developer Command Prompt for VS2017_).
+1. Start the _x64 Native Tools Command Prompt for VS 2017_ (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2017_). x86 build environment can be used if required too.
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the MSI build using `nmake Setup` command.
-4. The MSI packages will be saved to `bin\Setup` folder.
+4. The MSI packages and EXE installer will be saved to `bin\Setup` folder.
  
