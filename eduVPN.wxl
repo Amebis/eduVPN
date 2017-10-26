@@ -10,7 +10,6 @@
     Culture="en-us"
     Codepage="1252">
     <String Id="ApplicationName">eduVPN Client</String>
-    <String Id="ApplicationNameFull">eduVPN Client for Windows</String>
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1033</String>
     <String Id="SummaryCodepage">1252</String>

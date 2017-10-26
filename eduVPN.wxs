@@ -12,7 +12,7 @@
     <Bundle
         UpgradeCode="{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}"
         Version="$(var.eduVPN.Version)"
-        Name="!(loc.ApplicationNameFull) $(var.eduVPN.VersionInformational)"
+        Name="!(loc.ApplicationName) $(var.eduVPN.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)"
         AboutUrl="https://eduvpn.org/"
         Copyright="!(loc.LegalCopyright)"
@@ -22,8 +22,31 @@
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
             <bal:WixStandardBootstrapperApplication
                 LicenseUrl=""
-                LogoFile="Clipart\eduVPN_64x64.png"
                 SuppressOptionsUI="yes"/>
+
+            <Payload
+                Id="thm"
+                Compressed="yes"
+                Name="thm.xml"
+                SourceFile="eduVPN.thm.xml"/>
+
+            <Payload
+                Id="thm-en-US"
+                Compressed="yes"
+                Name="thm.wxl"
+                SourceFile="eduVPN.thm.wxl"/>
+
+            <Payload
+                Id="thm-sl-SI"
+                Compressed="yes"
+                Name="1060\thm.wxl"
+                SourceFile="eduVPN.thm.sl.wxl"/>
+
+            <Payload
+                Id="logo"
+                Compressed="yes"
+                Name="logo.png"
+                SourceFile="eduVPN.logo.png"/>
         </BootstrapperApplicationRef>
 
         <Chain>
@@ -38,12 +61,12 @@
             -->
             <MsiPackage
                 Id="eduVPNClient_x86"
-                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x86_!(loc.Culture).msi"
+                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x86.msi"
                 InstallCondition="NOT VersionNT64"/>
 
             <MsiPackage
                 Id="eduVPNClient_x64"
-                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x64_!(loc.Culture).msi"
+                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x64.msi"
                 InstallCondition="VersionNT64"/>
         </Chain>
     </Bundle>
