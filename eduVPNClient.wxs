@@ -145,6 +145,7 @@
             <ComponentRef Id="openvpn.exe"/>
             <ComponentRef Id="openvpnserv.exe"/>
             <ComponentRef Id="ssleay32.dll"/>
+            <ComponentRef Id="eduVPN.Resources.dll"/>
         </ComponentGroup>
     </Product>
 </Wix>
