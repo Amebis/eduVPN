@@ -134,6 +134,62 @@
                     <ServiceDependency Id="Dhcp"/>
                 </ServiceInstall>
             </Component>
+            <Component Id="openvpnserv.exe.reg1" Guid="{A82C7D8B-6E7C-4C1B-87FC-E54D0F45FC2F}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\eduVPN"
+                    Name="exe_path"
+                    Type="string"
+                    Value="[#openvpn.exe]"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg2" Guid="{887401D1-6889-45A7-A520-A2822859B01C}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\eduVPN"
+                    Name="config_dir"
+                    Type="string"
+                    Value="[INSTALLDIR]"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg3" Guid="{261C144E-B0F0-47C4-89CE-65236DDEC699}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\eduVPN"
+                    Name="config_ext"
+                    Type="string"
+                    Value="conf"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg4" Guid="{180A8917-F11C-4EFB-B5B5-CF760C140AD9}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\eduVPN"
+                    Name="log_dir"
+                    Type="string"
+                    Value="[INSTALLDIR]"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg5" Guid="{CFD8C746-C58D-44B0-BC21-D74F98F8BBF1}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\eduVPN"
+                    Name="log_append"
+                    Type="string"
+                    Value="0"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg6" Guid="{FDAF0DAD-5AA2-433E-8BE7-E032E1A3CF5F}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\eduVPN"
+                    Name="priority"
+                    Type="string"
+                    Value="NORMAL_PRIORITY_CLASS"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg7" Guid="{9E240139-F66F-45D9-8823-0FC9D738AF2B}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\eduVPN"
+                    Name="ovpn_admin_group"
+                    Type="string"
+                    Value="Users"/>
+            </Component>
             <Component Id="ssleay32.dll" Guid="{72639C55-D063-4A57-B7B7-1CD60945B97A}">
                 <File Source="ssleay32.dll"/>
             </Component>
@@ -144,6 +200,13 @@
             <ComponentRef Id="libpkcs11_helper_1.dll"/>
             <ComponentRef Id="openvpn.exe"/>
             <ComponentRef Id="openvpnserv.exe"/>
+            <ComponentRef Id="openvpnserv.exe.reg1"/>
+            <ComponentRef Id="openvpnserv.exe.reg2"/>
+            <ComponentRef Id="openvpnserv.exe.reg3"/>
+            <ComponentRef Id="openvpnserv.exe.reg4"/>
+            <ComponentRef Id="openvpnserv.exe.reg5"/>
+            <ComponentRef Id="openvpnserv.exe.reg6"/>
+            <ComponentRef Id="openvpnserv.exe.reg7"/>
             <ComponentRef Id="ssleay32.dll"/>
             <ComponentRef Id="eduVPN.Resources.dll"/>
         </ComponentGroup>
