@@ -1,7 +1,7 @@
 version: 1.0.8.{build}
 image: Visual Studio 2017
 before_build:
-  - git submodule update --init --recursive
+  - git submodule update -q --init --recursive
   - nuget restore -Verbosity quiet
 configuration:
   - Debug
