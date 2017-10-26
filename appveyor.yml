@@ -2,7 +2,7 @@ version: 1.0.8.{build}
 image: Visual Studio 2017
 before_build:
   - git submodule update --init --recursive
-  - nuget restore eduVPN.sln
+  - nuget restore -Verbosity quiet
 configuration:
   - Debug
   - Release
