@@ -17,5 +17,5 @@
     <String Id="LegalCopyright">Copyright: 2017, The Commons Conservancy eduVPN Programme</String>
 
     <String Id="DotNETFrameworkMissing">Aplikacija potrebuje .NET Framework 4.5. Namestite .NET Framework 4.5 in ponovno poženite to namestitev.</String>
-    <String Id="OpenVPNMissing">Aplikacija potrebuje OpenVPN 2.4 ali novejšega. Namestite OpenVPN 2.4 ali novejšega in ponovno poženite to namestitev.</String>
+    <String Id="TAPWindowsMissing">Aplikacija potrebuje TAP-Windows 9.21 ali novejšega. Namestite TAP-Windows 9.21 ali novejšega in ponovno poženite to namestitev.</String>
 </WixLocalization>
