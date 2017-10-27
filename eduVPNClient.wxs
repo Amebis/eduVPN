@@ -59,6 +59,22 @@
 
 
         <!--
+            TAP-Windows driver check
+            Note: Exact driver version check would be extremely difficult to invent and probably error prone.
+            Therefore, we're happy if "tap0901" service is registered and has ImagePath value set.
+        -->
+        <Property Id="TAPWINDOWSDRIVER">
+            <RegistrySearch
+                Id="TAPWindowsDriver"
+                Root="HKLM"
+                Key="SYSTEM\CurrentControlSet\services\tap0901"
+                Name="ImagePath"
+                Type="raw"/>
+        </Property>
+        <Condition Message="!(loc.TAPWindowsMissing)"><![CDATA[Installed OR TAPWINDOWSDRIVER]]></Condition>
+
+
+        <!--
             Folders
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
