@@ -1,4 +1,4 @@
-version: 1.0.8.{build}
+version: 1.0-alpha6.{build}
 image: Visual Studio 2017
 before_build:
   - git submodule update -q --init --recursive
