@@ -26,7 +26,7 @@ PLAT=x86
 
 # Utility default flags
 REG_FLAGS=/f
-DEVENV_FLAGS=/NoLogo
+MSBUILD_FLAGS=/m /v:minimal /nologo
 CSCRIPT_FLAGS=//Nologo
 WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo -deduVPN.Version="$(PRODUCT_VERSION)" -ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension

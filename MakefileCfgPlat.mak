@@ -46,7 +46,7 @@ SetupBuild :: \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
 
 SetupBuild ::
-	devenv.com "eduVPN.sln" /Build "$(CFG)|$(PLAT)" $(DEVENV_FLAGS)
+	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 SetupMSI :: \
 	"$(SETUP_DIR)\$(SETUP_NAME)_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET).msi"
@@ -62,18 +62,18 @@ SetupMSI :: \
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe" \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll" ::
-	devenv.com "eduVPN.sln" /Build "$(CFG)|$(PLAT)" $(DEVENV_FLAGS)
+	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
-	-devenv.com "eduVPN.sln" /Clean "$(CFG)|$(PLAT)" $(DEVENV_FLAGS)
+	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 "OpenVPN\$(PLAT_NATIVE)-Output\$(CFG)\openvpnserv.exe" :: "OpenVPN\config-msvc-local.h"
 
 "OpenVPN\$(PLAT_NATIVE)-Output\$(CFG)\openvpnserv.exe" ::
-	devenv.com "OpenVPN\openvpn.sln" /Build "$(CFG)|$(PLAT_NATIVE)" $(DEVENV_FLAGS)
+	msbuild.exe "OpenVPN\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_NATIVE)" $(MSBUILD_FLAGS)
 
 Clean ::
-	-devenv.com "OpenVPN\openvpn.sln" /Clean "$(CFG)|$(PLAT_NATIVE)" $(DEVENV_FLAGS)
+	-msbuild.exe "OpenVPN\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_NATIVE)" $(MSBUILD_FLAGS)
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libeay32.dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libeay32.dll"
 	copy /y $** $@ > NUL
