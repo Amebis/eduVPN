@@ -106,6 +106,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interactive Service failure..
+        /// </summary>
+        internal static string ErrorInteractiveService {
+            get {
+                return ResourceManager.GetString("ErrorInteractiveService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid hostname: hostnames contain letters, numbers, hyphens and dots..
         /// </summary>
         internal static string ErrorInvalidHostname {
