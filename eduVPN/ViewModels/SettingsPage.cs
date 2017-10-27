@@ -16,7 +16,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Settings wizard page
     /// </summary>
-    public class SettingsPage : ConnectWizardPage
+    public class SettingsPage : ConnectWizardPopupPage
     {
         #region Properties
 
@@ -74,24 +74,6 @@ namespace eduVPN.ViewModels
                 //    catch { }
                 //}
             }
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <inheritdoc/>
-        protected override void DoNavigateBack()
-        {
-            base.DoNavigateBack();
-
-            Parent.CurrentPage = Parent.PreviousPage ?? Parent.StartingPage;
-        }
-
-        /// <inheritdoc/>
-        protected override bool CanNavigateBack()
-        {
-            return true;
         }
 
         #endregion

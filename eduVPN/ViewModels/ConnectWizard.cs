@@ -149,19 +149,19 @@ namespace eduVPN.ViewModels
         private DelegateCommand _session_info;
 
         /// <summary>
-        /// Navigate to page command
+        /// Navigate to a pop-up page command
         /// </summary>
-        public DelegateCommand<ConnectWizardPage> NavigateTo
+        public DelegateCommand<ConnectWizardPopupPage> NavigateTo
         {
             get
             {
                 if (_navigate_to == null)
-                    _navigate_to = new DelegateCommand<ConnectWizardPage>(
+                    _navigate_to = new DelegateCommand<ConnectWizardPopupPage>(
                         // execute
                         page =>
                         {
                             ChangeTaskCount(+1);
-                            try { CurrentPage = page; }
+                            try { CurrentPopupPage = page; }
                             catch (Exception ex) { Error = ex; }
                             finally { ChangeTaskCount(-1); }
                         });
@@ -169,7 +169,7 @@ namespace eduVPN.ViewModels
                 return _navigate_to;
             }
         }
-        private DelegateCommand<ConnectWizardPage> _navigate_to;
+        private DelegateCommand<ConnectWizardPopupPage> _navigate_to;
 
         /// <summary>
         /// Starts VPN session
@@ -383,33 +383,39 @@ namespace eduVPN.ViewModels
         #region Pages
 
         /// <summary>
-        /// The page the wizard is currently displaying
+        /// The page the wizard is currently displaying (if no pop-up page)
         /// </summary>
         public ConnectWizardPage CurrentPage
         {
-            get { return _current_page; }
+            get { return _current_popup_page ?? _current_page; }
             set
             {
-                if (_current_page != value)
+                if (value != _current_page)
                 {
-                    _previous_page = _current_page;
-                    RaisePropertyChanged(nameof(PreviousPage));
-
-                    SetProperty(ref _current_page, value);
-                    _current_page.OnActivate();
+                    _current_page = value;
+                    if (_current_popup_page == null)
+                        RaisePropertyChanged();
                 }
             }
         }
         private ConnectWizardPage _current_page;
 
         /// <summary>
-        /// The previous page of the wizard
+        /// The pop-up page the wizard is currently displaying
         /// </summary>
-        public ConnectWizardPage PreviousPage
+        public ConnectWizardPopupPage CurrentPopupPage
         {
-            get { return _previous_page; }
+            get { return _current_popup_page; }
+            set
+            {
+                if (value != _current_popup_page)
+                {
+                    SetProperty(ref _current_popup_page, value);
+                    RaisePropertyChanged(nameof(CurrentPage));
+                }
+            }
         }
-        private ConnectWizardPage _previous_page;
+        private ConnectWizardPopupPage _current_popup_page;
 
         /// <summary>
         /// The first page of the wizard
