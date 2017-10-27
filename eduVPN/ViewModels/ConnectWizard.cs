@@ -134,14 +134,13 @@ namespace eduVPN.ViewModels
                 {
                     _session_info = new DelegateCommand(
                         // execute
-                        () => NavigateTo.Execute(StatusPage),
+                        () => CurrentPage = StatusPage,
 
                         // canExecute
-                        () => Sessions.Count > 0 && NavigateTo.CanExecute(StatusPage));
+                        () => Sessions.Count > 0);
 
                     // Setup canExecute refreshing.
                     Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _session_info.RaiseCanExecuteChanged();
-                    NavigateTo.CanExecuteChanged += (object sender, EventArgs e) => _session_info.RaiseCanExecuteChanged();
                 }
 
                 return _session_info;
