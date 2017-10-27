@@ -57,6 +57,13 @@ In order to have the build process digitally sign the output files, one should p
   - `ManifestTimestampRFC3161Url` - set the value to URL used to perform timestamp signature (i.e. `http://sha256timestamp.ws.symantec.com/sha256/timestamp`). In order to perform the timestamp signing successfully, the computer running the build should be online and able to access this URL.
 
 ### Initial Registration
+The registration prepares the working environment for the eduVPN client, much like the setup does. It performs the following:
+- Prepares local OpenVPN binaries.
+- Builds, installs and starts OpenVPN Interactive Service.
+- Builds the Debug version of the eduVPN Client.
+- Registers URI handler for OAuth redirection.
+- Creates Start Menu shortcut.
+
 1. Start the _x64 Native Tools Command Prompt for VS 2017_ elevated (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2017_ » _Run as Administrator_). x86 build environment can be used if required too.
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the initial build and registration using `nmake Register` command. This command will:
