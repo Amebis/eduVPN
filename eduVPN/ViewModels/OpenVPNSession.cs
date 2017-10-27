@@ -219,13 +219,18 @@ namespace eduVPN.ViewModels
                         using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Session())
                         {
                             var mgmt_password = Membership.GeneratePassword(16, 6);
-                            openvpn_interactive_service_connection.Connect(
+                            try
+                            {
+                                openvpn_interactive_service_connection.Connect(
                                     "eduvpn\\service",
                                     _working_folder,
                                     new string[] { "--config", _connection_id + ".conf", },
                                     mgmt_password + "\n",
                                     3000,
                                     _quit.Token);
+                            }
+                            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorInteractiveService, ex); }
+
                             try
                             {
                                 // Wait and accept the openvpn.exe on our management interface (--management-client parameter).

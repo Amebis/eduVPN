@@ -212,4 +212,7 @@
     <value>Property name {0} is not valid.</value>
     <comment>{0}=Property name</comment>
   </data>
+  <data name="ErrorInteractiveService" xml:space="preserve">
+    <value>Interactive Service failure.</value>
+  </data>
 </root>

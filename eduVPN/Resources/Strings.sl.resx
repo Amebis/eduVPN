@@ -212,4 +212,7 @@
     <value>Ime lastnosti {0} ni veljavno.</value>
     <comment>{0}=Property name</comment>
   </data>
+  <data name="ErrorInteractiveService" xml:space="preserve">
+    <value>Napaka interaktivne storitve.</value>
+  </data>
 </root>
