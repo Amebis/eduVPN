@@ -12,13 +12,14 @@
         <util:RegistrySearch
             Id="TAPWindowsPath"
             Root="HKLM"
-            Key="SOFTWARE\TAP-Windows"
-            Win64="yes"
-            Variable="TAPWindowsPath"/>
+            Key="SYSTEM\CurrentControlSet\services\tap0901"
+            Value="ImagePath"
+            Variable="TAPWindowsPath"
+            ExpandEnvironmentVariables="yes"/>
         <util:FileSearch
             Id="TAPWindowsDriverVersion"
             After="TAPWindowsPath"
-            Path="[TAPWindowsPath]\driver\tap0901.sys"
+            Path="[WindowsFolder][TAPWindowsPath]"
             Result="version"
             Variable="TAPWindowsDriverVersion"/>
 
