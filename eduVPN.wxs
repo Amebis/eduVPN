@@ -12,7 +12,7 @@
     <Bundle
         UpgradeCode="{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}"
         Version="$(var.eduVPN.Version)"
-        Name="!(loc.ApplicationName) $(var.eduVPN.VersionInformational)"
+        Name="!(loc.ApplicationName) $(var.eduVPN.VersionStr)"
         Manufacturer="!(loc.ManufacturerName)"
         AboutUrl="https://eduvpn.org/"
         Copyright="!(loc.LegalCopyright)"
@@ -57,16 +57,29 @@
             <PackageGroupRef Id="TAPWindows921Redist"/>
 
             <!--
-                eduVPN Client
+                OpenVPN
             -->
             <MsiPackage
-                Id="eduVPNClient_x86"
-                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x86.msi"
+                Id="eduVPNOpenVPN_x86"
+                SourceFile="bin\Setup\eduVPNOpenVPN_$(var.eduVPN.OpenVPN.VersionStr)_x86.msi"
                 InstallCondition="NOT VersionNT64"/>
 
             <MsiPackage
-                Id="eduVPNClient_x64"
-                SourceFile="bin\Setup\eduVPN-Client-Win_$(var.eduVPN.VersionInformational)_x64.msi"
+                Id="eduVPNOpenVPN_x64"
+                SourceFile="bin\Setup\eduVPNOpenVPN_$(var.eduVPN.OpenVPN.VersionStr)_x64.msi"
+                InstallCondition="VersionNT64"/>
+
+            <!--
+                Core
+            -->
+            <MsiPackage
+                Id="eduVPNCore_x86"
+                SourceFile="bin\Setup\eduVPNCore_$(var.eduVPN.Client.VersionStr)_x86.msi"
+                InstallCondition="NOT VersionNT64"/>
+
+            <MsiPackage
+                Id="eduVPNCore_x64"
+                SourceFile="bin\Setup\eduVPNCore_$(var.eduVPN.Client.VersionStr)_x64.msi"
                 InstallCondition="VersionNT64"/>
         </Chain>
     </Bundle>

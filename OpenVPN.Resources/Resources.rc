@@ -52,8 +52,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
-	FILEVERSION 1,0,9,0
-	PRODUCTVERSION 1,0,9,0
+	FILEVERSION 2,4,4,0
+	PRODUCTVERSION 2,4,4,0
 	FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
 #ifdef _DEBUG
 	FILEFLAGS VS_FF_DEBUG
@@ -70,11 +70,11 @@ BEGIN
 		BEGIN
 			VALUE "CompanyName",      "SURF"
 			VALUE "FileDescription",  "eduVPN Native Resources"
-			VALUE "FileVersion",      "1.0-alpha7"
+			VALUE "FileVersion",      "2.4.4"
 			VALUE "LegalCopyright",   "Copyright © The Commons Conservancy eduVPN Programme 2017"
-			VALUE "OriginalFilename", "eduVPN.Resources.dll"
+			VALUE "OriginalFilename", "OpenVPN.Resources.dll"
 			VALUE "ProductName",      "eduVPN"
-			VALUE "ProductVersion",   "1.0-alpha7"
+			VALUE "ProductVersion",   "2.4.4"
 		END
 	END
 	BLOCK "VarFileInfo"
@@ -90,11 +90,11 @@ END
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE       "eduVPN Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION "End-user friendly VPN"
-	IDS_EDUVPN_CLIENT_PUBLISHER   "SURF"
+	IDS_EDUVPN_OPENVPN_TITLE           "eduVPN Client OpenVPN Components"
+	IDS_EDUVPN_OPENVPN_PUBLISHER       "SURF"
 
-	IDS_EDUVPN_CORE_TITLE         "eduVPN Client Core"
+	IDS_EDUVPN_INTERACTIVE_TITLE       "eduVPN Interactive Service"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Enables eduVPN network management on connect. If stopped or disabled, eduVPN will not function."
 END
 
 #endif    // English (United States) resources
@@ -114,11 +114,11 @@ LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE       "Odjemalec eduVPN"
-	IDS_EDUVPN_CLIENT_DESCRIPTION "Uporabniku prijazen VPN"
-	IDS_EDUVPN_CLIENT_PUBLISHER   "SURF"
+	IDS_EDUVPN_OPENVPN_TITLE           "Odjemalec eduVPN - komponente OpenVPN"
+	IDS_EDUVPN_OPENVPN_PUBLISHER       "SURF"
 
-	IDS_EDUVPN_CORE_TITLE         "Odjemalec eduVPN - jedro"
+	IDS_EDUVPN_INTERACTIVE_TITLE       "Interaktivna storitev eduVPN"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Omogoča upravljanje omrežja ob povezavi eduVPN. Če je ta storitev zaustavljena ali onemogočena, eduVPN ne bo deloval."
 END
 
 #endif    // Slovenian (Slovenia) resources

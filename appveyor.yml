@@ -34,3 +34,5 @@ artifacts:
   - path: bin\$(configuration)\$(platform)\sl\eduVPN.Client.resources.dll
   - path: bin\$(configuration)\$(platform)\eduVPN.Resources.dll
   - path: bin\$(configuration)\$(platform)\eduVPN.Resources.pdb
+  - path: bin\$(configuration)\$(platform)\OpenVPN.Resources.dll
+  - path: bin\$(configuration)\$(platform)\OpenVPN.Resources.pdb

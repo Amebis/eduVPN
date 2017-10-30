@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Wix
+    xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+    <Product
+        Id="*"
+        UpgradeCode="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}"
+        Version="$(var.eduVPN.Client.Version)"
+        Language="!(loc.ProductLanguage)"
+        Name="!(loc.ApplicationCoreName) $(var.eduVPN.Client.VersionInformational)"
+        Manufacturer="!(loc.ManufacturerName)">
+
+        <Package
+            InstallScope="perMachine"
+            InstallerVersion="400"
+            Compressed="yes"
+            SummaryCodepage="!(loc.SummaryCodepage)"
+            ReadOnly="yes"/>
+
+        <Media
+            Id="1"
+            Cabinet="Core.cab"
+            EmbedCab="yes"/>
+
+        <Icon
+            Id="eduVPN.ico"
+            SourceFile="eduVPN.Client\Resources\eduVPN.ico"/>
+
+        <Property Id="ARPPRODUCTICON" Value="eduVPN.ico"/>
+        <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+
+
+        <!--
+            Upgrading functionality
+        -->
+        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
+        <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
+            <UpgradeVersion
+                Minimum="1.0.0"
+                Property="PREVIOUSVERSIONSINSTALLED"
+                IncludeMinimum="yes"
+                MigrateFeatures="yes"/>
+        </Upgrade>
+        <InstallExecuteSequence>
+            <RemoveExistingProducts Before="InstallInitialize"/>
+        </InstallExecuteSequence>
+
+
+        <!--
+            .NET Framework check
+        -->
+        <PropertyRef Id="NETFRAMEWORK45"/>
+        <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
+
+
+        <!--
+            Folders
+        -->
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
+                <Directory Id="INSTALLDIR" Name="eduVPN Client" FileSource="$(var.eduVPN.TargetDir)">
+                    <Directory Id="RESOURCEDIRSL" Name="sl"/>
+                </Directory>
+            </Directory>
+            <Directory Id="ProgramMenuFolder"/>
+            <Directory Id="DesktopFolder"/>
+
+            <Merge Id="VC150Redist" SourceFile="$(var.eduVPN.VC150RedistMSM)" DiskId="1" Language="0"/>
+        </Directory>
+
+
+        <!--
+            Features
+        -->
+        <Feature Id="eduVPN.Client" Title="!(loc.ApplicationCoreName)" Level="1">
+            <MergeRef Id="VC150Redist"/>
+
+            <ComponentGroupRef Id="eduVPN.Client.exe"/>
+        </Feature>
+
+
+        <!--
+            Prism
+        -->
+        <DirectoryRef Id="INSTALLDIR">
+            <Component Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}">
+                <File Source="Prism.dll"/>
+            </Component>
+        </DirectoryRef>
+        <ComponentGroup Id="Prism">
+            <ComponentRef Id="Prism.dll"/>
+        </ComponentGroup>
+    </Product>
+</Wix>

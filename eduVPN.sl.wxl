@@ -10,6 +10,8 @@
     Culture="sl"
     Codepage="1250">
     <String Id="ApplicationName">Odjemalec eduVPN</String>
+    <String Id="ApplicationCoreName">Odjemalec eduVPN - jedro</String>
+    <String Id="ApplicationOpenVPNName">Odjemalec eduVPN - komponente OpenVPN</String>
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1060</String>
     <String Id="SummaryCodepage">1250</String>

@@ -8,7 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		eduVPN.sl.wxl = eduVPN.sl.wxl
 		eduVPN.wxl = eduVPN.wxl
 		eduVPN.wxs = eduVPN.wxs
-		eduVPNClient.wxs = eduVPNClient.wxs
+		eduVPNCore.wxs = eduVPNCore.wxs
+		eduVPNOpenVPN.wxs = eduVPNOpenVPN.wxs
 		LICENSE = LICENSE
 		LICENSE.spdx = LICENSE.spdx
 		TAP-Windows.wxs = TAP-Windows.wxs
@@ -50,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install", "Install", "{E2BB
 		eduVPN.Install\eduVPN.thm.wxl = eduVPN.Install\eduVPN.thm.wxl
 		eduVPN.Install\eduVPN.thm.xml = eduVPN.Install\eduVPN.thm.xml
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenVPN.Resources", "OpenVPN.Resources\OpenVPN.Resources.vcxproj", "{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,6 +194,16 @@ Global
 		{CA8A2358-F8BF-484E-AE07-1255630A52E2}.Release|x64.Build.0 = Release|x64
 		{CA8A2358-F8BF-484E-AE07-1255630A52E2}.Release|x86.ActiveCfg = Release|Win32
 		{CA8A2358-F8BF-484E-AE07-1255630A52E2}.Release|x86.Build.0 = Release|Win32
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Debug|x64.ActiveCfg = Debug|x64
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Debug|x64.Build.0 = Debug|x64
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Debug|x86.ActiveCfg = Debug|Win32
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Debug|x86.Build.0 = Debug|Win32
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Release|x64.ActiveCfg = Release|x64
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Release|x64.Build.0 = Release|x64
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Release|x86.ActiveCfg = Release|Win32
+		{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Global settings - applied to all configurations and platforms
+  -->
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(Platform)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <NoEntryPoint>true</NoEntryPoint>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <Target Name="Sign" Condition="'$(ManifestCertificateThumbprint)' != ''" AfterTargets="_Manifest" BeforeTargets="RegisterOutput" Inputs="$(OutDir)$(TargetName)$(TargetExt)" Outputs="$(IntDir)$(TargetName).sign">
+    <Exec Command="signtool.exe sign /sha1 &quot;%ManifestCertificateThumbprint%&quot; /fd sha256 /as /tr &quot;%ManifestTimestampRFC3161Url%&quot; /q &quot;$(TargetPath)&quot;" />
+    <Touch Files="$(IntDir)$(TargetName).sign" AlwaysCreate="true" />
+  </Target>
+
+  <!--
+    Configuration specific settings
+  -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <Link>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+
+  <!--
+    Platform specific settings
+  -->
+  <PropertyGroup Condition="'$(Platform)'=='Win32'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)\x86\</OutDir> <!-- C# uses x86 for Win32 platform designation! -->
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+  </ItemDefinitionGroup>
+</Project>

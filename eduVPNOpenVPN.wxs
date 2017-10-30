@@ -10,28 +10,24 @@
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
         Id="*"
-        UpgradeCode="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}"
-        Version="$(var.eduVPN.Version)"
+        UpgradeCode="{CFE55281-AE4B-42A8-A1C3-76E94A733341}"
+        Version="$(var.eduVPN.OpenVPN.Version)"
         Language="!(loc.ProductLanguage)"
-        Name="!(loc.ApplicationName) $(var.eduVPN.VersionInformational)"
+        Name="!(loc.ApplicationOpenVPNName) $(var.eduVPN.OpenVPN.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
-            InstallerVersion="400"
+            InstallScope="perMachine"
+            InstallerVersion="200"
             Compressed="yes"
             SummaryCodepage="!(loc.SummaryCodepage)"
             ReadOnly="yes"/>
 
         <Media
             Id="1"
-            Cabinet="eduVPN.cab"
+            Cabinet="OpenVPN.cab"
             EmbedCab="yes"/>
 
-        <Icon
-            Id="eduVPN.ico"
-            SourceFile="eduVPN.Client\Resources\eduVPN.ico"/>
-
-        <Property Id="ARPPRODUCTICON" Value="eduVPN.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
 
 
@@ -39,7 +35,7 @@
             Upgrading functionality
         -->
         <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
-        <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
+        <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
             <UpgradeVersion
                 Minimum="1.0.0"
                 Property="PREVIOUSVERSIONSINSTALLED"
@@ -49,13 +45,6 @@
         <InstallExecuteSequence>
             <RemoveExistingProducts Before="InstallInitialize"/>
         </InstallExecuteSequence>
-
-
-        <!--
-            .NET Framework check
-        -->
-        <PropertyRef Id="NETFRAMEWORK45"/>
-        <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
 
 
         <!--
@@ -79,43 +68,13 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
-                <Directory Id="INSTALLDIR" Name="eduVPN Client" FileSource="$(var.eduVPN.TargetDir)">
-                    <Directory Id="RESOURCEDIRSL" Name="sl"/>
-                </Directory>
+                <Directory Id="INSTALLDIR" Name="eduVPN Client" FileSource="$(var.eduVPN.TargetDir)"/>
             </Directory>
-            <Directory Id="ProgramMenuFolder"/>
-            <Directory Id="DesktopFolder"/>
-
-            <Merge Id="VC150Redist" SourceFile="$(var.eduVPN.VC150RedistMSM)" DiskId="1" Language="0"/>
         </Directory>
 
 
         <!--
-            Features
-        -->
-        <Feature Id="eduVPN.Client" Title="!(loc.ApplicationName)" Level="1">
-            <MergeRef Id="VC150Redist"/>
-
-            <ComponentGroupRef Id="eduVPN.Client.exe"/>
-            <ComponentGroupRef Id="OpenVPN"/>
-        </Feature>
-
-
-        <!--
-            Prism
-        -->
-        <DirectoryRef Id="INSTALLDIR">
-            <Component Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}">
-                <File Source="Prism.dll"/>
-            </Component>
-        </DirectoryRef>
-        <ComponentGroup Id="Prism">
-            <ComponentRef Id="Prism.dll"/>
-        </ComponentGroup>
-
-
-        <!--
-            OpenVPN
+            Compontents
         -->
         <DirectoryRef Id="INSTALLDIR">
             <Component Id="libeay32.dll" Guid="{AE04C029-0B1B-4F2A-B810-58C8DEE72AE4}">
@@ -140,8 +99,8 @@
                     Remove="uninstall"/>
                 <ServiceInstall
                     Name="eduVPNServiceInteractive"
-                    DisplayName="@[#eduVPN.Resources.dll],-4"
-                    Description="@[#eduVPN.Resources.dll],-5"
+                    DisplayName="@[#OpenVPN.Resources.dll],-3"
+                    Description="@[#OpenVPN.Resources.dll],-4"
                     Type="shareProcess"
                     Start="auto"
                     ErrorControl="normal">
@@ -209,7 +168,12 @@
                 <File Source="ssleay32.dll"/>
             </Component>
         </DirectoryRef>
-        <ComponentGroup Id="OpenVPN">
+
+
+        <!--
+            Features
+        -->
+        <Feature Id="eduVPN.OpenVPN" Title="!(loc.ApplicationOpenVPNName)" Level="1">
             <ComponentRef Id="libeay32.dll"/>
             <ComponentRef Id="liblzo2_2.dll"/>
             <ComponentRef Id="libpkcs11_helper_1.dll"/>
@@ -223,7 +187,7 @@
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
             <ComponentRef Id="ssleay32.dll"/>
-            <ComponentRef Id="eduVPN.Resources.dll"/>
-        </ComponentGroup>
+            <ComponentGroupRef Id="OpenVPN.Resources.dll"/>
+        </Feature>
     </Product>
 </Wix>

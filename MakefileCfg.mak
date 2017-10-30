@@ -14,7 +14,7 @@
 
 "$(OUTPUT_DIR)\$(CFG)\eduVPN.wixobj" : "eduVPN.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS) -deduVPN.VersionInformational="$(PRODUCT_VERSION_STR)" -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS) -out $@ $**
 
 Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\eduVPN.wixobj" del /f /q "$(OUTPUT_DIR)\$(CFG)\eduVPN.wixobj"
