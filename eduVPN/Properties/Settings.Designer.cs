@@ -166,5 +166,14 @@ namespace eduVPN.Properties {
                 this["OpenVPNForceTCP"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("OpenVPNServiceInteractive$eduVPN\\service")]
+        public string OpenVPNInteractiveServiceNamedPipe {
+            get {
+                return ((string)(this["OpenVPNInteractiveServiceNamedPipe"]));
+            }
+        }
     }
 }

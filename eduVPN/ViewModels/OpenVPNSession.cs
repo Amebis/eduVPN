@@ -222,7 +222,7 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 openvpn_interactive_service_connection.Connect(
-                                    "eduvpn\\service",
+                                    Properties.Settings.Default.OpenVPNInteractiveServiceNamedPipe,
                                     _working_folder,
                                     new string[] { "--config", _connection_id + ".conf", },
                                     mgmt_password + "\n",

@@ -72,8 +72,6 @@ SetupMSI :: \
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
-"OpenVPN\$(PLAT_NATIVE)-Output\$(CFG)\openvpnserv.exe" :: "OpenVPN\config-msvc-local.h"
-
 "OpenVPN\$(PLAT_NATIVE)-Output\$(CFG)\openvpnserv.exe" ::
 	msbuild.exe "OpenVPN\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_NATIVE)" $(MSBUILD_FLAGS)
 
