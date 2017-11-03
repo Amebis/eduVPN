@@ -56,9 +56,19 @@ namespace eduVPN.ViewModels
         public ConnectWizard Parent { get; }
 
         /// <summary>
-        /// VPN configuration
+        /// Authenticating eduVPN instance
         /// </summary>
-        public Models.VPNConfiguration Configuration { get; }
+        public Models.InstanceInfo AuthenticatingInstance { get; }
+
+        /// <summary>
+        /// Connecting eduVPN instance
+        /// </summary>
+        public Models.InstanceInfo ConnectingInstance { get; }
+
+        /// <summary>
+        /// Connecting eduVPN instance profile
+        /// </summary>
+        public Models.ProfileInfo ConnectingProfile { get; }
 
         /// <summary>
         /// Event to signal VPN session finished
@@ -243,14 +253,21 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        public VPNSession(ConnectWizard parent, Models.VPNConfiguration configuration) :
+        /// <param name="parent">The page parent</param>
+        /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
+        /// <param name="connecting_instance">Connecting eduVPN instance</param>
+        /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
+        public VPNSession(ConnectWizard parent, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.ProfileInfo connecting_profile) :
             this()
         {
             _quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
             _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Parent = parent;
-            Configuration = configuration;
+
+            AuthenticatingInstance = authenticating_instance;
+            ConnectingInstance = connecting_instance;
+            ConnectingProfile = connecting_profile;
 
             // Create dispatcher timer.
             _connected_time_updater = new DispatcherTimer(
@@ -263,7 +280,7 @@ namespace eduVPN.ViewModels
                 // Launch user info load in the background.
                 () =>
                 {
-                    var user_info = Configuration.AuthenticatingInstance.GetUserInfo(Configuration.AuthenticatingInstance, _quit.Token);
+                    var user_info = AuthenticatingInstance.GetUserInfo(AuthenticatingInstance, _quit.Token);
                     Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                 },
 
@@ -271,10 +288,10 @@ namespace eduVPN.ViewModels
                 // Any errors shall be ignored.
                 () =>
                 {
-                    var api_authenticating = Configuration.AuthenticatingInstance.GetEndpoints(_quit.Token);
-                    var api_connecting = Configuration.ConnectingInstance.GetEndpoints(_quit.Token);
+                    var api_authenticating = AuthenticatingInstance.GetEndpoints(_quit.Token);
+                    var api_connecting = ConnectingInstance.GetEndpoints(_quit.Token);
                     var e = new Models.RequestAuthorizationEventArgs("config");
-                    Parent.Instance_RequestAuthorization(Configuration.AuthenticatingInstance, e);
+                    Parent.Instance_RequestAuthorization(AuthenticatingInstance, e);
                     if (e.AccessToken != null)
                     {
                         Parallel.ForEach(new List<KeyValuePair<Uri, string>>() {

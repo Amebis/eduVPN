@@ -238,7 +238,7 @@ namespace eduVPN.Views
 
             // Load previous username.
             var session = (ViewModels.VPNSession)sender;
-            var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
+            var profile_id = session.ConnectingInstance.Base.AbsoluteUri + "|" + session.ConnectingProfile.ID;
             try { view_model.Username = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id]; }
             catch { view_model.Username = null; }
 
@@ -273,7 +273,7 @@ namespace eduVPN.Views
 
             // Load previous "username". 2-Factor Authentication method actually.
             var session = (ViewModels.VPNSession)sender;
-            var profile_id = session.Configuration.ConnectingInstance.Base.AbsoluteUri + "|" + session.Configuration.ConnectingProfile.ID;
+            var profile_id = session.ConnectingInstance.Base.AbsoluteUri + "|" + session.ConnectingProfile.ID;
             var previous_method_selected = false;
             try
             {

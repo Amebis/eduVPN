@@ -82,8 +82,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
-        public OpenVPNSession(ConnectWizard parent, Models.VPNConfiguration configuration) :
-            base(parent, configuration)
+        /// <param name="parent">The page parent</param>
+        /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
+        /// <param name="connecting_instance">Connecting eduVPN instance</param>
+        /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
+        public OpenVPNSession(ConnectWizard parent, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.ProfileInfo connecting_profile) :
+            base(parent, authenticating_instance, connecting_instance, connecting_profile)
         {
             _working_folder = Path.GetTempPath();
             _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
@@ -97,13 +101,13 @@ namespace eduVPN.ViewModels
             _pre_run_actions.Add(() =>
             {
                 // Get profile's OpenVPN configuration.
-                _profile_config = Configuration.ConnectingProfile.GetOpenVPNConfig(Configuration.ConnectingInstance, _quit.Token);
+                _profile_config = ConnectingProfile.GetOpenVPNConfig(ConnectingInstance, _quit.Token);
             });
 
             _pre_run_actions.Add(() =>
             {
                 // Get instance client certificate.
-                _client_certificate = Configuration.ConnectingInstance.GetClientCertificate(Configuration.AuthenticatingInstance, _quit.Token);
+                _client_certificate = ConnectingInstance.GetClientCertificate(AuthenticatingInstance, _quit.Token);
             });
 
             _openvpn_interactive_service = new ServiceController("eduVPNServiceInteractive");
@@ -425,7 +429,7 @@ namespace eduVPN.ViewModels
                                             if (e.Message == "tls-error")
                                             {
                                                 // TLS negotiation failed. Perhaps the cause was our cached password. Refresh it.
-                                                _client_certificate = Configuration.ConnectingInstance.RefreshClientCertificate(Configuration.AuthenticatingInstance, _quit.Token);
+                                                _client_certificate = ConnectingInstance.RefreshClientCertificate(AuthenticatingInstance, _quit.Token);
                                                 _ignore_hold_hint = true;
                                             }
                                             else

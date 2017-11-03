@@ -52,7 +52,9 @@ namespace eduVPN.ViewModels
                                 // Start VPN session.
                                 var param = new ConnectWizard.StartSessionParams(
                                     InstanceSourceType,
-                                    (Models.VPNConfiguration)SelectedConfiguration.Clone());
+                                    SelectedConfiguration.AuthenticatingInstance,
+                                    SelectedConfiguration.ConnectingInstance,
+                                    SelectedConfiguration.ConnectingProfile);
                                 if (Parent.StartSession.CanExecute(param))
                                     Parent.StartSession.Execute(param);
                             }
@@ -103,7 +105,10 @@ namespace eduVPN.ViewModels
                         () =>
                             SelectedConfiguration != null &&
                             ConfigurationHistory.IndexOf(SelectedConfiguration) >= 0 &&
-                            !Parent.Sessions.Any(session => session.Configuration.Equals(SelectedConfiguration)));
+                            !Parent.Sessions.Any(session =>
+                                session.AuthenticatingInstance.Equals(SelectedConfiguration.AuthenticatingInstance) &&
+                                session.ConnectingInstance.Equals(SelectedConfiguration.ConnectingInstance) &&
+                                session.ConnectingProfile.Equals(SelectedConfiguration.ConnectingProfile)));
 
                     // Setup canExecute refreshing.
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedConfiguration)) _forget_selected_configuration.RaiseCanExecuteChanged(); };

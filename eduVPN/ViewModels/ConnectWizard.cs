@@ -188,10 +188,16 @@ namespace eduVPN.ViewModels
 
                             // Note: Sessions locking is not required, since all queue manipulation is done exclusively in the UI thread.
 
-                            if (Sessions.Count > 0 && Sessions[Sessions.Count - 1].Configuration.Equals(param.Configuration))
+                            if (Sessions.Count > 0)
                             {
-                                // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
-                                return;
+                                var s = Sessions[Sessions.Count - 1];
+                                if (s.AuthenticatingInstance.Equals(param.AuthenticatingInstance) &&
+                                    s.ConnectingInstance.Equals(param.ConnectingInstance) &&
+                                    s.ConnectingProfile.Equals(param.ConnectingProfile))
+                                {
+                                    // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
+                                    return;
+                                }
                             }
 
                             // Launch the VPN session in the background.
@@ -202,7 +208,11 @@ namespace eduVPN.ViewModels
                                     try
                                     {
                                         // Create our new session.
-                                        using (var session = new OpenVPNSession(this, param.Configuration))
+                                        using (var session = new OpenVPNSession(
+                                            this,
+                                            param.AuthenticatingInstance,
+                                            param.ConnectingInstance,
+                                            param.ConnectingProfile))
                                         {
                                             VPNSession previous_session = null;
                                             Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
@@ -256,49 +266,38 @@ namespace eduVPN.ViewModels
                                 })).Start();
 
                             // Do the configuration history book-keeping.
+                            var cfg = new Models.VPNConfiguration()
+                            {
+                                AuthenticatingInstance = param.AuthenticatingInstance,
+                                ConnectingInstance = param.ConnectingInstance,
+                                ConnectingProfile = param.ConnectingProfile,
+                            };
                             var configuration_history = ConfigurationHistories[(int)param.InstanceSourceType];
                             if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSourceInfo)
                             {
                                 // Check for session configuration duplicates and update popularity.
-                                int found = -1;
-                                for (var i = configuration_history.Count; i-- > 0;)
+                                for (var i = configuration_history.Count;;)
                                 {
-                                    if (configuration_history[i].Equals(param.Configuration))
+                                    if (i-- > 0)
                                     {
-                                        if (found < 0)
+                                        if (configuration_history[i].Equals(cfg))
                                         {
                                             // Upvote popularity.
                                             configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
-                                            found = i;
+                                            break;
                                         }
                                         else
                                         {
-                                            // We found a match second time. This happened early in the Alpha stage when duplicate checking didn't work right.
-                                            // Clean the list. The victim is less popular entry.
-                                            if (configuration_history[i].Popularity < configuration_history[found].Popularity)
-                                            {
-                                                configuration_history.RemoveAt(i);
-                                                found--;
-                                            }
-                                            else
-                                            {
-                                                param.Configuration.Popularity = configuration_history[i].Popularity;
-                                                configuration_history.RemoveAt(found);
-                                                found = i;
-                                            }
+                                            // Downvote popularity.
+                                            configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
                                         }
                                     }
                                     else
                                     {
-                                        // Downvote popularity.
-                                        configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                        // Add session configuration to history.
+                                        configuration_history.Add(cfg);
+                                        break;
                                     }
-                                }
-
-                                if (found < 0)
-                                {
-                                    // Add session configuration to history.
-                                    configuration_history.Add(param.Configuration);
                                 }
                             }
                             else if (
@@ -307,9 +306,9 @@ namespace eduVPN.ViewModels
                             {
                                 // Set session configuration to history.
                                 if (configuration_history.Count == 0)
-                                    configuration_history.Add(param.Configuration);
+                                    configuration_history.Add(cfg);
                                 else
-                                    configuration_history[0] = param.Configuration;
+                                    configuration_history[0] = cfg;
                             }
                             else
                                 throw new InvalidOperationException();
@@ -318,7 +317,9 @@ namespace eduVPN.ViewModels
                         // canExecute
                         param =>
                             param is StartSessionParams &&
-                            param.Configuration != null);
+                            param.AuthenticatingInstance != null &&
+                            param.ConnectingInstance != null &&
+                            param.ConnectingProfile != null);
 
                 return _start_session;
             }
@@ -338,9 +339,19 @@ namespace eduVPN.ViewModels
             public Models.InstanceSourceType InstanceSourceType { get; }
 
             /// <summary>
-            /// VPN configuration
+            /// Authenticating eduVPN instance
             /// </summary>
-            public Models.VPNConfiguration Configuration { get; }
+            public Models.InstanceInfo AuthenticatingInstance { get; }
+
+            /// <summary>
+            /// Connecting eduVPN instance
+            /// </summary>
+            public Models.InstanceInfo ConnectingInstance { get; }
+
+            /// <summary>
+            /// Connecting eduVPN instance profile
+            /// </summary>
+            public Models.ProfileInfo ConnectingProfile { get; }
 
             #endregion
 
@@ -350,11 +361,15 @@ namespace eduVPN.ViewModels
             /// Constructs a StartSession command parameter set
             /// </summary>
             /// <param name="instance_source_type">Instance source type</param>
-            /// <param name="configuration">VPN configuration</param>
-            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.VPNConfiguration configuration)
+            /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
+            /// <param name="connecting_instance">Connecting eduVPN instance</param>
+            /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
+            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.ProfileInfo connecting_profile)
             {
                 InstanceSourceType = instance_source_type;
-                Configuration = configuration;
+                AuthenticatingInstance = authenticating_instance;
+                ConnectingInstance = connecting_instance;
+                ConnectingProfile = connecting_profile;
             }
 
             #endregion
