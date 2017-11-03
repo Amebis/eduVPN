@@ -169,7 +169,7 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("OpenVPNServiceInteractive$eduVPN\\service")]
+        [global::System.Configuration.DefaultSettingValueAttribute("OpenVPN$eduVPN\\service")]
         public string OpenVPNInteractiveServiceNamedPipe {
             get {
                 return ((string)(this["OpenVPNInteractiveServiceNamedPipe"]));

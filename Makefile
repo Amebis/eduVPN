@@ -93,15 +93,15 @@ RegisterOpenVPNInteractiveService :: \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\ssleay32.dll" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll"
-	reg.exe add "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "config_dir"       /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)"             $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "config_ext"       /t REG_SZ /d "conf"                                                $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "log_dir"          /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)"             $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "log_append"       /t REG_SZ /d "0"                                                   $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "priority"         /t REG_SZ /d "NORMAL_PRIORITY_CLASS"                               $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "ovpn_admin_group" /t REG_SZ /d "Users"                                               $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "config_dir"       /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)"             $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "config_ext"       /t REG_SZ /d "conf"                                                $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "log_dir"          /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)"             $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "log_append"       /t REG_SZ /d "0"                                                   $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "priority"         /t REG_SZ /d "NORMAL_PRIORITY_CLASS"                               $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "ovpn_admin_group" /t REG_SZ /d "Users"                                               $(REG_FLAGS)
 	sc.exe create OpenVPNServiceInteractive$$eduVPN \
-		binpath= "\"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe\" -instance interactive OpenVPNServiceInteractive$$eduVPN" \
+		binpath= "\"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe\" -instance interactive OpenVPN$$eduVPN" \
 		DisplayName= "@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-3" \
 		type= own \
 		start= auto \
@@ -111,13 +111,13 @@ RegisterOpenVPNInteractiveService :: \
 
 UnregisterOpenVPNInteractiveService :: \
 	UnregisterOpenVPNInteractiveServiceSCM
-	-reg.exe delete "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "exe_path"         $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "config_dir"       $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "config_ext"       $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "log_dir"          $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "log_append"       $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "priority"         $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPNServiceInteractive$$eduVPN" /v "ovpn_admin_group" $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "exe_path"         $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "config_dir"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "config_ext"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "log_dir"          $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "log_append"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "priority"         $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "ovpn_admin_group" $(REG_FLAGS) > NUL 2>&1
 
 UnregisterOpenVPNInteractiveServiceSCM ::
 	-net.exe stop OpenVPNServiceInteractive$$eduVPN > NUL 2>&1
