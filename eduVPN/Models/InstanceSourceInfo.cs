@@ -25,7 +25,7 @@ namespace eduVPN.Models
         public uint Sequence
         {
             get { return _sequence; }
-            set { if (value != _sequence) { _sequence = value; OnPropertyChanged(new PropertyChangedEventArgs("Sequence")); } }
+            set { if (value != _sequence) { _sequence = value; OnPropertyChanged(new PropertyChangedEventArgs(nameof(Sequence))); } }
         }
         private uint _sequence;
 
@@ -35,7 +35,7 @@ namespace eduVPN.Models
         public DateTime? SignedAt
         {
             get { return _signed_at; }
-            set { if (value != _signed_at) { _signed_at = value; OnPropertyChanged(new PropertyChangedEventArgs("SignedAt")); } }
+            set { if (value != _signed_at) { _signed_at = value; OnPropertyChanged(new PropertyChangedEventArgs(nameof(SignedAt))); } }
         }
         private DateTime? _signed_at;
 
