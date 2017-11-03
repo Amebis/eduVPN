@@ -23,28 +23,16 @@ namespace eduVPN.ViewModels
         public ConnectWizard Parent { get; }
 
         /// <summary>
-        /// Selected instance source
+        /// Selected instance source type
         /// </summary>
-        public Models.InstanceSourceType InstanceSourceType
-        {
-            get { return _instance_source_type; }
-            set
-            {
-                if (SetProperty(ref _instance_source_type, value))
-                {
-                    RaisePropertyChanged(nameof(InstanceSource));
-                    RaisePropertyChanged(nameof(ConfigurationHistory));
-                }
-            }
-        }
-        private Models.InstanceSourceType _instance_source_type;
+        public Models.InstanceSourceType InstanceSourceType { get; }
 
         /// <summary>
         /// Selected instance source
         /// </summary>
         public Models.InstanceSourceInfo InstanceSource
         {
-            get { return Parent.InstanceSources[(int)_instance_source_type]; }
+            get { return Parent.InstanceSources[(int)InstanceSourceType]; }
         }
 
         /// <summary>
@@ -52,7 +40,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         public ObservableCollection<Models.VPNConfiguration> ConfigurationHistory
         {
-            get { return Parent.ConfigurationHistories[(int)_instance_source_type]; }
+            get { return Parent.ConfigurationHistories[(int)InstanceSourceType]; }
         }
 
         #endregion
@@ -67,7 +55,7 @@ namespace eduVPN.ViewModels
         public ConfigurationSelectBasePanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type)
         {
             Parent = parent;
-            _instance_source_type = instance_source_type;
+            InstanceSourceType = instance_source_type;
         }
 
         #endregion
