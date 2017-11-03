@@ -93,8 +93,8 @@ BEGIN
 	IDS_EDUVPN_OPENVPN_TITLE           "eduVPN Client OpenVPN Components"
 	IDS_EDUVPN_OPENVPN_PUBLISHER       "SURF"
 
-	IDS_EDUVPN_INTERACTIVE_TITLE       "eduVPN Interactive Service"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Enables eduVPN network management on connect. If stopped or disabled, eduVPN will not function."
+	IDS_EDUVPN_INTERACTIVE_TITLE       "OpenVPN Interactive Service (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
 END
 
 #endif    // English (United States) resources
@@ -117,10 +117,9 @@ BEGIN
 	IDS_EDUVPN_OPENVPN_TITLE           "Odjemalec eduVPN - komponente OpenVPN"
 	IDS_EDUVPN_OPENVPN_PUBLISHER       "SURF"
 
-	IDS_EDUVPN_INTERACTIVE_TITLE       "Interaktivna storitev eduVPN"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Omogoča upravljanje omrežja ob povezavi eduVPN. Če je ta storitev zaustavljena ali onemogočena, eduVPN ne bo deloval."
+	IDS_EDUVPN_INTERACTIVE_TITLE       "Interaktivna storitev OpenVPN (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec eduVPN ne bo deloval."
 END
 
 #endif    // Slovenian (Slovenia) resources
 /////////////////////////////////////////////////////////////////////////////
-
