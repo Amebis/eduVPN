@@ -28,8 +28,8 @@
                 <Shortcut
                     Id="eduVPN.Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
-                    Name="eduVPN Client" DisplayResourceDll="[#eduVPN.Resources.dll]" DisplayResourceId="1"
-                    DescriptionResourceDll="[#eduVPN.Resources.dll]" DescriptionResourceId="2"
+                    Name="eduVPN Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="1"
+                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
                     Target="eduVPN.Client"
                     WorkingDirectory="BINDIR"
                     Icon="eduVPN.ico"/>
@@ -42,9 +42,9 @@
                 <Shortcut
                     Id="eduVPN.Client.exe.DesktopShortcut"
                     Directory="DesktopFolder"
-                    Name="eduVPN Client" DisplayResourceDll="[#eduVPN.Resources.dll]" DisplayResourceId="1"
-                    DescriptionResourceDll="[#eduVPN.Resources.dll]" DescriptionResourceId="2"
-                    Target="[#eduVPN.Client.exe]"
+                    Name="eduVPN Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="1"
+                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
+                    Target="[BINDIR]eduVPN.Client.exe"
                     WorkingDirectory="BINDIR"
                     Icon="eduVPN.ico"/>
                 <RemoveFolder Id="eduVPN.Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>

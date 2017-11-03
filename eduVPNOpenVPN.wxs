@@ -122,8 +122,8 @@
                 <ServiceInstall
                     Id="OpenVPNServiceInteractive.eduVPN"
                     Name="OpenVPNServiceInteractive$eduVPN"
-                    DisplayName="@[#OpenVPN.Resources.dll],-3"
-                    Description="@[#OpenVPN.Resources.dll],-4"
+                    DisplayName="@[BINDIR]OpenVPN.Resources.dll,-3"
+                    Description="@[BINDIR]OpenVPN.Resources.dll,-4"
                     Arguments="-instance interactive OpenVPN$eduVPN"
                     Type="ownProcess"
                     Start="auto"
@@ -138,7 +138,7 @@
                     Key="Software\OpenVPN$eduVPN"
                     Name="exe_path"
                     Type="string"
-                    Value="[#openvpn.exe]"/>
+                    Value="[BINDIR]openvpn.exe"/>
             </Component>
             <Component Id="openvpnserv.exe.reg2" Guid="{5A36E0F2-D707-4A43-A039-2D6B4231BF23}">
                 <RegistryValue

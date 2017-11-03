@@ -40,7 +40,7 @@ WIX_CANDLE_FLAGS=-nologo \
 	-deduVPN.Client.Version="$(PRODUCT_VERSION)" -deduVPN.Client.VersionStr="$(PRODUCT_VERSION_STR)" -deduVPN.Client.ProductGUID="$(PRODUCT_VERSION_GUID)" \
 	-deduVPN.Version="$(PRODUCT_VERSION)" -deduVPN.VersionStr="$(PRODUCT_VERSION_STR)" \
 	-ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
-WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE69 -sice:ICE82 -ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
+WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 -ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
 WIX_INSIGNIA_FLAGS=-nologo
 
 
