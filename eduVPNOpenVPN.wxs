@@ -69,7 +69,7 @@
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
                 <Directory Id="EDUVPNDIR" Name="eduVPN">
-                    <Directory Id="INSTALLDIR" Name="OpenVPN" FileSource="$(var.eduVPN.TargetDir)"/>
+                    <Directory Id="BINDIR" Name="OpenVPN" FileSource="$(var.eduVPN.TargetDir)"/>
                 </Directory>
             </Directory>
         </Directory>
@@ -78,7 +78,7 @@
         <!--
             Compontents
         -->
-        <DirectoryRef Id="INSTALLDIR">
+        <DirectoryRef Id="BINDIR">
             <Component Id="libeay32.dll" Guid="{AE04C029-0B1B-4F2A-B810-58C8DEE72AE4}">
                 <File Source="libeay32.dll"/>
             </Component>
@@ -126,7 +126,7 @@
                     Key="Software\OpenVPNServiceInteractive$eduVPN"
                     Name="config_dir"
                     Type="string"
-                    Value="[INSTALLDIR]"/>
+                    Value="[BINDIR]"/>
             </Component>
             <Component Id="openvpnserv.exe.reg3" Guid="{3D89AA2C-04E3-49C2-A2BC-19B957ED4F74}">
                 <RegistryValue
@@ -142,7 +142,7 @@
                     Key="Software\OpenVPNServiceInteractive$eduVPN"
                     Name="log_dir"
                     Type="string"
-                    Value="[INSTALLDIR]"/>
+                    Value="[BINDIR]"/>
             </Component>
             <Component Id="openvpnserv.exe.reg5" Guid="{9C350B91-873A-4F0F-BBDD-D422071AE78C}">
                 <RegistryValue

@@ -65,8 +65,8 @@
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
                 <Directory Id="EDUVPNDIR" Name="eduVPN">
-                    <Directory Id="INSTALLDIR" Name="Core" FileSource="$(var.eduVPN.TargetDir)">
-                        <Directory Id="RESOURCEDIRSL" Name="sl"/>
+                    <Directory Id="BINDIR" Name="Core" FileSource="$(var.eduVPN.TargetDir)">
+                        <Directory Id="RESDIRSL" Name="sl"/>
                     </Directory>
                 </Directory>
             </Directory>
@@ -90,7 +90,7 @@
         <!--
             Prism
         -->
-        <DirectoryRef Id="INSTALLDIR">
+        <DirectoryRef Id="BINDIR">
             <Component Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}">
                 <File Source="Prism.dll"/>
             </Component>

@@ -10,7 +10,7 @@
         <!--
             Components
         -->
-        <DirectoryRef Id="INSTALLDIR">
+        <DirectoryRef Id="BINDIR">
             <Component Id="eduVPN.Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}">
                 <File Source="eduVPN.Client.exe" KeyPath="yes"/>
 
@@ -31,7 +31,7 @@
                     Name="eduVPN Client" DisplayResourceDll="[#eduVPN.Resources.dll]" DisplayResourceId="1"
                     DescriptionResourceDll="[#eduVPN.Resources.dll]" DescriptionResourceId="2"
                     Target="eduVPN.Client"
-                    WorkingDirectory="INSTALLDIR"
+                    WorkingDirectory="BINDIR"
                     Icon="eduVPN.ico"/>
             </Component>
             <Component Id="eduVPN.Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}">
@@ -45,14 +45,14 @@
                     Name="eduVPN Client" DisplayResourceDll="[#eduVPN.Resources.dll]" DisplayResourceId="1"
                     DescriptionResourceDll="[#eduVPN.Resources.dll]" DescriptionResourceId="2"
                     Target="[#eduVPN.Client.exe]"
-                    WorkingDirectory="INSTALLDIR"
+                    WorkingDirectory="BINDIR"
                     Icon="eduVPN.ico"/>
                 <RemoveFolder Id="eduVPN.Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
                 <RegistryValue Root="HKCU" Key="SOFTWARE\org.eduvpn.app" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
             -->
         </DirectoryRef>
-        <DirectoryRef Id="RESOURCEDIRSL">
+        <DirectoryRef Id="RESDIRSL">
             <Component Id="eduVPN.Client.resources.dll.sl" Guid="{662C9FC3-23A8-4174-8AD7-86EC67F916B4}">
                 <File Id="eduVPN.Client.resources.dll.sl" Source="sl\eduVPN.Client.resources.dll"/>
             </Component>
