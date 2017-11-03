@@ -59,6 +59,12 @@
             Id="BINDIR"
             Value="[BINDIRPREV]"
             Sequence="first"><![CDATA[BINDIRPREV AND NOT Installed]]></SetProperty>
+        <SetProperty
+            After="SetBinDirPrev"
+            Action="SetBinDirParam"
+            Id="BINDIR"
+            Value="[INSTALLDIR]"
+            Sequence="first"><![CDATA[INSTALLDIR AND NOT Installed]]></SetProperty>
 
 
         <!--
