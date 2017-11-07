@@ -23,7 +23,7 @@
 
         <ComboBox
             x:Name="InstanceList"
-            Margin="5"
+            Margin="5,5,5,2"
             Style="{StaticResource eduVPNComboBoxStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
@@ -33,9 +33,9 @@
         <ListBox
             x:Name="ProfileList"
             Grid.Row="1"
-            Margin="5"
+            Margin="5,2,5,5"
             Style="{StaticResource eduVPNListStyle}"
-            ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
+            ItemTemplate="{StaticResource eduVPNCompactProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
             ItemsSource="{Binding Path=ProfileList}"
             SelectedItem="{Binding Path=SelectedProfile}"/>

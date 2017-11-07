@@ -46,16 +46,16 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="eduVPNProfileSelectionItemTemplate">
+    <DataTemplate x:Key="eduVPNCompactProfileSelectionItemTemplate">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="32"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="43"/>
+                <RowDefinition Height="32"/>
             </Grid.RowDefinitions>
 
             <Separator
@@ -65,8 +65,7 @@
             <Image
                 Grid.Column="0"
                 Grid.Row="1"
-                Margin="0,5,5,5"
-                MaxHeight="16"
+                MaxHeight="18"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectPanel}}}"
@@ -94,7 +93,7 @@
             <TextBlock
                 Grid.Column="1"
                 Grid.Row="1"
-                Margin="-55,5,-55,5"
+                Margin="-32,0"
                 HorizontalAlignment="Center"
                 Text="{Binding Path=DisplayName}"
                 Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
@@ -104,7 +103,6 @@
                 Grid.Row="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="5,5,0,5"
                 Content="{StaticResource eduVPNTwoFactorAuthenticationIcon}"
                 Visibility="{Binding Path=IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
