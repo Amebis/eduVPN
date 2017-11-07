@@ -12,13 +12,13 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace eduVPN
+namespace eduVPN.Xml
 {
     /// <summary>
     /// Serializable string dictionary
     /// </summary>
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "DCS does not support IXmlSerializable types that are also marked as [Serializable]")]
-    public class SerializableStringDictionary : Dictionary<string, string>, IXmlSerializable
+    public class StringDictionary : Dictionary<string, string>, IXmlSerializable
     {
         #region IXmlSerializable Support
 
@@ -32,7 +32,7 @@ namespace eduVPN
             Clear();
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "SerializableStringDictionary"))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "DictionaryEntry")
                 {

@@ -5,13 +5,15 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Xml;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
     /// VPN configuration for distributed authenticating instance source as persisted to settings
     /// </summary>
+    [Obsolete]
     public class DistributedVPNConfigurationSettings : FederatedVPNConfigurationSettings
     {
         #region Properties
@@ -51,12 +53,12 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override void ReadXml(XmlReader reader)
         {
-            AuthenticatingInstance = reader["AuthenticatingInstance"];
+            AuthenticatingInstance = reader[nameof(AuthenticatingInstance)];
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "DistributedVPNConfigurationSettings"))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name == "FederatedVPNConfigurationSettings")
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(FederatedVPNConfigurationSettings))
                     base.ReadXml(reader);
             }
         }
@@ -65,9 +67,9 @@ namespace eduVPN.Models
         public override void WriteXml(XmlWriter writer)
         {
             if (AuthenticatingInstance != null)
-                writer.WriteAttributeString("AuthenticatingInstance", AuthenticatingInstance);
+                writer.WriteAttributeString(nameof(AuthenticatingInstance), AuthenticatingInstance);
 
-            writer.WriteStartElement("FederatedVPNConfigurationSettings");
+            writer.WriteStartElement(nameof(FederatedVPNConfigurationSettings));
             base.WriteXml(writer);
             writer.WriteEndElement();
         }

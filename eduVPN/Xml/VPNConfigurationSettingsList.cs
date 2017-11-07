@@ -5,16 +5,18 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
     /// VPN configuration list
     /// </summary>
+    [Obsolete]
     public class VPNConfigurationSettingsList : List<VPNConfigurationSettings>, IXmlSerializable
     {
         #region Constructors
@@ -48,7 +50,7 @@ namespace eduVPN.Models
             Clear();
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "VPNConfigurationSettingsList"))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
                 if (reader.NodeType == XmlNodeType.Element)
                 {
@@ -56,10 +58,10 @@ namespace eduVPN.Models
                     VPNConfigurationSettings cfg = null;
                     switch (reader.Name)
                     {
-                        case "VPNConfigurationSettings": cfg = new VPNConfigurationSettings(); break;
-                        case "LocalVPNConfigurationSettings": cfg = new LocalVPNConfigurationSettings(); break;
-                        case "FederatedVPNConfigurationSettings": cfg = new FederatedVPNConfigurationSettings(); break;
-                        case "DistributedVPNConfigurationSettings": cfg = new DistributedVPNConfigurationSettings(); break;
+                        case nameof(VPNConfigurationSettings): cfg = new VPNConfigurationSettings(); break;
+                        case nameof(LocalVPNConfigurationSettings): cfg = new LocalVPNConfigurationSettings(); break;
+                        case nameof(FederatedVPNConfigurationSettings): cfg = new FederatedVPNConfigurationSettings(); break;
+                        case nameof(DistributedVPNConfigurationSettings): cfg = new DistributedVPNConfigurationSettings(); break;
                     }
 
                     if (cfg != null)

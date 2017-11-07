@@ -5,13 +5,15 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Xml;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
     /// VPN configuration for local authenticating instance source as persisted to settings
     /// </summary>
+    [Obsolete]
     public class LocalVPNConfigurationSettings : VPNConfigurationSettings
     {
         #region Properties
@@ -19,12 +21,12 @@ namespace eduVPN.Models
         /// <summary>
         /// Instance
         /// </summary>
-        public InstanceInfo Instance { get; set; }
+        public Models.InstanceInfo Instance { get; set; }
 
         /// <summary>
         /// Profile ID
         /// </summary>
-        public ProfileInfo Profile { get; set; }
+        public Models.ProfileInfo Profile { get; set; }
 
         #endregion
 
@@ -61,28 +63,28 @@ namespace eduVPN.Models
             Profile = null;
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "LocalVPNConfigurationSettings"))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
                 if (reader.NodeType == XmlNodeType.Element)
                 {
                     switch (reader.Name)
                     {
-                        case "VPNConfigurationSettings":
+                        case nameof(VPNConfigurationSettings):
                             base.ReadXml(reader);
                             break;
 
-                        case "InstanceInfo":
-                            if (reader["Key"] == "Instance")
+                        case nameof(Models.InstanceInfo):
+                            if (reader["Key"] == nameof(Instance))
                             {
-                                Instance = new InstanceInfo();
+                                Instance = new Models.InstanceInfo();
                                 Instance.ReadXml(reader);
                             }
                             break;
 
-                        case "ProfileInfo":
-                            if (reader["Key"] == "Profile")
+                        case nameof(Models.ProfileInfo):
+                            if (reader["Key"] == nameof(Profile))
                             {
-                                Profile = new ProfileInfo();
+                                Profile = new Models.ProfileInfo();
                                 Profile.ReadXml(reader);
                             }
                             break;
@@ -94,22 +96,22 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override void WriteXml(XmlWriter writer)
         {
-            writer.WriteStartElement("VPNConfigurationSettings");
+            writer.WriteStartElement(nameof(VPNConfigurationSettings));
             base.WriteXml(writer);
             writer.WriteEndElement();
 
             if (Instance != null)
             {
-                writer.WriteStartElement("InstanceInfo");
-                writer.WriteAttributeString("Key", "Instance");
+                writer.WriteStartElement(nameof(Models.InstanceInfo));
+                writer.WriteAttributeString("Key", nameof(Instance));
                 Instance.WriteXml(writer);
                 writer.WriteEndElement();
             }
 
             if (Profile != null)
             {
-                writer.WriteStartElement("ProfileInfo");
-                writer.WriteAttributeString("Key", "Profile");
+                writer.WriteStartElement(nameof(Models.ProfileInfo));
+                writer.WriteAttributeString("Key", nameof(Profile));
                 Profile.WriteXml(writer);
                 writer.WriteEndElement();
             }

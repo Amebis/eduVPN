@@ -13,15 +13,16 @@ using System.Windows.Data;
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns <c>1*</c> if configuration histories contains any records; or <c>Auto</c> otherwise.
+    /// Returns <c>Visibility.Visible</c> if instance source contains any connecting instances; or <c>Visibility.Collapsed</c> otherwise.
     /// </summary>
-    class HistorySourceCountRowHeightConverter : IValueConverter
+    class InstanceSourceVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return
-                value is int count &&
-                count > 0 ? new GridLength(1.0, GridUnitType.Star) : GridLength.Auto;
+                value is ViewModels.ConnectWizard parent &&
+                parameter is Models.InstanceSourceType instance_source_type &&
+                parent.HasConnectingInstances(instance_source_type) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

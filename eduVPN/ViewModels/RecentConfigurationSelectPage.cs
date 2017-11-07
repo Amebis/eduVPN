@@ -20,11 +20,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Configuration history panels
         /// </summary>
-        public ConfigurationSelectBasePanel[] ConfigurationHistoryPanels
+        public ConnectingInstanceAndProfileSelectPanel[] Panels
         {
-            get { return _configuration_history_panels; }
+            get { return _panels; }
         }
-        private ConfigurationSelectBasePanel[] _configuration_history_panels;
+        private ConnectingInstanceAndProfileSelectPanel[] _panels;
 
         /// <summary>
         /// Add another profile
@@ -62,25 +62,9 @@ namespace eduVPN.ViewModels
         {
             // Create history panels.
             var source_type_length = (int)Models.InstanceSourceType._end;
-            _configuration_history_panels = new ConfigurationSelectBasePanel[Parent.InstanceSources.Length];
-            for (var i = (int)Models.InstanceSourceType._start; i < source_type_length; i++)
-            {
-                if (Parent.InstanceSources[i] is Models.LocalInstanceSourceInfo)
-                    _configuration_history_panels[i] = new ConfigurationSelectPanel(Parent, (Models.InstanceSourceType)i);
-                else if (
-                    Parent.InstanceSources[i] is Models.DistributedInstanceSourceInfo ||
-                    Parent.InstanceSources[i] is Models.FederatedInstanceSourceInfo)
-                {
-                    var panel = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)i);
-                    if (Parent.ConfigurationHistories[i].Count > 0)
-                    {
-                        // Mind the order: authenticating instance first, connecting second. Otherwise, the profile list loading will fail.
-                        panel.AuthenticatingInstance = Parent.ConfigurationHistories[i][0].AuthenticatingInstance;
-                        panel.SelectedInstance       = Parent.ConfigurationHistories[i][0].ConnectingInstance    ;
-                    };
-                    _configuration_history_panels[i] = panel;
-                }
-            }
+            _panels = new ConnectingInstanceAndProfileSelectPanel[Parent.InstanceSources.Length];
+            for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
+                _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index);
         }
 
         #endregion

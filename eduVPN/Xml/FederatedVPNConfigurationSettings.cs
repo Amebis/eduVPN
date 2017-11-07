@@ -5,13 +5,15 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Xml;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
     /// VPN configuration for federated authenticating instance source as persisted to settings
     /// </summary>
+    [Obsolete]
     public class FederatedVPNConfigurationSettings : VPNConfigurationSettings
     {
         #region Properties
@@ -51,12 +53,12 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override void ReadXml(XmlReader reader)
         {
-            LastInstance = reader["LastInstance"];
+            LastInstance = reader[nameof(LastInstance)];
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "FederatedVPNConfigurationSettings"))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name == "VPNConfigurationSettings")
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(VPNConfigurationSettings))
                     base.ReadXml(reader);
             }
         }
@@ -65,9 +67,9 @@ namespace eduVPN.Models
         public override void WriteXml(XmlWriter writer)
         {
             if (LastInstance != null)
-                writer.WriteAttributeString("LastInstance", LastInstance);
+                writer.WriteAttributeString(nameof(LastInstance), LastInstance);
 
-            writer.WriteStartElement("VPNConfigurationSettings");
+            writer.WriteStartElement(nameof(VPNConfigurationSettings));
             base.WriteXml(writer);
             writer.WriteEndElement();
         }

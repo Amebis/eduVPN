@@ -6,6 +6,7 @@
 */
 
 using Prism.Commands;
+using Prism.Mvvm;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -14,63 +15,29 @@ using System.Windows.Threading;
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Instance and profile select panel base class
+    /// Instance and profile select panel
     /// </summary>
-    public class ConnectingInstanceAndProfileSelectPanel : ConfigurationSelectBasePanel
+    public class ConnectingInstanceAndProfileSelectPanel : BindableBase
     {
         #region Properties
 
         /// <summary>
-        /// Authenticating instance
+        /// The page parent
         /// </summary>
-        public Models.InstanceInfo AuthenticatingInstance
-        {
-            get { return _authenticating_instance; }
-            set { SetProperty(ref _authenticating_instance, value); }
-        }
-        private Models.InstanceInfo _authenticating_instance;
+        public ConnectWizard Parent { get; }
 
         /// <summary>
-        /// Selected connecting instance
+        /// Selected instance source type
         /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.InstanceInfo SelectedInstance
-        {
-            get { return _selected_instance; }
-            set
-            {
-                if (SetProperty(ref _selected_instance, value))
-                {
-                    ProfileList = null;
-                    if (_selected_instance != null)
-                    {
-                        new Thread(new ThreadStart(
-                            () =>
-                            {
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
-                                try
-                                {
-                                    // Get and load profile list.
-                                    var profile_list = _selected_instance.GetProfileList(AuthenticatingInstance, Window.Abort.Token);
+        public Models.InstanceSourceType InstanceSourceType { get; }
 
-                                    // Send the loaded profile list back to the UI thread.
-                                    // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                        () =>
-                                        {
-                                            ProfileList = profile_list;
-                                            Parent.Error = null;
-                                        }));
-                                }
-                                catch (OperationCanceledException) { }
-                                catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
-                                finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-                            })).Start();
-                    }
-                }
-            }
+        /// <summary>
+        /// Selected instance source
+        /// </summary>
+        public Models.InstanceSourceInfo InstanceSource
+        {
+            get { return Parent.InstanceSources[(int)InstanceSourceType]; }
         }
-        private Models.InstanceInfo _selected_instance;
 
         /// <summary>
         /// List of available profiles
@@ -80,9 +47,12 @@ namespace eduVPN.ViewModels
             get { return _profile_list; }
             set
             {
-                if (SetProperty(ref _profile_list, value))
+                if (value != _profile_list)
                 {
-                    // Reset selested profile.
+                    _profile_list = value;
+                    RaisePropertyChanged();
+
+                    // Reset selected profile.
                     SelectedProfile = null;
                 }
             }
@@ -95,7 +65,7 @@ namespace eduVPN.ViewModels
         public Models.ProfileInfo SelectedProfile
         {
             get { return _selected_profile; }
-            set { SetProperty(ref _selected_profile, value); }
+            set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); }; }
         }
         private Models.ProfileInfo _selected_profile;
 
@@ -118,8 +88,8 @@ namespace eduVPN.ViewModels
                                 // Start VPN session.
                                 var param = new ConnectWizard.StartSessionParams(
                                     InstanceSourceType,
-                                    AuthenticatingInstance,
-                                    SelectedInstance,
+                                    InstanceSource.AuthenticatingInstance,
+                                    InstanceSource.ConnectingInstance,
                                     SelectedProfile);
                                 if (Parent.StartSession.CanExecute(param))
                                     Parent.StartSession.Execute(param);
@@ -129,12 +99,10 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () =>
-                            SelectedInstance != null&&
-                            SelectedProfile != null);
+                        () => SelectedProfile != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance) || e.PropertyName == nameof(SelectedProfile)) _connect_selected_profile.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedProfile)) _connect_selected_profile.RaiseCanExecuteChanged(); };
                 }
 
                 return _connect_selected_profile;
@@ -152,9 +120,51 @@ namespace eduVPN.ViewModels
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
         /// <param name="authenticating_instance">Authenticating instance</param>
-        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
-            base(parent, instance_source_type)
+        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type)
         {
+            Parent = parent;
+            InstanceSourceType = instance_source_type;
+
+            // Trigger initial load.
+            InstanceSource_PropertyChanged(this, new PropertyChangedEventArgs(nameof(InstanceSource.ConnectingInstance)));
+            InstanceSource.PropertyChanged += InstanceSource_PropertyChanged;
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void InstanceSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(InstanceSource.ConnectingInstance))
+            {
+                ProfileList = null;
+                if (InstanceSource.ConnectingInstance != null)
+                {
+                    new Thread(new ThreadStart(
+                        () =>
+                        {
+                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                            try
+                            {
+                                // Get and load profile list.
+                                var profile_list = InstanceSource.ConnectingInstance.GetProfileList(InstanceSource.AuthenticatingInstance, Window.Abort.Token);
+
+                                // Send the loaded profile list back to the UI thread.
+                                // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
+                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                    () =>
+                                    {
+                                        ProfileList = profile_list;
+                                        Parent.Error = null;
+                                    }));
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
+                            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                        })).Start();
+                }
+            }
         }
 
         #endregion

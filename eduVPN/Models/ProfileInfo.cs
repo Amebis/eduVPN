@@ -290,19 +290,19 @@ namespace eduVPN.Models
         {
             string v;
 
-            ID = (v = reader.GetAttribute("ID")) != null ? v : null;
-            DisplayName = reader.GetAttribute("DisplayName");
-            IsTwoFactorAuthentication = (v = reader.GetAttribute("IsTwoFactorAuthentication")) != null && bool.TryParse(v, out var v_bool) ? v_bool : false;
-            TwoFactorMethods = (v = reader.GetAttribute("TwoFactorMethods")) != null && int.TryParse(v, out var v_int) ? (TwoFactorAuthenticationMethods)v_int : TwoFactorAuthenticationMethods.None;
+            ID = reader[nameof(ID)];
+            DisplayName = reader[nameof(DisplayName)];
+            IsTwoFactorAuthentication = (v = reader[nameof(IsTwoFactorAuthentication)]) != null && bool.TryParse(v, out var v_is_two_factor_authentication) ? v_is_two_factor_authentication : false;
+            TwoFactorMethods = (v = reader[nameof(TwoFactorMethods)]) != null && int.TryParse(v, out var v_two_factor_methods) ? (TwoFactorAuthenticationMethods)v_two_factor_methods : TwoFactorAuthenticationMethods.None;
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("ID", ID);
+            writer.WriteAttributeString(nameof(ID), ID);
             if (DisplayName != null)
-                writer.WriteAttributeString("DisplayName", DisplayName);
-            writer.WriteAttributeString("IsTwoFactorAuthentication", IsTwoFactorAuthentication ? "true" : "false");
-            writer.WriteAttributeString("TwoFactorMethods", ((int)TwoFactorMethods).ToString());
+                writer.WriteAttributeString(nameof(DisplayName), DisplayName);
+            writer.WriteAttributeString(nameof(IsTwoFactorAuthentication), IsTwoFactorAuthentication.ToString());
+            writer.WriteAttributeString(nameof(TwoFactorMethods), ((int)TwoFactorMethods).ToString());
         }
 
         #endregion

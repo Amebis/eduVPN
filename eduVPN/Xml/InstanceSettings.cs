@@ -10,10 +10,10 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
-    /// Instance specific settings to persist accross client sessions
+    /// Serializable instance specific settings
     /// </summary>
     public class InstanceSettings : IXmlSerializable
     {
@@ -37,14 +37,14 @@ namespace eduVPN.Models
         {
             string v;
 
-            ClientCertificateHash = (v = reader["ClientCertificateHash"]) != null ? ClientCertificateHash = FromHexToBin(v) : null;
+            ClientCertificateHash = (v = reader[nameof(ClientCertificateHash)]) != null ? ClientCertificateHash = FromHexToBin(v) : null;
         }
 
         public void WriteXml(XmlWriter writer)
         {
             if (ClientCertificateHash != null)
             {
-                writer.WriteStartAttribute("ClientCertificateHash");
+                writer.WriteStartAttribute(nameof(ClientCertificateHash));
                 writer.WriteBinHex(ClientCertificateHash, 0, ClientCertificateHash.Length);
                 writer.WriteEndAttribute();
             }

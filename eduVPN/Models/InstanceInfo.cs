@@ -10,6 +10,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -90,6 +91,16 @@ namespace eduVPN.Models
         private Uri _logo;
 
         /// <summary>
+        /// Popularity factor in the [0.0, 1.0] range (default 0.5)
+        /// </summary>
+        public float Popularity
+        {
+            get { return _popularity; }
+            set { SetProperty(ref _popularity, value); }
+        }
+        private float _popularity = 1.0f;
+
+        /// <summary>
         /// Request authorization event
         /// </summary>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
@@ -123,23 +134,24 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Constructs the authenticating instance info for given federated instance source
+        /// Constructs the authenticating instance info
         /// </summary>
-        /// <param name="instance_source">Federated instance source</param>
-        public InstanceInfo(FederatedInstanceSourceInfo instance_source) :
+        /// <param name="authorization_endpoint">Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.</param>
+        /// <param name="token_endpoint">Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.</param>
+        public InstanceInfo(Uri authorization_endpoint, Uri token_endpoint) :
             this()
         {
             // Set display name to authorization URI hostname.
-            _display_name = instance_source.AuthorizationEndpoint.Host;
+            _display_name = authorization_endpoint.Host;
 
             // Set instance logo to /favicon.ico, perhaps we might get lucky.
-            _logo = new UriBuilder(instance_source.AuthorizationEndpoint) { Path = "/favicon.ico" }.Uri;
+            _logo = new UriBuilder(authorization_endpoint) { Path = "/favicon.ico" }.Uri;
 
             // Set API endpoints manually.
             _endpoints = new InstanceEndpoints()
             {
-                AuthorizationEndpoint = instance_source.AuthorizationEndpoint,
-                TokenEndpoint = instance_source.TokenEndpoint
+                AuthorizationEndpoint = authorization_endpoint,
+                TokenEndpoint = token_endpoint,
             };
         }
 
@@ -380,7 +392,7 @@ namespace eduVPN.Models
 
                                 // Save the certificate hash to the settings.
                                 if (instance_settings == null)
-                                    Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Models.InstanceSettings() { ClientCertificateHash = _client_certificate.GetCertHash() };
+                                    Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Xml.InstanceSettings() { ClientCertificateHash = _client_certificate.GetCertHash() };
                                 else
                                     Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = _client_certificate.GetCertHash();
                             }
@@ -477,18 +489,20 @@ namespace eduVPN.Models
         {
             string v;
 
-            Base = (v = reader.GetAttribute("Base")) != null ? new Uri(v) : null;
-            DisplayName = reader.GetAttribute("DisplayName");
-            Logo = (v = reader.GetAttribute("Logo")) != null ? new Uri(v) : null;
+            Base = (v = reader[nameof(Base)]) != null ? new Uri(v) : null;
+            DisplayName = reader[nameof(DisplayName)];
+            Logo = (v = reader[nameof(Logo)]) != null ? new Uri(v) : null;
+            Popularity = (v = reader[nameof(Popularity)]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("Base", Base.AbsoluteUri);
+            writer.WriteAttributeString(nameof(Base), Base.AbsoluteUri);
             if (DisplayName != null)
-                writer.WriteAttributeString("DisplayName", DisplayName);
+                writer.WriteAttributeString(nameof(DisplayName), DisplayName);
             if (Logo != null)
-                writer.WriteAttributeString("Logo", Logo.AbsoluteUri);
+                writer.WriteAttributeString(nameof(Logo), Logo.AbsoluteUri);
+            writer.WriteAttributeString(nameof(Popularity), Popularity.ToString(CultureInfo.InvariantCulture));
         }
 
         #endregion

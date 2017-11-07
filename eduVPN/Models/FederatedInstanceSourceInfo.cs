@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace eduVPN.Models
 {
@@ -16,24 +17,8 @@ namespace eduVPN.Models
     /// <remarks>
     /// Access token is issued by a central OAuth server; all instances accept this token.
     /// </remarks>
-    public class FederatedInstanceSourceInfo : InstanceSourceInfo
+    public class FederatedInstanceSourceInfo : DistributedInstanceSourceInfo
     {
-        #region Properties
-
-        /// <summary>
-        /// Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.
-        /// </summary>
-        public Uri AuthorizationEndpoint { get => _authorization_endpoint; }
-        private Uri _authorization_endpoint;
-
-        /// <summary>
-        /// Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.
-        /// </summary>
-        public Uri TokenEndpoint { get => _token_endpoint; }
-        private Uri _token_endpoint;
-
-        #endregion
-
         #region ILoadableItem Support
 
         /// <inheritdoc/>
@@ -43,14 +28,35 @@ namespace eduVPN.Models
 
             if (obj is Dictionary<string, object> obj2)
             {
-                // Set authorization endpoint.
-                _authorization_endpoint = new Uri(eduJSON.Parser.GetValue<string>(obj2, "authorization_endpoint"));
-
-                // Set token endpoint.
-                _token_endpoint = new Uri(eduJSON.Parser.GetValue<string>(obj2, "token_endpoint"));
+                AuthenticatingInstance = new InstanceInfo(
+                    new Uri(eduJSON.Parser.GetValue<string>(obj2, "authorization_endpoint")),
+                    new Uri(eduJSON.Parser.GetValue<string>(obj2, "token_endpoint")));
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+        }
+
+        #endregion
+
+        #region IXmlSerializable Support
+
+        /// <inheritdoc/>
+        public override void ReadXml(XmlReader reader)
+        {
+            while (reader.Read() &&
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
+            {
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(DistributedInstanceSourceInfo))
+                    base.ReadXml(reader);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void WriteXml(XmlWriter writer)
+        {
+            writer.WriteStartElement(nameof(DistributedInstanceSourceInfo));
+            base.WriteXml(writer);
+            writer.WriteEndElement();
         }
 
         #endregion

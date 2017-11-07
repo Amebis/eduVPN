@@ -36,7 +36,7 @@
             AutomationProperties.Name="{x:Static res:Strings.SecureInternetTitle}"
             Command="{Binding Path=SelectInstanceSource}"
             CommandParameter="{x:Static model:InstanceSourceType.SecureInternet}"
-            Visibility="{Binding Path=Parent.ConfigurationHistories, Converter={StaticResource HistorySourceInverseVisibilityConverter}, ConverterParameter={x:Static model:InstanceSourceType.SecureInternet}, FallbackValue={x:Static Visibility.Visible}}">
+            Visibility="{Binding Path=Parent, Converter={StaticResource InstanceSourceInverseVisibilityConverter}, ConverterParameter={x:Static model:InstanceSourceType.SecureInternet}, FallbackValue={x:Static Visibility.Visible}}">
 
             <Grid>
                 <Grid.ColumnDefinitions>

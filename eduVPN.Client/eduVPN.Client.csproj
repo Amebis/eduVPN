@@ -44,9 +44,9 @@
     <Compile Include="Converters\ConnectingInstanceAndProfileEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
-    <Compile Include="Converters\HistorySourceCountRowHeightConverter.cs" />
-    <Compile Include="Converters\HistorySourceCountVisibilityConverter.cs" />
-    <Compile Include="Converters\HistorySourceInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\InstanceSourceInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\InstanceSourceRowHeightConverter.cs" />
+    <Compile Include="Converters\InstanceSourceVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListRowHeightConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
@@ -68,10 +68,6 @@
     <Compile Include="Views\PasswordPopup.xaml.cs">
       <DependentUpon>PasswordPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectingInstanceAndProfileSelectBasePanel.cs" />
-    <Compile Include="Views\ConnectingProfileSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
     </Compile>
@@ -79,9 +75,6 @@
       <DependentUpon>TOTPAuthenticationPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImageWithFallback.cs" />
-    <Compile Include="Views\ConfigurationSelectPanel.xaml.cs">
-      <DependentUpon>ConfigurationSelectPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -94,12 +87,6 @@
     <Compile Include="Views\ConnectWizardPage.cs" />
     <Compile Include="Views\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ConnectingInstanceAndProfileSelectPage.xaml.cs">
-      <DependentUpon>ConnectingInstanceAndProfileSelectPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ConnectingProfileSelectPage.xaml.cs">
-      <DependentUpon>ConnectingProfileSelectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
@@ -154,19 +141,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectingProfileSelectPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TOTPAuthenticationPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConfigurationSelectPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -220,14 +199,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CustomInstancePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConnectingInstanceAndProfileSelectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ConnectingProfileSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

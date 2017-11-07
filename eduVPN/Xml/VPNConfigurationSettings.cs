@@ -5,16 +5,18 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Globalization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
     /// VPN configuration as persisted to settings base class
     /// </summary>
+    [Obsolete]
     public class VPNConfigurationSettings : IXmlSerializable
     {
         #region Properties
@@ -56,12 +58,12 @@ namespace eduVPN.Models
         {
             string v;
 
-            Popularity = (v = reader["Popularity"]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
+            Popularity = (v = reader[nameof(Popularity)]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
         }
 
         public virtual void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("Popularity", Popularity.ToString(CultureInfo.InvariantCulture));
+            writer.WriteAttributeString(nameof(Popularity), Popularity.ToString(CultureInfo.InvariantCulture));
         }
 
         #endregion

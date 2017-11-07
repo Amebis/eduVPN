@@ -1,20 +1,19 @@
-﻿<view:ConnectingInstanceAndProfileSelectBasePanel
+﻿<UserControl
     x:Class="eduVPN.Views.ConnectingInstanceAndProfileSelectPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:view="clr-namespace:eduVPN.Views"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
 
-    <view:ConnectingInstanceAndProfileSelectBasePanel.Resources>
+    <UserControl.Resources>
         <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
         </Style>
-    </view:ConnectingInstanceAndProfileSelectBasePanel.Resources>
+    </UserControl.Resources>
 
     <Grid Margin="-5">
         <Grid.RowDefinitions>
@@ -28,8 +27,8 @@
             Style="{StaticResource eduVPNComboBoxStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
-            ItemsSource="{Binding Path=InstanceSource}"
-            SelectedItem="{Binding Path=SelectedInstance}"/>
+            ItemsSource="{Binding Path=InstanceSource.ConnectingInstanceList}"
+            SelectedItem="{Binding Path=InstanceSource.ConnectingInstance}"/>
 
         <ListBox
             x:Name="ProfileList"
@@ -41,4 +40,4 @@
             ItemsSource="{Binding Path=ProfileList}"
             SelectedItem="{Binding Path=SelectedProfile}"/>
     </Grid>
-</view:ConnectingInstanceAndProfileSelectBasePanel>
+</UserControl>

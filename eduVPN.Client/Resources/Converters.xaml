@@ -12,9 +12,9 @@
     <conv:ConnectingInstanceAndProfileEqualVisibilityConverter x:Key="ConnectingInstanceAndProfileEqualVisibilityConverter"/>
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
-    <conv:HistorySourceInverseVisibilityConverter x:Key="HistorySourceInverseVisibilityConverter"/>
-    <conv:HistorySourceCountRowHeightConverter x:Key="HistorySourceCountRowHeightConverter"/>
-    <conv:HistorySourceCountVisibilityConverter x:Key="HistorySourceCountVisibilityConverter"/>
+    <conv:InstanceSourceInverseVisibilityConverter x:Key="InstanceSourceInverseVisibilityConverter"/>
+    <conv:InstanceSourceRowHeightConverter x:Key="InstanceSourceRowHeightConverter"/>
+    <conv:InstanceSourceVisibilityConverter x:Key="InstanceSourceVisibilityConverter"/>
     <conv:MessageListRowHeightConverter x:Key="MessageListRowHeightConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>

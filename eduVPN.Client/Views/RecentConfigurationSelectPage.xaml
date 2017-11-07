@@ -10,7 +10,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     xmlns:viewModel="clr-namespace:eduVPN.ViewModels;assembly=eduVPN"
     xmlns:view="clr-namespace:eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
@@ -21,17 +21,7 @@
     Style="{StaticResource eduVPNConnectWizardPageWithSettings}">
 
     <view:ConnectWizardPage.Resources>
-        <!-- eduVPN collection view sources -->
-        <CollectionViewSource x:Key="ConfigurationListView" Source="{Binding Path=Parent.ConfigurationHistories[2]}">
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Popularity" Direction="Descending"/>
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-
         <!-- Panel view model to view mapping -->
-        <DataTemplate DataType="{x:Type viewModel:ConfigurationSelectPanel}">
-            <view:ConfigurationSelectPanel/>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPanel}">
             <view:ConnectingInstanceAndProfileSelectPanel/>
         </DataTemplate>
@@ -41,13 +31,13 @@
         VerticalAlignment="Top"
         Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="{Binding Path=Parent.ConfigurationHistories[1].Count, Converter={StaticResource HistorySourceCountRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
-            <RowDefinition Height="{Binding Path=Parent.ConfigurationHistories[2].Count, Converter={StaticResource HistorySourceCountRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
+            <RowDefinition Height="{Binding Path=Parent, Converter={StaticResource InstanceSourceRowHeightConverter}, ConverterParameter={x:Static model:InstanceSourceType.SecureInternet}, FallbackValue={StaticResource AutoGridLength}}"/>
+            <RowDefinition Height="{Binding Path=Parent, Converter={StaticResource InstanceSourceRowHeightConverter}, ConverterParameter={x:Static model:InstanceSourceType.InstituteAccess}, FallbackValue={StaticResource AutoGridLength}}"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid
-            Visibility="{Binding Path=Parent.ConfigurationHistories[1].Count, Converter={StaticResource HistorySourceCountVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            Visibility="{Binding Path=Parent, Converter={StaticResource InstanceSourceVisibilityConverter}, ConverterParameter={x:Static model:InstanceSourceType.SecureInternet}, FallbackValue={x:Static Visibility.Collapsed}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
@@ -86,12 +76,12 @@
                 Grid.Row="1"
                 Margin="5"
                 IsTabStop="False"
-                Content="{Binding Path=ConfigurationHistoryPanels[1]}"/>
+                Content="{Binding Path=Panels[1]}"/>
         </Grid>
 
         <Grid
             Grid.Row="1"
-            Visibility="{Binding Path=Parent.ConfigurationHistories[2].Count, Converter={StaticResource HistorySourceCountVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            Visibility="{Binding Path=Parent, Converter={StaticResource InstanceSourceVisibilityConverter}, ConverterParameter={x:Static model:InstanceSourceType.InstituteAccess}, FallbackValue={x:Static Visibility.Collapsed}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
@@ -130,7 +120,7 @@
                 Grid.Row="1"
                 Margin="5"
                 IsTabStop="False"
-                Content="{Binding Path=ConfigurationHistoryPanels[2]}"/>
+                Content="{Binding Path=Panels[2]}"/>
         </Grid>
 
         <Button

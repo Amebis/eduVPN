@@ -66,7 +66,7 @@ namespace eduVPN.ViewModels
                 //{
                 //    try
                 //    {
-                //        var net_conn = network_connections.Where(c => c.GetAdapterId() == nic_id).FirstOrDefault();
+                //        var net_conn = network_connections.FirstOrDefault(c => c.GetAdapterId() == nic_id);
                 //        var net_id = net_conn.GetNetwork().GetNetworkId();
                 //        if (net_conn != null && !networks.Where(n => n == net_id).Any())
                 //            networks.Add(net_id);

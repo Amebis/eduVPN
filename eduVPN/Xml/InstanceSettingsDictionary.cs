@@ -12,10 +12,10 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
-    /// Dictionary of instance specific settings to persist accross client sessions
+    /// Serializable dictionary of instance specific settings
     /// </summary>
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "DCS does not support IXmlSerializable types that are also marked as [Serializable]")]
     public class InstanceSettingsDictionary : Dictionary<string, InstanceSettings>, IXmlSerializable
@@ -32,7 +32,7 @@ namespace eduVPN.Models
             Clear();
 
             while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "InstanceSettingsDictionary"))
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
                 var key = reader["Key"];
                 if (key == null)
@@ -48,7 +48,7 @@ namespace eduVPN.Models
         {
             foreach (var instance in this)
             {
-                writer.WriteStartElement("InstanceSettings");
+                writer.WriteStartElement(nameof(InstanceSettings));
                 writer.WriteAttributeString("Key", instance.Key);
                 instance.Value.WriteXml(writer);
                 writer.WriteEndElement();

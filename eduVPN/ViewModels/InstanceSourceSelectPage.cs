@@ -48,7 +48,7 @@ namespace eduVPN.ViewModels
                                     // Check if we have saved access token for any of the instances.
                                     object authenticating_instance_lock = new object();
                                     Models.InstanceInfo authenticating_instance = null;
-                                    await Task.WhenAll(Parent.InstanceSource.Select(instance =>
+                                    await Task.WhenAll(Parent.InstanceSource.InstanceList.Select(instance =>
                                     {
                                         var authorization_task = new Task(
                                             () =>
@@ -68,27 +68,21 @@ namespace eduVPN.ViewModels
                                     if (authenticating_instance != null)
                                     {
                                         // Save found instance.
-                                        Parent.AuthenticatingInstance = authenticating_instance;
+                                        instance_source_distributed.AuthenticatingInstance = authenticating_instance;
+                                        instance_source_distributed.ConnectingInstance = authenticating_instance;
 
                                         // Go to (instance and) profile selection page.
-                                        Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
+                                        Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
                                     }
                                     else
                                         Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
                                 else if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
                                 {
-                                    // Create authenticating instance.
-                                    var authenticating_instance = new Models.InstanceInfo(instance_source_federated);
-                                    authenticating_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
-
                                     // Trigger initial authorization request.
-                                    await Parent.TriggerAuthorizationAsync(authenticating_instance);
+                                    await Parent.TriggerAuthorizationAsync(instance_source_federated.AuthenticatingInstance);
 
-                                    // Set authenticating instance.
-                                    Parent.AuthenticatingInstance = authenticating_instance;
-
-                                    Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
+                                    Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
                                 }
                             }
                             catch (Exception ex) { Parent.Error = ex; }
