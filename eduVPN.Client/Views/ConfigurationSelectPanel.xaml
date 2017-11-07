@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
@@ -34,7 +35,7 @@
         <ListBox.ContextMenu>
             <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
                 <MenuItem
-                    Header="Forget"
+                    Header="{x:Static res:Strings.ConfigurationSelectForget}"
                     Command="{Binding Path=DataContext.ForgetSelectedConfiguration}"/>
             </ContextMenu>
         </ListBox.ContextMenu>
