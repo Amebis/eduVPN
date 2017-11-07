@@ -223,6 +223,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forget {0}.
+        /// </summary>
+        internal static string InstanceForget {
+            get {
+                return ResourceManager.GetString("InstanceForget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;Automatic&gt;.
         /// </summary>
         internal static string InterfaceNameAutomatic {

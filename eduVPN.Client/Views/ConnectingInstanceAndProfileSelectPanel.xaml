@@ -28,7 +28,16 @@
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
             ItemsSource="{Binding Path=InstanceSource.ConnectingInstanceList}"
-            SelectedItem="{Binding Path=InstanceSource.ConnectingInstance}"/>
+            SelectedItem="{Binding Path=InstanceSource.ConnectingInstance}">
+
+            <ComboBox.ContextMenu>
+                <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+                    <MenuItem
+                        Header="{Binding Path=DataContext.ForgetSelectedConfigurationLabel}"
+                        Command="{Binding Path=DataContext.ForgetSelectedConfiguration}"/>
+                </ContextMenu>
+            </ComboBox.ContextMenu>
+        </ComboBox>
 
         <ListBox
             x:Name="ProfileList"

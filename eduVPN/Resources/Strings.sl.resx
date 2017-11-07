@@ -215,4 +215,8 @@
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Napaka interaktivne storitve.</value>
   </data>
+  <data name="InstanceForget" xml:space="preserve">
+    <value>Pozabi {0}</value>
+    <comment>{0}=Provider</comment>
+  </data>
 </root>

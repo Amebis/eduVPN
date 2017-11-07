@@ -8,7 +8,9 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -110,6 +112,62 @@ namespace eduVPN.ViewModels
         }
         private DelegateCommand _connect_selected_profile;
 
+        /// <summary>
+        /// Menu label for <c>ForgetSelectedConfiguration</c> command
+        /// </summary>
+        public string ForgetSelectedConfigurationLabel
+        {
+            get { return string.Format(Resources.Strings.InstanceForget, InstanceSource.ConnectingInstance); }
+        }
+
+        /// <summary>
+        /// Forget selected configuration command
+        /// </summary>
+        public DelegateCommand ForgetSelectedConfiguration
+        {
+            get
+            {
+                if (_forget_selected_configuration == null)
+                {
+                    _forget_selected_configuration = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try
+                            {
+                                // Remove instance from history.
+                                InstanceSource.ConnectingInstanceList.Remove(InstanceSource.ConnectingInstance);
+                                InstanceSource.ConnectingInstance = InstanceSource.ConnectingInstanceList.FirstOrDefault();
+
+                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                                if (Parent.StartingPage != Parent.CurrentPage)
+                                    Parent.CurrentPage = Parent.StartingPage;
+                            }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () =>
+                            InstanceSource is Models.LocalInstanceSourceInfo &&
+                            InstanceSource.ConnectingInstance != null &&
+                            InstanceSource.ConnectingInstanceList.IndexOf(InstanceSource.ConnectingInstance) >= 0 &&
+                            !Parent.Sessions.Any(session =>
+                                session.AuthenticatingInstance.Equals(InstanceSource.AuthenticatingInstance) &&
+                                session.ConnectingInstance.Equals(InstanceSource.ConnectingInstance)));
+
+                    // Setup canExecute refreshing.
+                    InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) _forget_selected_configuration.RaiseCanExecuteChanged(); };
+                    InstanceSource.ConnectingInstanceList.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_configuration.RaiseCanExecuteChanged();
+                    Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_configuration.RaiseCanExecuteChanged();
+                }
+
+                return _forget_selected_configuration;
+            }
+        }
+        private DelegateCommand _forget_selected_configuration;
+
         #endregion
 
         #region Constructors
@@ -119,7 +177,6 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
-        /// <param name="authenticating_instance">Authenticating instance</param>
         public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type)
         {
             Parent = parent;
@@ -138,6 +195,8 @@ namespace eduVPN.ViewModels
         {
             if (e.PropertyName == nameof(InstanceSource.ConnectingInstance))
             {
+                RaisePropertyChanged(nameof(ForgetSelectedConfigurationLabel));
+
                 ProfileList = null;
                 if (InstanceSource.ConnectingInstance != null)
                 {
