@@ -27,14 +27,14 @@ namespace eduVPN.ViewModels
         private ConnectingInstanceAndProfileSelectPanel[] _panels;
 
         /// <summary>
-        /// Add another profile
+        /// Add another instance
         /// </summary>
-        public DelegateCommand AddAnotherProfile
+        public DelegateCommand AddAnotherInstance
         {
             get
             {
-                if (_add_another_profile == null)
-                    _add_another_profile = new DelegateCommand(
+                if (_add_another_instance == null)
+                    _add_another_instance = new DelegateCommand(
                         //execute
                         () =>
                         {
@@ -44,10 +44,10 @@ namespace eduVPN.ViewModels
                             finally { Parent.ChangeTaskCount(-1); }
                         });
 
-                return _add_another_profile;
+                return _add_another_instance;
             }
         }
-        private DelegateCommand _add_another_profile;
+        private DelegateCommand _add_another_instance;
 
         #endregion
 

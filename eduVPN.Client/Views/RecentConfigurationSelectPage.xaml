@@ -127,7 +127,7 @@
             Grid.Row="3"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            Content="{x:Static res:Strings.RecentConfigurationSelectPageAddProfile}"
-            Command="{Binding Path=AddAnotherProfile}"/>
+            Content="{x:Static res:Strings.RecentConfigurationSelectPageAddInstance}"
+            Command="{Binding Path=AddAnotherInstance}"/>
     </Grid>
 </view:ConnectWizardPage>
