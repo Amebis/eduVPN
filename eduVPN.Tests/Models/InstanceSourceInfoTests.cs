@@ -50,7 +50,7 @@ namespace eduVPN.Models.Tests
                 previous: instance_source_ia_json_task.Result);
 
             // Load all institute access instances API in parallel.
-            Task.WhenAll(instance_source_ia.Select(async i => {
+            Task.WhenAll(instance_source_ia.InstanceList.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
                 new Models.InstanceEndpoints().LoadJSON((await JSON.Response.GetAsync(uri_builder.Uri)).Value);
@@ -64,7 +64,7 @@ namespace eduVPN.Models.Tests
                 instance_source_si.LoadJSON(instance_source_ia_json_task.Result.Value);
             }
             catch (AggregateException ex) { throw ex.InnerException; }
-            Task.WhenAll(instance_source_si.Select(async i => {
+            Task.WhenAll(instance_source_si.InstanceList.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
                 new Models.InstanceEndpoints().LoadJSON((await JSON.Response.GetAsync(uri_builder.Uri)).Value);
