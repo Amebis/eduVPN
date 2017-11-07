@@ -913,26 +913,29 @@ namespace eduVPN.ViewModels
             else if (InstanceSources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed)
             {
                 // Distributed authenticating instance source:
-                // The authenticating instance must be selected and we need its access token cached.
-                if (instance_source_distributed.AuthenticatingInstance != null)
+                // At least one of the instances need its access token cached.
+                var has_token = false;
+                Parallel.ForEach(instance_source_distributed.ConnectingInstanceList, (instance, state) =>
                 {
                     var e = new Models.RequestAuthorizationEventArgs("config") { SourcePolicy = Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly };
-                    Instance_RequestAuthorization(instance_source_distributed.AuthenticatingInstance, e);
+                    Instance_RequestAuthorization(instance, e);
                     if (e.AccessToken != null)
-                        return true;
-                }
+                    {
+                        has_token = true;
+                        state.Stop();
+                    }
+                });
+                if (has_token)
+                    return true;
             }
             else if (InstanceSources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated)
             {
                 // Federated authenticating instance source:
-                // At least one of the instances need its access token cached.
+                // We need authenticating instance access token cached.
                 var e = new Models.RequestAuthorizationEventArgs("config") { SourcePolicy = Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly };
-                foreach (var instance in instance_source_federated.ConnectingInstanceList)
-                {
-                    Instance_RequestAuthorization(instance, e);
-                    if (e.AccessToken != null)
-                        return true;
-                }
+                Instance_RequestAuthorization(instance_source_federated.AuthenticatingInstance, e);
+                if (e.AccessToken != null)
+                    return true;
             }
             else
                 throw new InvalidOperationException();
