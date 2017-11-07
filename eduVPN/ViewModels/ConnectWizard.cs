@@ -603,7 +603,7 @@ namespace eduVPN.ViewModels
                 _instance_sources = new Models.InstanceSourceInfo[source_type_length];
 
                 // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, (Properties.Settings.Default.AccessTokens.Count + source_type_length - (int)Models.InstanceSourceType._start) * 2, 0)));
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 4, 0)));
 
                 // Load access tokens from settings.
                 Parallel.ForEach(Properties.Settings.Default.AccessTokens,
@@ -808,6 +808,17 @@ namespace eduVPN.ViewModels
                                         instance_source_federated.ConnectingInstance = h_federated.ConnectingInstance != null ? instance_source_federated.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_federated.ConnectingInstance.Base.AbsoluteUri) : null;
                                     }
                                 }
+
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
+
+                                // Peek connecting instances to cache API endpoints.
+                                HasConnectingInstances((Models.InstanceSourceType)source_index);
+
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
 
                                 break;
                             }
