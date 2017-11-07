@@ -700,6 +700,7 @@ namespace eduVPN.ViewModels
 
                                 // Load instance source info settings.
                                 Models.InstanceSourceInfo h = null;
+                                #pragma warning disable 0612 // This section contains legacy settings conversion.
                                 if (is_migrating_settings &&
                                     Properties.Settings.Default.GetPreviousVersion(_instance_directory_id[source_index] + "ConfigHistory") is Xml.VPNConfigurationSettingsList settings_list)
                                 {
@@ -753,6 +754,7 @@ namespace eduVPN.ViewModels
                                     }
                                 }
                                 else
+                                #pragma warning restore 0612
                                 {
                                     h = Properties.Settings.Default[_instance_directory_id[source_index] + "InstanceSourceInfo"] is Xml.InstanceSourceInfo h_xml &&
                                         h_xml.InstanceSource != null ? h_xml.InstanceSource : null;
