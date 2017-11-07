@@ -655,7 +655,7 @@ namespace eduVPN.ViewModels
                 _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[source_type_length];
 
                 // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
-                int total_ticks = (Properties.Settings.Default.AccessTokens.Count + source_type_length - (int)Models.InstanceSourceType._start) * 2;
+                int total_ticks = Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 2;
                 for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
                     total_ticks += ((Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"]).Count();
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, total_ticks, 0)));
@@ -807,7 +807,7 @@ namespace eduVPN.ViewModels
                                         finally
                                         {
                                             // Add a tick.
-                                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value += 1));
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
                                             lock (ticks_lock) ticks += 1;
                                         }
 
