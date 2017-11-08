@@ -22,7 +22,7 @@ namespace eduVPN.Client.Converters
             return
                 value is ViewModels.ConnectWizard parent &&
                 parameter is Models.InstanceSourceType instance_source_type &&
-                parent.HasConnectingInstances(instance_source_type) ? Visibility.Collapsed : Visibility.Visible;
+                parent.InstanceSources[(int)instance_source_type].ConnectingInstance != null ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

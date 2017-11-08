@@ -31,7 +31,7 @@ namespace eduVPN.Client.Converters
             return
                 value is ViewModels.ConnectWizard parent &&
                 parameter is Models.InstanceSourceType instance_source_type &&
-                parent.HasConnectingInstances(instance_source_type) ? _one_star_grid_length : GridLength.Auto;
+                parent.InstanceSources[(int)instance_source_type].ConnectingInstance != null ? _one_star_grid_length : GridLength.Auto;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

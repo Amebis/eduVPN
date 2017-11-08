@@ -417,11 +417,9 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                for (var instance_source_type = Models.InstanceSourceType._start; instance_source_type < Models.InstanceSourceType._end; instance_source_type++)
-                {
-                    if (HasConnectingInstances(instance_source_type))
+                for (var source_index = (int)Models.InstanceSourceType._start; source_index < (int)Models.InstanceSourceType._end; source_index++)
+                    if (InstanceSources[source_index].ConnectingInstance != null)
                         return RecentConfigurationSelectPage;
-                }
 
                 return InstanceSourceSelectPage;
             }
@@ -605,7 +603,7 @@ namespace eduVPN.ViewModels
                 _instance_sources = new Models.InstanceSourceInfo[source_type_length];
 
                 // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 4, 0)));
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 3, 0)));
 
                 // Load access tokens from settings.
                 Parallel.ForEach(Properties.Settings.Default.AccessTokens,
@@ -815,13 +813,6 @@ namespace eduVPN.ViewModels
                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
                                 ticks++;
 
-                                // Peek connecting instances to cache API endpoints.
-                                HasConnectingInstances((Models.InstanceSourceType)source_index);
-
-                                // Add a tick.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                ticks++;
-
                                 break;
                             }
                             catch (OperationCanceledException) { break; }
@@ -905,55 +896,6 @@ namespace eduVPN.ViewModels
 
             if (e.AccessToken == null)
                 throw new Models.AccessTokenNullException();
-        }
-
-        /// <summary>
-        /// Does the instance source have any previously connected instances?
-        /// </summary>
-        /// <param name="instance_source_type">Instance source type</param>
-        /// <returns><c>true</c> when user has previously connected to any instances of this source; <c>false</c> otherwise</returns>
-        public bool HasConnectingInstances(Models.InstanceSourceType instance_source_type)
-        {
-            int source_index = (int)instance_source_type;
-
-            if (InstanceSources[source_index] is Models.LocalInstanceSourceInfo instance_source_local)
-            {
-                // Local authenticating instance source:
-                // We need at least one connecting instance on the list.
-                if (instance_source_local.ConnectingInstanceList.Count > 0)
-                    return true;
-            }
-            else if (InstanceSources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed)
-            {
-                // Distributed authenticating instance source:
-                // At least one of the instances need its access token cached.
-                var has_token = false;
-                Parallel.ForEach(instance_source_distributed.ConnectingInstanceList, (instance, state) =>
-                {
-                    var e = new Models.RequestAuthorizationEventArgs("config") { SourcePolicy = Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly };
-                    Instance_RequestAuthorization(instance, e);
-                    if (e.AccessToken != null)
-                    {
-                        has_token = true;
-                        state.Stop();
-                    }
-                });
-                if (has_token)
-                    return true;
-            }
-            else if (InstanceSources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated)
-            {
-                // Federated authenticating instance source:
-                // We need authenticating instance access token cached.
-                var e = new Models.RequestAuthorizationEventArgs("config") { SourcePolicy = Models.RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly };
-                Instance_RequestAuthorization(instance_source_federated.AuthenticatingInstance, e);
-                if (e.AccessToken != null)
-                    return true;
-            }
-            else
-                throw new InvalidOperationException();
-
-            return false;
         }
 
         /// <summary>
