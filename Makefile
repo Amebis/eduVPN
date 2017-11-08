@@ -101,7 +101,7 @@ RegisterOpenVPNInteractiveService :: \
 	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "priority"         /t REG_SZ /d "NORMAL_PRIORITY_CLASS"                               $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$eduVPN" /v "ovpn_admin_group" /t REG_SZ /d "Users"                                               $(REG_FLAGS)
 	sc.exe create OpenVPNServiceInteractive$$eduVPN \
-		binpath= "\"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe\" -instance interactive OpenVPN$$eduVPN" \
+		binpath= "\"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe\" -instance interactive $$eduVPN" \
 		DisplayName= "@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-3" \
 		type= own \
 		start= auto \

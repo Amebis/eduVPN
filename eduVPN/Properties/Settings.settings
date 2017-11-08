@@ -42,7 +42,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="OpenVPNInteractiveServiceNamedPipe" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">OpenVPN$eduVPN\service</Value>
+      <Value Profile="(Default)">openvpn$eduVPN\service</Value>
     </Setting>
   </Settings>
 </SettingsFile>

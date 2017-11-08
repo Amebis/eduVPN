@@ -124,7 +124,7 @@
                     Name="OpenVPNServiceInteractive$eduVPN"
                     DisplayName="@[BINDIR]OpenVPN.Resources.dll,-3"
                     Description="@[BINDIR]OpenVPN.Resources.dll,-4"
-                    Arguments="-instance interactive OpenVPN$eduVPN"
+                    Arguments="-instance interactive $eduVPN"
                     Type="ownProcess"
                     Start="auto"
                     ErrorControl="normal">
