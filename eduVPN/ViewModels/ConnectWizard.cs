@@ -408,7 +408,8 @@ namespace eduVPN.ViewModels
                 if (value != _current_page)
                 {
                     _current_page = value;
-                    _current_page.OnActivate();
+                    if (_current_page != null)
+                        _current_page.OnActivate();
 
                     if (_current_popup_page == null)
                         RaisePropertyChanged();
@@ -428,7 +429,8 @@ namespace eduVPN.ViewModels
                 if (value != _current_popup_page)
                 {
                     SetProperty(ref _current_popup_page, value);
-                    _current_popup_page.OnActivate();
+                    if (_current_popup_page != null)
+                        _current_popup_page.OnActivate();
 
                     RaisePropertyChanged(nameof(CurrentPage));
                 }
