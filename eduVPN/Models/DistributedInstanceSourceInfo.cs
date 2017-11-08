@@ -19,10 +19,7 @@ namespace eduVPN.Models
     {
         #region Properties
 
-        /// <summary>
-        /// Authenticating instance
-        /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
+        /// <inheritdoc/>
         public override InstanceInfo AuthenticatingInstance
         {
             get { return _authenticating_instance; }

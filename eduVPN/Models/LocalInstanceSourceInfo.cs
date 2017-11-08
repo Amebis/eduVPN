@@ -19,9 +19,7 @@ namespace eduVPN.Models
     {
         #region Properties
 
-        /// <summary>
-        /// User saved instance list
-        /// </summary>
+        /// <inheritdoc/>
         public override InstanceInfoList ConnectingInstanceList
         {
             get { return _connecting_instance_list; }
