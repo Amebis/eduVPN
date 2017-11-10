@@ -28,9 +28,9 @@ WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) -deduVPN.ProgramFilesFolder="Pr
 !ENDIF
 
 !IF "$(CFG)" == "Debug"
-VC150REDIST_MSM=Microsoft_VC150_DebugCRT_$(PLAT).msm
+VC141REDIST_MSM=Microsoft_VC141_DebugCRT_$(PLAT).msm
 !ELSE
-VC150REDIST_MSM=Microsoft_VC150_CRT_$(PLAT).msm
+VC141REDIST_MSM=Microsoft_VC141_CRT_$(PLAT).msm
 !ENDIF
 
 
@@ -108,11 +108,11 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"        del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\ssleay32.dll"           del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\ssleay32.dll"
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC150REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\14.10.25008\MergeModules\$(VC150REDIST_MSM)"
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\14.11.25325\MergeModules\$(VC141REDIST_MSM)"
 	copy /y $** $@ > NUL
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC150REDIST_MSM)" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC150REDIST_MSM)"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN.wixobj" : \
 	"eduVPNOpenVPN.wxs"
@@ -125,9 +125,9 @@ Clean ::
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore.wixobj" : \
 	"eduVPNCore.wxs" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC150REDIST_MSM)"
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNCore.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -deduVPN.VC150RedistMSM="$(VC150REDIST_MSM)" -out $@ "eduVPNCore.wxs"
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -deduVPN.VC150RedistMSM="$(VC141REDIST_MSM)" -out $@ "eduVPNCore.wxs"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" : "eduEd25519\eduEd25519\eduEd25519.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
