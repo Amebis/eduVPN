@@ -4,11 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
 
     <UserControl.Resources>
+        <!-- eduVPN collection view sources -->
+        <CollectionViewSource x:Key="ConfigurationListView" Source="{Binding Path=InstanceSource.ConnectingInstanceList}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Popularity" Direction="Descending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
         <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
@@ -27,7 +35,7 @@
             Style="{StaticResource eduVPNComboBoxStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
-            ItemsSource="{Binding Path=InstanceSource.ConnectingInstanceList}"
+            ItemsSource="{Binding Source={StaticResource ConfigurationListView}}"
             SelectedItem="{Binding Path=InstanceSource.ConnectingInstance}">
 
             <ComboBox.ContextMenu>
