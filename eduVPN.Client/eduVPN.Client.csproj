@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ConnectingInstanceAndProfileEqualVisibilityConverter.cs" />
+    <Compile Include="Converters\ConnectingInstanceEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\InstanceSourceInverseVisibilityConverter.cs" />
