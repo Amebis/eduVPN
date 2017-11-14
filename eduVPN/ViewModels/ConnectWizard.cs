@@ -249,6 +249,7 @@ namespace eduVPN.ViewModels
                             // Do the instance source book-keeping.
                             if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSourceInfo instance_source_local)
                             {
+                                var found = false;
                                 for (var i = instance_source_local.ConnectingInstanceList.Count; ;)
                                 {
                                     if (i-- > 0)
@@ -257,7 +258,7 @@ namespace eduVPN.ViewModels
                                         {
                                             // Upvote popularity.
                                             instance_source_local.ConnectingInstanceList[i].Popularity = instance_source_local.ConnectingInstanceList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
-                                            break;
+                                            found = true;
                                         }
                                         else
                                         {
@@ -267,8 +268,12 @@ namespace eduVPN.ViewModels
                                     }
                                     else
                                     {
-                                        // Add connecting instance to the list.
-                                        instance_source_local.ConnectingInstanceList.Add(param.ConnectingInstance);
+                                        if (!found)
+                                        {
+                                            // Add connecting instance to the list.
+                                            instance_source_local.ConnectingInstanceList.Add(param.ConnectingInstance);
+                                        }
+
                                         break;
                                     }
                                 }
