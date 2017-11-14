@@ -41,8 +41,8 @@
             <ComboBox.ContextMenu>
                 <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
                     <MenuItem
-                        Header="{Binding Path=DataContext.ForgetSelectedConfigurationLabel}"
-                        Command="{Binding Path=DataContext.ForgetSelectedConfiguration}"/>
+                        Header="{Binding Path=DataContext.ForgetSelectedInstanceLabel}"
+                        Command="{Binding Path=DataContext.ForgetSelectedInstance}"/>
                 </ContextMenu>
             </ComboBox.ContextMenu>
         </ComboBox>

@@ -20,11 +20,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Configuration history panels
         /// </summary>
-        public ConnectingInstanceAndProfileSelectPanel[] Panels
+        public ConnectingInstanceSelectPanel[] Panels
         {
             get { return _panels; }
         }
-        private ConnectingInstanceAndProfileSelectPanel[] _panels;
+        private ConnectingInstanceSelectPanel[] _panels;
 
         /// <summary>
         /// Add another instance
