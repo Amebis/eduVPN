@@ -55,6 +55,8 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
+                                Parent.InstanceSourceType = InstanceSourceType;
+
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
                             }

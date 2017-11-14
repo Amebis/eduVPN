@@ -56,6 +56,16 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
+    <Compile Include="Views\ConnectingProfileSelectBasePanel.cs" />
+    <Compile Include="Views\ConnectingProfileSelectPanel.xaml.cs">
+      <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectingInstanceSelectPanel.xaml.cs">
+      <DependentUpon>ConnectingInstanceSelectPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectingProfileSelectPage.xaml.cs">
+      <DependentUpon>ConnectingProfileSelectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\YubiKeyAuthenticationPanel.xaml.cs">
       <DependentUpon>YubiKeyAuthenticationPanel.xaml</DependentUpon>
     </Compile>
@@ -124,6 +134,18 @@
     <Page Include="Resources\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectingProfileSelectPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConnectingInstanceSelectPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConnectingProfileSelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\YubiKeyAuthenticationPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

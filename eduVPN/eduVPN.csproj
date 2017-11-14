@@ -46,6 +46,7 @@
     <Compile Include="Models\InstanceInfoList.cs" />
     <Compile Include="ViewModels\ConnectingInstanceAndProfileSelectPanel.cs" />
     <Compile Include="ViewModels\ConnectingInstanceSelectPanel.cs" />
+    <Compile Include="ViewModels\ConnectingProfileSelectPage.cs" />
     <Compile Include="Xml\DistributedVPNConfigurationSettings.cs" />
     <Compile Include="Xml\FederatedVPNConfigurationSettings.cs" />
     <Compile Include="Xml\InstanceSettingsDictionary.cs" />

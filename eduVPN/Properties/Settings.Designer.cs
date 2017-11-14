@@ -175,5 +175,14 @@ namespace eduVPN.Properties {
                 return ((string)(this["OpenVPNInteractiveServiceNamedPipe"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ConnectingProfileSelectMode {
+            get {
+                return ((int)(this["ConnectingProfileSelectMode"]));
+            }
+        }
     }
 }

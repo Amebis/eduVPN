@@ -523,6 +523,20 @@ namespace eduVPN.ViewModels
         private RecentConfigurationSelectPage _recent_configuration_select_page;
 
         /// <summary>
+        /// Profile selection wizard page
+        /// </summary>
+        public ConnectingProfileSelectPage ConnectingProfileSelectPage
+        {
+            get
+            {
+                if (_profile_select_page == null)
+                    _profile_select_page = new ConnectingProfileSelectPage(this);
+                return _profile_select_page;
+            }
+        }
+        private ConnectingProfileSelectPage _profile_select_page;
+
+        /// <summary>
         /// Status wizard page
         /// </summary>
         public StatusPage StatusPage
