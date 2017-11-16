@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Xml;
+using System.Collections.ObjectModel;
 
 namespace eduVPN.Models
 {
@@ -20,54 +20,12 @@ namespace eduVPN.Models
         #region Properties
 
         /// <inheritdoc/>
-        public override InstanceInfoList ConnectingInstanceList
+        public override ObservableCollection<InstanceInfo> ConnectingInstanceList
         {
             get { return _connecting_instance_list; }
             set { SetProperty(ref _connecting_instance_list, value); }
         }
-        private InstanceInfoList _connecting_instance_list = new InstanceInfoList();
-
-        #endregion
-
-        #region IXmlSerializable Support
-
-        /// <inheritdoc/>
-        public override void ReadXml(XmlReader reader)
-        {
-            ConnectingInstanceList.Clear();
-
-            while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
-            {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    switch (reader.Name)
-                    {
-                        case nameof(InstanceInfoList):
-                            if (reader["Key"] == nameof(ConnectingInstanceList))
-                                ConnectingInstanceList.ReadXml(reader);
-                            break;
-
-                        case nameof(InstanceSourceInfo):
-                            base.ReadXml(reader);
-                            break;
-                    }
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public override void WriteXml(XmlWriter writer)
-        {
-            writer.WriteStartElement(nameof(InstanceInfoList));
-            writer.WriteAttributeString("Key", nameof(ConnectingInstanceList));
-            ConnectingInstanceList.WriteXml(writer);
-            writer.WriteEndElement();
-
-            writer.WriteStartElement(nameof(InstanceSourceInfo));
-            base.WriteXml(writer);
-            writer.WriteEndElement();
-        }
+        private ObservableCollection<InstanceInfo> _connecting_instance_list = new ObservableCollection<InstanceInfo>();
 
         #endregion
     }

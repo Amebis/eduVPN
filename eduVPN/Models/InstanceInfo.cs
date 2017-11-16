@@ -9,22 +9,19 @@ using eduVPN.JSON;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN instance (VPN service provider) basic info
+    /// An eduVPN instance (VPN service provider) information
     /// </summary>
-    public class InstanceInfo : BindableBase, JSON.ILoadableItem, IXmlSerializable
+    public class InstanceInfo : BindableBase, JSON.ILoadableItem
     {
         #region Fields
 
@@ -91,7 +88,7 @@ namespace eduVPN.Models
         private Uri _logo;
 
         /// <summary>
-        /// Popularity factor in the [0.0, 1.0] range (default 0.5)
+        /// Popularity factor in the [0.0, 1.0] range (default 1.0)
         /// </summary>
         public float Popularity
         {
@@ -99,6 +96,16 @@ namespace eduVPN.Models
             set { SetProperty(ref _popularity, value); }
         }
         private float _popularity = 1.0f;
+
+        /// <summary>
+        /// User saved profile list
+        /// </summary>
+        public ObservableCollection<ProfileInfo> ConnectingProfileList
+        {
+            get { return _connecting_profiles; }
+            set { SetProperty(ref _connecting_profiles, value); }
+        }
+        private ObservableCollection<ProfileInfo> _connecting_profiles = new ObservableCollection<ProfileInfo>();
 
         /// <summary>
         /// Request authorization event
@@ -474,35 +481,6 @@ namespace eduVPN.Models
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
-        }
-
-        #endregion
-
-        #region IXmlSerializable Support
-
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            string v;
-
-            Base = (v = reader[nameof(Base)]) != null ? new Uri(v) : null;
-            DisplayName = reader[nameof(DisplayName)];
-            Logo = (v = reader[nameof(Logo)]) != null ? new Uri(v) : null;
-            Popularity = (v = reader[nameof(Popularity)]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            writer.WriteAttributeString(nameof(Base), Base.AbsoluteUri);
-            if (DisplayName != null)
-                writer.WriteAttributeString(nameof(DisplayName), DisplayName);
-            if (Logo != null)
-                writer.WriteAttributeString(nameof(Logo), Logo.AbsoluteUri);
-            writer.WriteAttributeString(nameof(Popularity), Popularity.ToString(CultureInfo.InvariantCulture));
         }
 
         #endregion

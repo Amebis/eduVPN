@@ -11,14 +11,17 @@ using System.Xml.Serialization;
 
 namespace eduVPN.Xml
 {
-    public class InstanceSourceInfo : IXmlSerializable
+    /// <summary>
+    /// Wrapper to automate serialization of various InstanceSourceSettingsBase derived classes
+    /// </summary>
+    public class InstanceSourceSettings : IXmlSerializable
     {
         #region Properties
 
         /// <summary>
         /// Instance source
         /// </summary>
-        public Models.InstanceSourceInfo InstanceSource { get; set; }
+        public InstanceSourceSettingsBase InstanceSource { get; set; }
 
         #endregion
 
@@ -42,10 +45,10 @@ namespace eduVPN.Xml
                     {
                         switch (reader.Name)
                         {
-                            case nameof(Models.InstanceSourceInfo): InstanceSource = new Models.InstanceSourceInfo(); break;
-                            case nameof(Models.LocalInstanceSourceInfo): InstanceSource = new Models.LocalInstanceSourceInfo(); break;
-                            case nameof(Models.FederatedInstanceSourceInfo): InstanceSource = new Models.FederatedInstanceSourceInfo(); break;
-                            case nameof(Models.DistributedInstanceSourceInfo): InstanceSource = new Models.DistributedInstanceSourceInfo(); break;
+                            case nameof(InstanceSourceSettingsBase): InstanceSource = new InstanceSourceSettingsBase(); break;
+                            case nameof(LocalInstanceSourceSettings): InstanceSource = new LocalInstanceSourceSettings(); break;
+                            case nameof(FederatedInstanceSourceSettings): InstanceSource = new FederatedInstanceSourceSettings(); break;
+                            case nameof(DistributedInstanceSourceSettings): InstanceSource = new DistributedInstanceSourceSettings(); break;
                         }
 
                         if (InstanceSource != null)

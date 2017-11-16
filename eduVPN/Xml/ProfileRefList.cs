@@ -5,29 +5,18 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace eduVPN.Models
+namespace eduVPN.Xml
 {
     /// <summary>
-    /// VPN configuration list
+    /// Serializable profile reference list
     /// </summary>
-    public class InstanceInfoList : ObservableCollection<InstanceInfo>, IXmlSerializable
+    public class ProfileRefList : List<ProfileRef>, IXmlSerializable
     {
-        #region Constructors
-
-        /// <summary>
-        /// Constructs a VPN configuration list
-        /// </summary>
-        public InstanceInfoList() :
-            base()
-        { }
-
-        #endregion
-
         #region IXmlSerializable Support
 
         public XmlSchema GetSchema()
@@ -42,21 +31,21 @@ namespace eduVPN.Models
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(InstanceInfo))
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(ProfileRef))
                 {
-                    var instance = new InstanceInfo();
-                    instance.ReadXml(reader);
-                    Add(instance);
+                    var el = new ProfileRef();
+                    el.ReadXml(reader);
+                    Add(el);
                 }
             }
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            foreach (var instance in this)
+            foreach (var el in this)
             {
-                writer.WriteStartElement(nameof(InstanceInfo));
-                instance.WriteXml(writer);
+                writer.WriteStartElement(nameof(ProfileRef));
+                el.WriteXml(writer);
                 writer.WriteEndElement();
             }
         }

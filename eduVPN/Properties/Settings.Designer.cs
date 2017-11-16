@@ -55,13 +55,13 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceInfo/>")]
-        public global::eduVPN.Xml.InstanceSourceInfo InstituteAccessInstanceSourceInfo {
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
+        public global::eduVPN.Xml.InstanceSourceSettings InstituteAccessInstanceSourceSettings {
             get {
-                return ((global::eduVPN.Xml.InstanceSourceInfo)(this["InstituteAccessInstanceSourceInfo"]));
+                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["InstituteAccessInstanceSourceSettings"]));
             }
             set {
-                this["InstituteAccessInstanceSourceInfo"] = value;
+                this["InstituteAccessInstanceSourceSettings"] = value;
             }
         }
         
@@ -97,13 +97,13 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceInfo/>")]
-        public global::eduVPN.Xml.InstanceSourceInfo SecureInternetInstanceSourceInfo {
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
+        public global::eduVPN.Xml.InstanceSourceSettings SecureInternetInstanceSourceSettings {
             get {
-                return ((global::eduVPN.Xml.InstanceSourceInfo)(this["SecureInternetInstanceSourceInfo"]));
+                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["SecureInternetInstanceSourceSettings"]));
             }
             set {
-                this["SecureInternetInstanceSourceInfo"] = value;
+                this["SecureInternetInstanceSourceSettings"] = value;
             }
         }
         

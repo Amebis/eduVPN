@@ -12,16 +12,13 @@ using System.Collections.Specialized;
 using System.Net;
 using System.Threading;
 using System.Web;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN profile info
+    /// An eduVPN profile information
     /// </summary>
-    public class ProfileInfo : BindableBase, JSON.ILoadableItem, IXmlSerializable
+    public class ProfileInfo : BindableBase, JSON.ILoadableItem
     {
         #region Fields
 
@@ -80,6 +77,16 @@ namespace eduVPN.Models
             set { SetProperty(ref _two_factor_methods, value); }
         }
         private TwoFactorAuthenticationMethods _two_factor_methods;
+
+        /// <summary>
+        /// Popularity factor in the [0.0, 1.0] range (default 1.0)
+        /// </summary>
+        public float Popularity
+        {
+            get { return _popularity; }
+            set { SetProperty(ref _popularity, value); }
+        }
+        private float _popularity = 1.0f;
 
         /// <summary>
         /// Request authorization event
@@ -275,34 +282,6 @@ namespace eduVPN.Models
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
-        }
-
-        #endregion
-
-        #region IXmlSerializable Support
-
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            string v;
-
-            ID = reader[nameof(ID)];
-            DisplayName = reader[nameof(DisplayName)];
-            IsTwoFactorAuthentication = (v = reader[nameof(IsTwoFactorAuthentication)]) != null && bool.TryParse(v, out var v_is_two_factor_authentication) ? v_is_two_factor_authentication : false;
-            TwoFactorMethods = (v = reader[nameof(TwoFactorMethods)]) != null && int.TryParse(v, out var v_two_factor_methods) ? (TwoFactorAuthenticationMethods)v_two_factor_methods : TwoFactorAuthenticationMethods.None;
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            writer.WriteAttributeString(nameof(ID), ID);
-            if (DisplayName != null)
-                writer.WriteAttributeString(nameof(DisplayName), DisplayName);
-            writer.WriteAttributeString(nameof(IsTwoFactorAuthentication), IsTwoFactorAuthentication.ToString());
-            writer.WriteAttributeString(nameof(TwoFactorMethods), ((int)TwoFactorMethods).ToString());
         }
 
         #endregion

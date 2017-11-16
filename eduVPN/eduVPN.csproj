@@ -43,7 +43,15 @@
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSourceInfo.cs" />
     <Compile Include="Models\FederatedInstanceSourceInfo.cs" />
-    <Compile Include="Models\InstanceInfoList.cs" />
+    <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
+    <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />
+    <Compile Include="Xml\InstanceRef.cs" />
+    <Compile Include="Xml\InstanceSourceSettings.cs" />
+    <Compile Include="Xml\InstanceSourceSettingsBase.cs" />
+    <Compile Include="Xml\LocalInstanceSourceSettings.cs" />
+    <Compile Include="Xml\ProfileRefList.cs" />
+    <Compile Include="Xml\InstanceRefList.cs" />
+    <Compile Include="Xml\ProfileRef.cs" />
     <Compile Include="ViewModels\ConnectingInstanceAndProfileSelectPanel.cs" />
     <Compile Include="ViewModels\ConnectingInstanceSelectPanel.cs" />
     <Compile Include="ViewModels\ConnectingProfileSelectPage.cs" />
@@ -107,7 +115,6 @@
     <Compile Include="ViewModels\StatusPage.cs" />
     <Compile Include="ViewModels\Window.cs" />
     <Compile Include="ViewModels\YubiKeyAuthenticationPanel.cs" />
-    <Compile Include="Xml\InstanceSourceInfo.cs" />
     <Compile Include="Xml\LocalVPNConfigurationSettings.cs" />
     <Compile Include="Xml\StringDictionary.cs" />
     <Compile Include="Xml\VPNConfigurationSettings.cs" />

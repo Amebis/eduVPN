@@ -11,8 +11,8 @@
     <Setting Name="InstituteAccessDiscoveryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="InstituteAccessInstanceSourceInfo" Type="eduVPN.Xml.InstanceSourceInfo" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSourceInfo/&gt;</Value>
+    <Setting Name="InstituteAccessInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
+      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
     <Setting Name="SecureInternetDiscovery" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://static.eduvpn.nl/disco/secure_internet.json</Value>
@@ -23,8 +23,8 @@
     <Setting Name="SecureInternetDiscoveryCache" Type="eduVPN.JSON.Response" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SecureInternetInstanceSourceInfo" Type="eduVPN.Xml.InstanceSourceInfo" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSourceInfo/&gt;</Value>
+    <Setting Name="SecureInternetInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
+      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
     <Setting Name="OpenVPNInterfaceID" Type="System.Guid" Scope="User">
       <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>

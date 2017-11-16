@@ -5,8 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Xml;
-
 namespace eduVPN.Models
 {
     /// <summary>
@@ -26,55 +24,6 @@ namespace eduVPN.Models
             set { SetProperty(ref _authenticating_instance, value); }
         }
         private InstanceInfo _authenticating_instance;
-
-        #endregion
-
-        #region IXmlSerializable Support
-
-        /// <inheritdoc/>
-        public override void ReadXml(XmlReader reader)
-        {
-            AuthenticatingInstance = null;
-
-            while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
-            {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    switch (reader.Name)
-                    {
-                        case nameof(InstanceInfo):
-                            if (reader["Key"] == nameof(AuthenticatingInstance))
-                            {
-                                AuthenticatingInstance = new InstanceInfo();
-                                AuthenticatingInstance.ReadXml(reader);
-                            }
-
-                            break;
-
-                        case nameof(InstanceSourceInfo):
-                            base.ReadXml(reader);
-                            break;
-                    }
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public override void WriteXml(XmlWriter writer)
-        {
-            if (AuthenticatingInstance != null)
-            {
-                writer.WriteStartElement(nameof(InstanceInfo));
-                writer.WriteAttributeString("Key", nameof(AuthenticatingInstance));
-                AuthenticatingInstance.WriteXml(writer);
-                writer.WriteEndElement();
-            }
-
-            writer.WriteStartElement(nameof(InstanceSourceInfo));
-            base.WriteXml(writer);
-            writer.WriteEndElement();
-        }
 
         #endregion
     }

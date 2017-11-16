@@ -19,14 +19,14 @@ namespace eduVPN.Xml
         #region Properties
 
         /// <summary>
-        /// Instance
+        /// Instance base URI
         /// </summary>
-        public Models.InstanceInfo Instance { get; set; }
+        public Uri Instance { get; set; }
 
         /// <summary>
         /// Profile ID
         /// </summary>
-        public Models.ProfileInfo Profile { get; set; }
+        public string Profile { get; set; }
 
         #endregion
 
@@ -39,8 +39,8 @@ namespace eduVPN.Xml
                 return false;
 
             var other = obj as LocalVPNConfigurationSettings;
-            if (!Instance.Base.Equals(other.Instance.Base) ||
-                !Profile.ID.Equals(other.Profile.ID))
+            if (!Instance.AbsoluteUri.Equals(other.Instance.AbsoluteUri) ||
+                !Profile.Equals(other.Profile))
                 return false;
 
             return base.Equals(obj);
@@ -49,7 +49,7 @@ namespace eduVPN.Xml
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return base.GetHashCode() ^ Instance.Base.GetHashCode() ^ Profile.ID.GetHashCode();
+            return base.GetHashCode() ^ Instance.AbsoluteUri.GetHashCode() ^ Profile.GetHashCode();
         }
 
         #endregion
@@ -59,6 +59,8 @@ namespace eduVPN.Xml
         /// <inheritdoc/>
         public override void ReadXml(XmlReader reader)
         {
+            string v;
+
             Instance = null;
             Profile = null;
 
@@ -73,20 +75,14 @@ namespace eduVPN.Xml
                             base.ReadXml(reader);
                             break;
 
-                        case nameof(Models.InstanceInfo):
+                        case "InstanceInfo":
                             if (reader["Key"] == nameof(Instance))
-                            {
-                                Instance = new Models.InstanceInfo();
-                                Instance.ReadXml(reader);
-                            }
+                                Instance = (v = reader["Base"]) != null ? new Uri(v) : null;
                             break;
 
-                        case nameof(Models.ProfileInfo):
+                        case "ProfileInfo":
                             if (reader["Key"] == nameof(Profile))
-                            {
-                                Profile = new Models.ProfileInfo();
-                                Profile.ReadXml(reader);
-                            }
+                                Profile = reader["ID"];
                             break;
                     }
                 }
@@ -102,17 +98,17 @@ namespace eduVPN.Xml
 
             if (Instance != null)
             {
-                writer.WriteStartElement(nameof(Models.InstanceInfo));
+                writer.WriteStartElement("InstanceInfo");
                 writer.WriteAttributeString("Key", nameof(Instance));
-                Instance.WriteXml(writer);
+                writer.WriteAttributeString("Base", Instance.AbsoluteUri);
                 writer.WriteEndElement();
             }
 
             if (Profile != null)
             {
-                writer.WriteStartElement(nameof(Models.ProfileInfo));
+                writer.WriteStartElement("ProfileInfo");
                 writer.WriteAttributeString("Key", nameof(Profile));
-                Profile.WriteXml(writer);
+                writer.WriteAttributeString("ID", Profile);
                 writer.WriteEndElement();
             }
         }

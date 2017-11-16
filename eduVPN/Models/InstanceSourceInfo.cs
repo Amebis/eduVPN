@@ -8,21 +8,21 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace eduVPN.Models
 {
     /// <summary>
     /// An eduVPN instance source base class
     /// </summary>
-    public class InstanceSourceInfo : BindableBase, JSON.ILoadableItem, IXmlSerializable
+    public class InstanceSourceInfo : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 
-        public InstanceInfoList InstanceList
+        /// <summary>
+        /// List of all available instances
+        /// </summary>
+        public ObservableCollection<InstanceInfo> InstanceList
         {
             get { return _instance_list; }
             set
@@ -31,7 +31,7 @@ namespace eduVPN.Models
                     RaisePropertyChanged(nameof(ConnectingInstanceList));
             }
         }
-        private InstanceInfoList _instance_list = new InstanceInfoList();
+        private ObservableCollection<InstanceInfo> _instance_list = new ObservableCollection<InstanceInfo>();
 
         /// <summary>
         /// Authenticating instance
@@ -46,7 +46,7 @@ namespace eduVPN.Models
         /// <summary>
         /// User saved instance list
         /// </summary>
-        public virtual InstanceInfoList ConnectingInstanceList
+        public virtual ObservableCollection<InstanceInfo> ConnectingInstanceList
         {
             get { return _instance_list; }
             set { throw new InvalidOperationException(); }
@@ -157,68 +157,6 @@ namespace eduVPN.Models
             }
             else
                 throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
-        }
-
-        #endregion
-
-        #region IXmlSerializable Support
-
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public virtual void ReadXml(XmlReader reader)
-        {
-            string v;
-
-            InstanceList.Clear();
-            ConnectingInstance = null;
-            Sequence = (v = reader[nameof(Sequence)]) != null && uint.TryParse(v, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_sequence) ? Sequence = v_sequence : 0;
-            SignedAt = (v = reader[nameof(SignedAt)]) != null && DateTime.TryParse(v, out var v_signed_at) ? new DateTime?(v_signed_at) : null;
-
-            while (reader.Read() &&
-                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
-            {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    switch (reader.Name)
-                    {
-                        case nameof(InstanceInfoList):
-                            if (reader["Key"] == nameof(InstanceList))
-                                InstanceList.ReadXml(reader);
-                            break;
-
-                        case nameof(InstanceInfo):
-                            if (reader["Key"] == nameof(ConnectingInstance))
-                            {
-                                ConnectingInstance = new InstanceInfo();
-                                ConnectingInstance.ReadXml(reader);
-                            }
-                            break;
-                    }
-                }
-            }
-        }
-
-        public virtual void WriteXml(XmlWriter writer)
-        {
-            writer.WriteAttributeString(nameof(Sequence), Sequence.ToString(CultureInfo.InvariantCulture));
-            if (SignedAt != null)
-                writer.WriteAttributeString(nameof(SignedAt), SignedAt.Value.ToString("o"));
-
-            writer.WriteStartElement(nameof(InstanceInfoList));
-            writer.WriteAttributeString("Key", nameof(InstanceList));
-            InstanceList.WriteXml(writer);
-            writer.WriteEndElement();
-
-            if (ConnectingInstance != null)
-            {
-                writer.WriteStartElement(nameof(InstanceInfo));
-                writer.WriteAttributeString("Key", nameof(ConnectingInstance));
-                ConnectingInstance.WriteXml(writer);
-                writer.WriteEndElement();
-            }
         }
 
         #endregion
