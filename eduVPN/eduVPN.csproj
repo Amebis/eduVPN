@@ -61,7 +61,7 @@
     <Compile Include="Xml\InstanceSettings.cs" />
     <Compile Include="Models\InstanceSource.cs" />
     <Compile Include="Models\InstanceSourceType.cs" />
-    <Compile Include="Models\InterfaceInfo.cs" />
+    <Compile Include="Models\NetworkInterface.cs" />
     <Compile Include="Models\LocalInstanceSource.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageList.cs" />

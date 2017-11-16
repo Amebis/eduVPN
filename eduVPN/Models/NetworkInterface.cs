@@ -7,14 +7,13 @@
 
 using Prism.Mvvm;
 using System;
-using System.Net.NetworkInformation;
 
 namespace eduVPN.Models
 {
     /// <summary>
     /// Network interface
     /// </summary>
-    public class InterfaceInfo : BindableBase
+    public class NetworkInterface : BindableBase
     {
         #region Properties
 
@@ -37,7 +36,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="id">Interface ID</param>
         /// <param name="name">Interface name</param>
-        public InterfaceInfo(Guid id, string name)
+        public NetworkInterface(Guid id, string name)
         {
             ID = id;
             Name = name;
@@ -59,13 +58,13 @@ namespace eduVPN.Models
         /// <param name="id">Interface ID</param>
         /// <param name="iface">Network interface</param>
         /// <returns><c>true</c> if interface found; <c>false</c> otherwise</returns>
-        public static bool TryFromID(Guid id, out InterfaceInfo iface)
+        public static bool TryFromID(Guid id, out NetworkInterface iface)
         {
-            foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
+            foreach (var nic in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (Guid.TryParse(nic.Id, out var nic_id) && id == nic_id)
                 {
-                    iface = new InterfaceInfo(id, nic.Name);
+                    iface = new NetworkInterface(id, nic.Name);
                     return true;
                 }
             }
@@ -80,7 +79,7 @@ namespace eduVPN.Models
         /// <param name="id">Interface ID</param>
         /// <returns>Network interface</returns>
         /// <exception cref="ArgumentOutOfRangeException">Network interface with given ID not found.</exception>
-        public static InterfaceInfo FromID(Guid id)
+        public static NetworkInterface FromID(Guid id)
         {
             if (TryFromID(id, out var iface))
                 return iface;
@@ -94,14 +93,14 @@ namespace eduVPN.Models
         /// <param name="name">Interface name</param>
         /// <param name="iface">Network interface</param>
         /// <returns><c>true</c> if interface found; <c>false</c> otherwise</returns>
-        public static bool TryFromName(string name, out InterfaceInfo iface)
+        public static bool TryFromName(string name, out NetworkInterface iface)
         {
             var name_lc = name.ToLower();
-            foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
+            foreach (var nic in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (name_lc == nic.Name.ToLower())
                 {
-                    iface = new InterfaceInfo(Guid.TryParse(nic.Id, out var nic_id) ? nic_id : default(Guid), nic.Name);
+                    iface = new NetworkInterface(Guid.TryParse(nic.Id, out var nic_id) ? nic_id : default(Guid), nic.Name);
                     return true;
                 }
             }
@@ -116,7 +115,7 @@ namespace eduVPN.Models
         /// <param name="name">Interface name</param>
         /// <returns>Network interface</returns>
         /// <exception cref="ArgumentOutOfRangeException">Network interface with given name not found.</exception>
-        public static InterfaceInfo FromName(string name)
+        public static NetworkInterface FromName(string name)
         {
             if (TryFromName(name, out var iface))
                 return iface;
