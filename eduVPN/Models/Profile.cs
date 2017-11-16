@@ -122,7 +122,8 @@ namespace eduVPN.Models
                 return false;
 
             var other = obj as Profile;
-            if (!ID.Equals(other.ID))
+            if (!Instance.Equals(other.Instance) ||
+                !ID.Equals(other.ID))
                 return false;
 
             return true;
@@ -132,7 +133,7 @@ namespace eduVPN.Models
         public override int GetHashCode()
         {
             return
-                ID.GetHashCode();
+                Instance.GetHashCode() ^ ID.GetHashCode();
         }
 
         /// <summary>

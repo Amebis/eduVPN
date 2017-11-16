@@ -173,7 +173,6 @@ namespace eduVPN.ViewModels
                             {
                                 var s = Sessions[Sessions.Count - 1];
                                 if (s.AuthenticatingInstance.Equals(param.AuthenticatingInstance) &&
-                                    s.ConnectingInstance.Equals(param.ConnectingInstance) &&
                                     s.ConnectingProfile.Equals(param.ConnectingProfile))
                                 {
                                     // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
@@ -192,7 +191,6 @@ namespace eduVPN.ViewModels
                                         using (var session = new OpenVPNSession(
                                             this,
                                             param.AuthenticatingInstance,
-                                            param.ConnectingInstance,
                                             param.ConnectingProfile))
                                         {
                                             VPNSession previous_session = null;
@@ -283,7 +281,7 @@ namespace eduVPN.ViewModels
                                 {
                                     if (i-- > 0)
                                     {
-                                        if (instance_source_local.ConnectingInstanceList[i].Equals(param.ConnectingInstance))
+                                        if (instance_source_local.ConnectingInstanceList[i].Equals(param.ConnectingProfile.Instance))
                                         {
                                             // Upvote instance popularity.
                                             instance_source_local.ConnectingInstanceList[i].Popularity = instance_source_local.ConnectingInstanceList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
@@ -300,7 +298,7 @@ namespace eduVPN.ViewModels
                                         if (!instance_found)
                                         {
                                             // Add connecting instance to the list.
-                                            instance_source_local.ConnectingInstanceList.Add(param.ConnectingInstance);
+                                            instance_source_local.ConnectingInstanceList.Add(param.ConnectingProfile.Instance);
                                         }
 
                                         break;
@@ -317,14 +315,14 @@ namespace eduVPN.ViewModels
                             else
                                 throw new InvalidOperationException();
 
-                            InstanceSources[(int)param.InstanceSourceType].ConnectingInstance = param.ConnectingInstance;
+                            InstanceSources[(int)param.InstanceSourceType].ConnectingInstance = param.ConnectingProfile.Instance;
                         },
 
                         // canExecute
                         param =>
                             param is StartSessionParams &&
                             param.AuthenticatingInstance != null &&
-                            param.ConnectingInstance != null &&
+                            param.ConnectingProfile.Instance != null &&
                             param.ConnectingProfile != null);
 
                 return _start_session;
@@ -350,11 +348,6 @@ namespace eduVPN.ViewModels
             public Models.Instance AuthenticatingInstance { get; }
 
             /// <summary>
-            /// Connecting eduVPN instance
-            /// </summary>
-            public Models.Instance ConnectingInstance { get; }
-
-            /// <summary>
             /// Connecting eduVPN instance profile
             /// </summary>
             public Models.Profile ConnectingProfile { get; }
@@ -368,13 +361,11 @@ namespace eduVPN.ViewModels
             /// </summary>
             /// <param name="instance_source_type">Instance source type</param>
             /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
-            /// <param name="connecting_instance">Connecting eduVPN instance</param>
             /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
-            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.Instance authenticating_instance, Models.Instance connecting_instance, Models.Profile connecting_profile)
+            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.Instance authenticating_instance, Models.Profile connecting_profile)
             {
                 InstanceSourceType = instance_source_type;
                 AuthenticatingInstance = authenticating_instance;
-                ConnectingInstance = connecting_instance;
                 ConnectingProfile = connecting_profile;
             }
 

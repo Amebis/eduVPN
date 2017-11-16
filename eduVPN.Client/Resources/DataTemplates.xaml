@@ -54,7 +54,7 @@
                         FallbackValue="{x:Static Visibility.Collapsed}">
                         <Binding/>
                         <Binding
-                            Path="DataContext.Parent.ActiveSession.ConnectingInstance"
+                            Path="DataContext.Parent.ActiveSession.ConnectingProfile.Instance"
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
@@ -104,7 +104,7 @@
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
                         <Binding/>
                         <Binding
-                            Path="DataContext.Parent.ActiveSession.ConnectingInstance"
+                            Path="DataContext.Parent.ActiveSession.ConnectingProfile.Instance"
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
                         <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile"
@@ -170,7 +170,7 @@
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
                         <Binding/>
                         <Binding
-                            Path="DataContext.Parent.ActiveSession.ConnectingInstance"
+                            Path="DataContext.Parent.ActiveSession.ConnectingProfile.Instance"
                             RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
                         <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile"

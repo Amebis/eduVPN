@@ -70,7 +70,6 @@ namespace eduVPN.ViewModels
                                 var param = new ConnectWizard.StartSessionParams(
                                     InstanceSourceType,
                                     InstanceSource.AuthenticatingInstance,
-                                    InstanceSource.ConnectingInstance,
                                     SelectedProfile);
                                 if (Parent.StartSession.CanExecute(param))
                                     Parent.StartSession.Execute(param);

@@ -61,11 +61,6 @@ namespace eduVPN.ViewModels
         public Models.Instance AuthenticatingInstance { get; }
 
         /// <summary>
-        /// Connecting eduVPN instance
-        /// </summary>
-        public Models.Instance ConnectingInstance { get; }
-
-        /// <summary>
         /// Connecting eduVPN instance profile
         /// </summary>
         public Models.Profile ConnectingProfile { get; }
@@ -255,9 +250,8 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="parent">The page parent</param>
         /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
-        /// <param name="connecting_instance">Connecting eduVPN instance</param>
-        /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
-        public VPNSession(ConnectWizard parent, Models.Instance authenticating_instance, Models.Instance connecting_instance, Models.Profile connecting_profile) :
+        /// <param name="connecting_profile">Connecting eduVPN profile</param>
+        public VPNSession(ConnectWizard parent, Models.Instance authenticating_instance, Models.Profile connecting_profile) :
             this()
         {
             _quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
@@ -266,7 +260,6 @@ namespace eduVPN.ViewModels
             Parent = parent;
 
             AuthenticatingInstance = authenticating_instance;
-            ConnectingInstance = connecting_instance;
             ConnectingProfile = connecting_profile;
 
             // Create dispatcher timer.
@@ -289,7 +282,7 @@ namespace eduVPN.ViewModels
                 () =>
                 {
                     var api_authenticating = AuthenticatingInstance.GetEndpoints(_quit.Token);
-                    var api_connecting = ConnectingInstance.GetEndpoints(_quit.Token);
+                    var api_connecting = ConnectingProfile.Instance.GetEndpoints(_quit.Token);
                     var e = new Models.RequestAuthorizationEventArgs("config");
                     Parent.Instance_RequestAuthorization(AuthenticatingInstance, e);
                     if (e.AccessToken != null)

@@ -119,7 +119,7 @@ namespace eduVPN.ViewModels
                             InstanceSource.ConnectingInstanceList.IndexOf(InstanceSource.ConnectingInstance) >= 0 &&
                             !Parent.Sessions.Any(session =>
                                 session.AuthenticatingInstance.Equals(InstanceSource.AuthenticatingInstance) &&
-                                session.ConnectingInstance.Equals(InstanceSource.ConnectingInstance)));
+                                session.ConnectingProfile.Instance.Equals(InstanceSource.ConnectingInstance)));
 
                     // Setup canExecute refreshing.
                     InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) _forget_selected_instance.RaiseCanExecuteChanged(); };
