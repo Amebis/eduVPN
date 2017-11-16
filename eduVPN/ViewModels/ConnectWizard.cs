@@ -250,20 +250,20 @@ namespace eduVPN.ViewModels
                             if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSource instance_source_local)
                             {
                                 var profile_found = false;
-                                for (var i = param.ConnectingInstance.ConnectingProfileList.Count; ;)
+                                for (var i = instance_source_local.ConnectingProfileList.Count; ;)
                                 {
                                     if (i-- > 0)
                                     {
-                                        if (param.ConnectingInstance.ConnectingProfileList[i].Equals(param.ConnectingInstance))
+                                        if (instance_source_local.ConnectingProfileList[i].Equals(param.ConnectingProfile))
                                         {
                                             // Upvote profile popularity.
-                                            param.ConnectingInstance.ConnectingProfileList[i].Popularity = param.ConnectingInstance.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                            instance_source_local.ConnectingProfileList[i].Popularity = instance_source_local.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
                                             profile_found = true;
                                         }
                                         else
                                         {
                                             // Downvote profile popularity.
-                                            param.ConnectingInstance.ConnectingProfileList[i].Popularity = param.ConnectingInstance.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                            instance_source_local.ConnectingProfileList[i].Popularity = instance_source_local.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
                                         }
                                     }
                                     else
@@ -271,7 +271,7 @@ namespace eduVPN.ViewModels
                                         if (!profile_found)
                                         {
                                             // Add connecting profile to the list.
-                                            param.ConnectingInstance.ConnectingProfileList.Add(param.ConnectingProfile);
+                                            instance_source_local.ConnectingProfileList.Add(param.ConnectingProfile);
                                         }
 
                                         break;
@@ -869,8 +869,9 @@ namespace eduVPN.ViewModels
                                                         var profile = profile_list.FirstOrDefault(prof => prof.ID == h_profile.ID);
                                                         if (profile != null)
                                                         {
-                                                            profile.Popularity = Math.Max(profile.Popularity, h_profile.Popularity);
-                                                            instance.ConnectingProfileList.Add(profile);
+                                                            profile.Popularity = h_profile.Popularity;
+                                                            if (instance_source_local.ConnectingProfileList.FirstOrDefault(prof => prof.ID == profile.ID) == null)
+                                                                instance_source_local.ConnectingProfileList.Add(profile);
                                                         }
                                                     }
 
@@ -954,35 +955,32 @@ namespace eduVPN.ViewModels
                             Xml.InstanceSourceSettingsBase h = null;
                             if (InstanceSources[source_index] is Models.LocalInstanceSource instance_source_local)
                             {
-                                // Local authenticating instance source.
-                                var instance_list = new Xml.InstanceRefList();
-                                foreach (var instance in instance_source_local.ConnectingInstanceList)
-                                {
-                                    var profile_list = new Xml.ProfileRefList();
-                                    foreach (var profile in instance.ConnectingProfileList)
-                                        profile_list.Add(new Xml.ProfileRef()
-                                        {
-                                            ID = profile.ID,
-                                            Popularity = profile.Popularity
-                                        });
-
-                                    instance_list.Add(new Xml.InstanceRef()
-                                    {
-                                        Base = instance.Base,
-                                        Popularity = instance.Popularity,
-                                        ProfileList = profile_list
-                                    });
-                                }
-
+                                // Local authenticating instance source
                                 h = new Xml.LocalInstanceSourceSettings()
                                 {
                                     ConnectingInstance = instance_source_local.ConnectingInstance.Base,
-                                    ConnectingInstanceList = instance_list
+                                    ConnectingInstanceList = new Xml.InstanceRefList(
+                                        instance_source_local.ConnectingInstanceList
+                                        .Select(inst =>
+                                            new Xml.InstanceRef()
+                                            {
+                                                Base = inst.Base,
+                                                Popularity = inst.Popularity,
+                                                ProfileList = new Xml.ProfileRefList(
+                                                    instance_source_local.ConnectingProfileList
+                                                    .Where(prof => prof.Instance.Equals(inst))
+                                                    .Select(prof => new Xml.ProfileRef()
+                                                    {
+                                                        ID = prof.ID,
+                                                        Popularity = prof.Popularity
+                                                    }))
+                                            }
+                                        ))
                                 };
                             }
                             else if (InstanceSources[source_index] is Models.DistributedInstanceSource instance_source_distributed)
                             {
-                                // Distributed authenticating instance source.
+                                // Distributed authenticating instance source
                                 h = new Xml.DistributedInstanceSourceSettings()
                                 {
                                     AuthenticatingInstance = instance_source_distributed.AuthenticatingInstance?.Base,
@@ -991,7 +989,7 @@ namespace eduVPN.ViewModels
                             }
                             else if (InstanceSources[source_index] is Models.FederatedInstanceSource instance_source_federated)
                             {
-                                // Federated authenticating instance source.
+                                // Federated authenticating instance source
                                 h = new Xml.FederatedInstanceSourceSettings()
                                 {
                                     ConnectingInstance = instance_source_federated.ConnectingInstance?.Base

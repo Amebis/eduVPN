@@ -17,6 +17,26 @@ namespace eduVPN.Xml
     /// </summary>
     public class ProfileRefList : List<ProfileRef>, IXmlSerializable
     {
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a list
+        /// </summary>
+        public ProfileRefList()
+        {
+        }
+
+        /// <summary>
+        /// Constructs a list
+        /// </summary>
+        /// <param name="collection">The collection whose elements are copied to the new list</param>
+        public ProfileRefList(IEnumerable<ProfileRef> collection) :
+            base(collection)
+        {
+        }
+
+        #endregion
+
         #region IXmlSerializable Support
 
         public XmlSchema GetSchema()

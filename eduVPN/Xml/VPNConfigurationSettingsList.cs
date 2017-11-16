@@ -29,11 +29,19 @@ namespace eduVPN.Xml
         { }
 
         /// <summary>
-        /// Constructs a VPN configuration list that is empty and has the specified initial capacity
+        /// Constructs a VPN configuration list
         /// </summary>
         /// <param name="capacity">The number of elements that the new list can initially store.</param>
         public VPNConfigurationSettingsList(int capacity) :
             base(capacity)
+        { }
+
+        /// <summary>
+        /// Constructs a VPN configuration list
+        /// </summary>
+        /// <param name="collection">The collection whose elements are copied to the new list</param>
+        public VPNConfigurationSettingsList(IEnumerable<VPNConfigurationSettings> collection) :
+            base(collection)
         { }
 
         #endregion

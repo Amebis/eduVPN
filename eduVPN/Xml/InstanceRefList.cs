@@ -17,6 +17,24 @@ namespace eduVPN.Xml
     /// </summary>
     public class InstanceRefList : List<InstanceRef>, IXmlSerializable
     {
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a list
+        /// </summary>
+        public InstanceRefList()
+        { }
+
+        /// <summary>
+        /// Constructs a list
+        /// </summary>
+        /// <param name="collection">The collection whose elements are copied to the new list</param>
+        public InstanceRefList(IEnumerable<InstanceRef> collection) :
+            base(collection)
+        { }
+
+        #endregion
+
         #region IXmlSerializable Support
 
         public XmlSchema GetSchema()

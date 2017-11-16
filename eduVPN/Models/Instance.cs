@@ -9,7 +9,6 @@ using eduVPN.JSON;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
@@ -98,16 +97,6 @@ namespace eduVPN.Models
         private float _popularity = 1.0f;
 
         /// <summary>
-        /// User saved profile list
-        /// </summary>
-        public ObservableCollection<Profile> ConnectingProfileList
-        {
-            get { return _connecting_profiles; }
-            set { SetProperty(ref _connecting_profiles, value); }
-        }
-        private ObservableCollection<Profile> _connecting_profiles = new ObservableCollection<Profile>();
-
-        /// <summary>
         /// Request authorization event
         /// </summary>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
@@ -117,7 +106,7 @@ namespace eduVPN.Models
         #region Constructors
 
         /// <summary>
-        /// Constructs an instance info
+        /// Constructs an instance
         /// </summary>
         public Instance() :
             base()
@@ -125,7 +114,7 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Constructs a custom instance info
+        /// Constructs a custom instance
         /// </summary>
         /// <param name="b">Instance base URI</param>
         public Instance(Uri b)
@@ -141,7 +130,7 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Constructs the authenticating instance info
+        /// Constructs the authenticating instance
         /// </summary>
         /// <param name="authorization_endpoint">Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.</param>
         /// <param name="token_endpoint">Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.</param>
@@ -256,6 +245,10 @@ namespace eduVPN.Models
                             uri: api.ProfileList,
                             token: e.AccessToken,
                             ct: ct).Value, "profile_list", ct);
+
+                        // Bind all profiles to our instance.
+                        foreach (var profile in profile_list)
+                            profile.Instance = this;
 
                         // Attach to RequestAuthorization profile events.
                         foreach (var profile in profile_list)

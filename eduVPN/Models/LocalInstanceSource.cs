@@ -20,12 +20,12 @@ namespace eduVPN.Models
         #region Properties
 
         /// <inheritdoc/>
-        public override ObservableCollection<Instance> ConnectingInstanceList
-        {
-            get { return _connecting_instance_list; }
-            set { SetProperty(ref _connecting_instance_list, value); }
-        }
-        private ObservableCollection<Instance> _connecting_instance_list = new ObservableCollection<Instance>();
+        public override ObservableCollection<Instance> ConnectingInstanceList { get; } = new ObservableCollection<Instance>();
+
+        /// <summary>
+        /// User saved profile list
+        /// </summary>
+        public ObservableCollection<Profile> ConnectingProfileList { get; } = new ObservableCollection<Profile>();
 
         #endregion
     }

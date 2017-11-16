@@ -22,16 +22,7 @@ namespace eduVPN.Models
         /// <summary>
         /// List of all available instances
         /// </summary>
-        public ObservableCollection<Instance> InstanceList
-        {
-            get { return _instance_list; }
-            set
-            {
-                if (SetProperty(ref _instance_list, value))
-                    RaisePropertyChanged(nameof(ConnectingInstanceList));
-            }
-        }
-        private ObservableCollection<Instance> _instance_list = new ObservableCollection<Instance>();
+        public ObservableCollection<Instance> InstanceList { get; } = new ObservableCollection<Instance>();
 
         /// <summary>
         /// Authenticating instance
@@ -48,8 +39,7 @@ namespace eduVPN.Models
         /// </summary>
         public virtual ObservableCollection<Instance> ConnectingInstanceList
         {
-            get { return _instance_list; }
-            set { throw new InvalidOperationException(); }
+            get { return InstanceList; }
         }
 
         /// <summary>

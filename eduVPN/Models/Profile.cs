@@ -39,6 +39,16 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
+        /// The instance this profile belongs to
+        /// </summary>
+        public Instance Instance
+        {
+            get { return _instance; }
+            set { SetProperty(ref _instance, value); }
+        }
+        private Instance _instance;
+
+        /// <summary>
         /// Profile ID
         /// </summary>
         public string ID
