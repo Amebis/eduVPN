@@ -19,9 +19,9 @@ using System.Threading;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN instance (VPN service provider) information
+    /// An eduVPN instance (VPN service provider)
     /// </summary>
-    public class InstanceInfo : BindableBase, JSON.ILoadableItem
+    public class Instance : BindableBase, JSON.ILoadableItem
     {
         #region Fields
 
@@ -119,7 +119,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs an instance info
         /// </summary>
-        public InstanceInfo() :
+        public Instance() :
             base()
         {
         }
@@ -128,7 +128,7 @@ namespace eduVPN.Models
         /// Constructs a custom instance info
         /// </summary>
         /// <param name="b">Instance base URI</param>
-        public InstanceInfo(Uri b)
+        public Instance(Uri b)
         {
             // Set base.
             _base = b;
@@ -145,7 +145,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="authorization_endpoint">Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.</param>
         /// <param name="token_endpoint">Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.</param>
-        public InstanceInfo(Uri authorization_endpoint, Uri token_endpoint) :
+        public Instance(Uri authorization_endpoint, Uri token_endpoint) :
             this()
         {
             // Set display name to authorization URI hostname.
@@ -180,7 +180,7 @@ namespace eduVPN.Models
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            var other = obj as InstanceInfo;
+            var other = obj as Instance;
             if (!Base.Equals(other.Base))
                 return false;
 
@@ -232,7 +232,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile list</returns>
-        public JSON.Collection<Models.Profile> GetProfileList(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public JSON.Collection<Models.Profile> GetProfileList(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_profile_list_lock)
             {
@@ -289,7 +289,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>User info</returns>
-        public UserInfo GetUserInfo(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public UserInfo GetUserInfo(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             // Get API endpoints.
             var api = GetEndpoints(ct);
@@ -335,7 +335,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
-        public X509Certificate2 GetClientCertificate(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public X509Certificate2 GetClientCertificate(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_client_certificate_lock)
             {
@@ -431,7 +431,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
-        public X509Certificate2 RefreshClientCertificate(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public X509Certificate2 RefreshClientCertificate(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_client_certificate_lock)
             {

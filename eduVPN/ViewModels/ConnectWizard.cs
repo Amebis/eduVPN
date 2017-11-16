@@ -347,12 +347,12 @@ namespace eduVPN.ViewModels
             /// <summary>
             /// Authenticating eduVPN instance
             /// </summary>
-            public Models.InstanceInfo AuthenticatingInstance { get; }
+            public Models.Instance AuthenticatingInstance { get; }
 
             /// <summary>
             /// Connecting eduVPN instance
             /// </summary>
-            public Models.InstanceInfo ConnectingInstance { get; }
+            public Models.Instance ConnectingInstance { get; }
 
             /// <summary>
             /// Connecting eduVPN instance profile
@@ -370,7 +370,7 @@ namespace eduVPN.ViewModels
             /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
             /// <param name="connecting_instance">Connecting eduVPN instance</param>
             /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
-            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.Profile connecting_profile)
+            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.Instance authenticating_instance, Models.Instance connecting_instance, Models.Profile connecting_profile)
             {
                 InstanceSourceType = instance_source_type;
                 AuthenticatingInstance = authenticating_instance;
@@ -843,7 +843,7 @@ namespace eduVPN.ViewModels
                                             if (connecting_instance == null)
                                             {
                                                 // The connecting instance was not found. Could be user entered or removed from discovery file.
-                                                connecting_instance = new Models.InstanceInfo(h_instance.Base);
+                                                connecting_instance = new Models.Instance(h_instance.Base);
                                                 connecting_instance.RequestAuthorization += Instance_RequestAuthorization;
                                             } else
                                                 connecting_instance.Popularity = h_instance.Popularity;
@@ -1028,7 +1028,7 @@ namespace eduVPN.ViewModels
         /// <param name="instance">Instance</param>
         /// <returns>Asynchronous operation</returns>
         /// <exception cref="AccessTokenNullException">Authorization failed</exception>
-        public async Task TriggerAuthorizationAsync(Models.InstanceInfo instance)
+        public async Task TriggerAuthorizationAsync(Models.Instance instance)
         {
             var e = new Models.RequestAuthorizationEventArgs("config");
             var authorization_task = new Task(() => Instance_RequestAuthorization(instance, e), Abort.Token, TaskCreationOptions.LongRunning);
@@ -1042,11 +1042,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Called when an instance requests user authorization
         /// </summary>
-        /// <param name="sender">Instance of type <c>eduVPN.Models.InstanceInfo</c> requiring authorization</param>
+        /// <param name="sender">Instance of type <c>eduVPN.Models.Instance</c> requiring authorization</param>
         /// <param name="e">Authorization request event arguments</param>
         public void Instance_RequestAuthorization(object sender, Models.RequestAuthorizationEventArgs e)
         {
-            if (sender is Models.InstanceInfo authenticating_instance)
+            if (sender is Models.Instance authenticating_instance)
             {
                 lock (_access_token_cache_lock)
                 {
@@ -1088,7 +1088,7 @@ namespace eduVPN.ViewModels
                         if (Dispatcher.CurrentDispatcher == Dispatcher)
                         {
                             // We're in the GUI thread.
-                            var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
+                            var e_instance = new RequestInstanceAuthorizationEventArgs((Models.Instance)sender, e.Scope);
                             RequestInstanceAuthorization?.Invoke(this, e_instance);
                             e.AccessToken = e_instance.AccessToken;
                         }
@@ -1098,7 +1098,7 @@ namespace eduVPN.ViewModels
                             Dispatcher.Invoke(DispatcherPriority.Normal,
                                 (Action)(() =>
                                 {
-                                    var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
+                                    var e_instance = new RequestInstanceAuthorizationEventArgs((Models.Instance)sender, e.Scope);
                                     RequestInstanceAuthorization?.Invoke(this, e_instance);
                                     e.AccessToken = e_instance.AccessToken;
                                 }));

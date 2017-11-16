@@ -47,7 +47,7 @@ namespace eduVPN.ViewModels
                                 {
                                     // Check if we have saved access token for any of the instances.
                                     object authenticating_instance_lock = new object();
-                                    Models.InstanceInfo authenticating_instance = null;
+                                    Models.Instance authenticating_instance = null;
                                     await Task.WhenAll(Parent.InstanceSource.InstanceList.Select(instance =>
                                     {
                                         var authorization_task = new Task(

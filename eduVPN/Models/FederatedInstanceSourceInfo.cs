@@ -27,7 +27,7 @@ namespace eduVPN.Models
 
             if (obj is Dictionary<string, object> obj2)
             {
-                AuthenticatingInstance = new InstanceInfo(
+                AuthenticatingInstance = new Instance(
                     new Uri(eduJSON.Parser.GetValue<string>(obj2, "authorization_endpoint")),
                     new Uri(eduJSON.Parser.GetValue<string>(obj2, "token_endpoint")));
             }

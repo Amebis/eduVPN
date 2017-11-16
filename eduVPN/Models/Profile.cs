@@ -131,7 +131,7 @@ namespace eduVPN.Models
         /// <param name="connecting_instance">Instance this profile is part of</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetOpenVPNConfig(InstanceInfo connecting_instance, CancellationToken ct = default(CancellationToken))
+        public string GetOpenVPNConfig(Instance connecting_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_openvpn_config_lock)
             {
@@ -188,7 +188,7 @@ namespace eduVPN.Models
         /// <param name="connecting_instance">Instance this profile is part of</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetCompleteOpenVPNConfig(InstanceInfo connecting_instance, CancellationToken ct = default(CancellationToken))
+        public string GetCompleteOpenVPNConfig(Instance connecting_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_openvpn_complete_config_lock)
             {

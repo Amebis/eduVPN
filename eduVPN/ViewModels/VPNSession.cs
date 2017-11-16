@@ -58,12 +58,12 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authenticating eduVPN instance
         /// </summary>
-        public Models.InstanceInfo AuthenticatingInstance { get; }
+        public Models.Instance AuthenticatingInstance { get; }
 
         /// <summary>
         /// Connecting eduVPN instance
         /// </summary>
-        public Models.InstanceInfo ConnectingInstance { get; }
+        public Models.Instance ConnectingInstance { get; }
 
         /// <summary>
         /// Connecting eduVPN instance profile
@@ -257,7 +257,7 @@ namespace eduVPN.ViewModels
         /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
         /// <param name="connecting_instance">Connecting eduVPN instance</param>
         /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
-        public VPNSession(ConnectWizard parent, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.Profile connecting_profile) :
+        public VPNSession(ConnectWizard parent, Models.Instance authenticating_instance, Models.Instance connecting_instance, Models.Profile connecting_profile) :
             this()
         {
             _quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);

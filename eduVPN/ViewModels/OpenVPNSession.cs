@@ -86,7 +86,7 @@ namespace eduVPN.ViewModels
         /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
         /// <param name="connecting_instance">Connecting eduVPN instance</param>
         /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
-        public OpenVPNSession(ConnectWizard parent, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.Profile connecting_profile) :
+        public OpenVPNSession(ConnectWizard parent, Models.Instance authenticating_instance, Models.Instance connecting_instance, Models.Profile connecting_profile) :
             base(parent, authenticating_instance, connecting_instance, connecting_profile)
         {
             _working_folder = Path.GetTempPath();

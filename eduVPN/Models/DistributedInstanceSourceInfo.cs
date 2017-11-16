@@ -18,12 +18,12 @@ namespace eduVPN.Models
         #region Properties
 
         /// <inheritdoc/>
-        public override InstanceInfo AuthenticatingInstance
+        public override Instance AuthenticatingInstance
         {
             get { return _authenticating_instance; }
             set { SetProperty(ref _authenticating_instance, value); }
         }
-        private InstanceInfo _authenticating_instance;
+        private Instance _authenticating_instance;
 
         #endregion
     }

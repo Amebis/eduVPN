@@ -52,7 +52,7 @@ namespace eduVPN.ViewModels
                                 var instance = Parent.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == uri.AbsoluteUri);
                                 if (instance == null)
                                 {
-                                    instance = new Models.InstanceInfo(uri);
+                                    instance = new Models.Instance(uri);
                                     instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
                                     // Trigger initial authorization request.

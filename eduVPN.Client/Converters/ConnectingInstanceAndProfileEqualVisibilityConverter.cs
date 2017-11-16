@@ -20,9 +20,9 @@ namespace eduVPN.Client.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             return
-                values[0] is Models.InstanceInfo instance1 &&
+                values[0] is Models.Instance instance1 &&
                 values[1] is Models.Profile profile1 &&
-                values[2] is Models.InstanceInfo instance2 &&
+                values[2] is Models.Instance instance2 &&
                 values[3] is Models.Profile profile2 &&
                 instance1.Equals(instance2) &&
                 profile1.Equals(profile2) ? Visibility.Visible : Visibility.Collapsed;

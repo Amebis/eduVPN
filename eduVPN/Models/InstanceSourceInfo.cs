@@ -22,7 +22,7 @@ namespace eduVPN.Models
         /// <summary>
         /// List of all available instances
         /// </summary>
-        public ObservableCollection<InstanceInfo> InstanceList
+        public ObservableCollection<Instance> InstanceList
         {
             get { return _instance_list; }
             set
@@ -31,13 +31,13 @@ namespace eduVPN.Models
                     RaisePropertyChanged(nameof(ConnectingInstanceList));
             }
         }
-        private ObservableCollection<InstanceInfo> _instance_list = new ObservableCollection<InstanceInfo>();
+        private ObservableCollection<Instance> _instance_list = new ObservableCollection<Instance>();
 
         /// <summary>
         /// Authenticating instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public virtual InstanceInfo AuthenticatingInstance
+        public virtual Instance AuthenticatingInstance
         {
             get { return ConnectingInstance; }
             set { ConnectingInstance = value; }
@@ -46,7 +46,7 @@ namespace eduVPN.Models
         /// <summary>
         /// User saved instance list
         /// </summary>
-        public virtual ObservableCollection<InstanceInfo> ConnectingInstanceList
+        public virtual ObservableCollection<Instance> ConnectingInstanceList
         {
             get { return _instance_list; }
             set { throw new InvalidOperationException(); }
@@ -56,7 +56,7 @@ namespace eduVPN.Models
         /// Last connecting instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public InstanceInfo ConnectingInstance
+        public Instance ConnectingInstance
         {
             get { return _connecting_instance; }
             set
@@ -65,7 +65,7 @@ namespace eduVPN.Models
                     RaisePropertyChanged(nameof(AuthenticatingInstance));
             }
         }
-        private InstanceInfo _connecting_instance;
+        private Instance _connecting_instance;
 
         /// <summary>
         /// Version sequence
@@ -144,7 +144,7 @@ namespace eduVPN.Models
                 // Parse all instances listed. Don't do it in parallel to preserve the sort order.
                 foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "instances"))
                 {
-                    var instance = new InstanceInfo();
+                    var instance = new Instance();
                     instance.Load(el);
                     InstanceList.Add(instance);
                 }
