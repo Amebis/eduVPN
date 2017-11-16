@@ -34,7 +34,7 @@ namespace eduVPN.Models
         /// <summary>
         /// List of available profiles
         /// </summary>
-        private JSON.Collection<Models.ProfileInfo> _profile_list;
+        private JSON.Collection<Models.Profile> _profile_list;
         private object _profile_list_lock = new object();
 
         /// <summary>
@@ -100,12 +100,12 @@ namespace eduVPN.Models
         /// <summary>
         /// User saved profile list
         /// </summary>
-        public ObservableCollection<ProfileInfo> ConnectingProfileList
+        public ObservableCollection<Profile> ConnectingProfileList
         {
             get { return _connecting_profiles; }
             set { SetProperty(ref _connecting_profiles, value); }
         }
-        private ObservableCollection<ProfileInfo> _connecting_profiles = new ObservableCollection<ProfileInfo>();
+        private ObservableCollection<Profile> _connecting_profiles = new ObservableCollection<Profile>();
 
         /// <summary>
         /// Request authorization event
@@ -232,7 +232,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile list</returns>
-        public JSON.Collection<Models.ProfileInfo> GetProfileList(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public JSON.Collection<Models.Profile> GetProfileList(InstanceInfo authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_profile_list_lock)
             {
@@ -251,7 +251,7 @@ namespace eduVPN.Models
                             throw new AccessTokenNullException();
 
                         // Get and load profile list.
-                        var profile_list = new JSON.Collection<Models.ProfileInfo>();
+                        var profile_list = new JSON.Collection<Models.Profile>();
                         profile_list.LoadJSONAPIResponse(JSON.Response.Get(
                             uri: api.ProfileList,
                             token: e.AccessToken,

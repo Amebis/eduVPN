@@ -21,9 +21,9 @@ namespace eduVPN.Client.Converters
         {
             return
                 values[0] is Models.InstanceInfo instance1 &&
-                values[1] is Models.ProfileInfo profile1 &&
+                values[1] is Models.Profile profile1 &&
                 values[2] is Models.InstanceInfo instance2 &&
-                values[3] is Models.ProfileInfo profile2 &&
+                values[3] is Models.Profile profile2 &&
                 instance1.Equals(instance2) &&
                 profile1.Equals(profile2) ? Visibility.Visible : Visibility.Collapsed;
         }

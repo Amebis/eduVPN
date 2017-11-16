@@ -16,9 +16,9 @@ using System.Web;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An eduVPN profile information
+    /// An eduVPN profile
     /// </summary>
-    public class ProfileInfo : BindableBase, JSON.ILoadableItem
+    public class Profile : BindableBase, JSON.ILoadableItem
     {
         #region Fields
 
@@ -111,7 +111,7 @@ namespace eduVPN.Models
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            var other = obj as ProfileInfo;
+            var other = obj as Profile;
             if (!ID.Equals(other.ID))
                 return false;
 

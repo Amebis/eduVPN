@@ -23,7 +23,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available profiles
         /// </summary>
-        public JSON.Collection<Models.ProfileInfo> ProfileList
+        public JSON.Collection<Models.Profile> ProfileList
         {
             get { return _profile_list; }
             set
@@ -38,17 +38,17 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private JSON.Collection<Models.ProfileInfo> _profile_list;
+        private JSON.Collection<Models.Profile> _profile_list;
 
         /// <summary>
         /// Selected profile
         /// </summary>
-        public Models.ProfileInfo SelectedProfile
+        public Models.Profile SelectedProfile
         {
             get { return _selected_profile; }
             set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); }; }
         }
-        private Models.ProfileInfo _selected_profile;
+        private Models.Profile _selected_profile;
 
         /// <summary>
         /// Connect selected profile command

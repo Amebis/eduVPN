@@ -357,7 +357,7 @@ namespace eduVPN.ViewModels
             /// <summary>
             /// Connecting eduVPN instance profile
             /// </summary>
-            public Models.ProfileInfo ConnectingProfile { get; }
+            public Models.Profile ConnectingProfile { get; }
 
             #endregion
 
@@ -370,7 +370,7 @@ namespace eduVPN.ViewModels
             /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
             /// <param name="connecting_instance">Connecting eduVPN instance</param>
             /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
-            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.ProfileInfo connecting_profile)
+            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.Profile connecting_profile)
             {
                 InstanceSourceType = instance_source_type;
                 AuthenticatingInstance = authenticating_instance;

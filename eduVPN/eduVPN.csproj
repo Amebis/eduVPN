@@ -75,7 +75,7 @@
     <Compile Include="ViewModels\AboutPage.cs" />
     <Compile Include="ViewModels\ConnectWizardPopupPage.cs" />
     <Compile Include="ViewModels\OpenVPNSession.cs" />
-    <Compile Include="Models\ProfileInfo.cs" />
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="ViewModels\PasswordPopup.cs" />
