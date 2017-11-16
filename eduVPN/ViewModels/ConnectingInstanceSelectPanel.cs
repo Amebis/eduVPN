@@ -34,7 +34,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Selected instance source
         /// </summary>
-        public Models.InstanceSourceInfo InstanceSource
+        public Models.InstanceSource InstanceSource
         {
             get { return Parent.InstanceSources[(int)InstanceSourceType]; }
         }
@@ -114,7 +114,7 @@ namespace eduVPN.ViewModels
 
                         // canExecute
                         () =>
-                            InstanceSource is Models.LocalInstanceSourceInfo &&
+                            InstanceSource is Models.LocalInstanceSource &&
                             InstanceSource.ConnectingInstance != null &&
                             InstanceSource.ConnectingInstanceList.IndexOf(InstanceSource.ConnectingInstance) >= 0 &&
                             !Parent.Sessions.Any(session =>

@@ -54,11 +54,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Available instance sources
         /// </summary>
-        public Models.InstanceSourceInfo[] InstanceSources
+        public Models.InstanceSource[] InstanceSources
         {
             get { return _instance_sources; }
         }
-        private Models.InstanceSourceInfo[] _instance_sources;
+        private Models.InstanceSource[] _instance_sources;
 
         /// <summary>
         /// Selected instance source
@@ -82,7 +82,7 @@ namespace eduVPN.ViewModels
         /// Selected instance source
         /// </summary>
         /// <remarks>This property is used in a process of adding new instance/profile.</remarks>
-        public Models.InstanceSourceInfo InstanceSource
+        public Models.InstanceSource InstanceSource
         {
             get { return InstanceSources[(int)_instance_source_type]; }
         }
@@ -247,7 +247,7 @@ namespace eduVPN.ViewModels
                                 })).Start();
 
                             // Do the instance source book-keeping.
-                            if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSourceInfo instance_source_local)
+                            if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSource instance_source_local)
                             {
                                 var profile_found = false;
                                 for (var i = param.ConnectingInstance.ConnectingProfileList.Count; ;)
@@ -307,11 +307,11 @@ namespace eduVPN.ViewModels
                                     }
                                 }
                             }
-                            else if (InstanceSources[(int)param.InstanceSourceType] is Models.DistributedInstanceSourceInfo instance_source_distributed)
+                            else if (InstanceSources[(int)param.InstanceSourceType] is Models.DistributedInstanceSource instance_source_distributed)
                             {
                                 instance_source_distributed.AuthenticatingInstance = param.AuthenticatingInstance;
                             }
-                            else if (InstanceSources[(int)param.InstanceSourceType] is Models.FederatedInstanceSourceInfo instance_source_federated)
+                            else if (InstanceSources[(int)param.InstanceSourceType] is Models.FederatedInstanceSource instance_source_federated)
                             {
                             }
                             else
@@ -490,13 +490,13 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authenticating instance selection page
         /// </summary>
-        /// <remarks>Available only when authenticating and connecting instances can be different. I.e. <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSourceInfo</c> or <c>eduVPN.Models.DistributedInstanceSourceInfo</c>.</remarks>
+        /// <remarks>Available only when authenticating and connecting instances can be different. I.e. <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSource</c> or <c>eduVPN.Models.DistributedInstanceSource</c>.</remarks>
         public AuthenticatingInstanceSelectPage AuthenticatingInstanceSelectPage
         {
             get
             {
-                if (InstanceSource is Models.LocalInstanceSourceInfo ||
-                    InstanceSource is Models.DistributedInstanceSourceInfo)
+                if (InstanceSource is Models.LocalInstanceSource ||
+                    InstanceSource is Models.DistributedInstanceSource)
                 {
                     // Only local and distrubuted authentication sources have this page.
                     // However, this page varies between Secure Internet and Institute Access.
@@ -648,7 +648,7 @@ namespace eduVPN.ViewModels
             worker.DoWork += (object sender, DoWorkEventArgs e) =>
             {
                 var source_type_length = (int)Models.InstanceSourceType._end;
-                _instance_sources = new Models.InstanceSourceInfo[source_type_length];
+                _instance_sources = new Models.InstanceSource[source_type_length];
 
                 // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 3, 0)));
@@ -735,11 +735,11 @@ namespace eduVPN.ViewModels
                                 ticks++;
 
                                 // Load instance source.
-                                _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj_web);
+                                _instance_sources[source_index] = Models.InstanceSource.FromJSON(obj_web);
 
                                 {
                                     // Attach to RequestAuthorization instance events.
-                                    if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                    if (_instance_sources[source_index] is Models.FederatedInstanceSource instance_source_federated)
                                         instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
 
                                     foreach (var instance in _instance_sources[source_index].InstanceList)
@@ -753,7 +753,7 @@ namespace eduVPN.ViewModels
                                     Properties.Settings.Default.GetPreviousVersion(_instance_directory_id[source_index] + "ConfigHistory") is Xml.VPNConfigurationSettingsList settings_list)
                                 {
                                     // Versions before 1.0.9 used different instance source settings. Convert them.
-                                    if (_instance_sources[source_index] is Models.LocalInstanceSourceInfo instance_source_local)
+                                    if (_instance_sources[source_index] is Models.LocalInstanceSource instance_source_local)
                                     {
                                         // Local authenticating instance source:
                                         // - Convert instance list.
@@ -800,7 +800,7 @@ namespace eduVPN.ViewModels
                                         h_local.ConnectingInstance = h_local.ConnectingInstanceList.Aggregate((curMin, x) => (curMin == null || x.Popularity > curMin.Popularity ? x : curMin))?.Base;
                                         h = h_local;
                                     }
-                                    else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed)
+                                    else if (_instance_sources[source_index] is Models.DistributedInstanceSource instance_source_distributed)
                                     {
                                         // Distributed authenticating instance source:
                                         // - Convert authenticating instance.
@@ -813,7 +813,7 @@ namespace eduVPN.ViewModels
                                         }
                                         h = h_distributed;
                                     }
-                                    else if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                    else if (_instance_sources[source_index] is Models.FederatedInstanceSource instance_source_federated)
                                     {
                                         // Federated authenticating instance source:
                                         // - Convert connecting instance.
@@ -831,7 +831,7 @@ namespace eduVPN.ViewModels
 
                                 // Import instance source from settings.
                                 {
-                                    if (InstanceSources[source_index] is Models.LocalInstanceSourceInfo instance_source_local &&
+                                    if (InstanceSources[source_index] is Models.LocalInstanceSource instance_source_local &&
                                         h is Xml.LocalInstanceSourceSettings h_local)
                                     {
                                         // Local authenticating instance source:
@@ -879,7 +879,7 @@ namespace eduVPN.ViewModels
                                         }
                                         instance_source_local.ConnectingInstance = h_local.ConnectingInstance != null ? instance_source_local.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_local.ConnectingInstance.AbsoluteUri) : null;
                                     }
-                                    else if (InstanceSources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed &&
+                                    else if (InstanceSources[source_index] is Models.DistributedInstanceSource instance_source_distributed &&
                                         h is Xml.DistributedInstanceSourceSettings h_distributed)
                                     {
                                         // Distributed authenticating instance source:
@@ -892,7 +892,7 @@ namespace eduVPN.ViewModels
                                             instance_source_distributed.ConnectingInstance = h_distributed.ConnectingInstance != null ? instance_source_distributed.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.ConnectingInstance.AbsoluteUri) : null;
                                         }
                                     }
-                                    else if (InstanceSources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated &&
+                                    else if (InstanceSources[source_index] is Models.FederatedInstanceSource instance_source_federated &&
                                         h is Xml.FederatedInstanceSourceSettings h_federated)
                                     {
                                         // Federated authenticating instance source:
@@ -952,7 +952,7 @@ namespace eduVPN.ViewModels
                         Parallel.For((int)Models.InstanceSourceType._start, (int)Models.InstanceSourceType._end, source_index =>
                         {
                             Xml.InstanceSourceSettingsBase h = null;
-                            if (InstanceSources[source_index] is Models.LocalInstanceSourceInfo instance_source_local)
+                            if (InstanceSources[source_index] is Models.LocalInstanceSource instance_source_local)
                             {
                                 // Local authenticating instance source.
                                 var instance_list = new Xml.InstanceRefList();
@@ -980,7 +980,7 @@ namespace eduVPN.ViewModels
                                     ConnectingInstanceList = instance_list
                                 };
                             }
-                            else if (InstanceSources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed)
+                            else if (InstanceSources[source_index] is Models.DistributedInstanceSource instance_source_distributed)
                             {
                                 // Distributed authenticating instance source.
                                 h = new Xml.DistributedInstanceSourceSettings()
@@ -989,7 +989,7 @@ namespace eduVPN.ViewModels
                                     ConnectingInstance = instance_source_distributed.ConnectingInstance?.Base
                                 };
                             }
-                            else if (InstanceSources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated)
+                            else if (InstanceSources[source_index] is Models.FederatedInstanceSource instance_source_federated)
                             {
                                 // Federated authenticating instance source.
                                 h = new Xml.FederatedInstanceSourceSettings()

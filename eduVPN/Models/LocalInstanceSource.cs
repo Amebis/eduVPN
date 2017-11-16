@@ -15,7 +15,7 @@ namespace eduVPN.Models
     /// <remarks>
     /// Access token is specific to each instance and cannot be used by other instances.
     /// </remarks>
-    public class LocalInstanceSourceInfo : InstanceSourceInfo
+    public class LocalInstanceSource : InstanceSource
     {
         #region Properties
 

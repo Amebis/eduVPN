@@ -41,8 +41,8 @@
     <Compile Include="Models\AccessTokenNullException.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
-    <Compile Include="Models\DistributedInstanceSourceInfo.cs" />
-    <Compile Include="Models\FederatedInstanceSourceInfo.cs" />
+    <Compile Include="Models\DistributedInstanceSource.cs" />
+    <Compile Include="Models\FederatedInstanceSource.cs" />
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
     <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />
     <Compile Include="Xml\InstanceRef.cs" />
@@ -59,10 +59,10 @@
     <Compile Include="Xml\FederatedVPNConfigurationSettings.cs" />
     <Compile Include="Xml\InstanceSettingsDictionary.cs" />
     <Compile Include="Xml\InstanceSettings.cs" />
-    <Compile Include="Models\InstanceSourceInfo.cs" />
+    <Compile Include="Models\InstanceSource.cs" />
     <Compile Include="Models\InstanceSourceType.cs" />
     <Compile Include="Models\InterfaceInfo.cs" />
-    <Compile Include="Models\LocalInstanceSourceInfo.cs" />
+    <Compile Include="Models\LocalInstanceSource.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageList.cs" />
     <Compile Include="Models\MessageMaintenance.cs" />

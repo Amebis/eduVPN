@@ -13,7 +13,7 @@ namespace eduVPN.Models
     /// <remarks>
     /// Access token from any instance can be used by any other instance.
     /// </remarks>
-    public class DistributedInstanceSourceInfo : InstanceSourceInfo
+    public class DistributedInstanceSource : InstanceSource
     {
         #region Properties
 

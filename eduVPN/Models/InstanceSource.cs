@@ -15,7 +15,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN instance source base class
     /// </summary>
-    public class InstanceSourceInfo : BindableBase, JSON.ILoadableItem
+    public class InstanceSource : BindableBase, JSON.ILoadableItem
     {
         #region Properties
 
@@ -96,16 +96,16 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>instances</c> and other optional elements</param>
         /// <returns>Instance source</returns>
-        public static InstanceSourceInfo FromJSON(Dictionary<string, object> obj)
+        public static InstanceSource FromJSON(Dictionary<string, object> obj)
         {
             // Parse authorization data.
-            InstanceSourceInfo instance_source;
+            InstanceSource instance_source;
         #if INSTANCE_LIST_FORCE_LOCAL
-            instance_source = new LocalInstanceSourceInfo();
+            instance_source = new LocalInstanceSource();
         #elif INSTANCE_LIST_FORCE_DISTRIBUTED
-            instance_source = new DistributedInstanceSourceInfo();
+            instance_source = new DistributedInstanceSource();
         #elif INSTANCE_LIST_FORCE_FEDERATED
-            instance_source = new FederatedInstanceSourceInfo();
+            instance_source = new FederatedInstanceSource();
             obj.Add("authorization_endpoint", "https://demo.eduvpn.nl/portal/_oauth/authorize");
             obj.Add("token_endpoint"        , "https://demo.eduvpn.nl/portal/oauth.php/token");
         #else
@@ -113,13 +113,13 @@ namespace eduVPN.Models
             {
                 switch (authorization_type.ToLower())
                 {
-                    case "federated": instance_source = new FederatedInstanceSourceInfo(); break;
-                    case "distributed": instance_source = new DistributedInstanceSourceInfo(); break;
-                    default: instance_source = new LocalInstanceSourceInfo(); break; // Assume local authorization type on all other values.
+                    case "federated": instance_source = new FederatedInstanceSource(); break;
+                    case "distributed": instance_source = new DistributedInstanceSource(); break;
+                    default: instance_source = new LocalInstanceSource(); break; // Assume local authorization type on all other values.
                 }
             }
             else
-                instance_source = new LocalInstanceSourceInfo();
+                instance_source = new LocalInstanceSource();
         #endif
 
             instance_source.Load(obj);

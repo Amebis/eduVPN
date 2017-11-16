@@ -37,13 +37,13 @@ namespace eduVPN.ViewModels
                             {
                                 Parent.InstanceSourceType = instance_source_type.Value;
 
-                                if (Parent.InstanceSource is Models.LocalInstanceSourceInfo)
+                                if (Parent.InstanceSource is Models.LocalInstanceSource)
                                 {
                                     // With local authentication, the authenticating instance is the connecting instance.
                                     // Therefore, select "authenticating" instance.
                                     Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
-                                else if (Parent.InstanceSource is Models.DistributedInstanceSourceInfo instance_source_distributed)
+                                else if (Parent.InstanceSource is Models.DistributedInstanceSource instance_source_distributed)
                                 {
                                     // Check if we have saved access token for any of the instances.
                                     object authenticating_instance_lock = new object();
@@ -77,7 +77,7 @@ namespace eduVPN.ViewModels
                                     else
                                         Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
                                 }
-                                else if (Parent.InstanceSource is Models.FederatedInstanceSourceInfo instance_source_federated)
+                                else if (Parent.InstanceSource is Models.FederatedInstanceSource instance_source_federated)
                                 {
                                     // Trigger initial authorization request.
                                     await Parent.TriggerAuthorizationAsync(instance_source_federated.AuthenticatingInstance);

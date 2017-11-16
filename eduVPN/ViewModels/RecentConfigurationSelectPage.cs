@@ -65,7 +65,7 @@ namespace eduVPN.ViewModels
             _panels = new ConnectingInstanceSelectPanel[Parent.InstanceSources.Length];
             for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
             {
-                if (Parent.InstanceSources[source_index] is Models.LocalInstanceSourceInfo)
+                if (Parent.InstanceSources[source_index] is Models.LocalInstanceSource)
                 {
                     switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
@@ -74,8 +74,8 @@ namespace eduVPN.ViewModels
                     }
                 }
                 else if (
-                    Parent.InstanceSources[source_index] is Models.DistributedInstanceSourceInfo ||
-                    Parent.InstanceSources[source_index] is Models.FederatedInstanceSourceInfo)
+                    Parent.InstanceSources[source_index] is Models.DistributedInstanceSource ||
+                    Parent.InstanceSources[source_index] is Models.FederatedInstanceSource)
                     _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index);
             }
         }
