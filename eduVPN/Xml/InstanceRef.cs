@@ -55,17 +55,13 @@ namespace eduVPN.Xml
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
-                if (reader.NodeType == XmlNodeType.Element)
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(ProfileRefList))
                 {
-                    switch (reader.Name)
+                    if (reader["Key"] == nameof(ProfileList))
                     {
-                        case nameof(ProfileRefList):
-                            if (reader["Key"] == nameof(ProfileList))
-                            {
-                                ProfileList = new ProfileRefList();
-                                ProfileList.ReadXml(reader);
-                            }
-                            break;
+                        ProfileList = new ProfileRefList();
+                        if (!reader.IsEmptyElement)
+                            ProfileList.ReadXml(reader);
                     }
                 }
             }

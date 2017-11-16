@@ -42,7 +42,8 @@ namespace eduVPN.Xml
                     {
                         case nameof(InstanceRefList):
                             if (reader["Key"] == nameof(ConnectingInstanceList))
-                                ConnectingInstanceList.ReadXml(reader);
+                                if (!reader.IsEmptyElement)
+                                    ConnectingInstanceList.ReadXml(reader);
                             break;
 
                         case nameof(InstanceSourceSettingsBase):
