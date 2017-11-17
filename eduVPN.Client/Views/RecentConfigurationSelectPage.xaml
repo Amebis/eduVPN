@@ -22,6 +22,9 @@
 
     <view:ConnectWizardPage.Resources>
         <!-- Panel view model to view mapping -->
+        <DataTemplate DataType="{x:Type viewModel:ConnectingProfileSelectPanel}">
+            <view:ConnectingInstanceProfileSelectPanel/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceSelectPanel}">
             <view:ConnectingInstanceSelectPanel/>
         </DataTemplate>
@@ -130,7 +133,7 @@
             Grid.Row="3"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            Content="{x:Static res:Strings.RecentConfigurationSelectPageAddInstance}"
-            Command="{Binding Path=AddAnotherInstance}"/>
+            Content="{x:Static res:Strings.RecentConfigurationSelectPageAddEntry}"
+            Command="{Binding Path=AddAnotherEntry}"/>
     </Grid>
 </view:ConnectWizardPage>

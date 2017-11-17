@@ -41,8 +41,8 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\ConnectingInstanceAndProfileEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ConnectingInstanceEqualVisibilityConverter.cs" />
+    <Compile Include="Converters\ConnectingProfileEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\InstanceSourceInverseVisibilityConverter.cs" />
@@ -58,6 +58,9 @@
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Views\ConnectingProfileSelectBasePanel.cs" />
+    <Compile Include="Views\ConnectingInstanceProfileSelectPanel.xaml.cs">
+      <DependentUpon>ConnectingInstanceProfileSelectPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectingProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
     </Compile>
@@ -135,6 +138,10 @@
     <Page Include="Resources\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectingInstanceProfileSelectPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConnectingProfileSelectPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

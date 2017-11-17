@@ -13,18 +13,15 @@ using System.Windows.Data;
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns <c>Visibility.Visible</c> if <c>value[0]</c> and <c>value[1]</c> represent the same instance and profile as <c>value[2]</c> and <c>value[3]</c>; or <c>Visibility.Collapsed</c> otherwise.
+    /// Returns <c>Visibility.Visible</c> if <c>value[0]</c> represent the same profile as <c>value[1]</c></c>; or <c>Visibility.Collapsed</c> otherwise.
     /// </summary>
-    public class ConnectingInstanceAndProfileEqualVisibilityConverter : IMultiValueConverter
+    public class ConnectingProfileEqualVisibilityConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             return
-                values[0] is Models.Instance instance1 &&
-                values[1] is Models.Profile profile1 &&
-                values[2] is Models.Instance instance2 &&
-                values[3] is Models.Profile profile2 &&
-                instance1.Equals(instance2) &&
+                values[0] is Models.Profile profile1 &&
+                values[1] is Models.Profile profile2 &&
                 profile1.Equals(profile2) ? Visibility.Visible : Visibility.Collapsed;
         }
 

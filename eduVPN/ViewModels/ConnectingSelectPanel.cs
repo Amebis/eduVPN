@@ -64,13 +64,12 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Remove instance from history.
-                                InstanceSource.ConnectingInstanceList.Remove(InstanceSource.ConnectingInstance);
+                                var instance = InstanceSource.ConnectingInstance;
+                                InstanceSource.ConnectingInstanceList.Remove(instance);
                                 if (InstanceSource is Models.LocalInstanceSource instance_source_local)
-                                    for (int i = 0, n = instance_source_local.ConnectingProfileList.Count; i < n;)
-                                        if (instance_source_local.ConnectingProfileList[i].Instance.Equals(InstanceSource.ConnectingInstance))
+                                    for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
+                                        if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
                                             instance_source_local.ConnectingProfileList.RemoveAt(i);
-                                        else
-                                            i++;
                                 InstanceSource.ConnectingProfile = null;
                                 InstanceSource.ConnectingInstance = InstanceSource.ConnectingInstanceList.FirstOrDefault();
 

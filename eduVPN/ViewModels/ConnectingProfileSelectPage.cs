@@ -47,7 +47,25 @@ namespace eduVPN.ViewModels
         {
             base.DoNavigateBack();
 
-            Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+            if (Parent.InstanceSource is Models.LocalInstanceSource)
+            {
+                switch (Properties.Settings.Default.ConnectingProfileSelectMode)
+                {
+                    case 0:
+                    case 2:
+                        if (Parent.InstanceSource.InstanceList.IndexOf(Parent.InstanceSource.AuthenticatingInstance) >= 0)
+                            Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                        else
+                            Parent.CurrentPage = Parent.CustomInstancePage;
+                        break;
+
+                    case 1:
+                        Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+                        break;
+                }
+            }
+            else
+                Parent.CurrentPage = Parent.InstanceSourceSelectPage;
         }
 
         /// <inheritdoc/>

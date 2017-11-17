@@ -250,8 +250,8 @@ The client will continue after you complete the authorization...</value>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddInstance" xml:space="preserve">
-    <value>Add another provider</value>
+  <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
+    <value>Add another entry</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Connection _info...</value>

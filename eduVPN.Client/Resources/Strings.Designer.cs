@@ -379,11 +379,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add another provider.
+        ///   Looks up a localized string similar to Add another entry.
         /// </summary>
-        public static string RecentConfigurationSelectPageAddInstance {
+        public static string RecentConfigurationSelectPageAddEntry {
             get {
-                return ResourceManager.GetString("RecentConfigurationSelectPageAddInstance", resourceCulture);
+                return ResourceManager.GetString("RecentConfigurationSelectPageAddEntry", resourceCulture);
             }
         }
         

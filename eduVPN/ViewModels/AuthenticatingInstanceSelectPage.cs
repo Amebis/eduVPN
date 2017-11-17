@@ -45,7 +45,13 @@ namespace eduVPN.ViewModels
                                 Parent.InstanceSource.ConnectingInstance = Parent.InstanceSource.AuthenticatingInstance;
 
                                 // Go to (instance and) profile selection page.
-                                Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+                                switch (Properties.Settings.Default.ConnectingProfileSelectMode)
+                                {
+                                    case 0: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
+                                    case 1: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                    case 2: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
+                                    case 3: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                }
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }

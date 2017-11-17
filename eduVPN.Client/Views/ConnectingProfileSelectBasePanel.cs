@@ -38,7 +38,7 @@ namespace eduVPN.Views
 
         protected void ProfileList_SelectItem(object sender, InputEventArgs e)
         {
-            if (DataContext is ViewModels.ConnectingInstanceAndProfileSelectPanel view_model)
+            if (DataContext is ViewModels.ConnectingSelectPanel view_model)
             {
                 // Connect selected profile.
                 if (view_model.ConnectSelectedProfile.CanExecute())

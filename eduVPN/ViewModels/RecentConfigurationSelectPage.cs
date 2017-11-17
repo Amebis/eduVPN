@@ -27,14 +27,14 @@ namespace eduVPN.ViewModels
         private ConnectingSelectPanel[] _panels;
 
         /// <summary>
-        /// Add another instance
+        /// Add another instance or profile
         /// </summary>
-        public DelegateCommand AddAnotherInstance
+        public DelegateCommand AddAnotherEntry
         {
             get
             {
-                if (_add_another_instance == null)
-                    _add_another_instance = new DelegateCommand(
+                if (_add_another_entry == null)
+                    _add_another_entry = new DelegateCommand(
                         //execute
                         () =>
                         {
@@ -44,10 +44,10 @@ namespace eduVPN.ViewModels
                             finally { Parent.ChangeTaskCount(-1); }
                         });
 
-                return _add_another_instance;
+                return _add_another_entry;
             }
         }
-        private DelegateCommand _add_another_instance;
+        private DelegateCommand _add_another_entry;
 
         #endregion
 
@@ -69,7 +69,9 @@ namespace eduVPN.ViewModels
                 {
                     switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
+                        case 0: _panels[source_index] = new ConnectingProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
                         case 1: _panels[source_index] = new ConnectingInstanceSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
+                        case 2: _panels[source_index] = new ConnectingProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
                         case 3: _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
                     }
                 }
