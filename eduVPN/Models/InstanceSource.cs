@@ -67,7 +67,8 @@ namespace eduVPN.Models
             set
             {
                 if (SetProperty(ref _connecting_profile, value))
-                    ConnectingInstance = _connecting_profile?.Instance;
+                    if (_connecting_profile != null)
+                        ConnectingInstance = _connecting_profile.Instance;
             }
         }
         private Profile _connecting_profile;
