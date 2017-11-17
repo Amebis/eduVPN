@@ -14,7 +14,7 @@ using System.Windows.Threading;
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Instance and profile select panel
+    /// Connecting instance and profile select panel
     /// </summary>
     public class ConnectingInstanceAndProfileSelectPanel : ConnectingInstanceSelectPanel
     {

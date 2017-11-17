@@ -20,11 +20,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Configuration history panels
         /// </summary>
-        public ConnectingInstanceSelectPanel[] Panels
+        public ConnectingSelectPanel[] Panels
         {
             get { return _panels; }
         }
-        private ConnectingInstanceSelectPanel[] _panels;
+        private ConnectingSelectPanel[] _panels;
 
         /// <summary>
         /// Add another instance
@@ -62,7 +62,7 @@ namespace eduVPN.ViewModels
         {
             // Create history panels.
             var source_type_length = (int)Models.InstanceSourceType._end;
-            _panels = new ConnectingInstanceSelectPanel[Parent.InstanceSources.Length];
+            _panels = new ConnectingSelectPanel[Parent.InstanceSources.Length];
             for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
             {
                 if (Parent.InstanceSources[source_index] is Models.LocalInstanceSource)
