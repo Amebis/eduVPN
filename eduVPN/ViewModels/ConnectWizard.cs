@@ -248,18 +248,18 @@ namespace eduVPN.ViewModels
                             if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSource instance_source_local)
                             {
                                 var profile_found = false;
-                                for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
+                                foreach (var profile in instance_source_local.ConnectingProfileList)
                                 {
-                                    if (instance_source_local.ConnectingProfileList[i].Equals(param.ConnectingProfile))
+                                    if (profile.Equals(param.ConnectingProfile))
                                     {
                                         // Upvote profile popularity.
-                                        instance_source_local.ConnectingProfileList[i].Popularity = instance_source_local.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                        profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
                                         profile_found = true;
                                     }
                                     else
                                     {
                                         // Downvote profile popularity.
-                                        instance_source_local.ConnectingProfileList[i].Popularity = instance_source_local.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                        profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
                                     }
                                 }
                                 if (!profile_found)
@@ -282,18 +282,18 @@ namespace eduVPN.ViewModels
                                 }
 
                                 var instance_found = false;
-                                for (var i = instance_source_local.ConnectingInstanceList.Count; i-- > 0;)
+                                foreach (var instance in instance_source_local.ConnectingInstanceList)
                                 {
-                                    if (instance_source_local.ConnectingInstanceList[i].Equals(param.ConnectingProfile.Instance))
+                                    if (instance.Equals(param.ConnectingProfile.Instance))
                                     {
                                         // Upvote instance popularity.
-                                        instance_source_local.ConnectingInstanceList[i].Popularity = instance_source_local.ConnectingInstanceList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                        instance.Popularity = instance.Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
                                         instance_found = true;
                                     }
                                     else
                                     {
                                         // Downvote instance popularity.
-                                        instance_source_local.ConnectingInstanceList[i].Popularity = instance_source_local.ConnectingInstanceList[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                        instance.Popularity = instance.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
                                     }
                                 }
                                 if (!instance_found)
@@ -311,8 +311,6 @@ namespace eduVPN.ViewModels
                             }
                             else
                                 throw new InvalidOperationException();
-
-                            InstanceSources[(int)param.InstanceSourceType].ConnectingInstance = param.ConnectingProfile.Instance;
                         },
 
                         // canExecute
