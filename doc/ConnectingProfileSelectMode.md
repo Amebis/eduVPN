@@ -52,7 +52,7 @@ Pros:
 - `/profile_list` is loaded on demand. Client startup is faster.
 
 Cons:
-- The user needs two clicks to connect instead of one.
+- The user needs an extra step to connect. However, profile selection could be ommited when instance has only one profile.
 
 
 ## Mode 2
@@ -81,5 +81,5 @@ Pros:
 - `/profile_list` is loaded on demand. Client startup is faster.
 
 Cons:
-- The user needs one or three clicks to connect instead of one. Depending, whether the user needs to change instance in the drop-down list.
+- The user needs three clicks to change the instance and select the profile to connect to.
 - When Secure Internet and Institute Access are displayed on the same page simultaneously, the UI gets crammed.
