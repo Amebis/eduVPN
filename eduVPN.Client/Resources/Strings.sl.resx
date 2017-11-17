@@ -335,7 +335,4 @@ Omogoča SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-stopenjsko overovljanje</value>
   </data>
-  <data name="ConfigurationSelectForget" xml:space="preserve">
-    <value>Pozabi</value>
-  </data>
 </root>

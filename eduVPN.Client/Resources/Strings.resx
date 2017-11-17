@@ -335,7 +335,4 @@ Powered by SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-Factor Authentication</value>
   </data>
-  <data name="ConfigurationSelectForget" xml:space="preserve">
-    <value>Forget</value>
-  </data>
 </root>

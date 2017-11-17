@@ -208,15 +208,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forget.
-        /// </summary>
-        public static string ConfigurationSelectForget {
-            get {
-                return ResourceManager.GetString("ConfigurationSelectForget", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string ConnectingProfileSelectPageTitle {
