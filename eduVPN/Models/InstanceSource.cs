@@ -58,6 +58,21 @@ namespace eduVPN.Models
         private Instance _connecting_instance;
 
         /// <summary>
+        /// Last connecting profile
+        /// </summary>
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public Profile ConnectingProfile
+        {
+            get { return _connecting_profile; }
+            set
+            {
+                if (SetProperty(ref _connecting_profile, value))
+                    ConnectingInstance = _connecting_profile?.Instance;
+            }
+        }
+        private Profile _connecting_profile;
+
+        /// <summary>
         /// Version sequence
         /// </summary>
         public uint Sequence

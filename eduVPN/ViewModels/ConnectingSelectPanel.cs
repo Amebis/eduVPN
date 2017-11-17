@@ -65,6 +65,13 @@ namespace eduVPN.ViewModels
                             {
                                 // Remove instance from history.
                                 InstanceSource.ConnectingInstanceList.Remove(InstanceSource.ConnectingInstance);
+                                if (InstanceSource is Models.LocalInstanceSource instance_source_local)
+                                    for (int i = 0, n = instance_source_local.ConnectingProfileList.Count; i < n;)
+                                        if (instance_source_local.ConnectingProfileList[i].Instance.Equals(InstanceSource.ConnectingInstance))
+                                            instance_source_local.ConnectingProfileList.RemoveAt(i);
+                                        else
+                                            i++;
+                                InstanceSource.ConnectingProfile = null;
                                 InstanceSource.ConnectingInstance = InstanceSource.ConnectingInstanceList.FirstOrDefault();
 
                                 // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
@@ -94,6 +101,46 @@ namespace eduVPN.ViewModels
             }
         }
         private DelegateCommand _forget_selected_instance;
+
+        /// <summary>
+        /// Connect selected profile command
+        /// </summary>
+        public DelegateCommand ConnectSelectedProfile
+        {
+            get
+            {
+                if (_connect_selected_profile == null)
+                {
+                    _connect_selected_profile = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Parent.ChangeTaskCount(+1);
+                            try
+                            {
+                                // Start VPN session.
+                                var param = new ConnectWizard.StartSessionParams(
+                                    InstanceSourceType,
+                                    InstanceSource.AuthenticatingInstance,
+                                    InstanceSource.ConnectingProfile);
+                                if (Parent.StartSession.CanExecute(param))
+                                    Parent.StartSession.Execute(param);
+                            }
+                            catch (Exception ex) { Parent.Error = ex; }
+                            finally { Parent.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () => InstanceSource.ConnectingProfile != null);
+
+                    // Setup canExecute refreshing.
+                    InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingProfile)) _connect_selected_profile.RaiseCanExecuteChanged(); };
+                }
+
+                return _connect_selected_profile;
+            }
+        }
+        private DelegateCommand _connect_selected_profile;
 
         #endregion
 

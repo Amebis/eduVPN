@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Commands;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -28,67 +27,16 @@ namespace eduVPN.ViewModels
             get { return _profile_list; }
             set
             {
+                // CA2214: Must not be set using SetProperty<>(), since SetProperty<>() is virtual,
+                // and this property is set by constructor>InstanceSource_PropertyChanged call chain.
                 if (value != _profile_list)
                 {
                     _profile_list = value;
                     RaisePropertyChanged();
-
-                    // Reset selected profile.
-                    SelectedProfile = null;
                 }
             }
         }
         private JSON.Collection<Models.Profile> _profile_list;
-
-        /// <summary>
-        /// Selected profile
-        /// </summary>
-        public Models.Profile SelectedProfile
-        {
-            get { return _selected_profile; }
-            set { if (value != _selected_profile) { _selected_profile = value; RaisePropertyChanged(); }; }
-        }
-        private Models.Profile _selected_profile;
-
-        /// <summary>
-        /// Connect selected profile command
-        /// </summary>
-        public DelegateCommand ConnectSelectedProfile
-        {
-            get
-            {
-                if (_connect_selected_profile == null)
-                {
-                    _connect_selected_profile = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            Parent.ChangeTaskCount(+1);
-                            try
-                            {
-                                // Start VPN session.
-                                var param = new ConnectWizard.StartSessionParams(
-                                    InstanceSourceType,
-                                    InstanceSource.AuthenticatingInstance,
-                                    SelectedProfile);
-                                if (Parent.StartSession.CanExecute(param))
-                                    Parent.StartSession.Execute(param);
-                            }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        () => SelectedProfile != null);
-
-                    // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedProfile)) _connect_selected_profile.RaiseCanExecuteChanged(); };
-                }
-
-                return _connect_selected_profile;
-            }
-        }
-        private DelegateCommand _connect_selected_profile;
 
         #endregion
 
