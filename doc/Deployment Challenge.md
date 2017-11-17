@@ -1,6 +1,6 @@
 # 1. Overview
 
-![eduVPN Ecosystem](../images/basic.svg "eduVPN Ecosystem")
+![eduVPN Ecosystem](Deployment%20Challenge/basic.svg "eduVPN Ecosystem")
 
 eduVPN client deployment on Windows computers requires the following features installed locally:
 - eduVPN client
@@ -26,10 +26,10 @@ The ultimate eduVPN installer will be deployed as installer EXE to install all r
 ## 2.1 Plan A
 
 eduVPN client is installed using an MSI package:  
-![eduVPN client MSI](../images/basic-eduVPN-MSI-1.svg "eduVPN client MSI")
+![eduVPN client MSI](Deployment%20Challenge/basic-eduVPN-MSI-1.svg "eduVPN client MSI")
 
 All OpenVPN features are installed using OpenVPN installer EXE:  
-![OpenVPN installer EXE](../images/basic-OpenVPN-EXE-1.svg "OpenVPN installer EXE")
+![OpenVPN installer EXE](Deployment%20Challenge/basic-OpenVPN-EXE-1.svg "OpenVPN installer EXE")
 
 
 ### 2.1.1 Pros
@@ -53,7 +53,7 @@ Using command line switches, one can select features to update, but we should de
 ## 2.2 Plan B
 
 eduVPN client is bundled with OpenVPN and own version of OpenVPN Interactive Service, and is installed using an MSI package:  
-![Extended eduVPN client MSI](../images/basic-eduVPN-MSI-2.svg "Extended eduVPN client MSI")
+![Extended eduVPN client MSI](Deployment%20Challenge/basic-eduVPN-MSI-2.svg "Extended eduVPN client MSI")
 
 OpenVPN binaries (including DLL libraries) are upstream OpenVPN binaries:
 - openvpn.exe
@@ -65,7 +65,7 @@ OpenVPN binaries (including DLL libraries) are upstream OpenVPN binaries:
 The OpenVPN Interactive Service needs some amends to support multiple concurrent instances.
 
 TUN/TAP drivers are installed using TUN/TAP installer EXE:  
-![TUN/TAP installer EXE](../images/basic-TUNTAP-EXE-1.svg "TUN/TAP installer EXE")
+![TUN/TAP installer EXE](Deployment%20Challenge/basic-TUNTAP-EXE-1.svg "TUN/TAP installer EXE")
 
 
 ### 2.2.1 Pros
