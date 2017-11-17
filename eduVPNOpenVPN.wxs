@@ -113,6 +113,12 @@
             </Component>
             <Component Id="openvpnserv.exe" Guid="{1A38AF86-1516-49FA-91AE-D48EAE37468D}">
                 <File Source="openvpnserv.exe"/>
+                <!-- Until 1.0-alpha7, Interactive Service was installed as eduVPNServiceInteractive. -->
+                <ServiceControl
+                    Id="eduVPNServiceInteractive"
+                    Name="eduVPNServiceInteractive"
+                    Stop="install"
+                    Remove="install"/>
                 <ServiceControl
                     Id="OpenVPNServiceInteractive.eduVPN"
                     Name="OpenVPNServiceInteractive$eduVPN"
