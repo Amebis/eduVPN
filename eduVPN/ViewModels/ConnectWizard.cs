@@ -785,7 +785,7 @@ namespace eduVPN.ViewModels
                                                 }
                                             }
                                         }
-                                        h_local.ConnectingInstance = h_local.ConnectingInstanceList.Aggregate((curMin, x) => (curMin == null || x.Popularity > curMin.Popularity ? x : curMin))?.Base;
+                                        h_local.ConnectingInstance = h_local.ConnectingInstanceList.Count > 0 ? h_local.ConnectingInstanceList.Aggregate((most_popular_instance, inst) => (most_popular_instance == null || inst.Popularity > most_popular_instance.Popularity ? inst : most_popular_instance))?.Base : null;
                                         h = h_local;
                                     }
                                     else if (_instance_sources[source_index] is Models.DistributedInstanceSource instance_source_distributed)
