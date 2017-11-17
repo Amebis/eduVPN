@@ -949,7 +949,7 @@ namespace eduVPN.ViewModels
                     Dispatcher.ShutdownStarted += (object sender2, EventArgs e2) =>
                     {
                         // Update access token settings.
-                        Properties.Settings.Default.AccessTokens = new Xml.StringDictionary();
+                        Properties.Settings.Default.AccessTokens = new Xml.SerializableStringDictionary();
                         lock (_access_token_cache_lock)
                             foreach (var access_token in _access_token_cache)
                                 Properties.Settings.Default.AccessTokens[access_token.Key] = access_token.Value.ToBase64String();

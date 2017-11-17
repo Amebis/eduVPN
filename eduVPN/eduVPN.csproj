@@ -118,7 +118,7 @@
     <Compile Include="ViewModels\Window.cs" />
     <Compile Include="ViewModels\YubiKeyAuthenticationPanel.cs" />
     <Compile Include="Xml\LocalVPNConfigurationSettings.cs" />
-    <Compile Include="Xml\StringDictionary.cs" />
+    <Compile Include="Xml\SerializableStringDictionary.cs" />
     <Compile Include="Xml\VPNConfigurationSettings.cs" />
     <Compile Include="Xml\VPNConfigurationSettingsList.cs" />
   </ItemGroup>

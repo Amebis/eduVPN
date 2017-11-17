@@ -133,10 +133,10 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<StringDictionary/>")]
-        public global::eduVPN.Xml.StringDictionary AccessTokens {
+        [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
+        public global::eduVPN.Xml.SerializableStringDictionary AccessTokens {
             get {
-                return ((global::eduVPN.Xml.StringDictionary)(this["AccessTokens"]));
+                return ((global::eduVPN.Xml.SerializableStringDictionary)(this["AccessTokens"]));
             }
             set {
                 this["AccessTokens"] = value;

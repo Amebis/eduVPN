@@ -12,7 +12,7 @@ namespace eduVPN.Client.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -72,10 +72,10 @@ namespace eduVPN.Client.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<StringDictionary/>")]
-        public global::eduVPN.Xml.StringDictionary UsernameHistory {
+        [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
+        public global::eduVPN.Xml.SerializableStringDictionary UsernameHistory {
             get {
-                return ((global::eduVPN.Xml.StringDictionary)(this["UsernameHistory"]));
+                return ((global::eduVPN.Xml.SerializableStringDictionary)(this["UsernameHistory"]));
             }
             set {
                 this["UsernameHistory"] = value;

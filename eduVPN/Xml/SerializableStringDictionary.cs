@@ -18,7 +18,7 @@ namespace eduVPN.Xml
     /// Serializable string dictionary
     /// </summary>
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "DCS does not support IXmlSerializable types that are also marked as [Serializable]")]
-    public class StringDictionary : Dictionary<string, string>, IXmlSerializable
+    public class SerializableStringDictionary : Dictionary<string, string>, IXmlSerializable
     {
         #region IXmlSerializable Support
 
