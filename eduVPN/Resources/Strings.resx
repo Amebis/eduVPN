@@ -134,7 +134,7 @@
     <value>Loading of API endpoints failed.</value>
   </data>
   <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Loading of the instance source {0} failed.</value>
+    <value>Loading of the provider source {0} failed.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Loading of the profile list failed.</value>

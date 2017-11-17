@@ -131,7 +131,7 @@
     <value>Zasebni ključ ni veljaven ali je nepodprtega zapisa.</value>
   </data>
   <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Nalaganje skupine instanc {0} ni uspelo.</value>
+    <value>Nalaganje skupine ponudnikov {0} ni uspelo.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Nalaganje končnih točk API ni uspelo.</value>
