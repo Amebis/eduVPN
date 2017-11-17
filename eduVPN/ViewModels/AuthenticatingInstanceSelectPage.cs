@@ -8,6 +8,7 @@
 using Prism.Commands;
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace eduVPN.ViewModels
 {
@@ -17,16 +18,6 @@ namespace eduVPN.ViewModels
     public class AuthenticatingInstanceSelectPage : ConnectWizardPage
     {
         #region Properties
-
-        /// <summary>
-        /// Selected instance
-        /// </summary>
-        public Models.InstanceInfo SelectedInstance
-        {
-            get { return _selected_instance; }
-            set { SetProperty(ref _selected_instance, value); }
-        }
-        private Models.InstanceInfo _selected_instance;
 
         /// <summary>
         /// Authorize selected instance command
@@ -45,23 +36,32 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Trigger initial authorization request.
-                                await Parent.TriggerAuthorizationAsync(SelectedInstance);
+                                await Parent.TriggerAuthorizationAsync(Parent.InstanceSource.AuthenticatingInstance);
 
-                                // Save selected instance.
-                                Parent.AuthenticatingInstance = SelectedInstance;
+                                // Assume the same connecting instance.
+                                var instance = Parent.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == Parent.InstanceSource.AuthenticatingInstance.Base.AbsoluteUri);
+                                if (instance == null)
+                                    Parent.InstanceSource.ConnectingInstanceList.Add(Parent.InstanceSource.AuthenticatingInstance);
+                                Parent.InstanceSource.ConnectingInstance = Parent.InstanceSource.AuthenticatingInstance;
 
                                 // Go to (instance and) profile selection page.
-                                Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
+                                switch (Properties.Settings.Default.ConnectingProfileSelectMode)
+                                {
+                                    case 0: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
+                                    case 1: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                    case 2: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
+                                    case 3: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                }
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
-                        () => SelectedInstance != null);
+                        () => Parent.InstanceSource.AuthenticatingInstance != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _authorize_selected_instance.RaiseCanExecuteChanged(); };
+                    Parent.InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Parent.InstanceSource.AuthenticatingInstance)) _authorize_selected_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _authorize_selected_instance;

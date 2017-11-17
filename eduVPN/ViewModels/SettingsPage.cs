@@ -23,11 +23,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of installed TAP network interfaces
         /// </summary>
-        public ObservableCollection<Models.InterfaceInfo> InterfaceList
+        public ObservableCollection<Models.NetworkInterface> InterfaceList
         {
             get { return _interface_list; }
         }
-        private ObservableCollection<Models.InterfaceInfo> _interface_list;
+        private ObservableCollection<Models.NetworkInterface> _interface_list;
 
         #endregion
 
@@ -44,12 +44,11 @@ namespace eduVPN.ViewModels
             //ObservableCollection<Guid> networks = new ObservableCollection<Guid>();
 
             // Create available network interface list.
-            _interface_list = new ObservableCollection<Models.InterfaceInfo>()
+            _interface_list = new ObservableCollection<Models.NetworkInterface>()
             {
-                new Models.InterfaceInfo(Guid.Empty, Resources.Strings.InterfaceNameAutomatic)
+                new Models.NetworkInterface(Guid.Empty, Resources.Strings.InterfaceNameAutomatic)
             };
-            var interfaces = NetworkInterface.GetAllNetworkInterfaces();
-            foreach (var nic in interfaces)
+            foreach (var nic in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
                 Guid.TryParse(nic.Id, out var nic_id);
                 var mac = nic.GetPhysicalAddress().GetAddressBytes();
@@ -58,7 +57,7 @@ namespace eduVPN.ViewModels
                     mac.Length == 6 &&
                     mac[0] == 0x00 &&
                     mac[1] == 0xff)
-                    _interface_list.Add(new Models.InterfaceInfo(nic_id, nic.Name));
+                    _interface_list.Add(new Models.NetworkInterface(nic_id, nic.Name));
 
                 //if (nic.OperationalStatus == OperationalStatus.Up &&
                 //    nic.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
@@ -66,7 +65,7 @@ namespace eduVPN.ViewModels
                 //{
                 //    try
                 //    {
-                //        var net_conn = network_connections.Where(c => c.GetAdapterId() == nic_id).FirstOrDefault();
+                //        var net_conn = network_connections.FirstOrDefault(c => c.GetAdapterId() == nic_id);
                 //        var net_id = net_conn.GetNetwork().GetNetworkId();
                 //        if (net_conn != null && !networks.Where(n => n == net_id).Any())
                 //            networks.Add(net_id);

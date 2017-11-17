@@ -10,6 +10,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModel="clr-namespace:eduVPN.ViewModels;assembly=eduVPN"
     xmlns:view="clr-namespace:eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
@@ -18,15 +19,21 @@
     Title="{x:Static res:Strings.ConnectingProfileSelectPageTitle}"
     Style="{StaticResource eduVPNConnectWizardPageWithSettings}">
 
+    <view:ConnectWizardPage.Resources>
+        <!-- Panel view model to view mapping -->
+        <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPanel}">
+            <view:ConnectingProfileSelectPanel/>
+        </DataTemplate>
+    </view:ConnectWizardPage.Resources>
+
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <view:ConnectingProfileSelectPanel
-            x:Name="ConnectingProfileSelectPanel"
+        <ContentControl
             Margin="5"
             IsTabStop="False"
-            DataContext="{Binding Path=Panel}"/>
+            Content="{Binding Path=Panel}"/>
     </Grid>
 </view:ConnectWizardPage>

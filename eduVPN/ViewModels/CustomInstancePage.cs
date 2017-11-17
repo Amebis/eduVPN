@@ -9,6 +9,7 @@ using Prism.Commands;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace eduVPN.ViewModels
 {
@@ -47,17 +48,35 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 TryParseUri(Hostname, out var uri);
-                                var selected_instance = new Models.InstanceInfo(uri);
-                                selected_instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
-                                // Trigger initial authorization request.
-                                await Parent.TriggerAuthorizationAsync(selected_instance);
+                                var instance = Parent.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == uri.AbsoluteUri);
+                                if (instance == null)
+                                {
+                                    instance = new Models.Instance(uri);
+                                    instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
 
-                                // Set authentication instance.
-                                Parent.AuthenticatingInstance = selected_instance;
+                                    // Trigger initial authorization request.
+                                    await Parent.TriggerAuthorizationAsync(instance);
+
+                                    Parent.InstanceSource.ConnectingInstanceList.Add(instance);
+                                }
+                                else
+                                {
+                                    // Trigger initial authorization request.
+                                    await Parent.TriggerAuthorizationAsync(instance);
+                                }
+
+                                // Set authentication/connecting instance.
+                                Parent.InstanceSource.ConnectingInstance = instance;
 
                                 // Go to (instance and) profile selection page.
-                                Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
+                                switch (Properties.Settings.Default.ConnectingProfileSelectMode)
+                                {
+                                    case 0: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
+                                    case 1: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                    case 2: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
+                                    case 3: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                }
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }

@@ -101,10 +101,10 @@
                 MaxHeight="22"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                UriSource="{Binding Path=Parent.ActiveSession.ConnectingInstance.Logo}"
+                UriSource="{Binding Path=Parent.ActiveSession.ConnectingProfile.Instance.Logo}"
                 UriFallbackSource="pack://application:,,,/Resources/GenericInstance.png"
-                ToolTip="{Binding Path=Parent.ActiveSession.ConnectingInstance.DisplayName}"
-                AutomationProperties.Name="{Binding Path=Parent.ActiveSession.ConnectingInstance.DisplayName}"
+                ToolTip="{Binding Path=Parent.ActiveSession.ConnectingProfile.Instance.DisplayName}"
+                AutomationProperties.Name="{Binding Path=Parent.ActiveSession.ConnectingProfile.Instance.DisplayName}"
                 RenderOptions.BitmapScalingMode="Fant"/>
 
             <TextBlock

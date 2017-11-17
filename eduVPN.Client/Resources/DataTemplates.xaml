@@ -37,6 +37,29 @@
                 Margin="0,5,5,5"
                 RenderOptions.BitmapScalingMode="Fant"/>
 
+            <Image
+                Grid.Column="0"
+                Grid.Row="1"
+                Margin="2"
+                MaxHeight="12"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                RenderOptions.BitmapScalingMode="Fant">
+                <Image.Visibility>
+                    <MultiBinding
+                        Converter="{StaticResource ConnectingInstanceEqualVisibilityConverter}"
+                        FallbackValue="{x:Static Visibility.Collapsed}">
+                        <Binding/>
+                        <Binding
+                            Path="DataContext.Parent.ActiveSession.ConnectingProfile.Instance"
+                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
+                    </MultiBinding>
+                </Image.Visibility>
+            </Image>
+
             <TextBlock
                 Grid.Column="1"
                 Grid.Row="1"
@@ -65,28 +88,21 @@
             <Image
                 Grid.Column="0"
                 Grid.Row="1"
-                Margin="0,5,5,5"
-                MaxHeight="16"
+                MaxHeight="18"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
-                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}}"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
-                        Converter="{StaticResource ConnectingInstanceAndProfileEqualVisibilityConverter}"
+                        Converter="{StaticResource ConnectingProfileEqualVisibilityConverter}"
                         FallbackValue="{x:Static Visibility.Collapsed}">
-                        <Binding
-                            Path="DataContext.SelectedInstance"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}"/>
                         <Binding/>
                         <Binding
-                            Path="DataContext.Parent.ActiveSession.ConnectingInstance"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}"/>
-                        <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingInstanceAndProfileSelectBasePanel}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
@@ -94,7 +110,7 @@
             <TextBlock
                 Grid.Column="1"
                 Grid.Row="1"
-                Margin="-55,5,-55,5"
+                Margin="-55,5"
                 HorizontalAlignment="Center"
                 Text="{Binding Path=DisplayName}"
                 Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
@@ -113,7 +129,66 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="eduVPNConfigurationSelectionItemTemplate">
+    <DataTemplate x:Key="eduVPNCompactProfileSelectionItemTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="32"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="32"/>
+            </Grid.RowDefinitions>
+
+            <Separator
+                Grid.ColumnSpan="3"
+                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+
+            <Image
+                Grid.Column="0"
+                Grid.Row="1"
+                MaxHeight="18"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                RenderOptions.BitmapScalingMode="Fant">
+                <Image.Visibility>
+                    <MultiBinding
+                        Converter="{StaticResource ConnectingProfileEqualVisibilityConverter}"
+                        FallbackValue="{x:Static Visibility.Collapsed}">
+                        <Binding/>
+                        <Binding
+                            Path="DataContext.Parent.ActiveSession.ConnectingProfile"
+                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
+                    </MultiBinding>
+                </Image.Visibility>
+            </Image>
+
+            <TextBlock
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="-32,0"
+                HorizontalAlignment="Center"
+                Text="{Binding Path=DisplayName}"
+                Style="{StaticResource eduVPNListBoxItemTextStyle}"/>
+
+            <ContentControl
+                Grid.Column="2"
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="{StaticResource eduVPNTwoFactorAuthenticationIcon}"
+                Visibility="{Binding Path=IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
+                AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
+                IsTabStop="False"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="eduVPNInstanceProfileSelectionItemTemplate">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60"/>
@@ -132,7 +207,7 @@
             <view:ImageWithFallback
                 Grid.Column="0"
                 Grid.Row="1"
-                UriSource="{Binding Path=ConnectingInstance.Logo}"
+                UriSource="{Binding Path=Instance.Logo}"
                 UriFallbackSource="pack://application:,,,/Resources/GenericInstance.png"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -142,28 +217,22 @@
             <Image
                 Grid.Column="0"
                 Grid.Row="1"
-                Margin="0,5,5,5"
-                MaxHeight="16"
+                Margin="2"
+                MaxHeight="12"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"
-                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}}"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
-                        Converter="{StaticResource ConnectingInstanceAndProfileEqualVisibilityConverter}"
+                        Converter="{StaticResource ConnectingProfileEqualVisibilityConverter}"
                         FallbackValue="{x:Static Visibility.Collapsed}">
-                        <Binding
-                            Path="ConnectingInstance"/>
-                        <Binding
-                            Path="ConnectingProfile"/>
-                        <Binding
-                            Path="DataContext.Parent.ActiveSession.ConnectingInstance"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}"/>
+                        <Binding/>
                         <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConfigurationSelectPanel}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectBasePanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
@@ -179,13 +248,13 @@
 
                 <TextBlock
                     Margin="0,0,0,-1"
-                    Text="{Binding Path=ConnectingProfile.DisplayName}"
+                    Text="{Binding Path=DisplayName}"
                     Style="{StaticResource eduVPNTextBlockStyle}"/>
 
                 <TextBlock
                     Grid.Row="1"
                     Margin="0,-1,0,0"
-                    Text="{Binding Path=ConnectingInstance.DisplayName}"
+                    Text="{Binding Path=Instance.DisplayName}"
                     FontSize="10"
                     Style="{StaticResource eduVPNTextBlockStyle}"/>
             </Grid>
@@ -197,7 +266,7 @@
                 VerticalAlignment="Center"
                 Margin="5,5,0,5"
                 Content="{StaticResource eduVPNTwoFactorAuthenticationIcon}"
-                Visibility="{Binding Path=ConnectingProfile.IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                Visibility="{Binding Path=IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
                 AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
                 IsTabStop="False"/>

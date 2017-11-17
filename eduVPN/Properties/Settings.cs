@@ -23,5 +23,27 @@ namespace eduVPN.Properties
             get { throw new NotSupportedException("OpenVPNInterface is obsolete"); }
             set { throw new NotSupportedException("OpenVPNInterface is obsolete"); }
         }
+
+        [UserScopedSetting()]
+        [DebuggerNonUserCode()]
+        [DefaultSettingValue("")]
+        [Obsolete("Please use SecureInternetInstanceSourceInfo instead")]
+        [NoSettingsVersionUpgrade]
+        public Xml.VPNConfigurationSettingsList SecureInternetConfigHistory
+        {
+            get { throw new NotSupportedException("SecureInternetConfigHistory is obsolete"); }
+            set { throw new NotSupportedException("SecureInternetConfigHistory is obsolete"); }
+        }
+
+        [UserScopedSetting()]
+        [DebuggerNonUserCode()]
+        [DefaultSettingValue("")]
+        [Obsolete("Please use InstituteAccessInstanceSourceInfo instead")]
+        [NoSettingsVersionUpgrade]
+        public Xml.VPNConfigurationSettingsList InstituteAccessConfigHistory
+        {
+            get { throw new NotSupportedException("InstituteAccessConfigHistory is obsolete"); }
+            set { throw new NotSupportedException("InstituteAccessConfigHistory is obsolete"); }
+        }
     }
 }

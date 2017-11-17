@@ -20,7 +20,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authenticating instance
         /// </summary>
-        public Models.InstanceInfo Instance { get; }
+        public Models.Instance Instance { get; }
 
         /// <summary>
         /// Requested access token scope
@@ -42,7 +42,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="instance">Authenticating instance</param>
         /// <param name="scope">Requested access token scope</param>
-        public RequestInstanceAuthorizationEventArgs(Models.InstanceInfo instance, string scope)
+        public RequestInstanceAuthorizationEventArgs(Models.Instance instance, string scope)
         {
             Instance = instance;
             Scope = scope;

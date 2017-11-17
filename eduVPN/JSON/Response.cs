@@ -228,18 +228,20 @@ namespace eduVPN.JSON
 
         public void ReadXml(XmlReader reader)
         {
-            Value = reader.GetAttribute("Value");
-            Timestamp = DateTime.TryParse(reader.GetAttribute("Timestamp"), out var timestamp) ? timestamp : default(DateTime);
-            ETag = reader.GetAttribute("ETag");
-            IsFresh = reader.GetAttribute("IsFresh").Trim().ToLowerInvariant() == "true";
+            string v;
+
+            Value = reader[nameof(Value)];
+            Timestamp = DateTime.TryParse(reader[nameof(Timestamp)], out var timestamp) ? timestamp : default(DateTime);
+            ETag = reader[nameof(ETag)];
+            IsFresh = (v = reader[nameof(IsFresh)]) != null && bool.TryParse(v, out var v_is_fresh) ? v_is_fresh : false;
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("Value", Value);
-            writer.WriteAttributeString("Timestamp", Timestamp.ToString("o"));
-            writer.WriteAttributeString("ETag", ETag);
-            writer.WriteAttributeString("IsFresh", IsFresh ? "true" : "false");
+            writer.WriteAttributeString(nameof(Value), Value);
+            writer.WriteAttributeString(nameof(Timestamp), Timestamp.ToString("o"));
+            writer.WriteAttributeString(nameof(ETag), ETag);
+            writer.WriteAttributeString(nameof(IsFresh), IsFresh.ToString());
         }
 
         #endregion

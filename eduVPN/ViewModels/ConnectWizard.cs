@@ -54,24 +54,16 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Available instance sources
         /// </summary>
-        public Models.InstanceSourceInfo[] InstanceSources
+        public Models.InstanceSource[] InstanceSources
         {
             get { return _instance_sources; }
         }
-        private Models.InstanceSourceInfo[] _instance_sources;
-
-        /// <summary>
-        /// VPN configuration histories
-        /// </summary>
-        public ObservableCollection<Models.VPNConfiguration>[] ConfigurationHistories
-        {
-            get { return _configuration_histories; }
-        }
-        private ObservableCollection<Models.VPNConfiguration>[] _configuration_histories;
+        private Models.InstanceSource[] _instance_sources;
 
         /// <summary>
         /// Selected instance source
         /// </summary>
+        /// <remarks>This property is used in a process of adding new instance/profile.</remarks>
         public Models.InstanceSourceType InstanceSourceType
         {
             get { return _instance_source_type; }
@@ -81,7 +73,6 @@ namespace eduVPN.ViewModels
                 {
                     RaisePropertyChanged(nameof(InstanceSource));
                     RaisePropertyChanged(nameof(AuthenticatingInstanceSelectPage));
-                    RaisePropertyChanged(nameof(ConnectingProfileSelectPage));
                 }
             }
         }
@@ -90,21 +81,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Selected instance source
         /// </summary>
-        public Models.InstanceSourceInfo InstanceSource
+        /// <remarks>This property is used in a process of adding new instance/profile.</remarks>
+        public Models.InstanceSource InstanceSource
         {
             get { return InstanceSources[(int)_instance_source_type]; }
         }
-
-        /// <summary>
-        /// Authenticating eduVPN instance
-        /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.InstanceInfo AuthenticatingInstance
-        {
-            get { return _authenticating_instance; }
-            set { SetProperty(ref _authenticating_instance, value); }
-        }
-        private Models.InstanceInfo _authenticating_instance;
 
         /// <summary>
         /// VPN session queue - session 0 is the active session
@@ -192,7 +173,6 @@ namespace eduVPN.ViewModels
                             {
                                 var s = Sessions[Sessions.Count - 1];
                                 if (s.AuthenticatingInstance.Equals(param.AuthenticatingInstance) &&
-                                    s.ConnectingInstance.Equals(param.ConnectingInstance) &&
                                     s.ConnectingProfile.Equals(param.ConnectingProfile))
                                 {
                                     // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
@@ -211,7 +191,6 @@ namespace eduVPN.ViewModels
                                         using (var session = new OpenVPNSession(
                                             this,
                                             param.AuthenticatingInstance,
-                                            param.ConnectingInstance,
                                             param.ConnectingProfile))
                                         {
                                             VPNSession previous_session = null;
@@ -265,60 +244,82 @@ namespace eduVPN.ViewModels
                                     finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                                 })).Start();
 
-                            // Do the configuration history book-keeping.
-                            var cfg = new Models.VPNConfiguration()
+                            // Do the instance source book-keeping.
+                            if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSource instance_source_local)
                             {
-                                AuthenticatingInstance = param.AuthenticatingInstance,
-                                ConnectingInstance = param.ConnectingInstance,
-                                ConnectingProfile = param.ConnectingProfile,
-                            };
-                            var configuration_history = ConfigurationHistories[(int)param.InstanceSourceType];
-                            if (InstanceSources[(int)param.InstanceSourceType] is Models.LocalInstanceSourceInfo)
-                            {
-                                // Check for session configuration duplicates and update popularity.
-                                for (var i = configuration_history.Count;;)
+                                var profile_found = false;
+                                for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
                                 {
-                                    if (i-- > 0)
+                                    if (instance_source_local.ConnectingProfileList[i].Equals(param.ConnectingProfile))
                                     {
-                                        if (configuration_history[i].Equals(cfg))
-                                        {
-                                            // Upvote popularity.
-                                            configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            // Downvote popularity.
-                                            configuration_history[i].Popularity = configuration_history[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
-                                        }
+                                        // Upvote profile popularity.
+                                        instance_source_local.ConnectingProfileList[i].Popularity = instance_source_local.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                        profile_found = true;
                                     }
                                     else
                                     {
-                                        // Add session configuration to history.
-                                        configuration_history.Add(cfg);
-                                        break;
+                                        // Downvote profile popularity.
+                                        instance_source_local.ConnectingProfileList[i].Popularity = instance_source_local.ConnectingProfileList[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
                                     }
                                 }
+                                if (!profile_found)
+                                {
+                                    // Add connecting profile to the list.
+                                    instance_source_local.ConnectingProfileList.Add(param.ConnectingProfile);
+                                }
+                                if (Properties.Settings.Default.ConnectingProfileSelectMode == 2)
+                                {
+                                    // Add all profiles of connecting instance to the list.
+                                    foreach (var profile in param.ConnectingProfile.Instance.GetProfileList(param.AuthenticatingInstance, Abort.Token))
+                                        if (instance_source_local.ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
+                                        {
+                                            // Downvote profile popularity.
+                                            profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+
+                                            // Add sibling profile to the list.
+                                            instance_source_local.ConnectingProfileList.Add(profile);
+                                        }
+                                }
+
+                                var instance_found = false;
+                                for (var i = instance_source_local.ConnectingInstanceList.Count; i-- > 0;)
+                                {
+                                    if (instance_source_local.ConnectingInstanceList[i].Equals(param.ConnectingProfile.Instance))
+                                    {
+                                        // Upvote instance popularity.
+                                        instance_source_local.ConnectingInstanceList[i].Popularity = instance_source_local.ConnectingInstanceList[i].Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                        instance_found = true;
+                                    }
+                                    else
+                                    {
+                                        // Downvote instance popularity.
+                                        instance_source_local.ConnectingInstanceList[i].Popularity = instance_source_local.ConnectingInstanceList[i].Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                    }
+                                }
+                                if (!instance_found)
+                                {
+                                    // Add connecting instance to the list.
+                                    instance_source_local.ConnectingInstanceList.Add(param.ConnectingProfile.Instance);
+                                }
                             }
-                            else if (
-                                InstanceSources[(int)param.InstanceSourceType] is Models.DistributedInstanceSourceInfo ||
-                                InstanceSources[(int)param.InstanceSourceType] is Models.FederatedInstanceSourceInfo)
+                            else if (InstanceSources[(int)param.InstanceSourceType] is Models.DistributedInstanceSource instance_source_distributed)
                             {
-                                // Set session configuration to history.
-                                if (configuration_history.Count == 0)
-                                    configuration_history.Add(cfg);
-                                else
-                                    configuration_history[0] = cfg;
+                                instance_source_distributed.AuthenticatingInstance = param.AuthenticatingInstance;
+                            }
+                            else if (InstanceSources[(int)param.InstanceSourceType] is Models.FederatedInstanceSource instance_source_federated)
+                            {
                             }
                             else
                                 throw new InvalidOperationException();
+
+                            InstanceSources[(int)param.InstanceSourceType].ConnectingInstance = param.ConnectingProfile.Instance;
                         },
 
                         // canExecute
                         param =>
                             param is StartSessionParams &&
                             param.AuthenticatingInstance != null &&
-                            param.ConnectingInstance != null &&
+                            param.ConnectingProfile.Instance != null &&
                             param.ConnectingProfile != null);
 
                 return _start_session;
@@ -341,17 +342,12 @@ namespace eduVPN.ViewModels
             /// <summary>
             /// Authenticating eduVPN instance
             /// </summary>
-            public Models.InstanceInfo AuthenticatingInstance { get; }
-
-            /// <summary>
-            /// Connecting eduVPN instance
-            /// </summary>
-            public Models.InstanceInfo ConnectingInstance { get; }
+            public Models.Instance AuthenticatingInstance { get; }
 
             /// <summary>
             /// Connecting eduVPN instance profile
             /// </summary>
-            public Models.ProfileInfo ConnectingProfile { get; }
+            public Models.Profile ConnectingProfile { get; }
 
             #endregion
 
@@ -362,13 +358,11 @@ namespace eduVPN.ViewModels
             /// </summary>
             /// <param name="instance_source_type">Instance source type</param>
             /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
-            /// <param name="connecting_instance">Connecting eduVPN instance</param>
             /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
-            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.InstanceInfo authenticating_instance, Models.InstanceInfo connecting_instance, Models.ProfileInfo connecting_profile)
+            public StartSessionParams(Models.InstanceSourceType instance_source_type, Models.Instance authenticating_instance, Models.Profile connecting_profile)
             {
                 InstanceSourceType = instance_source_type;
                 AuthenticatingInstance = authenticating_instance;
-                ConnectingInstance = connecting_instance;
                 ConnectingProfile = connecting_profile;
             }
 
@@ -445,11 +439,11 @@ namespace eduVPN.ViewModels
         {
             get
             {
-                if (_configuration_histories[(int)Models.InstanceSourceType.SecureInternet].Count > 0 ||
-                    _configuration_histories[(int)Models.InstanceSourceType.InstituteAccess].Count > 0)
-                    return RecentConfigurationSelectPage;
-                else
-                    return InstanceSourceSelectPage;
+                for (var source_index = (int)Models.InstanceSourceType._start; source_index < (int)Models.InstanceSourceType._end; source_index++)
+                    if (InstanceSources[source_index].ConnectingInstance != null)
+                        return RecentConfigurationSelectPage;
+
+                return InstanceSourceSelectPage;
             }
         }
 
@@ -484,13 +478,13 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Authenticating instance selection page
         /// </summary>
-        /// <remarks>Available only when authenticating and connecting instances can be different. I.e. <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSourceInfo</c> or <c>eduVPN.Models.DistributedInstanceSourceInfo</c>.</remarks>
+        /// <remarks>Available only when authenticating and connecting instances can be different. I.e. <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSource</c> or <c>eduVPN.Models.DistributedInstanceSource</c>.</remarks>
         public AuthenticatingInstanceSelectPage AuthenticatingInstanceSelectPage
         {
             get
             {
-                if (InstanceSource is Models.LocalInstanceSourceInfo ||
-                    InstanceSource is Models.DistributedInstanceSourceInfo)
+                if (InstanceSource is Models.LocalInstanceSource ||
+                    InstanceSource is Models.DistributedInstanceSource)
                 {
                     // Only local and distrubuted authentication sources have this page.
                     // However, this page varies between Secure Internet and Institute Access.
@@ -532,33 +526,6 @@ namespace eduVPN.ViewModels
         private CustomInstancePage _custom_instance_page;
 
         /// <summary>
-        /// (Instance and) profile selection wizard page
-        /// </summary>
-        /// <remarks>When <c>InstanceSource</c> is <c>eduVPN.Models.LocalInstanceSourceInfo</c> the profile selection page is returned; otherwise, the instance and profile selection page is returned.</remarks>
-        public ConnectingInstanceAndProfileSelectBasePage ConnectingProfileSelectPage
-        {
-            get
-            {
-                if (InstanceSource is Models.LocalInstanceSourceInfo)
-                {
-                    // Profile selection (local authentication).
-                    if (_connecting_profile_select_page == null)
-                        _connecting_profile_select_page = new ConnectingProfileSelectPage(this);
-                    return _connecting_profile_select_page;
-                }
-                else
-                {
-                    // Connecting instance and profile selection (distributed and federated authentication).
-                    if (_connecting_instance_and_profile_select_page == null)
-                        _connecting_instance_and_profile_select_page = new ConnectingInstanceAndProfileSelectPage(this);
-                    return _connecting_instance_and_profile_select_page;
-                }
-            }
-        }
-        private ConnectingProfileSelectPage _connecting_profile_select_page;
-        private ConnectingInstanceAndProfileSelectPage _connecting_instance_and_profile_select_page;
-
-        /// <summary>
         /// Recent profile selection wizard page
         /// </summary>
         public RecentConfigurationSelectPage RecentConfigurationSelectPage
@@ -571,6 +538,20 @@ namespace eduVPN.ViewModels
             }
         }
         private RecentConfigurationSelectPage _recent_configuration_select_page;
+
+        /// <summary>
+        /// Profile selection wizard page
+        /// </summary>
+        public ConnectingProfileSelectPage ConnectingProfileSelectPage
+        {
+            get
+            {
+                if (_profile_select_page == null)
+                    _profile_select_page = new ConnectingProfileSelectPage(this);
+                return _profile_select_page;
+            }
+        }
+        private ConnectingProfileSelectPage _profile_select_page;
 
         /// <summary>
         /// Status wizard page
@@ -625,15 +606,17 @@ namespace eduVPN.ViewModels
         /// </summary>
         public ConnectWizard()
         {
+            bool is_migrating_settings = false;
             if (Properties.Settings.Default.SettingsVersion == 0)
             {
                 // Migrate settings from previous version.
                 Properties.Settings.Default.Upgrade();
                 Properties.Settings.Default.SettingsVersion = 1;
+                is_migrating_settings = true;
 
                 // Versions before 1.0.4 used interface name, instead of ID.
                 if (Properties.Settings.Default.GetPreviousVersion("OpenVPNInterface") is string iface_name &&
-                    Models.InterfaceInfo.TryFromName(iface_name, out var iface))
+                    Models.NetworkInterface.TryFromName(iface_name, out var iface))
                     Properties.Settings.Default.OpenVPNInterfaceID = iface.ID;
             }
 
@@ -653,14 +636,10 @@ namespace eduVPN.ViewModels
             worker.DoWork += (object sender, DoWorkEventArgs e) =>
             {
                 var source_type_length = (int)Models.InstanceSourceType._end;
-                _instance_sources = new Models.InstanceSourceInfo[source_type_length];
-                _configuration_histories = new ObservableCollection<Models.VPNConfiguration>[source_type_length];
+                _instance_sources = new Models.InstanceSource[source_type_length];
 
                 // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
-                int total_ticks = Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 2;
-                for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
-                    total_ticks += ((Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"]).Count();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, total_ticks, 0)));
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 3, 0)));
 
                 // Load access tokens from settings.
                 Parallel.ForEach(Properties.Settings.Default.AccessTokens,
@@ -744,79 +723,195 @@ namespace eduVPN.ViewModels
                                 ticks++;
 
                                 // Load instance source.
-                                _instance_sources[source_index] = Models.InstanceSourceInfo.FromJSON(obj_web);
+                                _instance_sources[source_index] = Models.InstanceSource.FromJSON(obj_web);
 
-                                // Attach to RequestAuthorization instance events.
-                                foreach (var instance in _instance_sources[source_index])
-                                    instance.RequestAuthorization += Instance_RequestAuthorization;
+                                {
+                                    // Attach to RequestAuthorization instance events.
+                                    if (_instance_sources[source_index] is Models.FederatedInstanceSource instance_source_federated)
+                                        instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
 
-                                _configuration_histories[source_index] = new ObservableCollection<Models.VPNConfiguration>();
+                                    foreach (var instance in _instance_sources[source_index].InstanceList)
+                                        instance.RequestAuthorization += Instance_RequestAuthorization;
+                                }
 
-                                // Load configuration histories from settings.
-                                Parallel.ForEach((Models.VPNConfigurationSettingsList)Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"],
-                                    h =>
+                                // Load instance source info settings.
+                                Xml.InstanceSourceSettingsBase h = null;
+                                #pragma warning disable 0612 // This section contains legacy settings conversion.
+                                if (is_migrating_settings &&
+                                    Properties.Settings.Default.GetPreviousVersion(_instance_directory_id[source_index] + "ConfigHistory") is Xml.VPNConfigurationSettingsList settings_list)
+                                {
+                                    // Versions before 1.0.9 used different instance source settings. Convert them.
+                                    if (_instance_sources[source_index] is Models.LocalInstanceSource instance_source_local)
                                     {
-                                        var cfg = new Models.VPNConfiguration();
-
-                                        try
+                                        // Local authenticating instance source:
+                                        // - Convert instance list.
+                                        // - Set connecting instance by maximum popularity.
+                                        var h_local = new Xml.LocalInstanceSourceSettings();
+                                        foreach (var h_cfg in settings_list)
                                         {
-                                            // Restore configuration.
-                                            if (_instance_sources[source_index] is Models.LocalInstanceSourceInfo instance_source_local &&
-                                                h is Models.LocalVPNConfigurationSettings h_local)
+                                            if (h_cfg is Xml.LocalVPNConfigurationSettings h_cfg_local)
                                             {
-                                                // Local authenticating instance source:
-                                                // - Restore instance, which is both: authenticating and connecting.
-                                                // - Restore profile.
-                                                cfg.AuthenticatingInstance = instance_source_local.Where(inst => inst.Base.AbsoluteUri == h_local.Instance.Base.AbsoluteUri).FirstOrDefault();
-                                                if (cfg.AuthenticatingInstance == null)
+                                                var instance = h_local.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_cfg_local.Instance.AbsoluteUri);
+                                                if (instance == null)
                                                 {
-                                                    cfg.AuthenticatingInstance = h_local.Instance;
-                                                    cfg.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                                    // Add (instance, profile) pair.
+                                                    h_local.ConnectingInstanceList.Add(new Xml.InstanceRef()
+                                                    {
+                                                        Base = h_cfg_local.Instance,
+                                                        Popularity = h_cfg_local.Popularity,
+                                                        ProfileList = new Xml.ProfileRefList()
+                                                        {
+                                                            new Xml.ProfileRef()
+                                                            {
+                                                                ID = h_cfg_local.Profile,
+                                                                Popularity = h_cfg_local.Popularity
+                                                            }
+                                                        }
+                                                    });
                                                 }
-                                                cfg.ConnectingInstance = cfg.AuthenticatingInstance;
+                                                else
+                                                {
+                                                    // Instance already on the list. Update it.
+                                                    instance.Popularity = Math.Max(instance.Popularity, h_cfg_local.Popularity);
+                                                    if (instance.ProfileList.FirstOrDefault(prof => prof.ID == h_cfg_local.Profile) == null)
+                                                    {
+                                                        // Add profile to the instance.
+                                                        instance.ProfileList.Add(new Xml.ProfileRef()
+                                                        {
+                                                            ID = h_cfg_local.Profile,
+                                                            Popularity = h_cfg_local.Popularity
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        h_local.ConnectingInstance = h_local.ConnectingInstanceList.Aggregate((curMin, x) => (curMin == null || x.Popularity > curMin.Popularity ? x : curMin))?.Base;
+                                        h = h_local;
+                                    }
+                                    else if (_instance_sources[source_index] is Models.DistributedInstanceSource instance_source_distributed)
+                                    {
+                                        // Distributed authenticating instance source:
+                                        // - Convert authenticating instance.
+                                        // - Convert connecting instance.
+                                        var h_distributed = new Xml.DistributedInstanceSourceSettings();
+                                        if (settings_list.Count > 0 && settings_list[0] is Xml.DistributedVPNConfigurationSettings h_cfg_distributed)
+                                        {
+                                            h_distributed.AuthenticatingInstance = new Uri(h_cfg_distributed.AuthenticatingInstance);
+                                            h_distributed.ConnectingInstance = new Uri(h_cfg_distributed.LastInstance);
+                                        }
+                                        h = h_distributed;
+                                    }
+                                    else if (_instance_sources[source_index] is Models.FederatedInstanceSource instance_source_federated)
+                                    {
+                                        // Federated authenticating instance source:
+                                        // - Convert connecting instance.
+                                        var h_federated = new Xml.FederatedInstanceSourceSettings();
+                                        if (settings_list.Count > 0 && settings_list[0] is Xml.FederatedVPNConfigurationSettings h_cfg_federated)
+                                        {
+                                            h_federated.ConnectingInstance = new Uri(h_cfg_federated.LastInstance);
+                                        }
+                                        h = h_federated;
+                                    }
+                                }
+                                else
+                                #pragma warning restore 0612
+                                    h = (Properties.Settings.Default[_instance_directory_id[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
 
-                                                // Matching profile with existing profiles might trigger OAuth in GetProfileList().
-                                                // Unfortunately, we can't rely to stored version from settings, since available profiles and their 2FA settings might have changed.
-                                                cfg.ConnectingProfile = cfg.ConnectingInstance.GetProfileList(cfg.AuthenticatingInstance, Abort.Token).Where(p => p.ID == h_local.Profile.ID).FirstOrDefault();
-                                                if (cfg.ConnectingProfile == null) return;
-                                            }
-                                            else if (_instance_sources[source_index] is Models.DistributedInstanceSourceInfo instance_source_distributed &&
-                                                h is Models.DistributedVPNConfigurationSettings h_distributed)
+                                // Import instance source from settings.
+                                {
+                                    if (InstanceSources[source_index] is Models.LocalInstanceSource instance_source_local &&
+                                        h is Xml.LocalInstanceSourceSettings h_local)
+                                    {
+                                        // Local authenticating instance source:
+                                        // - Restore instance list.
+                                        // - Restore connecting instance (optional).
+                                        foreach (var h_instance in h_local.ConnectingInstanceList)
+                                        {
+                                            var connecting_instance = instance_source_local.InstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_instance.Base.AbsoluteUri);
+                                            if (connecting_instance == null)
                                             {
-                                                // Distributed authenticating instance source:
-                                                // - Restore authenticating instance.
-                                                // - Restore last connected instance (optional).
-                                                cfg.AuthenticatingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance).FirstOrDefault();
-                                                if (cfg.AuthenticatingInstance == null) return;
-                                                cfg.ConnectingInstance = instance_source_distributed.Where(inst => inst.Base.AbsoluteUri == h_distributed.LastInstance).FirstOrDefault();
-                                            }
-                                            else if (_instance_sources[source_index] is Models.FederatedInstanceSourceInfo instance_source_federated &&
-                                                h is Models.FederatedVPNConfigurationSettings h_federated)
+                                                // The connecting instance was not found. Could be user entered, or removed from discovery file.
+                                                connecting_instance = new Models.Instance(h_instance.Base);
+                                                connecting_instance.RequestAuthorization += Instance_RequestAuthorization;
+                                            } else
+                                                connecting_instance.Popularity = h_instance.Popularity;
+
+                                            var instance = instance_source_local.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
+                                            if (instance == null)
                                             {
-                                                // Federated authenticating instance source:
-                                                // - Get authenticating instance from federated instance source settings.
-                                                // - Restore last connected instance (optional).
-                                                cfg.AuthenticatingInstance = new Models.InstanceInfo(instance_source_federated);
-                                                cfg.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
-                                                cfg.ConnectingInstance = instance_source_federated.Where(inst => inst.Base.AbsoluteUri == h_federated.LastInstance).FirstOrDefault();
+                                                instance_source_local.ConnectingInstanceList.Add(connecting_instance);
+                                                instance = connecting_instance;
                                             }
                                             else
-                                                return;
+                                                instance.Popularity = Math.Max(instance.Popularity, h_instance.Popularity);
 
-                                            cfg.Popularity = h.Popularity;
+                                            // Restore connecting profiles (optionally).
+                                            // Matching profile with existing profiles might trigger OAuth in GetProfileList().
+                                            switch (Properties.Settings.Default.ConnectingProfileSelectMode)
+                                            {
+                                                case 0:
+                                                    {
+                                                        // Restore only profiles user connected to before.
+                                                        var profile_list = instance.GetProfileList(instance, Abort.Token);
+                                                        foreach (var h_profile in h_instance.ProfileList)
+                                                        {
+                                                            var profile = profile_list.FirstOrDefault(prof => prof.ID == h_profile.ID);
+                                                            if (profile != null)
+                                                            {
+                                                                profile.Popularity = h_profile.Popularity;
+                                                                if (instance_source_local.ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
+                                                                    instance_source_local.ConnectingProfileList.Add(profile);
+                                                            }
+                                                        }
+                                                    }
+
+                                                    break;
+
+                                                case 2:
+                                                    {
+                                                        // Add all available profiles to the connecting profile list.
+                                                        // Restore popularity on the fly (or leave default to promote newly discovered profiles).
+                                                        var profile_list = instance.GetProfileList(instance, Abort.Token);
+                                                        foreach (var profile in profile_list)
+                                                        {
+                                                            var h_profile = h_instance.ProfileList.FirstOrDefault(prof => prof.ID == profile.ID);
+                                                            if (h_profile != null)
+                                                                profile.Popularity = h_profile.Popularity;
+
+                                                            instance_source_local.ConnectingProfileList.Add(profile);
+                                                        }
+                                                    }
+
+                                                    break;
+                                            }
                                         }
-                                        catch { return; }
-                                        finally
+                                        instance_source_local.ConnectingInstance = h_local.ConnectingInstance != null ? instance_source_local.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_local.ConnectingInstance.AbsoluteUri) : null;
+                                    }
+                                    else if (InstanceSources[source_index] is Models.DistributedInstanceSource instance_source_distributed &&
+                                        h is Xml.DistributedInstanceSourceSettings h_distributed)
+                                    {
+                                        // Distributed authenticating instance source:
+                                        // - Restore authenticating instance.
+                                        // - Restore connecting instance (optional).
+                                        instance_source_distributed.AuthenticatingInstance = h_distributed.AuthenticatingInstance != null ? instance_source_distributed.InstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance.AbsoluteUri) : null;
+                                        if (instance_source_distributed.AuthenticatingInstance != null)
                                         {
-                                            // Add a tick.
-                                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                            lock (ticks_lock) ticks += 1;
+                                            instance_source_distributed.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                            instance_source_distributed.ConnectingInstance = h_distributed.ConnectingInstance != null ? instance_source_distributed.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.ConnectingInstance.AbsoluteUri) : null;
                                         }
+                                    }
+                                    else if (InstanceSources[source_index] is Models.FederatedInstanceSource instance_source_federated &&
+                                        h is Xml.FederatedInstanceSourceSettings h_federated)
+                                    {
+                                        // Federated authenticating instance source:
+                                        // - Restore connecting instance (optional).
+                                        instance_source_federated.ConnectingInstance = h_federated.ConnectingInstance != null ? instance_source_federated.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_federated.ConnectingInstance.AbsoluteUri) : null;
+                                    }
+                                }
 
-                                        // Configuration successfuly restored. Add it.
-                                        lock (_configuration_histories[source_index])
-                                            _configuration_histories[source_index].Add(cfg);
-                                    });
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
 
                                 break;
                             }
@@ -856,19 +951,59 @@ namespace eduVPN.ViewModels
                     Dispatcher.ShutdownStarted += (object sender2, EventArgs e2) =>
                     {
                         // Update access token settings.
-                        Properties.Settings.Default.AccessTokens = new SerializableStringDictionary();
+                        Properties.Settings.Default.AccessTokens = new Xml.StringDictionary();
                         lock (_access_token_cache_lock)
-                        foreach (var access_token in _access_token_cache)
-                            Properties.Settings.Default.AccessTokens[access_token.Key] = access_token.Value.ToBase64String();
+                            foreach (var access_token in _access_token_cache)
+                                Properties.Settings.Default.AccessTokens[access_token.Key] = access_token.Value.ToBase64String();
 
+                        // Update settings.
                         Parallel.For((int)Models.InstanceSourceType._start, (int)Models.InstanceSourceType._end, source_index =>
                         {
-                            // Update settings.
-                            var configuration_history = ConfigurationHistories[source_index];
-                            var hist = new Models.VPNConfigurationSettingsList(configuration_history.Count);
-                            foreach (var cfg in configuration_history)
-                                hist.Add(cfg.ToSettings(InstanceSources[source_index].GetType()));
-                            Properties.Settings.Default[_instance_directory_id[source_index] + "ConfigHistory"] = hist;
+                            Xml.InstanceSourceSettingsBase h = null;
+                            if (InstanceSources[source_index] is Models.LocalInstanceSource instance_source_local)
+                            {
+                                // Local authenticating instance source
+                                h = new Xml.LocalInstanceSourceSettings()
+                                {
+                                    ConnectingInstance = instance_source_local.ConnectingInstance?.Base,
+                                    ConnectingInstanceList = new Xml.InstanceRefList(
+                                        instance_source_local.ConnectingInstanceList
+                                        .Select(inst =>
+                                            new Xml.InstanceRef()
+                                            {
+                                                Base = inst.Base,
+                                                Popularity = inst.Popularity,
+                                                ProfileList = new Xml.ProfileRefList(
+                                                    instance_source_local.ConnectingProfileList
+                                                    .Where(prof => prof.Instance.Equals(inst))
+                                                    .Select(prof => new Xml.ProfileRef()
+                                                    {
+                                                        ID = prof.ID,
+                                                        Popularity = prof.Popularity
+                                                    }))
+                                            }
+                                        ))
+                                };
+                            }
+                            else if (InstanceSources[source_index] is Models.DistributedInstanceSource instance_source_distributed)
+                            {
+                                // Distributed authenticating instance source
+                                h = new Xml.DistributedInstanceSourceSettings()
+                                {
+                                    AuthenticatingInstance = instance_source_distributed.AuthenticatingInstance?.Base,
+                                    ConnectingInstance = instance_source_distributed.ConnectingInstance?.Base
+                                };
+                            }
+                            else if (InstanceSources[source_index] is Models.FederatedInstanceSource instance_source_federated)
+                            {
+                                // Federated authenticating instance source
+                                h = new Xml.FederatedInstanceSourceSettings()
+                                {
+                                    ConnectingInstance = instance_source_federated.ConnectingInstance?.Base
+                                };
+                            }
+
+                            Properties.Settings.Default[_instance_directory_id[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = h };
                         });
 
                         // Persist settings to disk.
@@ -898,7 +1033,7 @@ namespace eduVPN.ViewModels
         /// <param name="instance">Instance</param>
         /// <returns>Asynchronous operation</returns>
         /// <exception cref="AccessTokenNullException">Authorization failed</exception>
-        public async Task TriggerAuthorizationAsync(Models.InstanceInfo instance)
+        public async Task TriggerAuthorizationAsync(Models.Instance instance)
         {
             var e = new Models.RequestAuthorizationEventArgs("config");
             var authorization_task = new Task(() => Instance_RequestAuthorization(instance, e), Abort.Token, TaskCreationOptions.LongRunning);
@@ -912,11 +1047,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Called when an instance requests user authorization
         /// </summary>
-        /// <param name="sender">Instance of type <c>eduVPN.Models.InstanceInfo</c> requiring authorization</param>
+        /// <param name="sender">Instance of type <c>eduVPN.Models.Instance</c> requiring authorization</param>
         /// <param name="e">Authorization request event arguments</param>
         public void Instance_RequestAuthorization(object sender, Models.RequestAuthorizationEventArgs e)
         {
-            if (sender is Models.InstanceInfo authenticating_instance)
+            if (sender is Models.Instance authenticating_instance)
             {
                 lock (_access_token_cache_lock)
                 {
@@ -958,7 +1093,7 @@ namespace eduVPN.ViewModels
                         if (Dispatcher.CurrentDispatcher == Dispatcher)
                         {
                             // We're in the GUI thread.
-                            var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
+                            var e_instance = new RequestInstanceAuthorizationEventArgs((Models.Instance)sender, e.Scope);
                             RequestInstanceAuthorization?.Invoke(this, e_instance);
                             e.AccessToken = e_instance.AccessToken;
                         }
@@ -968,7 +1103,7 @@ namespace eduVPN.ViewModels
                             Dispatcher.Invoke(DispatcherPriority.Normal,
                                 (Action)(() =>
                                 {
-                                    var e_instance = new RequestInstanceAuthorizationEventArgs((Models.InstanceInfo)sender, e.Scope);
+                                    var e_instance = new RequestInstanceAuthorizationEventArgs((Models.Instance)sender, e.Scope);
                                     RequestInstanceAuthorization?.Invoke(this, e_instance);
                                     e.AccessToken = e_instance.AccessToken;
                                 }));

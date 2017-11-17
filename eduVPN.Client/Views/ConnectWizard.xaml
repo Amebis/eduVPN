@@ -50,14 +50,11 @@
         <DataTemplate DataType="{x:Type viewModel:CustomInstancePage}">
             <view:CustomInstancePage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:ConnectingProfileSelectPage}">
-            <view:ConnectingProfileSelectPage/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPage}">
-            <view:ConnectingInstanceAndProfileSelectPage/>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:RecentConfigurationSelectPage}">
             <view:RecentConfigurationSelectPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ConnectingProfileSelectPage}">
+            <view:ConnectingProfileSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:StatusPage}">
             <view:StatusPage/>

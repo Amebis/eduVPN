@@ -53,6 +53,18 @@ namespace eduVPN.Properties {
             }
         }
         
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
+        public global::eduVPN.Xml.InstanceSourceSettings InstituteAccessInstanceSourceSettings {
+            get {
+                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["InstituteAccessInstanceSourceSettings"]));
+            }
+            set {
+                this["InstituteAccessInstanceSourceSettings"] = value;
+            }
+        }
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
@@ -85,6 +97,18 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
+        public global::eduVPN.Xml.InstanceSourceSettings SecureInternetInstanceSourceSettings {
+            get {
+                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["SecureInternetInstanceSourceSettings"]));
+            }
+            set {
+                this["SecureInternetInstanceSourceSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00000000-0000-0000-0000-000000000000")]
         public global::System.Guid OpenVPNInterfaceID {
             get {
@@ -109,10 +133,10 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
-        public global::eduVPN.SerializableStringDictionary AccessTokens {
+        [global::System.Configuration.DefaultSettingValueAttribute("<StringDictionary/>")]
+        public global::eduVPN.Xml.StringDictionary AccessTokens {
             get {
-                return ((global::eduVPN.SerializableStringDictionary)(this["AccessTokens"]));
+                return ((global::eduVPN.Xml.StringDictionary)(this["AccessTokens"]));
             }
             set {
                 this["AccessTokens"] = value;
@@ -122,36 +146,12 @@ namespace eduVPN.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSettingsDictionary/>")]
-        public global::eduVPN.Models.InstanceSettingsDictionary InstanceSettings {
+        public global::eduVPN.Xml.InstanceSettingsDictionary InstanceSettings {
             get {
-                return ((global::eduVPN.Models.InstanceSettingsDictionary)(this["InstanceSettings"]));
+                return ((global::eduVPN.Xml.InstanceSettingsDictionary)(this["InstanceSettings"]));
             }
             set {
                 this["InstanceSettings"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
-        public global::eduVPN.Models.VPNConfigurationSettingsList InstituteAccessConfigHistory {
-            get {
-                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["InstituteAccessConfigHistory"]));
-            }
-            set {
-                this["InstituteAccessConfigHistory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<VPNConfigurationSettingsList/>")]
-        public global::eduVPN.Models.VPNConfigurationSettingsList SecureInternetConfigHistory {
-            get {
-                return ((global::eduVPN.Models.VPNConfigurationSettingsList)(this["SecureInternetConfigHistory"]));
-            }
-            set {
-                this["SecureInternetConfigHistory"] = value;
             }
         }
         
@@ -173,6 +173,15 @@ namespace eduVPN.Properties {
         public string OpenVPNInteractiveServiceNamedPipe {
             get {
                 return ((string)(this["OpenVPNInteractiveServiceNamedPipe"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ConnectingProfileSelectMode {
+            get {
+                return ((int)(this["ConnectingProfileSelectMode"]));
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿<view:ConnectingInstanceAndProfileSelectBasePanel
+﻿<view:ConnectingSelectBasePanel
     x:Class="eduVPN.Views.ConnectingProfileSelectPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -16,11 +16,18 @@
         </Style>
     </UserControl.Resources>
 
-    <ListBox
-        x:Name="ProfileList"
-        Style="{StaticResource eduVPNListStyle}"
-        ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
-        ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
-        ItemsSource="{Binding Path=ProfileList}"
-        SelectedItem="{Binding Path=SelectedProfile}"/>
-</view:ConnectingInstanceAndProfileSelectBasePanel>
+    <Grid Margin="-5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ListBox
+            x:Name="ProfileList"
+            Margin="5,2,5,5"
+            Style="{StaticResource eduVPNListStyle}"
+            ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
+            ItemsSource="{Binding Path=ProfileList}"
+            SelectedItem="{Binding Path=InstanceSource.ConnectingProfile}"/>
+    </Grid>
+</view:ConnectingSelectBasePanel>

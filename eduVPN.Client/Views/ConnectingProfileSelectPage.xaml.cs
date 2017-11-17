@@ -17,8 +17,7 @@ namespace eduVPN.Views
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public ConnectingProfileSelectPage() :
-            base()
+        public ConnectingProfileSelectPage()
         {
             InitializeComponent();
         }

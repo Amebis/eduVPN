@@ -20,21 +20,21 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Configuration history panels
         /// </summary>
-        public ConfigurationSelectBasePanel[] ConfigurationHistoryPanels
+        public ConnectingSelectPanel[] Panels
         {
-            get { return _configuration_history_panels; }
+            get { return _panels; }
         }
-        private ConfigurationSelectBasePanel[] _configuration_history_panels;
+        private ConnectingSelectPanel[] _panels;
 
         /// <summary>
-        /// Add another profile
+        /// Add another instance or profile
         /// </summary>
-        public DelegateCommand AddAnotherProfile
+        public DelegateCommand AddAnotherEntry
         {
             get
             {
-                if (_add_another_profile == null)
-                    _add_another_profile = new DelegateCommand(
+                if (_add_another_entry == null)
+                    _add_another_entry = new DelegateCommand(
                         //execute
                         () =>
                         {
@@ -44,10 +44,10 @@ namespace eduVPN.ViewModels
                             finally { Parent.ChangeTaskCount(-1); }
                         });
 
-                return _add_another_profile;
+                return _add_another_entry;
             }
         }
-        private DelegateCommand _add_another_profile;
+        private DelegateCommand _add_another_entry;
 
         #endregion
 
@@ -62,24 +62,23 @@ namespace eduVPN.ViewModels
         {
             // Create history panels.
             var source_type_length = (int)Models.InstanceSourceType._end;
-            _configuration_history_panels = new ConfigurationSelectBasePanel[Parent.InstanceSources.Length];
-            for (var i = (int)Models.InstanceSourceType._start; i < source_type_length; i++)
+            _panels = new ConnectingSelectPanel[Parent.InstanceSources.Length];
+            for (var source_index = (int)Models.InstanceSourceType._start; source_index < source_type_length; source_index++)
             {
-                if (Parent.InstanceSources[i] is Models.LocalInstanceSourceInfo)
-                    _configuration_history_panels[i] = new ConfigurationSelectPanel(Parent, (Models.InstanceSourceType)i);
-                else if (
-                    Parent.InstanceSources[i] is Models.DistributedInstanceSourceInfo ||
-                    Parent.InstanceSources[i] is Models.FederatedInstanceSourceInfo)
+                if (Parent.InstanceSources[source_index] is Models.LocalInstanceSource)
                 {
-                    var panel = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)i);
-                    if (Parent.ConfigurationHistories[i].Count > 0)
+                    switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
-                        // Mind the order: authenticating instance first, connecting second. Otherwise, the profile list loading will fail.
-                        panel.AuthenticatingInstance = Parent.ConfigurationHistories[i][0].AuthenticatingInstance;
-                        panel.SelectedInstance       = Parent.ConfigurationHistories[i][0].ConnectingInstance    ;
-                    };
-                    _configuration_history_panels[i] = panel;
+                        case 0: _panels[source_index] = new ConnectingProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
+                        case 1: _panels[source_index] = new ConnectingInstanceSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
+                        case 2: _panels[source_index] = new ConnectingProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
+                        case 3: _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index); break;
+                    }
                 }
+                else if (
+                    Parent.InstanceSources[source_index] is Models.DistributedInstanceSource ||
+                    Parent.InstanceSources[source_index] is Models.FederatedInstanceSource)
+                    _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, (Models.InstanceSourceType)source_index);
             }
         }
 

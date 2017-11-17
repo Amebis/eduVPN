@@ -39,12 +39,12 @@ namespace eduVPN.ViewModels
         /// Authenticating eduVPN instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Models.InstanceInfo AuthenticatingInstance
+        public Models.Instance AuthenticatingInstance
         {
             get { return _authenticating_instance; }
             set { SetProperty(ref _authenticating_instance, value); }
         }
-        private Models.InstanceInfo _authenticating_instance;
+        private Models.Instance _authenticating_instance;
 
         /// <summary>
         /// Requested access token scope
