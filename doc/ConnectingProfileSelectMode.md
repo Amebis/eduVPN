@@ -4,28 +4,6 @@ According to the [#28](https://github.com/Amebis/eduVPN/issues/28) four distinct
 
 The mode of operation can be set in `eduVPN.Client.exe.config` XML file. When changing mode, the client should be closed. Furthermore, it is recommended to delete client user settings in `%LOCALAPPDATA%\SURF` when the mode is changed.
 
-1. If not already present, add the following element to `<configSections>`:
-
-```XML
-<sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
-    <section name="eduVPN.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-</sectionGroup>
-```
-
-2. If not already present, add the following element to `<configuration>`, or merge it with the existing:
-
-```XML
-<applicationSettings>
-    <eduVPN.Properties.Settings>
-        <setting name="ConnectingProfileSelectMode" serializeAs="String">
-            <value>2</value>
-        </setting>
-    </eduVPN.Properties.Settings>
-</applicationSettings>
-```
-
-Change `<value>2</value>` accordingly.
-
 
 ## Mode 0
 
