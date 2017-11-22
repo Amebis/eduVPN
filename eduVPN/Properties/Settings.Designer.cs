@@ -26,6 +26,48 @@ namespace eduVPN.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/secure_internet.json")]
+        public string SecureInternetDiscovery {
+            get {
+                return ((string)(this["SecureInternetDiscovery"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
+        public string SecureInternetDiscoveryPubKey {
+            get {
+                return ((string)(this["SecureInternetDiscoveryPubKey"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::eduVPN.JSON.Response SecureInternetDiscoveryCache {
+            get {
+                return ((global::eduVPN.JSON.Response)(this["SecureInternetDiscoveryCache"]));
+            }
+            set {
+                this["SecureInternetDiscoveryCache"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
+        public global::eduVPN.Xml.InstanceSourceSettings SecureInternetInstanceSourceSettings {
+            get {
+                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["SecureInternetInstanceSourceSettings"]));
+            }
+            set {
+                this["SecureInternetInstanceSourceSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/institute_access.json")]
         public string InstituteAccessDiscovery {
             get {
@@ -67,43 +109,19 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/secure_internet.json")]
-        public string SecureInternetDiscovery {
+        [global::System.Configuration.DefaultSettingValueAttribute("openvpn$eduVPN\\service")]
+        public string OpenVPNInteractiveServiceNamedPipe {
             get {
-                return ((string)(this["SecureInternetDiscovery"]));
+                return ((string)(this["OpenVPNInteractiveServiceNamedPipe"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
-        public string SecureInternetDiscoveryPubKey {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ConnectingProfileSelectMode {
             get {
-                return ((string)(this["SecureInternetDiscoveryPubKey"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.JSON.Response SecureInternetDiscoveryCache {
-            get {
-                return ((global::eduVPN.JSON.Response)(this["SecureInternetDiscoveryCache"]));
-            }
-            set {
-                this["SecureInternetDiscoveryCache"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
-        public global::eduVPN.Xml.InstanceSourceSettings SecureInternetInstanceSourceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["SecureInternetInstanceSourceSettings"]));
-            }
-            set {
-                this["SecureInternetInstanceSourceSettings"] = value;
+                return ((int)(this["ConnectingProfileSelectMode"]));
             }
         }
         
@@ -121,13 +139,13 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SettingsVersion {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OpenVPNForceTCP {
             get {
-                return ((int)(this["SettingsVersion"]));
+                return ((bool)(this["OpenVPNForceTCP"]));
             }
             set {
-                this["SettingsVersion"] = value;
+                this["OpenVPNForceTCP"] = value;
             }
         }
         
@@ -157,31 +175,13 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OpenVPNForceTCP {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SettingsVersion {
             get {
-                return ((bool)(this["OpenVPNForceTCP"]));
+                return ((int)(this["SettingsVersion"]));
             }
             set {
-                this["OpenVPNForceTCP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("openvpn$eduVPN\\service")]
-        public string OpenVPNInteractiveServiceNamedPipe {
-            get {
-                return ((string)(this["OpenVPNInteractiveServiceNamedPipe"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int ConnectingProfileSelectMode {
-            get {
-                return ((int)(this["ConnectingProfileSelectMode"]));
+                this["SettingsVersion"] = value;
             }
         }
     }
