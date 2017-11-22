@@ -109,6 +109,36 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/auto-update/windows/")]
+        public string AutoUpdate {
+            get {
+                return ((string)(this["AutoUpdate"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15nh06ilJd5f9hbH5rWGgU+qw9IxBHE+j2wVKshidkA=")]
+        public string AutoUpdatePubKey {
+            get {
+                return ((string)(this["AutoUpdatePubKey"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::eduVPN.JSON.Response AutoUpdateCache {
+            get {
+                return ((global::eduVPN.JSON.Response)(this["AutoUpdateCache"]));
+            }
+            set {
+                this["AutoUpdateCache"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("openvpn$eduVPN\\service")]
         public string OpenVPNInteractiveServiceNamedPipe {
             get {
