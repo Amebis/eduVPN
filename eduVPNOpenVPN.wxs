@@ -10,7 +10,7 @@
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
         Id="$(var.eduVPN.OpenVPN.ProductGUID)"
-        UpgradeCode="{CFE55281-AE4B-42A8-A1C3-76E94A733341}"
+        UpgradeCode="$(var.eduVPN.OpenVPN.UpgradeGUID)"
         Version="$(var.eduVPN.OpenVPN.Version)"
         Language="!(loc.ProductLanguage)"
         Name="!(loc.ApplicationOpenVPNName) $(var.eduVPN.OpenVPN.VersionInformational)"
@@ -34,10 +34,20 @@
         <!--
             Upgrading functionality
         -->
-        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
+        <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
             <UpgradeVersion
-                Minimum="1.0.0"
+                Minimum="0.0.0.0"
+                Maximum="2.4.4.1"
+                Property="OLDVERSIONSINSTALLED"
+                IncludeMinimum="yes"
+                IncludeMaximum="yes"
+                MigrateFeatures="yes"/>
+        </Upgrade>
+        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
+        <Upgrade Id="$(var.eduVPN.OpenVPN.UpgradeGUID)">
+            <UpgradeVersion
+                Minimum="0.0.0.0"
                 Property="PREVIOUSVERSIONSINSTALLED"
                 IncludeMinimum="yes"
                 MigrateFeatures="yes"/>

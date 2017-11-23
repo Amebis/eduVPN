@@ -22,9 +22,15 @@ WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS) -arch $(PLAT) \
 	-deduVPN.OpenVPN.VersionInformational="$(OPENVPN_VERSION_STR) $(SETUP_TARGET)" \
 	-deduVPN.Client.VersionInformational="$(PRODUCT_VERSION_STR) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
-WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) -deduVPN.ProgramFilesFolder="ProgramFiles64Folder"
+WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) \
+	-deduVPN.ProgramFilesFolder="ProgramFiles64Folder" \
+	-deduVPN.Client.UpgradeGUID="{02EBD828-2565-4BCD-ABFF-E3F48C3F9A23}" \
+	-deduVPN.OpenVPN.UpgradeGUID="{75C79E9E-5486-4568-814D-80C56E113FB8}"
 !ELSE
-WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) -deduVPN.ProgramFilesFolder="ProgramFilesFolder"
+WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) \
+	-deduVPN.ProgramFilesFolder="ProgramFilesFolder" \
+	-deduVPN.Client.UpgradeGUID="{E3746042-5041-4E2F-83E8-0240EF3C60CA}" \
+	-deduVPN.OpenVPN.UpgradeGUID="{258634EA-316E-434E-9AE9-13926FB26B12}"
 !ENDIF
 
 !IF "$(CFG)" == "Debug"
