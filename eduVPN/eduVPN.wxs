@@ -33,7 +33,7 @@
             <ComponentGroupRef Id="eduJSON.dll"/>
             <ComponentGroupRef Id="eduOAuth.dll"/>
             <ComponentGroupRef Id="eduOpenVPN.dll"/>
-            <ComponentGroupRef Id="Prism"/>
+            <ComponentGroupRef Id="Prism.dll"/>
 
             <ComponentRef Id="eduVPN.dll"/>
             <ComponentRef Id="eduVPN.dll.config"/>

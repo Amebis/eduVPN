@@ -129,7 +129,7 @@
                 <File Source="Prism.dll"/>
             </Component>
         </DirectoryRef>
-        <ComponentGroup Id="Prism">
+        <ComponentGroup Id="Prism.dll">
             <ComponentRef Id="Prism.dll"/>
         </ComponentGroup>
     </Product>
