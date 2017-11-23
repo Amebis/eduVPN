@@ -672,9 +672,10 @@ namespace eduVPN.ViewModels
                             {
                                 // Get instance source.
                                 var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"];
+                                var pub_key = (string)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryPubKey"];
                                 var obj_web = JSON.Response.GetSeq(
                                     uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index] + "Discovery"]),
-                                    pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryPubKey"]),
+                                    pub_key: !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
                                     ct: Abort.Token,
                                     response_cache: ref response_cache);
                                 Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"] = response_cache;
