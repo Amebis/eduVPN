@@ -101,17 +101,20 @@ namespace eduVPN.JSON
         public static async Task<Response> GetAsync(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
             // Spawn data loading.
-            var request = (HttpWebRequest)WebRequest.Create(uri);
+            var request = WebRequest.Create(uri);
             request.CachePolicy = _no_cache_policy;
-            request.Accept = response_type;
             if (token != null)
                 token.AddToRequest(request);
-            if (previous != null)
+            if (request is HttpWebRequest request_web)
             {
-                request.IfModifiedSince = previous.Timestamp;
+                request_web.Accept = response_type;
+                if (previous != null)
+                {
+                    request_web.IfModifiedSince = previous.Timestamp;
 
-                if (previous.ETag != null)
-                    request.Headers.Add("If-None-Match", previous.ETag);
+                    if (previous.ETag != null)
+                        request_web.Headers.Add("If-None-Match", previous.ETag);
+                }
             }
 
             if (param != null)
@@ -127,16 +130,16 @@ namespace eduVPN.JSON
             }
 
             var response_task = request.GetResponseAsync();
-            HttpWebResponse response;
+            WebResponse response;
             try
             {
                 // Wait for data to start comming in.
-                response = (HttpWebResponse)(await response_task);
+                response = await response_task;
             }
             catch (WebException ex)
             {
                 // When the content was not modified, return the previous one.
-                if (ex.Response != null && ((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotModified)
+                if (ex.Response != null && ex.Response is HttpWebResponse response_http && response_http.StatusCode == HttpStatusCode.NotModified)
                 {
                     previous.IsFresh = false;
                     return previous;
@@ -156,9 +159,10 @@ namespace eduVPN.JSON
                     builder_sig.Path += ".sig";
 
                     // Spawn signature loading.
-                    request = (HttpWebRequest)WebRequest.Create(builder_sig.Uri);
+                    request = WebRequest.Create(builder_sig.Uri);
                     request.CachePolicy = _no_cache_policy;
-                    request.Accept = "application/pgp-signature";
+                    if (request is HttpWebRequest request_web_sig)
+                        request_web_sig.Accept = "application/pgp-signature";
                     response_sig_task = request.GetResponseAsync();
                 }
 
@@ -172,7 +176,7 @@ namespace eduVPN.JSON
                     if (pub_key != null)
                     {
                         // Read the signature.
-                        using (var response_sig = (HttpWebResponse)(await response_sig_task))
+                        using (var response_sig = await response_sig_task)
                         using (var stream_sig = response_sig.GetResponseStream())
                         using (var reader_sig = new StreamReader(stream_sig))
                             signature = Convert.FromBase64String(await reader_sig.ReadToEndAsync());
@@ -208,13 +212,20 @@ namespace eduVPN.JSON
                     }
                 }
 
-                return new Response()
-                {
-                    Value = Encoding.UTF8.GetString(data),
-                    Timestamp = DateTime.TryParse(response.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
-                    ETag = response.GetResponseHeader("ETag"),
-                    IsFresh = true
-                };
+                return
+                    response is HttpWebResponse response_web ?
+                    new Response()
+                    {
+                        Value = Encoding.UTF8.GetString(data),
+                        Timestamp = DateTime.TryParse(response_web.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
+                        ETag = response_web.GetResponseHeader("ETag"),
+                        IsFresh = true
+                    } :
+                    new Response()
+                    {
+                        Value = Encoding.UTF8.GetString(data),
+                        IsFresh = true
+                    };
             }
         }
 
