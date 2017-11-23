@@ -43,6 +43,7 @@
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
     <Compile Include="Models\FederatedInstanceSource.cs" />
+    <Compile Include="System\Extensions.cs" />
     <Compile Include="ViewModels\ConnectingProfileSelectPanel.cs" />
     <Compile Include="ViewModels\ConnectingSelectPanel.cs" />
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
