@@ -20,6 +20,7 @@ using System.Web;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
+using System.Collections.Generic;
 
 namespace eduVPN.JSON
 {
@@ -61,7 +62,7 @@ namespace eduVPN.JSON
         #region Methods
 
         /// <summary>
-        /// Gets JSON from the given URI.
+        /// Gets UTF-8 text from the given URI.
         /// </summary>
         /// <param name="uri">URI</param>
         /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
@@ -69,8 +70,8 @@ namespace eduVPN.JSON
         /// <param name="response_type">Expected response MIME type</param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <param name="previous">Previous JSON content, when refresh is required</param>
-        /// <returns>JSON content</returns>
+        /// <param name="previous">Previous content, when refresh is required</param>
+        /// <returns>Content</returns>
         public static Response Get(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
             var task = GetAsync(uri, param, token, response_type, pub_key, ct, previous);
@@ -86,7 +87,7 @@ namespace eduVPN.JSON
         }
 
         /// <summary>
-        /// Gets JSON from the given URI asynchronously.
+        /// Gets UTF-8 text from the given URI asynchronously.
         /// </summary>
         /// <param name="uri">URI</param>
         /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
@@ -94,8 +95,8 @@ namespace eduVPN.JSON
         /// <param name="response_type">Expected response MIME type</param>
         /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <param name="previous">Previous JSON content, when refresh is required</param>
-        /// <returns>Asynchronous operation with expected JSON string</returns>
+        /// <param name="previous">Previous content, when refresh is required</param>
+        /// <returns>Asynchronous operation with expected content</returns>
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
         public static async Task<Response> GetAsync(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
@@ -215,6 +216,59 @@ namespace eduVPN.JSON
                     IsFresh = true
                 };
             }
+        }
+
+        /// <summary>
+        /// Gets sequenced JSON from the given URI.
+        /// </summary>
+        /// <param name="uri">URI</param>
+        /// <param name="response_cache">Previous JSON content on input, new JSON content to cache on output</param>
+        /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
+        /// <param name="token">OAuth access token</param>
+        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>JSON content</returns>
+        public static Dictionary<string, object> GetSeq(Uri uri, ref Response response_cache, NameValueCollection param = null, AccessToken token = null, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        {
+            // Get instance source.
+            var response_web = JSON.Response.Get(
+                uri: uri,
+                param: param,
+                token: token,
+                pub_key: pub_key,
+                ct: ct,
+                previous: response_cache);
+
+            // Parse instance source JSON.
+            var obj_web = (Dictionary<string, object>)eduJSON.Parser.Parse(response_web.Value, ct);
+
+            if (response_web.IsFresh)
+            {
+                if (response_cache != null)
+                {
+                    try
+                    {
+                        // Verify sequence.
+                        var obj_cache = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache.Value, ct);
+
+                        bool rollback = false;
+                        try { rollback = (uint)eduJSON.Parser.GetValue<int>(obj_cache, "seq") > (uint)eduJSON.Parser.GetValue<int>(obj_web, "seq"); }
+                        catch { rollback = true; }
+                        if (rollback)
+                        {
+                            // Sequence rollback detected. Revert to cached version.
+                            obj_web = obj_cache;
+                            response_web = response_cache;
+                        }
+                    }
+                    catch { }
+                }
+
+                // Save response to cache.
+                response_cache = response_web;
+            }
+
+            return obj_web;
         }
 
         #endregion

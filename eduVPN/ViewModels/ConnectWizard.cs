@@ -636,8 +636,8 @@ namespace eduVPN.ViewModels
                 var source_type_length = (int)Models.InstanceSourceType._end;
                 _instance_sources = new Models.InstanceSource[source_type_length];
 
-                // Setup progress feedback. Each instance will add two ticks of progress, plus as many ticks as there are configuration entries in its history.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 3, 0)));
+                // Setup progress feedback.
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)Models.InstanceSourceType._start) * 2, 0)));
 
                 // Load access tokens from settings.
                 Parallel.ForEach(Properties.Settings.Default.AccessTokens,
@@ -670,51 +670,14 @@ namespace eduVPN.ViewModels
                             object ticks_lock = new object();
                             try
                             {
-                                var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"];
-
                                 // Get instance source.
-                                var response_web = JSON.Response.Get(
+                                var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"];
+                                var obj_web = JSON.Response.GetSeq(
                                     uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index] + "Discovery"]),
                                     pub_key: Convert.FromBase64String((string)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryPubKey"]),
                                     ct: Abort.Token,
-                                    previous: response_cache);
-
-                                // Add a tick.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                ticks++;
-
-                                // Parse instance source JSON.
-                                var obj_web = (Dictionary<string, object>)eduJSON.Parser.Parse(
-                                    response_web.Value,
-                                    Abort.Token);
-
-                                if (response_web.IsFresh)
-                                {
-                                    if (response_cache != null)
-                                    {
-                                        try
-                                        {
-                                            // Verify sequence.
-                                            var obj_cache = (Dictionary<string, object>)eduJSON.Parser.Parse(
-                                                response_cache.Value,
-                                                Abort.Token);
-
-                                            bool rollback = false;
-                                            try { rollback = (uint)eduJSON.Parser.GetValue<int>(obj_cache, "seq") > (uint)eduJSON.Parser.GetValue<int>(obj_web, "seq"); }
-                                            catch { rollback = true; }
-                                            if (rollback)
-                                            {
-                                                // Sequence rollback detected. Revert to cached version.
-                                                obj_web = obj_cache;
-                                                response_web = response_cache;
-                                            }
-                                        }
-                                        catch { }
-                                    }
-
-                                    // Save response to cache.
-                                    Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"] = response_web;
-                                }
+                                    response_cache: ref response_cache);
+                                Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"] = response_cache;
 
                                 // Add a tick.
                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
