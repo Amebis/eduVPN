@@ -26,13 +26,19 @@
     <Setting Name="InstituteAccessInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
       <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
-    <Setting Name="AutoUpdate" Type="(Web Service URL)" Scope="Application">
+    <Setting Name="SelfUpdate" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://static.eduvpn.nl/auto-update/windows/</Value>
     </Setting>
-    <Setting Name="AutoUpdatePubKey" Type="System.String" Scope="Application">
+    <Setting Name="SelfUpdatePubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">15nh06ilJd5f9hbH5rWGgU+qw9IxBHE+j2wVKshidkA=</Value>
     </Setting>
-    <Setting Name="AutoUpdateCache" Type="eduVPN.JSON.Response" Scope="User">
+    <Setting Name="SelfUpdateCache" Type="eduVPN.JSON.Response" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SelfUpdateLastVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SelfUpdateLastReminder" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OpenVPNInteractiveServiceNamedPipe" Type="System.String" Scope="Application">

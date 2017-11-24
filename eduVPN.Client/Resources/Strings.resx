@@ -335,4 +335,21 @@ Powered by SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-Factor Authentication</value>
   </data>
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
+    <value>A newer version of eduVPN client was downloaded and is ready to install.</value>
+  </data>
+  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+    <value>Update available</value>
+  </data>
+  <data name="SelfUpdatePopupAskLater" xml:space="preserve">
+    <value>Ask me later</value>
+  </data>
+  <data name="SelfUpdatePopupSkip" xml:space="preserve">
+    <value>Skip this version</value>
+  </data>
+  <data name="SelfUpdatePopupUpdate" xml:space="preserve">
+    <value>Update to {0} now
+(Client will restart)</value>
+    <comment>{0}=version</comment>
+  </data>
 </root>

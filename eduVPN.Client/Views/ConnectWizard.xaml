@@ -27,7 +27,9 @@
             RequestInstanceAuthorization="ConnectWizard_RequestInstanceAuthorization"
             RequestOpenVPNPasswordAuthentication="ConnectWizard_RequestOpenVPNPasswordAuthentication"
             RequestOpenVPNUsernamePasswordAuthentication="ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication"
-            RequestTwoFactorAuthentication="ConnectWizard_RequestTwoFactorAuthentication"/>
+            RequestTwoFactorAuthentication="ConnectWizard_RequestTwoFactorAuthentication"
+            PromptSelfUpdate="ConnectWizard_PromptSelfUpdate"
+            QuitApplication="ConnectWizard_QuitApplication"/>
     </Window.DataContext>
 
     <Window.Resources>

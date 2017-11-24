@@ -57,6 +57,9 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
+    <Compile Include="Views\SelfUpdatePopup.xaml.cs">
+      <DependentUpon>SelfUpdatePopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectingProfileSelectBasePanel.cs" />
     <Compile Include="Views\ConnectingInstanceProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceProfileSelectPanel.xaml</DependentUpon>
@@ -138,6 +141,10 @@
     <Page Include="Resources\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelfUpdatePopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConnectingInstanceProfileSelectPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -270,7 +277,9 @@
     <None Include="eduVPN.Client.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">
@@ -318,6 +327,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\SettingsBlue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Update.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />

@@ -307,6 +307,27 @@ namespace eduVPN.Views
             }
         }
 
+        private void ConnectWizard_PromptSelfUpdate(object sender, ViewModels.PromptSelfUpdateEventArgs e)
+        {
+            // Create a new prompt pop-up.
+            var popup = new SelfUpdatePopup() { Owner = this };
+
+            // Populate pop-up view model.
+            var view_model = popup.DataContext as ViewModels.SelfUpdatePopup;
+            view_model.InstalledVersion = e.InstalledVersion;
+            view_model.AvailableVersion = e.AvailableVersion;
+
+            // Run the pop-up and pass the selected action to be returned to the event sender.
+            if (popup.ShowDialog() == true)
+                e.Action = view_model.Action;
+        }
+
+        private void ConnectWizard_QuitApplication(object sender, EventArgs e)
+        {
+            _do_close = true;
+            Close();
+        }
+
         #endregion
 
         #region IDisposable Support

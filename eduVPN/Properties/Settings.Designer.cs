@@ -111,29 +111,52 @@ namespace eduVPN.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/auto-update/windows/")]
-        public string AutoUpdate {
+        public string SelfUpdate {
             get {
-                return ((string)(this["AutoUpdate"]));
+                return ((string)(this["SelfUpdate"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("15nh06ilJd5f9hbH5rWGgU+qw9IxBHE+j2wVKshidkA=")]
-        public string AutoUpdatePubKey {
+        public string SelfUpdatePubKey {
             get {
-                return ((string)(this["AutoUpdatePubKey"]));
+                return ((string)(this["SelfUpdatePubKey"]));
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.JSON.Response AutoUpdateCache {
+        public global::eduVPN.JSON.Response SelfUpdateCache {
             get {
-                return ((global::eduVPN.JSON.Response)(this["AutoUpdateCache"]));
+                return ((global::eduVPN.JSON.Response)(this["SelfUpdateCache"]));
             }
             set {
-                this["AutoUpdateCache"] = value;
+                this["SelfUpdateCache"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelfUpdateLastVersion {
+            get {
+                return ((string)(this["SelfUpdateLastVersion"]));
+            }
+            set {
+                this["SelfUpdateLastVersion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime SelfUpdateLastReminder {
+            get {
+                return ((global::System.DateTime)(this["SelfUpdateLastReminder"]));
+            }
+            set {
+                this["SelfUpdateLastReminder"] = value;
             }
         }
         

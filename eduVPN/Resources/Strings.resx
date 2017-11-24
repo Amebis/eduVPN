@@ -219,4 +219,8 @@
     <value>Forget {0}</value>
     <comment>{0}=Provider</comment>
   </data>
+  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
+    <value>Downloaded file {0} is corrupt.</value>
+    <comment>{0}=URI</comment>
+  </data>
 </root>

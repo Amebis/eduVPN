@@ -88,6 +88,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloaded file {0} is corrupt..
+        /// </summary>
+        internal static string ErrorDownloadedFileCorrupt {
+            get {
+                return ResourceManager.GetString("ErrorDownloadedFileCorrupt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading of API endpoints failed..
         /// </summary>
         internal static string ErrorEndpointsLoad {

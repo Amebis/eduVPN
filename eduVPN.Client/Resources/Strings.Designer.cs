@@ -406,6 +406,52 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ask me later.
+        /// </summary>
+        public static string SelfUpdatePopupAskLater {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupAskLater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A newer version of eduVPN client was downloaded and is ready to install..
+        /// </summary>
+        public static string SelfUpdatePopupMessage {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip this version.
+        /// </summary>
+        public static string SelfUpdatePopupSkip {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available.
+        /// </summary>
+        public static string SelfUpdatePopupTitle {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update to {0} now
+        ///(Client will restart).
+        /// </summary>
+        public static string SelfUpdatePopupUpdate {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sometimes, eduVPN can&apos;t connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances..
         /// </summary>
         public static string SettingsPageForceTCPDescription {

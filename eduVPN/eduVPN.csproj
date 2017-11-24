@@ -42,10 +42,14 @@
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
+    <Compile Include="ViewModels\DownloadedFileCorruptException.cs" />
     <Compile Include="Models\FederatedInstanceSource.cs" />
     <Compile Include="System\Extensions.cs" />
     <Compile Include="ViewModels\ConnectingProfileSelectPanel.cs" />
     <Compile Include="ViewModels\ConnectingSelectPanel.cs" />
+    <Compile Include="ViewModels\PromptSelfUpdateActionType.cs" />
+    <Compile Include="ViewModels\PromptSelfUpdateEventArgs.cs" />
+    <Compile Include="ViewModels\SelfUpdatePopup.cs" />
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
     <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />
     <Compile Include="Xml\InstanceRef.cs" />
