@@ -9,11 +9,11 @@
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
-        Id="$(var.eduVPN.Client.ProductGUID)"
-        UpgradeCode="$(var.eduVPN.Client.UpgradeGUID)"
-        Version="$(var.eduVPN.Client.Version)"
+        Id="$(var.eduVPN.Core.ProductGUID)"
+        UpgradeCode="$(var.eduVPN.Core.UpgradeGUID)"
+        Version="$(var.eduVPN.Core.Version)"
         Language="!(loc.ProductLanguage)"
-        Name="!(loc.ApplicationCoreName) $(var.eduVPN.Client.VersionInformational)"
+        Name="!(loc.ApplicationCoreName) $(var.eduVPN.Core.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
@@ -49,7 +49,7 @@
                 MigrateFeatures="yes"/>
         </Upgrade>
         <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
-        <Upgrade Id="$(var.eduVPN.Client.UpgradeGUID)">
+        <Upgrade Id="$(var.eduVPN.Core.UpgradeGUID)">
             <UpgradeVersion
                 Minimum="0.0.0.0"
                 Property="PREVIOUSVERSIONSINSTALLED"

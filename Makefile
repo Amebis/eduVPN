@@ -5,20 +5,23 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
+BUNDLE_VERSION_MAJ=1
+BUNDLE_VERSION_MIN=0
+BUNDLE_VERSION_REV=11
+BUNDLE_VERSION=$(BUNDLE_VERSION_MAJ).$(BUNDLE_VERSION_MIN).$(BUNDLE_VERSION_REV)
+
+CORE_VERSION_MAJ=1
+CORE_VERSION_MIN=0
+CORE_VERSION_REV=11
+CORE_VERSION=$(CORE_VERSION_MAJ).$(CORE_VERSION_MIN).$(CORE_VERSION_REV)
+CORE_VERSION_GUID={5CCC8478-91E6-49B0-9C30-6518E5CC4EBE}
+
 OPENVPN_VERSION_MAJ=2
 OPENVPN_VERSION_MIN=4
 OPENVPN_VERSION_REV=4
 OPENVPN_VERSION_BUILD=1
 OPENVPN_VERSION=$(OPENVPN_VERSION_MAJ).$(OPENVPN_VERSION_MIN).$(OPENVPN_VERSION_REV).$(OPENVPN_VERSION_BUILD)
-OPENVPN_VERSION_STR=$(OPENVPN_VERSION)
 OPENVPN_VERSION_GUID={723B8EBF-346D-4D57-8CF2-775CE54C6E17}
-
-PRODUCT_VERSION_MAJ=1
-PRODUCT_VERSION_MIN=0
-PRODUCT_VERSION_REV=11
-PRODUCT_VERSION=$(PRODUCT_VERSION_MAJ).$(PRODUCT_VERSION_MIN).$(PRODUCT_VERSION_REV)
-PRODUCT_VERSION_STR=$(PRODUCT_VERSION_MAJ).$(PRODUCT_VERSION_MIN)-alpha9
-PRODUCT_VERSION_GUID={5CCC8478-91E6-49B0-9C30-6518E5CC4EBE}
 
 OUTPUT_DIR=bin
 SETUP_DIR=$(OUTPUT_DIR)\Setup
@@ -37,9 +40,9 @@ MSBUILD_FLAGS=/m /v:minimal /nologo
 CSCRIPT_FLAGS=//Nologo
 WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo \
-	-deduVPN.OpenVPN.Version="$(OPENVPN_VERSION)" -deduVPN.OpenVPN.VersionStr="$(OPENVPN_VERSION_STR)" -deduVPN.OpenVPN.ProductGUID="$(OPENVPN_VERSION_GUID)" \
-	-deduVPN.Client.Version="$(PRODUCT_VERSION)" -deduVPN.Client.VersionStr="$(PRODUCT_VERSION_STR)" -deduVPN.Client.ProductGUID="$(PRODUCT_VERSION_GUID)" \
-	-deduVPN.Version="$(PRODUCT_VERSION)" -deduVPN.VersionStr="$(PRODUCT_VERSION_STR)" \
+	-deduVPN.OpenVPN.Version="$(OPENVPN_VERSION)" -deduVPN.OpenVPN.ProductGUID="$(OPENVPN_VERSION_GUID)" \
+	-deduVPN.Core.Version="$(CORE_VERSION)" -deduVPN.Core.ProductGUID="$(CORE_VERSION_GUID)" \
+	-deduVPN.Version="$(BUNDLE_VERSION)" \
 	-ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
 WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 -ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
 WIX_INSIGNIA_FLAGS=-nologo
@@ -135,7 +138,7 @@ Setup :: \
 	SetupExe
 
 SetupExe :: \
-	"$(SETUP_DIR)\eduVPNClient_$(PRODUCT_VERSION_STR).exe"
+	"$(SETUP_DIR)\eduVPNClient_$(BUNDLE_VERSION).exe"
 
 
 ######################################################################
@@ -155,7 +158,7 @@ SetupExe :: \
 # Building
 ######################################################################
 
-"$(OUTPUT_DIR)\Release\eduVPNClient_$(PRODUCT_VERSION_STR).exe" : \
+"$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe" : \
 	"eduVPN.wxl" \
 	"eduVPN.Install\eduVPN.thm.wxl" \
 	"eduVPN.Install\eduVPN.thm.sl.wxl" \
@@ -163,10 +166,10 @@ SetupExe :: \
 	"eduVPN.Install\eduVPN.logo.png" \
 	"$(OUTPUT_DIR)\Release\eduVPN.wixobj" \
 	"$(OUTPUT_DIR)\Release\TAP-Windows.wixobj" \
-	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_x86.msi" \
-	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_x64.msi" \
-	"$(SETUP_DIR)\eduVPNCore_$(PRODUCT_VERSION_STR)_x86.msi" \
-	"$(SETUP_DIR)\eduVPNCore_$(PRODUCT_VERSION_STR)_x64.msi"
+	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_x86.msi" \
+	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_x64.msi" \
+	"$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_x86.msi" \
+	"$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_x64.msi"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "eduVPN.wxl" -out $@ "$(OUTPUT_DIR)\Release\eduVPN.wixobj" "$(OUTPUT_DIR)\Release\TAP-Windows.wixobj"
 
 Clean ::
@@ -174,7 +177,7 @@ Clean ::
 
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 
-"$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_$(PRODUCT_VERSION_STR).exe" : "$(OUTPUT_DIR)\Release\eduVPNClient_$(PRODUCT_VERSION_STR).exe"
+"$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_$(BUNDLE_VERSION).exe" : "$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe"
 	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ib $** -o "$(@:"=).tmp"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "eduVPN Client" /q "$(@:"=).tmp"
 	move /y "$(@:"=).tmp" $@ > NUL
@@ -182,22 +185,22 @@ Clean ::
 Clean ::
 	-if exist "$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_*.exe" del /f /q "$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_*.exe"
 
-"$(SETUP_DIR)\eduVPNClient_$(PRODUCT_VERSION_STR).exe" : \
-	"$(OUTPUT_DIR)\Release\eduVPNClient_$(PRODUCT_VERSION_STR).exe" \
-	"$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_$(PRODUCT_VERSION_STR).exe"
-	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ab "$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_$(PRODUCT_VERSION_STR).exe" "$(OUTPUT_DIR)\Release\eduVPNClient_$(PRODUCT_VERSION_STR).exe" -o "$(@:"=).tmp"
+"$(SETUP_DIR)\eduVPNClient_$(BUNDLE_VERSION).exe" : \
+	"$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe" \
+	"$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_$(BUNDLE_VERSION).exe"
+	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ab "$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_$(BUNDLE_VERSION).exe" "$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe" -o "$(@:"=).tmp"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "eduVPN Client" /q "$(@:"=).tmp"
 	move /y "$(@:"=).tmp" $@ > NUL
 
 !ELSE
 
-"$(SETUP_DIR)\eduVPNClient_$(PRODUCT_VERSION_STR).exe" : "$(OUTPUT_DIR)\Release\eduVPNClient_$(PRODUCT_VERSION_STR).exe"
+"$(SETUP_DIR)\eduVPNClient_$(BUNDLE_VERSION).exe" : "$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe"
 	copy /y $** $@ > NUL
 
 !ENDIF
 
 Clean ::
-	-if exist "$(SETUP_DIR)\eduVPNClient_$(PRODUCT_VERSION_STR).exe" del /f /q "$(SETUP_DIR)\eduVPNClient_$(PRODUCT_VERSION_STR).exe"
+	-if exist "$(SETUP_DIR)\eduVPNClient_$(BUNDLE_VERSION).exe" del /f /q "$(SETUP_DIR)\eduVPNClient_$(BUNDLE_VERSION).exe"
 
 
 ######################################################################

@@ -19,17 +19,17 @@ SETUP_TARGET=$(SETUP_TARGET)D
 # WiX parameters
 WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS) -arch $(PLAT) \
 	-deduVPN.TargetDir="bin\$(CFG)\$(PLAT)\\" \
-	-deduVPN.OpenVPN.VersionInformational="$(OPENVPN_VERSION_STR) $(SETUP_TARGET)" \
-	-deduVPN.Client.VersionInformational="$(PRODUCT_VERSION_STR) $(SETUP_TARGET)"
+	-deduVPN.OpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
+	-deduVPN.Core.VersionInformational="$(CORE_VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
 WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) \
 	-deduVPN.ProgramFilesFolder="ProgramFiles64Folder" \
-	-deduVPN.Client.UpgradeGUID="{02EBD828-2565-4BCD-ABFF-E3F48C3F9A23}" \
+	-deduVPN.Core.UpgradeGUID="{02EBD828-2565-4BCD-ABFF-E3F48C3F9A23}" \
 	-deduVPN.OpenVPN.UpgradeGUID="{75C79E9E-5486-4568-814D-80C56E113FB8}"
 !ELSE
 WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) \
 	-deduVPN.ProgramFilesFolder="ProgramFilesFolder" \
-	-deduVPN.Client.UpgradeGUID="{E3746042-5041-4E2F-83E8-0240EF3C60CA}" \
+	-deduVPN.Core.UpgradeGUID="{E3746042-5041-4E2F-83E8-0240EF3C60CA}" \
 	-deduVPN.OpenVPN.UpgradeGUID="{258634EA-316E-434E-9AE9-13926FB26B12}"
 !ENDIF
 
@@ -58,8 +58,8 @@ SetupBuild ::
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 SetupMSI :: \
-	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET).msi" \
-	"$(SETUP_DIR)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET).msi"
+	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" \
+	"$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET).msi"
 !ENDIF
 
 
@@ -175,11 +175,11 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj"  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe.wixobj"     del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe.wixobj"
 
-"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET).msi" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_sl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_en-US.msi"
-	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_sl.mst" 1060 /L
+"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi"
+	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client OpenVPN Components" /q "$(@:"=).tmp"
 !ENDIF
@@ -187,11 +187,11 @@ Clean ::
 	if exist $@ attrib.exe -r $@
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"$(SETUP_DIR)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET).msi" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_sl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_en-US.msi"
-	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_sl.mst" 1060 /L
+"$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET).msi" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi"
+	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client Core" /q "$(@:"=).tmp"
 !ENDIF
@@ -200,8 +200,8 @@ Clean ::
 	move /y "$(@:"=).tmp" $@ > NUL
 
 Clean ::
-	-if exist "$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET).msi" del /f /q "$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET).msi"
-	-if exist "$(SETUP_DIR)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET).msi"    del /f /q "$(SETUP_DIR)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET).msi"
+	-if exist "$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" del /f /q "$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi"
+	-if exist "$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET).msi"       del /f /q "$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET).msi"
 
 
 ######################################################################

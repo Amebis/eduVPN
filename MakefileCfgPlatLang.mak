@@ -16,13 +16,13 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 # Building
 ######################################################################
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_$(LANG).msi" : \
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_$(LANG).msi" : \
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduJSON.dll.wixobj" \
@@ -42,14 +42,14 @@ Clean ::
 # The en-US localization serves as the base. Therefore, it does not produce a diff MST.
 !ELSE
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_$(LANG).mst" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_en-US.msi" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION_STR)_$(SETUP_TARGET)_$(LANG).msi"
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_$(LANG).mst" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_en-US.msi" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(PRODUCT_VERSION_STR)_$(SETUP_TARGET)_$(LANG).msi"
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 
 Clean ::
