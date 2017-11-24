@@ -37,7 +37,7 @@
             Margin="5"
             TextAlignment="Center"
             Style="{StaticResource eduVPNVersionTextBlockStyle}"
-            Text="{Binding Version, StringFormat={x:Static res:Strings.AboutPageVersion}}"/>
+            Text="{Binding Path=Version, StringFormat={x:Static res:Strings.AboutPageVersion}}"/>
 
         <TextBlock
             Grid.Row="2"
