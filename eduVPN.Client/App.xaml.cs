@@ -8,6 +8,9 @@
 using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Windows;
 
@@ -39,6 +42,22 @@ namespace eduVPN.Client
         {
             if (SingleInstance<App>.InitializeAsFirstInstance("org.eduvpn.app"))
             {
+                // Setup tracing to a log file.
+                var working_folder = Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath);
+                if (!Directory.Exists(working_folder))
+                    Directory.CreateDirectory(working_folder);
+                string path_separator = Path.DirectorySeparatorChar.ToString();
+                if (!working_folder.EndsWith(path_separator)) working_folder += path_separator;
+                var trace_filename = working_folder + "recent.log";
+                if (File.Exists(trace_filename))
+                {
+                    // Purge the log file. If possible.
+                    try { File.Delete(trace_filename); }
+                    catch { }
+                }
+                var listener = new TextWriterTraceListener(trace_filename, "LogFileListener") { TraceOutputOptions = TraceOptions.Timestamp | TraceOptions.ProcessId | TraceOptions.ThreadId };
+                Trace.Listeners.Add(listener);
+
                 if (eduVPN.Client.Properties.Settings.Default.SettingsVersion == 0)
                 {
                     // Migrate settings from previous version.
@@ -53,6 +72,8 @@ namespace eduVPN.Client
 
                 // Allow single instance code to perform cleanup operations.
                 SingleInstance<App>.Cleanup();
+
+                Trace.Flush();
             }
         }
 
