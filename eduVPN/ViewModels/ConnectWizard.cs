@@ -1014,60 +1014,68 @@ namespace eduVPN.ViewModels
                         var installer_filename = working_folder + "eduVPNClient.exe";
                         var updater_filename = working_folder + "eduVPNClient.wsf";
                         Dictionary<string, object> obj_web = null;
-                        Version product_version = null;
+                        Version repo_version = null, product_version = null;
 
                         try
                         {
                             Parallel.ForEach(new List<Action>()
+                            {
+                                () =>
                                 {
-                                    () =>
+                                    if (File.Exists(updater_filename))
                                     {
-                                        if (File.Exists(updater_filename))
-                                        {
-                                            // Clean stale updater WSF file. If possible.
-                                            try { File.Delete(updater_filename); }
-                                            catch { }
-                                        }
-                                    },
+                                        // Clean stale updater WSF file. If possible.
+                                        Trace.TraceInformation("Deleting file {0}...", updater_filename);
+                                        try { File.Delete(updater_filename); }
+                                        catch (Exception ex) { Trace.TraceWarning("Deleting {0} file failed: {1}", updater_filename, ex.ToString()); }
+                                    }
+                                },
 
-                                    () =>
-                                    {
-                                        // Get self-update.
-                                        var response_cache = (JSON.Response)Properties.Settings.Default.SelfUpdateCache;
-                                        var pub_key = (string)Properties.Settings.Default.SelfUpdatePubKey;
-                                        obj_web = JSON.Response.GetSeq(
-                                            uri: new Uri((string)Properties.Settings.Default.SelfUpdate),
-                                            pub_key: !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
-                                            ct: Abort.Token,
-                                            response_cache: ref response_cache);
-                                        Properties.Settings.Default.SelfUpdateCache = response_cache;
-                                    },
+                                () =>
+                                {
+                                    // Get self-update.
+                                    var response_cache = (JSON.Response)Properties.Settings.Default.SelfUpdateCache;
+                                    var pub_key = (string)Properties.Settings.Default.SelfUpdatePubKey;
+                                    var uri = new Uri((string)Properties.Settings.Default.SelfUpdate);
+                                    Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", uri.AbsoluteUri);
+                                    obj_web = JSON.Response.GetSeq(
+                                        uri: uri,
+                                        pub_key: !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
+                                        ct: Abort.Token,
+                                        response_cache: ref response_cache);
+                                    Properties.Settings.Default.SelfUpdateCache = response_cache;
 
-                                    () =>
+                                    repo_version = new Version((string)obj_web["version"]);
+                                    Trace.TraceInformation("Online version: {0}", repo_version.ToString());
+                                },
+
+                                () =>
+                                {
+                                    // Evaluate installed products.
+                                    Trace.TraceInformation("Evaluating installed products...");
+                                    using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                                    using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
                                     {
-                                        // Evaluate installed products.
-                                        using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-                                        using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
+                                        foreach (var product_key_name in uninstall_key.GetSubKeyNames())
                                         {
-                                            foreach (var product_key_name in uninstall_key.GetSubKeyNames())
+                                            Abort.Token.ThrowIfCancellationRequested();
+                                            using (var product_key = uninstall_key.OpenSubKey(product_key_name))
                                             {
-                                                Abort.Token.ThrowIfCancellationRequested();
-                                                using (var product_key = uninstall_key.OpenSubKey(product_key_name))
+                                                var bundle_upgrade_code = product_key.GetValue("BundleUpgradeCode");
+                                                if ((bundle_upgrade_code is string   bundle_upgrade_code_str   && bundle_upgrade_code_str.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}" ||
+                                                        bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}") != null) &&
+                                                    product_key.GetValue("BundleVersion") is string bundle_version_str)
                                                 {
-                                                    var bundle_upgrade_code = product_key.GetValue("BundleUpgradeCode");
-                                                    if ((bundle_upgrade_code is string   bundle_upgrade_code_str   && bundle_upgrade_code_str.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}" ||
-                                                         bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}") != null) &&
-                                                        product_key.GetValue("BundleVersion") is string bundle_version_str)
-                                                    {
-                                                        // Our product entry found.
-                                                        product_version = new Version(product_key.GetValue("DisplayVersion") is string display_version_str ? display_version_str : bundle_version_str);
-                                                        break;
-                                                    }
+                                                    // Our product entry found.
+                                                    product_version = new Version(product_key.GetValue("DisplayVersion") is string display_version_str ? display_version_str : bundle_version_str);
+                                                    Trace.TraceInformation("Installed version: {0}", product_version.ToString());
+                                                    break;
                                                 }
                                             }
                                         }
-                                    },
+                                    }
                                 },
+                            },
                                 action =>
                                 {
                                     Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
@@ -1090,8 +1098,6 @@ namespace eduVPN.ViewModels
                             }
                         }
 
-                        var repo_version = new Version((string)obj_web["version"]);
-
                         try
                         {
                             if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == repo_version &&
@@ -1101,23 +1107,32 @@ namespace eduVPN.ViewModels
                                 // We already prompted user for this version.
                                 // Either user opted not to be reminded of this version update again,
                                 // or it has been less than three days since the last prompt.
+                                Trace.TraceInformation("Update deferred by user choice.");
                                 return;
                             }
                         }
                         catch { }
 
-                        if (product_version == null || repo_version <= product_version)
+                        if (product_version == null)
                         {
                             // Nothing to update.
+                            Trace.TraceInformation("Product not installed or version could not be determined.");
                             return;
                         }
 
-                        // Download installer.
+                        if (repo_version <= product_version)
+                        {
+                            // Product already up-to-date.
+                            Trace.TraceInformation("Update not required.");
+                            return;
+                        }
+
                         var installer_ready = false;
                         var repo_hash = ((string)obj_web["hash-sha256"]).FromHexToBin();
                         if (File.Exists(installer_filename))
                         {
                             // File already exists. Verify its integrity.
+                            Trace.TraceInformation("Verifying installer file {0} integrity...", installer_filename);
                             try
                             {
                                 using (BinaryReader reader = new BinaryReader(File.Open(installer_filename, FileMode.Open)))
@@ -1140,14 +1155,18 @@ namespace eduVPN.ViewModels
                                         throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, installer_filename));
                                 }
 
+                                Trace.TraceInformation("{0} integrity OK.", installer_filename);
                                 installer_ready = true;
                             }
                             catch (OperationCanceledException) { throw; }
-                            catch
+                            catch (Exception ex)
                             {
+                                Trace.TraceWarning("Error: {0}", ex.ToString());
+
                                 // Delete file. If possible.
+                                Trace.TraceInformation("Deleting file {0}...", installer_filename);
                                 try { File.Delete(installer_filename); }
-                                catch { }
+                                catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
                             }
                         }
 
@@ -1163,6 +1182,7 @@ namespace eduVPN.ViewModels
                                 try
                                 {
                                     var uri = new Uri((string)uris[uri_idx]);
+                                    Trace.TraceInformation("Downloading installer file from {0}...", uri.AbsoluteUri);
                                     var request = WebRequest.Create(uri);
                                     using (var response = request.GetResponse())
                                     using (var stream = response.GetResponseStream())
@@ -1191,7 +1211,7 @@ namespace eduVPN.ViewModels
 
                                                 hash.TransformFinalBlock(buffer, 0, 0);
                                                 if (!hash.Hash.SequenceEqual(repo_hash))
-                                                    throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, uri.AbsolutePath));
+                                                    throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, uri.AbsoluteUri));
                                             }
 
                                             installer_ready = true;
@@ -1200,24 +1220,32 @@ namespace eduVPN.ViewModels
                                         catch
                                         {
                                             // Delete file. If possible.
+                                            Trace.TraceInformation("Deleting file {0}...", installer_filename);
                                             try { File.Delete(installer_filename); }
-                                            catch { }
+                                            catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
+
                                             throw;
                                         }
                                     }
                                 }
                                 catch (OperationCanceledException) { throw; }
-                                catch { uris.RemoveAt(uri_idx); }
+                                catch (Exception ex)
+                                {
+                                    Trace.TraceWarning("Error: {0}", ex.ToString());
+                                    uris.RemoveAt(uri_idx);
+                                }
                             }
                         }
 
                         if (!installer_ready)
                         {
                             // The installer file is not ready.
+                            Trace.TraceWarning("Installer file not available. Aborting...");
                             return;
                         }
 
                         // We're in the background thread - raise the prompt event via dispatcher.
+                        Trace.TraceInformation("Prompting user to update...");
                         var e_prompt = new PromptSelfUpdateEventArgs(product_version, repo_version);
                         Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => PromptSelfUpdate?.Invoke(this, e_prompt)));
                         bool quit = false;
@@ -1227,6 +1255,7 @@ namespace eduVPN.ViewModels
                             case PromptSelfUpdateActionType.Update:
                                 {
                                     // Prepare WSF file.
+                                    Trace.TraceInformation("Creating update script file {0}...", updater_filename);
                                     using (XmlTextWriter writer = new XmlTextWriter(updater_filename, null))
                                     {
                                         writer.WriteStartDocument();
@@ -1274,6 +1303,7 @@ namespace eduVPN.ViewModels
                                     }
 
                                     // Launch wscript.exe with WSF file.
+                                    Trace.TraceInformation("Launching update script file {0}...", updater_filename);
                                     var process = new Process();
                                     process.StartInfo.FileName = "wscript.exe";
                                     process.StartInfo.Arguments = "\"" + updater_filename + "\"";
@@ -1287,11 +1317,13 @@ namespace eduVPN.ViewModels
 
                             case PromptSelfUpdateActionType.AskLater:
                                 // Mark the timestamp of the prompt.
+                                Trace.TraceInformation("User will be reminded after three days again. (Should an update is still required.)");
                                 Properties.Settings.Default.SelfUpdateLastReminder = DateTime.UtcNow;
                                 break;
 
                             case PromptSelfUpdateActionType.Skip:
                                 // Mark not to re-prompt again.
+                                Trace.TraceInformation("User choose to skip this update.");
                                 Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MaxValue;
                                 break;
                         }
@@ -1302,11 +1334,20 @@ namespace eduVPN.ViewModels
                         if (quit)
                         {
                             // Ask the view to quit.
+                            Trace.TraceInformation("Quitting client...");
                             Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => QuitApplication?.Invoke(this, new EventArgs())));
                         }
                     }
-                    catch { }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { Trace.TraceError("Error: {0}", ex.ToString()); }
                     finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                };
+
+                // Self-update completition.
+                self_update.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
+                {
+                    // Self-dispose.
+                    (sender as BackgroundWorker)?.Dispose();
                 };
 
                 self_update.RunWorkerAsync();
