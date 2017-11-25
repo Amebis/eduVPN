@@ -1007,28 +1007,88 @@ namespace eduVPN.ViewModels
                 var self_update = new BackgroundWorker() { WorkerReportsProgress = true };
                 self_update.DoWork += (object sender, DoWorkEventArgs e) =>
                 {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
                     try
                     {
                         var working_folder = Path.GetTempPath();
                         var installer_filename = working_folder + "eduVPNClient.exe";
                         var updater_filename = working_folder + "eduVPNClient.wsf";
+                        Dictionary<string, object> obj_web = null;
+                        Version product_version = null;
 
-                        if (File.Exists(updater_filename))
+                        try
                         {
-                            // Clean stale updater WSF file. If possible.
-                            try { File.Delete(updater_filename); }
-                            catch { }
-                        }
+                            Parallel.ForEach(new List<Action>()
+                                {
+                                    () =>
+                                    {
+                                        if (File.Exists(updater_filename))
+                                        {
+                                            // Clean stale updater WSF file. If possible.
+                                            try { File.Delete(updater_filename); }
+                                            catch { }
+                                        }
+                                    },
 
-                        // Get self-update.
-                        var response_cache = (JSON.Response)Properties.Settings.Default.SelfUpdateCache;
-                        var pub_key = (string)Properties.Settings.Default.SelfUpdatePubKey;
-                        var obj_web = JSON.Response.GetSeq(
-                            uri: new Uri((string)Properties.Settings.Default.SelfUpdate),
-                            pub_key: !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
-                            ct: Abort.Token,
-                            response_cache: ref response_cache);
-                        Properties.Settings.Default.SelfUpdateCache = response_cache;
+                                    () =>
+                                    {
+                                        // Get self-update.
+                                        var response_cache = (JSON.Response)Properties.Settings.Default.SelfUpdateCache;
+                                        var pub_key = (string)Properties.Settings.Default.SelfUpdatePubKey;
+                                        obj_web = JSON.Response.GetSeq(
+                                            uri: new Uri((string)Properties.Settings.Default.SelfUpdate),
+                                            pub_key: !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
+                                            ct: Abort.Token,
+                                            response_cache: ref response_cache);
+                                        Properties.Settings.Default.SelfUpdateCache = response_cache;
+                                    },
+
+                                    () =>
+                                    {
+                                        // Evaluate installed products.
+                                        using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                                        using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
+                                        {
+                                            foreach (var product_key_name in uninstall_key.GetSubKeyNames())
+                                            {
+                                                Abort.Token.ThrowIfCancellationRequested();
+                                                using (var product_key = uninstall_key.OpenSubKey(product_key_name))
+                                                {
+                                                    var bundle_upgrade_code = product_key.GetValue("BundleUpgradeCode");
+                                                    if ((bundle_upgrade_code is string   bundle_upgrade_code_str   && bundle_upgrade_code_str.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}" ||
+                                                         bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}") != null) &&
+                                                        product_key.GetValue("BundleVersion") is string bundle_version_str)
+                                                    {
+                                                        // Our product entry found.
+                                                        product_version = new Version(product_key.GetValue("DisplayVersion") is string display_version_str ? display_version_str : bundle_version_str);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                },
+                                action =>
+                                {
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
+                                    try { action(); }
+                                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                                });
+                        }
+                        catch (AggregateException ex)
+                        {
+                            var ex_non_cancelled = ex.InnerExceptions.Where(ex_inner => !(ex_inner is OperationCanceledException));
+                            if (ex_non_cancelled.Any())
+                            {
+                                // Some exceptions were issues beyond OperationCanceledException.
+                                throw new AggregateException(ex.Message, ex_non_cancelled.ToArray());
+                            }
+                            else
+                            {
+                                // All exceptions were OperationCanceledException.
+                                throw new OperationCanceledException();
+                            }
+                        }
 
                         var repo_version = new Version((string)obj_web["version"]);
 
@@ -1045,29 +1105,6 @@ namespace eduVPN.ViewModels
                             }
                         }
                         catch { }
-
-                        // Evaluate installed products.
-                        Version product_version = null;
-                        using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-                        using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
-                        {
-                            foreach (var product_key_name in uninstall_key.GetSubKeyNames())
-                            {
-                                Abort.Token.ThrowIfCancellationRequested();
-                                using (var product_key = uninstall_key.OpenSubKey(product_key_name))
-                                {
-                                    var bundle_upgrade_code = product_key.GetValue("BundleUpgradeCode");
-                                    if ((bundle_upgrade_code is string   bundle_upgrade_code_str   && bundle_upgrade_code_str.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}" ||
-                                         bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}") != null) &&
-                                        product_key.GetValue("BundleVersion") is string bundle_version_str)
-                                    {
-                                        // Our product entry found.
-                                        product_version = new Version(product_key.GetValue("DisplayVersion") is string display_version_str ? display_version_str : bundle_version_str);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
 
                         if (product_version == null || repo_version <= product_version)
                         {
@@ -1269,6 +1306,7 @@ namespace eduVPN.ViewModels
                         }
                     }
                     catch { }
+                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                 };
 
                 self_update.RunWorkerAsync();
