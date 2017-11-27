@@ -5,6 +5,8 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System.ComponentModel;
+
 namespace eduVPN.ViewModels
 {
     /// <summary>
@@ -19,10 +21,16 @@ namespace eduVPN.ViewModels
         /// </summary>
         public ConnectingInstanceAndProfileSelectPanel Panel
         {
-            get { return _panel; }
-            set { SetProperty(ref _panel, value); }
+            get
+            {
+                var source_index = (int)Parent.InstanceSourceType;
+                if (_panels[source_index] == null)
+                    _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.InstanceSourceType);
+
+                return _panels[source_index];
+            }
         }
-        private ConnectingInstanceAndProfileSelectPanel _panel;
+        private ConnectingInstanceAndProfileSelectPanel[] _panels = new ConnectingInstanceAndProfileSelectPanel[(int)Models.InstanceSourceType._end];
 
         #endregion
 
@@ -35,7 +43,11 @@ namespace eduVPN.ViewModels
         public ConnectingProfileSelectPage(ConnectWizard parent) :
             base(parent)
         {
-            _panel = new ConnectingInstanceAndProfileSelectPanel(Parent, Parent.InstanceSourceType);
+            Parent.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                if (e.PropertyName == nameof(Parent.InstanceSourceType))
+                    RaisePropertyChanged(nameof(Panel));
+            };
         }
 
         #endregion
