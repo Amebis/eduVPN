@@ -62,6 +62,7 @@
             <ComponentSearch Id="openvpn.exe" Guid="{101FF3BB-DD5A-41CB-8A8C-0B582F7BF1D7}"/>
             <ComponentSearch Id="openvpnserv.exe" Guid="{1A38AF86-1516-49FA-91AE-D48EAE37468D}"/>
             <ComponentSearch Id="ssleay32.dll" Guid="{72639C55-D063-4A57-B7B7-1CD60945B97A}"/>
+            <ComponentSearch Id="OpenVPN.Resources.dll" Guid="{B1F28A18-CDC3-4D0D-B0E9-4BC79E876E4E}"/>
         </Property>
         <SetProperty
             After="AppSearch"
