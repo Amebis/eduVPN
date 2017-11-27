@@ -6,7 +6,6 @@
 */
 
 using System;
-using System.Linq;
 using System.Reflection;
 
 namespace eduVPN.ViewModels
@@ -21,13 +20,11 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Program version
         /// </summary>
-        public string Version
+        public Version Version
         {
             get
             {
-                return (Attribute.GetCustomAttributes(
-                    Assembly.GetExecutingAssembly(),
-                    typeof(AssemblyInformationalVersionAttribute)).SingleOrDefault() as AssemblyInformationalVersionAttribute)?.InformationalVersion;
+                return Assembly.GetExecutingAssembly()?.GetName()?.Version;
             }
         }
 
