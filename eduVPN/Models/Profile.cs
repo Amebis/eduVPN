@@ -20,22 +20,6 @@ namespace eduVPN.Models
     /// </summary>
     public class Profile : BindableBase, JSON.ILoadableItem
     {
-        #region Fields
-
-        /// <summary>
-        /// Profile OpenVPN configuration
-        /// </summary>
-        private string _openvpn_config;
-        private object _openvpn_config_lock = new object();
-
-        /// <summary>
-        /// Profile complete OpenVPN configuration
-        /// </summary>
-        private string _openvpn_complete_config;
-        private object _openvpn_complete_config_lock = new object();
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -144,53 +128,45 @@ namespace eduVPN.Models
         /// <returns>Profile configuration</returns>
         public string GetOpenVPNConfig(Instance connecting_instance, CancellationToken ct = default(CancellationToken))
         {
-            lock (_openvpn_config_lock)
+            // Get API endpoints.
+            var api = connecting_instance.GetEndpoints(ct);
+            var e = new RequestAuthorizationEventArgs("config");
+
+            retry:
+            try
             {
-                if (_openvpn_config == null)
-                {
-                    // Get API endpoints.
-                    var api = connecting_instance.GetEndpoints(ct);
-                    var e = new RequestAuthorizationEventArgs("config");
+                // Request authentication token.
+                RequestAuthorization?.Invoke(this, e);
+                if (e.AccessToken == null)
+                    throw new AccessTokenNullException();
 
-                    retry:
-                    try
-                    {
-                        // Request authentication token.
-                        RequestAuthorization?.Invoke(this, e);
-                        if (e.AccessToken == null)
-                            throw new AccessTokenNullException();
+                // Get profile config.
+                var uri_builder = new UriBuilder(api.ProfileConfig);
+                var query = HttpUtility.ParseQueryString(uri_builder.Query);
+                query["profile_id"] = ID;
+                uri_builder.Query = query.ToString();
+                var openvpn_config = JSON.Response.Get(
+                    uri: uri_builder.Uri,
+                    token: e.AccessToken,
+                    response_type: "application/x-openvpn-profile",
+                    ct: ct).Value;
 
-                        // Get profile config.
-                        var uri_builder = new UriBuilder(api.ProfileConfig);
-                        var query = HttpUtility.ParseQueryString(uri_builder.Query);
-                        query["profile_id"] = ID;
-                        uri_builder.Query = query.ToString();
-                        var openvpn_config = JSON.Response.Get(
-                            uri: uri_builder.Uri,
-                            token: e.AccessToken,
-                            response_type: "application/x-openvpn-profile",
-                            ct: ct).Value;
-
-                        // If we got here, save the config.
-                        _openvpn_config = openvpn_config;
-                    }
-                    catch (OperationCanceledException) { throw; }
-                    catch (WebException ex)
-                    {
-                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                        {
-                            // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
-                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                            goto retry;
-                        }
-                        else
-                            throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex);
-                    }
-                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
-                }
-
-                return _openvpn_config;
+                // If we got here, return the config.
+                return openvpn_config;
             }
+            catch (OperationCanceledException) { throw; }
+            catch (WebException ex)
+            {
+                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
+                    e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                    goto retry;
+                }
+                else
+                    throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex);
+            }
+            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
         }
 
         /// <summary>
@@ -201,54 +177,46 @@ namespace eduVPN.Models
         /// <returns>Profile configuration</returns>
         public string GetCompleteOpenVPNConfig(Instance connecting_instance, CancellationToken ct = default(CancellationToken))
         {
-            lock (_openvpn_complete_config_lock)
+            // Get API endpoints.
+            var api = connecting_instance.GetEndpoints(ct);
+            var e = new RequestAuthorizationEventArgs("config");
+
+            retry:
+            try
             {
-                if (_openvpn_complete_config == null)
-                {
-                    // Get API endpoints.
-                    var api = connecting_instance.GetEndpoints(ct);
-                    var e = new RequestAuthorizationEventArgs("config");
+                // Request authentication token.
+                RequestAuthorization?.Invoke(this, e);
+                if (e.AccessToken == null)
+                    throw new AccessTokenNullException();
 
-                    retry:
-                    try
+                // Get complete profile config.
+                var openvpn_complete_config = JSON.Response.Get(
+                    uri: api.ProfileCompleteConfig,
+                    param: new NameValueCollection
                     {
-                        // Request authentication token.
-                        RequestAuthorization?.Invoke(this, e);
-                        if (e.AccessToken == null)
-                            throw new AccessTokenNullException();
+                        { "display_name", String.Format(Resources.Strings.ProfileTitle, Environment.MachineName) },
+                        { "profile_id", ID }
+                    },
+                    token: e.AccessToken,
+                    response_type: "application/x-openvpn-profile",
+                    ct: ct).Value;
 
-                        // Get complete profile config.
-                        var openvpn_complete_config = JSON.Response.Get(
-                            uri: api.ProfileCompleteConfig,
-                            param: new NameValueCollection
-                            {
-                                { "display_name", String.Format(Resources.Strings.ProfileTitle, Environment.MachineName) },
-                                { "profile_id", ID }
-                            },
-                            token: e.AccessToken,
-                            response_type: "application/x-openvpn-profile",
-                            ct: ct).Value;
-
-                        // If we got here, save the config.
-                        _openvpn_complete_config = openvpn_complete_config;
-                    }
-                    catch (OperationCanceledException) { throw; }
-                    catch (WebException ex)
-                    {
-                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                        {
-                            // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
-                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                            goto retry;
-                        }
-                        else
-                            throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex);
-                    }
-                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
-                }
-
-                return _openvpn_complete_config;
+                // If we got here, return the config.
+                return openvpn_complete_config;
             }
+            catch (OperationCanceledException) { throw; }
+            catch (WebException ex)
+            {
+                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
+                    e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                    goto retry;
+                }
+                else
+                    throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex);
+            }
+            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
         }
 
         #endregion
