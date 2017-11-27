@@ -21,6 +21,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace eduVPN.JSON
 {
@@ -100,6 +101,11 @@ namespace eduVPN.JSON
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
         public static async Task<Response> GetAsync(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
+            var assembly = Assembly.GetExecutingAssembly();
+            var assembly_title_attribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
+            var assembly_version = assembly?.GetName()?.Version;
+            var user_agent = assembly_title_attribute?.Title + "/" + assembly_version?.ToString();
+
             // Spawn data loading.
             var request = WebRequest.Create(uri);
             request.CachePolicy = _no_cache_policy;
@@ -107,6 +113,7 @@ namespace eduVPN.JSON
                 token.AddToRequest(request);
             if (request is HttpWebRequest request_web)
             {
+                request_web.UserAgent = user_agent;
                 request_web.Accept = response_type;
                 if (previous != null)
                 {
@@ -162,7 +169,11 @@ namespace eduVPN.JSON
                     request = WebRequest.Create(builder_sig.Uri);
                     request.CachePolicy = _no_cache_policy;
                     if (request is HttpWebRequest request_web_sig)
+                    {
+                        request_web_sig.UserAgent = user_agent;
                         request_web_sig.Accept = "application/pgp-signature";
+                    }
+
                     response_sig_task = request.GetResponseAsync();
                 }
 
