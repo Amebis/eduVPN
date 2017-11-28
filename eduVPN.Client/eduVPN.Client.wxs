@@ -24,8 +24,10 @@
                     WorkingDirectory="BINDIR"
                     Icon="eduVPN.ico"/>
             </Component>
-            <Component Id="eduVPN.Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}">
-                <File Source="eduVPN.Client.exe.config"/>
+            <Component Id="eduVPN.Client.exe.config_sample" Guid="{B65F58D7-9F41-4BEA-B6CC-7B85E58491CF}">
+                <File
+                    Source="eduVPN.Client.exe.config"
+                    Name="eduVPN.Client.exe.config-sample"/>
             </Component>
             <Component Id="eduVPN.Client.reg1" Guid="{91E7E0D2-7DDF-4A36-AF16-6AF548B77409}">
                 <RegistryValue Root="HKCR" Key="org.eduvpn.app" Type="string" Name="URL Protocol" Value=""/>
@@ -71,7 +73,7 @@
             <ComponentGroupRef Id="Prism.dll"/>
 
             <ComponentRef Id="eduVPN.Client.exe"/>
-            <ComponentRef Id="eduVPN.Client.exe.config"/>
+            <ComponentRef Id="eduVPN.Client.exe.config_sample"/>
             <ComponentRef Id="eduVPN.Client.reg1"/>
             <ComponentRef Id="eduVPN.Client.reg2"/>
             <ComponentRef Id="eduVPN.Client.reg3"/>
