@@ -8,7 +8,11 @@
 using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Windows;
 
 namespace eduVPN.Client
@@ -37,8 +41,40 @@ namespace eduVPN.Client
         [STAThread]
         public static void Main()
         {
-            if (SingleInstance<App>.InitializeAsFirstInstance("org.eduvpn.app"))
+            if (!SingleInstance<App>.InitializeAsFirstInstance("org.eduvpn.app"))
             {
+                // This is not the first instance. Quit.
+                return;
+            }
+
+            try
+            {
+                try
+                {
+                    // Test load the user settings.
+                    ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                }
+                catch (ConfigurationErrorsException ex)
+                {
+                    // Ups, something is wrong with the user settings.
+                    var assembly_title = (Attribute.GetCustomAttributes(Assembly.GetExecutingAssembly(), typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title;
+                    var filename = ex.Filename;
+                    if (MessageBox.Show(
+                        string.Format(eduVPN.Client.Resources.Strings.SettingsCorruptErrorMessage, assembly_title, filename),
+                        eduVPN.Client.Resources.Strings.SettingsCorruptErrorTitle,
+                        MessageBoxButton.OKCancel,
+                        MessageBoxImage.Error) == MessageBoxResult.OK)
+                    {
+                        // Delete user settings file and continue.
+                        File.Delete(filename);
+                    }
+                    else
+                    {
+                        // User cancelled. Quit.
+                        return;
+                    }
+                }
+
                 if (eduVPN.Client.Properties.Settings.Default.SettingsVersion == 0)
                 {
                     // Migrate settings from previous version.
@@ -50,7 +86,9 @@ namespace eduVPN.Client
                 var application = new App();
                 application.InitializeComponent();
                 application.Run();
-
+            }
+            finally
+            {
                 // Allow single instance code to perform cleanup operations.
                 SingleInstance<App>.Cleanup();
             }

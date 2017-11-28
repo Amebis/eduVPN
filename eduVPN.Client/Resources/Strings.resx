@@ -352,4 +352,13 @@ Powered by SURFnet</value>
 (Client will restart)</value>
     <comment>{0}=version</comment>
   </data>
+  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
+    <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash or improper exiting of the program.
+
+If you continue, your user settings will be reset to defaults.</value>
+    <comment>{0}=application name, {1}=filename</comment>
+  </data>
+  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
+    <value>Corrupt user settings</value>
+  </data>
 </root>
