@@ -1272,6 +1272,7 @@ namespace eduVPN.ViewModels
 
                                         writer.WriteStartElement("script");
                                         writer.WriteAttributeString("language", "JScript");
+                                        var installer_arguments_esc = eduJSON.Parser.GetValue(obj_web, "arguments", out string installer_arguments) ? " " + HttpUtility.JavaScriptStringEncode(installer_arguments) : "";
                                         var argv = Environment.GetCommandLineArgs();
                                         var arguments = new StringBuilder();
                                         for (long i = 1, n = argv.LongLength; i < n; i++)
@@ -1285,7 +1286,7 @@ namespace eduVPN.ViewModels
                                         script.AppendLine("// This script was auto-generated.");
                                         script.AppendLine("// Launch installer file and wait for the update to finish.");
                                         script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
-                                        script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installer_filename.Replace("\"", "\"\"")) + "\\\"\", 0, true) == 0) {");
+                                        script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installer_filename.Replace("\"", "\"\"")) + "\\\"" + installer_arguments_esc + "\", 0, true) == 0) {");
                                         script.AppendLine("  // Installer succeeded. Relaunch the application.");
                                         script.AppendLine("  var shl = WScript.CreateObject(\"Shell.Application\");");
                                         script.AppendLine("  shl.ShellExecute(\"" + HttpUtility.JavaScriptStringEncode(argv[0]) + "\", \"" + HttpUtility.JavaScriptStringEncode(arguments.ToString()) + "\", \"" + HttpUtility.JavaScriptStringEncode(Environment.CurrentDirectory) + "\");");
