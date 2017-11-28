@@ -110,7 +110,7 @@ namespace eduVPN.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/auto-update/windows/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/auto-update/windows.json")]
         public string SelfUpdate {
             get {
                 return ((string)(this["SelfUpdate"]));

@@ -27,7 +27,7 @@
       <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
     <Setting Name="SelfUpdate" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://static.eduvpn.nl/auto-update/windows/</Value>
+      <Value Profile="(Default)">https://static.eduvpn.nl/auto-update/windows.json</Value>
     </Setting>
     <Setting Name="SelfUpdatePubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">15nh06ilJd5f9hbH5rWGgU+qw9IxBHE+j2wVKshidkA=</Value>
