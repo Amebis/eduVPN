@@ -50,6 +50,7 @@
     <Compile Include="ViewModels\PromptSelfUpdateActionType.cs" />
     <Compile Include="ViewModels\PromptSelfUpdateEventArgs.cs" />
     <Compile Include="ViewModels\SelfUpdatePopup.cs" />
+    <Compile Include="Xml\Dictionary.cs" />
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
     <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />
     <Compile Include="Xml\InstanceRef.cs" />
