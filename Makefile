@@ -36,6 +36,7 @@ PLAT=x86
 
 # Utility default flags
 REG_FLAGS=/f
+NUGET_FLAGS=-Verbosity quiet
 MSBUILD_FLAGS=/m /v:minimal /nologo
 CSCRIPT_FLAGS=//Nologo
 WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
