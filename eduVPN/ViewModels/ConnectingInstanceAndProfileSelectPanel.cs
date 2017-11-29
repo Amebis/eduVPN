@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
@@ -22,7 +23,7 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// List of available profiles
         /// </summary>
-        public JSON.Collection<Models.Profile> ProfileList
+        public ObservableCollection<Models.Profile> ProfileList
         {
             get { return _profile_list; }
             set
@@ -36,7 +37,7 @@ namespace eduVPN.ViewModels
                 }
             }
         }
-        private JSON.Collection<Models.Profile> _profile_list;
+        private ObservableCollection<Models.Profile> _profile_list;
 
         #endregion
 

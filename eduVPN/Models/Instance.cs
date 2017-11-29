@@ -9,6 +9,7 @@ using eduVPN.JSON;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
@@ -33,7 +34,7 @@ namespace eduVPN.Models
         /// <summary>
         /// List of available profiles
         /// </summary>
-        private JSON.Collection<Models.Profile> _profile_list;
+        private ObservableCollection<Models.Profile> _profile_list;
         private object _profile_list_lock = new object();
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile list</returns>
-        public JSON.Collection<Models.Profile> GetProfileList(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public ObservableCollection<Models.Profile> GetProfileList(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_profile_list_lock)
             {
@@ -240,7 +241,7 @@ namespace eduVPN.Models
                             throw new AccessTokenNullException();
 
                         // Get and load profile list.
-                        var profile_list = new JSON.Collection<Models.Profile>();
+                        var profile_list = new ObservableCollection<Models.Profile>();
                         profile_list.LoadJSONAPIResponse(Xml.Response.Get(
                             uri: api.ProfileList,
                             token: e.AccessToken,
