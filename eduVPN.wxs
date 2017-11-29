@@ -51,9 +51,23 @@
 
         <Chain>
             <!--
-            Prerequisites
+                .NET Framework
             -->
             <PackageGroupRef Id="NetFx45Redist"/>
+
+            <!--
+                TAP-Windows
+            -->
+            <MsiPackage
+                Id="eduVPNTAPWinPre_x86"
+                SourceFile="bin\Setup\eduVPNTAPWinPre_$(var.eduVPN.TAPWinPre.Version)_x86.msi"
+                InstallCondition="NOT VersionNT64"/>
+
+            <MsiPackage
+                Id="eduVPNTAPWinPre_x64"
+                SourceFile="bin\Setup\eduVPNTAPWinPre_$(var.eduVPN.TAPWinPre.Version)_x64.msi"
+                InstallCondition="VersionNT64"/>
+
             <PackageGroupRef Id="TAPWindows921Redist"/>
 
             <!--

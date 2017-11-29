@@ -7,11 +7,14 @@
 
 BUNDLE_VERSION=1.0.13
 
-CORE_VERSION=1.0.13
-CORE_VERSION_GUID={8C8D0D69-B3BB-444C-BD32-2941AA86A3BF}
+TAPWINPRE_VERSION=1.0.0
+TAPWINPRE_VERSION_GUID={405BF01E-F159-4E55-8C22-FFA136CA9F95}
 
 OPENVPN_VERSION=2.4.4.1
 OPENVPN_VERSION_GUID={723B8EBF-346D-4D57-8CF2-775CE54C6E17}
+
+CORE_VERSION=1.0.13
+CORE_VERSION_GUID={8C8D0D69-B3BB-444C-BD32-2941AA86A3BF}
 
 OUTPUT_DIR=bin
 SETUP_DIR=$(OUTPUT_DIR)\Setup
@@ -29,13 +32,15 @@ REG_FLAGS=/f
 NUGET_FLAGS=-Verbosity quiet
 MSBUILD_FLAGS=/m /v:minimal /nologo
 CSCRIPT_FLAGS=//Nologo
+WIX_EXTENSIONS=-ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension -ext WixIIsExtension
 WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo \
+	-deduVPN.TAPWinPre.Version="$(TAPWINPRE_VERSION)" -deduVPN.TAPWinPre.ProductGUID="$(TAPWINPRE_VERSION_GUID)" \
 	-deduVPN.OpenVPN.Version="$(OPENVPN_VERSION)" -deduVPN.OpenVPN.ProductGUID="$(OPENVPN_VERSION_GUID)" \
 	-deduVPN.Core.Version="$(CORE_VERSION)" -deduVPN.Core.ProductGUID="$(CORE_VERSION_GUID)" \
 	-deduVPN.Version="$(BUNDLE_VERSION)" \
-	-ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
-WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 -ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
+	$(WIX_EXTENSIONS)
+WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 $(WIX_EXTENSIONS)
 WIX_INSIGNIA_FLAGS=-nologo
 
 
@@ -157,6 +162,8 @@ SetupExe :: \
 	"eduVPN.Install\eduVPN.logo.png" \
 	"$(OUTPUT_DIR)\Release\eduVPN.wixobj" \
 	"$(OUTPUT_DIR)\Release\TAP-Windows.wixobj" \
+	"$(SETUP_DIR)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_x86.msi" \
+	"$(SETUP_DIR)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_x64.msi" \
 	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_x86.msi" \
 	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_x64.msi" \
 	"$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_x86.msi" \

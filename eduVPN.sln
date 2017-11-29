@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}"
 	ProjectSection(SolutionItems) = preProject
@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		eduVPN.wxs = eduVPN.wxs
 		eduVPNCore.wxs = eduVPNCore.wxs
 		eduVPNOpenVPN.wxs = eduVPNOpenVPN.wxs
+		eduVPNTAPWinPre.wxs = eduVPNTAPWinPre.wxs
 		LICENSE = LICENSE
 		LICENSE.spdx = LICENSE.spdx
 		TAP-Windows.wxs = TAP-Windows.wxs
@@ -219,5 +220,8 @@ Global
 		{DDF40A25-1180-40B1-9BF1-8D3D66D734AD} = {62C4825F-1F58-4BA1-BD10-DABB139FCC47}
 		{EC9E752D-3228-47B1-AB68-9FCF0FAA3B8A} = {34019D9B-CB1A-4C13-B6F8-992DE8AB6F39}
 		{E2BBEBA8-DA57-42E8-BB75-78F13BD05E86} = {DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7FC9EE6-11F6-4153-B5AE-66D3DA7A7A61}
 	EndGlobalSection
 EndGlobal

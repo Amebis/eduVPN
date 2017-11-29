@@ -12,6 +12,7 @@
     <String Id="ApplicationName">eduVPN Client</String>
     <String Id="ApplicationCoreName">eduVPN Client Core</String>
     <String Id="ApplicationOpenVPNName">eduVPN Client OpenVPN Components</String>
+    <String Id="ApplicationTAPWinPreName">eduVPN Client TAP-Windows Prerequisites</String>
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1033</String>
     <String Id="SummaryCodepage">1252</String>

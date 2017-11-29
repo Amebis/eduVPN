@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Wix
+    xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+    <Product
+        Id="$(var.eduVPN.TAPWinPre.ProductGUID)"
+        UpgradeCode="$(var.eduVPN.TAPWinPre.UpgradeGUID)"
+        Version="$(var.eduVPN.TAPWinPre.Version)"
+        Language="!(loc.ProductLanguage)"
+        Name="!(loc.ApplicationTAPWinPreName) $(var.eduVPN.TAPWinPre.VersionInformational)"
+        Manufacturer="!(loc.ManufacturerName)">
+
+        <Package
+            InstallScope="perMachine"
+            InstallerVersion="200"
+            Compressed="yes"
+            SummaryCodepage="!(loc.SummaryCodepage)"
+            ReadOnly="yes"/>
+
+        <Media
+            Id="1"
+            Cabinet="TAPWinPre.cab"
+            EmbedCab="yes"/>
+
+        <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+
+        <Binary Id="tap0901.cer" SourceFile="tap0901.cer"/>
+
+
+        <!--
+            Upgrading functionality
+        -->
+        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
+        <Upgrade Id="$(var.eduVPN.TAPWinPre.UpgradeGUID)">
+            <UpgradeVersion
+                Minimum="0.0.0.0"
+                Property="PREVIOUSVERSIONSINSTALLED"
+                IncludeMinimum="yes"
+                MigrateFeatures="yes"/>
+        </Upgrade>
+        <InstallExecuteSequence>
+            <RemoveExistingProducts Before="InstallInitialize"/>
+        </InstallExecuteSequence>
+        <Property Id="BINDIRPREV">
+            <ComponentSearch Id="tap0901.cer" Guid="{CDCB8AE6-B105-409F-8539-5642A2BC3910}"/>
+        </Property>
+        <SetProperty
+            After="AppSearch"
+            Action="SetBinDirPrev"
+            Id="BINDIR"
+            Value="[BINDIRPREV]"
+            Sequence="first"><![CDATA[BINDIRPREV AND NOT Installed]]></SetProperty>
+        <SetProperty
+            After="SetBinDirPrev"
+            Action="SetBinDirParam"
+            Id="BINDIR"
+            Value="[INSTALLDIR]"
+            Sequence="first"><![CDATA[INSTALLDIR AND NOT Installed]]></SetProperty>
+
+
+        <!--
+            Folders
+        -->
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
+                <Directory Id="EDUVPNDIR" Name="eduVPN">
+                    <Directory Id="BINDIR" Name="TAPWinPre" FileSource="$(var.eduVPN.TargetDir)"/>
+                </Directory>
+            </Directory>
+        </Directory>
+
+
+        <!--
+            Compontents
+        -->
+        <DirectoryRef Id="BINDIR">
+            <Component Id="tap0901.cer" Guid="{CDCB8AE6-B105-409F-8539-5642A2BC3910}">
+                <File Source="tap0901.cer"/>
+                <iis:Certificate
+                    Id="OpenVPNTechCert"
+                    Name="OpenVPN Technologies, Inc."
+                    StoreLocation="localMachine"
+                    StoreName="trustedPublisher"
+                    BinaryKey="tap0901.cer"
+                    Request="no"/>
+            </Component>
+        </DirectoryRef>
+
+
+        <!--
+            Features
+        -->
+        <Feature Id="eduVPN.TAPWinPre" Title="!(loc.ApplicationTAPWinPreName)" Level="1">
+            <ComponentRef Id="tap0901.cer"/>
+        </Feature>
+    </Product>
+</Wix>
