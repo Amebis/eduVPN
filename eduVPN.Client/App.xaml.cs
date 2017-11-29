@@ -130,12 +130,6 @@ namespace eduVPN.Client
         /// <returns><c>true</c></returns>
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
-            // (Re)activate main window.
-            if (!MainWindow.IsActive)
-                MainWindow.Show();
-            MainWindow.Activate();
-            MainWindow.Focus();
-
             if (args.Count >= 2)
             {
                 // Forward redirect URI to the authorization pop-up.
@@ -146,6 +140,20 @@ namespace eduVPN.Client
                     wizard.AuthorizationPopup.DataContext is ViewModels.AuthorizationPopup view_model &&
                     view_model.Authorize.CanExecute(uri))
                     view_model.Authorize.Execute(uri);
+            }
+
+            // (Re)activate main window.
+            if (!MainWindow.IsActive)
+                MainWindow.Show();
+            MainWindow.Topmost = true;
+            try
+            {
+                MainWindow.Activate();
+                MainWindow.Focus();
+            }
+            finally
+            {
+                MainWindow.Topmost = false;
             }
 
             return true;
