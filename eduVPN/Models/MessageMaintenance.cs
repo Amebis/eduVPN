@@ -57,7 +57,7 @@ namespace eduVPN.Models
                 End = eduJSON.Parser.GetValue(obj2, "end", out string end) && DateTime.TryParse(end, out var end_date) ? end_date : (DateTime?)null;
             }
             else
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
         }
 
         #endregion

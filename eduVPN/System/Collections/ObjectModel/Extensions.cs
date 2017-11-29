@@ -45,7 +45,7 @@ namespace System.Collections.ObjectModel
                 }
             }
             else
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(List<object>), obj.GetType());
+                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(List<object>), obj.GetType());
         }
     }
 }

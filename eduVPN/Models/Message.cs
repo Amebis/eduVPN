@@ -68,7 +68,7 @@ namespace eduVPN.Models
                 Date = DateTime.Parse(eduJSON.Parser.GetValue<string>(obj2, "date_time"));
             }
             else
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
         }
 
         #endregion

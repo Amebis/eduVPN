@@ -70,7 +70,7 @@ namespace eduVPN.Models
                 }
             }
             else
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
         }
 
         /// <summary>

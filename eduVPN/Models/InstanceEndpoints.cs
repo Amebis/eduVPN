@@ -136,7 +136,7 @@ namespace eduVPN.Models
                     _base_uri != null ? AppendPath(_base_uri, "/user_info") : null;
             }
             else
-                throw new eduJSON.InvalidParameterTypeException("obj", typeof(Dictionary<string, object>), obj.GetType());
+                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
         }
 
         /// <summary>
