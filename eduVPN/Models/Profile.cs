@@ -145,7 +145,7 @@ namespace eduVPN.Models
                 var query = HttpUtility.ParseQueryString(uri_builder.Query);
                 query["profile_id"] = ID;
                 uri_builder.Query = query.ToString();
-                var openvpn_config = JSON.Response.Get(
+                var openvpn_config = Xml.Response.Get(
                     uri: uri_builder.Uri,
                     token: e.AccessToken,
                     response_type: "application/x-openvpn-profile",
@@ -190,7 +190,7 @@ namespace eduVPN.Models
                     throw new AccessTokenNullException();
 
                 // Get complete profile config.
-                var openvpn_complete_config = JSON.Response.Get(
+                var openvpn_complete_config = Xml.Response.Get(
                     uri: api.ProfileCompleteConfig,
                     param: new NameValueCollection
                     {

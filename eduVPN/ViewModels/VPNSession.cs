@@ -302,7 +302,7 @@ namespace eduVPN.ViewModels
                                     // Get and load messages.
                                     var message_list = new Models.MessageList();
                                     message_list.LoadJSONAPIResponse(
-                                        JSON.Response.Get(
+                                        Xml.Response.Get(
                                             uri: list.Key,
                                             token: e.AccessToken,
                                             ct: _quit.Token).Value,

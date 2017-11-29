@@ -688,14 +688,11 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 // Get instance source.
-                                var response_cache = (JSON.Response)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"];
                                 var pub_key = (string)Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryPubKey"];
-                                var obj_web = JSON.Response.GetSeq(
-                                    uri: new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index] + "Discovery"]),
-                                    pub_key: !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
-                                    ct: Abort.Token,
-                                    response_cache: ref response_cache);
-                                Properties.Settings.Default[_instance_directory_id[source_index] + "DiscoveryCache"] = response_cache;
+                                var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
+                                    new Uri((string)Properties.Settings.Default[_instance_directory_id[source_index] + "Discovery"]),
+                                    !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
+                                    Abort.Token);
 
                                 // Add a tick.
                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
@@ -1034,16 +1031,13 @@ namespace eduVPN.ViewModels
                                 () =>
                                 {
                                     // Get self-update.
-                                    var response_cache = (JSON.Response)Properties.Settings.Default.SelfUpdateCache;
-                                    var pub_key = (string)Properties.Settings.Default.SelfUpdatePubKey;
-                                    var uri = new Uri((string)Properties.Settings.Default.SelfUpdate);
+                                    var pub_key = Properties.Settings.Default.SelfUpdatePubKey;
+                                    var uri = new Uri(Properties.Settings.Default.SelfUpdate);
                                     Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", uri.AbsoluteUri);
-                                    obj_web = JSON.Response.GetSeq(
-                                        uri: uri,
-                                        pub_key: !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
-                                        ct: Abort.Token,
-                                        response_cache: ref response_cache);
-                                    Properties.Settings.Default.SelfUpdateCache = response_cache;
+                                    obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
+                                        uri,
+                                        !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
+                                        Abort.Token);
 
                                     repo_version = new Version((string)obj_web["version"]);
                                     Trace.TraceInformation("Online version: {0}", repo_version.ToString());

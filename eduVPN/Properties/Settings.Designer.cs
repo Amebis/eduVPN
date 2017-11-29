@@ -23,6 +23,18 @@ namespace eduVPN.Properties {
             }
         }
         
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<JSONResponseDictionary/>")]
+        public global::eduVPN.Xml.JSONResponseDictionary ResponseCache {
+            get {
+                return ((global::eduVPN.Xml.JSONResponseDictionary)(this["ResponseCache"]));
+            }
+            set {
+                this["ResponseCache"] = value;
+            }
+        }
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
@@ -39,17 +51,6 @@ namespace eduVPN.Properties {
         public string SecureInternetDiscoveryPubKey {
             get {
                 return ((string)(this["SecureInternetDiscoveryPubKey"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.JSON.Response SecureInternetDiscoveryCache {
-            get {
-                return ((global::eduVPN.JSON.Response)(this["SecureInternetDiscoveryCache"]));
-            }
-            set {
-                this["SecureInternetDiscoveryCache"] = value;
             }
         }
         
@@ -86,17 +87,6 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.JSON.Response InstituteAccessDiscoveryCache {
-            get {
-                return ((global::eduVPN.JSON.Response)(this["InstituteAccessDiscoveryCache"]));
-            }
-            set {
-                this["InstituteAccessDiscoveryCache"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
         public global::eduVPN.Xml.InstanceSourceSettings InstituteAccessInstanceSourceSettings {
             get {
@@ -123,17 +113,6 @@ namespace eduVPN.Properties {
         public string SelfUpdatePubKey {
             get {
                 return ((string)(this["SelfUpdatePubKey"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.JSON.Response SelfUpdateCache {
-            get {
-                return ((global::eduVPN.JSON.Response)(this["SelfUpdateCache"]));
-            }
-            set {
-                this["SelfUpdateCache"] = value;
             }
         }
         

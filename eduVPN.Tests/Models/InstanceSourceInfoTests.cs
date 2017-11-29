@@ -25,12 +25,12 @@ namespace eduVPN.Models.Tests
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
             // Spawn instance source get (Institute Access).
-            var instance_source_ia_json_task = JSON.Response.GetAsync(
+            var instance_source_ia_json_task = Xml.Response.GetAsync(
                 uri: new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
                 pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
             // Spawn instance source get (Secure Internet).
-            var instance_source_si_json_task = JSON.Response.GetAsync(
+            var instance_source_si_json_task = Xml.Response.GetAsync(
                 uri: new Uri("https://static.eduvpn.nl/disco/secure_internet.json"),
                 pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
 
@@ -44,7 +44,7 @@ namespace eduVPN.Models.Tests
             catch (AggregateException ex) { throw ex.InnerException; }
 
             // Re-spawn instance source get.
-            instance_source_ia_json_task = JSON.Response.GetAsync(
+            instance_source_ia_json_task = Xml.Response.GetAsync(
                 uri: new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
                 pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="),
                 previous: instance_source_ia_json_task.Result);
@@ -53,7 +53,7 @@ namespace eduVPN.Models.Tests
             Task.WhenAll(instance_source_ia.InstanceList.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
-                new Models.InstanceEndpoints().LoadJSON((await JSON.Response.GetAsync(uri_builder.Uri)).Value);
+                new Models.InstanceEndpoints().LoadJSON((await Xml.Response.GetAsync(uri_builder.Uri)).Value);
             })).Wait();
 
             // Load all secure internet instances API in parallel.
@@ -67,7 +67,7 @@ namespace eduVPN.Models.Tests
             Task.WhenAll(instance_source_si.InstanceList.Select(async i => {
                 var uri_builder = new UriBuilder(i.Base);
                 uri_builder.Path += "info.json";
-                new Models.InstanceEndpoints().LoadJSON((await JSON.Response.GetAsync(uri_builder.Uri)).Value);
+                new Models.InstanceEndpoints().LoadJSON((await Xml.Response.GetAsync(uri_builder.Uri)).Value);
             })).Wait();
 
             // Re-load list of institute access instances.

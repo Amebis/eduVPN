@@ -200,7 +200,7 @@ namespace eduVPN.Models
                         var endpoints = new InstanceEndpoints();
                         var uri_builder = new UriBuilder(Base);
                         uri_builder.Path += "info.json";
-                        endpoints.LoadJSON(JSON.Response.Get(
+                        endpoints.LoadJSON(Xml.Response.Get(
                             uri: uri_builder.Uri,
                             ct: ct).Value, ct);
 
@@ -241,7 +241,7 @@ namespace eduVPN.Models
 
                         // Get and load profile list.
                         var profile_list = new JSON.Collection<Models.Profile>();
-                        profile_list.LoadJSONAPIResponse(JSON.Response.Get(
+                        profile_list.LoadJSONAPIResponse(Xml.Response.Get(
                             uri: api.ProfileList,
                             token: e.AccessToken,
                             ct: ct).Value, "profile_list", ct);
@@ -301,7 +301,7 @@ namespace eduVPN.Models
 
                 // Get and load user info.
                 var user_info = new UserInfo();
-                user_info.LoadJSONAPIResponse(JSON.Response.Get(
+                user_info.LoadJSONAPIResponse(Xml.Response.Get(
                     uri: api.UserInfo,
                     token: e.AccessToken,
                     ct: ct).Value, "user_info", ct);
@@ -377,7 +377,7 @@ namespace eduVPN.Models
 
                                 // Get certificate and import it to Windows user certificate store.
                                 var cert = new Models.Certificate();
-                                cert.LoadJSONAPIResponse(JSON.Response.Get(
+                                cert.LoadJSONAPIResponse(Xml.Response.Get(
                                     uri: api.CreateCertificate,
                                     param: new NameValueCollection
                                     {
