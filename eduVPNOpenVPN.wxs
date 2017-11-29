@@ -6,8 +6,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <Wix
-    xmlns="http://schemas.microsoft.com/wix/2006/wi"
-    xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+    xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product
         Id="$(var.eduVPN.OpenVPN.ProductGUID)"
         UpgradeCode="$(var.eduVPN.OpenVPN.UpgradeGUID)"
