@@ -195,18 +195,6 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSettingsDictionary/>")]
-        public global::eduVPN.Xml.InstanceSettingsDictionary InstanceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSettingsDictionary)(this["InstanceSettings"]));
-            }
-            set {
-                this["InstanceSettings"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int SettingsVersion {
             get {

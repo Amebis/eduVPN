@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -340,25 +339,24 @@ namespace eduVPN.Models
                     store.Open(OpenFlags.ReadWrite);
                     try
                     {
-                        if (Properties.Settings.Default.InstanceSettings.TryGetValue(Base.AbsoluteUri, out var instance_settings) && instance_settings.ClientCertificateHash != null)
+                        // Try to restore previously issued client certificate from the certificate store first.
+                        var friendly_name = Base.AbsoluteUri;
+                        foreach (var cert in store.Certificates)
                         {
-                            // Try to restore previously issued client certificate from the certificate store first.
-                            foreach (var cert in store.Certificates)
+                            var cert_friendly_name = cert.FriendlyName;
+                            if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey && cert_friendly_name.Length > 0)
                             {
-                                if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
+                                // Not expired && Has the private key.
+                                if (cert_friendly_name == friendly_name)
                                 {
-                                    // Not expired && Has the private key.
-                                    if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
-                                    {
-                                        // Certificate found.
-                                        _client_certificate = cert;
-                                    }
+                                    // Certificate found.
+                                    _client_certificate = cert;
                                 }
-                                else
-                                {
-                                    // Certificate expired or matching private key not found == Useless. Clean it from the store.
-                                    store.Remove(cert);
-                                }
+                            }
+                            else
+                            {
+                                // Certificate expired or matching private key not found or without a name == Useless. Clean it from the store.
+                                store.Remove(cert);
                             }
                         }
 
@@ -386,16 +384,11 @@ namespace eduVPN.Models
                                     },
                                     token: e.AccessToken,
                                     ct: ct).Value, "create_keypair", ct);
+                                cert.Value.FriendlyName = friendly_name;
                                 store.Add(cert.Value);
 
                                 // If we got here, save the certificate.
                                 _client_certificate = cert.Value;
-
-                                // Save the certificate hash to the settings.
-                                if (instance_settings == null)
-                                    Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri] = instance_settings = new Xml.InstanceSettings() { ClientCertificateHash = _client_certificate.GetCertHash() };
-                                else
-                                    Properties.Settings.Default.InstanceSettings[Base.AbsoluteUri].ClientCertificateHash = _client_certificate.GetCertHash();
                             }
                             catch (OperationCanceledException) { throw; }
                             catch (WebException ex)
@@ -429,20 +422,19 @@ namespace eduVPN.Models
         {
             lock (_client_certificate_lock)
             {
-                if (Properties.Settings.Default.InstanceSettings.TryGetValue(Base.AbsoluteUri, out var instance_settings) && instance_settings.ClientCertificateHash != null)
+                var friendly_name = Base.AbsoluteUri;
+
+                // Open eduVPN client certificate store.
+                var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
+                store.Open(OpenFlags.ReadWrite);
+                try
                 {
-                    // Open eduVPN client certificate store.
-                    var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
-                    store.Open(OpenFlags.ReadWrite);
-                    try
-                    {
-                        // Delete previously issued client certificate from the certificate store.
-                        foreach (var cert in store.Certificates)
-                            if (cert.GetCertHash().SequenceEqual(instance_settings.ClientCertificateHash))
-                                store.Remove(cert);
-                    }
-                    finally { store.Close(); }
+                    // Delete previously issued client certificate from the certificate store.
+                    foreach (var cert in store.Certificates)
+                        if (cert.FriendlyName == friendly_name)
+                            store.Remove(cert);
                 }
+                finally { store.Close(); }
 
                 // Invalidate memory cache.
                 _client_certificate = null;

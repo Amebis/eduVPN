@@ -66,8 +66,6 @@
     <Compile Include="ViewModels\ConnectingProfileSelectPage.cs" />
     <Compile Include="Xml\DistributedVPNConfigurationSettings.cs" />
     <Compile Include="Xml\FederatedVPNConfigurationSettings.cs" />
-    <Compile Include="Xml\InstanceSettingsDictionary.cs" />
-    <Compile Include="Xml\InstanceSettings.cs" />
     <Compile Include="Models\InstanceSource.cs" />
     <Compile Include="Models\InstanceSourceType.cs" />
     <Compile Include="Models\NetworkInterface.cs" />
