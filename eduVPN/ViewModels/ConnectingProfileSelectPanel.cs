@@ -10,7 +10,7 @@ namespace eduVPN.ViewModels
     /// <summary>
     /// Connecting profile select panel
     /// </summary>
-    public class ConnectingProfileSelectPanel : ConnectingSelectPanel
+    public class ConnectingProfileSelectPanel : ConnectingRefreshableProfileListSelectPanel
     {
         #region Constructors
 

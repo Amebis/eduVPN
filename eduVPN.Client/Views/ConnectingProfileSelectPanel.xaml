@@ -1,4 +1,4 @@
-﻿<view:ConnectingSelectBasePanel
+﻿<view:ConnectingSelectPanel
     x:Class="eduVPN.Views.ConnectingProfileSelectPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -28,6 +28,6 @@
             ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
             ItemsSource="{Binding Path=ProfileList}"
-            SelectedItem="{Binding Path=InstanceSource.ConnectingProfile}"/>
+            SelectedItem="{Binding Path=SelectedProfile}"/>
     </Grid>
-</view:ConnectingSelectBasePanel>
+</view:ConnectingSelectPanel>

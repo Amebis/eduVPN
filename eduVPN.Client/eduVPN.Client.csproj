@@ -61,7 +61,7 @@
     <Compile Include="Views\SelfUpdatePopup.xaml.cs">
       <DependentUpon>SelfUpdatePopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectingProfileSelectBasePanel.cs" />
+    <Compile Include="Views\ConnectingSelectBasePanel.cs" />
     <Compile Include="Views\ConnectingInstanceProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceProfileSelectPanel.xaml</DependentUpon>
     </Compile>

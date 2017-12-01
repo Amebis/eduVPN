@@ -1,4 +1,4 @@
-﻿<view:ConnectingSelectBasePanel
+﻿<view:ConnectingSelectPanel
     x:Class="eduVPN.Views.ConnectingInstanceSelectPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="300">
 
-    <view:ConnectingSelectBasePanel.Resources>
+    <view:ConnectingSelectPanel.Resources>
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="ConfigurationListView" Source="{Binding Path=InstanceSource.ConnectingInstanceList}">
             <CollectionViewSource.SortDescriptions>
@@ -22,7 +22,7 @@
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstanceList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="InstanceList_PreviewKeyDown"/>
         </Style>
-    </view:ConnectingSelectBasePanel.Resources>
+    </view:ConnectingSelectPanel.Resources>
 
     <Grid Margin="-5">
         <Grid.RowDefinitions>
@@ -36,7 +36,7 @@
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource InstanceListBoxStyle}"
             ItemsSource="{Binding Source={StaticResource ConfigurationListView}}"
-            SelectedItem="{Binding Path=InstanceSource.ConnectingInstance}">
+            SelectedItem="{Binding Path=SelectedInstance}">
 
             <ListBox.ContextMenu>
                 <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
@@ -47,4 +47,4 @@
             </ListBox.ContextMenu>
         </ListBox>
     </Grid>
-</view:ConnectingSelectBasePanel>
+</view:ConnectingSelectPanel>

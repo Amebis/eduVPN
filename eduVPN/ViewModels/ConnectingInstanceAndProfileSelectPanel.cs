@@ -5,42 +5,13 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Threading;
-using System.Windows.Threading;
-
 namespace eduVPN.ViewModels
 {
     /// <summary>
     /// Connecting instance and profile select panel
     /// </summary>
-    public class ConnectingInstanceAndProfileSelectPanel : ConnectingInstanceSelectPanel
+    public class ConnectingInstanceAndProfileSelectPanel : ConnectingRefreshableProfileListSelectPanel
     {
-        #region Properties
-
-        /// <summary>
-        /// List of available profiles
-        /// </summary>
-        public ObservableCollection<Models.Profile> ProfileList
-        {
-            get { return _profile_list; }
-            set
-            {
-                // CA2214: Must not be set using SetProperty<>(), since SetProperty<>() is virtual,
-                // and this property is set by constructor>InstanceSource_PropertyChanged call chain.
-                if (value != _profile_list)
-                {
-                    _profile_list = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        private ObservableCollection<Models.Profile> _profile_list;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -51,46 +22,6 @@ namespace eduVPN.ViewModels
         public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
             base(parent, instance_source_type)
         {
-            // Trigger initial load.
-            InstanceSource_PropertyChanged(this, new PropertyChangedEventArgs(nameof(InstanceSource.ConnectingInstance)));
-            InstanceSource.PropertyChanged += InstanceSource_PropertyChanged;
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void InstanceSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(InstanceSource.ConnectingInstance))
-            {
-                ProfileList = null;
-                if (InstanceSource.ConnectingInstance != null)
-                {
-                    new Thread(new ThreadStart(
-                        () =>
-                        {
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
-                            try
-                            {
-                                // Get and load profile list.
-                                var profile_list = InstanceSource.ConnectingInstance.GetProfileList(InstanceSource.AuthenticatingInstance, Window.Abort.Token);
-
-                                // Send the loaded profile list back to the UI thread.
-                                // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                    () =>
-                                    {
-                                        ProfileList = profile_list;
-                                        Parent.Error = null;
-                                    }));
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
-                            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
-                        })).Start();
-                }
-            }
         }
 
         #endregion

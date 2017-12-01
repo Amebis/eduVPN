@@ -21,7 +21,7 @@
 
     <view:ConnectWizardPage.Resources>
         <!-- Panel view model to view mapping -->
-        <DataTemplate DataType="{x:Type viewModel:ConnectingInstanceAndProfileSelectPanel}">
+        <DataTemplate DataType="{x:Type viewModel:ConnectingProfileSelectPanel}">
             <view:ConnectingProfileSelectPanel/>
         </DataTemplate>
     </view:ConnectWizardPage.Resources>

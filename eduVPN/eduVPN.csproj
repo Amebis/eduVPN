@@ -46,6 +46,7 @@
     <Compile Include="Models\FederatedInstanceSource.cs" />
     <Compile Include="System\Extensions.cs" />
     <Compile Include="ViewModels\ConnectingProfileSelectPanel.cs" />
+    <Compile Include="ViewModels\ConnectingRefreshableProfileListSelectPanel.cs" />
     <Compile Include="ViewModels\ConnectingSelectPanel.cs" />
     <Compile Include="ViewModels\PromptSelfUpdateActionType.cs" />
     <Compile Include="ViewModels\PromptSelfUpdateEventArgs.cs" />

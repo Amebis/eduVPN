@@ -13,17 +13,17 @@ namespace eduVPN.Views
     /// <summary>
     /// Interaction logic for ConnectingInstanceSelectPanel.xaml, ConnectingProfileSelectPanel.xaml and ConnectingInstanceAndProfileSelectPanel.xaml
     /// </summary>
-    public class ConnectingSelectBasePanel : UserControl
+    public class ConnectingSelectPanel : UserControl
     {
         #region Methods
 
         protected void InstanceList_SelectItem(object sender, InputEventArgs e)
         {
-            if (DataContext is ViewModels.ConnectingInstanceSelectPanel view_model)
+            if (DataContext is ViewModels.ConnectingSelectPanel view_model)
             {
                 // Select connecting instance.
-                if (view_model.SelectInstance.CanExecute())
-                    view_model.SelectInstance.Execute();
+                if (view_model.SetConnectingInstance.CanExecute())
+                    view_model.SetConnectingInstance.Execute();
 
                 e.Handled = true;
             }
