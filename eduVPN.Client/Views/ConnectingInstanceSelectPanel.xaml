@@ -36,7 +36,7 @@
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource InstanceListBoxStyle}"
             ItemsSource="{Binding Source={StaticResource ConfigurationListView}}"
-            SelectedItem="{Binding Path=SelectedInstance}">
+            SelectedItem="{Binding Path=InstanceSource.ConnectingInstance}">
 
             <ListBox.ContextMenu>
                 <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">

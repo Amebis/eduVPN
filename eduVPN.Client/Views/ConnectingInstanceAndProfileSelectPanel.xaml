@@ -37,7 +37,7 @@
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource InstanceListView}}"
-            SelectedItem="{Binding Path=SelectedInstance}">
+            SelectedItem="{Binding Path=InstanceSource.ConnectingInstance}">
 
             <ComboBox.ContextMenu>
                 <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">

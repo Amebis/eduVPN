@@ -42,6 +42,7 @@
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
     <Compile Include="System\Collections\ObjectModel\Extensions.cs" />
+    <Compile Include="ViewModels\ConnectingRefreshableProfileSelectPanel.cs" />
     <Compile Include="ViewModels\DownloadedFileCorruptException.cs" />
     <Compile Include="Models\FederatedInstanceSource.cs" />
     <Compile Include="System\Extensions.cs" />

@@ -19,18 +19,18 @@ namespace eduVPN.ViewModels
         /// <summary>
         /// Profile select panel
         /// </summary>
-        public ConnectingProfileSelectPanel Panel
+        public ConnectingRefreshableProfileSelectPanel Panel
         {
             get
             {
                 var source_index = (int)Parent.InstanceSourceType;
                 if (_panels[source_index] == null)
-                    _panels[source_index] = new ConnectingProfileSelectPanel(Parent, Parent.InstanceSourceType);
+                    _panels[source_index] = new ConnectingRefreshableProfileSelectPanel(Parent, Parent.InstanceSourceType);
 
                 return _panels[source_index];
             }
         }
-        private ConnectingProfileSelectPanel[] _panels = new ConnectingProfileSelectPanel[(int)Models.InstanceSourceType._end];
+        private ConnectingRefreshableProfileSelectPanel[] _panels = new ConnectingRefreshableProfileSelectPanel[(int)Models.InstanceSourceType._end];
 
         #endregion
 
@@ -53,15 +53,6 @@ namespace eduVPN.ViewModels
         #endregion
 
         #region Methods
-
-        /// <inheritdoc/>
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            // Trigger initial profile list load.
-            Panel.SelectedInstance = Parent.InstanceSource.ConnectingInstance;
-        }
 
         /// <inheritdoc/>
         protected override void DoNavigateBack()

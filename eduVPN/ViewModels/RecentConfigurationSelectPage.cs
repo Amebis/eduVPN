@@ -83,19 +83,5 @@ namespace eduVPN.ViewModels
         }
 
         #endregion
-
-        #region Methods
-
-        /// <inheritdoc/>
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            // Set initially selected instance. With some panel types this triggers initial profile list load.
-            for (var source_index = (int)Models.InstanceSourceType._start; source_index < (int)Models.InstanceSourceType._end; source_index++)
-                Panels[source_index].SelectedInstance = Parent.InstanceSources[source_index].ConnectingInstance;
-        }
-
-        #endregion
     }
 }

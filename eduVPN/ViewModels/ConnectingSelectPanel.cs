@@ -8,7 +8,6 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -41,16 +40,6 @@ namespace eduVPN.ViewModels
         }
 
         /// <summary>
-        /// Currently selected instance
-        /// </summary>
-        public Models.Instance SelectedInstance
-        {
-            get { return _selected_instance; }
-            set { SetProperty(ref _selected_instance, value); }
-        }
-        private Models.Instance _selected_instance;
-
-        /// <summary>
         /// Set connecting instance command
         /// </summary>
         public DelegateCommand SetConnectingInstance
@@ -67,7 +56,6 @@ namespace eduVPN.ViewModels
                             try
                             {
                                 Parent.InstanceSourceType = InstanceSourceType;
-                                InstanceSource.ConnectingInstance = SelectedInstance;
 
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
@@ -77,10 +65,10 @@ namespace eduVPN.ViewModels
                         },
 
                         // canExecute
-                        () => SelectedInstance != null);
+                        () => InstanceSource.ConnectingInstance != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _set_connecting_instance.RaiseCanExecuteChanged(); };
+                    InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) _set_connecting_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _set_connecting_instance;
@@ -93,7 +81,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         public string ForgetSelectedInstanceLabel
         {
-            get { return string.Format(Resources.Strings.InstanceForget, SelectedInstance); }
+            get { return string.Format(Resources.Strings.InstanceForget, InstanceSource.ConnectingInstance); }
         }
 
         /// <summary>
@@ -115,21 +103,14 @@ namespace eduVPN.ViewModels
                                 if (InstanceSource is Models.LocalInstanceSource instance_source_local)
                                 {
                                     // Remove all instance profiles from history.
-                                    var instance = SelectedInstance;
+                                    var instance = InstanceSource.ConnectingInstance;
                                     for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
                                         if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
                                             instance_source_local.ConnectingProfileList.RemoveAt(i);
 
                                     // Remove the instance from history.
                                     instance_source_local.ConnectingInstanceList.Remove(instance);
-                                    if (instance_source_local.ConnectingInstance != null && instance_source_local.ConnectingInstance.Equals(instance))
-                                    {
-                                        // This was the connecting instance.
-                                        instance_source_local.ConnectingInstance = instance_source_local.ConnectingInstanceList.FirstOrDefault();
-                                    }
-
-                                    // Reset selection.
-                                    SelectedInstance = instance_source_local.ConnectingInstance;
+                                    instance_source_local.ConnectingInstance = instance_source_local.ConnectingInstanceList.FirstOrDefault();
 
                                     // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
                                     if (Parent.StartingPage != Parent.CurrentPage)
@@ -143,12 +124,12 @@ namespace eduVPN.ViewModels
                         // canExecute
                         () =>
                             InstanceSource is Models.LocalInstanceSource &&
-                            SelectedInstance != null &&
-                            InstanceSource.ConnectingInstanceList.IndexOf(SelectedInstance) >= 0 &&
-                            !Parent.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(SelectedInstance)));
+                            InstanceSource.ConnectingInstance != null &&
+                            InstanceSource.ConnectingInstanceList.IndexOf(InstanceSource.ConnectingInstance) >= 0 &&
+                            !Parent.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(InstanceSource.ConnectingInstance)));
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _forget_selected_instance.RaiseCanExecuteChanged(); };
+                    InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) _forget_selected_instance.RaiseCanExecuteChanged(); };
                     InstanceSource.ConnectingInstanceList.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_instance.RaiseCanExecuteChanged();
                     Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_instance.RaiseCanExecuteChanged();
                 }
@@ -157,20 +138,6 @@ namespace eduVPN.ViewModels
             }
         }
         private DelegateCommand _forget_selected_instance;
-
-        /// <summary>
-        /// List of available profiles
-        /// </summary>
-        public ObservableCollection<Models.Profile> ProfileList
-        {
-            get { return _profile_list; }
-            set
-            {
-                if (SetProperty(ref _profile_list, value))
-                    SelectedProfile = null;
-            }
-        }
-        private ObservableCollection<Models.Profile> _profile_list;
 
         /// <summary>
         /// Currently selected profile
@@ -198,6 +165,9 @@ namespace eduVPN.ViewModels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
+                                // Set connecting instance.
+                                InstanceSource.ConnectingInstance = SelectedProfile.Instance;
+
                                 // Start VPN session.
                                 var param = new ConnectWizard.StartSessionParams(
                                     InstanceSourceType,
@@ -258,9 +228,6 @@ namespace eduVPN.ViewModels
                                         else if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
                                             remove_instance = false;
 
-                                    // Reset selection.
-                                    SelectedProfile = null;
-
                                     if (remove_instance)
                                     {
                                         // Remove the instance from history.
@@ -313,14 +280,8 @@ namespace eduVPN.ViewModels
             Parent = parent;
             InstanceSourceType = instance_source_type;
 
-            PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-            {
-                if (e.PropertyName == nameof(SelectedInstance))
-                    RaisePropertyChanged(nameof(ForgetSelectedInstanceLabel));
-
-                if (e.PropertyName == nameof(SelectedProfile))
-                    RaisePropertyChanged(nameof(ForgetSelectedProfileLabel));
-            };
+            InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) RaisePropertyChanged(nameof(ForgetSelectedInstanceLabel)); };
+            PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedProfile)) RaisePropertyChanged(nameof(ForgetSelectedProfileLabel)); };
         }
 
         #endregion

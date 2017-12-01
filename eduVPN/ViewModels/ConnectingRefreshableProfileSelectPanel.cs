@@ -8,9 +8,9 @@
 namespace eduVPN.ViewModels
 {
     /// <summary>
-    /// Connecting profile select panel
+    /// Connecting profile select panel with refreshable profile list
     /// </summary>
-    public class ConnectingProfileSelectPanel : ConnectingSelectPanel
+    public class ConnectingRefreshableProfileSelectPanel : ConnectingRefreshableProfileListSelectPanel
     {
         #region Constructors
 
@@ -19,7 +19,7 @@ namespace eduVPN.ViewModels
         /// </summary>
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public ConnectingProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
+        public ConnectingRefreshableProfileSelectPanel(ConnectWizard parent, Models.InstanceSourceType instance_source_type) :
             base(parent, instance_source_type)
         {
         }
