@@ -1374,11 +1374,11 @@ namespace eduVPN.ViewModels.Windows
         {
             if (sender is Instance authenticating_instance)
             {
+                // Get API endpoints.
+                var api = authenticating_instance.GetEndpoints(Abort.Token);
+
                 lock (_access_token_cache_lock)
                 {
-                    // Get API endpoints.
-                    var api = authenticating_instance.GetEndpoints(Abort.Token);
-
                     if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
                     {
                         var key = api.AuthorizationEndpoint.AbsoluteUri;
