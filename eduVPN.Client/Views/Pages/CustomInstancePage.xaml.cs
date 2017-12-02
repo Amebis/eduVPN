@@ -19,8 +19,8 @@ namespace eduVPN.Views.Pages
         /// </summary>
         public CustomInstancePage()
         {
-            if (eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory == null)
-                eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
+            if (Client.Properties.Settings.Default.CustomInstanceHistory == null)
+                Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
 
             InitializeComponent();
         }
@@ -33,8 +33,8 @@ namespace eduVPN.Views.Pages
         {
             var hostname = InstanceHostname.Text;
 
-            if (!eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Contains(hostname))
-                eduVPN.Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, hostname);
+            if (!Client.Properties.Settings.Default.CustomInstanceHistory.Contains(hostname))
+                Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, hostname);
         }
 
         #endregion

@@ -76,11 +76,11 @@ namespace eduVPN.Client
                     }
                 }
 
-                if (eduVPN.Client.Properties.Settings.Default.SettingsVersion == 0)
+                if (Client.Properties.Settings.Default.SettingsVersion == 0)
                 {
                     // Migrate settings from previous version.
-                    eduVPN.Client.Properties.Settings.Default.Upgrade();
-                    eduVPN.Client.Properties.Settings.Default.SettingsVersion = 1;
+                    Client.Properties.Settings.Default.Upgrade();
+                    Client.Properties.Settings.Default.SettingsVersion = 1;
                 }
 
                 // First instance
@@ -115,7 +115,7 @@ namespace eduVPN.Client
         /// <inheritdoc/>
         protected override void OnExit(ExitEventArgs e)
         {
-            eduVPN.Client.Properties.Settings.Default.Save();
+            Client.Properties.Settings.Default.Save();
 
             base.OnExit(e);
         }

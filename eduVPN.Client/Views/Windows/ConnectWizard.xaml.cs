@@ -47,10 +47,10 @@ namespace eduVPN.Views.Windows
             InitializeComponent();
 
             // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
-            if (!double.IsNaN(eduVPN.Client.Properties.Settings.Default.WindowLeft))
-                Left = Math.Min(Math.Max(eduVPN.Client.Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
-            if (!double.IsNaN(eduVPN.Client.Properties.Settings.Default.WindowTop))
-                Top = Math.Min(Math.Max(eduVPN.Client.Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
+            if (!double.IsNaN(Client.Properties.Settings.Default.WindowLeft))
+                Left = Math.Min(Math.Max(Client.Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
+            if (!double.IsNaN(Client.Properties.Settings.Default.WindowTop))
+                Top = Math.Min(Math.Max(Client.Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
         }
 
         #endregion
@@ -149,8 +149,8 @@ namespace eduVPN.Views.Windows
                 _tray_icon.Visible = false;
 
                 // Save window position on closing.
-                eduVPN.Client.Properties.Settings.Default.WindowTop = Top;
-                eduVPN.Client.Properties.Settings.Default.WindowLeft = Left;
+                Client.Properties.Settings.Default.WindowTop = Top;
+                Client.Properties.Settings.Default.WindowLeft = Left;
             }
             else
             {
@@ -241,7 +241,7 @@ namespace eduVPN.Views.Windows
             // Load previous username.
             var session = (VPNSession)sender;
             var profile_id = session.ConnectingProfile.Instance.Base.AbsoluteUri + "|" + session.ConnectingProfile.ID;
-            try { view_model.Username = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id]; }
+            try { view_model.Username = Client.Properties.Settings.Default.UsernameHistory[profile_id]; }
             catch { view_model.Username = null; }
 
             // Create a new authentication pop-up.
@@ -265,7 +265,7 @@ namespace eduVPN.Views.Windows
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
 
                 // Save username for the next time.
-                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.Username;
+                Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.Username;
             }
         }
 
@@ -279,7 +279,7 @@ namespace eduVPN.Views.Windows
             var previous_method_selected = false;
             try
             {
-                var method_id = eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id];
+                var method_id = Client.Properties.Settings.Default.UsernameHistory[profile_id];
                 var method = view_model.MethodList.FirstOrDefault(m => m.ID == method_id);
                 if (method != null)
                 {
@@ -305,7 +305,7 @@ namespace eduVPN.Views.Windows
             if (popup.ShowDialog() == true)
             {
                 // Save "username" for the next time.
-                eduVPN.Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.SelectedMethod.ID;
+                Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.SelectedMethod.ID;
             }
         }
 
