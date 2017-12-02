@@ -6,7 +6,6 @@
 */
 
 using eduVPN.Models;
-using eduVPN.ViewModels.Windows;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -21,10 +20,7 @@ namespace eduVPN.Client.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return
-                value is ConnectWizard parent &&
-                parameter is InstanceSourceType instance_source_type &&
-                parent.InstanceSources[(int)instance_source_type].ConnectingInstance != null ? Visibility.Collapsed : Visibility.Visible;
+            return value as Instance != null ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
