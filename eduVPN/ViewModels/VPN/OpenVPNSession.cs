@@ -102,7 +102,7 @@ namespace eduVPN.ViewModels.VPN
             _pre_run_actions.Add(() =>
             {
                 // Get profile's OpenVPN configuration.
-                _profile_config = ConnectingProfile.GetOpenVPNConfig(ConnectingProfile.Instance, _quit.Token);
+                _profile_config = ConnectingProfile.GetOpenVPNConfig(_quit.Token);
             });
 
             _pre_run_actions.Add(() =>

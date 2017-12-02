@@ -123,13 +123,12 @@ namespace eduVPN.Models
         /// <summary>
         /// Gets profile OpenVPN configuration
         /// </summary>
-        /// <param name="connecting_instance">Instance this profile is part of</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetOpenVPNConfig(Instance connecting_instance, CancellationToken ct = default(CancellationToken))
+        public string GetOpenVPNConfig(CancellationToken ct = default(CancellationToken))
         {
             // Get API endpoints.
-            var api = connecting_instance.GetEndpoints(ct);
+            var api = Instance.GetEndpoints(ct);
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
@@ -172,13 +171,12 @@ namespace eduVPN.Models
         /// <summary>
         /// Gets profile OpenVPN complete configuration
         /// </summary>
-        /// <param name="connecting_instance">Instance this profile is part of</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetCompleteOpenVPNConfig(Instance connecting_instance, CancellationToken ct = default(CancellationToken))
+        public string GetCompleteOpenVPNConfig(CancellationToken ct = default(CancellationToken))
         {
             // Get API endpoints.
-            var api = connecting_instance.GetEndpoints(ct);
+            var api = Instance.GetEndpoints(ct);
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
