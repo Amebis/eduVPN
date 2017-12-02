@@ -56,6 +56,7 @@ namespace eduVPN.ViewModels.Pages
                                 {
                                     instance = new Instance(uri);
                                     instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
+                                    instance.ForgetAuthorization += Parent.Instance_ForgetAuthorization;
 
                                     // Trigger initial authorization request.
                                     await Parent.TriggerAuthorizationAsync(instance);

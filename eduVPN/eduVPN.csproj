@@ -41,6 +41,7 @@
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
+    <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="System\Collections\ObjectModel\Extensions.cs" />
     <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileSelectPanel.cs" />
     <Compile Include="Models\DownloadedFileCorruptException.cs" />

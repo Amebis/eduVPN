@@ -101,6 +101,11 @@ namespace eduVPN.Models
         /// </summary>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
+        /// <summary>
+        /// Forget authorization event
+        /// </summary>
+        public event EventHandler<ForgetAuthorizationEventArgs> ForgetAuthorization;
+
         #endregion
 
         #region Constructors
@@ -441,6 +446,39 @@ namespace eduVPN.Models
 
                 return GetClientCertificate(authenticating_instance, ct);
             }
+        }
+
+        /// <summary>
+        /// Removes instance data from cache
+        /// </summary>
+        public void Forget()
+        {
+            lock (_profile_list_lock)
+            {
+                // Remove profile list from cache.
+                _profile_list = null;
+            }
+
+            lock (_client_certificate_lock)
+            {
+                // Open eduVPN client certificate store.
+                var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
+                store.Open(OpenFlags.ReadWrite);
+                try
+                {
+                    // Remove previously issued client certificate from the certificate store.
+                    var friendly_name = Base.AbsoluteUri;
+                    foreach (var cert in store.Certificates)
+                        if (cert.FriendlyName == friendly_name)
+                            store.Remove(cert);
+                }
+                finally { store.Close(); }
+
+                _client_certificate = null;
+            }
+
+            // Ask authorization provider to forget our authorization token.
+            ForgetAuthorization?.Invoke(this, new ForgetAuthorizationEventArgs("config"));
         }
 
         #endregion

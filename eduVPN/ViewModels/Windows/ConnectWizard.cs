@@ -698,12 +698,18 @@ namespace eduVPN.ViewModels.Windows
                                 _instance_sources[source_index] = InstanceSource.FromJSON(obj_web);
 
                                 {
-                                    // Attach to RequestAuthorization instance events.
+                                    // Attach to instance events.
                                     if (_instance_sources[source_index] is FederatedInstanceSource instance_source_federated)
+                                    {
                                         instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                        instance_source_federated.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
+                                    }
 
                                     foreach (var instance in _instance_sources[source_index].InstanceList)
+                                    {
                                         instance.RequestAuthorization += Instance_RequestAuthorization;
+                                        instance.ForgetAuthorization += Instance_ForgetAuthorization;
+                                    }
                                 }
 
                                 // Load instance source info settings.
@@ -805,7 +811,9 @@ namespace eduVPN.ViewModels.Windows
                                                 // The connecting instance was not found. Could be user entered, or removed from discovery file.
                                                 connecting_instance = new Instance(h_instance.Base);
                                                 connecting_instance.RequestAuthorization += Instance_RequestAuthorization;
-                                            } else
+                                                connecting_instance.ForgetAuthorization += Instance_ForgetAuthorization;
+                                            }
+                                            else
                                                 connecting_instance.Popularity = h_instance.Popularity;
 
                                             var instance = instance_source_local.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
@@ -869,6 +877,7 @@ namespace eduVPN.ViewModels.Windows
                                         if (instance_source_distributed.AuthenticatingInstance != null)
                                         {
                                             instance_source_distributed.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                            instance_source_distributed.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
                                             instance_source_distributed.ConnectingInstance = h_distributed.ConnectingInstance != null ? instance_source_distributed.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.ConnectingInstance.AbsoluteUri) : null;
                                         }
                                     }
@@ -1437,6 +1446,24 @@ namespace eduVPN.ViewModels.Windows
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Called when an instance requests authorization delete
+        /// </summary>
+        /// <param name="sender">Instance of type <c>eduVPN.Instance</c> requiring authorization</param>
+        /// <param name="e">Authorization forget event arguments</param>
+        public void Instance_ForgetAuthorization(object sender, ForgetAuthorizationEventArgs e)
+        {
+            if (sender is Instance authenticating_instance)
+            {
+                // Get API endpoints.
+                var api = authenticating_instance.GetEndpoints(Abort.Token);
+
+                // Remove access token from cache.
+                lock (_access_token_cache_lock)
+                    _access_token_cache.Remove(api.AuthorizationEndpoint.AbsoluteUri);
             }
         }
 

@@ -114,23 +114,11 @@ namespace eduVPN.ViewModels.Panels
                             Parent.ChangeTaskCount(+1);
                             try
                             {
-                                if (InstanceSource is LocalInstanceSource instance_source_local)
-                                {
-                                    // Remove all instance profiles from history.
-                                    var instance = SelectedInstance;
-                                    for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
-                                        if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
-                                            instance_source_local.ConnectingProfileList.RemoveAt(i);
+                                ForgetInstance(SelectedInstance);
 
-                                    // Remove the instance from history.
-                                    instance_source_local.ConnectingInstanceList.Remove(instance);
-                                    if (instance_source_local.ConnectingInstance != null && instance_source_local.ConnectingInstance.Equals(instance))
-                                        instance_source_local.ConnectingInstance = instance_source_local.ConnectingInstanceList.FirstOrDefault();
-
-                                    // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                                    if (Parent.StartingPage != Parent.CurrentPage)
-                                        Parent.CurrentPage = Parent.StartingPage;
-                                }
+                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                                if (Parent.StartingPage != Parent.CurrentPage)
+                                    Parent.CurrentPage = Parent.StartingPage;
                             }
                             catch (Exception ex) { Parent.Error = ex; }
                             finally { Parent.ChangeTaskCount(-1); }
@@ -234,27 +222,19 @@ namespace eduVPN.ViewModels.Panels
                                     // Remove the profile from history.
                                     var profile = SelectedProfile;
                                     var instance = profile.Instance;
-                                    var remove_instance = true;
+                                    var forget_instance = true;
                                     for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
                                         if (instance_source_local.ConnectingProfileList[i].Equals(profile))
                                             instance_source_local.ConnectingProfileList.RemoveAt(i);
                                         else if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
-                                            remove_instance = false;
+                                            forget_instance = false;
 
-                                    if (remove_instance)
-                                    {
-                                        // Remove the instance from history.
-                                        instance_source_local.ConnectingInstanceList.Remove(instance);
-                                        if (instance_source_local.ConnectingInstance != null && instance_source_local.ConnectingInstance.Equals(instance))
-                                        {
-                                            // This was also the connecting instance.
-                                            instance_source_local.ConnectingInstance = instance_source_local.ConnectingInstanceList.FirstOrDefault();
-                                        }
+                                    if (forget_instance)
+                                        ForgetInstance(instance);
 
-                                        // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                                        if (Parent.StartingPage != Parent.CurrentPage)
-                                            Parent.CurrentPage = Parent.StartingPage;
-                                    }
+                                    // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                                    if (Parent.StartingPage != Parent.CurrentPage)
+                                        Parent.CurrentPage = Parent.StartingPage;
                                 }
                             }
                             catch (Exception ex) { Parent.Error = ex; }
@@ -300,6 +280,46 @@ namespace eduVPN.ViewModels.Panels
                 else if (e.PropertyName == nameof(SelectedProfile))
                     RaisePropertyChanged(nameof(ForgetSelectedProfileLabel));
             };
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Removes given instance from history
+        /// </summary>
+        /// <param name="instance">Instance</param>
+        private void ForgetInstance(Instance instance)
+        {
+            if (InstanceSource is LocalInstanceSource instance_source_local)
+            {
+                // Remove all instance profiles from history.
+                for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
+                    if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
+                        instance_source_local.ConnectingProfileList.RemoveAt(i);
+            }
+
+            // Remove the instance from history.
+            InstanceSource.ConnectingInstanceList.Remove(instance);
+
+            // Reset connecting instance.
+            if (InstanceSource.ConnectingInstance != null && InstanceSource.ConnectingInstance.Equals(instance))
+            {
+                InstanceSource.ConnectingInstance = InstanceSource.ConnectingInstanceList.FirstOrDefault();
+                if (InstanceSource is LocalInstanceSource)
+                    InstanceSource.AuthenticatingInstance = InstanceSource.ConnectingInstance;
+            }
+
+            // Test if it is safe to remove authorization token and certificate.
+            if (InstanceSource.AuthenticatingInstance != null && InstanceSource.AuthenticatingInstance.Equals(instance))
+                return;
+            for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
+                if (Parent.InstanceSources[source_index].AuthenticatingInstance != null && Parent.InstanceSources[source_index].AuthenticatingInstance.Equals(instance)/* ||
+                    Parent.InstanceSources[source_index].ConnectingInstanceList.FirstOrDefault(inst => inst.Equals(instance)) != null*/)
+                    return;
+
+            instance.Forget();
         }
 
         #endregion
