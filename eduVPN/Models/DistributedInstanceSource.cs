@@ -15,15 +15,13 @@ namespace eduVPN.Models
     /// </remarks>
     public class DistributedInstanceSource : InstanceSource
     {
-        #region Properties
+        #region Methods
 
         /// <inheritdoc/>
-        public override Instance AuthenticatingInstance
+        public override Instance GetAuthenticatingInstance(Instance connecting_instance)
         {
-            get { return _authenticating_instance; }
-            set { SetProperty(ref _authenticating_instance, value); }
+            return AuthenticatingInstance;
         }
-        private Instance _authenticating_instance;
 
         #endregion
     }

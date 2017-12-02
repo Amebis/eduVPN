@@ -57,6 +57,14 @@ namespace eduVPN.ViewModels.Pages
 
         #region Methods
 
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
+            // Synchronize selected instance => triggers profile list refresh.
+            Panel.SelectedInstance = Parent.InstanceSource.ConnectingInstance;
+        }
+
         /// <inheritdoc/>
         protected override void DoNavigateBack()
         {

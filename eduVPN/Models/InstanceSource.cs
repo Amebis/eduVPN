@@ -28,11 +28,12 @@ namespace eduVPN.Models
         /// Authenticating instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public virtual Instance AuthenticatingInstance
+        public Instance AuthenticatingInstance
         {
-            get { return ConnectingInstance; }
-            set { ConnectingInstance = value; }
+            get { return _authenticating_instance; }
+            set { SetProperty(ref _authenticating_instance, value); }
         }
+        private Instance _authenticating_instance;
 
         /// <summary>
         /// User saved instance list
@@ -49,11 +50,7 @@ namespace eduVPN.Models
         public Instance ConnectingInstance
         {
             get { return _connecting_instance; }
-            set
-            {
-                if (SetProperty(ref _connecting_instance, value))
-                    RaisePropertyChanged(nameof(AuthenticatingInstance));
-            }
+            set { SetProperty(ref _connecting_instance, value); }
         }
         private Instance _connecting_instance;
 
@@ -80,6 +77,16 @@ namespace eduVPN.Models
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Returns appropriate authenticating instance for given connecting instance
+        /// </summary>
+        /// <param name="connecting_instance">Connecting instance</param>
+        /// <returns></returns>
+        public virtual Instance GetAuthenticatingInstance(Instance connecting_instance)
+        {
+            return connecting_instance;
+        }
 
         /// <summary>
         /// Loads instance source from a dictionary object (provided by JSON)

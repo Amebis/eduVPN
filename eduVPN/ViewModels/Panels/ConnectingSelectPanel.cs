@@ -42,6 +42,17 @@ namespace eduVPN.ViewModels.Panels
         }
 
         /// <summary>
+        /// Selected instance
+        /// </summary>
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public Instance SelectedInstance
+        {
+            get { return _selected_instance; }
+            set { SetProperty(ref _selected_instance, value); }
+        }
+        private Instance _selected_instance;
+
+        /// <summary>
         /// Set connecting instance command
         /// </summary>
         public DelegateCommand SetConnectingInstance
@@ -58,6 +69,7 @@ namespace eduVPN.ViewModels.Panels
                             try
                             {
                                 Parent.InstanceSourceType = InstanceSourceType;
+                                InstanceSource.ConnectingInstance = SelectedInstance;
 
                                 // Go to profile selection page.
                                 Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
@@ -67,10 +79,10 @@ namespace eduVPN.ViewModels.Panels
                         },
 
                         // canExecute
-                        () => InstanceSource.ConnectingInstance != null);
+                        () => SelectedInstance != null);
 
                     // Setup canExecute refreshing.
-                    InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) _set_connecting_instance.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _set_connecting_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _set_connecting_instance;
@@ -83,7 +95,7 @@ namespace eduVPN.ViewModels.Panels
         /// </summary>
         public string ForgetSelectedInstanceLabel
         {
-            get { return string.Format(Resources.Strings.InstanceForget, InstanceSource.ConnectingInstance); }
+            get { return string.Format(Resources.Strings.InstanceForget, SelectedInstance); }
         }
 
         /// <summary>
@@ -105,14 +117,15 @@ namespace eduVPN.ViewModels.Panels
                                 if (InstanceSource is LocalInstanceSource instance_source_local)
                                 {
                                     // Remove all instance profiles from history.
-                                    var instance = InstanceSource.ConnectingInstance;
+                                    var instance = SelectedInstance;
                                     for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
                                         if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
                                             instance_source_local.ConnectingProfileList.RemoveAt(i);
 
                                     // Remove the instance from history.
                                     instance_source_local.ConnectingInstanceList.Remove(instance);
-                                    instance_source_local.ConnectingInstance = instance_source_local.ConnectingInstanceList.FirstOrDefault();
+                                    if (instance_source_local.ConnectingInstance != null && instance_source_local.ConnectingInstance.Equals(instance))
+                                        instance_source_local.ConnectingInstance = instance_source_local.ConnectingInstanceList.FirstOrDefault();
 
                                     // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
                                     if (Parent.StartingPage != Parent.CurrentPage)
@@ -126,12 +139,12 @@ namespace eduVPN.ViewModels.Panels
                         // canExecute
                         () =>
                             InstanceSource is LocalInstanceSource &&
-                            InstanceSource.ConnectingInstance != null &&
-                            InstanceSource.ConnectingInstanceList.IndexOf(InstanceSource.ConnectingInstance) >= 0 &&
-                            !Parent.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(InstanceSource.ConnectingInstance)));
+                            SelectedInstance != null &&
+                            InstanceSource.ConnectingInstanceList.IndexOf(SelectedInstance) >= 0 &&
+                            !Parent.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(SelectedInstance)));
 
                     // Setup canExecute refreshing.
-                    InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) _forget_selected_instance.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _forget_selected_instance.RaiseCanExecuteChanged(); };
                     InstanceSource.ConnectingInstanceList.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_instance.RaiseCanExecuteChanged();
                     Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_instance.RaiseCanExecuteChanged();
                 }
@@ -168,13 +181,11 @@ namespace eduVPN.ViewModels.Panels
                             try
                             {
                                 // Set connecting instance.
+                                Parent.InstanceSourceType = InstanceSourceType;
                                 InstanceSource.ConnectingInstance = SelectedProfile.Instance;
 
                                 // Start VPN session.
-                                var param = new ConnectWizard.StartSessionParams(
-                                    InstanceSourceType,
-                                    InstanceSource.AuthenticatingInstance,
-                                    SelectedProfile);
+                                var param = new ConnectWizard.StartSessionParams(InstanceSourceType, SelectedProfile);
                                 if (Parent.StartSession.CanExecute(param))
                                     Parent.StartSession.Execute(param);
                             }
@@ -282,8 +293,13 @@ namespace eduVPN.ViewModels.Panels
             Parent = parent;
             InstanceSourceType = instance_source_type;
 
-            InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(InstanceSource.ConnectingInstance)) RaisePropertyChanged(nameof(ForgetSelectedInstanceLabel)); };
-            PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedProfile)) RaisePropertyChanged(nameof(ForgetSelectedProfileLabel)); };
+            PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                if (e.PropertyName == nameof(SelectedInstance))
+                    RaisePropertyChanged(nameof(ForgetSelectedInstanceLabel));
+                else if (e.PropertyName == nameof(SelectedProfile))
+                    RaisePropertyChanged(nameof(ForgetSelectedProfileLabel));
+            };
         }
 
         #endregion

@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
@@ -19,6 +20,17 @@ namespace eduVPN.ViewModels.Pages
     public class AuthenticatingInstanceSelectPage : ConnectWizardPage
     {
         #region Properties
+
+        /// <summary>
+        /// Selected instance
+        /// </summary>
+        /// <remarks><c>null</c> if none selected.</remarks>
+        public Instance SelectedInstance
+        {
+            get { return _selected_instance; }
+            set { SetProperty(ref _selected_instance, value); }
+        }
+        private Instance _selected_instance;
 
         /// <summary>
         /// Authorize selected instance command
@@ -37,13 +49,15 @@ namespace eduVPN.ViewModels.Pages
                             try
                             {
                                 // Trigger initial authorization request.
-                                await Parent.TriggerAuthorizationAsync(Parent.InstanceSource.AuthenticatingInstance);
+                                var authenticating_instance = SelectedInstance;
+                                await Parent.TriggerAuthorizationAsync(authenticating_instance);
+                                Parent.InstanceSource.AuthenticatingInstance = authenticating_instance;
 
                                 // Assume the same connecting instance.
-                                var instance = Parent.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == Parent.InstanceSource.AuthenticatingInstance.Base.AbsoluteUri);
-                                if (instance == null)
-                                    Parent.InstanceSource.ConnectingInstanceList.Add(Parent.InstanceSource.AuthenticatingInstance);
-                                Parent.InstanceSource.ConnectingInstance = Parent.InstanceSource.AuthenticatingInstance;
+                                var connecting_instance = Parent.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == authenticating_instance.Base.AbsoluteUri);
+                                if (connecting_instance == null)
+                                    Parent.InstanceSource.ConnectingInstanceList.Add(authenticating_instance);
+                                Parent.InstanceSource.ConnectingInstance = authenticating_instance;
 
                                 // Go to (instance and) profile selection page.
                                 switch (Properties.Settings.Default.ConnectingProfileSelectMode)
@@ -59,10 +73,10 @@ namespace eduVPN.ViewModels.Pages
                         },
 
                         // canExecute
-                        () => Parent.InstanceSource.AuthenticatingInstance != null);
+                        () => SelectedInstance != null);
 
                     // Setup canExecute refreshing.
-                    Parent.InstanceSource.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Parent.InstanceSource.AuthenticatingInstance)) _authorize_selected_instance.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _authorize_selected_instance.RaiseCanExecuteChanged(); };
                 }
 
                 return _authorize_selected_instance;

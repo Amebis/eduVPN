@@ -31,7 +31,7 @@ namespace eduVPN.ViewModels.Panels
             set
             {
                 // CA2214: Must not be set using SetProperty<>(), since SetProperty<>() is virtual,
-                // and this property is set by constructor>InstanceSource_PropertyChanged call chain.
+                // and this property is set by constructor>OnPropertyChanged call chain.
                 if (value != _profile_list)
                 {
                     _profile_list = value;
@@ -54,22 +54,22 @@ namespace eduVPN.ViewModels.Panels
             base(parent, instance_source_type)
         {
             // Trigger initial load.
-            InstanceSource_PropertyChanged(this, new PropertyChangedEventArgs(nameof(InstanceSource.ConnectingInstance)));
+            OnPropertyChanged(this, new PropertyChangedEventArgs(nameof(SelectedInstance)));
 
             // Register to receive property change events and reload the profile list.
-            InstanceSource.PropertyChanged += InstanceSource_PropertyChanged;
+            PropertyChanged += OnPropertyChanged;
         }
 
         #endregion
 
         #region Methods
 
-        private void InstanceSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(InstanceSource.ConnectingInstance))
+            if (e.PropertyName == nameof(SelectedInstance))
             {
                 ProfileList = null;
-                if (InstanceSource.ConnectingInstance != null)
+                if (SelectedInstance != null)
                 {
                     new Thread(new ThreadStart(
                         () =>
@@ -78,7 +78,7 @@ namespace eduVPN.ViewModels.Panels
                             try
                             {
                                 // Get and load profile list.
-                                var profile_list = InstanceSource.ConnectingInstance.GetProfileList(InstanceSource.AuthenticatingInstance, Window.Abort.Token);
+                                var profile_list = SelectedInstance.GetProfileList(InstanceSource.GetAuthenticatingInstance(SelectedInstance), Window.Abort.Token);
 
                                 // Send the loaded profile list back to the UI thread.
                                 // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.

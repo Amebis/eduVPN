@@ -86,5 +86,18 @@ namespace eduVPN.ViewModels.Pages
         }
 
         #endregion
+
+        #region Methods
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
+            // Synchronize selected instance => triggers profile list refresh.
+            for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
+                Panels[source_index].SelectedInstance = Parent.InstanceSources[source_index].ConnectingInstance;
+        }
+
+        #endregion
     }
 }
