@@ -9,7 +9,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
-    xmlns:view="clr-namespace:eduVPN.Views"
+    xmlns:panels="clr-namespace:eduVPN.Views.Panels"
+    xmlns:controls="clr-namespace:eduVPN.Views.Controls"
     xmlns:res="clr-namespace:eduVPN.Client.Resources">
 
     <DataTemplate x:Key="eduVPNInstanceSelectionItemTemplate">
@@ -27,7 +28,7 @@
                 Grid.ColumnSpan="2"
                 Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
 
-            <view:ImageWithFallback
+            <controls:ImageWithFallback
                 Grid.Column="0"
                 Grid.Row="1"
                 UriSource="{Binding Path=Logo}"
@@ -44,9 +45,9 @@
                 MaxHeight="12"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
@@ -55,7 +56,7 @@
                         <Binding/>
                         <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile.Instance"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
@@ -91,9 +92,9 @@
                 MaxHeight="18"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
@@ -102,7 +103,7 @@
                         <Binding/>
                         <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
@@ -151,9 +152,9 @@
                 MaxHeight="18"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
@@ -162,7 +163,7 @@
                         <Binding/>
                         <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
@@ -204,7 +205,7 @@
                 Grid.ColumnSpan="3"
                 Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
 
-            <view:ImageWithFallback
+            <controls:ImageWithFallback
                 Grid.Column="0"
                 Grid.Row="1"
                 UriSource="{Binding Path=Instance.Logo}"
@@ -221,9 +222,9 @@
                 MaxHeight="12"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
-                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                ToolTip="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                AutomationProperties.Name="{Binding Path=DataContext.Parent.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Visibility>
                     <MultiBinding
@@ -232,7 +233,7 @@
                         <Binding/>
                         <Binding
                             Path="DataContext.Parent.ActiveSession.ConnectingProfile"
-                            RelativeSource="{RelativeSource AncestorType={x:Type view:ConnectingSelectPanel}}"/>
+                            RelativeSource="{RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>

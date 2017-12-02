@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -19,7 +20,7 @@ namespace eduVPN.Client.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value as Models.Instance != null ? Visibility.Visible : Visibility.Collapsed;
+            return value as Instance != null ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

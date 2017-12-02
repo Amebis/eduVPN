@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.Models;
+using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -28,7 +28,7 @@ namespace eduVPN.Client.Converters
                         new Uri(
                             String.Format(
                                 "pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico",
-                                Enum.GetName(typeof(Models.VPNSessionStatusType), status_type))));
+                                Enum.GetName(typeof(VPNSessionStatusType), status_type))));
                 }
                 catch { }
             }

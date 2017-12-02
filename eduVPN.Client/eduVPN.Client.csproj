@@ -58,58 +58,58 @@
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
-    <Compile Include="Views\SelfUpdatePopup.xaml.cs">
+    <Compile Include="Views\Windows\SelfUpdatePopup.xaml.cs">
       <DependentUpon>SelfUpdatePopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectingSelectBasePanel.cs" />
-    <Compile Include="Views\ConnectingInstanceProfileSelectPanel.xaml.cs">
+    <Compile Include="Views\Panels\ConnectingSelectBasePanel.cs" />
+    <Compile Include="Views\Panels\ConnectingInstanceProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceProfileSelectPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectingProfileSelectPanel.xaml.cs">
+    <Compile Include="Views\Panels\ConnectingProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectingInstanceSelectPanel.xaml.cs">
+    <Compile Include="Views\Panels\ConnectingInstanceSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceSelectPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectingProfileSelectPage.xaml.cs">
+    <Compile Include="Views\Pages\ConnectingProfileSelectPage.xaml.cs">
       <DependentUpon>ConnectingProfileSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\YubiKeyAuthenticationPanel.xaml.cs">
+    <Compile Include="Views\Panels\YubiKeyAuthenticationPanel.xaml.cs">
       <DependentUpon>YubiKeyAuthenticationPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TwoFactorAuthenticationPopup.xaml.cs">
+    <Compile Include="Views\Windows\TwoFactorAuthenticationPopup.xaml.cs">
       <DependentUpon>TwoFactorAuthenticationPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UsernamePasswordPopup.xaml.cs">
+    <Compile Include="Views\Windows\UsernamePasswordPopup.xaml.cs">
       <DependentUpon>UsernamePasswordPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PasswordPopup.xaml.cs">
+    <Compile Include="Views\Windows\PasswordPopup.xaml.cs">
       <DependentUpon>PasswordPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
+    <Compile Include="Views\Panels\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TOTPAuthenticationPanel.xaml.cs">
+    <Compile Include="Views\Panels\TOTPAuthenticationPanel.xaml.cs">
       <DependentUpon>TOTPAuthenticationPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ImageWithFallback.cs" />
-    <Compile Include="Views\AboutPage.xaml.cs">
+    <Compile Include="Views\Controls\ImageWithFallback.cs" />
+    <Compile Include="Views\Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsPage.xaml.cs">
+    <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RecentConfigurationSelectPage.xaml.cs">
+    <Compile Include="Views\Pages\RecentConfigurationSelectPage.xaml.cs">
       <DependentUpon>RecentConfigurationSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectWizardPage.cs" />
-    <Compile Include="Views\InitializingPage.xaml.cs">
+    <Compile Include="Views\Pages\ConnectWizardPage.cs" />
+    <Compile Include="Views\Pages\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StatusPage.xaml.cs">
+    <Compile Include="Views\Pages\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Window.cs" />
+    <Compile Include="Views\Windows\Window.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -143,110 +143,110 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SelfUpdatePopup.xaml">
+    <Page Include="Views\Windows\SelfUpdatePopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectingInstanceProfileSelectPanel.xaml">
+    <Page Include="Views\Panels\ConnectingInstanceProfileSelectPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectingProfileSelectPanel.xaml">
+    <Page Include="Views\Panels\ConnectingProfileSelectPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectingInstanceSelectPanel.xaml">
+    <Page Include="Views\Panels\ConnectingInstanceSelectPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectingProfileSelectPage.xaml">
+    <Page Include="Views\Pages\ConnectingProfileSelectPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\YubiKeyAuthenticationPanel.xaml">
+    <Page Include="Views\Panels\YubiKeyAuthenticationPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TwoFactorAuthenticationPopup.xaml">
+    <Page Include="Views\Windows\TwoFactorAuthenticationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UsernamePasswordPopup.xaml">
+    <Page Include="Views\Windows\UsernamePasswordPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PasswordPopup.xaml">
+    <Page Include="Views\Windows\PasswordPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectingInstanceAndProfileSelectPanel.xaml">
+    <Page Include="Views\Panels\ConnectingInstanceAndProfileSelectPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TOTPAuthenticationPanel.xaml">
+    <Page Include="Views\Panels\TOTPAuthenticationPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AboutPage.xaml">
+    <Page Include="Views\Pages\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsPage.xaml">
+    <Page Include="Views\Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RecentConfigurationSelectPage.xaml">
+    <Page Include="Views\Pages\RecentConfigurationSelectPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\InitializingPage.xaml">
+    <Page Include="Views\Pages\InitializingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\InstanceSourceSelectPage.xaml">
+    <Page Include="Views\Pages\InstanceSourceSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AuthorizationPopup.xaml">
+    <Page Include="Views\Windows\AuthorizationPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AuthenticatingInstanceSelectPage.xaml">
+    <Page Include="Views\Pages\AuthenticatingInstanceSelectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ConnectWizard.xaml">
+    <Page Include="Views\Windows\ConnectWizard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Views\InstanceSourceSelectPage.xaml.cs">
+    <Compile Include="Views\Pages\InstanceSourceSelectPage.xaml.cs">
       <DependentUpon>InstanceSourceSelectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\AuthorizationPopup.xaml.cs">
+    <Compile Include="Views\Windows\AuthorizationPopup.xaml.cs">
       <DependentUpon>AuthorizationPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AuthenticatingInstanceSelectPage.xaml.cs">
+    <Compile Include="Views\Pages\AuthenticatingInstanceSelectPage.xaml.cs">
       <DependentUpon>AuthenticatingInstanceSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectWizard.xaml.cs">
+    <Compile Include="Views\Windows\ConnectWizard.xaml.cs">
       <DependentUpon>ConnectWizard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\CustomInstancePage.xaml">
+    <Page Include="Views\Pages\CustomInstancePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StatusPage.xaml">
+    <Page Include="Views\Pages\StatusPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\CustomInstancePage.xaml.cs">
+    <Compile Include="Views\Pages\CustomInstancePage.xaml.cs">
       <DependentUpon>CustomInstancePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -332,6 +332,7 @@
   <ItemGroup>
     <Resource Include="Resources\Update.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />
 </Project>

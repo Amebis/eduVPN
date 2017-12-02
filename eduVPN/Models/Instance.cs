@@ -33,7 +33,7 @@ namespace eduVPN.Models
         /// <summary>
         /// List of available profiles
         /// </summary>
-        private ObservableCollection<Models.Profile> _profile_list;
+        private ObservableCollection<Profile> _profile_list;
         private object _profile_list_lock = new object();
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile list</returns>
-        public ObservableCollection<Models.Profile> GetProfileList(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public ObservableCollection<Profile> GetProfileList(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
         {
             lock (_profile_list_lock)
             {
@@ -240,7 +240,7 @@ namespace eduVPN.Models
                             throw new AccessTokenNullException();
 
                         // Get and load profile list.
-                        var profile_list = new ObservableCollection<Models.Profile>();
+                        var profile_list = new ObservableCollection<Profile>();
                         profile_list.LoadJSONAPIResponse(Xml.Response.Get(
                             uri: api.ProfileList,
                             token: e.AccessToken,
@@ -375,7 +375,7 @@ namespace eduVPN.Models
                                     throw new AccessTokenNullException();
 
                                 // Get certificate and import it to Windows user certificate store.
-                                var cert = new Models.Certificate();
+                                var cert = new Certificate();
                                 cert.LoadJSONAPIResponse(Xml.Response.Get(
                                     uri: api.CreateCertificate,
                                     param: new NameValueCollection

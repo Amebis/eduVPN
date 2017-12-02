@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.Models;
+using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
 using System.IO;

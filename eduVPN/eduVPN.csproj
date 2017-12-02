@@ -42,16 +42,16 @@
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
     <Compile Include="System\Collections\ObjectModel\Extensions.cs" />
-    <Compile Include="ViewModels\ConnectingRefreshableProfileSelectPanel.cs" />
-    <Compile Include="ViewModels\DownloadedFileCorruptException.cs" />
+    <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileSelectPanel.cs" />
+    <Compile Include="Models\DownloadedFileCorruptException.cs" />
     <Compile Include="Models\FederatedInstanceSource.cs" />
     <Compile Include="System\Extensions.cs" />
-    <Compile Include="ViewModels\ConnectingProfileSelectPanel.cs" />
-    <Compile Include="ViewModels\ConnectingRefreshableProfileListSelectPanel.cs" />
-    <Compile Include="ViewModels\ConnectingSelectPanel.cs" />
-    <Compile Include="ViewModels\PromptSelfUpdateActionType.cs" />
-    <Compile Include="ViewModels\PromptSelfUpdateEventArgs.cs" />
-    <Compile Include="ViewModels\SelfUpdatePopup.cs" />
+    <Compile Include="ViewModels\Panels\ConnectingProfileSelectPanel.cs" />
+    <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileListSelectPanel.cs" />
+    <Compile Include="ViewModels\Panels\ConnectingSelectPanel.cs" />
+    <Compile Include="Models\PromptSelfUpdateActionType.cs" />
+    <Compile Include="Models\PromptSelfUpdateEventArgs.cs" />
+    <Compile Include="ViewModels\Windows\SelfUpdatePopup.cs" />
     <Compile Include="Xml\Dictionary.cs" />
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
     <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />
@@ -63,9 +63,9 @@
     <Compile Include="Xml\ProfileRefList.cs" />
     <Compile Include="Xml\InstanceRefList.cs" />
     <Compile Include="Xml\ProfileRef.cs" />
-    <Compile Include="ViewModels\ConnectingInstanceAndProfileSelectPanel.cs" />
-    <Compile Include="ViewModels\ConnectingInstanceSelectPanel.cs" />
-    <Compile Include="ViewModels\ConnectingProfileSelectPage.cs" />
+    <Compile Include="ViewModels\Panels\ConnectingInstanceAndProfileSelectPanel.cs" />
+    <Compile Include="ViewModels\Panels\ConnectingInstanceSelectPanel.cs" />
+    <Compile Include="ViewModels\Pages\ConnectingProfileSelectPage.cs" />
     <Compile Include="Xml\DistributedVPNConfigurationSettings.cs" />
     <Compile Include="Xml\FederatedVPNConfigurationSettings.cs" />
     <Compile Include="Models\InstanceSource.cs" />
@@ -81,32 +81,32 @@
     <Compile Include="Models\ValidatableBindableBase.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />
-    <Compile Include="ViewModels\AboutPage.cs" />
-    <Compile Include="ViewModels\ConnectWizardPopupPage.cs" />
-    <Compile Include="ViewModels\OpenVPNSession.cs" />
+    <Compile Include="ViewModels\Pages\AboutPage.cs" />
+    <Compile Include="ViewModels\Pages\ConnectWizardPopupPage.cs" />
+    <Compile Include="ViewModels\VPN\OpenVPNSession.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
     <Compile Include="Models\UserInfo.cs" />
-    <Compile Include="ViewModels\PasswordPopup.cs" />
-    <Compile Include="ViewModels\SettingsPage.cs" />
-    <Compile Include="ViewModels\TOTPAuthenticationPanel.cs" />
-    <Compile Include="ViewModels\TwoFactorAuthenticationBasePanel.cs" />
-    <Compile Include="ViewModels\TwoFactorAuthenticationPopup.cs" />
-    <Compile Include="ViewModels\UsernamePasswordPopup.cs" />
-    <Compile Include="ViewModels\VPNSession.cs" />
-    <Compile Include="Models\VPNSessionStatusType.cs" />
+    <Compile Include="ViewModels\Windows\PasswordPopup.cs" />
+    <Compile Include="ViewModels\Pages\SettingsPage.cs" />
+    <Compile Include="ViewModels\Panels\TOTPAuthenticationPanel.cs" />
+    <Compile Include="ViewModels\Panels\TwoFactorAuthenticationBasePanel.cs" />
+    <Compile Include="ViewModels\Windows\TwoFactorAuthenticationPopup.cs" />
+    <Compile Include="ViewModels\Windows\UsernamePasswordPopup.cs" />
+    <Compile Include="ViewModels\VPN\VPNSession.cs" />
+    <Compile Include="ViewModels\VPN\VPNSessionStatusType.cs" />
     <Compile Include="System\IO\Extensions.cs" />
-    <Compile Include="ViewModels\AuthenticatingCountrySelectPage.cs" />
-    <Compile Include="ViewModels\AuthenticatingInstanceSelectPage.cs" />
-    <Compile Include="ViewModels\AuthenticatingInstituteSelectPage.cs" />
-    <Compile Include="ViewModels\CustomInstancePage.cs" />
-    <Compile Include="ViewModels\InitializingPage.cs" />
+    <Compile Include="ViewModels\Pages\AuthenticatingCountrySelectPage.cs" />
+    <Compile Include="ViewModels\Pages\AuthenticatingInstanceSelectPage.cs" />
+    <Compile Include="ViewModels\Pages\AuthenticatingInstituteSelectPage.cs" />
+    <Compile Include="ViewModels\Pages\CustomInstancePage.cs" />
+    <Compile Include="ViewModels\Pages\InitializingPage.cs" />
     <Compile Include="Models\InstanceEndpoints.cs" />
-    <Compile Include="ViewModels\AuthorizationPopup.cs" />
-    <Compile Include="ViewModels\ConnectWizardPage.cs" />
-    <Compile Include="ViewModels\ConnectWizard.cs" />
+    <Compile Include="ViewModels\Windows\AuthorizationPopup.cs" />
+    <Compile Include="ViewModels\Pages\ConnectWizardPage.cs" />
+    <Compile Include="ViewModels\Windows\ConnectWizard.cs" />
     <Compile Include="Models\Instance.cs" />
-    <Compile Include="ViewModels\InstanceSourceSelectPage.cs" />
+    <Compile Include="ViewModels\Pages\InstanceSourceSelectPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -118,11 +118,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\RecentConfigurationSelectPage.cs" />
-    <Compile Include="ViewModels\RequestInstanceAuthorizationEventArgs.cs" />
-    <Compile Include="ViewModels\StatusPage.cs" />
-    <Compile Include="ViewModels\Window.cs" />
-    <Compile Include="ViewModels\YubiKeyAuthenticationPanel.cs" />
+    <Compile Include="ViewModels\Pages\RecentConfigurationSelectPage.cs" />
+    <Compile Include="Models\RequestInstanceAuthorizationEventArgs.cs" />
+    <Compile Include="ViewModels\Pages\StatusPage.cs" />
+    <Compile Include="ViewModels\Windows\Window.cs" />
+    <Compile Include="ViewModels\Panels\YubiKeyAuthenticationPanel.cs" />
     <Compile Include="Xml\LocalVPNConfigurationSettings.cs" />
     <Compile Include="Xml\Response.cs" />
     <Compile Include="Xml\SerializableStringDictionary.cs" />
@@ -133,6 +133,7 @@
     <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.sl.resx">
       <SubType>Designer</SubType>

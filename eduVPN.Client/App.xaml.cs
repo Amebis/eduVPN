@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Views.Windows;
 using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
@@ -134,10 +135,10 @@ namespace eduVPN.Client
             {
                 // Forward redirect URI to the authorization pop-up.
                 var uri = args[1];
-                var wizard = (eduVPN.Views.ConnectWizard)MainWindow;
+                var wizard = (ConnectWizard)MainWindow;
 
                 if (wizard.AuthorizationPopup != null &&
-                    wizard.AuthorizationPopup.DataContext is ViewModels.AuthorizationPopup view_model &&
+                    wizard.AuthorizationPopup.DataContext is ViewModels.Windows.AuthorizationPopup view_model &&
                     view_model.Authorize.CanExecute(uri))
                     view_model.Authorize.Execute(uri);
             }
