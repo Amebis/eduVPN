@@ -61,8 +61,8 @@ namespace eduVPN.Client
                     var assembly_title = (Attribute.GetCustomAttributes(Assembly.GetExecutingAssembly(), typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title;
                     var filename = ex.Filename;
                     if (MessageBox.Show(
-                        string.Format(eduVPN.Client.Resources.Strings.SettingsCorruptErrorMessage, assembly_title, filename),
-                        eduVPN.Client.Resources.Strings.SettingsCorruptErrorTitle,
+                        string.Format(Client.Resources.Strings.SettingsCorruptErrorMessage, assembly_title, filename),
+                        Client.Resources.Strings.SettingsCorruptErrorTitle,
                         MessageBoxButton.OKCancel,
                         MessageBoxImage.Error) == MessageBoxResult.OK)
                     {
