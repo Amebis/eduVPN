@@ -74,9 +74,9 @@ namespace eduVPN.ViewModels.Windows
         {
             get
             {
-                if (_retry_authorization == null)
+                if (_request_authorization == null)
                 {
-                    _retry_authorization = new DelegateCommand(
+                    _request_authorization = new DelegateCommand(
                         // execute
                         () =>
                         {
@@ -106,13 +106,13 @@ namespace eduVPN.ViewModels.Windows
                         () => AuthenticatingInstance != null && Scope != null);
 
                     // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(AuthenticatingInstance) || e.PropertyName == nameof(Scope)) _retry_authorization.RaiseCanExecuteChanged(); };
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(AuthenticatingInstance) || e.PropertyName == nameof(Scope)) _request_authorization.RaiseCanExecuteChanged(); };
                 }
 
-                return _retry_authorization;
+                return _request_authorization;
             }
         }
-        private DelegateCommand _retry_authorization;
+        private DelegateCommand _request_authorization;
 
         /// <summary>
         /// Authorize command
@@ -136,6 +136,9 @@ namespace eduVPN.ViewModels.Windows
                                     null,
                                     Abort.Token);
 
+                                // Authorization grants are non-reusable.
+                                _authorization_grant = null;
+
                                 Error = null;
                             }
                             catch (Exception ex) { Error = ex; }
@@ -154,7 +157,7 @@ namespace eduVPN.ViewModels.Windows
                             try { parsed_uri = new Uri(uri); }
                             catch { return false; }
                             // - Must match the redirect endpoint provided in request.
-                            if (parsed_uri.Scheme + ":" + parsed_uri.AbsolutePath != _redirect_endpoint) return false;
+                            if (parsed_uri.GetLeftPart(UriPartial.Path) != _redirect_endpoint) return false;
 
                             return true;
                         });
