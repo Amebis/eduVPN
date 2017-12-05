@@ -1334,7 +1334,7 @@ namespace eduVPN.ViewModels.Windows
                         {
                             // Ask the view to quit.
                             Trace.TraceInformation("Quitting client...");
-                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => QuitApplication?.Invoke(this, new EventArgs())));
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => QuitApplication?.Invoke(this, EventArgs.Empty)));
                         }
                     }
                     catch (OperationCanceledException) { }
