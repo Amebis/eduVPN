@@ -112,24 +112,20 @@ namespace eduVPN.Views.Controls
                         using (var stream = response.GetResponseStream())
                         {
                             // Read to memory. BitmapImage doesn't fancy non-seekable streams.
-                            var data = new byte[0];
-                            var buffer = new byte[1048576];
-                            for (;;)
+                            using (var memory_stream = new MemoryStream())
                             {
-                                // Wait for the data to arrive.
-                                var buffer_length = stream.Read(buffer, 0, buffer.Length);
-                                if (buffer_length == 0)
-                                    break;
+                                var buffer = new byte[1048576];
+                                for (;;)
+                                {
+                                    // Wait for the data to arrive.
+                                    var buffer_length = stream.Read(buffer, 0, buffer.Length);
+                                    if (buffer_length == 0)
+                                        break;
 
-                                // Append it to the data.
-                                var data_new = new byte[data.LongLength + buffer_length];
-                                Array.Copy(data, data_new, data.LongLength);
-                                Array.Copy(buffer, 0, data_new, data.LongLength, buffer_length);
-                                data = data_new;
-                            }
+                                    // Append it to the memory stream.
+                                    memory_stream.Write(buffer, 0, buffer_length);
+                                }
 
-                            using (var memory_stream = new MemoryStream(data))
-                            {
                                 // Decode image.
                                 var bitmap_image = new BitmapImage();
                                 bitmap_image.BeginInit();
