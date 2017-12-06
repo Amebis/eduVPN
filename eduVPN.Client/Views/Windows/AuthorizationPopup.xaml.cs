@@ -5,8 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.ComponentModel;
-
 namespace eduVPN.Views.Windows
 {
     /// <summary>
@@ -19,15 +17,6 @@ namespace eduVPN.Views.Windows
         public AuthorizationPopup()
         {
             InitializeComponent();
-
-            var view_model = (ViewModels.Windows.AuthorizationPopup)DataContext;
-
-            // Dismiss the dialog once access token is set.
-            view_model.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-            {
-                if (e.PropertyName == nameof(view_model.AccessToken) && view_model.AccessToken != null)
-                    DialogResult = true;
-            };
         }
 
         #endregion

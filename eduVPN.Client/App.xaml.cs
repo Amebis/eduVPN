@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Web;
 using System.Windows;
 
 namespace eduVPN.Client
@@ -134,13 +135,16 @@ namespace eduVPN.Client
             if (args.Count >= 2)
             {
                 // Forward redirect URI to the authorization pop-up.
-                var uri = args[1];
-                var wizard = (ConnectWizard)MainWindow;
-
-                if (wizard.AuthorizationPopup != null &&
-                    wizard.AuthorizationPopup.DataContext is ViewModels.Windows.AuthorizationPopup view_model &&
-                    view_model.Authorize.CanExecute(uri))
-                    view_model.Authorize.Execute(uri);
+                Uri uri = null;
+                try { uri = new Uri(args[1]); } catch { }
+                if (uri != null)
+                {
+                    var query = HttpUtility.ParseQueryString(uri.Query);
+                    var wizard = (ConnectWizard)MainWindow;
+                    if (wizard.AuthorizationPopups.TryGetValue(query["state"], out var popup) &&
+                        popup.DataContext is ViewModels.Windows.AuthorizationPopup view_model)
+                        view_model.CallbackURI = uri;
+                }
             }
 
             // (Re)activate main window.

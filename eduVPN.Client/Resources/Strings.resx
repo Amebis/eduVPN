@@ -124,9 +124,6 @@
     <value>eduVPN client needs {0} authorization, and has opened an authorization web page in your browser.
 The client will continue after you complete the authorization...</value>
   </data>
-  <data name="AuthorizationPopupRetry" xml:space="preserve">
-    <value>Retry</value>
-  </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Waiting for authorization</value>
   </data>
@@ -360,5 +357,26 @@ If you continue, your user settings will be reset to defaults.</value>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Corrupt user settings</value>
+  </data>
+  <data name="OAuthError400" xml:space="preserve">
+    <value>Request is not valid.</value>
+  </data>
+  <data name="OAuthError404" xml:space="preserve">
+    <value>Path {0} not found.</value>
+  </data>
+  <data name="OAuthError405" xml:space="preserve">
+    <value>Method {0} not supported.</value>
+  </data>
+  <data name="OAuthErrorDescription" xml:space="preserve">
+    <value>Please try again later or contact your helpdesk for support.</value>
+  </data>
+  <data name="OAuthErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="OAuthFinishedDescription" xml:space="preserve">
+    <value>You can now close this tab.</value>
+  </data>
+  <data name="OAuthFinishedTitle" xml:space="preserve">
+    <value>eduVPN client succesfuly authorized.</value>
   </data>
 </root>

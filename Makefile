@@ -58,12 +58,12 @@ All :: \
 
 Register :: \
 	RegisterOpenVPNInteractiveService \
-	RegisterSettings \
+#	RegisterSettings \
 	RegisterShortcuts
 
 Unregister :: \
 	UnregisterShortcuts \
-	UnregisterSettings \
+#	UnregisterSettings \
 	UnregisterOpenVPNInteractiveService
 
 RegisterSettings :: \

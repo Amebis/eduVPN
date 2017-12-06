@@ -23,15 +23,15 @@ namespace eduVPN.Models
         public Instance Instance { get; }
 
         /// <summary>
-        /// Requested access token scope
+        /// Authorization grant
         /// </summary>
-        public string Scope { get; }
+        public AuthorizationGrant AuthorizationGrant { get; }
 
         /// <summary>
-        /// Access token
+        /// Callback URI
         /// </summary>
-        /// <remarks>Should be populated by access token on event end, or <c>null</c> if authorization failed.</remarks>
-        public AccessToken AccessToken { get; set; }
+        /// <remarks>Should be populated by callback URI on event end, or <c>null</c> if cancelled.</remarks>
+        public Uri CallbackURI { get; set; }
 
         #endregion
 
@@ -41,11 +41,11 @@ namespace eduVPN.Models
         /// Constructs event arguments
         /// </summary>
         /// <param name="instance">Authenticating instance</param>
-        /// <param name="scope">Requested access token scope</param>
-        public RequestInstanceAuthorizationEventArgs(Instance instance, string scope)
+        /// <param name="authorization_grant">Authorization grant</param>
+        public RequestInstanceAuthorizationEventArgs(Instance instance, AuthorizationGrant authorization_grant)
         {
             Instance = instance;
-            Scope = scope;
+            AuthorizationGrant = authorization_grant;
         }
 
         #endregion

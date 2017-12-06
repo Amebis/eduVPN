@@ -1418,26 +1418,36 @@ namespace eduVPN.ViewModels.Windows
 
                     if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly)
                     {
+                        // Prepare new authorization grant.
+                        var authorization_grant = new AuthorizationGrant()
+                        {
+                            AuthorizationEndpoint = api.AuthorizationEndpoint,
+                            ClientID = "org.eduvpn.app",
+                            Scope = new List<string>() { e.Scope },
+                            CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
+                        };
+
                         // Re-raise this event as ConnectWizard event, to simplify view.
-                        // This way the view can listen ConnectWizard for authentication events only.
+                        // This way the view can listen ConnectWizard for authorization events only.
+                        var e_instance = new RequestInstanceAuthorizationEventArgs(authenticating_instance, authorization_grant);
                         if (Dispatcher.CurrentDispatcher == Dispatcher)
                         {
                             // We're in the GUI thread.
-                            var e_instance = new RequestInstanceAuthorizationEventArgs((Instance)sender, e.Scope);
                             RequestInstanceAuthorization?.Invoke(this, e_instance);
-                            e.AccessToken = e_instance.AccessToken;
                         }
                         else
                         {
                             // We're in the background thread - raise event via dispatcher.
-                            Dispatcher.Invoke(DispatcherPriority.Normal,
-                                (Action)(() =>
-                                {
-                                    var e_instance = new RequestInstanceAuthorizationEventArgs((Instance)sender, e.Scope);
-                                    RequestInstanceAuthorization?.Invoke(this, e_instance);
-                                    e.AccessToken = e_instance.AccessToken;
-                                }));
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestInstanceAuthorization?.Invoke(this, e_instance)));
                         }
+
+                        // Get access token from authorization grant.
+                        if (e_instance.CallbackURI != null)
+                            e.AccessToken = authorization_grant.ProcessResponse(
+                                HttpUtility.ParseQueryString(e_instance.CallbackURI.Query),
+                                api.TokenEndpoint,
+                                null,
+                                Abort.Token);
 
                         if (e.AccessToken != null)
                         {

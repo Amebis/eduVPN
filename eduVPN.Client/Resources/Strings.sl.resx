@@ -124,9 +124,6 @@
     <value>Odjemalec eduVPN potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
 Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
-  <data name="AuthorizationPopupRetry" xml:space="preserve">
-    <value>Ponovi</value>
-  </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Čakam na pooblastilo</value>
   </data>
@@ -359,5 +356,26 @@ Omogoča SURFnet</value>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Pokvarjene uporabniške nastavitve</value>
+  </data>
+  <data name="OAuthError400" xml:space="preserve">
+    <value>Zahteva ni veljavna.</value>
+  </data>
+  <data name="OAuthError404" xml:space="preserve">
+    <value>Pot {0} ni najdena.</value>
+  </data>
+  <data name="OAuthError405" xml:space="preserve">
+    <value>Metoda {0} ni podprta.</value>
+  </data>
+  <data name="OAuthErrorDescription" xml:space="preserve">
+    <value>Prosimo poskusite pozneje ali se obrnite na svojo tehnično pomoč.</value>
+  </data>
+  <data name="OAuthErrorTitle" xml:space="preserve">
+    <value>Napaka</value>
+  </data>
+  <data name="OAuthFinishedDescription" xml:space="preserve">
+    <value>Zdaj lahko zaprete ta zavihek.</value>
+  </data>
+  <data name="OAuthFinishedTitle" xml:space="preserve">
+    <value>Odjemalec eduVPN uspešno pooblaščen.</value>
   </data>
 </root>

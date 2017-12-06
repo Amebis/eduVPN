@@ -12,18 +12,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows"
-    xmlns:vmwindows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     mc:Ignorable="d"
     Width="350"
     Height="216"
     Title="{x:Static res:Strings.AuthorizationPopupTitle}"
-    Description="{Binding Path=AuthenticatingInstance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
+    Description="{Binding Path=Instance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">
-
-    <Window.DataContext>
-        <vmwindows:AuthorizationPopup/>
-    </Window.DataContext>
 
     <Grid
         VerticalAlignment="Top"
@@ -31,12 +26,5 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <Button
-            x:Name="Retry"
-            Margin="5"
-            Style="{StaticResource eduVPNButtonStyle}"
-            Content="{x:Static res:Strings.AuthorizationPopupRetry}"
-            Command="{Binding Path=RequestAuthorization}"/>
     </Grid>
 </windows:Window>

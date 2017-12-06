@@ -11,10 +11,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace eduVPN.Views.Windows
 {
@@ -28,15 +34,25 @@ namespace eduVPN.Views.Windows
         private System.Windows.Forms.NotifyIcon _tray_icon;
         private Dictionary<VPNSessionStatusType, Icon> _icons;
         private bool _do_close = false;
+        private readonly Dictionary<string, string> _mime_types = new Dictionary<string, string>()
+        {
+            { ".css", "text/css" },
+            { ".ico", "image/x-icon" },
+        };
+
+        /// <summary>
+        /// TCP listener for OAuth authorization callback and response
+        /// </summary>
+        private TcpListener _listener = new TcpListener(IPAddress.Loopback, 0);
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Authorization pop-up window
+        /// Authorization pop-up windows
         /// </summary>
-        public AuthorizationPopup AuthorizationPopup { get; set; }
+        public Dictionary<string, AuthorizationPopup> AuthorizationPopups { get; } = new Dictionary<string, AuthorizationPopup>();
 
         #endregion
 
@@ -104,7 +120,145 @@ namespace eduVPN.Views.Windows
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
 
+            // Launch TCP listener on the loopback interface.
+            _listener.Start();
+            new Thread(new ThreadStart(
+                () =>
+                {
+                    try
+                    {
+                        for (; ; )
+                        {
+                            // Wait for the agent request and accept it.
+                            TcpClient client = null;
+                            try { client = _listener.AcceptTcpClient(); }
+                            catch (InvalidOperationException) { break; }
+                            new Thread(new ThreadStart(
+                                () =>
+                                {
+                                    try
+                                    {
+                                        // Receive agent request.
+                                        string request = null;
+                                        using (var memory_stream = new MemoryStream())
+                                        {
+                                            var stream = client.GetStream();
+                                            var buffer = new byte[client.ReceiveBufferSize];
+                                            while (stream.DataAvailable)
+                                            {
+                                                // Read available data.
+                                                var bytes_read = stream.Read(buffer, 0, buffer.Length);
+                                                if (bytes_read == 0)
+                                                    break;
+
+                                                // Append it to the memory stream.
+                                                memory_stream.Write(buffer, 0, bytes_read);
+                                            }
+
+                                            request = Encoding.UTF8.GetString(memory_stream.ToArray());
+                                        }
+
+                                        try
+                                        {
+                                            var request_headers = request.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                                            var request_line = request_headers[0].Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+                                            switch (request_line[0].ToUpperInvariant())
+                                            {
+                                                case "GET":
+                                                case "POST":
+                                                    break;
+                                                default:
+                                                    throw new HttpException(405, string.Format(Client.Resources.Strings.OAuthError405, request_line[0]));
+                                            }
+
+                                            var uri = new Uri(string.Format("http://{0}:{1}{2}", IPAddress.Loopback, ((IPEndPoint)_listener.LocalEndpoint).Port, request_line[1]));
+                                            switch (uri.AbsolutePath)
+                                            {
+                                                case "/callback":
+                                                    {
+                                                        var query = HttpUtility.ParseQueryString(uri.Query);
+                                                        if (!AuthorizationPopups.TryGetValue(query["state"], out var popup))
+                                                            throw new HttpException(400, Client.Resources.Strings.OAuthError400);
+
+                                                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                                        {
+                                                            // Set the callback URI. This will close the pop-up.
+                                                            ((ViewModels.Windows.AuthorizationPopup)popup.DataContext).CallbackURI = uri;
+
+                                                            // (Re)activate main window.
+                                                            if (!IsActive)
+                                                                Show();
+                                                            Topmost = true;
+                                                            try
+                                                            {
+                                                                Activate();
+                                                                Focus();
+                                                            }
+                                                            finally
+                                                            {
+                                                                Topmost = false;
+                                                            }
+                                                        }));
+
+                                                        // Send response to the agent.
+                                                        var response = string.Format("<!DOCTYPE html><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/><title>{0}</title></head><body class=\"finished\"><table id=\"wrapper\"><tr><td><div id=\"frame\"><table><tr><td><h2>{0}</h2><p>{1}</p></td></tr></table></div></td></tr></table></body></html>",
+                                                            HttpUtility.HtmlEncode(Client.Resources.Strings.OAuthFinishedTitle),
+                                                            HttpUtility.HtmlEncode(Client.Resources.Strings.OAuthFinishedDescription));
+                                                        using (var writer = new StreamWriter(client.GetStream(), new UTF8Encoding(false)))
+                                                            writer.Write(string.Format("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: {0}\r\n\r\n{1}", response.Length, response));
+                                                    }
+                                                    break;
+
+                                                case "/favicon.ico":
+                                                case "/style.css":
+                                                    {
+                                                        // Send static content.
+                                                        using (var stream = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/OAuth" + uri.AbsolutePath)).Stream)
+                                                        using (var response_stream = client.GetStream())
+                                                        {
+                                                            var headers = Encoding.UTF8.GetBytes(string.Format("HTTP/1.0 200 OK\r\nContent-Type: {0}\r\nContent-Length: {1}\r\n\r\n",
+                                                                _mime_types[Path.GetExtension(uri.LocalPath)],
+                                                                stream.Length));
+                                                            response_stream.Write(headers, 0, headers.Length);
+                                                            stream.CopyTo(response_stream);
+                                                        }
+                                                    }
+                                                    break;
+
+                                                default:
+                                                    throw new HttpException(404, string.Format(Client.Resources.Strings.OAuthError404, uri.AbsolutePath));
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            // Send response to the agent.
+                                            var status_code = ex is HttpException ex_http ? ex_http.GetHttpCode() : 500;
+                                            var response = string.Format("<!DOCTYPE html><html xmlns=\"http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/><title>{0}</title></head><body class=\"error\"><table id=\"wrapper\"><tr><td><div id=\"frame\"><table><tr><td><h2>{1}</h2><p>{2}</p></td></tr></table></div></td></tr></table></body></html>",
+                                                HttpUtility.HtmlEncode(Client.Resources.Strings.OAuthErrorTitle),
+                                                HttpUtility.HtmlEncode(ex.Message),
+                                                HttpUtility.HtmlEncode(Client.Resources.Strings.OAuthErrorDescription));
+                                            using (var writer = new StreamWriter(client.GetStream(), new UTF8Encoding(false)))
+                                                writer.Write(string.Format("HTTP/1.0 {0} Error\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: {1}\r\n\r\n{2}", status_code, response.Length, response));
+                                        }
+                                    }
+                                    catch { }
+                                }
+                            )).Start();
+                        }
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => view_model.Error = ex)); }
+                })).Start();
+
             base.OnInitialized(e);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            // Stop the OAuth listener.
+            _listener.Stop();
+
+            base.OnClosed(e);
         }
 
         private void Hide_Click(object sender, RoutedEventArgs e)
@@ -183,27 +337,35 @@ namespace eduVPN.Views.Windows
         /// <param name="e">Authorization request event arguments</param>
         private void ConnectWizard_RequestInstanceAuthorization(object sender, RequestInstanceAuthorizationEventArgs e)
         {
-            if (AuthorizationPopup != null)
-            {
-                // Close previous authorization pop-up.
-                AuthorizationPopup.Close();
-            }
+            var view_model = new ViewModels.Windows.AuthorizationPopup(sender, e);
 
             // Create a new authorization pop-up.
-            AuthorizationPopup = new AuthorizationPopup() { Owner = this };
+            var popup = new AuthorizationPopup() { Owner = this, DataContext = view_model };
+            view_model.PropertyChanged += (object sender2, PropertyChangedEventArgs e2) =>
+            {
+                if (e2.PropertyName == nameof(view_model.CallbackURI) && view_model.CallbackURI != null)
+                {
+                    // Close the authorization pop-up after the callback URI is set.
+                    popup.DialogResult = true;
+                }
+            };
+
+            // Set the redirect URI and make the final authorization URI.
+            view_model.AuthorizationGrant.RedirectEndpoint = new Uri(string.Format("http://{0}:{1}/callback", IPAddress.Loopback, ((IPEndPoint)_listener.LocalEndpoint).Port));
+            var authorization_uri = view_model.AuthorizationGrant.AuthorizationURI;
+
+            // Extract the state. We use it as a key to support multiple pending authorizations.
+            var query = HttpUtility.ParseQueryString(authorization_uri.Query);
+            AuthorizationPopups.Add(query["state"], popup);
 
             // Trigger authorization.
-            var view_model = AuthorizationPopup.DataContext as ViewModels.Windows.AuthorizationPopup;
-            view_model.AuthenticatingInstance = e.Instance;
-            view_model.Scope = e.Scope;
-            if (view_model.RequestAuthorization.CanExecute())
-                view_model.RequestAuthorization.Execute();
+            System.Diagnostics.Process.Start(authorization_uri.ToString());
 
             // Run the authorization pop-up and pass the access token to be returned to the event sender.
-            if (AuthorizationPopup.ShowDialog() == true)
-                e.AccessToken = view_model.AccessToken;
+            if (popup.ShowDialog() == true)
+                e.CallbackURI = view_model.CallbackURI;
 
-            AuthorizationPopup = null;
+            AuthorizationPopups.Remove(query["state"]);
         }
 
         /// <summary>
