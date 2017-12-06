@@ -78,6 +78,12 @@ namespace eduVPN.Models
         public Uri UserInfo { get => _user_info; }
         private Uri _user_info;
 
+        /// <summary>
+        /// 2-Factor Authentication enroll URI
+        /// </summary>
+        public Uri TwoFactorAuthenticationEnroll { get => _two_factor_authentication_enroll; }
+        private Uri _two_factor_authentication_enroll;
+
         #endregion
 
         #region ILoadableItem Support
@@ -134,6 +140,18 @@ namespace eduVPN.Models
                 _user_info = eduJSON.Parser.GetValue(api, "user_info", out string user_info) ?
                     new Uri(user_info) :
                     _base_uri != null ? AppendPath(_base_uri, "/user_info") : null;
+
+                // Get two_factor_authentication object.
+                if (eduJSON.Parser.GetValue(obj2, "two_factor_authentication", out Dictionary<string, object> tfa))
+                {
+                    _two_factor_authentication_enroll = eduJSON.Parser.GetValue(tfa, "enroll_uri", out string two_factor_authentication_enroll) ?
+                        new Uri(two_factor_authentication_enroll) :
+                        null;
+                }
+                else
+                {
+                    _two_factor_authentication_enroll = null;
+                }
             }
             else
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
