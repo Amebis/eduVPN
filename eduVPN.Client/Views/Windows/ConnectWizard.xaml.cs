@@ -302,6 +302,10 @@ namespace eduVPN.Views.Windows
                 // Hide tray icon when closed.
                 _tray_icon.Visible = false;
 
+                // Dismiss all pop-ups.
+                foreach (Window popup in OwnedWindows)
+                    popup.Close();
+
                 // Save window position on closing.
                 Client.Properties.Settings.Default.WindowTop = Top;
                 Client.Properties.Settings.Default.WindowLeft = Left;
