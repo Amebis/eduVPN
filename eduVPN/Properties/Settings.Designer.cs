@@ -150,7 +150,7 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int ConnectingProfileSelectMode {
             get {
                 return ((int)(this["ConnectingProfileSelectMode"]));
@@ -195,7 +195,7 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int SettingsVersion {
             get {
                 return ((int)(this["SettingsVersion"]));
