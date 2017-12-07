@@ -357,25 +357,7 @@ Omogoča SURFnet</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
-  <data name="OAuthError400" xml:space="preserve">
-    <value>Zahteva ni veljavna.</value>
-  </data>
-  <data name="OAuthError404" xml:space="preserve">
-    <value>Pot {0} ni najdena.</value>
-  </data>
-  <data name="OAuthError405" xml:space="preserve">
-    <value>Metoda {0} ni podprta.</value>
-  </data>
-  <data name="OAuthErrorDescription" xml:space="preserve">
-    <value>Prosimo poskusite pozneje ali se obrnite na svojo tehnično pomoč.</value>
-  </data>
-  <data name="OAuthErrorTitle" xml:space="preserve">
-    <value>Napaka</value>
-  </data>
-  <data name="OAuthFinishedDescription" xml:space="preserve">
-    <value>Zdaj lahko zaprete ta zavihek.</value>
-  </data>
-  <data name="OAuthFinishedTitle" xml:space="preserve">
-    <value>Odjemalec eduVPN uspešno pooblaščen.</value>
+  <data name="ErrorOAuthState" xml:space="preserve">
+    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
 </root>

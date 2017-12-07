@@ -226,6 +226,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The required OAuth parameter &quot;state&quot; is missing or incorrect..
+        /// </summary>
+        public static string ErrorOAuthState {
+            get {
+                return ResourceManager.GetString("ErrorOAuthState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initializing....
         /// </summary>
         public static string InitializingPageTitle {
@@ -339,69 +348,6 @@ namespace eduVPN.Client.Resources {
         public static string NumberToHumanReadable {
             get {
                 return ResourceManager.GetString("NumberToHumanReadable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request is not valid..
-        /// </summary>
-        public static string OAuthError400 {
-            get {
-                return ResourceManager.GetString("OAuthError400", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Path {0} not found..
-        /// </summary>
-        public static string OAuthError404 {
-            get {
-                return ResourceManager.GetString("OAuthError404", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Method {0} not supported..
-        /// </summary>
-        public static string OAuthError405 {
-            get {
-                return ResourceManager.GetString("OAuthError405", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please try again later or contact your helpdesk for support..
-        /// </summary>
-        public static string OAuthErrorDescription {
-            get {
-                return ResourceManager.GetString("OAuthErrorDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        public static string OAuthErrorTitle {
-            get {
-                return ResourceManager.GetString("OAuthErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can now close this tab..
-        /// </summary>
-        public static string OAuthFinishedDescription {
-            get {
-                return ResourceManager.GetString("OAuthFinishedDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to eduVPN client succesfuly authorized..
-        /// </summary>
-        public static string OAuthFinishedTitle {
-            get {
-                return ResourceManager.GetString("OAuthFinishedTitle", resourceCulture);
             }
         }
         
