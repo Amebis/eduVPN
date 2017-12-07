@@ -52,6 +52,8 @@
     <Compile Include="ViewModels\Panels\ConnectingSelectPanel.cs" />
     <Compile Include="Models\PromptSelfUpdateActionType.cs" />
     <Compile Include="Models\PromptSelfUpdateEventArgs.cs" />
+    <Compile Include="Models\RequestTwoFactorEnrollmentEventArgs.cs" />
+    <Compile Include="ViewModels\Windows\TwoFactorEnrollPopup.cs" />
     <Compile Include="ViewModels\Windows\SelfUpdatePopup.cs" />
     <Compile Include="Xml\Dictionary.cs" />
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />

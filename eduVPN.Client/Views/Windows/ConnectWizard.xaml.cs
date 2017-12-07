@@ -265,6 +265,26 @@ namespace eduVPN.Views.Windows
         }
 
         /// <summary>
+        /// Called when user tries to connect to a profile that required 2-Factor Authentication user is not enrolled with
+        /// </summary>
+        /// <param name="sender"><c>eduVPN.ViewModels.Panels.ConnectingSelectPanel</c> requiring enrollment</param>
+        /// <param name="e">Enrollment event arguments</param>
+        private void ConnectWizard_RequestTwoFactorEnrollment(object sender, RequestTwoFactorEnrollmentEventArgs e)
+        {
+            var view_model = new ViewModels.Windows.TwoFactorEnrollPopup(sender, e);
+
+            // Create a new 2FA enroll pop-up.
+            TwoFactorEnrollPopup popup = new TwoFactorEnrollPopup() { Owner = this, DataContext = view_model };
+
+            // Run the 2FA enroll pop-up.
+            if (popup.ShowDialog() == true && e.EnrollmentUri != null)
+            {
+                // Trigger enrollment.
+                System.Diagnostics.Process.Start(e.EnrollmentUri.ToString());
+            }
+        }
+
+        /// <summary>
         /// Called when an OpenVPN session requests a password authentication
         /// </summary>
         /// <param name="sender"><c>eduVPN.ViewModels.Windows.ConnectWizard</c> requiring authentication</param>

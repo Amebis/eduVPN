@@ -715,6 +715,42 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enroll....
+        /// </summary>
+        public static string TwoFactorEnrollButton {
+            get {
+                return ResourceManager.GetString("TwoFactorEnrollButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One of the following methods is required: {0}.
+        /// </summary>
+        public static string TwoFactorEnrollPopupList {
+            get {
+                return ResourceManager.GetString("TwoFactorEnrollPopupList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} requires you to enroll for 2-Factor Authentication..
+        /// </summary>
+        public static string TwoFactorEnrollPopupMessage {
+            get {
+                return ResourceManager.GetString("TwoFactorEnrollPopupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2-Factor Authentication Enroll.
+        /// </summary>
+        public static string TwoFactorEnrollPopupTitle {
+            get {
+                return ResourceManager.GetString("TwoFactorEnrollPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warning! Your account is marked as disabled. You might not be able to connect. Please, contact your helpdesk for support..
         /// </summary>
         public static string UserDisabledMessage {

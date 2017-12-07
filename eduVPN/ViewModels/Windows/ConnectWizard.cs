@@ -376,6 +376,11 @@ namespace eduVPN.ViewModels.Windows
         public event EventHandler<RequestInstanceAuthorizationEventArgs> RequestInstanceAuthorization;
 
         /// <summary>
+        /// 2-Factor Authentication enrollment requested
+        /// </summary>
+        public event EventHandler<RequestTwoFactorEnrollmentEventArgs> RequestTwoFactorEnrollment;
+
+        /// <summary>
         /// OpenVPN requested a password
         /// </summary>
         public event EventHandler<eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs> RequestOpenVPNPasswordAuthentication;
@@ -1474,6 +1479,22 @@ namespace eduVPN.ViewModels.Windows
                 // Remove access token from cache.
                 lock (_access_token_cache_lock)
                     _access_token_cache.Remove(api.AuthorizationEndpoint.AbsoluteUri);
+            }
+        }
+
+        public void Profile_RequestTwoFactorEnrollment(object sender, RequestTwoFactorEnrollmentEventArgs e)
+        {
+            // Re-raise this event as ConnectWizard event, to simplify view.
+            // This way the view can listen ConnectWizard for profile events only.
+            if (Dispatcher.CurrentDispatcher == Dispatcher)
+            {
+                // We're in the GUI thread.
+                RequestTwoFactorEnrollment?.Invoke(sender, e);
+            }
+            else
+            {
+                // We're in the background thread - raise event via dispatcher.
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestTwoFactorEnrollment?.Invoke(sender, e)));
             }
         }
 

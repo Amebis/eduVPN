@@ -13,6 +13,7 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels.Panels
 {
@@ -163,11 +164,39 @@ namespace eduVPN.ViewModels.Panels
                 {
                     _connect_selected_profile = new DelegateCommand(
                         // execute
-                        () =>
+                        async () =>
                         {
                             Parent.ChangeTaskCount(+1);
                             try
                             {
+                                if (SelectedProfile.IsTwoFactorAuthentication)
+                                {
+                                    // Selected profile requires 2-Factor Authentication.
+                                    var authenticating_instance = InstanceSource is LocalInstanceSource ? SelectedProfile.Instance : InstanceSource.AuthenticatingInstance;
+
+                                    // Get user info.
+                                    var userinfo_task = new Task<UserInfo>(() => authenticating_instance.GetUserInfo(authenticating_instance, Window.Abort.Token), TaskCreationOptions.LongRunning);
+                                    userinfo_task.Start();
+                                    var user_info = await userinfo_task;
+
+                                    if (!user_info.IsTwoFactorAuthentication ||
+                                        user_info.TwoFactorMethods != TwoFactorAuthenticationMethods.None && (user_info.TwoFactorMethods & SelectedProfile.TwoFactorMethods) == 0)
+                                    {
+                                        // User is not enrolled for 2FA, or is not enrolled using any required 2FA method.
+
+                                        // Get authenticating instance endpoints. (Already cached by GetUserInfo above.)
+                                        var api = authenticating_instance.GetEndpoints(Window.Abort.Token);
+
+                                        // Offer user to enroll for 2FA.
+                                        Parent.Profile_RequestTwoFactorEnrollment(
+                                            this,
+                                            new RequestTwoFactorEnrollmentEventArgs(
+                                                api.TwoFactorAuthenticationEnroll ?? authenticating_instance.Base,
+                                                SelectedProfile));
+                                        return;
+                                    }
+                                }
+
                                 // Set connecting instance.
                                 Parent.InstanceSourceType = InstanceSourceType;
                                 InstanceSource.ConnectingInstance = SelectedProfile.Instance;
