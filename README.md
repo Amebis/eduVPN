@@ -8,7 +8,7 @@ Windows eduVPN Client
 Download and run the EXE installer. Binaries are published [here](https://github.com/Amebis/eduVPN/releases)
 
 ## Update
-A self-updating feature has been introduced beggining with version 1.0.11. You should be prompted to update when new version is available on client startup.
+A self-updating feature has been introduced beginning with version 1.0.11. You should be prompted to update when a new version is available on client startup.
 
 To update manually, perform the following steps:
 1. Exit eduVPN client if running.
@@ -26,7 +26,7 @@ _Start_ » _All Programs_ » _eduVPN Client_
 3. Deploy eduVPN Client MSI packages. Binaries are published [here](https://github.com/Amebis/eduVPN/releases)
 
 ## Update
-Deploy newer version of eduVPN Client MSI packages.
+Deploy a newer version of eduVPN Client MSI packages.
 
 
 # Developers
@@ -95,3 +95,12 @@ The registration prepares the working environment for the eduVPN client, much li
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the MSI build using `nmake Setup` command.
 4. The MSI packages and EXE installer will be saved to the `bin\Setup` folder.
+
+
+# Translators
+
+Anyone wanting to translate the eduVPN Client for Windows is welcome to join the translation project at [POEditor.com](https://poeditor.com/join/project/0cJKTOUjzn) where the `.resx` localization takes place.
+
+Furthermore, there are some tiny `.rc` and `.wxl` files in the project that require manual translation.
+
+Should you need any assistance to get started, please do not hesitate to contact project maintainer at [simon@rozman.si](mailto:simon@rozman.si).
