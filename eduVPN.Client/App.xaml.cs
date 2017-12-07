@@ -24,17 +24,6 @@ namespace eduVPN.Client
     /// </summary>
     public partial class App : Application, ISingleInstanceApp
     {
-        #region Constructors
-
-        /// <summary>
-        /// Constructs the application
-        /// </summary>
-        public App()
-        {
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
