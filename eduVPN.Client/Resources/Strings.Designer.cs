@@ -99,15 +99,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select your institution&apos;s country here. You can select VPN endpoints in other countries after signing in with your institution credentials..
-        /// </summary>
-        public static string AuthenticatingCountrySelectPageDescription {
-            get {
-                return ResourceManager.GetString("AuthenticatingCountrySelectPageDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select your Country.
         /// </summary>
         public static string AuthenticatingCountrySelectPageTitle {
@@ -253,7 +244,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the profile type you want to use below. You will be redirected to the browser for your credentials..
+        ///   Looks up a localized string similar to Select one of the VPN types below..
         /// </summary>
         public static string InstanceSourceSelectPageDescription {
             get {
@@ -262,7 +253,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose your profile.
+        ///   Looks up a localized string similar to Select VPN type.
         /// </summary>
         public static string InstanceSourceSelectPageTitle {
             get {
@@ -379,7 +370,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add another entry.
+        ///   Looks up a localized string similar to Add another provider.
         /// </summary>
         public static string RecentConfigurationSelectPageAddEntry {
             get {

@@ -29,15 +29,13 @@
         </CollectionViewSource>
     </Page.Resources>
 
-    <Grid
-        VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="{Binding Path=Parent.ActiveSession.MessageList.Count, Converter={StaticResource MessageListRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <StatusBar
@@ -58,9 +56,9 @@
             Grid.Row="1"
             Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -227,6 +225,7 @@
                 Margin="4,0,0,0"
                 Height="20"
                 FontSize="11"
+                HorizontalAlignment="Left"
                 Style="{StaticResource eduVPNButtonStyle}"
                 Content="{x:Static res:Strings.StatusPageSessionInfoViewLog}"
                 Command="{Binding Path=Parent.ActiveSession.ShowLog}"/>

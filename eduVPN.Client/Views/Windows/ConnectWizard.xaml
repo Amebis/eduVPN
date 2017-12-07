@@ -45,8 +45,7 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:AuthenticatingCountrySelectPage}">
             <pages:AuthenticatingInstanceSelectPage
-                Title="{x:Static res:Strings.AuthenticatingCountrySelectPageTitle}"
-                Description="{x:Static res:Strings.AuthenticatingCountrySelectPageDescription}"/>
+                Title="{x:Static res:Strings.AuthenticatingCountrySelectPageTitle}"/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:AuthenticatingInstituteSelectPage}">
             <pages:AuthenticatingInstanceSelectPage

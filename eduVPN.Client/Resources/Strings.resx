@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Choose your profile</value>
+    <value>Select VPN type</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
     <value>eduVPN client needs {0} authorization, and has opened an authorization web page in your browser.
@@ -220,14 +220,11 @@ The client will continue after you complete the authorization...</value>
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="AuthenticatingCountrySelectPageDescription" xml:space="preserve">
-    <value>Select your institution's country here. You can select VPN endpoints in other countries after signing in with your institution credentials.</value>
-  </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Add other address</value>
   </data>
   <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Select the profile type you want to use below. You will be redirected to the browser for your credentials.</value>
+    <value>Select one of the VPN types below.</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>E_xit</value>
@@ -248,7 +245,7 @@ The client will continue after you complete the authorization...</value>
     <value>Secure Internet</value>
   </data>
   <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
-    <value>Add another entry</value>
+    <value>Add another provider</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Connection _info...</value>

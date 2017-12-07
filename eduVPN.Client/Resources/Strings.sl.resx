@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Izberite svoj profil</value>
+    <value>Izberite vrsto VPN</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
     <value>Odjemalec eduVPN potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
@@ -220,14 +220,11 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>{0:G} {1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="AuthenticatingCountrySelectPageDescription" xml:space="preserve">
-    <value>Tukaj izberite državo svoje ustanove. Ko se boste prijavili s poverilnicami svoje ustanove, boste lahko izbrali končno točko VPN v drugih državah.</value>
-  </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Dodaj drug naslov</value>
   </data>
   <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Spodaj izberite vrsto profila, ki ga želite uporabiti. Preusmerjeni boste v svoj brskalnik, kjer boste vnesli svoje poverilnice.</value>
+    <value>Izberite eno izmed vrst VPN spodaj.</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>I_zhod</value>
@@ -248,7 +245,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Varni splet</value>
   </data>
   <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
-    <value>Dodaj drug zapis</value>
+    <value>Dodaj drugega ponudnika</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Podatk_i povezave ...</value>
