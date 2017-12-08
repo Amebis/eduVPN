@@ -934,67 +934,7 @@ namespace eduVPN.ViewModels.Windows
                     if (Abort.Token.IsCancellationRequested)
                         return;
 
-                    Dispatcher.ShutdownStarted += (object sender2, EventArgs e2) =>
-                    {
-                        // Update access token settings.
-                        Properties.Settings.Default.AccessTokens = new Xml.SerializableStringDictionary();
-                        lock (_access_token_cache_lock)
-                            foreach (var access_token in _access_token_cache)
-                                Properties.Settings.Default.AccessTokens[access_token.Key] = access_token.Value.ToBase64String();
-
-                        // Update settings.
-                        Parallel.For((int)InstanceSourceType._start, (int)InstanceSourceType._end, source_index =>
-                        {
-                            Xml.InstanceSourceSettingsBase h = null;
-                            if (InstanceSources[source_index] is LocalInstanceSource instance_source_local)
-                            {
-                                // Local authenticating instance source
-                                h = new Xml.LocalInstanceSourceSettings()
-                                {
-                                    ConnectingInstance = instance_source_local.ConnectingInstance?.Base,
-                                    ConnectingInstanceList = new Xml.InstanceRefList(
-                                        instance_source_local.ConnectingInstanceList
-                                        .Select(inst =>
-                                            new Xml.InstanceRef()
-                                            {
-                                                Base = inst.Base,
-                                                Popularity = inst.Popularity,
-                                                ProfileList = new Xml.ProfileRefList(
-                                                    instance_source_local.ConnectingProfileList
-                                                    .Where(prof => prof.Instance.Equals(inst))
-                                                    .Select(prof => new Xml.ProfileRef()
-                                                    {
-                                                        ID = prof.ID,
-                                                        Popularity = prof.Popularity
-                                                    }))
-                                            }
-                                        ))
-                                };
-                            }
-                            else if (InstanceSources[source_index] is DistributedInstanceSource instance_source_distributed)
-                            {
-                                // Distributed authenticating instance source
-                                h = new Xml.DistributedInstanceSourceSettings()
-                                {
-                                    AuthenticatingInstance = instance_source_distributed.AuthenticatingInstance?.Base,
-                                    ConnectingInstance = instance_source_distributed.ConnectingInstance?.Base
-                                };
-                            }
-                            else if (InstanceSources[source_index] is FederatedInstanceSource instance_source_federated)
-                            {
-                                // Federated authenticating instance source
-                                h = new Xml.FederatedInstanceSourceSettings()
-                                {
-                                    ConnectingInstance = instance_source_federated.ConnectingInstance?.Base
-                                };
-                            }
-
-                            Properties.Settings.Default[_instance_directory_id[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = h };
-                        });
-
-                        // Persist settings to disk.
-                        Properties.Settings.Default.Save();
-                    };
+                    Dispatcher.ShutdownStarted += (object sender2, EventArgs e2) => SaveSettings();
 
                     // Proceed to the "first" page.
                     RaisePropertyChanged(nameof(StartingPage));
@@ -1361,6 +1301,71 @@ namespace eduVPN.ViewModels.Windows
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Saves settings
+        /// </summary>
+        public void SaveSettings()
+        {
+            // Update access token settings.
+            Properties.Settings.Default.AccessTokens = new Xml.SerializableStringDictionary();
+            lock (_access_token_cache_lock)
+                foreach (var access_token in _access_token_cache)
+                    Properties.Settings.Default.AccessTokens[access_token.Key] = access_token.Value.ToBase64String();
+
+            // Update settings.
+            Parallel.For((int)InstanceSourceType._start, (int)InstanceSourceType._end, source_index =>
+            {
+                Xml.InstanceSourceSettingsBase h = null;
+                if (InstanceSources[source_index] is LocalInstanceSource instance_source_local)
+                {
+                    // Local authenticating instance source
+                    h = new Xml.LocalInstanceSourceSettings()
+                    {
+                        ConnectingInstance = instance_source_local.ConnectingInstance?.Base,
+                        ConnectingInstanceList = new Xml.InstanceRefList(
+                            instance_source_local.ConnectingInstanceList
+                            .Select(inst =>
+                                new Xml.InstanceRef()
+                                {
+                                    Base = inst.Base,
+                                    Popularity = inst.Popularity,
+                                    ProfileList = new Xml.ProfileRefList(
+                                        instance_source_local.ConnectingProfileList
+                                        .Where(prof => prof.Instance.Equals(inst))
+                                        .Select(prof => new Xml.ProfileRef()
+                                        {
+                                            ID = prof.ID,
+                                            Popularity = prof.Popularity
+                                        }))
+                                }
+                            ))
+                    };
+                }
+                else if (InstanceSources[source_index] is DistributedInstanceSource instance_source_distributed)
+                {
+                    // Distributed authenticating instance source
+                    h = new Xml.DistributedInstanceSourceSettings()
+                    {
+                        AuthenticatingInstance = instance_source_distributed.AuthenticatingInstance?.Base,
+                        ConnectingInstance = instance_source_distributed.ConnectingInstance?.Base
+                    };
+                }
+                else if (InstanceSources[source_index] is FederatedInstanceSource instance_source_federated)
+                {
+                    // Federated authenticating instance source
+                    h = new Xml.FederatedInstanceSourceSettings()
+                    {
+                        ConnectingInstance = instance_source_federated.ConnectingInstance?.Base
+                    };
+                }
+
+                Properties.Settings.Default[_instance_directory_id[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = h };
+            });
+
+            // Persist settings.
+            Properties.Settings.Default.Save();
+        }
 
         /// <summary>
         /// Triggers authorization for selected instance asynchronously

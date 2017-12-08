@@ -111,6 +111,17 @@ namespace eduVPN.Views.Windows
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
 
+            Application.Current.SessionEnding += (object sender, SessionEndingCancelEventArgs e_session_end) =>
+            {
+                // Save view settings on logout.
+                Client.Properties.Settings.Default.WindowTop = Top;
+                Client.Properties.Settings.Default.WindowLeft = Left;
+                Client.Properties.Settings.Default.Save();
+
+                // Save view model settings on logout. Dispatcher doesn't do the Shutdown on session ending.
+                view_model.SaveSettings();
+            };
+
             // Bind to HttpCallback to process OAuth authorization grant.
             _listener.HttpCallback += (object sender, eduOAuth.HttpCallbackEventArgs e_callback) =>
             {
