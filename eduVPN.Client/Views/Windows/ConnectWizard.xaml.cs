@@ -282,10 +282,10 @@ namespace eduVPN.Views.Windows
         /// <param name="e">Enrollment event arguments</param>
         private void ConnectWizard_RequestTwoFactorEnrollment(object sender, RequestTwoFactorEnrollmentEventArgs e)
         {
-            var view_model = new ViewModels.Windows.TwoFactorEnrollPopup(sender, e);
+            var view_model = new ViewModels.Windows.TwoFactorEnrollmentPopup(sender, e);
 
             // Create a new 2FA enroll pop-up.
-            TwoFactorEnrollPopup popup = new TwoFactorEnrollPopup() { Owner = this, DataContext = view_model };
+            TwoFactorEnrollmentPopup popup = new TwoFactorEnrollmentPopup() { Owner = this, DataContext = view_model };
 
             // Run the 2FA enroll pop-up.
             if (popup.ShowDialog() == true && e.EnrollmentUri != null)

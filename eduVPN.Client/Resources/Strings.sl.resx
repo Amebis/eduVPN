@@ -357,17 +357,17 @@ Omogoča SURFnet</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
-  <data name="TwoFactorEnrollButton" xml:space="preserve">
+  <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Včlanitev...</value>
   </data>
-  <data name="TwoFactorEnrollPopupMessage" xml:space="preserve">
+  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
     <value>{0} zahteva vašo včlanitev v 2-stopenjsko overovljanje.</value>
     <comment>{0}=Profile name</comment>
   </data>
-  <data name="TwoFactorEnrollPopupTitle" xml:space="preserve">
+  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Včlanitev v 2-stopenjsko overovljanje</value>
   </data>
-  <data name="TwoFactorEnrollPopupList" xml:space="preserve">
+  <data name="TwoFactorEnrollmentPopupList" xml:space="preserve">
     <value>Zahtevana je ena izmed naštetih metod: {0}</value>
     <comment>{0}=List of 2-Factor Authentication methods</comment>
   </data>

@@ -13,7 +13,7 @@ namespace eduVPN.ViewModels.Windows
     /// <summary>
     /// 2-Factor Authentication enrollment pop-up
     /// </summary>
-    public class TwoFactorEnrollPopup : Window
+    public class TwoFactorEnrollmentPopup : Window
     {
         #region Properties
 
@@ -36,7 +36,7 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         /// <param name="sender">Profile select panel</param>
         /// <param name="e">Event parameters</param>
-        public TwoFactorEnrollPopup(object sender, RequestTwoFactorEnrollmentEventArgs e)
+        public TwoFactorEnrollmentPopup(object sender, RequestTwoFactorEnrollmentEventArgs e)
         {
             EnrollmentUri = e.EnrollmentUri;
             Profile = e.Profile;

@@ -708,36 +708,36 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Enroll....
         /// </summary>
-        public static string TwoFactorEnrollButton {
+        public static string TwoFactorEnrollmentButton {
             get {
-                return ResourceManager.GetString("TwoFactorEnrollButton", resourceCulture);
+                return ResourceManager.GetString("TwoFactorEnrollmentButton", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to One of the following methods is required: {0}.
         /// </summary>
-        public static string TwoFactorEnrollPopupList {
+        public static string TwoFactorEnrollmentPopupList {
             get {
-                return ResourceManager.GetString("TwoFactorEnrollPopupList", resourceCulture);
+                return ResourceManager.GetString("TwoFactorEnrollmentPopupList", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to {0} requires you to enroll for 2-Factor Authentication..
         /// </summary>
-        public static string TwoFactorEnrollPopupMessage {
+        public static string TwoFactorEnrollmentPopupMessage {
             get {
-                return ResourceManager.GetString("TwoFactorEnrollPopupMessage", resourceCulture);
+                return ResourceManager.GetString("TwoFactorEnrollmentPopupMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 2-Factor Authentication Enroll.
         /// </summary>
-        public static string TwoFactorEnrollPopupTitle {
+        public static string TwoFactorEnrollmentPopupTitle {
             get {
-                return ResourceManager.GetString("TwoFactorEnrollPopupTitle", resourceCulture);
+                return ResourceManager.GetString("TwoFactorEnrollmentPopupTitle", resourceCulture);
             }
         }
         

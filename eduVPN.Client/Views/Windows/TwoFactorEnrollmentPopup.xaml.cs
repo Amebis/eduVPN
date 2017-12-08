@@ -8,13 +8,13 @@
 namespace eduVPN.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for TwoFactorEnrollPopup.xaml
+    /// Interaction logic for TwoFactorEnrollmentPopup.xaml
     /// </summary>
-    public partial class TwoFactorEnrollPopup : Window
+    public partial class TwoFactorEnrollmentPopup : Window
     {
         #region Constructors
 
-        public TwoFactorEnrollPopup()
+        public TwoFactorEnrollmentPopup()
         {
             InitializeComponent();
         }
