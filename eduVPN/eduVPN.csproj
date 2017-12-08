@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EqualityComparer.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="JSON\APIErrorException.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />

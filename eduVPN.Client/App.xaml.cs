@@ -66,6 +66,8 @@ namespace eduVPN.Client
                     }
                 }
 
+                Global.Initialize();
+
                 if (Client.Properties.Settings.Default.SettingsVersion == 0)
                 {
                     // Migrate settings from previous version.
@@ -106,6 +108,7 @@ namespace eduVPN.Client
         protected override void OnExit(ExitEventArgs e)
         {
             Client.Properties.Settings.Default.Save();
+            eduVPN.Properties.Settings.Default.Save();
 
             base.OnExit(e);
         }

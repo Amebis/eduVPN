@@ -118,8 +118,8 @@ namespace eduVPN.Views.Windows
                 Client.Properties.Settings.Default.WindowLeft = Left;
                 Client.Properties.Settings.Default.Save();
 
-                // Save view model settings on logout. Dispatcher doesn't do the Shutdown on session ending.
-                view_model.SaveSettings();
+                // Save view model settings on logout.
+                Properties.Settings.Default.Save();
             };
 
             // Bind to HttpCallback to process OAuth authorization grant.
