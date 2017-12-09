@@ -61,8 +61,8 @@ namespace eduVPN.Xml
         {
             string v;
 
-            Instance = null;
-            Profile = null;
+            if (reader.IsEmptyElement)
+                return;
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))

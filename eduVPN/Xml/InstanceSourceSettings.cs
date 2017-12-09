@@ -34,7 +34,8 @@ namespace eduVPN.Xml
 
         public virtual void ReadXml(XmlReader reader)
         {
-            InstanceSource = null;
+            if (reader.IsEmptyElement)
+                return;
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))

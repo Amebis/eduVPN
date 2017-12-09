@@ -50,7 +50,9 @@ namespace eduVPN.Xml
 
             Base = (v = reader[nameof(Base)]) != null ? new Uri(v) : null;
             Popularity = (v = reader[nameof(Popularity)]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
-            ProfileList = null;
+
+            if (reader.IsEmptyElement)
+                return;
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
@@ -60,8 +62,7 @@ namespace eduVPN.Xml
                     if (reader["Key"] == nameof(ProfileList))
                     {
                         ProfileList = new ProfileRefList();
-                        if (!reader.IsEmptyElement)
-                            ProfileList.ReadXml(reader);
+                        ProfileList.ReadXml(reader);
                     }
                 }
             }

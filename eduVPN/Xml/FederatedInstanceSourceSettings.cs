@@ -22,6 +22,9 @@ namespace eduVPN.Xml
         /// <inheritdoc/>
         public override void ReadXml(XmlReader reader)
         {
+            if (reader.IsEmptyElement)
+                return;
+
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {

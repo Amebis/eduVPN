@@ -55,6 +55,9 @@ namespace eduVPN.Xml
         {
             LastInstance = reader[nameof(LastInstance)];
 
+            if (reader.IsEmptyElement)
+                return;
+
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {

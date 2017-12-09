@@ -31,7 +31,8 @@ namespace eduVPN.Xml
         /// <inheritdoc/>
         public override void ReadXml(XmlReader reader)
         {
-            ConnectingInstanceList.Clear();
+            if (reader.IsEmptyElement)
+                return;
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
@@ -42,8 +43,7 @@ namespace eduVPN.Xml
                     {
                         case nameof(InstanceRefList):
                             if (reader["Key"] == nameof(ConnectingInstanceList))
-                                if (!reader.IsEmptyElement)
-                                    ConnectingInstanceList.ReadXml(reader);
+                                ConnectingInstanceList.ReadXml(reader);
                             break;
 
                         case nameof(InstanceSourceSettingsBase):

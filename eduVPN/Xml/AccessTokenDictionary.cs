@@ -30,7 +30,8 @@ namespace eduVPN.Xml
 
         public void ReadXml(XmlReader reader)
         {
-            Clear();
+            if (reader.IsEmptyElement)
+                return;
 
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))

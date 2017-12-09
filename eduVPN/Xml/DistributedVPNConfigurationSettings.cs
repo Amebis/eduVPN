@@ -55,6 +55,9 @@ namespace eduVPN.Xml
         {
             AuthenticatingInstance = reader[nameof(AuthenticatingInstance)];
 
+            if (reader.IsEmptyElement)
+                return;
+
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
