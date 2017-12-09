@@ -45,5 +45,16 @@ namespace eduVPN.Properties
             get { throw new NotSupportedException("InstituteAccessConfigHistory is obsolete"); }
             set { throw new NotSupportedException("InstituteAccessConfigHistory is obsolete"); }
         }
+
+        [UserScopedSetting()]
+        [DebuggerNonUserCode()]
+        [DefaultSettingValue("<SerializableStringDictionary />")]
+        [Obsolete("Please use AccessTokenCache instead")]
+        [NoSettingsVersionUpgrade]
+        public Xml.SerializableStringDictionary AccessTokens
+        {
+            get { throw new NotSupportedException("AccessTokens is obsolete"); }
+            set { throw new NotSupportedException("AccessTokens is obsolete"); }
+        }
     }
 }

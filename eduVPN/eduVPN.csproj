@@ -56,6 +56,7 @@
     <Compile Include="Models\RequestTwoFactorEnrollmentEventArgs.cs" />
     <Compile Include="ViewModels\Windows\TwoFactorEnrollmentPopup.cs" />
     <Compile Include="ViewModels\Windows\SelfUpdatePopup.cs" />
+    <Compile Include="Xml\AccessTokenDictionary.cs" />
     <Compile Include="Xml\Dictionary.cs" />
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
     <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />

@@ -41,12 +41,6 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         private static readonly float _popularity_alpha = 0.1f;
 
-        /// <summary>
-        /// Access token cache
-        /// </summary>
-        private Dictionary<string, AccessToken> _access_token_cache;
-        private object _access_token_cache_lock;
-
         #endregion
 
         #region Properties
@@ -650,10 +644,6 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public ConnectWizard()
         {
-            // Create access token cache.
-            _access_token_cache = new Dictionary<string, AccessToken>();
-            _access_token_cache_lock = new object();
-
             // Create session queue.
             _sessions = new ObservableCollection<VPNSession>();
             _sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(ActiveSession));
@@ -669,26 +659,7 @@ namespace eduVPN.ViewModels.Windows
                 _instance_sources = new InstanceSource[source_type_length];
 
                 // Setup progress feedback.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, Properties.Settings.Default.AccessTokens.Count + (source_type_length - (int)InstanceSourceType._start) * 2, 0)));
-
-                // Load access tokens from settings.
-                Parallel.ForEach(Properties.Settings.Default.AccessTokens,
-                    token =>
-                    {
-                        try
-                        {
-                            // Try to load the access token from the settings.
-                            var access_token = AccessToken.FromBase64String(token.Value);
-                            lock (_access_token_cache_lock)
-                                _access_token_cache.Add(token.Key, access_token);
-                        }
-                        catch { }
-                        finally
-                        {
-                            // Add a tick.
-                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                        }
-                    });
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, (source_type_length - (int)InstanceSourceType._start) * 2, 0)));
 
                 // Spawn instance source loading threads.
                 Parallel.For((int)InstanceSourceType._start, source_type_length, source_index =>
@@ -1259,12 +1230,12 @@ namespace eduVPN.ViewModels.Windows
                 // Get API endpoints.
                 var api = authenticating_instance.GetEndpoints(Abort.Token);
 
-                lock (_access_token_cache_lock)
+                lock (Properties.Settings.Default.AccessTokenCache)
                 {
                     if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
                     {
                         var key = api.AuthorizationEndpoint.AbsoluteUri;
-                        if (_access_token_cache.TryGetValue(key, out var access_token))
+                        if (Properties.Settings.Default.AccessTokenCache.TryGetValue(key, out var access_token))
                         {
                             if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
                             {
@@ -1273,8 +1244,7 @@ namespace eduVPN.ViewModels.Windows
                                 if (access_token != null)
                                 {
                                     // Update access token cache.
-                                    _access_token_cache[key] = access_token;
-                                    Properties.Settings.Default.AccessTokens[key] = access_token.ToBase64String();
+                                    Properties.Settings.Default.AccessTokenCache[key] = access_token;
 
                                     // If we got here, return the token.
                                     e.AccessToken = access_token;
@@ -1327,8 +1297,7 @@ namespace eduVPN.ViewModels.Windows
                         {
                             // Save access token to the cache.
                             var key = api.AuthorizationEndpoint.AbsoluteUri;
-                            _access_token_cache[key] = e.AccessToken;
-                            Properties.Settings.Default.AccessTokens[key] = e.AccessToken.ToBase64String();
+                            Properties.Settings.Default.AccessTokenCache[key] = e.AccessToken;
                         }
                     }
                 }
@@ -1348,11 +1317,10 @@ namespace eduVPN.ViewModels.Windows
                 var api = authenticating_instance.GetEndpoints(Abort.Token);
 
                 // Remove access token from cache.
-                lock (_access_token_cache_lock)
+                lock (Properties.Settings.Default.AccessTokenCache)
                 {
                     var key = api.AuthorizationEndpoint.AbsoluteUri;
-                    _access_token_cache.Remove(key);
-                    Properties.Settings.Default.AccessTokens.Remove(key);
+                    Properties.Settings.Default.AccessTokenCache.Remove(key);
                 }
             }
         }

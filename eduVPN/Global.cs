@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using eduVPN.Models;
 using System;
 using System.Linq;
@@ -125,6 +126,11 @@ namespace eduVPN
                     }
                     #pragma warning restore 0612
                 }
+
+                // Versions before 1.0.14 used string dictionary for access token cache.
+                if (Properties.Settings.Default.GetPreviousVersion("AccessTokens") is Xml.SerializableStringDictionary access_tokens)
+                    foreach (var token in access_tokens)
+                        Properties.Settings.Default.AccessTokenCache[token.Key] = AccessToken.FromBase64String(token.Value);
             }
         }
 

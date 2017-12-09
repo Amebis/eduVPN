@@ -183,13 +183,13 @@ namespace eduVPN.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
-        public global::eduVPN.Xml.SerializableStringDictionary AccessTokens {
+        [global::System.Configuration.DefaultSettingValueAttribute("<AccessTokenDictionary/>")]
+        public global::eduVPN.Xml.AccessTokenDictionary AccessTokenCache {
             get {
-                return ((global::eduVPN.Xml.SerializableStringDictionary)(this["AccessTokens"]));
+                return ((global::eduVPN.Xml.AccessTokenDictionary)(this["AccessTokenCache"]));
             }
             set {
-                this["AccessTokens"] = value;
+                this["AccessTokenCache"] = value;
             }
         }
         

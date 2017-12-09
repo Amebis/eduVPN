@@ -47,8 +47,8 @@
     <Setting Name="OpenVPNForceTCP" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AccessTokens" Type="eduVPN.Xml.SerializableStringDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;SerializableStringDictionary/&gt;</Value>
+    <Setting Name="AccessTokenCache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
     </Setting>
     <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
