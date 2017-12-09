@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.Windows;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -121,6 +122,25 @@ namespace eduVPN.Models
 
             instance_source.Load(obj);
             return instance_source;
+        }
+
+        /// <summary>
+        /// Loads instance source settings
+        /// </summary>
+        /// <param name="parent">Parent window</param>
+        /// <param name="settings">Settings</param>
+        public virtual void FromSettings(ConnectWizard parent, Xml.InstanceSourceSettingsBase settings)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Generates persistable instance source settings
+        /// </summary>
+        /// <returns>Persistable instance source settings</returns>
+        public virtual Xml.InstanceSourceSettingsBase ToSettings()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

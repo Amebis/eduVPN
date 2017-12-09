@@ -117,6 +117,9 @@ namespace eduVPN.ViewModels.Panels
                             {
                                 ForgetInstance(SelectedInstance);
 
+                                // Update settings.
+                                Properties.Settings.Default[Global.InstanceDirectoryId[(int)InstanceSourceType] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSource.ToSettings() };
+
                                 // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
                                 if (Parent.StartingPage != Parent.CurrentPage)
                                     Parent.CurrentPage = Parent.StartingPage;
@@ -260,6 +263,9 @@ namespace eduVPN.ViewModels.Panels
 
                                     if (forget_instance)
                                         ForgetInstance(instance);
+
+                                    // Update settings.
+                                    Properties.Settings.Default[Global.InstanceDirectoryId[(int)InstanceSourceType] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSource.ToSettings() };
 
                                     // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
                                     if (Parent.StartingPage != Parent.CurrentPage)

@@ -5,8 +5,10 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.Windows;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace eduVPN.Models
 {
@@ -16,8 +18,38 @@ namespace eduVPN.Models
     /// <remarks>
     /// Access token is issued by a central OAuth server; all instances accept this token.
     /// </remarks>
-    public class FederatedInstanceSource : DistributedInstanceSource
+    public class FederatedInstanceSource : InstanceSource
     {
+        #region Methods
+
+        /// <inheritdoc/>
+        public override Instance GetAuthenticatingInstance(Instance connecting_instance)
+        {
+            return AuthenticatingInstance;
+        }
+
+        /// <inheritdoc/>
+        public override void FromSettings(ConnectWizard parent, Xml.InstanceSourceSettingsBase settings)
+        {
+            if (settings is Xml.FederatedInstanceSourceSettings h_federated)
+            {
+                // - Restore connecting instance (optional).
+                ConnectingInstance = h_federated.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_federated.ConnectingInstance.AbsoluteUri) : null;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Xml.InstanceSourceSettingsBase ToSettings()
+        {
+            return
+                new Xml.FederatedInstanceSourceSettings()
+                {
+                    ConnectingInstance = ConnectingInstance?.Base
+                };
+        }
+
+        #endregion
+
         #region ILoadableItem Support
 
         /// <inheritdoc/>

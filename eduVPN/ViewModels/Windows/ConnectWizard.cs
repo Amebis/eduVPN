@@ -241,7 +241,6 @@ namespace eduVPN.ViewModels.Windows
                                 })).Start();
 
                             // Do the instance source book-keeping.
-                            Xml.InstanceSourceSettingsBase h = null;
                             if (InstanceSources[source_index] is LocalInstanceSource instance_source_local)
                             {
                                 // Local authenticating instance source
@@ -299,51 +298,21 @@ namespace eduVPN.ViewModels.Windows
                                     // Add connecting instance to the list.
                                     instance_source_local.ConnectingInstanceList.Add(param.ConnectingProfile.Instance);
                                 }
-
-                                h = new Xml.LocalInstanceSourceSettings()
-                                {
-                                    ConnectingInstance = instance_source_local.ConnectingInstance?.Base,
-                                    ConnectingInstanceList = new Xml.InstanceRefList(
-                                        instance_source_local.ConnectingInstanceList
-                                        .Select(inst =>
-                                            new Xml.InstanceRef()
-                                            {
-                                                Base = inst.Base,
-                                                Popularity = inst.Popularity,
-                                                ProfileList = new Xml.ProfileRefList(
-                                                    instance_source_local.ConnectingProfileList
-                                                    .Where(prof => prof.Instance.Equals(inst))
-                                                    .Select(prof => new Xml.ProfileRef()
-                                                    {
-                                                        ID = prof.ID,
-                                                        Popularity = prof.Popularity
-                                                    }))
-                                            }
-                                        ))
-                                };
                             }
                             else if (InstanceSources[source_index] is DistributedInstanceSource instance_source_distributed)
                             {
                                 // Distributed authenticating instance source
                                 instance_source_distributed.AuthenticatingInstance = authenticating_instance;
-                                h = new Xml.DistributedInstanceSourceSettings()
-                                {
-                                    AuthenticatingInstance = instance_source_distributed.AuthenticatingInstance?.Base,
-                                    ConnectingInstance = instance_source_distributed.ConnectingInstance?.Base
-                                };
                             }
                             else if (InstanceSources[source_index] is FederatedInstanceSource instance_source_federated)
                             {
                                 // Federated authenticating instance source
-                                h = new Xml.FederatedInstanceSourceSettings()
-                                {
-                                    ConnectingInstance = instance_source_federated.ConnectingInstance?.Base
-                                };
                             }
                             else
                                 throw new InvalidOperationException();
 
-                            Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = h };
+                            // Update settings.
+                            Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSources[source_index].ToSettings() };
                         },
 
                         // canExecute
@@ -704,97 +673,7 @@ namespace eduVPN.ViewModels.Windows
 
                                 // Import settings.
                                 Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
-                                if (InstanceSources[source_index] is LocalInstanceSource instance_source_local &&
-                                    h is Xml.LocalInstanceSourceSettings h_local)
-                                {
-                                    // Local authenticating instance source:
-                                    // - Restore instance list.
-                                    // - Restore connecting instance (optional).
-                                    foreach (var h_instance in h_local.ConnectingInstanceList)
-                                    {
-                                        var connecting_instance = instance_source_local.InstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_instance.Base.AbsoluteUri);
-                                        if (connecting_instance == null)
-                                        {
-                                            // The connecting instance was not found. Could be user entered, or removed from discovery file.
-                                            connecting_instance = new Instance(h_instance.Base);
-                                            connecting_instance.RequestAuthorization += Instance_RequestAuthorization;
-                                            connecting_instance.ForgetAuthorization += Instance_ForgetAuthorization;
-                                        }
-                                        else
-                                            connecting_instance.Popularity = h_instance.Popularity;
-
-                                        var instance = instance_source_local.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
-                                        if (instance == null)
-                                        {
-                                            instance_source_local.ConnectingInstanceList.Add(connecting_instance);
-                                            instance = connecting_instance;
-                                        }
-                                        else
-                                            instance.Popularity = Math.Max(instance.Popularity, h_instance.Popularity);
-
-                                        // Restore connecting profiles (optionally).
-                                        // Matching profile with existing profiles might trigger OAuth in GetProfileList().
-                                        switch (Properties.Settings.Default.ConnectingProfileSelectMode)
-                                        {
-                                            case 0:
-                                                {
-                                                    // Restore only profiles user connected to before.
-                                                    var profile_list = instance.GetProfileList(instance, Abort.Token);
-                                                    foreach (var h_profile in h_instance.ProfileList)
-                                                    {
-                                                        var profile = profile_list.FirstOrDefault(prof => prof.ID == h_profile.ID);
-                                                        if (profile != null)
-                                                        {
-                                                            profile.Popularity = h_profile.Popularity;
-                                                            if (instance_source_local.ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
-                                                                instance_source_local.ConnectingProfileList.Add(profile);
-                                                        }
-                                                    }
-                                                }
-
-                                                break;
-
-                                            case 2:
-                                                {
-                                                    // Add all available profiles to the connecting profile list.
-                                                    // Restore popularity on the fly (or leave default to promote newly discovered profiles).
-                                                    var profile_list = instance.GetProfileList(instance, Abort.Token);
-                                                    foreach (var profile in profile_list)
-                                                    {
-                                                        var h_profile = h_instance.ProfileList.FirstOrDefault(prof => prof.ID == profile.ID);
-                                                        if (h_profile != null)
-                                                            profile.Popularity = h_profile.Popularity;
-
-                                                        instance_source_local.ConnectingProfileList.Add(profile);
-                                                    }
-                                                }
-
-                                                break;
-                                        }
-                                    }
-                                    instance_source_local.ConnectingInstance = h_local.ConnectingInstance != null ? instance_source_local.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_local.ConnectingInstance.AbsoluteUri) : null;
-                                }
-                                else if (InstanceSources[source_index] is DistributedInstanceSource instance_source_distributed &&
-                                    h is Xml.DistributedInstanceSourceSettings h_distributed)
-                                {
-                                    // Distributed authenticating instance source:
-                                    // - Restore authenticating instance.
-                                    // - Restore connecting instance (optional).
-                                    instance_source_distributed.AuthenticatingInstance = h_distributed.AuthenticatingInstance != null ? instance_source_distributed.InstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance.AbsoluteUri) : null;
-                                    if (instance_source_distributed.AuthenticatingInstance != null)
-                                    {
-                                        instance_source_distributed.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
-                                        instance_source_distributed.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
-                                        instance_source_distributed.ConnectingInstance = h_distributed.ConnectingInstance != null ? instance_source_distributed.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.ConnectingInstance.AbsoluteUri) : null;
-                                    }
-                                }
-                                else if (InstanceSources[source_index] is FederatedInstanceSource instance_source_federated &&
-                                    h is Xml.FederatedInstanceSourceSettings h_federated)
-                                {
-                                    // Federated authenticating instance source:
-                                    // - Restore connecting instance (optional).
-                                    instance_source_federated.ConnectingInstance = h_federated.ConnectingInstance != null ? instance_source_federated.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_federated.ConnectingInstance.AbsoluteUri) : null;
-                                }
+                                InstanceSources[source_index].FromSettings(this, h);
 
                                 // Add a tick.
                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));

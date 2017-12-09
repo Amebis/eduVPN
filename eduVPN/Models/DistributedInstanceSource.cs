@@ -5,6 +5,9 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.Windows;
+using System.Linq;
+
 namespace eduVPN.Models
 {
     /// <summary>
@@ -21,6 +24,34 @@ namespace eduVPN.Models
         public override Instance GetAuthenticatingInstance(Instance connecting_instance)
         {
             return AuthenticatingInstance;
+        }
+
+        /// <inheritdoc/>
+        public override void FromSettings(ConnectWizard parent, Xml.InstanceSourceSettingsBase settings)
+        {
+            if (settings is Xml.DistributedInstanceSourceSettings h_distributed)
+            {
+                // - Restore authenticating instance.
+                // - Restore connecting instance (optional).
+                AuthenticatingInstance = h_distributed.AuthenticatingInstance != null ? InstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance.AbsoluteUri) : null;
+                if (AuthenticatingInstance != null)
+                {
+                    AuthenticatingInstance.RequestAuthorization += parent.Instance_RequestAuthorization;
+                    AuthenticatingInstance.ForgetAuthorization += parent.Instance_ForgetAuthorization;
+                    ConnectingInstance = h_distributed.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.ConnectingInstance.AbsoluteUri) : null;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Xml.InstanceSourceSettingsBase ToSettings()
+        {
+            return
+                new Xml.DistributedInstanceSourceSettings()
+                {
+                    AuthenticatingInstance = AuthenticatingInstance?.Base,
+                    ConnectingInstance = ConnectingInstance?.Base
+                };
         }
 
         #endregion
