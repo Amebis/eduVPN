@@ -187,7 +187,7 @@ namespace eduVPN.ViewModels.Panels
                                     {
                                         // User is not enrolled for 2FA, or is not enrolled using any required 2FA method.
 
-                                        // Get authenticating instance endpoints. (Already cached by GetUserInfo above.)
+                                        // Get authenticating instance endpoints. (Already cached by GetUserInfo above. Otherwise it would need to be spawned as a background task to avoid deadlock.)
                                         var api = authenticating_instance.GetEndpoints(Window.Abort.Token);
 
                                         // Offer user to enroll for 2FA.

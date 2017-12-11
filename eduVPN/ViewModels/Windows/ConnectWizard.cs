@@ -266,7 +266,7 @@ namespace eduVPN.ViewModels.Windows
                                 }
                                 if (Properties.Settings.Default.ConnectingProfileSelectMode == 2)
                                 {
-                                    // Add all profiles of connecting instance to the list.
+                                    // Add all profiles of connecting instance to the list. (Profile list is already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
                                     foreach (var profile in param.ConnectingProfile.Instance.GetProfileList(authenticating_instance, Abort.Token))
                                         if (instance_source_local.ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
                                         {
@@ -1106,7 +1106,7 @@ namespace eduVPN.ViewModels.Windows
         {
             if (sender is Instance authenticating_instance)
             {
-                // Get API endpoints.
+                // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
                 var api = authenticating_instance.GetEndpoints(Abort.Token);
 
                 lock (Properties.Settings.Default.AccessTokenCache)
