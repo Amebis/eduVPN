@@ -130,7 +130,10 @@ namespace eduVPN
                 // Versions before 1.0.14 used string dictionary for access token cache.
                 if (Properties.Settings.Default.GetPreviousVersion("AccessTokens") is Xml.SerializableStringDictionary access_tokens)
                     foreach (var token in access_tokens)
-                        Properties.Settings.Default.AccessTokenCache[token.Key] = AccessToken.FromBase64String(token.Value);
+                    {
+                        var authorization_endpoint = new Uri(token.Key);
+                        Properties.Settings.Default.AccessTokenCache[authorization_endpoint.Host] = AccessToken.FromBase64String(token.Value);
+                    }
             }
         }
 

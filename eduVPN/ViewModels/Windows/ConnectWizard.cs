@@ -1113,7 +1113,7 @@ namespace eduVPN.ViewModels.Windows
                 {
                     if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
                     {
-                        var key = api.AuthorizationEndpoint.AbsoluteUri;
+                        var key = authenticating_instance.Base.Host;
                         if (Properties.Settings.Default.AccessTokenCache.TryGetValue(key, out var access_token))
                         {
                             if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
@@ -1175,8 +1175,7 @@ namespace eduVPN.ViewModels.Windows
                         if (e.AccessToken != null)
                         {
                             // Save access token to the cache.
-                            var key = api.AuthorizationEndpoint.AbsoluteUri;
-                            Properties.Settings.Default.AccessTokenCache[key] = e.AccessToken;
+                            Properties.Settings.Default.AccessTokenCache[authenticating_instance.Base.Host] = e.AccessToken;
                         }
                     }
                 }
@@ -1192,15 +1191,9 @@ namespace eduVPN.ViewModels.Windows
         {
             if (sender is Instance authenticating_instance)
             {
-                // Get API endpoints.
-                var api = authenticating_instance.GetEndpoints(Abort.Token);
-
                 // Remove access token from cache.
                 lock (Properties.Settings.Default.AccessTokenCache)
-                {
-                    var key = api.AuthorizationEndpoint.AbsoluteUri;
-                    Properties.Settings.Default.AccessTokenCache.Remove(key);
-                }
+                    Properties.Settings.Default.AccessTokenCache.Remove(authenticating_instance.Base.Host);
             }
         }
 
