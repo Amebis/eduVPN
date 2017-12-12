@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="300">
 
-    <UserControl.Resources>
+    <panels:ConnectingSelectPanel.Resources>
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="ProfileListView" Source="{Binding Path=InstanceSource.ConnectingProfileList}">
             <CollectionViewSource.SortDescriptions>
@@ -22,7 +22,7 @@
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
         </Style>
-    </UserControl.Resources>
+    </panels:ConnectingSelectPanel.Resources>
 
     <Grid Margin="-5">
         <Grid.RowDefinitions>
@@ -31,7 +31,7 @@
 
         <ListBox
             x:Name="ProfileList"
-            Margin="5,2,5,5"
+            Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
