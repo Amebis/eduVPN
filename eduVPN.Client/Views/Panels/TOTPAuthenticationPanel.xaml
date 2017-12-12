@@ -18,7 +18,7 @@
             x:Name="Response"
             Margin="5"
             HorizontalContentAlignment="Center"
-            Style="{StaticResource eduVPNTextBoxStyle}"
+            Style="{StaticResource eduVPNCodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>
