@@ -142,6 +142,9 @@ namespace eduVPN.Models
         public Instance(Uri authorization_endpoint, Uri token_endpoint) :
             this()
         {
+            // Make a guess for the base name - required to identify instance (e.g. when caching access tokens).
+            _base = new Uri(authorization_endpoint.GetLeftPart(UriPartial.Authority) + "/");
+
             // Set display name to authorization URI hostname.
             _display_name = authorization_endpoint.Host;
 
