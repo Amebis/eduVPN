@@ -8,6 +8,7 @@
 using eduOpenVPN.Management;
 using eduVPN.Models;
 using Prism.Commands;
+using System;
 using System.ComponentModel;
 using System.Net;
 using System.Windows.Input;
@@ -73,6 +74,37 @@ namespace eduVPN.ViewModels.Panels
         }
         private DelegateCommand<UsernamePasswordAuthenticationRequestedEventArgs> _apply_response;
 
+        /// <summary>
+        /// Apply enrollment command
+        /// </summary>
+        public ICommand ApplyEnrollment
+        {
+            get
+            {
+                if (_apply_enrollment == null)
+                {
+                    _apply_enrollment = new DelegateCommand<RequestTwoFactorEnrollmentEventArgs>(
+                        // execute
+                        e =>
+                        {
+                            e.Credentials = GetEnrollmentCredentials();
+                        },
+
+                        // canExecute
+                        e =>
+                            e is RequestTwoFactorEnrollmentEventArgs &&
+                            !string.IsNullOrEmpty(Response) &&
+                            !HasErrors);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Response) || e.PropertyName == nameof(HasErrors)) _apply_enrollment.RaiseCanExecuteChanged(); };
+                }
+
+                return _apply_enrollment;
+            }
+        }
+        private DelegateCommand<RequestTwoFactorEnrollmentEventArgs> _apply_enrollment;
+
         #endregion
 
         #region Methods
@@ -81,6 +113,15 @@ namespace eduVPN.ViewModels.Panels
         public override string ToString()
         {
             return DisplayName;
+        }
+
+        /// <summary>
+        /// Returns 2-Factor Authentication enrollment credentials entered
+        /// </summary>
+        /// <returns>2-Factor Authentication enrollment credentials</returns>
+        protected virtual TwoFactorEnrollmentCredentials GetEnrollmentCredentials()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

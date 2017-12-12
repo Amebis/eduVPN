@@ -223,4 +223,7 @@
     <value>Downloaded file {0} is corrupt.</value>
     <comment>{0}=URI</comment>
   </data>
+  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
+    <value>2-Factor Authentication enrollment failed.</value>
+  </data>
 </root>

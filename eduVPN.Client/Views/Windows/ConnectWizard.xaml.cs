@@ -284,14 +284,38 @@ namespace eduVPN.Views.Windows
         {
             var view_model = new ViewModels.Windows.TwoFactorEnrollmentPopup(sender, e);
 
+            // Load previous "username". 2-Factor Authentication method actually.
+            var profile_id = e.Profile.Instance.Base.AbsoluteUri + "|" + e.Profile.ID;
+            var previous_method_selected = false;
+            try
+            {
+                var method_id = Client.Properties.Settings.Default.UsernameHistory[profile_id];
+                var method = view_model.MethodList.FirstOrDefault(m => m.ID == method_id);
+                if (method != null)
+                {
+                    view_model.SelectedMethod = method;
+                    previous_method_selected = true;
+                }
+            }
+            catch { }
+
             // Create a new 2FA enroll pop-up.
             TwoFactorEnrollmentPopup popup = new TwoFactorEnrollmentPopup() { Owner = this, DataContext = view_model };
-
-            // Run the 2FA enroll pop-up.
-            if (popup.ShowDialog() == true && e.EnrollmentUri != null)
+            popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
             {
-                // Trigger enrollment.
-                System.Diagnostics.Process.Start(e.EnrollmentUri.ToString());
+                // Set initial focus.
+                if (!previous_method_selected && view_model.MethodList.Count > 1)
+                    popup.Method.Focus();
+            };
+
+            // Set the event args to fill with data.
+            popup.OK.CommandParameter = e;
+
+            // Run the 2FA enrollment pop-up and pass the credentials to be returned to the event sender.
+            if (popup.ShowDialog() == true)
+            {
+                // Save "username" for the next time.
+                Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.SelectedMethod.ID;
             }
         }
 

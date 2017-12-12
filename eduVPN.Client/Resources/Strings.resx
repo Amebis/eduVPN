@@ -359,17 +359,19 @@ If you continue, your user settings will be reset to defaults.</value>
     <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
-    <value>Enroll...</value>
+    <value>Enroll</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0} requires you to enroll for 2-Factor Authentication.</value>
-    <comment>{0}=Profile name</comment>
+    <value>{0} requires you to enroll for 2-Factor Authentication at {1}.</value>
+    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
   </data>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>2-Factor Authentication Enroll</value>
+    <value>2-Factor Authentication Enrollment</value>
   </data>
-  <data name="TwoFactorEnrollmentPopupList" xml:space="preserve">
-    <value>One of the following methods is required: {0}</value>
-    <comment>{0}=List of 2-Factor Authentication methods</comment>
+  <data name="TOTPEnrollmentPanelResponseTitle" xml:space="preserve">
+    <value>Response:</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretTitle" xml:space="preserve">
+    <value>Secret:</value>
   </data>
 </root>

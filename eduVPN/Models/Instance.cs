@@ -452,6 +452,72 @@ namespace eduVPN.Models
         }
 
         /// <summary>
+        /// Enroll user for 2-Factor Authentication
+        /// </summary>
+        /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
+        /// <param name="credentials">2-Factor Authentication credentials</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <exception cref="ArgumentNullException">Parameter <paramref name="credentials"/> is <c>null</c></exception>
+        /// <exception cref="InvalidOperationException">Unsupported 2-Factor Authentication credentials type in <paramref name="credentials"/></exception>
+        public void TwoFactorEnroll(Instance authenticating_instance, TwoFactorEnrollmentCredentials credentials, CancellationToken ct = default(CancellationToken))
+        {
+            // Get API endpoints.
+            var api = GetEndpoints(ct);
+
+            var e = new RequestAuthorizationEventArgs("config");
+
+            retry:
+            try
+            {
+                // Request authentication token.
+                RequestAuthorization?.Invoke(authenticating_instance, e);
+                if (e.AccessToken == null)
+                    throw new AccessTokenNullException();
+
+                Uri uri = null;
+                var param = new NameValueCollection();
+                String name = null;
+                if (credentials is TOTPEnrollmentCredentials cred_totp)
+                {
+                    uri = api.TOTPAuthenticationEnroll;
+                    param["totp_secret"] = new NetworkCredential("", cred_totp.Secret).Password;
+                    param["totp_key"] = new NetworkCredential("", cred_totp.Response).Password;
+                    name = "two_factor_enroll_totp";
+                }
+                else if (credentials is YubiKeyEnrollmentCredentials cred_yubi)
+                {
+                    uri = api.YubiKeyAuthenticationEnroll;
+                    param["yubi_key_otp"] = new NetworkCredential("", cred_yubi.Response).Password;
+                    name = "two_factor_enroll_yubi";
+                }
+                else if (credentials == null)
+                    throw new ArgumentNullException(nameof(credentials));
+                else
+                    throw new InvalidOperationException();
+
+                // Enroll.
+                JSON.Extensions.LoadJSONAPIResponse(Xml.Response.Get(
+                    uri: uri,
+                    param: param,
+                    token: e.AccessToken,
+                    ct: ct).Value, name, ct);
+            }
+            catch (OperationCanceledException) { throw; }
+            catch (WebException ex)
+            {
+                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
+                    e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                    goto retry;
+                }
+                else
+                    throw new AggregateException(Resources.Strings.ErrorTwoFactorEnrollment, ex);
+            }
+            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorTwoFactorEnrollment, ex); }
+        }
+
+        /// <summary>
         /// Removes instance data from cache
         /// </summary>
         public void Forget()

@@ -17,14 +17,20 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
-        /// Enrollment URI
+        /// Authenticating instance
         /// </summary>
-        public Uri EnrollmentUri { get; }
+        public Instance AuthenticatingInstance { get; }
 
         /// <summary>
         /// Connecting profile
         /// </summary>
         public Profile Profile { get; }
+
+        /// <summary>
+        /// 2-Factor Authentication enrollment credentials
+        /// </summary>
+        /// <remarks>Should be set to selected 2-Factor Authentication method credentials.</remarks>
+        public TwoFactorEnrollmentCredentials Credentials { get; set; }
 
         #endregion
 
@@ -33,11 +39,11 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs event parameters
         /// </summary>
-        /// <param name="enrollment_uri">Enrollment URI</param>
+        /// <param name="authenticating_instance">Authenticating instance</param>
         /// <param name="profile">Connecting profile</param>
-        public RequestTwoFactorEnrollmentEventArgs(Uri enrollment_uri, Profile profile)
+        public RequestTwoFactorEnrollmentEventArgs(Instance authenticating_instance, Profile profile)
         {
-            EnrollmentUri = enrollment_uri;
+            AuthenticatingInstance = authenticating_instance;
             Profile = profile;
         }
 

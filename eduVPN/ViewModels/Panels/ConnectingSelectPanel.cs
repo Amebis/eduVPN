@@ -191,12 +191,15 @@ namespace eduVPN.ViewModels.Panels
                                         var api = authenticating_instance.GetEndpoints(Window.Abort.Token);
 
                                         // Offer user to enroll for 2FA.
-                                        Parent.Profile_RequestTwoFactorEnrollment(
-                                            this,
-                                            new RequestTwoFactorEnrollmentEventArgs(
-                                                api.TwoFactorAuthenticationEnroll ?? authenticating_instance.Base,
-                                                SelectedProfile));
-                                        return;
+                                        var e = new RequestTwoFactorEnrollmentEventArgs(authenticating_instance, SelectedProfile);
+                                        Parent.Profile_RequestTwoFactorEnrollment(this, e);
+                                        if (e.Credentials == null)
+                                            return;
+
+                                        // Enroll.
+                                        var enrollment_task = new Task(() => authenticating_instance.TwoFactorEnroll(authenticating_instance, e.Credentials, Window.Abort.Token), Window.Abort.Token, TaskCreationOptions.LongRunning);
+                                        enrollment_task.Start();
+                                        await enrollment_task;
                                     }
                                 }
 

@@ -5,6 +5,9 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
+using System.Net;
+
 namespace eduVPN.ViewModels.Panels
 {
     /// <summary>
@@ -19,6 +22,19 @@ namespace eduVPN.ViewModels.Panels
 
         /// <inheritdoc/>
         public override string DisplayName { get => Resources.Strings.TwoFactorAuthenticationMethodYubiKey; }
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc/>
+        protected override TwoFactorEnrollmentCredentials GetEnrollmentCredentials()
+        {
+            return new YubiKeyEnrollmentCredentials()
+            {
+                Response = (new NetworkCredential("", Response)).SecurePassword
+            };
+        }
 
         #endregion
     }

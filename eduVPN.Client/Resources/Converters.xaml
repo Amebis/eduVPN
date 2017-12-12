@@ -21,8 +21,8 @@
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
     <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
+    <conv:TOTPQRConverter x:Key="TOTPQRConverter"/>
     <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>
-    <conv:TwoFactorMethodVisibilityConverter x:Key="TwoFactorMethodVisibilityConverter"/>
     <conv:UserDisabledVisibilityConverter x:Key="UserDisabledVisibilityConverter"/>
     <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
     <conv:VPNSessionStatusTypeWindowIconConverter x:Key="VPNSessionStatusTypeWindowIconConverter"/>

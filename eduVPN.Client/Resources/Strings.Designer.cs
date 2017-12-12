@@ -679,6 +679,24 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Response:.
+        /// </summary>
+        public static string TOTPEnrollmentPanelResponseTitle {
+            get {
+                return ResourceManager.GetString("TOTPEnrollmentPanelResponseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secret:.
+        /// </summary>
+        public static string TOTPEnrollmentPanelSecretTitle {
+            get {
+                return ResourceManager.GetString("TOTPEnrollmentPanelSecretTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select your enrolled authentication method and enter the security token:.
         /// </summary>
         public static string TwoFactorAuthenticationPopupMessage {
@@ -706,7 +724,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enroll....
+        ///   Looks up a localized string similar to Enroll.
         /// </summary>
         public static string TwoFactorEnrollmentButton {
             get {
@@ -715,16 +733,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to One of the following methods is required: {0}.
-        /// </summary>
-        public static string TwoFactorEnrollmentPopupList {
-            get {
-                return ResourceManager.GetString("TwoFactorEnrollmentPopupList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} requires you to enroll for 2-Factor Authentication..
+        ///   Looks up a localized string similar to {0} requires you to enroll for 2-Factor Authentication at {1}..
         /// </summary>
         public static string TwoFactorEnrollmentPopupMessage {
             get {
@@ -733,7 +742,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2-Factor Authentication Enroll.
+        ///   Looks up a localized string similar to 2-Factor Authentication Enrollment.
         /// </summary>
         public static string TwoFactorEnrollmentPopupTitle {
             get {

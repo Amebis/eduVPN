@@ -6,7 +6,9 @@
 */
 
 using eduVPN.Models;
-using System;
+using eduVPN.ViewModels.Panels;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace eduVPN.ViewModels.Windows
 {
@@ -18,14 +20,45 @@ namespace eduVPN.ViewModels.Windows
         #region Properties
 
         /// <summary>
-        /// Enrollment URI
+        /// Authenticating instance
         /// </summary>
-        public Uri EnrollmentUri { get; }
+        public Instance AuthenticatingInstance { get; }
 
         /// <summary>
         /// Connecting profile
         /// </summary>
         public Profile Profile { get; }
+
+        /// <summary>
+        /// Authentication method list
+        /// </summary>
+        public ObservableCollection<TwoFactorAuthenticationBasePanel> MethodList
+        {
+            get { return _method_list; }
+        }
+        private ObservableCollection<TwoFactorAuthenticationBasePanel> _method_list;
+
+        /// <summary>
+        /// 2-Factor authentication method
+        /// </summary>
+        public TwoFactorAuthenticationBasePanel SelectedMethod
+        {
+            get { return _selected_method; }
+            set
+            {
+                if (SetProperty(ref _selected_method, value))
+                    RaisePropertyChanged(nameof(ApplyEnrollment));
+            }
+        }
+        private TwoFactorAuthenticationBasePanel _selected_method;
+
+        /// <summary>
+        /// Apply enrollment command
+        /// </summary>
+        public ICommand ApplyEnrollment
+        {
+            get { return SelectedMethod?.ApplyEnrollment; }
+        }
 
         #endregion
 
@@ -38,8 +71,19 @@ namespace eduVPN.ViewModels.Windows
         /// <param name="e">Event parameters</param>
         public TwoFactorEnrollmentPopup(object sender, RequestTwoFactorEnrollmentEventArgs e)
         {
-            EnrollmentUri = e.EnrollmentUri;
+            AuthenticatingInstance = e.AuthenticatingInstance;
             Profile = e.Profile;
+
+            // Prepare the list of methods.
+            _method_list = new ObservableCollection<TwoFactorAuthenticationBasePanel>();
+            if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.TOTP))
+                _method_list.Add(new TOTPEnrollmentPanel());
+            if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.YubiKey))
+                _method_list.Add(new YubiKeyAuthenticationPanel());
+
+            // Initially select the first method.
+            if (_method_list.Count > 0)
+                _selected_method = _method_list[0];
         }
 
         #endregion
