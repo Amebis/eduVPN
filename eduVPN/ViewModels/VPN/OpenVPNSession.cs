@@ -240,7 +240,7 @@ namespace eduVPN.ViewModels.VPN
                             {
                                 // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
                                 var mgmt_client_task = mgmt_server.AcceptTcpClientAsync();
-                                try { mgmt_client_task.Wait(_quit.Token); }
+                                try { mgmt_client_task.Wait(30000, _quit.Token); }
                                 catch (AggregateException ex) { throw ex.InnerException; }
                                 var mgmt_client = mgmt_client_task.Result;
                                 try
