@@ -1106,9 +1106,6 @@ namespace eduVPN.ViewModels.Windows
         {
             if (sender is Instance authenticating_instance)
             {
-                // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
-                var api = authenticating_instance.GetEndpoints(Abort.Token);
-
                 lock (Properties.Settings.Default.AccessTokenCache)
                 {
                     if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
@@ -1119,6 +1116,10 @@ namespace eduVPN.ViewModels.Windows
                             if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
                             {
                                 // Token expired. Refresh it.
+
+                                // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
+                                var api = authenticating_instance.GetEndpoints(Abort.Token);
+
                                 access_token = access_token.RefreshToken(api.TokenEndpoint, null, Abort.Token);
                                 if (access_token != null)
                                 {
@@ -1141,6 +1142,9 @@ namespace eduVPN.ViewModels.Windows
 
                     if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly)
                     {
+                        // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
+                        var api = authenticating_instance.GetEndpoints(Abort.Token);
+
                         // Prepare new authorization grant.
                         var authorization_grant = new AuthorizationGrant()
                         {
