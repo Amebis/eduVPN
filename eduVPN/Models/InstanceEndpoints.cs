@@ -79,7 +79,7 @@ namespace eduVPN.Models
         private Uri _user_info;
 
         /// <summary>
-        /// 2-Factor Authentication enroll URI
+        /// 2-Factor Authentication enroll URI (web based)
         /// </summary>
         public Uri TwoFactorAuthenticationEnroll { get => _two_factor_authentication_enroll; }
         private Uri _two_factor_authentication_enroll;

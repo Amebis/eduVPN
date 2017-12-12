@@ -62,7 +62,7 @@ namespace eduVPN.ViewModels.Windows
             base(sender, e)
         {
             // Query profile supported & user enrolled 2-Factor authentication methods.
-            TwoFactorAuthenticationMethods methods = TwoFactorAuthenticationMethods.Any;
+            var methods = TwoFactorAuthenticationMethods.Any;
             if (Session.ConnectingProfile.IsTwoFactorAuthentication)
                 methods &= Session.ConnectingProfile.TwoFactorMethods;
             if (Session.UserInfo.IsTwoFactorAuthentication)

@@ -44,7 +44,7 @@ namespace eduVPN.ViewModels.Panels
         /// <summary>
         /// Apply response command
         /// </summary>
-        public virtual ICommand ApplyResponse
+        public ICommand ApplyResponse
         {
             get
             {
