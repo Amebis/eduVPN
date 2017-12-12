@@ -39,7 +39,7 @@ namespace eduVPN.JSON
 
             // Verify response status.
             if (eduJSON.Parser.GetValue(obj, "ok", out bool is_ok) && !is_ok)
-                throw new APIErrorException();
+                throw eduJSON.Parser.GetValue(obj, "error", out string error) ? new APIErrorException(error) : new APIErrorException();
 
             // Load data.
             i.Load(obj["data"]);
