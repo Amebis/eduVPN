@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.Views.Windows;
 using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Web;
 using System.Windows;
 
 namespace eduVPN.Client
@@ -124,21 +122,6 @@ namespace eduVPN.Client
         /// <returns><c>true</c></returns>
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
-            if (args.Count >= 2)
-            {
-                // Forward redirect URI to the authorization pop-up.
-                Uri uri = null;
-                try { uri = new Uri(args[1]); } catch { }
-                if (uri != null)
-                {
-                    var query = HttpUtility.ParseQueryString(uri.Query);
-                    var wizard = (ConnectWizard)MainWindow;
-                    if (wizard.AuthorizationPopups.TryGetValue(query["state"], out var popup) &&
-                        popup.DataContext is ViewModels.Windows.AuthorizationPopup view_model)
-                        view_model.CallbackURI = uri;
-                }
-            }
-
             // (Re)activate main window.
             if (!MainWindow.IsActive)
                 MainWindow.Show();

@@ -58,24 +58,11 @@ All :: \
 
 Register :: \
 	RegisterOpenVPNInteractiveService \
-#	RegisterSettings \
 	RegisterShortcuts
 
 Unregister :: \
 	UnregisterShortcuts \
-#	UnregisterSettings \
 	UnregisterOpenVPNInteractiveService
-
-RegisterSettings :: \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe"
-	reg.exe add "HKCR\org.eduvpn.app"                    /v "URL Protocol" /t REG_SZ /d ""                                                                     $(REG_FLAGS)
-	reg.exe add "HKCR\org.eduvpn.app\DefaultIcon"        /ve               /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe,1"          $(REG_FLAGS)
-	reg.exe add "HKCR\org.eduvpn.app\shell\open\command" /ve               /t REG_SZ /d "\"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe\" \"%1\"" $(REG_FLAGS)
-
-UnregisterSettings ::
-	-reg.exe delete "HKCR\org.eduvpn.app"                    /v "URL Protocol" $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKCR\org.eduvpn.app\DefaultIcon"        /ve               $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKCR\org.eduvpn.app\shell\open\command" /ve               $(REG_FLAGS) > NUL 2>&1
 
 RegisterShortcuts :: \
 	"$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\eduVPN Client.lnk"

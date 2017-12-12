@@ -28,17 +28,6 @@
                 <File Source="eduVPN.Client.exe.config"/>
             </Component>
             <!--
-            <Component Id="eduVPN.Client.reg1" Guid="{91E7E0D2-7DDF-4A36-AF16-6AF548B77409}">
-                <RegistryValue Root="HKCR" Key="org.eduvpn.app" Type="string" Name="URL Protocol" Value=""/>
-            </Component>
-            <Component Id="eduVPN.Client.reg2" Guid="{504194A9-47DD-437B-BB41-F73B4BA7BD73}">
-                <RegistryValue Root="HKCR" Key="org.eduvpn.app\DefaultIcon" Type="string" Value="[BINDIR]eduVPN.Client.exe,1"/>
-            </Component>
-            <Component Id="eduVPN.Client.reg3" Guid="{121D88DA-040C-445A-BCFB-6EC8A1977F3E}">
-                <RegistryValue Root="HKCR" Key="org.eduvpn.app\shell\open\command" Type="string" Value="&quot;[BINDIR]eduVPN.Client.exe&quot; &quot;%1&quot;"/>
-            </Component>
-            -->
-            <!--
             <Component Id="eduVPN.Client.exe.DesktopShortcut" Guid="{9DE24D79-5251-4D41-B151-737E372975FA}">
                 <Shortcut
                     Id="eduVPN.Client.exe.DesktopShortcut"
@@ -75,9 +64,6 @@
 
             <ComponentRef Id="eduVPN.Client.exe"/>
             <ComponentRef Id="eduVPN.Client.exe.config"/>
-            <!--<ComponentRef Id="eduVPN.Client.reg1"/>
-            <ComponentRef Id="eduVPN.Client.reg2"/>
-            <ComponentRef Id="eduVPN.Client.reg3"/>-->
             <ComponentRef Id="eduVPN.Client.resources.dll.sl"/>
             <!--<ComponentRef Id="eduVPN.Client.exe.DesktopShortcut"/>-->
         </ComponentGroup>
