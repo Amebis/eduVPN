@@ -269,7 +269,7 @@
     -->
 
     <Style x:Key="eduVPNComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
-        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="Background" Value="{StaticResource eduVPNWindowBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Style.Triggers>
