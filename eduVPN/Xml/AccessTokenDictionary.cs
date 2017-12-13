@@ -42,7 +42,9 @@ namespace eduVPN.Xml
                     if (key == null)
                         throw new FormatException();
 
-                    this[key] = AccessToken.FromBase64String(reader["Value"]);
+                    // Carefully decode access token as it might be damaged or encrypted using another session key.
+                    try { this[key] = AccessToken.FromBase64String(reader["Value"]); }
+                    catch { }
                 }
             }
         }

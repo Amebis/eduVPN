@@ -132,7 +132,10 @@ namespace eduVPN
                     foreach (var token in access_tokens)
                     {
                         var authorization_endpoint = new Uri(token.Key);
-                        Properties.Settings.Default.AccessTokenCache[authorization_endpoint.GetLeftPart(UriPartial.Authority) + "/"] = AccessToken.FromBase64String(token.Value);
+
+                        // Carefully decode access token as it might be damaged or encrypted using another session key.
+                        try { Properties.Settings.Default.AccessTokenCache[authorization_endpoint.GetLeftPart(UriPartial.Authority) + "/"] = AccessToken.FromBase64String(token.Value); }
+                        catch { };
                     }
             }
         }
