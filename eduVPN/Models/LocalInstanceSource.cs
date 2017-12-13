@@ -54,23 +54,31 @@ namespace eduVPN.Models
                     else
                         connecting_instance.Popularity = h_instance.Popularity;
 
-                    var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
-                    if (instance == null)
-                    {
-                        ConnectingInstanceList.Add(connecting_instance);
-                        instance = connecting_instance;
-                    }
-                    else
-                        instance.Popularity = Math.Max(instance.Popularity, h_instance.Popularity);
-
                     // Restore connecting profiles (optionally).
-                    // Matching profile with existing profiles might trigger OAuth in GetProfileList().
+                    ObservableCollection<Profile> profile_list = null;
+                    try
+                    {
+                        switch (Properties.Settings.Default.ConnectingProfileSelectMode)
+                        {
+                            case 0:
+                            case 2:
+                                // This might trigger OAuth.
+                                profile_list = connecting_instance.GetProfileList(connecting_instance, Window.Abort.Token);
+                                break;
+                        }
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch
+                    {
+                        // When profile list could not be obtained from the instance, instance settings should be forgotten to avoid issues next time.
+                        connecting_instance.Forget();
+                        continue;
+                    }
                     switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
                         case 0:
                             {
                                 // Restore only profiles user connected to before.
-                                var profile_list = instance.GetProfileList(instance, Window.Abort.Token);
                                 foreach (var h_profile in h_instance.ProfileList)
                                 {
                                     var profile = profile_list.FirstOrDefault(prof => prof.ID == h_profile.ID);
@@ -89,7 +97,6 @@ namespace eduVPN.Models
                             {
                                 // Add all available profiles to the connecting profile list.
                                 // Restore popularity on the fly (or leave default to promote newly discovered profiles).
-                                var profile_list = instance.GetProfileList(instance, Window.Abort.Token);
                                 foreach (var profile in profile_list)
                                 {
                                     var h_profile = h_instance.ProfileList.FirstOrDefault(prof => prof.ID == profile.ID);
@@ -102,6 +109,15 @@ namespace eduVPN.Models
 
                             break;
                     }
+
+                    var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
+                    if (instance == null)
+                    {
+                        ConnectingInstanceList.Add(connecting_instance);
+                        instance = connecting_instance;
+                    }
+                    else
+                        instance.Popularity = Math.Max(instance.Popularity, h_instance.Popularity);
                 }
                 ConnectingInstance = h_local.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_local.ConnectingInstance.AbsoluteUri) : null;
             }
