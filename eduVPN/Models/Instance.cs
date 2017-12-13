@@ -270,8 +270,19 @@ namespace eduVPN.Models
                     {
                         if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                         {
-                            // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
-                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                            // Access token was rejected (401 Unauthorized).
+                            if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                            {
+                                // Access token loaded from the settings was rejected.
+                                // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                                // Retry with forced access token refresh.
+                                e.ForceRefresh = true;
+                            }
+                            else
+                            {
+                                // Retry with forced authorization, ignoring saved access token completely.
+                                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                            }
                             goto retry;
                         }
                         else
@@ -320,8 +331,19 @@ namespace eduVPN.Models
             {
                 if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
-                    e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                    // Access token was rejected (401 Unauthorized).
+                    if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                    {
+                        // Access token loaded from the settings was rejected.
+                        // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                        // Retry with forced access token refresh.
+                        e.ForceRefresh = true;
+                    }
+                    else
+                    {
+                        // Retry with forced authorization, ignoring saved access token completely.
+                        e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                    }
                     goto retry;
                 }
                 else
@@ -403,8 +425,19 @@ namespace eduVPN.Models
                             {
                                 if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                                 {
-                                    // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
-                                    e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                                    // Access token was rejected (401 Unauthorized).
+                                    if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                                    {
+                                        // Access token loaded from the settings was rejected.
+                                        // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                                        // Retry with forced access token refresh.
+                                        e.ForceRefresh = true;
+                                    }
+                                    else
+                                    {
+                                        // Retry with forced authorization, ignoring saved access token completely.
+                                        e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                                    }
                                     goto retry;
                                 }
                                 else
@@ -507,8 +540,19 @@ namespace eduVPN.Models
             {
                 if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    // Access token was rejected (401 Unauthorized): retry with forced authorization, ignoring saved access token.
-                    e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                    // Access token was rejected (401 Unauthorized).
+                    if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                    {
+                        // Access token loaded from the settings was rejected.
+                        // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                        // Retry with forced access token refresh.
+                        e.ForceRefresh = true;
+                    }
+                    else
+                    {
+                        // Retry with forced authorization, ignoring saved access token completely.
+                        e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                    }
                     goto retry;
                 }
                 else

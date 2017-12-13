@@ -39,6 +39,33 @@ namespace eduVPN.Models
             ForceAuthorization,
         }
 
+        /// <summary>
+        /// Token origin type
+        /// </summary>
+        public enum TokenOriginType
+        {
+            /// <summary>
+            /// No valid access token
+            /// </summary>
+            /// <remarks>This is the default.</remarks>
+            None = 0,
+
+            /// <summary>
+            /// Access token was loaded from settings
+            /// </summary>
+            Saved,
+
+            /// <summary>
+            /// Access token was loaded from settings and refreshed
+            /// </summary>
+            Refreshed,
+
+            /// <summary>
+            /// Access token was freshly authorized
+            /// </summary>
+            Authorized,
+        }
+
         #endregion
 
         #region Properties
@@ -52,6 +79,17 @@ namespace eduVPN.Models
         /// Access token retrieval policy
         /// </summary>
         public SourcePolicyType SourcePolicy { get; set; }
+
+        /// <summary>
+        /// If the token is to be loaded from the settings, should expiration time be honoured (<c>false</c>) or token refresh be forced (<c>true</c>)
+        /// </summary>
+        public bool ForceRefresh { get; set; }
+
+        /// <summary>
+        /// Access token origin
+        /// </summary>
+        /// <remarks>Should be set appropriately on event end, or <c>TokenOriginType.None</c> if no authorization token available.</remarks>
+        public TokenOriginType TokenOrigin { get; set; }
 
         /// <summary>
         /// Access token

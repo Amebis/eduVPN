@@ -1106,6 +1106,9 @@ namespace eduVPN.ViewModels.Windows
         {
             if (sender is Instance authenticating_instance)
             {
+                e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.None;
+                e.AccessToken = null;
+
                 lock (Properties.Settings.Default.AccessTokenCache)
                 {
                     if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
@@ -1113,9 +1116,9 @@ namespace eduVPN.ViewModels.Windows
                         var key = authenticating_instance.Base.AbsoluteUri;
                         if (Properties.Settings.Default.AccessTokenCache.TryGetValue(key, out var access_token))
                         {
-                            if (access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
+                            if (e.ForceRefresh || access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
                             {
-                                // Token expired. Refresh it.
+                                // Token refresh was explicitly requested or the token expired. Refresh it.
 
                                 // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
                                 var api = authenticating_instance.GetEndpoints(Abort.Token);
@@ -1127,6 +1130,7 @@ namespace eduVPN.ViewModels.Windows
                                     Properties.Settings.Default.AccessTokenCache[key] = access_token;
 
                                     // If we got here, return the token.
+                                    e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Refreshed;
                                     e.AccessToken = access_token;
                                     return;
                                 }
@@ -1134,6 +1138,7 @@ namespace eduVPN.ViewModels.Windows
                             else
                             {
                                 // If we got here, return the token.
+                                e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Saved;
                                 e.AccessToken = access_token;
                                 return;
                             }
@@ -1179,6 +1184,7 @@ namespace eduVPN.ViewModels.Windows
                         if (e.AccessToken != null)
                         {
                             // Save access token to the cache.
+                            e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Authorized;
                             Properties.Settings.Default.AccessTokenCache[authenticating_instance.Base.AbsoluteUri] = e.AccessToken;
                         }
                     }
