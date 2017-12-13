@@ -11,7 +11,7 @@ using System.Windows.Media;
 
 namespace QRCoder
 {
-    class XamlQRCode : AbstractQRCode<DrawingImage>, IDisposable
+    public class XamlQRCode : AbstractQRCode<DrawingImage>, IDisposable
     {
         public XamlQRCode(QRCodeData data) : base(data) { }
 
