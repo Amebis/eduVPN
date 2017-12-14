@@ -22,12 +22,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// VPN session
         /// </summary>
-        public VPNSession Session
-        {
-            get { return _session; }
-            set { SetProperty(ref _session, value); }
-        }
-        private VPNSession _session;
+        public VPNSession Session { get; }
 
         /// <summary>
         /// Authenticating realm
@@ -75,7 +70,7 @@ namespace eduVPN.ViewModels.Windows
         /// <param name="e"></param>
         public PasswordPopup(object sender, PasswordAuthenticationRequestedEventArgs e)
         {
-            _session = sender as VPNSession;
+            Session = sender as VPNSession;
             _realm = e.Realm;
         }
 

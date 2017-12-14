@@ -352,8 +352,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.UsernamePasswordPopup(sender, e);
 
             // Load previous username.
-            var session = (VPNSession)sender;
-            var profile_id = session.ConnectingProfile.Instance.Base.AbsoluteUri + "|" + session.ConnectingProfile.ID;
+            var profile_id = view_model.Session.ConnectingProfile.Instance.Base.AbsoluteUri + "|" + view_model.Session.ConnectingProfile.ID;
             try { view_model.Username = Client.Properties.Settings.Default.UsernameHistory[profile_id]; }
             catch { view_model.Username = null; }
 
@@ -387,8 +386,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.TwoFactorAuthenticationPopup(sender, e);
 
             // Load previous "username". 2-Factor Authentication method actually.
-            var session = (VPNSession)sender;
-            var profile_id = session.ConnectingProfile.Instance.Base.AbsoluteUri + "|" + session.ConnectingProfile.ID;
+            var profile_id = view_model.Session.ConnectingProfile.Instance.Base.AbsoluteUri + "|" + view_model.Session.ConnectingProfile.ID;
             var previous_method_selected = false;
             try
             {
