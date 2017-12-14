@@ -117,113 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ProfileTitle" xml:space="preserve">
-    <value></value>
-    <comment>{0}=Computer name</comment>
-  </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorProfileConfigLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorNullAccessToken" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeConnected" xml:space="preserve">
-    <value>Verbonden.</value>
-  </data>
-  <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
-    <value>Verbinden...</value>
-  </data>
-  <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>&lt;Automatisch&gt;</value>
-  </data>
-  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
-    <value>YubiKey</value>
-  </data>
-  <data name="ErrorInvalidTOTP" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Ongeldige hostname: hostnamen bevatten letters, nummers, koppeltekens en punten.</value>
-  </data>
-  <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value></value>
-    <comment>{0}=Property name</comment>
-  </data>
-  <data name="ErrorInteractiveService" xml:space="preserve">
-    <value></value>
-    <comment>{0} = Error number, {1} = The name of the function</comment>
-  </data>
-  <data name="InstanceForget" xml:space="preserve">
-    <value>Vergeet {0}</value>
-    <comment>{0}=Provider</comment>
-  </data>
-  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value></value>
-    <comment>{0}=URI</comment>
-  </data>
   <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
     <value>Kies je profiel</value>
     <comment>Fuzzy</comment>
@@ -324,17 +217,14 @@
     <comment>Display format of the duration times one day or longer</comment>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
-    <value></value>
+    <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
-  </data>
-  <data name="AuthenticatingCountrySelectPageDescription" xml:space="preserve">
-    <value>Selecteer je instellingsland hier. Je kunt VPN providers uit andere landen kiezen na het inloggen bij je instellingsland.</value>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Voeg een ander adres toe</value>
   </data>
   <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value></value>
+    <value>Select one of the VPN types below.</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>S_luiten</value>
@@ -352,7 +242,7 @@
     <value>Verbind veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi netwerken.</value>
   </data>
   <data name="SecureInternetTitle" xml:space="preserve">
-    <value></value>
+    <value>Secure Internet</value>
   </data>
   <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
     <value>Nieuwe provider</value>
@@ -374,10 +264,12 @@
     <value>Over</value>
   </data>
   <data name="AboutPageCopyright" xml:space="preserve">
-    <value></value>
+    <value>Copyright © 2017
+The Commons Conservancy eduVPN Programme</value>
   </data>
   <data name="AboutPageeduVPN" xml:space="preserve">
-    <value></value>
+    <value>eduVPN
+Powered by SURFnet</value>
   </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Versie {0}</value>
@@ -386,7 +278,7 @@
     <value>_Over...</value>
   </data>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value></value>
+    <value>When you need multiple simultaneous OpenVPN connections at once, select the TAP interface for eduVPN below.</value>
   </data>
   <data name="SettingsPageInterfaceTitle" xml:space="preserve">
     <value>Selecteer TAP interface</value>
@@ -401,7 +293,7 @@
     <value>Instellingen</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value></value>
+    <value>Sometimes, eduVPN can&apos;t connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances.</value>
   </data>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>TCP afdwingen</value>
@@ -455,167 +347,35 @@
     <comment>{0}=version</comment>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value></value>
+    <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash or improper exiting of the program.
+
+If you continue, your user settings will be reset to defaults.</value>
     <comment>{0}=application name, {1}=filename</comment>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value></value>
+    <value>Corrupt user settings</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value></value>
+    <value>The required OAuth parameter &quot;state&quot; is missing or incorrect.</value>
   </data>
-  <data name="TwoFactorEnrollButton" xml:space="preserve">
-    <value></value>
+  <data name="TwoFactorEnrollmentButton" xml:space="preserve">
+    <value>Enroll</value>
   </data>
-  <data name="TwoFactorEnrollPopupMessage" xml:space="preserve">
-    <value></value>
-    <comment>{0}=Profile name</comment>
+  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
+    <value>{0} requires you to enroll for 2-Factor Authentication at {1}.</value>
+    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
   </data>
-  <data name="TwoFactorEnrollPopupTitle" xml:space="preserve">
-    <value>Twee-factorauthenticatie Enroll</value>
+  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
+    <value>2-Factor Authentication Enrollment</value>
   </data>
-  <data name="TwoFactorEnrollPopupList" xml:space="preserve">
-    <value>Een van de volgende methodes is vereist: {0}</value>
-    <comment>{0}=List of 2-Factor Authentication methods</comment>
+  <data name="TOTPEnrollmentPanelResponseTitle" xml:space="preserve">
+    <value>Response:</value>
   </data>
-  <data name="ErrorUnsupportedHash" xml:space="preserve">
-    <value></value>
+  <data name="TOTPEnrollmentPanelSecretTitle" xml:space="preserve">
+    <value>Secret:</value>
   </data>
-  <data name="ErrorDuplicateElement" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorExpectedReceived" xml:space="preserve">
-    <value></value>
-    <comment>{0}=A sentence explaining an error, {1}=expected value, {2}=received value</comment>
-  </data>
-  <data name="ErrorInvalidIdentifier" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInvalidParameterType" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorJSONCode" xml:space="preserve">
-    <value></value>
-    <comment>{0}=A sentence explaining an error, {1}=JSON source code</comment>
-  </data>
-  <data name="ErrorMissingClosingParenthesis" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorMissingParameter" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorMissingSeparator" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorMissingSeparatorOrClosingParenthesis" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorParameter" xml:space="preserve">
-    <value></value>
-    <comment>{0}=A sentence explaining an error, {1}=parameter name</comment>
-  </data>
-  <data name="ErrorTrailingData" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorUnknownValue" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAccessTokenInvalidClient" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAccessTokenInvalidGrant" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAccessTokenInvalidRequest" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAccessTokenInvalidScope" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAccessTokenUnauthorizedClient" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAccessTokenUnsupportedGrantType" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorizationGrantAccessDenied" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorizationGrantInvalidRequest" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorizationGrantInvalidScope" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorizationGrantServerError" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorizationGrantTemporarilyUnavailable" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorizationGrantUnauthorizedClient" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorizationGrantUnsupportedResponseType" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorHttp404" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorHttp405" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInvalidState" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorTokenType" xml:space="preserve">
-    <value></value>
-    <comment>{0}=A sentence explaining an error, {1}=token type</comment>
-  </data>
-  <data name="ErrorUnsupportedTokenType" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="HtmlErrorDescription" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="HtmlErrorTitle" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="HtmlFinishedDescription" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="HtmlFinishedTitle" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorBadBackslash" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInteractiveServiceConnect" xml:space="preserve">
-    <value></value>
-    <comment>{0} = Name of the pipe to connect to</comment>
-  </data>
-  <data name="ErrorManagementManagementResponse" xml:space="preserve">
-    <value></value>
-    <comment>{0} = A sentence explaining an error, {1} = Response source code</comment>
-  </data>
-  <data name="ErrorNoClosingQuotation" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorNoClosingSingleQuotation" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorParameterValueNotFound" xml:space="preserve">
-    <value></value>
-    <comment>{0} = Parameter value name, {1} = Enum data type</comment>
-  </data>
-  <data name="ErrorPeerDisconnected" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorResidualParseState" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorUnexpectedReply" xml:space="preserve">
-    <value></value>
+  <data name="TOTPAuthenticationNote" xml:space="preserve">
+    <value>Please do not use the same TOTP twice. Wait until a fresh TOTP is generated.</value>
   </data>
 
 </root>
