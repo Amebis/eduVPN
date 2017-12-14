@@ -33,7 +33,7 @@ namespace eduVPN.Client.Converters
                 var qr_generator = new QRCodeGenerator();
                 var qr_code_data = qr_generator.CreateQrCode(otp_uri, QRCodeGenerator.ECCLevel.Q);
                 var qr_code = new XamlQRCode(qr_code_data);
-                return qr_code.GetGraphic(2, false);
+                return qr_code.GetGraphic(3, false);
             }
             catch { }
 
