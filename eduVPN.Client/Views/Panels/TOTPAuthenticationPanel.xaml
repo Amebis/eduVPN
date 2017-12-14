@@ -34,7 +34,7 @@
             <ContentControl
                 Margin="5,2,5,5"
                 IsTabStop="False"
-                Content="{StaticResource eduVPNExclamationIcon}"/>
+                ContentTemplate="{StaticResource eduVPNExclamationIcon}"/>
 
             <TextBlock
                 Grid.Column="1"

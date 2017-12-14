@@ -583,7 +583,7 @@
                         <StatusBarItem>
                             <ContentControl
                                 IsTabStop="False"
-                                Content="{StaticResource eduVPNExclamationIcon}"/>
+                                ContentTemplate="{StaticResource eduVPNExclamationIcon}"/>
                         </StatusBarItem>
                         <StatusBarItem>
                             <Grid
