@@ -77,15 +77,19 @@ namespace eduVPN.ViewModels.Windows
             Profile = e.Profile;
 
             // Prepare the list of methods.
+            var last_method = Properties.Settings.Default.InstanceSettings.TryGetValue(AuthenticatingInstance.Base.AbsoluteUri, out var settings) ? settings.LastTwoFactorAuthenticationMethod : null;
             _method_list = new ObservableCollection<TwoFactorAuthenticationBasePanel>();
+            TwoFactorAuthenticationBasePanel method;
             if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.TOTP))
-                _method_list.Add(new TOTPEnrollmentPanel(selection_panel.Parent));
+            {
+                _method_list.Add(method = new TOTPEnrollmentPanel(selection_panel.Parent, AuthenticatingInstance));
+                if (last_method == method.ID) _selected_method = method;
+            }
             if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.YubiKey))
-                _method_list.Add(new YubiKeyAuthenticationPanel(selection_panel.Parent));
-
-            // Initially select the first method.
-            if (_method_list.Count > 0)
-                _selected_method = _method_list[0];
+            {
+                _method_list.Add(method = new YubiKeyAuthenticationPanel(selection_panel.Parent, AuthenticatingInstance));
+                if (last_method == method.ID) _selected_method = method;
+            }
         }
 
         #endregion

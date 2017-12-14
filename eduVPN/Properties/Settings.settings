@@ -50,6 +50,9 @@
     <Setting Name="AccessTokenCache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
       <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
     </Setting>
+    <Setting Name="InstanceSettings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
+    </Setting>
     <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>

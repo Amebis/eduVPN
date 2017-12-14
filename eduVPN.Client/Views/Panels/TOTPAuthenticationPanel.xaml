@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="320"
     d:DesignHeight="100"
@@ -12,13 +13,34 @@
     <Grid Margin="-5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBox
             x:Name="Response"
-            Margin="5"
+            Margin="5,5,5,2"
             HorizontalContentAlignment="Center"
             Style="{StaticResource eduVPNCodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Grid
+            Grid.Row="1"
+            Visibility="{Binding Path=LastResponseTime, Converter={StaticResource TOTPAuthenticationNoteVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ContentControl
+                Margin="5,2,5,5"
+                IsTabStop="False"
+                Content="{StaticResource eduVPNExclamationIcon}"/>
+
+            <TextBlock
+                Grid.Column="1"
+                Margin="5,2,5,5"
+                Style="{StaticResource eduVPNTextBlockStyle}"
+                Text="{x:Static res:Strings.TOTPAuthenticationNote}"/>
+        </Grid>
     </Grid>
 </UserControl>

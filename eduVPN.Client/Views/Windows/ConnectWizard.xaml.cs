@@ -284,39 +284,24 @@ namespace eduVPN.Views.Windows
         {
             var view_model = new ViewModels.Windows.TwoFactorEnrollmentPopup(sender, e);
 
-            // Load previous "username". 2-Factor Authentication method actually.
-            var profile_id = e.Profile.Instance.Base.AbsoluteUri + "|" + e.Profile.ID;
-            var previous_method_selected = false;
-            try
-            {
-                var method_id = Client.Properties.Settings.Default.UsernameHistory[profile_id];
-                var method = view_model.MethodList.FirstOrDefault(m => m.ID == method_id);
-                if (method != null)
-                {
-                    view_model.SelectedMethod = method;
-                    previous_method_selected = true;
-                }
-            }
-            catch { }
-
             // Create a new 2FA enroll pop-up.
-            TwoFactorEnrollmentPopup popup = new TwoFactorEnrollmentPopup() { Owner = this, DataContext = view_model };
+            var popup = new TwoFactorEnrollmentPopup() { Owner = this, DataContext = view_model };
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
             {
                 // Set initial focus.
-                if (!previous_method_selected && view_model.MethodList.Count > 1)
-                    popup.Method.Focus();
+                if (view_model.SelectedMethod == null && view_model.MethodList.Count > 0)
+                {
+                    view_model.SelectedMethod = view_model.MethodList[0];
+                    if (view_model.MethodList.Count > 1)
+                        popup.Method.Focus();
+                }
             };
 
             // Set the event args to fill with data.
             popup.OK.CommandParameter = e;
 
             // Run the 2FA enrollment pop-up and pass the credentials to be returned to the event sender.
-            if (popup.ShowDialog() == true)
-            {
-                // Save "username" for the next time.
-                Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.SelectedMethod.ID;
-            }
+            popup.ShowDialog();
         }
 
         /// <summary>
@@ -329,7 +314,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.PasswordPopup(sender, e);
 
             // Create a new authentication pop-up.
-            PasswordPopup popup = new PasswordPopup() { Owner = this, DataContext = view_model };
+            var popup = new PasswordPopup() { Owner = this, DataContext = view_model };
 
             // Set the event args to fill with data.
             popup.OK.CommandParameter = e;
@@ -351,17 +336,12 @@ namespace eduVPN.Views.Windows
         {
             var view_model = new ViewModels.Windows.UsernamePasswordPopup(sender, e);
 
-            // Load previous username.
-            var profile_id = view_model.Session.ConnectingProfile.Instance.Base.AbsoluteUri + "|" + view_model.Session.ConnectingProfile.ID;
-            try { view_model.Username = Client.Properties.Settings.Default.UsernameHistory[profile_id]; }
-            catch { view_model.Username = null; }
-
             // Create a new authentication pop-up.
-            UsernamePasswordPopup popup = new UsernamePasswordPopup() { Owner = this, DataContext = view_model };
+            var popup = new UsernamePasswordPopup() { Owner = this, DataContext = view_model };
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
             {
                 // Set initial focus.
-                if (view_model.Username == null || view_model.Username.Length == 0)
+                if (string.IsNullOrEmpty(view_model.Username))
                     popup.Username.Focus();
                 else
                     popup.Password.Focus();
@@ -375,9 +355,6 @@ namespace eduVPN.Views.Windows
             {
                 // Password was not set using MVVP, since <PasswordBox> control does not support binding.
                 e.Password = (new NetworkCredential("", popup.Password.Password)).SecurePassword;
-
-                // Save username for the next time.
-                Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.Username;
             }
         }
 
@@ -385,39 +362,24 @@ namespace eduVPN.Views.Windows
         {
             var view_model = new ViewModels.Windows.TwoFactorAuthenticationPopup(sender, e);
 
-            // Load previous "username". 2-Factor Authentication method actually.
-            var profile_id = view_model.Session.ConnectingProfile.Instance.Base.AbsoluteUri + "|" + view_model.Session.ConnectingProfile.ID;
-            var previous_method_selected = false;
-            try
-            {
-                var method_id = Client.Properties.Settings.Default.UsernameHistory[profile_id];
-                var method = view_model.MethodList.FirstOrDefault(m => m.ID == method_id);
-                if (method != null)
-                {
-                    view_model.SelectedMethod = method;
-                    previous_method_selected = true;
-                }
-            }
-            catch { }
-
             // Create a new authentication pop-up.
-            TwoFactorAuthenticationPopup popup = new TwoFactorAuthenticationPopup() { Owner = this, DataContext = view_model };
+            var popup = new TwoFactorAuthenticationPopup() { Owner = this, DataContext = view_model };
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
             {
                 // Set initial focus.
-                if (!previous_method_selected && view_model.MethodList.Count > 1)
-                    popup.Method.Focus();
+                if (view_model.SelectedMethod == null && view_model.MethodList.Count > 0)
+                {
+                    view_model.SelectedMethod = view_model.MethodList[0];
+                    if (view_model.MethodList.Count > 1)
+                        popup.Method.Focus();
+                }
             };
 
             // Set the event args to fill with data.
             popup.OK.CommandParameter = e;
 
             // Run the authentication pop-up and pass the credentials to be returned to the event sender.
-            if (popup.ShowDialog() == true)
-            {
-                // Save "username" for the next time.
-                Client.Properties.Settings.Default.UsernameHistory[profile_id] = view_model.SelectedMethod.ID;
-            }
+            popup.ShowDialog();
         }
 
         private void ConnectWizard_PromptSelfUpdate(object sender, PromptSelfUpdateEventArgs e)

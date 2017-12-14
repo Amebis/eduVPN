@@ -373,4 +373,7 @@ Omogoča SURFnet</value>
   <data name="TOTPEnrollmentPanelSecretTitle" xml:space="preserve">
     <value>Skrivnost:</value>
   </data>
+  <data name="TOTPAuthenticationNote" xml:space="preserve">
+    <value>Ne uporabite istega TOTP dvakrat. Počakajte, da bo ustvarjen svež TOTP.</value>
+  </data>
 </root>

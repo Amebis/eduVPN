@@ -32,8 +32,9 @@ namespace eduVPN.ViewModels.Panels
         /// Construct a panel
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public YubiKeyAuthenticationPanel(ConnectWizard parent) :
-            base(parent)
+        /// <param name="authenticating_instance">Authenticating instance</param>
+        public YubiKeyAuthenticationPanel(ConnectWizard parent, Instance authenticating_instance) :
+            base(parent, authenticating_instance)
         {
         }
 

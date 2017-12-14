@@ -60,6 +60,7 @@
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\TOTPQRConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
+    <Compile Include="Converters\TOTPAuthenticationNoteVisibilityConverter.cs" />
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />

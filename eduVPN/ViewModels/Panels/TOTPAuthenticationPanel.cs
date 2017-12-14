@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using System.ComponentModel.DataAnnotations;
 
@@ -35,8 +36,9 @@ namespace eduVPN.ViewModels.Panels
         /// Constructs a panel
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public TOTPAuthenticationPanel(ConnectWizard parent) :
-            base(parent)
+        /// <param name="authenticating_instance">Authenticating instance</param>
+        public TOTPAuthenticationPanel(ConnectWizard parent, Instance authenticating_instance) :
+            base(parent, authenticating_instance)
         {
         }
 

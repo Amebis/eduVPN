@@ -679,6 +679,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please do not use the same TOTP twice. Wait until a fresh TOTP is generated..
+        /// </summary>
+        public static string TOTPAuthenticationNote {
+            get {
+                return ResourceManager.GetString("TOTPAuthenticationNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Response:.
         /// </summary>
         public static string TOTPEnrollmentPanelResponseTitle {

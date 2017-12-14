@@ -66,6 +66,8 @@
     <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
     <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />
     <Compile Include="Xml\InstanceRef.cs" />
+    <Compile Include="Xml\InstanceSettings.cs" />
+    <Compile Include="Xml\InstanceSettingsDictionary.cs" />
     <Compile Include="Xml\InstanceSourceSettings.cs" />
     <Compile Include="Xml\InstanceSourceSettingsBase.cs" />
     <Compile Include="Xml\JSONResponseDictionary.cs" />

@@ -43,8 +43,9 @@ namespace eduVPN.ViewModels.Panels
         /// Constructs a panel
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public TOTPEnrollmentPanel(ConnectWizard parent) :
-            base(parent)
+        /// <param name="authenticating_instance">Authenticating instance</param>
+        public TOTPEnrollmentPanel(ConnectWizard parent, Instance authenticating_instance) :
+            base(parent, authenticating_instance)
         {
             _secret = GenerateSecret();
         }

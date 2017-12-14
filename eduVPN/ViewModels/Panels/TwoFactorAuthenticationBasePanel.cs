@@ -13,6 +13,7 @@ using System;
 using System.ComponentModel;
 using System.Net;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.Panels
 {
@@ -22,6 +23,11 @@ namespace eduVPN.ViewModels.Panels
     public class TwoFactorAuthenticationBasePanel : Panel
     {
         #region Properties
+
+        /// <summary>
+        /// Authenticating instance
+        /// </summary>
+        public Instance AuthenticatingInstance { get; }
 
         /// <summary>
         /// Method ID to be used as username
@@ -44,6 +50,21 @@ namespace eduVPN.ViewModels.Panels
         private string _response;
 
         /// <summary>
+        /// Running time since the last response
+        /// </summary>
+        /// <remarks><c>null</c> when previous response time is unknown</remarks>
+        public TimeSpan? LastResponseTime
+        {
+            get {
+                return
+                    Properties.Settings.Default.InstanceSettings.TryGetValue(AuthenticatingInstance.Base.AbsoluteUri, out var settings) && settings != null && settings.LastTwoFactorAuthenticationResponse != null ?
+                        DateTime.Now - settings.LastTwoFactorAuthenticationResponse :
+                        null;
+            }
+        }
+        private DispatcherTimer _previous_response_time_updater;
+
+        /// <summary>
         /// Apply response command
         /// </summary>
         public ICommand ApplyResponse
@@ -58,6 +79,14 @@ namespace eduVPN.ViewModels.Panels
                         {
                             e.Username = ID;
                             e.Password = (new NetworkCredential("", Response)).SecurePassword;
+
+                            // Update the settings.
+                            var key = AuthenticatingInstance.Base.AbsoluteUri;
+                            if (!Properties.Settings.Default.InstanceSettings.TryGetValue(key, out var settings))
+                                Properties.Settings.Default.InstanceSettings[key] = settings = new Xml.InstanceSettings();
+                            settings.LastTwoFactorAuthenticationMethod = ID;
+                            settings.LastTwoFactorAuthenticationResponse = DateTime.Now;
+                            RaisePropertyChanged(nameof(LastResponseTime));
                         },
 
                         // canExecute
@@ -89,6 +118,14 @@ namespace eduVPN.ViewModels.Panels
                         e =>
                         {
                             e.Credentials = GetEnrollmentCredentials();
+
+                            // Update the settings.
+                            var key = AuthenticatingInstance.Base.AbsoluteUri;
+                            if (!Properties.Settings.Default.InstanceSettings.TryGetValue(key, out var settings))
+                                Properties.Settings.Default.InstanceSettings[key] = settings = new Xml.InstanceSettings();
+                            settings.LastTwoFactorAuthenticationMethod = ID;
+                            settings.LastTwoFactorAuthenticationResponse = DateTime.Now;
+                            RaisePropertyChanged(nameof(LastResponseTime));
                         },
 
                         // canExecute
@@ -114,9 +151,17 @@ namespace eduVPN.ViewModels.Panels
         /// Construct a panel
         /// </summary>
         /// <param name="parent">The page parent</param>
-        public TwoFactorAuthenticationBasePanel(ConnectWizard parent) :
+        /// <param name="authenticating_instance">Authenticating instance</param>
+        public TwoFactorAuthenticationBasePanel(ConnectWizard parent, Instance authenticating_instance) :
             base(parent)
         {
+            AuthenticatingInstance = authenticating_instance;
+
+            // Create dispatcher timer.
+            _previous_response_time_updater = new DispatcherTimer(
+                new TimeSpan(0, 0, 0, 1),
+                DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged(nameof(LastResponseTime)),
+                Parent.Dispatcher);
         }
 
         #endregion
