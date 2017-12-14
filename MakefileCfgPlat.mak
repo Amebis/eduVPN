@@ -193,9 +193,11 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe.wixobj"     del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe.wixobj"
 
 "$(SETUP_DIR)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET).msi" : \
+#	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_sl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+#	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client TAP-Windows Prerequisites" /q "$(@:"=).tmp"
@@ -205,9 +207,11 @@ Clean ::
 	move /y "$(@:"=).tmp" $@ > NUL
 
 "$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" : \
+#	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+#	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNOpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client OpenVPN Components" /q "$(@:"=).tmp"
@@ -217,9 +221,11 @@ Clean ::
 	move /y "$(@:"=).tmp" $@ > NUL
 
 "$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET).msi" : \
+#	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+#	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPNCore_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client Core" /q "$(@:"=).tmp"

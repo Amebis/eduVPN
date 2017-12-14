@@ -36,11 +36,13 @@
                 Name="thm.wxl"
                 SourceFile="eduVPN.Install\eduVPN.thm.wxl"/>
 
+            <!--
             <Payload
                 Id="thm-nl-NL"
                 Compressed="yes"
                 Name="1043\thm.wxl"
                 SourceFile="eduVPN.Install\eduVPN.thm.nl.wxl"/>
+            -->
 
             <Payload
                 Id="thm-sl-SI"
