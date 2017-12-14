@@ -144,6 +144,7 @@ SetupExe :: \
 "$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe" : \
 	"eduVPN.wxl" \
 	"eduVPN.Install\eduVPN.thm.wxl" \
+	"eduVPN.Install\eduVPN.thm.nl.wxl" \
 	"eduVPN.Install\eduVPN.thm.sl.wxl" \
 	"eduVPN.Install\eduVPN.thm.xml" \
 	"eduVPN.Install\eduVPN.logo.png" \

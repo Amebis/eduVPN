@@ -101,6 +101,7 @@
             <Directory Id="$(var.eduVPN.ProgramFilesFolder)">
                 <Directory Id="EDUVPNDIR" Name="eduVPN">
                     <Directory Id="BINDIR" Name="Core" FileSource="$(var.eduVPN.TargetDir)">
+                        <Directory Id="RESDIRNL" Name="nl"/>
                         <Directory Id="RESDIRSL" Name="sl"/>
                     </Directory>
                 </Directory>
