@@ -28,13 +28,15 @@
             Text="{x:Static res:Strings.TOTPEnrollmentPanelSecretTitle}"/>
 
         <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
             <Image
-                Margin="2,5,2,5"
+                Margin="2,5,5,2"
+                HorizontalAlignment="Center"
+                Stretch="None"
                 RenderOptions.BitmapScalingMode="Fant">
                 <Image.Source>
                     <MultiBinding
@@ -49,13 +51,12 @@
             </Image>
 
             <TextBox
-                Grid.Column="1"
+                Grid.Row="1"
                 x:Name="Secret"
-                Margin="2,5,5,5"
+                Margin="2,2,5,5"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.CanContentScroll="False"
+                TextWrapping="Wrap"
                 Style="{StaticResource eduVPNCodeTextBoxStyle}"
                 Text="{Binding Path=Secret}"
                 IsReadOnly="True"/>

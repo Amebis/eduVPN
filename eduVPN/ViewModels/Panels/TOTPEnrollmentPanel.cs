@@ -61,11 +61,11 @@ namespace eduVPN.ViewModels.Panels
         {
             // Generate random secret.
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            var random = new byte[10];
+            var random = new byte[20];
             rng.GetBytes(random);
 
             // Base32 encode.
-            var result = new char[16];
+            var result = new char[32];
             int offset = 0;
             byte buf = 0, bits = 5;
             foreach (var b in random)
