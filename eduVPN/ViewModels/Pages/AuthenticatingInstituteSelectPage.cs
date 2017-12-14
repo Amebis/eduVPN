@@ -19,9 +19,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs an institute selection wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public AuthenticatingInstituteSelectPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public AuthenticatingInstituteSelectPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 

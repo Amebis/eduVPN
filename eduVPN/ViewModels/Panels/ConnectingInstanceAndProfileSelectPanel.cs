@@ -20,10 +20,10 @@ namespace eduVPN.ViewModels.Panels
         /// <summary>
         /// Constructs a panel
         /// </summary>
-        /// <param name="parent">The page parent</param>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard parent, InstanceSourceType instance_source_type) :
-            base(parent, instance_source_type)
+        public ConnectingInstanceAndProfileSelectPanel(ConnectWizard wizard, InstanceSourceType instance_source_type) :
+            base(wizard, instance_source_type)
         {
         }
 

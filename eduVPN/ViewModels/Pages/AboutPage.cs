@@ -36,8 +36,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a view model.
         /// </summary>
-        public AboutPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public AboutPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 

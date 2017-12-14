@@ -53,9 +53,9 @@ namespace eduVPN.ViewModels.VPN
         #region Properties
 
         /// <summary>
-        /// The session parent
+        /// The connecting wizard
         /// </summary>
-        public ConnectWizard Parent { get; }
+        public ConnectWizard Wizard { get; }
 
         /// <summary>
         /// Authenticating eduVPN instance
@@ -219,10 +219,10 @@ namespace eduVPN.ViewModels.VPN
                         // execute
                         () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try { DoShowLog(); }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -250,16 +250,16 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        /// <param name="parent">The page parent</param>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
         /// <param name="connecting_profile">Connecting eduVPN profile</param>
-        public VPNSession(ConnectWizard parent, Instance authenticating_instance, Profile connecting_profile) :
+        public VPNSession(ConnectWizard wizard, Instance authenticating_instance, Profile connecting_profile) :
             this()
         {
             _quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
             _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-            Parent = parent;
+            Wizard = wizard;
 
             AuthenticatingInstance = authenticating_instance;
             ConnectingProfile = connecting_profile;
@@ -268,7 +268,7 @@ namespace eduVPN.ViewModels.VPN
             _connected_time_updater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
-                Parent.Dispatcher);
+                Wizard.Dispatcher);
 
             _pre_run_actions = new List<Action>()
             {
@@ -276,7 +276,7 @@ namespace eduVPN.ViewModels.VPN
                 () =>
                 {
                     var user_info = AuthenticatingInstance.GetUserInfo(AuthenticatingInstance, _quit.Token);
-                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
+                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                 },
 
                 // Load messages from all possible sources: authenticating/connecting instance, user/system list.
@@ -286,7 +286,7 @@ namespace eduVPN.ViewModels.VPN
                     var api_authenticating = AuthenticatingInstance.GetEndpoints(_quit.Token);
                     var api_connecting = ConnectingProfile.Instance.GetEndpoints(_quit.Token);
                     var e = new RequestAuthorizationEventArgs("config");
-                    Parent.Instance_RequestAuthorization(AuthenticatingInstance, e);
+                    Wizard.Instance_RequestAuthorization(AuthenticatingInstance, e);
                     if (e.AccessToken != null)
                     {
                         Parallel.ForEach(new List<KeyValuePair<Uri, string>>() {
@@ -314,7 +314,7 @@ namespace eduVPN.ViewModels.VPN
                                     if (message_list.Count > 0)
                                     {
                                         // Add messages.
-                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                         {
                                             foreach (var msg in message_list)
                                                 MessageList.Add(msg);
@@ -326,7 +326,7 @@ namespace eduVPN.ViewModels.VPN
                     }
 
                     //// Add test messages.
-                    //Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                    //Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                     //{
                     //    MessageList.Add(new MessageMaintenance()
                     //    {
@@ -356,9 +356,9 @@ namespace eduVPN.ViewModels.VPN
                     Parallel.ForEach(_pre_run_actions,
                         action =>
                         {
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1)));
                             try { action(); }
-                            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(-1))); }
                         });
                 }
                 catch (AggregateException ex)

@@ -48,10 +48,10 @@ namespace eduVPN.ViewModels.Panels
         /// <summary>
         /// Constructs a panel
         /// </summary>
-        /// <param name="parent">The page parent</param>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public ConnectingRefreshableProfileListSelectPanel(ConnectWizard parent, InstanceSourceType instance_source_type) :
-            base(parent, instance_source_type)
+        public ConnectingRefreshableProfileListSelectPanel(ConnectWizard wizard, InstanceSourceType instance_source_type) :
+            base(wizard, instance_source_type)
         {
             // Trigger initial load.
             OnPropertyChanged(this, new PropertyChangedEventArgs(nameof(SelectedInstance)));
@@ -74,7 +74,7 @@ namespace eduVPN.ViewModels.Panels
                     new Thread(new ThreadStart(
                         () =>
                         {
-                            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1)));
                             try
                             {
                                 // Get and load profile list.
@@ -82,16 +82,16 @@ namespace eduVPN.ViewModels.Panels
 
                                 // Send the loaded profile list back to the UI thread.
                                 // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                 () =>
                                 {
                                     ProfileList = profile_list;
-                                    Parent.Error = null;
+                                    Wizard.Error = null;
                                 }));
                             }
                             catch (OperationCanceledException) { }
-                            catch (Exception ex) { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.Error = ex)); }
-                            finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1))); }
+                            catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
+                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(-1))); }
                         })).Start();
                 }
             }

@@ -29,7 +29,7 @@ namespace eduVPN.Models
         }
 
         /// <inheritdoc/>
-        public override void FromSettings(ConnectWizard parent, Xml.InstanceSourceSettingsBase settings)
+        public override void FromSettings(ConnectWizard wizard, Xml.InstanceSourceSettingsBase settings)
         {
             if (settings is Xml.FederatedInstanceSourceSettings h_federated)
             {

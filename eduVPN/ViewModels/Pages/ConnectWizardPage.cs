@@ -20,9 +20,9 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
-        /// The page parent
+        /// The connecting wizard
         /// </summary>
-        public ConnectWizard Parent { get; }
+        public ConnectWizard Wizard { get; }
 
         /// <summary>
         /// Navigate back command
@@ -36,10 +36,10 @@ namespace eduVPN.ViewModels.Pages
                         // execute
                         () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try { DoNavigateBack(); }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -57,10 +57,10 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public ConnectWizardPage(ConnectWizard parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public ConnectWizardPage(ConnectWizard wizard)
         {
-            Parent = parent;
+            Wizard = wizard;
         }
 
         #endregion
@@ -89,7 +89,7 @@ namespace eduVPN.ViewModels.Pages
         public virtual void OnActivate()
         {
             // Reset error condition on every page activation.
-            Parent.Error = null;
+            Wizard.Error = null;
         }
 
         #endregion

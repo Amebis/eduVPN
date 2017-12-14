@@ -19,9 +19,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a country selection wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public AuthenticatingCountrySelectPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public AuthenticatingCountrySelectPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 

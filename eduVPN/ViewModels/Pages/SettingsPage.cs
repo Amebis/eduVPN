@@ -37,9 +37,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a settings wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public SettingsPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public SettingsPage(ConnectWizard wizard) :
+            base(wizard)
         {
             //var network_connections = new NetworkListManager().GetNetworkConnections().Cast<INetworkConnection>();
             //ObservableCollection<Guid> networks = new ObservableCollection<Guid>();

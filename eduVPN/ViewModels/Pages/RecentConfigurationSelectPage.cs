@@ -41,10 +41,10 @@ namespace eduVPN.ViewModels.Pages
                         //execute
                         () =>
                         {
-                            Parent.ChangeTaskCount(+1);
-                            try { Parent.CurrentPage = Parent.InstanceSourceSelectPage; }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            Wizard.ChangeTaskCount(+1);
+                            try { Wizard.CurrentPage = Wizard.InstanceSourceSelectPage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         });
 
                 return _add_another_entry;
@@ -59,29 +59,29 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a recent profile selection wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public RecentConfigurationSelectPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public RecentConfigurationSelectPage(ConnectWizard wizard) :
+            base(wizard)
         {
             // Create history panels.
             var source_type_length = (int)InstanceSourceType._end;
-            _panels = new ConnectingSelectPanel[Parent.InstanceSources.Length];
+            _panels = new ConnectingSelectPanel[Wizard.InstanceSources.Length];
             for (var source_index = (int)InstanceSourceType._start; source_index < source_type_length; source_index++)
             {
-                if (Parent.InstanceSources[source_index] is LocalInstanceSource)
+                if (Wizard.InstanceSources[source_index] is LocalInstanceSource)
                 {
                     switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
-                        case 0: _panels[source_index] = new ConnectingProfileSelectPanel(Parent, (InstanceSourceType)source_index); break;
-                        case 1: _panels[source_index] = new ConnectingInstanceSelectPanel(Parent, (InstanceSourceType)source_index); break;
-                        case 2: _panels[source_index] = new ConnectingProfileSelectPanel(Parent, (InstanceSourceType)source_index); break;
-                        case 3: _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, (InstanceSourceType)source_index); break;
+                        case 0: _panels[source_index] = new ConnectingProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
+                        case 1: _panels[source_index] = new ConnectingInstanceSelectPanel(Wizard, (InstanceSourceType)source_index); break;
+                        case 2: _panels[source_index] = new ConnectingProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
+                        case 3: _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
                     }
                 }
                 else if (
-                    Parent.InstanceSources[source_index] is DistributedInstanceSource ||
-                    Parent.InstanceSources[source_index] is FederatedInstanceSource)
-                    _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Parent, (InstanceSourceType)source_index);
+                    Wizard.InstanceSources[source_index] is DistributedInstanceSource ||
+                    Wizard.InstanceSources[source_index] is FederatedInstanceSource)
+                    _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Wizard, (InstanceSourceType)source_index);
             }
         }
 
@@ -95,7 +95,7 @@ namespace eduVPN.ViewModels.Pages
 
             // Synchronize selected instance => triggers profile list refresh.
             for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
-                Panels[source_index].SelectedInstance = Parent.InstanceSources[source_index].ConnectingInstance;
+                Panels[source_index].SelectedInstance = Wizard.InstanceSources[source_index].ConnectingInstance;
         }
 
         #endregion

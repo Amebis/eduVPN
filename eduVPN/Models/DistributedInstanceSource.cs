@@ -27,7 +27,7 @@ namespace eduVPN.Models
         }
 
         /// <inheritdoc/>
-        public override void FromSettings(ConnectWizard parent, Xml.InstanceSourceSettingsBase settings)
+        public override void FromSettings(ConnectWizard wizard, Xml.InstanceSourceSettingsBase settings)
         {
             if (settings is Xml.DistributedInstanceSourceSettings h_distributed)
             {
@@ -36,8 +36,8 @@ namespace eduVPN.Models
                 AuthenticatingInstance = h_distributed.AuthenticatingInstance != null ? InstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.AuthenticatingInstance.AbsoluteUri) : null;
                 if (AuthenticatingInstance != null)
                 {
-                    AuthenticatingInstance.RequestAuthorization += parent.Instance_RequestAuthorization;
-                    AuthenticatingInstance.ForgetAuthorization += parent.Instance_ForgetAuthorization;
+                    AuthenticatingInstance.RequestAuthorization += wizard.Instance_RequestAuthorization;
+                    AuthenticatingInstance.ForgetAuthorization += wizard.Instance_ForgetAuthorization;
                     ConnectingInstance = h_distributed.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.ConnectingInstance.AbsoluteUri) : null;
                 }
             }

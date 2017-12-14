@@ -22,7 +22,7 @@
 
     <Page.Resources>
         <!-- eduVPN collection view sources -->
-        <CollectionViewSource x:Key="MessageListView" Source="{Binding Path=Parent.ActiveSession.MessageList}">
+        <CollectionViewSource x:Key="MessageListView" Source="{Binding Path=Wizard.ActiveSession.MessageList}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Date" Direction="Descending"/>
             </CollectionViewSource.SortDescriptions>
@@ -33,7 +33,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="{Binding Path=Parent.ActiveSession.MessageList.Count, Converter={StaticResource MessageListRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
+            <RowDefinition Height="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -41,7 +41,7 @@
         <StatusBar
             Margin="5"
             Style="{StaticResource eduVPNInlineInfoBarStyle}"
-            Visibility="{Binding Path=Parent.ActiveSession.UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            Visibility="{Binding Path=Wizard.ActiveSession.UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <StatusBarItem>
                 <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
             </StatusBarItem>
@@ -88,9 +88,9 @@
                 MaxHeight="22"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Source="{Binding Path=Parent.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
-                ToolTip="{Binding Path=Parent.ActiveSession.StateDescription}"
-                AutomationProperties.Name="{Binding Path=Parent.ActiveSession.StateDescription}"
+                Source="{Binding Path=Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
+                ToolTip="{Binding Path=Wizard.ActiveSession.StateDescription}"
+                AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.StateDescription}"
                 RenderOptions.BitmapScalingMode="Fant"/>
 
             <controls:ImageWithFallback
@@ -100,10 +100,10 @@
                 MaxHeight="22"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                UriSource="{Binding Path=Parent.ActiveSession.ConnectingProfile.Instance.Logo}"
+                UriSource="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.Logo}"
                 UriFallbackSource="pack://application:,,,/Resources/GenericInstance.png"
-                ToolTip="{Binding Path=Parent.ActiveSession.ConnectingProfile.Instance.DisplayName}"
-                AutomationProperties.Name="{Binding Path=Parent.ActiveSession.ConnectingProfile.Instance.DisplayName}"
+                ToolTip="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
+                AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
                 RenderOptions.BitmapScalingMode="Fant"/>
 
             <TextBlock
@@ -113,7 +113,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Parent.ActiveSession.ConnectingProfile.DisplayName}"/>
+                Text="{Binding Path=Wizard.ActiveSession.ConnectingProfile.DisplayName}"/>
         </Grid>
 
         <ListBox
@@ -123,7 +123,7 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MessageListView}}"
-            Visibility="{Binding Path=Parent.ActiveSession.MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+            Visibility="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
 
         <Grid
             Grid.Row="3"
@@ -159,7 +159,7 @@
                 Grid.Column="1"
                 Margin="1,2,4,0"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Parent.ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
+                Text="{Binding Path=Wizard.ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -173,7 +173,7 @@
                 Grid.Column="3"
                 Margin="1,2,0,0"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Parent.ActiveSession.TunnelAddress}"/>
+                Text="{Binding Path=Wizard.ActiveSession.TunnelAddress}"/>
 
             <TextBlock
                 Grid.Row="2"
@@ -187,7 +187,7 @@
                 Grid.Column="1"
                 Margin="1,0,4,0"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Parent.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                Text="{Binding Path=Wizard.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <TextBlock
                 Grid.Row="2"
@@ -201,7 +201,7 @@
                 Grid.Column="3"
                 Margin="1,0,0,0"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Parent.ActiveSession.IPv6TunnelAddress}"/>
+                Text="{Binding Path=Wizard.ActiveSession.IPv6TunnelAddress}"/>
 
             <TextBlock
                 Grid.Row="3"
@@ -215,7 +215,7 @@
                 Grid.Column="1"
                 Margin="1,0,4,0"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Parent.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                Text="{Binding Path=Wizard.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <Button
                 x:Name="ShowLog"
@@ -228,7 +228,7 @@
                 HorizontalAlignment="Left"
                 Style="{StaticResource eduVPNButtonStyle}"
                 Content="{x:Static res:Strings.StatusPageSessionInfoViewLog}"
-                Command="{Binding Path=Parent.ActiveSession.ShowLog}"/>
+                Command="{Binding Path=Wizard.ActiveSession.ShowLog}"/>
         </Grid>
 
         <Button
@@ -240,6 +240,6 @@
             VerticalAlignment="Center"
             Style="{StaticResource eduVPNButtonStyle}"
             Content="{x:Static res:Strings.StatusPageDisconnect}"
-            Command="{Binding Path=Parent.ActiveSession.Disconnect}"/>
+            Command="{Binding Path=Wizard.ActiveSession.Disconnect}"/>
     </Grid>
 </pages:ConnectWizardPage>

@@ -34,7 +34,7 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource InstanceListBoxStyle}"
-            ItemsSource="{Binding Path=Parent.InstanceSource.InstanceList}"
+            ItemsSource="{Binding Path=Wizard.InstanceSource.InstanceList}"
             SelectedItem="{Binding Path=SelectedInstance}"/>
     </Grid>
 </pages:ConnectWizardPage>

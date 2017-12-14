@@ -33,9 +33,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a initial wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public InitializingPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public InitializingPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 

@@ -127,9 +127,9 @@ namespace eduVPN.Models
         /// <summary>
         /// Loads instance source settings
         /// </summary>
-        /// <param name="parent">Parent window</param>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="settings">Settings</param>
-        public virtual void FromSettings(ConnectWizard parent, Xml.InstanceSourceSettingsBase settings)
+        public virtual void FromSettings(ConnectWizard wizard, Xml.InstanceSourceSettingsBase settings)
         {
             throw new NotImplementedException();
         }

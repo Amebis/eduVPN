@@ -19,8 +19,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a view model.
         /// </summary>
-        public ConnectWizardPopupPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public ConnectWizardPopupPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 
@@ -33,7 +34,7 @@ namespace eduVPN.ViewModels.Pages
         {
             base.DoNavigateBack();
 
-            Parent.CurrentPopupPage = null;
+            Wizard.CurrentPopupPage = null;
         }
 
         /// <inheritdoc/>

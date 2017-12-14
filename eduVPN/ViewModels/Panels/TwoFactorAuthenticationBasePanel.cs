@@ -150,10 +150,10 @@ namespace eduVPN.ViewModels.Panels
         /// <summary>
         /// Construct a panel
         /// </summary>
-        /// <param name="parent">The page parent</param>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="authenticating_instance">Authenticating instance</param>
-        public TwoFactorAuthenticationBasePanel(ConnectWizard parent, Instance authenticating_instance) :
-            base(parent)
+        public TwoFactorAuthenticationBasePanel(ConnectWizard wizard, Instance authenticating_instance) :
+            base(wizard)
         {
             AuthenticatingInstance = authenticating_instance;
 
@@ -161,7 +161,7 @@ namespace eduVPN.ViewModels.Panels
             _previous_response_time_updater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged(nameof(LastResponseTime)),
-                Parent.Dispatcher);
+                Wizard.Dispatcher);
         }
 
         #endregion

@@ -19,9 +19,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a status wizard page
         /// </summary>
-        /// <param name="parent"></param>
-        public StatusPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public StatusPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 
@@ -34,7 +34,7 @@ namespace eduVPN.ViewModels.Pages
         {
             base.DoNavigateBack();
 
-            Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+            Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
         }
 
         /// <inheritdoc/>

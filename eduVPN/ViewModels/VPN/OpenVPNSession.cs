@@ -84,11 +84,11 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
-        /// <param name="parent">The page parent</param>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
         /// <param name="connecting_profile">Connecting eduVPN profile</param>
-        public OpenVPNSession(ConnectWizard parent, Instance authenticating_instance, Profile connecting_profile) :
-            base(parent, authenticating_instance, connecting_profile)
+        public OpenVPNSession(ConnectWizard wizard, Instance authenticating_instance, Profile connecting_profile) :
+            base(wizard, authenticating_instance, connecting_profile)
         {
             _working_folder = Path.GetTempPath();
             _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
@@ -97,7 +97,7 @@ namespace eduVPN.ViewModels.VPN
             new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => ShowLog.RaiseCanExecuteChanged(),
-                Parent.Dispatcher).Start();
+                Wizard.Dispatcher).Start();
 
             _pre_run_actions.Add(() =>
             {
@@ -136,7 +136,7 @@ namespace eduVPN.ViewModels.VPN
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "FileStream tolerates multiple disposes.")]
         protected override void DoRun()
         {
-            Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1)));
+            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1)));
             try
             {
                 if (_openvpn_interactive_service != null)
@@ -250,7 +250,7 @@ namespace eduVPN.ViewModels.VPN
 
                                     // Set event handlers.
                                     mgmt_session.ByteCountReported += (object sender, ByteCountReportedEventArgs e) =>
-                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                             () =>
                                             {
                                                 BytesIn = e.BytesIn;
@@ -258,7 +258,7 @@ namespace eduVPN.ViewModels.VPN
                                             }));
 
                                     mgmt_session.FatalErrorReported += (object sender, MessageReportedEventArgs e) =>
-                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                             () =>
                                             {
                                                 State = VPNSessionStatusType.Error;
@@ -279,10 +279,10 @@ namespace eduVPN.ViewModels.VPN
 
                                     mgmt_session.CertificateRequested += (object sender, CertificateRequestedEventArgs e) => e.Certificate = _client_certificate;
 
-                                    mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestPasswordAuthentication(this, e);
+                                    mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Wizard.OpenVPNSession_RequestPasswordAuthentication(this, e);
 
                                     // OpenVPN username/password prompts are actually 2FA for eduVPN use-case. Relay them as such.
-                                    mgmt_session.UsernamePasswordAuthenticationRequested += (object sender, UsernamePasswordAuthenticationRequestedEventArgs e) => Parent.OpenVPNSession_RequestTwoFactorAuthentication(this, e);
+                                    mgmt_session.UsernamePasswordAuthenticationRequested += (object sender, UsernamePasswordAuthenticationRequestedEventArgs e) => Wizard.OpenVPNSession_RequestTwoFactorAuthentication(this, e);
 
                                     mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
                                     {
@@ -334,7 +334,7 @@ namespace eduVPN.ViewModels.VPN
 
                                     mgmt_session.StateReported += (object sender, StateReportedEventArgs e) =>
                                     {
-                                        Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                             () =>
                                             {
                                                 string msg = null;
@@ -448,18 +448,18 @@ namespace eduVPN.ViewModels.VPN
                                     mgmt_session.SetByteCount(5, _quit.Token);
                                     mgmt_session.ReleaseHold(_quit.Token);
 
-                                    Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(-1)));
+                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(-1)));
                                     try
                                     {
                                         // Wait for the session to end gracefully.
                                         mgmt_session.Monitor.Join();
-                                    } finally { Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Parent.ChangeTaskCount(+1))); }
+                                    } finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1))); }
                                 }
                                 finally { mgmt_client.Close(); }
                             }
                             finally
                             {
-                                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                     () =>
                                     {
                                         // Cleanup status properties.
@@ -494,14 +494,14 @@ namespace eduVPN.ViewModels.VPN
             }
             finally
             {
-                Parent.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                     () =>
                     {
                         // Cleanup status properties.
                         State = VPNSessionStatusType.Initializing;
                         StateDescription = "";
 
-                        Parent.ChangeTaskCount(-1);
+                        Wizard.ChangeTaskCount(-1);
                     }));
             }
         }

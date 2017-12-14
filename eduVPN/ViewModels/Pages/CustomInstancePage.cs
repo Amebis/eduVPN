@@ -46,43 +46,43 @@ namespace eduVPN.ViewModels.Pages
                         // execute
                         async () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
                                 TryParseUri(Hostname, out var uri);
 
-                                var instance = Parent.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == uri.AbsoluteUri);
+                                var instance = Wizard.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == uri.AbsoluteUri);
                                 if (instance == null)
                                 {
                                     instance = new Instance(uri);
-                                    instance.RequestAuthorization += Parent.Instance_RequestAuthorization;
-                                    instance.ForgetAuthorization += Parent.Instance_ForgetAuthorization;
+                                    instance.RequestAuthorization += Wizard.Instance_RequestAuthorization;
+                                    instance.ForgetAuthorization += Wizard.Instance_ForgetAuthorization;
 
                                     // Trigger initial authorization request.
-                                    await Parent.TriggerAuthorizationAsync(instance);
+                                    await Wizard.TriggerAuthorizationAsync(instance);
 
-                                    Parent.InstanceSource.ConnectingInstanceList.Add(instance);
+                                    Wizard.InstanceSource.ConnectingInstanceList.Add(instance);
                                 }
                                 else
                                 {
                                     // Trigger initial authorization request.
-                                    await Parent.TriggerAuthorizationAsync(instance);
+                                    await Wizard.TriggerAuthorizationAsync(instance);
                                 }
 
                                 // Set authentication/connecting instance.
-                                Parent.InstanceSource.ConnectingInstance = instance;
+                                Wizard.InstanceSource.ConnectingInstance = instance;
 
                                 // Go to (instance and) profile selection page.
                                 switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                                 {
-                                    case 0: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
-                                    case 1: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
-                                    case 2: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
-                                    case 3: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                    case 0: Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage; break;
+                                    case 1: Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; break;
+                                    case 2: Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage; break;
+                                    case 3: Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; break;
                                 }
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -106,8 +106,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs a view model.
         /// </summary>
-        public CustomInstancePage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public CustomInstancePage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 
@@ -120,7 +121,7 @@ namespace eduVPN.ViewModels.Pages
         {
             base.DoNavigateBack();
 
-            Parent.CurrentPage = Parent.InstanceSourceSelectPage;
+            Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
         }
 
         /// <inheritdoc/>

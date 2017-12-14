@@ -729,8 +729,8 @@
                                 Style="{StaticResource eduVPNNavigationButtonStyle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
                                 ToolTip="{x:Static res:Strings.ButtonSettingsTitle}"
-                                Command="{Binding Path=Parent.NavigateTo}"
-                                CommandParameter="{Binding Path=Parent.SettingsPage}">
+                                Command="{Binding Path=Wizard.NavigateTo}"
+                                CommandParameter="{Binding Path=Wizard.SettingsPage}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="{x:Type Button}">
                                         <Grid>

@@ -35,7 +35,7 @@ namespace eduVPN.Models
         #region Methods
 
         /// <inheritdoc/>
-        public override void FromSettings(ConnectWizard parent, Xml.InstanceSourceSettingsBase settings)
+        public override void FromSettings(ConnectWizard wizard, Xml.InstanceSourceSettingsBase settings)
         {
             if (settings is Xml.LocalInstanceSourceSettings h_local)
             {
@@ -48,8 +48,8 @@ namespace eduVPN.Models
                     {
                         // The connecting instance was not found. Could be user entered, or removed from discovery file.
                         connecting_instance = new Instance(h_instance.Base);
-                        connecting_instance.RequestAuthorization += parent.Instance_RequestAuthorization;
-                        connecting_instance.ForgetAuthorization += parent.Instance_ForgetAuthorization;
+                        connecting_instance.RequestAuthorization += wizard.Instance_RequestAuthorization;
+                        connecting_instance.ForgetAuthorization += wizard.Instance_ForgetAuthorization;
                     }
                     else
                         connecting_instance.Popularity = h_instance.Popularity;

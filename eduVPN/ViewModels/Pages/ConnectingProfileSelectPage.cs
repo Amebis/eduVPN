@@ -26,9 +26,9 @@ namespace eduVPN.ViewModels.Pages
         {
             get
             {
-                var source_index = (int)Parent.InstanceSourceType;
+                var source_index = (int)Wizard.InstanceSourceType;
                 if (_panels[source_index] == null)
-                    _panels[source_index] = new ConnectingRefreshableProfileSelectPanel(Parent, Parent.InstanceSourceType);
+                    _panels[source_index] = new ConnectingRefreshableProfileSelectPanel(Wizard, Wizard.InstanceSourceType);
 
                 return _panels[source_index];
             }
@@ -42,13 +42,13 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs an profile selection wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public ConnectingProfileSelectPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public ConnectingProfileSelectPage(ConnectWizard wizard) :
+            base(wizard)
         {
-            Parent.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            Wizard.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
-                if (e.PropertyName == nameof(Parent.InstanceSourceType))
+                if (e.PropertyName == nameof(Wizard.InstanceSourceType))
                     RaisePropertyChanged(nameof(Panel));
             };
         }
@@ -62,7 +62,7 @@ namespace eduVPN.ViewModels.Pages
             base.OnActivate();
 
             // Synchronize selected instance => triggers profile list refresh.
-            Panel.SelectedInstance = Parent.InstanceSource.ConnectingInstance;
+            Panel.SelectedInstance = Wizard.InstanceSource.ConnectingInstance;
         }
 
         /// <inheritdoc/>
@@ -70,25 +70,25 @@ namespace eduVPN.ViewModels.Pages
         {
             base.DoNavigateBack();
 
-            if (Parent.InstanceSource is LocalInstanceSource)
+            if (Wizard.InstanceSource is LocalInstanceSource)
             {
                 switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                 {
                     case 0:
                     case 2:
-                        if (Parent.InstanceSource.InstanceList.IndexOf(Parent.InstanceSource.AuthenticatingInstance) >= 0)
-                            Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                        if (Wizard.InstanceSource.InstanceList.IndexOf(Wizard.InstanceSource.AuthenticatingInstance) >= 0)
+                            Wizard.CurrentPage = Wizard.AuthenticatingInstanceSelectPage;
                         else
-                            Parent.CurrentPage = Parent.CustomInstancePage;
+                            Wizard.CurrentPage = Wizard.CustomInstancePage;
                         break;
 
                     case 1:
-                        Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+                        Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
                         break;
                 }
             }
             else
-                Parent.CurrentPage = Parent.InstanceSourceSelectPage;
+                Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
         }
 
         /// <inheritdoc/>

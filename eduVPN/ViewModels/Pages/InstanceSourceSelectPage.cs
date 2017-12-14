@@ -34,29 +34,29 @@ namespace eduVPN.ViewModels.Pages
                         // execute
                         async instance_source_type =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.InstanceSourceType = instance_source_type.Value;
+                                Wizard.InstanceSourceType = instance_source_type.Value;
 
-                                if (Parent.InstanceSource is LocalInstanceSource)
+                                if (Wizard.InstanceSource is LocalInstanceSource)
                                 {
                                     // With local authentication, the authenticating instance is the connecting instance.
                                     // Therefore, select "authenticating" instance.
-                                    Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                                    Wizard.CurrentPage = Wizard.AuthenticatingInstanceSelectPage;
                                 }
-                                else if (Parent.InstanceSource is DistributedInstanceSource instance_source_distributed)
+                                else if (Wizard.InstanceSource is DistributedInstanceSource instance_source_distributed)
                                 {
                                     // Check if we have saved access token for any of the instances.
                                     object authenticating_instance_lock = new object();
                                     Instance authenticating_instance = null;
-                                    await Task.WhenAll(Parent.InstanceSource.InstanceList.Select(instance =>
+                                    await Task.WhenAll(Wizard.InstanceSource.InstanceList.Select(instance =>
                                     {
                                         var authorization_task = new Task(
                                             () =>
                                             {
                                                 var e = new RequestAuthorizationEventArgs("config") { SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly };
-                                                Parent.Instance_RequestAuthorization(instance, e);
+                                                Wizard.Instance_RequestAuthorization(instance, e);
                                                 if (e.AccessToken != null)
                                                     lock (authenticating_instance_lock)
                                                         authenticating_instance = instance;
@@ -74,31 +74,31 @@ namespace eduVPN.ViewModels.Pages
                                         instance_source_distributed.ConnectingInstance = authenticating_instance;
 
                                         // Go to (instance and) profile selection page.
-                                        Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+                                        Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
                                     }
                                     else
-                                        Parent.CurrentPage = Parent.AuthenticatingInstanceSelectPage;
+                                        Wizard.CurrentPage = Wizard.AuthenticatingInstanceSelectPage;
                                 }
-                                else if (Parent.InstanceSource is FederatedInstanceSource instance_source_federated)
+                                else if (Wizard.InstanceSource is FederatedInstanceSource instance_source_federated)
                                 {
                                     // Trigger initial authorization request.
-                                    await Parent.TriggerAuthorizationAsync(instance_source_federated.AuthenticatingInstance);
+                                    await Wizard.TriggerAuthorizationAsync(instance_source_federated.AuthenticatingInstance);
 
-                                    Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+                                    Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
                                 }
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
                         instance_source_type =>
                             instance_source_type is InstanceSourceType &&
-                            Parent.InstanceSources != null &&
-                            Parent.InstanceSources[(int)instance_source_type] != null);
+                            Wizard.InstanceSources != null &&
+                            Wizard.InstanceSources[(int)instance_source_type] != null);
 
                     // Setup canExecute refreshing.
-                    // Note: Parent.InstanceSources is pseudo-static. We don't need to monitor it for changes.
+                    // Note: Wizard.InstanceSources is pseudo-static. We don't need to monitor it for changes.
                 }
 
                 return _select_instance_source;
@@ -119,16 +119,16 @@ namespace eduVPN.ViewModels.Pages
                         // execute
                         () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
                                 // Assume the custom instance would otherwise be a part of "Institute Access" source.
-                                Parent.InstanceSourceType = InstanceSourceType.InstituteAccess;
+                                Wizard.InstanceSourceType = InstanceSourceType.InstituteAccess;
 
-                                Parent.CurrentPage = Parent.CustomInstancePage;
+                                Wizard.CurrentPage = Wizard.CustomInstancePage;
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         });
                 }
 
@@ -144,9 +144,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs an instance source selection wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public InstanceSourceSelectPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public InstanceSourceSelectPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 
@@ -159,13 +159,13 @@ namespace eduVPN.ViewModels.Pages
         {
             base.DoNavigateBack();
 
-            Parent.CurrentPage = Parent.RecentConfigurationSelectPage;
+            Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
         }
 
         /// <inheritdoc/>
         protected override bool CanNavigateBack()
         {
-            return Parent.StartingPage != this;
+            return Wizard.StartingPage != this;
         }
 
         #endregion

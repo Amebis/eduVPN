@@ -18,9 +18,9 @@ namespace eduVPN.ViewModels.Panels
         #region Properties
 
         /// <summary>
-        /// The panel parent
+        /// The connecting wizard
         /// </summary>
-        public ConnectWizard Parent { get; }
+        public ConnectWizard Wizard { get; }
 
         #endregion
 
@@ -29,10 +29,10 @@ namespace eduVPN.ViewModels.Panels
         /// <summary>
         /// Construct a panel
         /// </summary>
-        /// <param name="parent">The panel parent</param>
-        public Panel(ConnectWizard parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public Panel(ConnectWizard wizard)
         {
-            Parent = parent;
+            Wizard = wizard;
         }
 
         #endregion

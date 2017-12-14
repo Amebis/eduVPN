@@ -45,31 +45,31 @@ namespace eduVPN.ViewModels.Pages
                         // execute
                         async () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
                                 // Trigger initial authorization request.
                                 var authenticating_instance = SelectedInstance;
-                                await Parent.TriggerAuthorizationAsync(authenticating_instance);
-                                Parent.InstanceSource.AuthenticatingInstance = authenticating_instance;
+                                await Wizard.TriggerAuthorizationAsync(authenticating_instance);
+                                Wizard.InstanceSource.AuthenticatingInstance = authenticating_instance;
 
                                 // Assume the same connecting instance.
-                                var connecting_instance = Parent.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == authenticating_instance.Base.AbsoluteUri);
+                                var connecting_instance = Wizard.InstanceSource.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == authenticating_instance.Base.AbsoluteUri);
                                 if (connecting_instance == null)
-                                    Parent.InstanceSource.ConnectingInstanceList.Add(authenticating_instance);
-                                Parent.InstanceSource.ConnectingInstance = authenticating_instance;
+                                    Wizard.InstanceSource.ConnectingInstanceList.Add(authenticating_instance);
+                                Wizard.InstanceSource.ConnectingInstance = authenticating_instance;
 
                                 // Go to (instance and) profile selection page.
                                 switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                                 {
-                                    case 0: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
-                                    case 1: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
-                                    case 2: Parent.CurrentPage = Parent.ConnectingProfileSelectPage; break;
-                                    case 3: Parent.CurrentPage = Parent.RecentConfigurationSelectPage; break;
+                                    case 0: Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage; break;
+                                    case 1: Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; break;
+                                    case 2: Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage; break;
+                                    case 3: Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; break;
                                 }
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -91,9 +91,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Constructs an instance selection wizard page.
         /// </summary>
-        /// <param name="parent">The page parent</param>
-        public AuthenticatingInstanceSelectPage(ConnectWizard parent) :
-            base(parent)
+        /// <param name="wizard">The connecting wizard</param>
+        public AuthenticatingInstanceSelectPage(ConnectWizard wizard) :
+            base(wizard)
         {
         }
 
@@ -106,7 +106,7 @@ namespace eduVPN.ViewModels.Pages
         {
             base.DoNavigateBack();
 
-            Parent.CurrentPage = Parent.InstanceSourceSelectPage;
+            Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
         }
 
         /// <inheritdoc/>

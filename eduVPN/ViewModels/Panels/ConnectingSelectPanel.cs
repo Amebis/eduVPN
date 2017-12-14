@@ -33,7 +33,7 @@ namespace eduVPN.ViewModels.Panels
         /// </summary>
         public InstanceSource InstanceSource
         {
-            get { return Parent.InstanceSources[(int)InstanceSourceType]; }
+            get { return Wizard.InstanceSources[(int)InstanceSourceType]; }
         }
 
         /// <summary>
@@ -60,17 +60,17 @@ namespace eduVPN.ViewModels.Panels
                         // execute
                         () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
-                                Parent.InstanceSourceType = InstanceSourceType;
+                                Wizard.InstanceSourceType = InstanceSourceType;
                                 InstanceSource.ConnectingInstance = SelectedInstance;
 
                                 // Go to profile selection page.
-                                Parent.CurrentPage = Parent.ConnectingProfileSelectPage;
+                                Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage;
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -106,7 +106,7 @@ namespace eduVPN.ViewModels.Panels
                         // execute
                         () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
                                 ForgetInstance(SelectedInstance);
@@ -115,11 +115,11 @@ namespace eduVPN.ViewModels.Panels
                                 Properties.Settings.Default[Global.InstanceDirectoryId[(int)InstanceSourceType] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSource.ToSettings() };
 
                                 // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                                if (Parent.StartingPage != Parent.CurrentPage)
-                                    Parent.CurrentPage = Parent.StartingPage;
+                                if (Wizard.StartingPage != Wizard.CurrentPage)
+                                    Wizard.CurrentPage = Wizard.StartingPage;
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -127,12 +127,12 @@ namespace eduVPN.ViewModels.Panels
                             InstanceSource is LocalInstanceSource &&
                             SelectedInstance != null &&
                             InstanceSource.ConnectingInstanceList.IndexOf(SelectedInstance) >= 0 &&
-                            !Parent.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(SelectedInstance)));
+                            !Wizard.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(SelectedInstance)));
 
                     // Setup canExecute refreshing.
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _forget_selected_instance.RaiseCanExecuteChanged(); };
                     InstanceSource.ConnectingInstanceList.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_instance.RaiseCanExecuteChanged();
-                    Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_instance.RaiseCanExecuteChanged();
+                    Wizard.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_instance.RaiseCanExecuteChanged();
                 }
 
                 return _forget_selected_instance;
@@ -163,7 +163,7 @@ namespace eduVPN.ViewModels.Panels
                         // execute
                         async () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
                                 if (SelectedProfile.IsTwoFactorAuthentication)
@@ -186,7 +186,7 @@ namespace eduVPN.ViewModels.Panels
 
                                         // Offer user to enroll for 2FA.
                                         var e = new RequestTwoFactorEnrollmentEventArgs(authenticating_instance, SelectedProfile);
-                                        Parent.Profile_RequestTwoFactorEnrollment(this, e);
+                                        Wizard.Profile_RequestTwoFactorEnrollment(this, e);
                                         if (e.Credentials == null)
                                             return;
 
@@ -198,16 +198,16 @@ namespace eduVPN.ViewModels.Panels
                                 }
 
                                 // Set connecting instance.
-                                Parent.InstanceSourceType = InstanceSourceType;
+                                Wizard.InstanceSourceType = InstanceSourceType;
                                 InstanceSource.ConnectingInstance = SelectedProfile.Instance;
 
                                 // Start VPN session.
                                 var param = new ConnectWizard.StartSessionParams(InstanceSourceType, SelectedProfile);
-                                if (Parent.StartSession.CanExecute(param))
-                                    Parent.StartSession.Execute(param);
+                                if (Wizard.StartSession.CanExecute(param))
+                                    Wizard.StartSession.Execute(param);
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -243,7 +243,7 @@ namespace eduVPN.ViewModels.Panels
                         // execute
                         () =>
                         {
-                            Parent.ChangeTaskCount(+1);
+                            Wizard.ChangeTaskCount(+1);
                             try
                             {
                                 if (InstanceSource is LocalInstanceSource instance_source_local)
@@ -265,12 +265,12 @@ namespace eduVPN.ViewModels.Panels
                                     Properties.Settings.Default[Global.InstanceDirectoryId[(int)InstanceSourceType] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSource.ToSettings() };
 
                                     // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                                    if (Parent.StartingPage != Parent.CurrentPage)
-                                        Parent.CurrentPage = Parent.StartingPage;
+                                    if (Wizard.StartingPage != Wizard.CurrentPage)
+                                        Wizard.CurrentPage = Wizard.StartingPage;
                                 }
                             }
-                            catch (Exception ex) { Parent.Error = ex; }
-                            finally { Parent.ChangeTaskCount(-1); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute
@@ -278,12 +278,12 @@ namespace eduVPN.ViewModels.Panels
                             InstanceSource is LocalInstanceSource instance_source_local &&
                             SelectedProfile != null &&
                             instance_source_local.ConnectingProfileList.IndexOf(SelectedProfile) >= 0 &&
-                            !Parent.Sessions.Any(session => session.ConnectingProfile.Equals(SelectedProfile)));
+                            !Wizard.Sessions.Any(session => session.ConnectingProfile.Equals(SelectedProfile)));
 
                     // Setup canExecute refreshing.
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedProfile)) _forget_selected_profile.RaiseCanExecuteChanged(); };
                     if (InstanceSource is LocalInstanceSource instance_source_local2) instance_source_local2.ConnectingProfileList.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_profile.RaiseCanExecuteChanged();
-                    Parent.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_profile.RaiseCanExecuteChanged();
+                    Wizard.Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => _forget_selected_profile.RaiseCanExecuteChanged();
                 }
 
                 return _forget_selected_profile;
@@ -298,10 +298,10 @@ namespace eduVPN.ViewModels.Panels
         /// <summary>
         /// Constructs a panel
         /// </summary>
-        /// <param name="parent">The page parent</param>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public ConnectingSelectPanel(ConnectWizard parent, InstanceSourceType instance_source_type) :
-            base(parent)
+        public ConnectingSelectPanel(ConnectWizard wizard, InstanceSourceType instance_source_type) :
+            base(wizard)
         {
             InstanceSourceType = instance_source_type;
 
@@ -347,8 +347,8 @@ namespace eduVPN.ViewModels.Panels
             if (InstanceSource.AuthenticatingInstance != null && InstanceSource.AuthenticatingInstance.Equals(instance))
                 return;
             for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
-                if (Parent.InstanceSources[source_index].AuthenticatingInstance != null && Parent.InstanceSources[source_index].AuthenticatingInstance.Equals(instance)/* ||
-                    Parent.InstanceSources[source_index].ConnectingInstanceList.FirstOrDefault(inst => inst.Equals(instance)) != null*/)
+                if (Wizard.InstanceSources[source_index].AuthenticatingInstance != null && Wizard.InstanceSources[source_index].AuthenticatingInstance.Equals(instance)/* ||
+                    Wizard.InstanceSources[source_index].ConnectingInstanceList.FirstOrDefault(inst => inst.Equals(instance)) != null*/)
                     return;
 
             instance.Forget();

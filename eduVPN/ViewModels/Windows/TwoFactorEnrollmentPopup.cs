@@ -82,12 +82,12 @@ namespace eduVPN.ViewModels.Windows
             TwoFactorAuthenticationBasePanel method;
             if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.TOTP))
             {
-                _method_list.Add(method = new TOTPEnrollmentPanel(selection_panel.Parent, AuthenticatingInstance));
+                _method_list.Add(method = new TOTPEnrollmentPanel(selection_panel.Wizard, AuthenticatingInstance));
                 if (last_method == method.ID) _selected_method = method;
             }
             if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.YubiKey))
             {
-                _method_list.Add(method = new YubiKeyAuthenticationPanel(selection_panel.Parent, AuthenticatingInstance));
+                _method_list.Add(method = new YubiKeyAuthenticationPanel(selection_panel.Wizard, AuthenticatingInstance));
                 if (last_method == method.ID) _selected_method = method;
             }
         }
