@@ -364,36 +364,43 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Instance request authorization event
         /// </summary>
+        /// <remarks>Sender is the connection wizard <c>eduVPN.ViewModels.Windows.ConnectingWizard</c>.</remarks>
         public event EventHandler<RequestInstanceAuthorizationEventArgs> RequestInstanceAuthorization;
 
         /// <summary>
         /// 2-Factor Authentication enrollment requested
         /// </summary>
+        /// <remarks>Sender is the profile select panel <c>eduVPN.ViewModels.Panels.ConnectingSelectPanel</c>.</remarks>
         public event EventHandler<RequestTwoFactorEnrollmentEventArgs> RequestTwoFactorEnrollment;
 
         /// <summary>
         /// OpenVPN requested a password
         /// </summary>
+        /// <remarks>Sender is the OpenVPN session <c>eduOpenVPN.ViewModel.VPN.OpenVPNSession</c>.</remarks>
         public event EventHandler<eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs> RequestOpenVPNPasswordAuthentication;
 
         /// <summary>
         /// OpenVPN requested a username and password
         /// </summary>
+        /// <remarks>Sender is the OpenVPN session <c>eduOpenVPN.ViewModel.VPN.OpenVPNSession</c>.</remarks>
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestOpenVPNUsernamePasswordAuthentication;
 
         /// <summary>
         /// 2-Factor Authentication requested
         /// </summary>
+        /// <remarks>Sender is the OpenVPN session <c>eduOpenVPN.ViewModel.VPN.OpenVPNSession</c>.</remarks>
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestTwoFactorAuthentication;
 
         /// <summary>
         /// Product update is available
         /// </summary>
+        /// <remarks>Sender is the connection wizard <c>eduVPN.ViewModels.Windows.ConnectingWizard</c>.</remarks>
         public event EventHandler<PromptSelfUpdateEventArgs> PromptSelfUpdate;
 
         /// <summary>
         /// Application should quit
         /// </summary>
+        /// <remarks>Sender is the connection wizard <c>eduVPN.ViewModels.Windows.ConnectingWizard</c>.</remarks>
         public event EventHandler QuitApplication;
 
         #region Pages

@@ -99,11 +99,13 @@ namespace eduVPN.Models
         /// <summary>
         /// Request authorization event
         /// </summary>
+        /// <remarks>Sender is the authenticating instance <c>eduVPN.Models.Instance</c>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         /// <summary>
         /// Forget authorization event
         /// </summary>
+        /// <remarks>Sender is the authenticating instance <c>eduVPN.Models.Instance</c>.</remarks>
         public event EventHandler<ForgetAuthorizationEventArgs> ForgetAuthorization;
 
         #endregion
@@ -260,7 +262,7 @@ namespace eduVPN.Models
 
                         // Attach to RequestAuthorization profile events.
                         foreach (var profile in profile_list)
-                            profile.RequestAuthorization += (object sender, RequestAuthorizationEventArgs e2) => RequestAuthorization?.Invoke(authenticating_instance, e2);
+                            profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => RequestAuthorization?.Invoke(authenticating_instance, e_profile);
 
                         // If we got here, save the profile list.
                         _profile_list = profile_list;
