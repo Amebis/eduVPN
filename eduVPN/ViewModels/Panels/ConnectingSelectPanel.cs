@@ -8,7 +8,6 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
-using Prism.Mvvm;
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -20,14 +19,9 @@ namespace eduVPN.ViewModels.Panels
     /// <summary>
     /// Connecting instance and/or profile select panel base class
     /// </summary>
-    public class ConnectingSelectPanel : BindableBase
+    public class ConnectingSelectPanel : Panel
     {
         #region Properties
-
-        /// <summary>
-        /// The page parent
-        /// </summary>
-        public ConnectWizard Parent { get; }
 
         /// <summary>
         /// Selected instance source type
@@ -306,9 +300,9 @@ namespace eduVPN.ViewModels.Panels
         /// </summary>
         /// <param name="parent">The page parent</param>
         /// <param name="instance_source_type">Instance source type</param>
-        public ConnectingSelectPanel(ConnectWizard parent, InstanceSourceType instance_source_type)
+        public ConnectingSelectPanel(ConnectWizard parent, InstanceSourceType instance_source_type) :
+            base(parent)
         {
-            Parent = parent;
             InstanceSourceType = instance_source_type;
 
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>

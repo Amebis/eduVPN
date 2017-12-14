@@ -7,6 +7,7 @@
 
 using eduOpenVPN.Management;
 using eduVPN.Models;
+using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
 using System.ComponentModel;
@@ -18,7 +19,7 @@ namespace eduVPN.ViewModels.Panels
     /// <summary>
     /// 2-Factor authentication response panel base class
     /// </summary>
-    public class TwoFactorAuthenticationBasePanel : ValidatableBindableBase
+    public class TwoFactorAuthenticationBasePanel : Panel
     {
         #region Properties
 
@@ -104,6 +105,19 @@ namespace eduVPN.ViewModels.Panels
             }
         }
         private DelegateCommand<RequestTwoFactorEnrollmentEventArgs> _apply_enrollment;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Construct a panel
+        /// </summary>
+        /// <param name="parent">The page parent</param>
+        public TwoFactorAuthenticationBasePanel(ConnectWizard parent) :
+            base(parent)
+        {
+        }
 
         #endregion
 

@@ -6,6 +6,7 @@
 */
 
 using eduVPN.Models;
+using eduVPN.ViewModels.Windows;
 using System.Net;
 
 namespace eduVPN.ViewModels.Panels
@@ -22,6 +23,19 @@ namespace eduVPN.ViewModels.Panels
 
         /// <inheritdoc/>
         public override string DisplayName { get => Resources.Strings.TwoFactorAuthenticationMethodYubiKey; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Construct a panel
+        /// </summary>
+        /// <param name="parent">The page parent</param>
+        public YubiKeyAuthenticationPanel(ConnectWizard parent) :
+            base(parent)
+        {
+        }
 
         #endregion
 

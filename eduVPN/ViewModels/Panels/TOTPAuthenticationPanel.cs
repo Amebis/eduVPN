@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.Windows;
 using System.ComponentModel.DataAnnotations;
 
 namespace eduVPN.ViewModels.Panels
@@ -25,6 +26,19 @@ namespace eduVPN.ViewModels.Panels
         /// <inheritdoc/>
         [RegularExpression(@"^\d{6}$", ErrorMessageResourceName = "ErrorInvalidTOTP", ErrorMessageResourceType = typeof(Resources.Strings))]
         public override string Response { get => base.Response; set => base.Response = value; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Constructs a panel
+        /// </summary>
+        /// <param name="parent">The page parent</param>
+        public TOTPAuthenticationPanel(ConnectWizard parent) :
+            base(parent)
+        {
+        }
 
         #endregion
     }

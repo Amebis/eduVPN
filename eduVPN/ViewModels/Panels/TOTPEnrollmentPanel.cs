@@ -6,6 +6,7 @@
 */
 
 using eduVPN.Models;
+using eduVPN.ViewModels.Windows;
 using System.Net;
 using System.Security.Cryptography;
 
@@ -41,7 +42,9 @@ namespace eduVPN.ViewModels.Panels
         /// <summary>
         /// Constructs a panel
         /// </summary>
-        public TOTPEnrollmentPanel()
+        /// <param name="parent">The page parent</param>
+        public TOTPEnrollmentPanel(ConnectWizard parent) :
+            base(parent)
         {
             _secret = GenerateSecret();
         }

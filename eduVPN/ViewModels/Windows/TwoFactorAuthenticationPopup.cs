@@ -8,6 +8,7 @@
 using eduOpenVPN.Management;
 using eduVPN.Models;
 using eduVPN.ViewModels.Panels;
+using eduVPN.ViewModels.VPN;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -61,6 +62,8 @@ namespace eduVPN.ViewModels.Windows
         public TwoFactorAuthenticationPopup(object sender, UsernamePasswordAuthenticationRequestedEventArgs e) :
             base(sender, e)
         {
+            var session = sender as VPNSession;
+
             // Query profile supported & user enrolled 2-Factor authentication methods.
             var methods = TwoFactorAuthenticationMethods.Any;
             if (Session.ConnectingProfile.IsTwoFactorAuthentication)
@@ -71,9 +74,9 @@ namespace eduVPN.ViewModels.Windows
             // Prepare the list of methods.
             _method_list = new ObservableCollection<TwoFactorAuthenticationBasePanel>();
             if (methods.HasFlag(TwoFactorAuthenticationMethods.TOTP))
-                _method_list.Add(new TOTPAuthenticationPanel());
+                _method_list.Add(new TOTPAuthenticationPanel(session.Parent));
             if (methods.HasFlag(TwoFactorAuthenticationMethods.YubiKey))
-                _method_list.Add(new YubiKeyAuthenticationPanel());
+                _method_list.Add(new YubiKeyAuthenticationPanel(session.Parent));
 
             // Initially select the first method.
             if (_method_list.Count > 0)

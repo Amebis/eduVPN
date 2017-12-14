@@ -71,15 +71,17 @@ namespace eduVPN.ViewModels.Windows
         /// <param name="e">Event parameters</param>
         public TwoFactorEnrollmentPopup(object sender, RequestTwoFactorEnrollmentEventArgs e)
         {
+            var selection_panel = sender as ConnectingSelectPanel;
+
             AuthenticatingInstance = e.AuthenticatingInstance;
             Profile = e.Profile;
 
             // Prepare the list of methods.
             _method_list = new ObservableCollection<TwoFactorAuthenticationBasePanel>();
             if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.TOTP))
-                _method_list.Add(new TOTPEnrollmentPanel());
+                _method_list.Add(new TOTPEnrollmentPanel(selection_panel.Parent));
             if (Profile.TwoFactorMethods.HasFlag(TwoFactorAuthenticationMethods.YubiKey))
-                _method_list.Add(new YubiKeyAuthenticationPanel());
+                _method_list.Add(new YubiKeyAuthenticationPanel(selection_panel.Parent));
 
             // Initially select the first method.
             if (_method_list.Count > 0)
