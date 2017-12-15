@@ -16,7 +16,7 @@ namespace eduVPN.Client.Converters
     /// Converts and returns number as human readable string using metric prefixes
     /// </summary>
     /// <remarks>Only integer numbers supported</remarks>
-    class NumberToHumanReadableConverter : BindableBase, IValueConverter
+    public class NumberToHumanReadableConverter : BindableBase, IValueConverter
     {
         #region Fields
 

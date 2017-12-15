@@ -16,7 +16,7 @@ namespace eduVPN.Client.Converters
     /// <summary>
     /// Returns <c>Visibility.Collapsed</c> if instance source contains any connecting instances; or <c>Visibility.Visible</c> otherwise.
     /// </summary>
-    class InstanceSourceInverseVisibilityConverter : IValueConverter
+    public class InstanceSourceInverseVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
