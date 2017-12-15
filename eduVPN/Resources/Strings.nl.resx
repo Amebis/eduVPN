@@ -206,7 +206,7 @@
     <value>Invalid TOTP response: it should contain exactly six (6) decimal numbers; no spaces or hyphens are allowed.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Ongeldige hostname: hostnamen bevatten letters, nummers, koppeltekens en punten.</value>
+    <value>Ongeldige servername: een servernaam bevat letters, nummers, koppeltekens en punten.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Property name {0} is not valid.</value>
