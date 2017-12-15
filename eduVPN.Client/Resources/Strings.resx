@@ -377,4 +377,15 @@ If you continue, your user settings will be reset to defaults.</value>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
     <value>Please do not use the same TOTP twice. Wait until a fresh TOTP is generated.</value>
   </data>
+  <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
+    <value>IP={0}, IPv6={1}</value>
+    <comment>{0}=IP address, {1}=IPv6 address</comment>
+  </data>
+  <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
+    <value>{0} connected</value>
+    <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
+    <value>The eduVPN window has been minimized here.</value>
+  </data>
 </root>

@@ -616,6 +616,33 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP={0}, IPv6={1}.
+        /// </summary>
+        public static string SystemTrayBalloonConnectedMessage {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonConnectedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} connected.
+        /// </summary>
+        public static string SystemTrayBalloonConnectedTitle {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonConnectedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The eduVPN window has been minimized here..
+        /// </summary>
+        public static string SystemTrayBalloonHiddenMessage {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonHiddenMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _About....
         /// </summary>
         public static string SystemTrayMenuAbout {

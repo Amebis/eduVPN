@@ -69,5 +69,17 @@ namespace eduVPN.Client.Properties {
                 this["SettingsVersion"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SystemTrayMinimizedWarned {
+            get {
+                return ((bool)(this["SystemTrayMinimizedWarned"]));
+            }
+            set {
+                this["SystemTrayMinimizedWarned"] = value;
+            }
+        }
     }
 }

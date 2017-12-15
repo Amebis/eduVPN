@@ -96,7 +96,19 @@ namespace eduVPN.Views.Windows
                             view_model.ActiveSession.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
                                 {
                                     if (e_Session.PropertyName == nameof(view_model.ActiveSession.State))
+                                    {
                                         _tray_icon.Icon = _icons[view_model.ActiveSession.State];
+
+                                        if (view_model.ActiveSession.State == VPNSessionStatusType.Connected && !IsVisible)
+                                        {
+                                            // Client connected while "minimized". Popup the balloon message.
+                                            _tray_icon.ShowBalloonTip(
+                                                5000,
+                                                string.Format(Client.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
+                                                string.Format(Client.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
+                                                System.Windows.Forms.ToolTipIcon.Info);
+                                        }
+                                    }
                                 };
                         }
                         else
@@ -167,6 +179,18 @@ namespace eduVPN.Views.Windows
         private void Hide_Click(object sender, RoutedEventArgs e)
         {
             Hide();
+
+            if (!Client.Properties.Settings.Default.SystemTrayMinimizedWarned)
+            {
+                // Notify user that the eduVPN client did not close, but was "minimized" to system tray.
+                _tray_icon.ShowBalloonTip(
+                    10000,
+                    Client.Resources.Strings.MainWindowTitle,
+                    Client.Resources.Strings.SystemTrayBalloonHiddenMessage,
+                    System.Windows.Forms.ToolTipIcon.Info);
+
+                Client.Properties.Settings.Default.SystemTrayMinimizedWarned = true;
+            }
         }
 
         private void TrayIcon_Click(object sender, EventArgs ea)
