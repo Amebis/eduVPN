@@ -1,5 +1,5 @@
 # eduVPN
-Windows eduVPN Client
+eduVPN Client for Windows
 
 
 # End-users
@@ -99,8 +99,4 @@ The registration prepares the working environment for the eduVPN client, much li
 
 # Translators
 
-Anyone wanting to translate the eduVPN Client for Windows is welcome to join the translation project at [POEditor.com](https://poeditor.com/join/project/0cJKTOUjzn) where the `.resx` localization takes place.
-
-Furthermore, there are some tiny `.rc` and `.wxl` files in the project that require manual translation.
-
-Should you need any assistance to get started, please do not hesitate to contact project maintainer at [simon@rozman.si](mailto:simon@rozman.si).
+Anyone wanting to translate the eduVPN Client for Windows is welcome to join the translation. Detailed instructions can be found [here](doc/Localization.md).
