@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -136,14 +136,17 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Naprej &gt;</value>
   </data>
+  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
+    <value>Izberite svojo državo</value>
+  </data>
+  <data name="MainWindowTitle" xml:space="preserve">
+    <value>eduVPN</value>
+  </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
     <value>Drug naslov</value>
   </data>
   <data name="CustomInstancePageDescription" xml:space="preserve">
     <value>Vnesite ime gostitelja svojega ponudnika VPN.</value>
-  </data>
-  <data name="MainWindowTitle" xml:space="preserve">
-    <value>eduVPN</value>
   </data>
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
     <value>Poveži</value>
@@ -166,20 +169,17 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="StatusPageStatus" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="MessageMaintenanceTitle" xml:space="preserve">
-    <value>Obvestilo o vzdrževanju</value>
-  </data>
-  <data name="MessageNotificationTitle" xml:space="preserve">
-    <value>Obvestilo</value>
-  </data>
   <data name="MessageMaintenanceBegin" xml:space="preserve">
     <value>Začetek</value>
   </data>
   <data name="MessageMaintenanceEnd" xml:space="preserve">
     <value>Konec</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo državo</value>
+  <data name="MessageMaintenanceTitle" xml:space="preserve">
+    <value>Obvestilo o vzdrževanju</value>
+  </data>
+  <data name="MessageNotificationTitle" xml:space="preserve">
+    <value>Obvestilo</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Izberite svojo ustanovo</value>
@@ -218,7 +218,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Dodaj drug naslov</value>
@@ -305,7 +305,7 @@ Omogoča SURFnet</value>
     <value>Geslo</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
+    <value>Vnesite svoje uporabniško ime in geslo za &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -329,6 +329,12 @@ Omogoča SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-stopenjsko overovljanje</value>
   </data>
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
+    <value>Novejša verzija odjemalca eduVPN je prenešena in pripravljena na namestitev.</value>
+  </data>
+  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+    <value>Posodobitev na voljo</value>
+  </data>
   <data name="SelfUpdatePopupAskLater" xml:space="preserve">
     <value>Vprašaj me pozneje</value>
   </data>
@@ -338,12 +344,7 @@ Omogoča SURFnet</value>
   <data name="SelfUpdatePopupUpdate" xml:space="preserve">
     <value>Posodobi na {0} zdaj
 (Odjemalec se bo ponovno zagnal)</value>
-  </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Novejša verzija odjemalca eduVPN je prenešena in pripravljena na namestitev.</value>
-  </data>
-  <data name="SelfUpdatePopupTitle" xml:space="preserve">
-    <value>Posodobitev na voljo</value>
+    <comment>{0}=version</comment>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>Program {0} je zaznal, da se je datoteka z vašimi uporabniškimi nastavitvami {1} pokvarila. Lahko gre za posledico zrušenja ali nepravilne zaustavitve programa.
@@ -355,7 +356,7 @@ Omogoča SURFnet</value>
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
+    <value>Zahtevani parameter OAuth &quot;state&quot; manjka ali je napačen.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Včlani</value>
@@ -376,4 +377,16 @@ Omogoča SURFnet</value>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
     <value>Ne uporabite istega TOTP dvakrat. Počakajte, da bo ustvarjen svež TOTP.</value>
   </data>
+  <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
+    <value>IP={0}, IPv6={1}</value>
+    <comment>{0}=IP address, {1}=IPv6 address</comment>
+  </data>
+  <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
+    <value>{0} je povezan</value>
+    <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
+    <value>Okno eduVPN je bilo pomanjšano semle.</value>
+  </data>
+
 </root>
