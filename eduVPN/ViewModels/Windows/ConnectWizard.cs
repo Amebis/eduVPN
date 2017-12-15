@@ -733,7 +733,7 @@ namespace eduVPN.ViewModels.Windows
 
             worker.RunWorkerAsync();
 
-            if (Properties.Settings.Default.SelfUpdate is string)
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.SelfUpdate))
             {
                 // Setup self-update.
                 var self_update = new BackgroundWorker() { WorkerReportsProgress = true };
