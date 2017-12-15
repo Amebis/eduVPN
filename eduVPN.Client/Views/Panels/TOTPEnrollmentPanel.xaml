@@ -61,7 +61,7 @@
                 VerticalContentAlignment="Center"
                 TextWrapping="Wrap"
                 Style="{StaticResource eduVPNCodeTextBoxStyle}"
-                Text="{Binding Path=Secret}"
+                Text="{Binding Path=Secret, Converter={StaticResource TOTPSecretConverter}}"
                 IsReadOnly="True"/>
         </Grid>
 

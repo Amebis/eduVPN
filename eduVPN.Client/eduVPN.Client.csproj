@@ -55,6 +55,7 @@
     <Compile Include="Converters\InstanceSourceVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListRowHeightConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
+    <Compile Include="Converters\TOTPSecretConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
     <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
