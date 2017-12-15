@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -218,7 +218,7 @@ The client will continue after you complete the authorization...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Add other address</value>
@@ -233,7 +233,7 @@ The client will continue after you complete the authorization...</value>
     <value>Initializing...</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Access your institute's network from outside the institution.</value>
+    <value>Access your institute&apos;s network from outside the institution.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
@@ -292,20 +292,20 @@ Powered by SURFnet</value>
     <value>Settings</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>Sometimes, eduVPN can't connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances.</value>
+    <value>Sometimes, eduVPN can&apos;t connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances.</value>
   </data>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>Force TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Enter your password for "{0}":</value>
+    <value>Enter your password for &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Enter your username and password for "{0}":</value>
+    <value>Enter your username and password for &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -356,7 +356,7 @@ If you continue, your user settings will be reset to defaults.</value>
     <value>Corrupt user settings</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>The required OAuth parameter "state" is missing or incorrect.</value>
+    <value>The required OAuth parameter &quot;state&quot; is missing or incorrect.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Enroll</value>
@@ -388,4 +388,5 @@ If you continue, your user settings will be reset to defaults.</value>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>The eduVPN window has been minimized here.</value>
   </data>
+
 </root>
