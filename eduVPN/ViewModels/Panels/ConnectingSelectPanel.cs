@@ -185,7 +185,7 @@ namespace eduVPN.ViewModels.Panels
                                         var api = authenticating_instance.GetEndpoints(Window.Abort.Token);
 
                                         // Offer user to enroll for 2FA.
-                                        var e = new RequestTwoFactorEnrollmentEventArgs(authenticating_instance, SelectedProfile);
+                                        var e = new RequestTwoFactorEnrollmentEventArgs(user_info, authenticating_instance, SelectedProfile);
                                         Wizard.Profile_RequestTwoFactorEnrollment(this, e);
                                         if (e.Credentials == null)
                                             return;

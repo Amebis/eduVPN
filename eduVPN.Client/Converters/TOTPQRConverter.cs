@@ -24,10 +24,12 @@ namespace eduVPN.Client.Converters
             try
             {
                 var secret   = values[0] as string;
-                var instance = values[1] as Instance;
-                var otp_uri = string.Format("otpauth://totp/{1}?secret={0}&issuer={2}",
+                var user     = values[1] as UserInfo;
+                var instance = values[2] as Instance;
+                var otp_uri = string.Format(user.ID != null ? "otpauth://totp/{1}:{2}?secret={0}&issuer={3}" : "otpauth://totp/{1}?secret={0}&issuer={3}",
                     secret,
                     instance.Base.Host,
+                    user.ID,
                     HttpUtility.UrlEncode(instance.ToString()));
 
                 var qr_generator = new QRCodeGenerator();

@@ -20,6 +20,11 @@ namespace eduVPN.ViewModels.Windows
         #region Properties
 
         /// <summary>
+        /// User
+        /// </summary>
+        public UserInfo User { get; }
+
+        /// <summary>
         /// Authenticating instance
         /// </summary>
         public Instance AuthenticatingInstance { get; }
@@ -73,6 +78,7 @@ namespace eduVPN.ViewModels.Windows
         {
             var selection_panel = sender as ConnectingSelectPanel;
 
+            User = e.User;
             AuthenticatingInstance = e.AuthenticatingInstance;
             Profile = e.Profile;
 

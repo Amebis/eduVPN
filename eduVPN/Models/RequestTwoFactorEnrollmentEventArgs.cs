@@ -17,6 +17,11 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
+        /// User
+        /// </summary>
+        public UserInfo User { get; }
+
+        /// <summary>
         /// Authenticating instance
         /// </summary>
         public Instance AuthenticatingInstance { get; }
@@ -39,10 +44,12 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs event parameters
         /// </summary>
+        /// <param name="user">User</param>
         /// <param name="authenticating_instance">Authenticating instance</param>
         /// <param name="profile">Connecting profile</param>
-        public RequestTwoFactorEnrollmentEventArgs(Instance authenticating_instance, Profile profile)
+        public RequestTwoFactorEnrollmentEventArgs(UserInfo user, Instance authenticating_instance, Profile profile)
         {
+            User = user;
             AuthenticatingInstance = authenticating_instance;
             Profile = profile;
         }

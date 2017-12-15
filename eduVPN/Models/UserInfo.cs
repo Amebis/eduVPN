@@ -18,6 +18,16 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
+        /// User ID
+        /// </summary>
+        public string ID
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
+        private string _id;
+
+        /// <summary>
         /// Is user enabled?
         /// </summary>
         public bool IsEnabled
@@ -49,6 +59,16 @@ namespace eduVPN.Models
 
         #endregion
 
+        #region Methods
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ID;
+        }
+
+        #endregion
+
         #region ILoadableItem Support
 
         /// <summary>
@@ -60,6 +80,9 @@ namespace eduVPN.Models
         {
             if (obj is Dictionary<string, object> obj2)
             {
+                // Set user ID.
+                ID = eduJSON.Parser.GetValue(obj2, "user_id", out string user_id) ? user_id : null;
+
                 // Set two-factor authentication.
                 IsEnabled = eduJSON.Parser.GetValue(obj2, "is_disabled", out bool is_disabled) ? !is_disabled : true;
 

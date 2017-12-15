@@ -44,6 +44,9 @@
                         <Binding
                             Path="Secret"/>
                         <Binding
+                            Path="DataContext.User"
+                            RelativeSource="{RelativeSource AncestorType={x:Type windows:TwoFactorEnrollmentPopup}}"/>
+                        <Binding
                             Path="DataContext.AuthenticatingInstance"
                             RelativeSource="{RelativeSource AncestorType={x:Type windows:TwoFactorEnrollmentPopup}}"/>
                     </MultiBinding>
