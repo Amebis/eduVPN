@@ -226,4 +226,10 @@
   <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
     <value>2-Factor Authentication enrollment failed.</value>
   </data>
+  <data name="ErrorDownloading" xml:space="preserve">
+    <value>Downloading from web failed. Please check your internet connection.</value>
+  </data>
+  <data name="ErrorUploading" xml:space="preserve">
+    <value>Uploading to web failed. Please check your internet connection.</value>
+  </data>
 </root>

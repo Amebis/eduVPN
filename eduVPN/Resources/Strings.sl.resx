@@ -226,4 +226,10 @@
   <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
     <value>Včlanitev v 2-stopenjsko overovljanje ni uspela.</value>
   </data>
+  <data name="ErrorDownloading" xml:space="preserve">
+    <value>Prenos s spleta ni uspel. Preverite svojo spletno povezavo.</value>
+  </data>
+  <data name="ErrorUploading" xml:space="preserve">
+    <value>Prenos na splet ni uspel. Preverite svojo spletno povezavo.</value>
+  </data>
 </root>

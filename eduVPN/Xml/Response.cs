@@ -131,16 +131,19 @@ namespace eduVPN.Xml
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = body_binary.Length;
-                using (var stream_req = await request.GetRequestStreamAsync())
-                    await stream_req.WriteAsync(body_binary, 0, body_binary.Length, ct);
+                try
+                {
+                    using (var stream_req = await request.GetRequestStreamAsync())
+                        await stream_req.WriteAsync(body_binary, 0, body_binary.Length, ct);
+                }
+                catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex); }
             }
 
-            var response_task = request.GetResponseAsync();
             WebResponse response;
             try
             {
                 // Wait for data to start comming in.
-                response = await response_task;
+                response = await request.GetResponseAsync();
             }
             catch (WebException ex)
             {
@@ -151,7 +154,7 @@ namespace eduVPN.Xml
                     return previous;
                 }
                 else
-                    throw;
+                    throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
             }
 
             using (response)
@@ -192,7 +195,7 @@ namespace eduVPN.Xml
                             signature = Convert.FromBase64String(await reader_sig.ReadToEndAsync());
                     }
 
-                    for (;;)
+                    for (; ; )
                     {
                         // Wait for the data to arrive.
                         await read_task;

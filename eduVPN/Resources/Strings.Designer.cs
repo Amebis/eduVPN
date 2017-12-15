@@ -97,6 +97,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading from web failed. Please check your internet connection..
+        /// </summary>
+        internal static string ErrorDownloading {
+            get {
+                return ResourceManager.GetString("ErrorDownloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading of API endpoints failed..
         /// </summary>
         internal static string ErrorEndpointsLoad {
@@ -228,6 +237,15 @@ namespace eduVPN.Resources {
         internal static string ErrorTwoFactorEnrollment {
             get {
                 return ResourceManager.GetString("ErrorTwoFactorEnrollment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploading to web failed. Please check your internet connection..
+        /// </summary>
+        internal static string ErrorUploading {
+            get {
+                return ResourceManager.GetString("ErrorUploading", resourceCulture);
             }
         }
         
