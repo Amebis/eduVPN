@@ -643,7 +643,7 @@ namespace eduVPN.ViewModels.Windows
                     Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
                     try
                     {
-                        for (;;)
+                        do
                         {
                             int ticks = 0;
                             object ticks_lock = new object();
@@ -703,10 +703,9 @@ namespace eduVPN.ViewModels.Windows
                                 }));
                             }
 
-                            // Sleep for 3s, then retry.
-                            if (Abort.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(3)))
-                                break;
                         }
+                        // Sleep for 3s, then retry.
+                        while (!Abort.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(3)));
                     }
                     finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                 });
@@ -739,337 +738,342 @@ namespace eduVPN.ViewModels.Windows
                 var self_update = new BackgroundWorker() { WorkerReportsProgress = true };
                 self_update.DoWork += (object sender, DoWorkEventArgs e) =>
                 {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
-                    try
+                    var random = new Random();
+                    do
                     {
-                        var working_folder = Path.GetTempPath();
-                        var installer_filename = working_folder + "eduVPNClient.exe";
-                        var updater_filename = working_folder + "eduVPNClient.wsf";
-                        Dictionary<string, object> obj_web = null;
-                        Version repo_version = null, product_version = null;
-
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
                         try
                         {
-                            Parallel.ForEach(new List<Action>()
-                            {
-                                () =>
-                                {
-                                    if (File.Exists(updater_filename))
-                                    {
-                                        // Clean stale updater WSF file. If possible.
-                                        Trace.TraceInformation("Deleting file {0}...", updater_filename);
-                                        try { File.Delete(updater_filename); }
-                                        catch (Exception ex) { Trace.TraceWarning("Deleting {0} file failed: {1}", updater_filename, ex.ToString()); }
-                                    }
-                                },
+                            var working_folder = Path.GetTempPath();
+                            var installer_filename = working_folder + "eduVPNClient.exe";
+                            var updater_filename = working_folder + "eduVPNClient.wsf";
+                            Dictionary<string, object> obj_web = null;
+                            Version repo_version = null, product_version = null;
 
-                                () =>
-                                {
-                                    // Get self-update.
-                                    var pub_key = Properties.Settings.Default.SelfUpdatePubKey;
-                                    var uri = new Uri(Properties.Settings.Default.SelfUpdate);
-                                    Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", uri.AbsoluteUri);
-                                    obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
-                                        uri,
-                                        !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
-                                        Abort.Token);
-
-                                    repo_version = new Version((string)obj_web["version"]);
-                                    Trace.TraceInformation("Online version: {0}", repo_version.ToString());
-                                },
-
-                                () =>
-                                {
-                                    // Evaluate installed products.
-                                    Trace.TraceInformation("Evaluating installed products...");
-                                    using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-                                    using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
-                                    {
-                                        foreach (var product_key_name in uninstall_key.GetSubKeyNames())
-                                        {
-                                            Abort.Token.ThrowIfCancellationRequested();
-                                            using (var product_key = uninstall_key.OpenSubKey(product_key_name))
-                                            {
-                                                var bundle_upgrade_code = product_key.GetValue("BundleUpgradeCode");
-                                                if ((bundle_upgrade_code is string   bundle_upgrade_code_str   && bundle_upgrade_code_str.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}" ||
-                                                        bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}") != null) &&
-                                                    product_key.GetValue("BundleVersion") is string bundle_version_str)
-                                                {
-                                                    // Our product entry found.
-                                                    product_version = new Version(product_key.GetValue("DisplayVersion") is string display_version_str ? display_version_str : bundle_version_str);
-                                                    Trace.TraceInformation("Installed version: {0}", product_version.ToString());
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                            },
-                                action =>
-                                {
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
-                                    try { action(); }
-                                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
-                                });
-                        }
-                        catch (AggregateException ex)
-                        {
-                            var ex_non_cancelled = ex.InnerExceptions.Where(ex_inner => !(ex_inner is OperationCanceledException));
-                            if (ex_non_cancelled.Any())
-                            {
-                                // Some exceptions were issues beyond OperationCanceledException.
-                                throw new AggregateException(ex.Message, ex_non_cancelled.ToArray());
-                            }
-                            else
-                            {
-                                // All exceptions were OperationCanceledException.
-                                throw new OperationCanceledException();
-                            }
-                        }
-
-                        try
-                        {
-                            if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == repo_version &&
-                                (Properties.Settings.Default.SelfUpdateLastReminder == DateTime.MaxValue ||
-                                (DateTime.UtcNow - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
-                            {
-                                // We already prompted user for this version.
-                                // Either user opted not to be reminded of this version update again,
-                                // or it has been less than three days since the last prompt.
-                                Trace.TraceInformation("Update deferred by user choice.");
-                                return;
-                            }
-                        }
-                        catch { }
-
-                        if (product_version == null)
-                        {
-                            // Nothing to update.
-                            Trace.TraceInformation("Product not installed or version could not be determined.");
-                            return;
-                        }
-
-                        if (repo_version <= product_version)
-                        {
-                            // Product already up-to-date.
-                            Trace.TraceInformation("Update not required.");
-                            return;
-                        }
-
-                        var installer_ready = false;
-                        var repo_hash = ((string)obj_web["hash-sha256"]).FromHexToBin();
-                        if (File.Exists(installer_filename))
-                        {
-                            // File already exists. Verify its integrity.
-                            Trace.TraceInformation("Verifying installer file {0} integrity...", installer_filename);
                             try
                             {
-                                using (BinaryReader reader = new BinaryReader(File.Open(installer_filename, FileMode.Open)))
+                                Parallel.ForEach(new List<Action>()
                                 {
-                                    var hash = new eduEd25519.SHA256();
-                                    var buffer = new byte[1048576];
-
-                                    for (; ; )
+                                    () =>
                                     {
-                                        // Read data and hash it.
-                                        Abort.Token.ThrowIfCancellationRequested();
-                                        var buffer_length = reader.Read(buffer, 0, buffer.Length);
-                                        if (buffer_length == 0)
-                                            break;
-                                        hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
-                                    }
+                                        if (File.Exists(updater_filename))
+                                        {
+                                            // Clean stale updater WSF file. If possible.
+                                            Trace.TraceInformation("Deleting file {0}...", updater_filename);
+                                            try { File.Delete(updater_filename); }
+                                            catch (Exception ex) { Trace.TraceWarning("Deleting {0} file failed: {1}", updater_filename, ex.ToString()); }
+                                        }
+                                    },
 
-                                    hash.TransformFinalBlock(buffer, 0, 0);
-                                    if (!hash.Hash.SequenceEqual(repo_hash))
-                                        throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, installer_filename));
+                                    () =>
+                                    {
+                                        // Get self-update.
+                                        var pub_key = Properties.Settings.Default.SelfUpdatePubKey;
+                                        var uri = new Uri(Properties.Settings.Default.SelfUpdate);
+                                        Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", uri.AbsoluteUri);
+                                        obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
+                                            uri,
+                                            !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
+                                            Abort.Token);
+
+                                        repo_version = new Version((string)obj_web["version"]);
+                                        Trace.TraceInformation("Online version: {0}", repo_version.ToString());
+                                    },
+
+                                    () =>
+                                    {
+                                        // Evaluate installed products.
+                                        Trace.TraceInformation("Evaluating installed products...");
+                                        using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                                        using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
+                                        {
+                                            foreach (var product_key_name in uninstall_key.GetSubKeyNames())
+                                            {
+                                                Abort.Token.ThrowIfCancellationRequested();
+                                                using (var product_key = uninstall_key.OpenSubKey(product_key_name))
+                                                {
+                                                    var bundle_upgrade_code = product_key.GetValue("BundleUpgradeCode");
+                                                    if ((bundle_upgrade_code is string   bundle_upgrade_code_str   && bundle_upgrade_code_str.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}" ||
+                                                            bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}") != null) &&
+                                                        product_key.GetValue("BundleVersion") is string bundle_version_str)
+                                                    {
+                                                        // Our product entry found.
+                                                        product_version = new Version(product_key.GetValue("DisplayVersion") is string display_version_str ? display_version_str : bundle_version_str);
+                                                        Trace.TraceInformation("Installed version: {0}", product_version.ToString());
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                },
+                                    action =>
+                                    {
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
+                                        try { action(); }
+                                        finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                                    });
+                            }
+                            catch (AggregateException ex)
+                            {
+                                var ex_non_cancelled = ex.InnerExceptions.Where(ex_inner => !(ex_inner is OperationCanceledException));
+                                if (ex_non_cancelled.Any())
+                                {
+                                    // Some exceptions were issues beyond OperationCanceledException.
+                                    throw new AggregateException(ex.Message, ex_non_cancelled.ToArray());
                                 }
-
-                                Trace.TraceInformation("{0} integrity OK.", installer_filename);
-                                installer_ready = true;
+                                else
+                                {
+                                    // All exceptions were OperationCanceledException.
+                                    throw new OperationCanceledException();
+                                }
                             }
-                            catch (OperationCanceledException) { throw; }
-                            catch (Exception ex)
-                            {
-                                Trace.TraceWarning("Error: {0}", ex.ToString());
 
-                                // Delete file. If possible.
-                                Trace.TraceInformation("Deleting file {0}...", installer_filename);
-                                try { File.Delete(installer_filename); }
-                                catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
+                            try
+                            {
+                                if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == repo_version &&
+                                    (Properties.Settings.Default.SelfUpdateLastReminder == DateTime.MaxValue ||
+                                    (DateTime.UtcNow - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
+                                {
+                                    // We already prompted user for this version.
+                                    // Either user opted not to be reminded of this version update again,
+                                    // or it has been less than three days since the last prompt.
+                                    Trace.TraceInformation("Update deferred by user choice.");
+                                    continue;
+                                }
                             }
-                        }
+                            catch { }
 
-                        if (!installer_ready)
-                        {
-                            // Download installer.
-                            var uris = (List<object>)obj_web["uri"];
-                            var random = new Random();
-                            while (uris.Count > 0)
+                            if (product_version == null)
                             {
-                                Abort.Token.ThrowIfCancellationRequested();
-                                var uri_idx = random.Next(uris.Count);
+                                // Nothing to update.
+                                Trace.TraceInformation("Product not installed or version could not be determined.");
+                                return; // Quit self-updating.
+                            }
+
+                            if (repo_version <= product_version)
+                            {
+                                // Product already up-to-date.
+                                Trace.TraceInformation("Update not required.");
+                                continue;
+                            }
+
+                            var installer_ready = false;
+                            var repo_hash = ((string)obj_web["hash-sha256"]).FromHexToBin();
+                            if (File.Exists(installer_filename))
+                            {
+                                // File already exists. Verify its integrity.
+                                Trace.TraceInformation("Verifying installer file {0} integrity...", installer_filename);
                                 try
                                 {
-                                    var uri = new Uri((string)uris[uri_idx]);
-                                    Trace.TraceInformation("Downloading installer file from {0}...", uri.AbsoluteUri);
-                                    var request = WebRequest.Create(uri);
-                                    using (var response = request.GetResponse())
-                                    using (var stream = response.GetResponseStream())
+                                    using (BinaryReader reader = new BinaryReader(File.Open(installer_filename, FileMode.Open)))
                                     {
-                                        try
+                                        var hash = new eduEd25519.SHA256();
+                                        var buffer = new byte[1048576];
+
+                                        for (; ; )
                                         {
-                                            // Read to file.
-                                            using (BinaryWriter writer = new BinaryWriter(File.Open(installer_filename, FileMode.Create)))
-                                            {
-                                                var hash = new eduEd25519.SHA256();
-                                                var buffer = new byte[1048576];
-
-                                                for (; ; )
-                                                {
-                                                    // Wait for the data to arrive.
-                                                    Abort.Token.ThrowIfCancellationRequested();
-                                                    var buffer_length = stream.Read(buffer, 0, buffer.Length);
-                                                    if (buffer_length == 0)
-                                                        break;
-
-                                                    // Append it to the file and hash it.
-                                                    Abort.Token.ThrowIfCancellationRequested();
-                                                    writer.Write(buffer, 0, buffer_length);
-                                                    hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
-                                                }
-
-                                                hash.TransformFinalBlock(buffer, 0, 0);
-                                                if (!hash.Hash.SequenceEqual(repo_hash))
-                                                    throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, uri.AbsoluteUri));
-                                            }
-
-                                            installer_ready = true;
-                                            break;
+                                            // Read data and hash it.
+                                            Abort.Token.ThrowIfCancellationRequested();
+                                            var buffer_length = reader.Read(buffer, 0, buffer.Length);
+                                            if (buffer_length == 0)
+                                                break;
+                                            hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
                                         }
-                                        catch
-                                        {
-                                            // Delete file. If possible.
-                                            Trace.TraceInformation("Deleting file {0}...", installer_filename);
-                                            try { File.Delete(installer_filename); }
-                                            catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
 
-                                            throw;
-                                        }
+                                        hash.TransformFinalBlock(buffer, 0, 0);
+                                        if (!hash.Hash.SequenceEqual(repo_hash))
+                                            throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, installer_filename));
                                     }
+
+                                    Trace.TraceInformation("{0} integrity OK.", installer_filename);
+                                    installer_ready = true;
                                 }
                                 catch (OperationCanceledException) { throw; }
                                 catch (Exception ex)
                                 {
                                     Trace.TraceWarning("Error: {0}", ex.ToString());
-                                    uris.RemoveAt(uri_idx);
+
+                                    // Delete file. If possible.
+                                    Trace.TraceInformation("Deleting file {0}...", installer_filename);
+                                    try { File.Delete(installer_filename); }
+                                    catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
                                 }
                             }
-                        }
 
-                        if (!installer_ready)
-                        {
-                            // The installer file is not ready.
-                            Trace.TraceWarning("Installer file not available. Aborting...");
-                            return;
-                        }
-
-                        // We're in the background thread - raise the prompt event via dispatcher.
-                        Trace.TraceInformation("Prompting user to update...");
-                        var e_prompt = new PromptSelfUpdateEventArgs(product_version, repo_version);
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => PromptSelfUpdate?.Invoke(this, e_prompt)));
-                        bool quit = false;
-
-                        switch (e_prompt.Action)
-                        {
-                            case PromptSelfUpdateActionType.Update:
+                            if (!installer_ready)
+                            {
+                                // Download installer.
+                                var uris = (List<object>)obj_web["uri"];
+                                while (uris.Count > 0)
                                 {
-                                    // Prepare WSF file.
-                                    Trace.TraceInformation("Creating update script file {0}...", updater_filename);
-                                    using (XmlTextWriter writer = new XmlTextWriter(updater_filename, null))
+                                    Abort.Token.ThrowIfCancellationRequested();
+                                    var uri_idx = random.Next(uris.Count);
+                                    try
                                     {
-                                        writer.WriteStartDocument();
-                                        writer.WriteStartElement("package");
-                                        writer.WriteStartElement("job");
-
-                                        writer.WriteStartElement("reference");
-                                        writer.WriteAttributeString("object", "WScript.Shell");
-                                        writer.WriteEndElement(); // reference
-
-                                        writer.WriteStartElement("reference");
-                                        writer.WriteAttributeString("object", "Scripting.FileSystemObject");
-                                        writer.WriteEndElement(); // reference
-
-                                        writer.WriteStartElement("script");
-                                        writer.WriteAttributeString("language", "JScript");
-                                        var installer_arguments_esc = eduJSON.Parser.GetValue(obj_web, "arguments", out string installer_arguments) ? " " + HttpUtility.JavaScriptStringEncode(installer_arguments) : "";
-                                        var argv = Environment.GetCommandLineArgs();
-                                        var arguments = new StringBuilder();
-                                        for (long i = 1, n = argv.LongLength; i < n; i++)
+                                        var uri = new Uri((string)uris[uri_idx]);
+                                        Trace.TraceInformation("Downloading installer file from {0}...", uri.AbsoluteUri);
+                                        var request = WebRequest.Create(uri);
+                                        using (var response = request.GetResponse())
+                                        using (var stream = response.GetResponseStream())
                                         {
-                                            if (i > 1) arguments.Append(" ");
-                                            arguments.Append("\"");
-                                            arguments.Append(argv[i].Replace("\"", "\"\""));
-                                            arguments.Append("\"");
+                                            try
+                                            {
+                                                // Read to file.
+                                                using (BinaryWriter writer = new BinaryWriter(File.Open(installer_filename, FileMode.Create)))
+                                                {
+                                                    var hash = new eduEd25519.SHA256();
+                                                    var buffer = new byte[1048576];
+
+                                                    for (; ; )
+                                                    {
+                                                        // Wait for the data to arrive.
+                                                        Abort.Token.ThrowIfCancellationRequested();
+                                                        var buffer_length = stream.Read(buffer, 0, buffer.Length);
+                                                        if (buffer_length == 0)
+                                                            break;
+
+                                                        // Append it to the file and hash it.
+                                                        Abort.Token.ThrowIfCancellationRequested();
+                                                        writer.Write(buffer, 0, buffer_length);
+                                                        hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
+                                                    }
+
+                                                    hash.TransformFinalBlock(buffer, 0, 0);
+                                                    if (!hash.Hash.SequenceEqual(repo_hash))
+                                                        throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, uri.AbsoluteUri));
+                                                }
+
+                                                installer_ready = true;
+                                                break;
+                                            }
+                                            catch
+                                            {
+                                                // Delete file. If possible.
+                                                Trace.TraceInformation("Deleting file {0}...", installer_filename);
+                                                try { File.Delete(installer_filename); }
+                                                catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
+
+                                                throw;
+                                            }
                                         }
-                                        var script = new StringBuilder();
-                                        script.AppendLine("// This script was auto-generated.");
-                                        script.AppendLine("// Launch installer file and wait for the update to finish.");
-                                        script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
-                                        script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installer_filename.Replace("\"", "\"\"")) + "\\\"" + installer_arguments_esc + "\", 0, true) == 0) {");
-                                        script.AppendLine("  // Installer succeeded. Relaunch the application.");
-                                        script.AppendLine("  var shl = WScript.CreateObject(\"Shell.Application\");");
-                                        script.AppendLine("  shl.ShellExecute(\"" + HttpUtility.JavaScriptStringEncode(argv[0]) + "\", \"" + HttpUtility.JavaScriptStringEncode(arguments.ToString()) + "\", \"" + HttpUtility.JavaScriptStringEncode(Environment.CurrentDirectory) + "\");");
-                                        script.AppendLine("  // Delete the installer file.");
-                                        script.AppendLine("  var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");");
-                                        script.AppendLine("  try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(installer_filename) + "\", true); } catch (err) {}");
-                                        script.AppendLine("}");
-                                        writer.WriteCData(script.ToString());
-                                        writer.WriteEndElement(); // script
-
-                                        writer.WriteEndElement(); // job
-                                        writer.WriteEndElement(); // package
-                                        writer.WriteEndDocument();
                                     }
-
-                                    // Launch wscript.exe with WSF file.
-                                    Trace.TraceInformation("Launching update script file {0}...", updater_filename);
-                                    var process = new Process();
-                                    process.StartInfo.FileName = "wscript.exe";
-                                    process.StartInfo.Arguments = "\"" + updater_filename + "\"";
-                                    process.StartInfo.WorkingDirectory = working_folder;
-                                    process.Start();
-
-                                    // Quit the client.
-                                    quit = true;
+                                    catch (OperationCanceledException) { throw; }
+                                    catch (Exception ex)
+                                    {
+                                        Trace.TraceWarning("Error: {0}", ex.ToString());
+                                        uris.RemoveAt(uri_idx);
+                                    }
                                 }
-                                goto case PromptSelfUpdateActionType.AskLater;
+                            }
 
-                            case PromptSelfUpdateActionType.AskLater:
-                                // Mark the timestamp of the prompt.
-                                Trace.TraceInformation("User will be reminded after three days again. (Should an update is still required.)");
-                                Properties.Settings.Default.SelfUpdateLastReminder = DateTime.UtcNow;
-                                break;
+                            if (!installer_ready)
+                            {
+                                // The installer file is not ready.
+                                Trace.TraceWarning("Installer file not available. Aborting...");
+                                continue;
+                            }
 
-                            case PromptSelfUpdateActionType.Skip:
-                                // Mark not to re-prompt again.
-                                Trace.TraceInformation("User choose to skip this update.");
-                                Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MaxValue;
-                                break;
+                            // We're in the background thread - raise the prompt event via dispatcher.
+                            Trace.TraceInformation("Prompting user to update...");
+                            var e_prompt = new PromptSelfUpdateEventArgs(product_version, repo_version);
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => PromptSelfUpdate?.Invoke(this, e_prompt)));
+                            bool quit = false;
+
+                            switch (e_prompt.Action)
+                            {
+                                case PromptSelfUpdateActionType.Update:
+                                    {
+                                        // Prepare WSF file.
+                                        Trace.TraceInformation("Creating update script file {0}...", updater_filename);
+                                        using (XmlTextWriter writer = new XmlTextWriter(updater_filename, null))
+                                        {
+                                            writer.WriteStartDocument();
+                                            writer.WriteStartElement("package");
+                                            writer.WriteStartElement("job");
+
+                                            writer.WriteStartElement("reference");
+                                            writer.WriteAttributeString("object", "WScript.Shell");
+                                            writer.WriteEndElement(); // reference
+
+                                            writer.WriteStartElement("reference");
+                                            writer.WriteAttributeString("object", "Scripting.FileSystemObject");
+                                            writer.WriteEndElement(); // reference
+
+                                            writer.WriteStartElement("script");
+                                            writer.WriteAttributeString("language", "JScript");
+                                            var installer_arguments_esc = eduJSON.Parser.GetValue(obj_web, "arguments", out string installer_arguments) ? " " + HttpUtility.JavaScriptStringEncode(installer_arguments) : "";
+                                            var argv = Environment.GetCommandLineArgs();
+                                            var arguments = new StringBuilder();
+                                            for (long i = 1, n = argv.LongLength; i < n; i++)
+                                            {
+                                                if (i > 1) arguments.Append(" ");
+                                                arguments.Append("\"");
+                                                arguments.Append(argv[i].Replace("\"", "\"\""));
+                                                arguments.Append("\"");
+                                            }
+                                            var script = new StringBuilder();
+                                            script.AppendLine("// This script was auto-generated.");
+                                            script.AppendLine("// Launch installer file and wait for the update to finish.");
+                                            script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
+                                            script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installer_filename.Replace("\"", "\"\"")) + "\\\"" + installer_arguments_esc + "\", 0, true) == 0) {");
+                                            script.AppendLine("  // Installer succeeded. Relaunch the application.");
+                                            script.AppendLine("  var shl = WScript.CreateObject(\"Shell.Application\");");
+                                            script.AppendLine("  shl.ShellExecute(\"" + HttpUtility.JavaScriptStringEncode(argv[0]) + "\", \"" + HttpUtility.JavaScriptStringEncode(arguments.ToString()) + "\", \"" + HttpUtility.JavaScriptStringEncode(Environment.CurrentDirectory) + "\");");
+                                            script.AppendLine("  // Delete the installer file.");
+                                            script.AppendLine("  var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");");
+                                            script.AppendLine("  try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(installer_filename) + "\", true); } catch (err) {}");
+                                            script.AppendLine("}");
+                                            writer.WriteCData(script.ToString());
+                                            writer.WriteEndElement(); // script
+
+                                            writer.WriteEndElement(); // job
+                                            writer.WriteEndElement(); // package
+                                            writer.WriteEndDocument();
+                                        }
+
+                                        // Launch wscript.exe with WSF file.
+                                        Trace.TraceInformation("Launching update script file {0}...", updater_filename);
+                                        var process = new Process();
+                                        process.StartInfo.FileName = "wscript.exe";
+                                        process.StartInfo.Arguments = "\"" + updater_filename + "\"";
+                                        process.StartInfo.WorkingDirectory = working_folder;
+                                        process.Start();
+
+                                        // Quit the client.
+                                        quit = true;
+                                    }
+                                    goto case PromptSelfUpdateActionType.AskLater;
+
+                                case PromptSelfUpdateActionType.AskLater:
+                                    // Mark the timestamp of the prompt.
+                                    Trace.TraceInformation("User will be reminded after three days again. (Should an update is still required.)");
+                                    Properties.Settings.Default.SelfUpdateLastReminder = DateTime.UtcNow;
+                                    break;
+
+                                case PromptSelfUpdateActionType.Skip:
+                                    // Mark not to re-prompt again.
+                                    Trace.TraceInformation("User choose to skip this update.");
+                                    Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MaxValue;
+                                    break;
+                            }
+
+                            // Mark the version of this prompt.
+                            Properties.Settings.Default.SelfUpdateLastVersion = repo_version.ToString();
+
+                            if (quit)
+                            {
+                                // Ask the view to quit.
+                                Trace.TraceInformation("Quitting client...");
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => QuitApplication?.Invoke(this, EventArgs.Empty)));
+                            }
                         }
-
-                        // Mark the version of this prompt.
-                        Properties.Settings.Default.SelfUpdateLastVersion = repo_version.ToString();
-
-                        if (quit)
-                        {
-                            // Ask the view to quit.
-                            Trace.TraceInformation("Quitting client...");
-                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => QuitApplication?.Invoke(this, EventArgs.Empty)));
-                        }
+                        catch (OperationCanceledException) { }
+                        catch (Exception ex) { Trace.TraceError("Error: {0}", ex.ToString()); }
+                        finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                     }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Trace.TraceError("Error: {0}", ex.ToString()); }
-                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                    // Sleep for 23-24h, then retry.
+                    while (!Abort.Token.WaitHandle.WaitOne(random.Next(23 * 60 * 60 * 1000, 24 * 60 * 60 * 1000)));
                 };
 
                 // Self-update completition.
