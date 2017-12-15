@@ -118,11 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Kies je profiel</value>
-    <comment>Fuzzy</comment>
+    <value>Kies een VPN type</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>de eduVPN applicatie heeft {0} toestemming nodig en heeft een pagina in de webbrowser geopend. De applicatie gaat verder na het geven van toestemming...</value>
+    <value>de eduVPN applicatie heeft {0} toestemming nodig en heeft een pagina in je browser geopend. De applicatie zal verder gaan na het geven van toestemming...</value>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Wachten op toestemming...</value>
@@ -143,10 +142,10 @@
     <value>eduVPN</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Ander adres</value>
+    <value>Andere server</value>
   </data>
   <data name="CustomInstancePageDescription" xml:space="preserve">
-    <value>Voer de hostname van je VPN provider in.</value>
+    <value>Voer de servernaam van je VPN provider in.</value>
   </data>
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
     <value>Verbinden</value>
@@ -158,7 +157,7 @@
     <value>Waarschuwing! Je account is uitgeschakeld. Neem contact op met de helpdesk.</value>
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN verbinding</value>
+    <value>VPN-verbinding</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
     <value>Provider</value>
@@ -185,13 +184,14 @@
     <value>Selecteer je insitituut</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
-    <value>Bytes in</value>
+    <value>Bytes (ontvangen)</value>
   </data>
   <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
-    <value>Bytes uit</value>
+    <value>Bytes (verzonden)</value>
   </data>
   <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Duur</value>
+    <comment>Fuzzy</comment>
   </data>
   <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
     <value>IPv4</value>
@@ -221,10 +221,10 @@
     <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
-    <value>Voeg een ander adres toe</value>
+    <value>Voeg ander adres toe</value>
   </data>
   <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Select one of the VPN types below.</value>
+    <value>Selecteer een van de VPN-types hieronder.</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>S_luiten</value>
@@ -233,10 +233,10 @@
     <value>Initialiseren...</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Toegang tot je instellingsnetwerk van buiten de instelling.</value>
+    <value>Toegang tot je instellingsnetwerk.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
-    <value>Instellingstoegang</value>
+    <value>Institute Access</value>
   </data>
   <data name="SecureInternetNote" xml:space="preserve">
     <value>Verbind veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi netwerken.</value>
@@ -278,7 +278,7 @@ Powered by SURFnet</value>
     <value>_Over...</value>
   </data>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>When you need multiple simultaneous OpenVPN connections at once, select the TAP interface for eduVPN below.</value>
+    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze VPN client hieronder.</value>
   </data>
   <data name="SettingsPageInterfaceTitle" xml:space="preserve">
     <value>Selecteer TAP interface</value>
@@ -293,10 +293,10 @@ Powered by SURFnet</value>
     <value>Instellingen</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>Sometimes, eduVPN can&apos;t connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances.</value>
+    <value>Als de VPN client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
   </data>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
-    <value>TCP afdwingen</value>
+    <value>Via TCP verbinden</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
     <value>Voer je wachtwoord in voor &quot;{0}&quot;:</value>
@@ -331,13 +331,13 @@ Powered by SURFnet</value>
     <value>Twee-factorauthenticatie</value>
   </data>
   <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Een nieuwere versie van de eduVPN applicatie is gedownload en klaar om geïnstalleerd te worden.</value>
+    <value>Een nieuwe versie van de eduVPN applicatie is gedownload en klaar om geïnstalleerd te worden.</value>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update beschikbaar</value>
   </data>
   <data name="SelfUpdatePopupAskLater" xml:space="preserve">
-    <value>Later</value>
+    <value>Vraag later</value>
   </data>
   <data name="SelfUpdatePopupSkip" xml:space="preserve">
     <value>Sla deze versie over</value>
@@ -348,46 +348,46 @@ Powered by SURFnet</value>
     <comment>{0}=version</comment>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash or improper exiting of the program.
+    <value>{0} heeft gedetecteerd dat je gebruikersinstellingenbestand {1} beschadigd is geraakt. Dit kan komen door een crash. 
 
-If you continue, your user settings will be reset to defaults.</value>
+Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden hersteld.</value>
     <comment>{0}=application name, {1}=filename</comment>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Corrupt user settings</value>
+    <value>Beschadigde gebruikersinstellingen</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>The required OAuth parameter &quot;state&quot; is missing or incorrect.</value>
+    <value>De vereiste OAuth paramter &quot;state&quot; ontbreekt of is onjuist.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Enroll</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0} requires you to enroll for 2-Factor Authentication at {1}.</value>
+    <value>{0} vereist dat je aangemeld bent voor twee-factorauthenticatie bij {1}.</value>
     <comment>{0}=Profile name, {1}=Authenticating provider</comment>
   </data>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>2-Factor Authentication Enrollment</value>
+    <value>Twee-factorauthenticatie aanmelding</value>
   </data>
   <data name="TOTPEnrollmentPanelResponseTitle" xml:space="preserve">
-    <value>Response:</value>
+    <value>Antwoord:</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretTitle" xml:space="preserve">
-    <value>Secret:</value>
+    <value>Sleutel:</value>
   </data>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
-    <value>Please do not use the same TOTP twice. Wait until a fresh TOTP is generated.</value>
+    <value>Gebruik niet dezelfde TOTP code. Wacht tot er een nieuwe code is gegenereerd.</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
     <comment>{0}=IP address, {1}=IPv6 address</comment>
   </data>
   <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
-    <value>{0} connected</value>
+    <value>{0} Verbonden</value>
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
-    <value>The eduVPN window has been minimized here.</value>
+    <value>Het VPN-clientvenster is hier geminimaliseerd.</value>
   </data>
 
 </root>
