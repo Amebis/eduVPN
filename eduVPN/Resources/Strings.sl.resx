@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -130,14 +130,11 @@
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value>Zasebni ključ ni veljaven ali je nepodprtega zapisa.</value>
   </data>
-  <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value>Nalaganje končnih točk API ni uspelo.</value>
-  </data>
   <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
     <value>Nalaganje skupine ponudnikov {0} ni uspelo.</value>
   </data>
-  <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value>Nalaganje spiska profilov ni uspelo.</value>
+  <data name="ErrorEndpointsLoad" xml:space="preserve">
+    <value>Nalaganje končnih točk API ni uspelo.</value>
   </data>
   <data name="ErrorClientCertificateLoad" xml:space="preserve">
     <value>Nalaganje digitalnega potrdila uporabnika ni uspelo.</value>
@@ -145,11 +142,14 @@
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Nalaganje nastavitev profila ni uspelo.</value>
   </data>
+  <data name="ErrorProfileListLoad" xml:space="preserve">
+    <value>Nalaganje spiska profilov ni uspelo.</value>
+  </data>
   <data name="ErrorUserInfoLoad" xml:space="preserve">
     <value>Nalaganje podatkov o uporabniku ni uspelo.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Shranjevanje profilovih nastavitev OpenVPN v &quot;{0}&quot; ni uspelo.</value>
+    <value>Shranjevanje profilovih nastavitev OpenVPN v "{0}" ni uspelo.</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Pooblaščanje odjemalca ni uspelo.</value>
@@ -226,5 +226,10 @@
   <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
     <value>Včlanitev v 2-stopenjsko overovljanje ni uspela.</value>
   </data>
-
+  <data name="ErrorDownloading" xml:space="preserve">
+    <value>Prenos s spleta ni uspel. Preverite svojo spletno povezavo.</value>
+  </data>
+  <data name="ErrorUploading" xml:space="preserve">
+    <value>Prenos na splet ni uspel. Preverite svojo spletno povezavo.</value>
+  </data>
 </root>
