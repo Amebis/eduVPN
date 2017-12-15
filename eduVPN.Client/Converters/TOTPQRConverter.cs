@@ -23,7 +23,7 @@ namespace eduVPN.Client.Converters
         {
             try
             {
-                var secret = values[0] as string;
+                var secret   = values[0] as string;
                 var instance = values[1] as Instance;
                 var otp_uri = string.Format("otpauth://totp/{1}?secret={0}&issuer={2}",
                     secret,
@@ -33,7 +33,7 @@ namespace eduVPN.Client.Converters
                 var qr_generator = new QRCodeGenerator();
                 var qr_code_data = qr_generator.CreateQrCode(otp_uri, QRCodeGenerator.ECCLevel.Q);
                 var qr_code = new XamlQRCode(qr_code_data);
-                return qr_code.GetGraphic(3, false);
+                return qr_code.GetGraphic(3, true);
             }
             catch { }
 

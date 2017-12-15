@@ -17,7 +17,7 @@
     xmlns:windows="clr-namespace:eduVPN.Views.Windows"
     mc:Ignorable="d"
     Width="350"
-    Height="450"
+    Height="490"
     Title="{x:Static res:Strings.TwoFactorEnrollmentPopupTitle}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">
