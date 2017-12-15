@@ -109,7 +109,9 @@ Clean ::
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe" : "OpenVPN\$(PLAT_NATIVE)-Output\$(CFG)\openvpnserv.exe"
 	copy /y $** "$(@:"=).tmp" > NUL
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
+!IF "$(CFG)" == "Release"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /q "$(@:"=).tmp"
+!ENDIF
 !ENDIF
 	move /y "$(@:"=).tmp" $@ > NUL
 

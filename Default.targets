@@ -7,7 +7,7 @@
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup Condition="'$(ManifestCertificateThumbprint)' != ''">
+  <PropertyGroup Condition="'$(ManifestCertificateThumbprint)' != '' AND '$(Configuration)'=='Release'">
     <BuildDependsOn>$(BuildDependsOn);Sign</BuildDependsOn>
 
     <!--

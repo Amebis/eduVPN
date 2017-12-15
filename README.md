@@ -53,7 +53,7 @@ Deploy a newer version of eduVPN Client MSI packages.
 - Visual Studio 2017 Community Edition: The required VS2017 feature set to be announced later...
 
 ### Code Signing
-In order to have the build process digitally sign the output files, one should provide the following:
+In order to have the build process digitally sign the release output files, one should provide the following:
 
 1. A signing certificate installed in the building user’s certificate store.
 2. The following variables in the environment:
