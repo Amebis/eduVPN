@@ -21,7 +21,7 @@ namespace eduVPN.Client.Converters
         #region Fields
 
         /// <summary>
-        /// The alpha factor to increase/decrease popularity
+        /// 1* grid length
         /// </summary>
         private static readonly GridLength _one_star_grid_length = new GridLength(1.0, GridUnitType.Star);
 
