@@ -976,7 +976,10 @@ namespace eduVPN.ViewModels.Windows
 
                             // We're in the background thread - raise the prompt event via dispatcher.
                             Trace.TraceInformation("Prompting user to update...");
-                            var e_prompt = new PromptSelfUpdateEventArgs(product_version, repo_version);
+                            var e_prompt = new PromptSelfUpdateEventArgs(
+                                product_version,
+                                repo_version,
+                                eduJSON.Parser.GetValue(obj_web, "changelog_uri", out string changelog) ? new Uri(changelog) : null);
                             Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => PromptSelfUpdate?.Invoke(this, e_prompt)));
                             bool quit = false;
 

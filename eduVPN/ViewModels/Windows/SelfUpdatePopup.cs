@@ -8,6 +8,7 @@
 using eduVPN.Models;
 using Prism.Commands;
 using System;
+using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Windows
 {
@@ -21,28 +22,28 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Installed product version
         /// </summary>
-        public Version InstalledVersion
-        {
-            get { return _detected_version; }
-            set { SetProperty(ref _detected_version, value); }
-        }
-        private Version _detected_version;
+        public Version InstalledVersion { get; }
 
         /// <summary>
         /// Available product version
         /// </summary>
-        public Version AvailableVersion
-        {
-            get { return _available_version; }
-            set { SetProperty(ref _available_version, value); }
-        }
-        private Version _available_version;
+        public Version AvailableVersion { get; }
+
+        /// <summary>
+        /// Product changelog
+        /// </summary>
+        public Uri ChangelogPath { get; }
 
         /// <summary>
         /// Action instructed by user
         /// </summary>
         /// <remarks>Should be populated by action on event end.</remarks>
-        public PromptSelfUpdateActionType Action { get; set; }
+        public PromptSelfUpdateActionType Action
+        {
+            get { return _action; }
+            set { SetProperty(ref _action, value); }
+        }
+        private PromptSelfUpdateActionType _action;
 
         /// <summary>
         /// Action command
@@ -73,6 +74,52 @@ namespace eduVPN.ViewModels.Windows
             }
         }
         private DelegateCommand<PromptSelfUpdateActionType?> _do_action;
+
+        /// <summary>
+        /// Show changelog command
+        /// </summary>
+        public DelegateCommand ShowChangelog
+        {
+            get
+            {
+                if (_show_changelog == null)
+                    _show_changelog = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            ChangeTaskCount(+1);
+                            try
+                            {
+                                Process.Start(ChangelogPath.ToString());
+                                Error = null;
+                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () => ChangelogPath != null);
+
+                return _show_changelog;
+            }
+        }
+        private DelegateCommand _show_changelog;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a popup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public SelfUpdatePopup(object sender, PromptSelfUpdateEventArgs e)
+        {
+            InstalledVersion = e.InstalledVersion;
+            AvailableVersion = e.AvailableVersion;
+            ChangelogPath = e.ChangelogPath;
+        }
 
         #endregion
     }

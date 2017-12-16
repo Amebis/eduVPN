@@ -12,22 +12,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows"
-    xmlns:vmwindows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     mc:Ignorable="d"
     Width="350"
-    Height="210"
+    Height="240"
     Title="{x:Static res:Strings.SelfUpdatePopupTitle}"
     Description="{x:Static res:Strings.SelfUpdatePopupMessage}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">
 
-    <Window.DataContext>
-        <vmwindows:SelfUpdatePopup/>
-    </Window.DataContext>
-
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding Path=ShowChangelog, Converter={StaticResource CommandRowHeightConverter}, FallbackValue=0}"/>
             <RowDefinition/>
             <!--
             <RowDefinition Height="Auto"/>
@@ -36,6 +32,14 @@
         </Grid.RowDefinitions>
 
         <Button
+            x:Name="Changelog"
+            Margin="5"
+            Style="{StaticResource eduVPNLinkButtonStyle}"
+            Content="{x:Static res:Strings.SelfUpdatePopupChangelog}"
+            Command="{Binding Path=ShowChangelog}"/>
+
+        <Button
+            Grid.Row="1"
             x:Name="Update"
             Margin="5"
             IsDefault="True"
@@ -61,14 +65,21 @@
                 <TextBlock
                     Grid.Column="1"
                     Margin="10"
-                    Style="{StaticResource eduVPNChoiceNoteStyle}"
-                    Text="{Binding Path=AvailableVersion, StringFormat={x:Static res:Strings.SelfUpdatePopupUpdate}}"/>
+                    Style="{StaticResource eduVPNChoiceNoteStyle}">
+                    <TextBlock.Text>
+                        <MultiBinding
+                            StringFormat="{x:Static res:Strings.SelfUpdatePopupUpdate2}">
+                            <Binding Path="InstalledVersion"/>
+                            <Binding Path="AvailableVersion"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
             </Grid>
         </Button>
 
         <!--
         <Button
-            Grid.Row="1"
+            Grid.Row="2"
             x:Name="AskLater"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
@@ -78,7 +89,7 @@
             Click="OK_Click"/>
 
         <Button
-            Grid.Row="2"
+            Grid.Row="3"
             x:Name="Skip"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"

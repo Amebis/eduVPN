@@ -99,7 +99,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select your Country.
+        ///   Looks up a localized string similar to Select Your Country.
         /// </summary>
         public static string AuthenticatingCountrySelectPageTitle {
             get {
@@ -108,7 +108,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select your Institution.
+        ///   Looks up a localized string similar to Select Your Institution.
         /// </summary>
         public static string AuthenticatingInstituteSelectPageTitle {
             get {
@@ -117,8 +117,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eduVPN client needs {0} authorization, and has opened an authorization web page in your browser.
-        ///The client will continue after you complete the authorization....
+        ///   Looks up a localized string similar to The VPN client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization....
         /// </summary>
         public static string AuthorizationPopupMessage {
             get {
@@ -127,7 +126,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting for authorization.
+        ///   Looks up a localized string similar to Waiting For Authorization.
         /// </summary>
         public static string AuthorizationPopupTitle {
             get {
@@ -208,7 +207,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other address.
+        ///   Looks up a localized string similar to Other Address.
         /// </summary>
         public static string CustomInstancePageTitle {
             get {
@@ -253,7 +252,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select VPN type.
+        ///   Looks up a localized string similar to Select VPN Type.
         /// </summary>
         public static string InstanceSourceSelectPageTitle {
             get {
@@ -262,7 +261,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Access your institute&apos;s network from outside the institution..
+        ///   Looks up a localized string similar to Access your institute&apos;s network..
         /// </summary>
         public static string InstituteAccessNote {
             get {
@@ -316,7 +315,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maintenance notification.
+        ///   Looks up a localized string similar to Maintenance Notification.
         /// </summary>
         public static string MessageMaintenanceTitle {
             get {
@@ -352,7 +351,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password:.
+        ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string PasswordPopupPasswordTitle {
             get {
@@ -379,7 +378,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect to the internet securely, for example when using public WiFi..
+        ///   Looks up a localized string similar to Connect to the Internet securely, for example when using public WiFi..
         /// </summary>
         public static string SecureInternetNote {
             get {
@@ -406,7 +405,16 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A newer version of eduVPN client was downloaded and is ready to install..
+        ///   Looks up a localized string similar to What&apos;s New?.
+        /// </summary>
+        public static string SelfUpdatePopupChangelog {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupChangelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A newer version of the VPN client was downloaded and is ready to install..
         /// </summary>
         public static string SelfUpdatePopupMessage {
             get {
@@ -424,7 +432,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update available.
+        ///   Looks up a localized string similar to Update Available.
         /// </summary>
         public static string SelfUpdatePopupTitle {
             get {
@@ -433,19 +441,19 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update to {0} now
+        ///   Looks up a localized string similar to Update {0} to {1} now
         ///(Client will restart).
         /// </summary>
-        public static string SelfUpdatePopupUpdate {
+        public static string SelfUpdatePopupUpdate2 {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupUpdate", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupUpdate2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has detected that your user settings file {1} has become corrupted. This may be due to a crash or improper exiting of the program.
+        ///   Looks up a localized string similar to {0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
         ///
-        ///If you continue, your user settings will be reset to defaults..
+        ///If you continue, your user settings will be reset to the default..
         /// </summary>
         public static string SettingsCorruptErrorMessage {
             get {
@@ -454,7 +462,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Corrupt user settings.
+        ///   Looks up a localized string similar to Corrupt User Settings.
         /// </summary>
         public static string SettingsCorruptErrorTitle {
             get {
@@ -463,7 +471,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sometimes, eduVPN can&apos;t connect properly because of very strict firewalls. Connecting directly through TCP can make it easier in these circumstances..
+        ///   Looks up a localized string similar to If the VPN client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
         /// </summary>
         public static string SettingsPageForceTCPDescription {
             get {
@@ -472,7 +480,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force TCP.
+        ///   Looks up a localized string similar to Connect Over TCP.
         /// </summary>
         public static string SettingsPageForceTCPInterfaceTitle {
             get {
@@ -481,7 +489,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections at once, select the TAP interface for eduVPN below..
+        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections, select the TAP interface for this VPN client below..
         /// </summary>
         public static string SettingsPageInterfaceDescription {
             get {
@@ -490,7 +498,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select TAP interface.
+        ///   Looks up a localized string similar to Select TAP Interface.
         /// </summary>
         public static string SettingsPageInterfaceTitle {
             get {
@@ -535,7 +543,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bytes in.
+        ///   Looks up a localized string similar to Bytes (received).
         /// </summary>
         public static string StatusPageSessionInfoBytesIn {
             get {
@@ -544,7 +552,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bytes out.
+        ///   Looks up a localized string similar to Bytes (sent).
         /// </summary>
         public static string StatusPageSessionInfoBytesOut {
             get {
@@ -580,7 +588,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection info.
+        ///   Looks up a localized string similar to Connection Info.
         /// </summary>
         public static string StatusPageSessionInfoTitle {
             get {
@@ -607,7 +615,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VPN connection.
+        ///   Looks up a localized string similar to VPN Connection.
         /// </summary>
         public static string StatusPageTitle {
             get {
@@ -625,7 +633,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} connected.
+        ///   Looks up a localized string similar to {0} Connected.
         /// </summary>
         public static string SystemTrayBalloonConnectedTitle {
             get {
@@ -634,7 +642,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The eduVPN window has been minimized here..
+        ///   Looks up a localized string similar to The VPN client window has been minimized here..
         /// </summary>
         public static string SystemTrayBalloonHiddenMessage {
             get {
@@ -706,7 +714,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please do not use the same TOTP twice. Wait until a fresh TOTP is generated..
+        ///   Looks up a localized string similar to Please do not reuse the TOTP. Wait until a fresh TOTP is generated..
         /// </summary>
         public static string TOTPAuthenticationNote {
             get {
@@ -715,7 +723,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Response:.
+        ///   Looks up a localized string similar to Response.
         /// </summary>
         public static string TOTPEnrollmentPanelResponseTitle {
             get {
@@ -724,7 +732,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Secret:.
+        ///   Looks up a localized string similar to Secret.
         /// </summary>
         public static string TOTPEnrollmentPanelSecretTitle {
             get {
@@ -733,7 +741,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select your enrolled authentication method and enter the security token:.
+        ///   Looks up a localized string similar to Select your two-factor method and enter the security token:.
         /// </summary>
         public static string TwoFactorAuthenticationPopupMessage {
             get {
@@ -742,7 +750,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2-Factor Authentication.
+        ///   Looks up a localized string similar to Two-factor Authentication.
         /// </summary>
         public static string TwoFactorAuthenticationPopupTitle {
             get {
@@ -769,7 +777,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} requires you to enroll for 2-Factor Authentication at {1}..
+        ///   Looks up a localized string similar to {0} requires you to enroll for two-factor authentication at {1}..
         /// </summary>
         public static string TwoFactorEnrollmentPopupMessage {
             get {
@@ -778,7 +786,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2-Factor Authentication Enrollment.
+        ///   Looks up a localized string similar to Two-factor Authentication Enrollment.
         /// </summary>
         public static string TwoFactorEnrollmentPopupTitle {
             get {
@@ -787,7 +795,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning! Your account is marked as disabled. You might not be able to connect. Please, contact your helpdesk for support..
+        ///   Looks up a localized string similar to Warning! Your account is disabled. Please, contact your helpdesk for support..
         /// </summary>
         public static string UserDisabledMessage {
             get {
@@ -805,7 +813,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password:.
+        ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string UsernamePasswordPopupPasswordTitle {
             get {
@@ -823,7 +831,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username:.
+        ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string UsernamePasswordPopupUsernameTitle {
             get {

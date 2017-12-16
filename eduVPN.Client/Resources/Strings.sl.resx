@@ -218,7 +218,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Dodaj drug naslov</value>
@@ -305,7 +305,7 @@ Omogoča SURFnet</value>
     <value>Geslo</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Vnesite svoje uporabniško ime in geslo za &quot;{0}&quot;:</value>
+    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -341,10 +341,10 @@ Omogoča SURFnet</value>
   <data name="SelfUpdatePopupSkip" xml:space="preserve">
     <value>Preskoči to verzijo</value>
   </data>
-  <data name="SelfUpdatePopupUpdate" xml:space="preserve">
-    <value>Posodobi na {0} zdaj
+  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
+    <value>Posodobi {0} na {1} zdaj
 (Odjemalec se bo ponovno zagnal)</value>
-    <comment>{0}=version</comment>
+    <comment>{0}=installed version, {1}=available version</comment>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>Program {0} je zaznal, da se je datoteka z vašimi uporabniškimi nastavitvami {1} pokvarila. Lahko gre za posledico zrušenja ali nepravilne zaustavitve programa.
@@ -356,7 +356,7 @@ Omogoča SURFnet</value>
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>Zahtevani parameter OAuth &quot;state&quot; manjka ali je napačen.</value>
+    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Včlani</value>
@@ -388,5 +388,7 @@ Omogoča SURFnet</value>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Okno eduVPN je bilo pomanjšano semle.</value>
   </data>
-
+  <data name="SelfUpdatePopupChangelog" xml:space="preserve">
+    <value>Kaj je novega?</value>
+  </data>
 </root>

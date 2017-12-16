@@ -408,13 +408,10 @@ namespace eduVPN.Views.Windows
 
         private void ConnectWizard_PromptSelfUpdate(object sender, PromptSelfUpdateEventArgs e)
         {
-            // Create a new prompt pop-up.
-            var popup = new SelfUpdatePopup() { Owner = this };
+            var view_model = new ViewModels.Windows.SelfUpdatePopup(sender, e);
 
-            // Populate pop-up view model.
-            var view_model = popup.DataContext as ViewModels.Windows.SelfUpdatePopup;
-            view_model.InstalledVersion = e.InstalledVersion;
-            view_model.AvailableVersion = e.AvailableVersion;
+            // Create a new prompt pop-up.
+            var popup = new SelfUpdatePopup() { Owner = this, DataContext = view_model };
 
             // Run the pop-up and pass the selected action to be returned to the event sender.
             if (popup.ShowDialog() == true)
