@@ -329,8 +329,9 @@ Omogoča SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-stopenjsko overovljanje</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Novejša verzija odjemalca eduVPN je prenešena in pripravljena na namestitev.</value>
+  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
+    <value>Novejša verzija odjemalca eduVPN je prenešena in pripravljena na posodobitev iz {0} na {1}.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Posodobitev na voljo</value>
@@ -341,10 +342,9 @@ Omogoča SURFnet</value>
   <data name="SelfUpdatePopupSkip" xml:space="preserve">
     <value>Preskoči to verzijo</value>
   </data>
-  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
-    <value>Posodobi {0} na {1} zdaj
+  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
+    <value>Posodobi zdaj
 (Odjemalec se bo ponovno zagnal)</value>
-    <comment>{0}=installed version, {1}=available version</comment>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>Program {0} je zaznal, da se je datoteka z vašimi uporabniškimi nastavitvami {1} pokvarila. Lahko gre za posledico zrušenja ali nepravilne zaustavitve programa.

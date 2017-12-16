@@ -329,8 +329,9 @@ Powered by SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>A newer version of the VPN client was downloaded and is ready to install.</value>
+  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
+    <value>A newer version of the VPN client was downloaded and is ready to update from {0} to {1}.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update Available</value>
@@ -341,10 +342,9 @@ Powered by SURFnet</value>
   <data name="SelfUpdatePopupSkip" xml:space="preserve">
     <value>Skip this version</value>
   </data>
-  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
-    <value>Update {0} to {1} now
+  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
+    <value>Update now
 (Client will restart)</value>
-    <comment>{0}=installed version, {1}=available version</comment>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.

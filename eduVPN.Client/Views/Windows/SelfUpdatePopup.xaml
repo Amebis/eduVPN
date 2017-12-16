@@ -15,11 +15,17 @@
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     mc:Ignorable="d"
     Width="350"
-    Height="240"
+    Height="280"
     Title="{x:Static res:Strings.SelfUpdatePopupTitle}"
-    Description="{x:Static res:Strings.SelfUpdatePopupMessage}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">
+
+    <windows:Window.Description>
+        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage2}">
+            <Binding Path="InstalledVersion"/>
+            <Binding Path="AvailableVersion"/>
+        </MultiBinding>
+    </windows:Window.Description>
 
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
@@ -65,15 +71,8 @@
                 <TextBlock
                     Grid.Column="1"
                     Margin="10"
-                    Style="{StaticResource eduVPNChoiceNoteStyle}">
-                    <TextBlock.Text>
-                        <MultiBinding
-                            StringFormat="{x:Static res:Strings.SelfUpdatePopupUpdate2}">
-                            <Binding Path="InstalledVersion"/>
-                            <Binding Path="AvailableVersion"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
+                    Style="{StaticResource eduVPNChoiceNoteStyle}"
+                    Text="{x:Static res:Strings.SelfUpdatePopupUpdate3}"/>
             </Grid>
         </Button>
 
