@@ -543,7 +543,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bytes (received).
+        ///   Looks up a localized string similar to Bytes In.
         /// </summary>
         public static string StatusPageSessionInfoBytesIn {
             get {
@@ -552,7 +552,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bytes (sent).
+        ///   Looks up a localized string similar to Bytes Out.
         /// </summary>
         public static string StatusPageSessionInfoBytesOut {
             get {
@@ -642,7 +642,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The VPN client window has been minimized here..
+        ///   Looks up a localized string similar to The window has been minimized here..
         /// </summary>
         public static string SystemTrayBalloonHiddenMessage {
             get {

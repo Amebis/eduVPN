@@ -121,7 +121,7 @@
     <value>Izberite vrsto VPN</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>Odjemalec eduVPN potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
+    <value>Odjemalec VPN potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
 Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
@@ -277,7 +277,7 @@ Omogoča SURFnet</value>
     <value>O progr_amu ...</value>
   </data>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za eduVPN.</value>
+    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za tega odjemalca VPN.</value>
   </data>
   <data name="SettingsPageInterfaceTitle" xml:space="preserve">
     <value>Izberite vmesnik TAP</value>
@@ -292,7 +292,7 @@ Omogoča SURFnet</value>
     <value>Nastavitve</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>Včasih se eduVPN ne more pravilno povezati zaradi zelo strogih požarnih zidov. Uporaba protokola TCP lahko v takih okoliščinah olajša povezovanje.</value>
+    <value>Če se odjemalec VPN ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
   </data>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>Vsili TCP</value>
@@ -330,7 +330,7 @@ Omogoča SURFnet</value>
     <value>2-stopenjsko overovljanje</value>
   </data>
   <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>Novejša verzija odjemalca eduVPN je prenešena in pripravljena na posodobitev iz {0} na {1}.</value>
+    <value>Novejša verzija odjemalca VPN je prenešena in pripravljena na posodobitev iz {0} na {1}.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
@@ -386,7 +386,7 @@ Omogoča SURFnet</value>
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
-    <value>Okno eduVPN je bilo pomanjšano semle.</value>
+    <value>Okno je bilo pomanjšano semle.</value>
   </data>
   <data name="SelfUpdatePopupChangelog" xml:space="preserve">
     <value>Kaj je novega?</value>

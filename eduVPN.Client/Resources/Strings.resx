@@ -184,10 +184,10 @@
     <value>Select Your Institution</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
-    <value>Bytes (received)</value>
+    <value>Bytes In</value>
   </data>
   <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
-    <value>Bytes (sent)</value>
+    <value>Bytes Out</value>
   </data>
   <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Duration</value>
@@ -386,7 +386,7 @@ If you continue, your user settings will be reset to the default.</value>
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
-    <value>The VPN client window has been minimized here.</value>
+    <value>The window has been minimized here.</value>
   </data>
   <data name="SelfUpdatePopupChangelog" xml:space="preserve">
     <value>What's New?</value>
