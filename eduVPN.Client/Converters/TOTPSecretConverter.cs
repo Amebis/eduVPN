@@ -23,22 +23,13 @@ namespace eduVPN.Client.Converters
         {
             if (value is string secret)
             {
-                // Divide secret in 16-tuples separated by newlines.
-                int line_counter = 0;
+                // Divide line in 4-tuples separated by spaces.
+                int group_counter = 0;
                 return string.Join(
-                    Environment.NewLine,
+                    " ",
                     secret
-                        .GroupBy(_ => line_counter++ / 16)
-                        .Select(line =>
-                            {
-                                // Divide line in 4-tuples separated by spaces.
-                                int group_counter = 0;
-                                return string.Join(
-                                    " ",
-                                    line
-                                        .GroupBy(_ => group_counter++ / 4)
-                                        .Select(g => new String(g.ToArray())));
-                            }));
+                        .GroupBy(_ => group_counter++ / 4)
+                        .Select(g => new String(g.ToArray())));
             }
 
             return null;
