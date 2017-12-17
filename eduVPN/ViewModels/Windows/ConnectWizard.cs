@@ -749,6 +749,7 @@ namespace eduVPN.ViewModels.Windows
                             var updater_filename = working_folder + "eduVPNClient.wsf";
                             Dictionary<string, object> obj_web = null;
                             Version repo_version = null, product_version = null;
+                            var discovery_uri = new Uri(Properties.Settings.Default.SelfUpdate);
 
                             try
                             {
@@ -769,10 +770,9 @@ namespace eduVPN.ViewModels.Windows
                                     {
                                         // Get self-update.
                                         var pub_key = Properties.Settings.Default.SelfUpdatePubKey;
-                                        var uri = new Uri(Properties.Settings.Default.SelfUpdate);
-                                        Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", uri.AbsoluteUri);
+                                        Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", discovery_uri.AbsoluteUri);
                                         obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
-                                            uri,
+                                            discovery_uri,
                                             !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
                                             Abort.Token);
 
@@ -904,16 +904,16 @@ namespace eduVPN.ViewModels.Windows
                             if (!installer_ready)
                             {
                                 // Download installer.
-                                var uris = (List<object>)obj_web["uri"];
-                                while (uris.Count > 0)
+                                var binary_uris = (List<object>)obj_web["uri"];
+                                while (binary_uris.Count > 0)
                                 {
                                     Abort.Token.ThrowIfCancellationRequested();
-                                    var uri_idx = random.Next(uris.Count);
+                                    var uri_idx = random.Next(binary_uris.Count);
                                     try
                                     {
-                                        var uri = new Uri((string)uris[uri_idx]);
-                                        Trace.TraceInformation("Downloading installer file from {0}...", uri.AbsoluteUri);
-                                        var request = WebRequest.Create(uri);
+                                        var binary_uri = new Uri(discovery_uri, (string)binary_uris[uri_idx]);
+                                        Trace.TraceInformation("Downloading installer file from {0}...", binary_uri.AbsoluteUri);
+                                        var request = WebRequest.Create(binary_uri);
                                         using (var response = request.GetResponse())
                                         using (var stream = response.GetResponseStream())
                                         {
@@ -941,7 +941,7 @@ namespace eduVPN.ViewModels.Windows
 
                                                     hash.TransformFinalBlock(buffer, 0, 0);
                                                     if (!hash.Hash.SequenceEqual(repo_hash))
-                                                        throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, uri.AbsoluteUri));
+                                                        throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, binary_uri.AbsoluteUri));
                                                 }
 
                                                 installer_ready = true;
@@ -962,7 +962,7 @@ namespace eduVPN.ViewModels.Windows
                                     catch (Exception ex)
                                     {
                                         Trace.TraceWarning("Error: {0}", ex.ToString());
-                                        uris.RemoveAt(uri_idx);
+                                        binary_uris.RemoveAt(uri_idx);
                                     }
                                 }
                             }
