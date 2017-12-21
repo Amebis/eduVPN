@@ -72,7 +72,6 @@ The registration prepares the working environment for the eduVPN client, much li
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the initial build and registration using `nmake Register` command. This command will:
    - Build the Debug version for your architecture as defined by the `PROCESSOR_ARCHITECTURE` environment variable.
-   - Register the `org.eduvpn.app` custom URI scheme.
    - Create a Start menu eduVPN Client shortcut.
    - Install eduVPN Interactive Service.
 4. The client can now be started using the Start menu shortcut.
