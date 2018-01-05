@@ -256,13 +256,14 @@ namespace eduVPN.Models
                             token: e.AccessToken,
                             ct: ct).Value, "profile_list", ct);
 
-                        // Bind all profiles to our instance.
                         foreach (var profile in profile_list)
+                        {
+                            // Bind profile to our instance.
                             profile.Instance = this;
 
-                        // Attach to RequestAuthorization profile events.
-                        foreach (var profile in profile_list)
+                            // Attach to RequestAuthorization profile events.
                             profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => RequestAuthorization?.Invoke(authenticating_instance, e_profile);
+                        }
 
                         // If we got here, save the profile list.
                         _profile_list = profile_list;
