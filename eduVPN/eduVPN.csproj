@@ -136,6 +136,7 @@
     <Compile Include="ViewModels\Windows\Window.cs" />
     <Compile Include="ViewModels\Panels\YubiKeyAuthenticationPanel.cs" />
     <Compile Include="Xml\LocalVPNConfigurationSettings.cs" />
+    <Compile Include="Xml\ResourceRef.cs" />
     <Compile Include="Xml\Response.cs" />
     <Compile Include="Xml\SerializableStringDictionary.cs" />
     <Compile Include="Xml\VPNConfigurationSettings.cs" />

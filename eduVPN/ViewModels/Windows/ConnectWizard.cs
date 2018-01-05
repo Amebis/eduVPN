@@ -650,10 +650,10 @@ namespace eduVPN.ViewModels.Windows
                             try
                             {
                                 // Get instance source.
-                                var pub_key = (string)Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "DiscoveryPubKey"];
+                                var source = Properties.Settings.Default.GetResourceRef(Global.InstanceDirectoryId[source_index] + "Discovery");
                                 var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
-                                    new Uri((string)Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "Discovery"]),
-                                    !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
+                                    source.Uri,
+                                    source.PublicKey,
                                     Abort.Token);
 
                                 // Add a tick.
@@ -732,7 +732,7 @@ namespace eduVPN.ViewModels.Windows
 
             worker.RunWorkerAsync();
 
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.SelfUpdate))
+            if (Properties.Settings.Default.SelfUpdateDescr?.Uri != null)
             {
                 // Setup self-update.
                 var self_update = new BackgroundWorker() { WorkerReportsProgress = true };
@@ -749,7 +749,7 @@ namespace eduVPN.ViewModels.Windows
                             var updater_filename = working_folder + "eduVPNClient.wsf";
                             Dictionary<string, object> obj_web = null;
                             Version repo_version = null, product_version = null;
-                            var discovery_uri = new Uri(Properties.Settings.Default.SelfUpdate);
+                            var discovery_uri = Properties.Settings.Default.SelfUpdateDescr.Uri;
 
                             try
                             {
@@ -769,11 +769,10 @@ namespace eduVPN.ViewModels.Windows
                                     () =>
                                     {
                                         // Get self-update.
-                                        var pub_key = Properties.Settings.Default.SelfUpdatePubKey;
                                         Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", discovery_uri.AbsoluteUri);
                                         obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
                                             discovery_uri,
-                                            !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null,
+                                            Properties.Settings.Default.SelfUpdateDescr.PublicKey,
                                             Abort.Token);
 
                                         repo_version = new Version((string)obj_web["version"]);

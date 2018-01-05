@@ -35,25 +35,6 @@ namespace eduVPN.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/secure_internet.json")]
-        public string SecureInternetDiscovery {
-            get {
-                return ((string)(this["SecureInternetDiscovery"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
-        public string SecureInternetDiscoveryPubKey {
-            get {
-                return ((string)(this["SecureInternetDiscoveryPubKey"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
@@ -66,25 +47,6 @@ namespace eduVPN.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/disco/institute_access.json")]
-        public string InstituteAccessDiscovery {
-            get {
-                return ((string)(this["InstituteAccessDiscovery"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
-        public string InstituteAccessDiscoveryPubKey {
-            get {
-                return ((string)(this["InstituteAccessDiscoveryPubKey"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
@@ -94,25 +56,6 @@ namespace eduVPN.Properties {
             }
             set {
                 this["InstituteAccessInstanceSourceSettings"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://static.eduvpn.nl/auto-update/windows.json")]
-        public string SelfUpdate {
-            get {
-                return ((string)(this["SelfUpdate"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15nh06ilJd5f9hbH5rWGgU+qw9IxBHE+j2wVKshidkA=")]
-        public string SelfUpdatePubKey {
-            get {
-                return ((string)(this["SelfUpdatePubKey"]));
             }
         }
         
