@@ -215,6 +215,14 @@ namespace eduVPN.ViewModels.VPN
                                 // Renegotiate data channel every 5 minutes in debug versions.
                                 sw.WriteLine("reneg-sec 300");
 #endif
+
+                                if (Environment.OSVersion.Version < new Version(6, 2))
+                                {
+                                    // Windows 7 is using tiny 8kB send/receive socket buffers by default.
+                                    // Increase to 64kB which is default from Windows 8 on.
+                                    sw.WriteLine("sndbuf 65536");
+                                    sw.WriteLine("rcvbuf 65536");
+                                }
                             }
                         }
                         catch (OperationCanceledException) { throw; }
