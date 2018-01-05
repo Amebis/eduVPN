@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <ListBox
-            x:Name="ProfileList"
+            x:Name="InstanceProfileList"
             Margin="5"
             Style="{StaticResource eduVPNListStyle}"
             ItemTemplate="{StaticResource eduVPNInstanceProfileSelectionItemTemplate}"
