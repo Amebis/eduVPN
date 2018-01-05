@@ -461,6 +461,11 @@ namespace eduVPN.ViewModels.VPN
                                     {
                                         // Wait for the session to end gracefully.
                                         mgmt_session.Monitor.Join();
+                                        if (mgmt_session.Error != null && !(mgmt_session.Error is OperationCanceledException))
+                                        {
+                                            // Session reported an error. Rethrow it.
+                                            throw mgmt_session.Error;
+                                        }
                                     } finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1))); }
                                 }
                                 finally { mgmt_client.Close(); }
