@@ -251,6 +251,7 @@
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>No items</value>
+    <comment>Displayed when a list is empty</comment>
   </data>
   <data name="ButtonCopy" xml:space="preserve">
     <value>Copy</value>
@@ -390,5 +391,9 @@ If you continue, your user settings will be reset to the default.</value>
   </data>
   <data name="SelfUpdatePopupChangelog" xml:space="preserve">
     <value>What's New?</value>
+  </data>
+  <data name="ListBoxNull" xml:space="preserve">
+    <value>Please wait...</value>
+    <comment>Displayed when a list is loading</comment>
   </data>
 </root>

@@ -224,6 +224,21 @@
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Path=ItemsSource, RelativeSource={x:Static RelativeSource.Self}}"
+                Value="{x:Null}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource eduVPNNoteTextBlockStyle}"
+                                Text="{x:Static res:Strings.ListBoxNull}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
