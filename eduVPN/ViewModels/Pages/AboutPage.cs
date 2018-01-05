@@ -25,7 +25,11 @@ namespace eduVPN.ViewModels.Pages
         {
             get
             {
-                return Assembly.GetExecutingAssembly()?.GetName()?.Version;
+                var ver = Assembly.GetExecutingAssembly()?.GetName()?.Version;
+                return
+                    ver.Revision != 0 ? new Version(ver.Major, ver.Minor, ver.Build, ver.Revision) :
+                    ver.Build    != 0 ? new Version(ver.Major, ver.Minor, ver.Build) :
+                                        new Version(ver.Major, ver.Minor);
             }
         }
 
