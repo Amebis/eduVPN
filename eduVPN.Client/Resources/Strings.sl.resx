@@ -252,6 +252,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>Brez elementov</value>
+    <comment>Displayed when a list is empty</comment>
   </data>
   <data name="ButtonCopy" xml:space="preserve">
     <value>Kopiraj</value>
@@ -390,5 +391,9 @@ Omogoča SURFnet</value>
   </data>
   <data name="SelfUpdatePopupChangelog" xml:space="preserve">
     <value>Kaj je novega?</value>
+  </data>
+  <data name="ListBoxNull" xml:space="preserve">
+    <value>Prosimo počakajte ...</value>
+    <comment>Displayed when a list is loading</comment>
   </data>
 </root>

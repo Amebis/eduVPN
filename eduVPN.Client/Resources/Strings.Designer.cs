@@ -288,6 +288,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please wait....
+        /// </summary>
+        public static string ListBoxNull {
+            get {
+                return ResourceManager.GetString("ListBoxNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eduVPN.
         /// </summary>
         public static string MainWindowTitle {
