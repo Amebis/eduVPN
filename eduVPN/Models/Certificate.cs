@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
@@ -138,7 +137,7 @@ namespace eduVPN.Models
                 long pki_end = reader.ReadASN1Length() + reader.BaseStream.Position;
 
                 // INTEGER(Version)
-                if (!reader.ReadASN1Integer().SequenceEqual(new byte[] { 0 }))
+                if (reader.ReadASN1Integer() != 0)
                     throw new InvalidDataException();
 
                 // SEQUENCE(AlgorithmIdentifier)
