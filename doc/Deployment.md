@@ -69,6 +69,6 @@ Should you prefer manual updating, self-updating can be turned off in the `eduVP
 </setting>
 ```
 
-Updating eduVPN Client for Windows manually is installing the newer version over the previous one using the same deployment option again.
+Updating eduVPN Client for Windows manually is installing a newer version over the previous one using the same deployment option again.
 
-Updating will overwrite the `eduVPN.Client.exe.config` file with the default one. All modifications are lost. If you want to keep self-updating disabled make sure to re-deploy your version of `eduVPN.Client.exe.config` again.
+Updating will overwrite the `eduVPN.Client.exe.config` file with a default one. All modifications are lost. If you want to keep self-updating disabled make sure to re-deploy your version of `eduVPN.Client.exe.config` again.
