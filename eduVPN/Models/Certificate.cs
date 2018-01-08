@@ -88,14 +88,13 @@ namespace eduVPN.Models
             var start = pem.IndexOf(header, StringComparison.Ordinal);
             if (start < 0)
                 return null;
-
             start += header.Length;
-            var end = pem.IndexOf(footer, start, StringComparison.Ordinal) - start;
 
+            var end = pem.IndexOf(footer, start, StringComparison.Ordinal);
             if (end < 0)
                 return null;
 
-            return Convert.FromBase64String(pem.Substring(start, end));
+            return Convert.FromBase64String(pem.Substring(start, end - start));
         }
 
         /// <summary>
