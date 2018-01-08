@@ -5,7 +5,7 @@
 
 1. [eduVPN.Client at POEditor](https://poeditor.com/join/project/JNdH23JhOo)
 2. [eduVPN at POEditor](https://poeditor.com/join/project/0cJKTOUjzn)
-3. [eduOAuth at POEditor](https://poeditor.com/join/project/KluhCNBAWP) (terms not starting with "Error…")
+3. [eduOAuth at POEditor](https://poeditor.com/join/project/KluhCNBAWP) (terms not starting with "Errorâ€¦")
 4. Setup
    - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.wxl)
    - EXE bundle [eduVPN.thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Install/eduVPN.thm.wxl)
@@ -34,7 +34,7 @@ Should you need any assistance to get started, please do not hesitate to contact
 ## Notes
 
 [1]: #footnote1
-<a name="footnote1">[1]</a> The Resource.rc files have only a few terms, therefore we kindly invite you to translate both Resource.rc files. You can find the texts inside the file by following the "LANGUAGE" markers. Just [e-mail us](mailto:simon.rozman@amebis.si) the translations – we can handle the rest.
+<a name="footnote1">[1]</a> The Resource.rc files have only a few terms, therefore we kindly invite you to translate both Resource.rc files. You can find the texts inside the file by following the "LANGUAGE" markers. Just [e-mail us](mailto:simon.rozman@amebis.si) the translations â€“ we can handle the rest.
 
 [2]: #footnote2
 <a name="footnote2">[2]</a> Those libraries are so low-level their errors have very low probability to occur in the real world. Fortunately, they do not have much text to translate.
