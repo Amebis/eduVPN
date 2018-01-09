@@ -192,7 +192,15 @@ namespace System.IO
 
         private static byte[] TrimPositivePadding(byte[] data)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
             var length = data.Length;
+            if (length < 1)
+                throw new ArgumentException(nameof(data));
+            if (data[0] >= 0x80)
+                throw new ArgumentOutOfRangeException(nameof(data));
+
             for (var i = 0; ; i++)
             {
                 if (i + 1 >= length || data[i] != 0x00)
