@@ -1168,7 +1168,7 @@ namespace eduVPN.ViewModels.Windows
                         {
                             AuthorizationEndpoint = api.AuthorizationEndpoint,
                             ClientID = "org.eduvpn.app.windows",
-                            Scope = new List<string>() { e.Scope },
+                            Scope = new HashSet<string>() { e.Scope },
                             CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
                         };
 
