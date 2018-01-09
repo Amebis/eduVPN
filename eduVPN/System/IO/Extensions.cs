@@ -35,7 +35,7 @@ namespace System.IO
         /// </summary>
         /// <param name="reader">Stream of ASN.1 data</param>
         /// <returns>Raw integer data (big-endian)</returns>
-        public static byte[] ReadASN1RawInteger(this BinaryReader reader)
+        public static byte[] ReadASN1Integer(this BinaryReader reader)
         {
             if (reader.ReadByte() != 0x02)
                 throw new InvalidDataException();
@@ -61,12 +61,14 @@ namespace System.IO
         /// </summary>
         /// <param name="reader">Stream of ASN.1 data</param>
         /// <returns>Integer value</returns>
-        public static long ReadASN1Integer(this BinaryReader reader)
+        /// <exception cref="ArgumentException">Zero-width integer</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Integer too wide to fit in <c>int</c></exception>
+        public static int ReadASN1IntegerInt(this BinaryReader reader)
         {
-            var data = reader.ReadASN1RawInteger();
+            var data = reader.ReadASN1Integer();
             var length = data.Length;
             if (length < 1)
-                throw new ArgumentOutOfRangeException(nameof(length));
+                throw new ArgumentException();
 
             // Skip padding.
             var i = 0;
@@ -80,8 +82,11 @@ namespace System.IO
                     break;
             }
 
+            if (i + 4 >= length)
+                throw new ArgumentOutOfRangeException();
+
             // Parse integer.
-            long value = is_positive ? data[i] : (long)data[i] - 0x100;
+            int value = is_positive ? data[i] : data[i] - 0x100;
             for (i++; i < length; i++)
                 value = value * 0x100 + data[i];
 
@@ -156,19 +161,19 @@ namespace System.IO
             try
             {
                 // INTEGER(Version)
-                if (reader.ReadASN1Integer() != 0)
+                if (reader.ReadASN1IntegerInt() != 0)
                     throw new InvalidDataException();
 
                 var rsa = new RSAParameters()
                 {
-                    Modulus = TrimPositivePadding(reader.ReadASN1RawInteger()),
-                    Exponent = TrimPositivePadding(reader.ReadASN1RawInteger()),
-                    D = TrimPositivePadding(reader.ReadASN1RawInteger()),
-                    P = TrimPositivePadding(reader.ReadASN1RawInteger()),
-                    Q = TrimPositivePadding(reader.ReadASN1RawInteger()),
-                    DP = TrimPositivePadding(reader.ReadASN1RawInteger()),
-                    DQ = TrimPositivePadding(reader.ReadASN1RawInteger()),
-                    InverseQ = TrimPositivePadding(reader.ReadASN1RawInteger()),
+                    Modulus = TrimPositivePadding(reader.ReadASN1Integer()),
+                    Exponent = TrimPositivePadding(reader.ReadASN1Integer()),
+                    D = TrimPositivePadding(reader.ReadASN1Integer()),
+                    P = TrimPositivePadding(reader.ReadASN1Integer()),
+                    Q = TrimPositivePadding(reader.ReadASN1Integer()),
+                    DP = TrimPositivePadding(reader.ReadASN1Integer()),
+                    DQ = TrimPositivePadding(reader.ReadASN1Integer()),
+                    InverseQ = TrimPositivePadding(reader.ReadASN1Integer()),
                 };
 
                 // .NET does not like PKCS padding. However, it still requires RSA parameter lengths to be in sync.

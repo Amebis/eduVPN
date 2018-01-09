@@ -137,7 +137,7 @@ namespace eduVPN.Models
                 long pki_end = reader.ReadASN1Length() + reader.BaseStream.Position;
 
                 // INTEGER(Version)
-                if (reader.ReadASN1Integer() != 0)
+                if (reader.ReadASN1IntegerInt() != 0)
                     throw new InvalidDataException();
 
                 // SEQUENCE(AlgorithmIdentifier)
