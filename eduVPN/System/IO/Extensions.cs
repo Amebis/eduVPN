@@ -190,6 +190,14 @@ namespace System.IO
             }
         }
 
+        /// <summary>
+        /// Removes leading zero padding
+        /// </summary>
+        /// <param name="data">Raw integer data (big-endian)</param>
+        /// <returns>Raw unsigned integer data (big-endian)</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="data"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="data"/> must be at least one byte wide.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="data"/> is negative.</exception>
         private static byte[] TrimPositivePadding(byte[] data)
         {
             if (data == null)
@@ -214,6 +222,12 @@ namespace System.IO
             }
         }
 
+        /// <summary>
+        /// Inserts leading zero padding
+        /// </summary>
+        /// <param name="data">Raw unsigned integer data (big-endian)</param>
+        /// <param name="length_final">Required width</param>
+        /// <returns>Raw unsigned integer data (big-endian)</returns>
         private static byte[] AddPositivePadding(byte[] data, int length_final)
         {
             var length = data.Length;
