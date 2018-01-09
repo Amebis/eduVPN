@@ -195,9 +195,7 @@ namespace System.IO
             var length = data.Length;
             for (var i = 0; ; i++)
             {
-                if (i >= length)
-                    return new byte[0];
-                else if (data[i] != 0x00)
+                if (i + 1 >= length || data[i] != 0x00)
                 {
                     // Strip the leading zero(s).
                     var length_final = length - i;
