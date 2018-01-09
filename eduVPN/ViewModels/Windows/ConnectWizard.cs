@@ -1129,7 +1129,7 @@ namespace eduVPN.ViewModels.Windows
                         var key = authenticating_instance.Base.AbsoluteUri;
                         if (Properties.Settings.Default.AccessTokenCache.TryGetValue(key, out var access_token))
                         {
-                            if (e.ForceRefresh || access_token.Expires.HasValue && access_token.Expires.Value <= DateTime.Now)
+                            if (e.ForceRefresh || access_token.Expires <= DateTime.Now)
                             {
                                 // Token refresh was explicitly requested or the token expired. Refresh it.
 
