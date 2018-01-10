@@ -39,12 +39,12 @@ namespace eduVPN.Xml
         /// <summary>
         /// User agent
         /// </summary>
-        private static readonly string _user_agent = (Attribute.GetCustomAttributes(_assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title + "/" + _assembly?.GetName()?.Version?.ToString();
+        public static readonly string UserAgent = (Attribute.GetCustomAttributes(_assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title + "/" + _assembly?.GetName()?.Version?.ToString();
 
         /// <summary>
         /// Caching policy
         /// </summary>
-        private static readonly HttpRequestCachePolicy _no_cache_policy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+        public static readonly HttpRequestCachePolicy CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
 
         #endregion
 
@@ -115,12 +115,12 @@ namespace eduVPN.Xml
         {
             // Spawn data loading.
             var request = WebRequest.Create(uri);
-            request.CachePolicy = _no_cache_policy;
+            request.CachePolicy = CachePolicy;
             if (token != null)
                 token.AddToRequest(request);
             if (request is HttpWebRequest request_web)
             {
-                request_web.UserAgent = _user_agent;
+                request_web.UserAgent = UserAgent;
                 request_web.Accept = response_type;
                 if (previous != null && param != null)
                 {
@@ -177,10 +177,10 @@ namespace eduVPN.Xml
 
                     // Spawn signature loading.
                     request = WebRequest.Create(builder_sig.Uri);
-                    request.CachePolicy = _no_cache_policy;
+                    request.CachePolicy = CachePolicy;
                     if (request is HttpWebRequest request_web_sig)
                     {
-                        request_web_sig.UserAgent = _user_agent;
+                        request_web_sig.UserAgent = UserAgent;
                         request_web_sig.Accept = "application/pgp-signature";
                     }
 

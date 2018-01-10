@@ -1136,7 +1136,13 @@ namespace eduVPN.ViewModels.Windows
                                 // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
                                 var api = authenticating_instance.GetEndpoints(Abort.Token);
 
-                                access_token = access_token.RefreshToken(api.TokenEndpoint, null, Abort.Token);
+                                // Prepare web request.
+                                var request = WebRequest.Create(api.TokenEndpoint);
+                                request.CachePolicy = Xml.Response.CachePolicy;
+                                if (request is HttpWebRequest request_http)
+                                    request_http.UserAgent = Xml.Response.UserAgent;
+
+                                access_token = access_token.RefreshToken(request, null, Abort.Token);
                                 if (access_token != null)
                                 {
                                     // Update access token cache.
@@ -1188,11 +1194,19 @@ namespace eduVPN.ViewModels.Windows
 
                         // Get access token from authorization grant.
                         if (e_instance.CallbackURI != null)
+                        {
+                            // Prepare web request.
+                            var request = WebRequest.Create(api.TokenEndpoint);
+                            request.CachePolicy = Xml.Response.CachePolicy;
+                            if (request is HttpWebRequest request_http)
+                                request_http.UserAgent = Xml.Response.UserAgent;
+
                             e.AccessToken = authorization_grant.ProcessResponse(
                                 HttpUtility.ParseQueryString(e_instance.CallbackURI.Query),
-                                api.TokenEndpoint,
+                                request,
                                 null,
                                 Abort.Token);
+                        }
 
                         if (e.AccessToken != null)
                         {
