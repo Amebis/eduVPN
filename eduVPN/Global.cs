@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace eduVPN
 {
-    public class Global
+    public static class Global
     {
         #region Fields
 
