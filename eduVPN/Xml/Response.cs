@@ -31,6 +31,19 @@ namespace eduVPN.Xml
     {
         #region Fields
 
+        /// <summary>
+        /// Executing assembly
+        /// </summary>
+        private static readonly Assembly _assembly = Assembly.GetExecutingAssembly();
+
+        /// <summary>
+        /// User agent
+        /// </summary>
+        private static readonly string _user_agent = (Attribute.GetCustomAttributes(_assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title + "/" + _assembly?.GetName()?.Version?.ToString();
+
+        /// <summary>
+        /// Caching policy
+        /// </summary>
         private static readonly HttpRequestCachePolicy _no_cache_policy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
 
         #endregion
@@ -100,11 +113,6 @@ namespace eduVPN.Xml
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
         public static async Task<Response> GetAsync(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var assembly_title_attribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
-            var assembly_version = assembly?.GetName()?.Version;
-            var user_agent = assembly_title_attribute?.Title + "/" + assembly_version?.ToString();
-
             // Spawn data loading.
             var request = WebRequest.Create(uri);
             request.CachePolicy = _no_cache_policy;
@@ -112,7 +120,7 @@ namespace eduVPN.Xml
                 token.AddToRequest(request);
             if (request is HttpWebRequest request_web)
             {
-                request_web.UserAgent = user_agent;
+                request_web.UserAgent = _user_agent;
                 request_web.Accept = response_type;
                 if (previous != null && param != null)
                 {
@@ -172,7 +180,7 @@ namespace eduVPN.Xml
                     request.CachePolicy = _no_cache_policy;
                     if (request is HttpWebRequest request_web_sig)
                     {
-                        request_web_sig.UserAgent = user_agent;
+                        request_web_sig.UserAgent = _user_agent;
                         request_web_sig.Accept = "application/pgp-signature";
                     }
 
