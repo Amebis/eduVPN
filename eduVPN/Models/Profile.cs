@@ -133,13 +133,13 @@ namespace eduVPN.Models
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
+            // Request authentication token.
+            RequestAuthorization?.Invoke(this, e);
+            if (e.AccessToken == null)
+                throw new AccessTokenNullException();
+
             try
             {
-                // Request authentication token.
-                RequestAuthorization?.Invoke(this, e);
-                if (e.AccessToken == null)
-                    throw new AccessTokenNullException();
-
                 // Get profile config.
                 var uri_builder = new UriBuilder(api.ProfileConfig);
                 var query = HttpUtility.ParseQueryString(uri_builder.Query);
@@ -192,13 +192,13 @@ namespace eduVPN.Models
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
+            // Request authentication token.
+            RequestAuthorization?.Invoke(this, e);
+            if (e.AccessToken == null)
+                throw new AccessTokenNullException();
+
             try
             {
-                // Request authentication token.
-                RequestAuthorization?.Invoke(this, e);
-                if (e.AccessToken == null)
-                    throw new AccessTokenNullException();
-
                 // Get complete profile config.
                 var openvpn_complete_config = Xml.Response.Get(
                     uri: api.ProfileCompleteConfig,

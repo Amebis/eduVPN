@@ -242,13 +242,13 @@ namespace eduVPN.Models
                     var e = new RequestAuthorizationEventArgs("config");
 
                     retry:
+                    // Request authentication token.
+                    RequestAuthorization?.Invoke(authenticating_instance, e);
+                    if (e.AccessToken == null)
+                        throw new AccessTokenNullException();
+
                     try
                     {
-                        // Request authentication token.
-                        RequestAuthorization?.Invoke(authenticating_instance, e);
-                        if (e.AccessToken == null)
-                            throw new AccessTokenNullException();
-
                         // Get and load profile list.
                         var profile_list = new ObservableCollection<Profile>();
                         profile_list.LoadJSONAPIResponse(Xml.Response.Get(
@@ -314,13 +314,13 @@ namespace eduVPN.Models
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
+            // Request authentication token.
+            RequestAuthorization?.Invoke(authenticating_instance, e);
+            if (e.AccessToken == null)
+                throw new AccessTokenNullException();
+
             try
             {
-                // Request authentication token.
-                RequestAuthorization?.Invoke(authenticating_instance, e);
-                if (e.AccessToken == null)
-                    throw new AccessTokenNullException();
-
                 // Get and load user info.
                 var user_info = new UserInfo();
                 user_info.LoadJSONAPIResponse(Xml.Response.Get(
@@ -400,13 +400,13 @@ namespace eduVPN.Models
                             var e = new RequestAuthorizationEventArgs("config");
 
                             retry:
+                            // Request authentication token.
+                            RequestAuthorization?.Invoke(authenticating_instance, e);
+                            if (e.AccessToken == null)
+                                throw new AccessTokenNullException();
+
                             try
                             {
-                                // Request authentication token.
-                                RequestAuthorization?.Invoke(authenticating_instance, e);
-                                if (e.AccessToken == null)
-                                    throw new AccessTokenNullException();
-
                                 // Get certificate and import it to Windows user certificate store.
                                 var cert = new Certificate();
                                 cert.LoadJSONAPIResponse(Xml.Response.Get(
@@ -503,13 +503,13 @@ namespace eduVPN.Models
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
+            // Request authentication token.
+            RequestAuthorization?.Invoke(authenticating_instance, e);
+            if (e.AccessToken == null)
+                throw new AccessTokenNullException();
+
             try
             {
-                // Request authentication token.
-                RequestAuthorization?.Invoke(authenticating_instance, e);
-                if (e.AccessToken == null)
-                    throw new AccessTokenNullException();
-
                 Uri uri = null;
                 var param = new NameValueCollection();
                 String name = null;
