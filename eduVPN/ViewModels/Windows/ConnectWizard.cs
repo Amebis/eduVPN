@@ -1142,9 +1142,10 @@ namespace eduVPN.ViewModels.Windows
                                 if (request is HttpWebRequest request_http)
                                     request_http.UserAgent = Xml.Response.UserAgent;
 
-                                access_token = access_token.RefreshToken(request, null, Abort.Token);
-                                if (access_token != null)
+                                try
                                 {
+                                    access_token = access_token.RefreshToken(request, null, Abort.Token);
+
                                     // Update access token cache.
                                     Properties.Settings.Default.AccessTokenCache[key] = access_token;
 
@@ -1152,6 +1153,16 @@ namespace eduVPN.ViewModels.Windows
                                     e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Refreshed;
                                     e.AccessToken = access_token;
                                     return;
+                                }
+                                catch (AccessTokenException ex)
+                                {
+                                    if (ex.ErrorCode == AccessTokenException.ErrorCodeType.InvalidGrant)
+                                    {
+                                        // The grant has been revoked. Drop the access token.
+                                        Properties.Settings.Default.AccessTokenCache.Remove(key);
+                                    }
+                                    else
+                                        throw;
                                 }
                             }
                             else
