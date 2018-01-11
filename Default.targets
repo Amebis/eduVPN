@@ -9,17 +9,19 @@
 
   <PropertyGroup Condition="'$(ManifestCertificateThumbprint)' != '' AND '$(Configuration)'=='Release'">
     <BuildDependsOn>$(BuildDependsOn);Sign</BuildDependsOn>
-
-    <!--
-        Fixes "ALINK : warning AL1073: Referenced assembly 'mscorlib.dll' targets a different processor" warning.
-        https://stackoverflow.com/a/41945190/2071884
-    -->
-    <TargetFrameworkSDKToolsDirectory Condition="'$(PlatformTarget)' == 'x64'">$(TargetFrameworkSDKToolsDirectory)$(PlatformTarget)\</TargetFrameworkSDKToolsDirectory>
   </PropertyGroup>
 
   <Target Name="Sign" Inputs="$(OutDir)$(TargetName)$(TargetExt)" Outputs="$(OutDir)$(TargetName).sign">
     <Exec Command="signtool.exe sign /sha1 &quot;%ManifestCertificateThumbprint%&quot; /fd sha256 /as /tr &quot;%ManifestTimestampRFC3161Url%&quot; /q &quot;$(TargetPath)&quot;" />
     <Touch Files="$(OutDir)$(TargetName).sign" AlwaysCreate="true" />
   </Target>
+
+  <!--
+      Fixes "ALINK : warning AL1073: Referenced assembly 'mscorlib.dll' targets a different processor" warning.
+      https://stackoverflow.com/a/41945190/2071884
+  -->
+  <PropertyGroup Condition="'$(Platform)' == 'x64'">
+    <TargetFrameworkSDKToolsDirectory>$(TargetFrameworkSDKToolsDirectory)$(PlatformTarget)\</TargetFrameworkSDKToolsDirectory>
+  </PropertyGroup>
 
 </Project>
