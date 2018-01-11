@@ -36,14 +36,10 @@ namespace eduVPN.Views.Windows
         /// </summary>
         private eduOAuth.HttpListener _listener = new eduOAuth.HttpListener(IPAddress.Loopback, 0);
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Authorization pop-up windows
         /// </summary>
-        public Dictionary<string, AuthorizationPopup> AuthorizationPopups { get; } = new Dictionary<string, AuthorizationPopup>();
+        private Dictionary<string, AuthorizationPopup> _authorization_popups = new Dictionary<string, AuthorizationPopup>();
 
         #endregion
 
@@ -138,7 +134,7 @@ namespace eduVPN.Views.Windows
             _listener.HttpCallback += (object sender, eduOAuth.HttpCallbackEventArgs e_callback) =>
             {
                 var query = HttpUtility.ParseQueryString(e_callback.Uri.Query);
-                if (!AuthorizationPopups.TryGetValue(query["state"], out var popup))
+                if (!_authorization_popups.TryGetValue(query["state"], out var popup))
                     throw new HttpException(400, Client.Resources.Strings.ErrorOAuthState);
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
@@ -287,7 +283,7 @@ namespace eduVPN.Views.Windows
 
             // Extract the state. We use it as a key to support multiple pending authorizations.
             var query = HttpUtility.ParseQueryString(authorization_uri.Query);
-            AuthorizationPopups.Add(query["state"], popup);
+            _authorization_popups.Add(query["state"], popup);
 
             // Trigger authorization.
             System.Diagnostics.Process.Start(authorization_uri.ToString());
@@ -296,7 +292,7 @@ namespace eduVPN.Views.Windows
             if (popup.ShowDialog() == true)
                 e.CallbackURI = view_model.CallbackURI;
 
-            AuthorizationPopups.Remove(query["state"]);
+            _authorization_popups.Remove(query["state"]);
         }
 
         /// <summary>
