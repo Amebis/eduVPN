@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Kies een VPN type</value>
+    <value>Kies een VPN-type</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>de eduVPN applicatie heeft {0} toestemming nodig en heeft een pagina in je browser geopend. De applicatie zal verder gaan na het geven van toestemming...</value>
+    <value>de VPN-client heeft {0} toestemming nodig en heeft een pagina in je browser geopend. De applicatie zal verder gaan na het geven van toestemming...</value>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Wachten op toestemming...</value>
@@ -145,7 +145,7 @@
     <value>Andere server</value>
   </data>
   <data name="CustomInstancePageDescription" xml:space="preserve">
-    <value>Voer de servernaam van je VPN provider in.</value>
+    <value>Voer de servernaam van je VPN-provider in.</value>
   </data>
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
     <value>Verbinden</value>
@@ -181,13 +181,13 @@
     <value>Notificatie</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Selecteer je insitituut</value>
+    <value>Selecteer je instituut</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
-    <value>Bytes (ontvangen)</value>
+    <value>Bytes (in)</value>
   </data>
   <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
-    <value>Bytes (verzonden)</value>
+    <value>Bytes (uit)</value>
   </data>
   <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Duur</value>
@@ -206,7 +206,7 @@
     <value>Bekijk log</value>
   </data>
   <data name="StatusPageDisconnect" xml:space="preserve">
-    <value>Uitzetten</value>
+    <value>Verbreken</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>hh\:mm\:ss</value>
@@ -233,19 +233,19 @@
     <value>Initialiseren...</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Toegang tot je instellingsnetwerk.</value>
+    <value>Toegang tot netwerk van je instituut.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
   </data>
   <data name="SecureInternetNote" xml:space="preserve">
-    <value>Verbind veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi netwerken.</value>
+    <value>Verbind veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi-netwerken.</value>
   </data>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
   <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
-    <value>Nieuwe provider</value>
+    <value>Andere provider toevoegen</value>
     <comment>Fuzzy</comment>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
@@ -278,10 +278,10 @@ Powered by SURFnet</value>
     <value>_Over...</value>
   </data>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze VPN client hieronder.</value>
+    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze VPN-client hieronder.</value>
   </data>
   <data name="SettingsPageInterfaceTitle" xml:space="preserve">
-    <value>Selecteer TAP interface</value>
+    <value>Selecteer TAP-interface</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Instellingen...</value>
@@ -293,7 +293,7 @@ Powered by SURFnet</value>
     <value>Instellingen</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>Als de VPN client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
+    <value>Als de VPN-client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
   </data>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>Via TCP verbinden</value>
@@ -331,7 +331,7 @@ Powered by SURFnet</value>
     <value>Twee-factorauthenticatie</value>
   </data>
   <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Een nieuwe versie van de eduVPN applicatie is gedownload en klaar om geïnstalleerd te worden.</value>
+    <value>Een nieuwe versie van de VPN-client is gedownload en klaar om geïnstalleerd te worden.</value>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update beschikbaar</value>
@@ -376,7 +376,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Sleutel:</value>
   </data>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
-    <value>Gebruik niet dezelfde TOTP code. Wacht tot er een nieuwe code is gegenereerd.</value>
+    <value>Gebruik niet dezelfde TOTP-code. Wacht tot er een nieuwe code is gegenereerd.</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -389,5 +389,18 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Het VPN-clientvenster is hier geminimaliseerd.</value>
   </data>
-
+  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
+    <value>Update {0} naar {1} nu (Applicatie zal herstarten)</value>
+    <comment>{0}=installed version, {1}=available version</comment>
+  </data>
+  <data name="SelfUpdatePopupChangelog" xml:space="preserve">
+    <value>Wat is nieuw?</value>
+  </data>
+  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
+    <value>Een nieuwere versie van de VPN-client is gedownload en staat klaar om te updaten van {0} naar {1}.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+  </data>
+  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
+    <value>Nu updaten (Client zal herstarten)</value>
+  </data>
 </root>
