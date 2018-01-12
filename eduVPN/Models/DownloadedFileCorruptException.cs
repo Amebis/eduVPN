@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// Downloaded file is corrupt.
     /// </summary>
     [Serializable]
-    class DownloadedFileCorruptException : ApplicationException, ISerializable
+    class DownloadedFileCorruptException : Exception
     {
         #region Constructors
 
@@ -42,6 +42,15 @@ namespace eduVPN.Models
         /// <param name="innerException">Inner exception reference</param>
         public DownloadedFileCorruptException(string message, Exception innerException) :
             base(message, innerException)
+        {
+        }
+
+        #endregion
+
+        #region ISerializable Support
+
+        protected DownloadedFileCorruptException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
 

@@ -14,7 +14,7 @@ namespace eduVPN.JSON
     /// API server replied with an error.
     /// </summary>
     [Serializable]
-    public class APIErrorException : ApplicationException, ISerializable
+    public class APIErrorException : Exception
     {
         #region Constructors
 
@@ -32,6 +32,15 @@ namespace eduVPN.JSON
         /// <param name="message">Exception message</param>
         public APIErrorException(string message) :
             base(message)
+        {
+        }
+
+        #endregion
+
+        #region ISerializable Support
+
+        protected APIErrorException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
 

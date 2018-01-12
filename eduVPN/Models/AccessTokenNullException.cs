@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// No access token granted.
     /// </summary>
     [Serializable]
-    class AccessTokenNullException : ApplicationException, ISerializable
+    class AccessTokenNullException : Exception
     {
         #region Constructors
 
@@ -42,6 +42,15 @@ namespace eduVPN.Models
         /// <param name="innerException">Inner exception reference</param>
         public AccessTokenNullException(string message, Exception innerException) :
             base(message, innerException)
+        {
+        }
+
+        #endregion
+
+        #region ISerializable Support
+
+        protected AccessTokenNullException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
 

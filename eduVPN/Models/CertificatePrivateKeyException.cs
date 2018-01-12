@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// Private key is invalid or of unsupported format.
     /// </summary>
     [Serializable]
-    public class CertificatePrivateKeyException : ApplicationException, ISerializable
+    public class CertificatePrivateKeyException : Exception
     {
         #region Constructors
 
@@ -42,6 +42,15 @@ namespace eduVPN.Models
         /// <param name="innerException">Inner exception reference</param>
         public CertificatePrivateKeyException(string message, Exception innerException) :
             base(message, innerException)
+        {
+        }
+
+        #endregion
+
+        #region ISerializable Support
+
+        protected CertificatePrivateKeyException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
 
