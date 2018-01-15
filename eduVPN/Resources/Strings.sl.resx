@@ -232,4 +232,10 @@
   <data name="ErrorUploading" xml:space="preserve">
     <value>Prenos na splet ni uspel. Preverite svojo spletno povezavo.</value>
   </data>
+  <data name="OpenVPNStateTypeResolving" xml:space="preserve">
+    <value>Razrešujem naslov IP strežnika ...</value>
+  </data>
+  <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
+    <value>Povezujem se na strežnik TCP ...</value>
+  </data>
 </root>

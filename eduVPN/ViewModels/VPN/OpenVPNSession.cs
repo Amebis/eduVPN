@@ -19,7 +19,6 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.ServiceProcess;
 using System.Web.Security;
 using System.Windows.Threading;
 
@@ -316,6 +315,16 @@ namespace eduVPN.ViewModels.VPN
                                                         msg = Resources.Strings.OpenVPNStateTypeConnecting;
                                                         break;
 
+                                                    case OpenVPNStateType.Resolving:
+                                                        State = VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeResolving;
+                                                        break;
+
+                                                    case OpenVPNStateType.TcpConnecting:
+                                                        State = VPNSessionStatusType.Connecting;
+                                                        msg = Resources.Strings.OpenVPNStateTypeTcpConnecting;
+                                                        break;
+
                                                     case OpenVPNStateType.Waiting:
                                                         State = VPNSessionStatusType.Connecting;
                                                         msg = Resources.Strings.OpenVPNStateTypeWaiting;
@@ -354,11 +363,6 @@ namespace eduVPN.ViewModels.VPN
                                                     case OpenVPNStateType.Exiting:
                                                         State = VPNSessionStatusType.Disconnecting;
                                                         msg = Resources.Strings.OpenVPNStateTypeExiting;
-                                                        break;
-
-                                                    case OpenVPNStateType.FatalError:
-                                                        State = VPNSessionStatusType.Error;
-                                                        msg = Resources.Strings.OpenVPNStateTypeFatalError;
                                                         break;
                                                 }
 

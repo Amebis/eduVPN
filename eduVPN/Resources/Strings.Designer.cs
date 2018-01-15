@@ -358,6 +358,24 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resolving server IP....
+        /// </summary>
+        internal static string OpenVPNStateTypeResolving {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeResolving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting to TCP server....
+        /// </summary>
+        internal static string OpenVPNStateTypeTcpConnecting {
+            get {
+                return ResourceManager.GetString("OpenVPNStateTypeTcpConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Waiting for initial response from server....
         /// </summary>
         internal static string OpenVPNStateTypeWaiting {

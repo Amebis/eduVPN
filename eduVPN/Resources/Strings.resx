@@ -232,4 +232,10 @@
   <data name="ErrorUploading" xml:space="preserve">
     <value>Uploading to web failed. Please check your internet connection.</value>
   </data>
+  <data name="OpenVPNStateTypeResolving" xml:space="preserve">
+    <value>Resolving server IP...</value>
+  </data>
+  <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
+    <value>Connecting to TCP server...</value>
+  </data>
 </root>
