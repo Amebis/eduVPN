@@ -346,6 +346,7 @@
     <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.png" />
     <Resource Include="Resources\Blank.png" />
     <Resource Include="Resources\eduVPNBanner.png" />
   </ItemGroup>
