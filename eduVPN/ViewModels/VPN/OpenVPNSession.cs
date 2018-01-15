@@ -58,11 +58,6 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         private bool _ignore_hold_hint;
 
-        /// <summary>
-        /// OpenVPN Interactive Service Controller
-        /// </summary>
-        private ServiceController _openvpn_interactive_service;
-
         #endregion
 
         #region Properties
@@ -110,22 +105,6 @@ namespace eduVPN.ViewModels.VPN
                 // Get instance client certificate.
                 _client_certificate = ConnectingProfile.Instance.GetClientCertificate(AuthenticatingInstance, _quit.Token);
             });
-
-            _openvpn_interactive_service = new ServiceController("eduVPNServiceInteractive");
-            _pre_run_actions.Add(() =>
-            {
-                try
-                {
-                    // Check if the Interactive Service is started.
-                    // In case we hit "Access Denied" (or another error) give up on SCM.
-                    if (_openvpn_interactive_service.Status == ServiceControllerStatus.Stopped ||
-                        _openvpn_interactive_service.Status == ServiceControllerStatus.Paused)
-                    {
-                        _openvpn_interactive_service.Start();
-                    }
-                }
-                catch { _openvpn_interactive_service = null; }
-            });
         }
 
         #endregion
@@ -139,23 +118,6 @@ namespace eduVPN.ViewModels.VPN
             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1)));
             try
             {
-                if (_openvpn_interactive_service != null)
-                {
-                    // Wait for OpenVPN Interactive Service to report "running" status.
-                    // Maximum 30 times 100ms = 3s.
-                    var refresh_interval = TimeSpan.FromMilliseconds(100);
-                    for (var i = 0; i < 30 && !_quit.Token.IsCancellationRequested; i++)
-                    {
-                        try
-                        {
-                            _openvpn_interactive_service.WaitForStatus(ServiceControllerStatus.Running, refresh_interval);
-                            break;
-                        }
-                        catch (System.ServiceProcess.TimeoutException) { }
-                        catch { break; }
-                    }
-                }
-
                 try
                 {
                     // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
