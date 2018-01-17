@@ -217,7 +217,7 @@
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Add other address</value>
@@ -232,7 +232,7 @@
     <value>Initializing...</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Access your institute's network.</value>
+    <value>Access your institute&apos;s network.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
@@ -292,20 +292,20 @@ Powered by SURFnet</value>
     <value>Settings</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>If the VPN client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
+    <value>If the VPN client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this.</value>
   </data>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>Connect Over TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Enter your password for "{0}":</value>
+    <value>Enter your password for &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Enter your username and password for "{0}":</value>
+    <value>Enter your username and password for &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -325,14 +325,13 @@ Powered by SURFnet</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Select your two-factor method and enter the security token:</value>
-    <comment>"securirty token" sounds wrong</comment>
+    <comment>&quot;securirty token&quot; sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
-    <value>Version {0} of VPN client is installed. A newer version {1} is is available online.</value>
-    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
+    <value>A newer version of the VPN client was downloaded and is ready to install.</value>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update Available</value>
@@ -343,9 +342,10 @@ Powered by SURFnet</value>
   <data name="SelfUpdatePopupSkip" xml:space="preserve">
     <value>Skip this version</value>
   </data>
-  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
-    <value>Download and update now
+  <data name="SelfUpdatePopupUpdate" xml:space="preserve">
+    <value>Update to {0} now
 (Client will restart)</value>
+    <comment>{0}=version</comment>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
@@ -357,7 +357,7 @@ If you continue, your user settings will be reset to the default.</value>
     <value>Corrupt User Settings</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>The required OAuth parameter "state" is missing or incorrect.</value>
+    <value>The required OAuth parameter &quot;state&quot; is missing or incorrect.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Enroll</value>
@@ -389,8 +389,29 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>The window has been minimized here.</value>
   </data>
+  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
+    <value>Update {0} to {1} now
+(Client will restart)</value>
+    <comment>{0}=installed version, {1}=available version</comment>
+  </data>
   <data name="SelfUpdatePopupChangelog" xml:space="preserve">
-    <value>What's New?</value>
+    <value>What&apos;s New?</value>
+  </data>
+  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
+    <value>A newer version of the VPN client was downloaded and is ready to update from {0} to {1}.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+  </data>
+  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
+    <value>Update now
+(Client will restart)</value>
+  </data>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>Version {0} of VPN client is installed. A newer version {1} is is available online.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+  </data>
+  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
+    <value>Download and update now
+(Client will restart)</value>
   </data>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Please wait...</value>
