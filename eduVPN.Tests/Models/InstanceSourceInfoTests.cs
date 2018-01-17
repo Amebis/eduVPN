@@ -8,7 +8,7 @@
 using eduVPN.JSON;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -24,59 +24,34 @@ namespace eduVPN.Models.Tests
             // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
-            // Spawn instance source get (Institute Access).
-            var instance_source_ia_json_task = Xml.Response.GetAsync(
-                uri: new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
-                pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
+            var pub_key = Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=");
+            Parallel.ForEach(new List<KeyValuePair<Uri, byte[]>>()
+                {
+                    new KeyValuePair<Uri, byte[]>(new Uri("https://static.eduvpn.nl/disco/institute_access.json"), pub_key),
+                    new KeyValuePair<Uri, byte[]>(new Uri("https://static.eduvpn.nl/disco/secure_internet.json"), pub_key),
+                }, source =>
+                {
+                    // Load list of instances.
+                    var instance_source_json = Xml.Response.Get(
+                        uri: source.Key,
+                        pub_key: source.Value);
+                    var instance_source_ia = new InstanceSource();
+                    instance_source_ia.LoadJSON(instance_source_json.Value);
 
-            // Spawn instance source get (Secure Internet).
-            var instance_source_si_json_task = Xml.Response.GetAsync(
-                uri: new Uri("https://static.eduvpn.nl/disco/secure_internet.json"),
-                pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="));
+                    // Load all instances APIs.
+                    Parallel.ForEach(instance_source_ia.InstanceList, i =>
+                    {
+                        var uri_builder = new UriBuilder(i.Base);
+                        uri_builder.Path += "info.json";
+                        new Models.InstanceEndpoints().LoadJSON(Xml.Response.Get(uri_builder.Uri).Value);
+                    });
 
-            // Load list of institute access instances.
-            var instance_source_ia = new InstanceSource();
-            try
-            {
-                instance_source_ia_json_task.Wait();
-                instance_source_ia.LoadJSON(instance_source_ia_json_task.Result.Value);
-            }
-            catch (AggregateException ex) { throw ex.InnerException; }
-
-            // Re-spawn instance source get.
-            instance_source_ia_json_task = Xml.Response.GetAsync(
-                uri: new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
-                pub_key: Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88="),
-                previous: instance_source_ia_json_task.Result);
-
-            // Load all institute access instances API in parallel.
-            Task.WhenAll(instance_source_ia.InstanceList.Select(async i => {
-                var uri_builder = new UriBuilder(i.Base);
-                uri_builder.Path += "info.json";
-                new Models.InstanceEndpoints().LoadJSON((await Xml.Response.GetAsync(uri_builder.Uri)).Value);
-            })).Wait();
-
-            // Load all secure internet instances API in parallel.
-            var instance_source_si = new InstanceSource();
-            try
-            {
-                instance_source_si_json_task.Wait();
-                instance_source_si.LoadJSON(instance_source_ia_json_task.Result.Value);
-            }
-            catch (AggregateException ex) { throw ex.InnerException; }
-            Task.WhenAll(instance_source_si.InstanceList.Select(async i => {
-                var uri_builder = new UriBuilder(i.Base);
-                uri_builder.Path += "info.json";
-                new Models.InstanceEndpoints().LoadJSON((await Xml.Response.GetAsync(uri_builder.Uri)).Value);
-            })).Wait();
-
-            // Re-load list of institute access instances.
-            try
-            {
-                instance_source_ia_json_task.Wait();
-                instance_source_ia.LoadJSON(instance_source_ia_json_task.Result.Value);
-            }
-            catch (AggregateException ex) { throw ex.InnerException; }
+                    // Re-load list of instances.
+                    instance_source_json = Xml.Response.Get(
+                        uri: source.Key,
+                        pub_key: source.Value,
+                        previous: instance_source_json);
+                });
         }
 
 #if PLATFORM_AnyCPU

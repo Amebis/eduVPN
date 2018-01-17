@@ -16,7 +16,6 @@ using System.Net.Cache;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 using System.Xml.Schema;
@@ -85,49 +84,24 @@ namespace eduVPN.Xml
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <param name="previous">Previous content, when refresh is required</param>
         /// <returns>Content</returns>
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
         public static Response Get(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
         {
-            var task = GetAsync(uri, param, token, response_type, pub_key, ct, previous);
-            try
-            {
-                task.Wait(ct);
-                return task.Result;
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-
-        /// <summary>
-        /// Gets UTF-8 text from the given URI asynchronously.
-        /// </summary>
-        /// <param name="uri">URI</param>
-        /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
-        /// <param name="token">OAuth access token</param>
-        /// <param name="response_type">Expected response MIME type</param>
-        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <param name="previous">Previous content, when refresh is required</param>
-        /// <returns>Asynchronous operation with expected content</returns>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
-        public static async Task<Response> GetAsync(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", byte[] pub_key = null, CancellationToken ct = default(CancellationToken), Response previous = null)
-        {
-            // Spawn data loading.
+            // Create request.
             var request = WebRequest.Create(uri);
             request.CachePolicy = CachePolicy;
             if (token != null)
                 token.AddToRequest(request);
-            if (request is HttpWebRequest request_web)
+            if (request is HttpWebRequest request_http)
             {
-                request_web.UserAgent = UserAgent;
-                request_web.Accept = response_type;
+                request_http.UserAgent = UserAgent;
+                request_http.Accept = response_type;
                 if (previous != null && param != null)
                 {
-                    request_web.IfModifiedSince = previous.Timestamp;
+                    request_http.IfModifiedSince = previous.Timestamp;
 
                     if (previous.ETag != null)
-                        request_web.Headers.Add("If-None-Match", previous.ETag);
+                        request_http.Headers.Add("If-None-Match", previous.ETag);
                 }
             }
 
@@ -141,18 +115,21 @@ namespace eduVPN.Xml
                 request.ContentLength = body_binary.Length;
                 try
                 {
-                    using (var stream_req = await request.GetRequestStreamAsync())
-                        await stream_req.WriteAsync(body_binary, 0, body_binary.Length, ct);
+                    using (var stream_req = request.GetRequestStream())
+                    {
+                        var task = stream_req.WriteAsync(body_binary, 0, body_binary.Length, ct);
+                        try { task.Wait(ct); }
+                        catch (AggregateException ex) { throw ex.InnerException; }
+                    }
                 }
                 catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex); }
             }
 
+            ct.ThrowIfCancellationRequested();
+
+            // Wait for data to start comming in.
             WebResponse response;
-            try
-            {
-                // Wait for data to start comming in.
-                response = await request.GetResponseAsync();
-            }
+            try { response = request.GetResponse(); }
             catch (WebException ex)
             {
                 // When the content was not modified, return the previous one.
@@ -165,89 +142,85 @@ namespace eduVPN.Xml
                     throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
             }
 
-            using (response)
+            ct.ThrowIfCancellationRequested();
+
+            // Read the data.
+            var data = new byte[0];
+            using (var stream = response.GetResponseStream())
             {
-                byte[] signature = null;
-                Task<WebResponse> response_sig_task = null;
-                if (pub_key != null)
+                var buffer = new byte[1048576];
+                for (; ; )
                 {
-                    // Generate signature URI.
-                    var builder_sig = new UriBuilder(uri);
-                    builder_sig.Path += ".sig";
+                    // Read data chunk.
+                    var task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
+                    try { task.Wait(ct); }
+                    catch (AggregateException ex) { throw ex.InnerException; }
+                    if (task.Result == 0)
+                        break;
 
-                    // Spawn signature loading.
-                    request = WebRequest.Create(builder_sig.Uri);
-                    request.CachePolicy = CachePolicy;
-                    if (request is HttpWebRequest request_web_sig)
-                    {
-                        request_web_sig.UserAgent = UserAgent;
-                        request_web_sig.Accept = "application/pgp-signature";
-                    }
-
-                    response_sig_task = request.GetResponseAsync();
+                    // Append it to the data.
+                    var data_new = new byte[data.LongLength + task.Result];
+                    Array.Copy(data, data_new, data.LongLength);
+                    Array.Copy(buffer, 0, data_new, data.LongLength, task.Result);
+                    data = data_new;
                 }
-
-                var data = new byte[0];
-                using (var stream = response.GetResponseStream())
-                {
-                    // Spawn data chunk read.
-                    var buffer = new byte[1048576];
-                    var read_task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
-
-                    if (pub_key != null)
-                    {
-                        // Read the signature.
-                        using (var response_sig = await response_sig_task)
-                        using (var stream_sig = response_sig.GetResponseStream())
-                        using (var reader_sig = new StreamReader(stream_sig))
-                            signature = Convert.FromBase64String(await reader_sig.ReadToEndAsync());
-                    }
-
-                    for (; ; )
-                    {
-                        // Wait for the data to arrive.
-                        await read_task;
-                        if (read_task.IsCanceled)
-                            throw new OperationCanceledException(ct);
-                        if (read_task.Result == 0)
-                            break;
-
-                        // Append it to the data.
-                        var data_new = new byte[data.LongLength + read_task.Result];
-                        Array.Copy(data, data_new, data.LongLength);
-                        Array.Copy(buffer, 0, data_new, data.LongLength, read_task.Result);
-                        data = data_new;
-
-                        // Respawn data chunk read.
-                        read_task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
-                    }
-
-                    if (pub_key != null)
-                    {
-                        ct.ThrowIfCancellationRequested();
-
-                        // Verify signature.
-                        using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
-                            if (!key.VerifyDetached(data, signature))
-                                throw new System.Security.SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, uri));
-                    }
-                }
-
-                return
-                    response is HttpWebResponse response_web ?
-                    new Response()
-                    {
-                        Value = Encoding.UTF8.GetString(data),
-                        Timestamp = DateTime.TryParse(response_web.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
-                        ETag = response_web.GetResponseHeader("ETag"),
-                        IsFresh = true
-                    } :
-                    new Response()
-                    {
-                        Value = Encoding.UTF8.GetString(data),
-                        IsFresh = true
-                    };
             }
+
+            if (pub_key != null)
+            {
+                // Generate signature URI.
+                var builder_sig = new UriBuilder(uri);
+                builder_sig.Path += ".sig";
+
+                // Create signature request.
+                request = WebRequest.Create(builder_sig.Uri);
+                request.CachePolicy = CachePolicy;
+                if (token != null)
+                    token.AddToRequest(request);
+                if (request is HttpWebRequest request_http_sig)
+                {
+                    request_http_sig.UserAgent = UserAgent;
+                    request_http_sig.Accept = "application/pgp-signature";
+                }
+
+                // Read the signature.
+                byte[] signature = null;
+                using (var response_sig = request.GetResponse())
+                using (var stream_sig = response_sig.GetResponseStream())
+                {
+                    ct.ThrowIfCancellationRequested();
+
+                    using (var reader_sig = new StreamReader(stream_sig))
+                    {
+                        var task = reader_sig.ReadToEndAsync();
+                        try { task.Wait(ct); }
+                        catch (AggregateException ex) { throw ex.InnerException; }
+                        signature = Convert.FromBase64String(task.Result);
+                    }
+                }
+
+                ct.ThrowIfCancellationRequested();
+
+                // Verify signature.
+                using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
+                    if (!key.VerifyDetached(data, signature))
+                        throw new System.Security.SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, uri));
+            }
+
+            return
+                response is HttpWebResponse response_web ?
+                new Response()
+                {
+                    Value = Encoding.UTF8.GetString(data),
+                    Timestamp = DateTime.TryParse(response_web.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
+                    ETag = response_web.GetResponseHeader("ETag"),
+                    IsFresh = true
+                } :
+                new Response()
+                {
+                    Value = Encoding.UTF8.GetString(data),
+                    IsFresh = true
+                };
         }
 
         #endregion
