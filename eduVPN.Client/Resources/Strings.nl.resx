@@ -253,6 +253,7 @@
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>Geen items</value>
+    <comment>Displayed when a list is empty</comment>
   </data>
   <data name="ButtonCopy" xml:space="preserve">
     <value>Kopiëren</value>
@@ -402,5 +403,20 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   </data>
   <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
     <value>Nu updaten (Client zal herstarten)</value>
+  </data>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>Version {0} of VPN client is installed. A newer version {1} is is available online.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+  </data>
+  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
+    <value>Download and update now
+(Client will restart)</value>
+  </data>
+  <data name="ListBoxNull" xml:space="preserve">
+    <value>Please wait...</value>
+    <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+    <value>Preparing update...</value>
   </data>
 </root>
