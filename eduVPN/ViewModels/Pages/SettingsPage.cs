@@ -41,11 +41,22 @@ namespace eduVPN.ViewModels.Pages
         public SettingsPage(ConnectWizard wizard) :
             base(wizard)
         {
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc/>
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
             //var network_connections = new NetworkListManager().GetNetworkConnections().Cast<INetworkConnection>();
             //ObservableCollection<Guid> networks = new ObservableCollection<Guid>();
 
             // Create available network interface list.
-            _interface_list = new ObservableCollection<eduVPN.Models.NetworkInterface>()
+            var interface_list = new ObservableCollection<eduVPN.Models.NetworkInterface>()
             {
                 new eduVPN.Models.NetworkInterface(Guid.Empty, Resources.Strings.InterfaceNameAutomatic)
             };
@@ -58,7 +69,7 @@ namespace eduVPN.ViewModels.Pages
                     mac.Length == 6 &&
                     mac[0] == 0x00 &&
                     mac[1] == 0xff)
-                    _interface_list.Add(new eduVPN.Models.NetworkInterface(nic_id, nic.Name));
+                    interface_list.Add(new eduVPN.Models.NetworkInterface(nic_id, nic.Name));
 
                 //if (nic.OperationalStatus == OperationalStatus.Up &&
                 //    nic.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
@@ -74,6 +85,9 @@ namespace eduVPN.ViewModels.Pages
                 //    catch { }
                 //}
             }
+
+            _interface_list = interface_list;
+            RaisePropertyChanged(nameof(InterfaceList));
         }
 
         #endregion
