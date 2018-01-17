@@ -67,6 +67,9 @@
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="QRCoder\XamlQRCode.cs" />
+    <Compile Include="Views\Pages\SelfUpdatingPage.xaml.cs">
+      <DependentUpon>SelfUpdatingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Panels\TOTPEnrollmentPanel.xaml.cs">
       <DependentUpon>TOTPEnrollmentPanel.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
     <Page Include="Resources\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\SelfUpdatingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Panels\TOTPEnrollmentPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

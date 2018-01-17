@@ -43,10 +43,12 @@
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
+    <Compile Include="Models\InstallerFileUnavailableException.cs" />
     <Compile Include="Models\TOTPEnrollmentCredentials.cs" />
     <Compile Include="Models\TwoFactorEnrollmentCredentials.cs" />
     <Compile Include="Models\YubiKeyEnrollmentCredentials.cs" />
     <Compile Include="System\Collections\ObjectModel\Extensions.cs" />
+    <Compile Include="ViewModels\Pages\SelfUpdatingPage.cs" />
     <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileSelectPanel.cs" />
     <Compile Include="Models\DownloadedFileCorruptException.cs" />
     <Compile Include="Models\FederatedInstanceSource.cs" />

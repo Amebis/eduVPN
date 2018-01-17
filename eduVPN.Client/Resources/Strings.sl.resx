@@ -330,8 +330,8 @@ Omogoča SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-stopenjsko overovljanje</value>
   </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>Novejša verzija odjemalca VPN je prenešena in pripravljena na posodobitev iz {0} na {1}.</value>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>Nameščena verzija odjemalca VPN je {0}. Na spletu je na voljo novejša verzija {1}.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
@@ -343,8 +343,8 @@ Omogoča SURFnet</value>
   <data name="SelfUpdatePopupSkip" xml:space="preserve">
     <value>Preskoči to verzijo</value>
   </data>
-  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
-    <value>Posodobi zdaj
+  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
+    <value>Prenesi in posodobi zdaj
 (Odjemalec se bo ponovno zagnal)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
@@ -395,5 +395,8 @@ Omogoča SURFnet</value>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Prosimo počakajte ...</value>
     <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+    <value>Pripravljam posodobitev ...</value>
   </data>
 </root>

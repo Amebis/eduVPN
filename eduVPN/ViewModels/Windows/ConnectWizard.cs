@@ -17,15 +17,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Threading;
-using System.Xml;
 
 namespace eduVPN.ViewModels.Windows
 {
@@ -609,6 +606,20 @@ namespace eduVPN.ViewModels.Windows
         }
         private AboutPage _about_page;
 
+        /// <summary>
+        /// Self-update wizard page
+        /// </summary>
+        public SelfUpdatingPage SelfUpdatingPage
+        {
+            get
+            {
+                if (_self_updating_page == null)
+                    _self_updating_page = new SelfUpdatingPage(this);
+                return _self_updating_page;
+            }
+        }
+        private SelfUpdatingPage _self_updating_page;
+
         #endregion
 
         #endregion
@@ -744,9 +755,6 @@ namespace eduVPN.ViewModels.Windows
                         Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
                         try
                         {
-                            var working_folder = Path.GetTempPath();
-                            var installer_filename = working_folder + "eduVPNClient.exe";
-                            var updater_filename = working_folder + "eduVPNClient.wsf";
                             Dictionary<string, object> obj_web = null;
                             Version repo_version = null, product_version = null;
                             var discovery_uri = Properties.Settings.Default.SelfUpdateDescr.Uri;
@@ -755,17 +763,6 @@ namespace eduVPN.ViewModels.Windows
                             {
                                 Parallel.ForEach(new List<Action>()
                                 {
-                                    () =>
-                                    {
-                                        if (File.Exists(updater_filename))
-                                        {
-                                            // Clean stale updater WSF file. If possible.
-                                            Trace.TraceInformation("Deleting file {0}...", updater_filename);
-                                            try { File.Delete(updater_filename); }
-                                            catch (Exception ex) { Trace.TraceWarning("Deleting {0} file failed: {1}", updater_filename, ex.ToString()); }
-                                        }
-                                    },
-
                                     () =>
                                     {
                                         // Get self-update.
@@ -857,122 +854,6 @@ namespace eduVPN.ViewModels.Windows
                                 continue;
                             }
 
-                            var installer_ready = false;
-                            var repo_hash = ((string)obj_web["hash-sha256"]).FromHexToBin();
-                            if (File.Exists(installer_filename))
-                            {
-                                // File already exists. Verify its integrity.
-                                Trace.TraceInformation("Verifying installer file {0} integrity...", installer_filename);
-                                try
-                                {
-                                    using (BinaryReader reader = new BinaryReader(File.Open(installer_filename, FileMode.Open)))
-                                    {
-                                        var hash = new eduEd25519.SHA256();
-                                        var buffer = new byte[1048576];
-
-                                        for (; ; )
-                                        {
-                                            // Read data and hash it.
-                                            Abort.Token.ThrowIfCancellationRequested();
-                                            var buffer_length = reader.Read(buffer, 0, buffer.Length);
-                                            if (buffer_length == 0)
-                                                break;
-                                            hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
-                                        }
-
-                                        hash.TransformFinalBlock(buffer, 0, 0);
-                                        if (!hash.Hash.SequenceEqual(repo_hash))
-                                            throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, installer_filename));
-                                    }
-
-                                    Trace.TraceInformation("{0} integrity OK.", installer_filename);
-                                    installer_ready = true;
-                                }
-                                catch (OperationCanceledException) { throw; }
-                                catch (Exception ex)
-                                {
-                                    Trace.TraceWarning("Error: {0}", ex.ToString());
-
-                                    // Delete file. If possible.
-                                    Trace.TraceInformation("Deleting file {0}...", installer_filename);
-                                    try { File.Delete(installer_filename); }
-                                    catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
-                                }
-                            }
-
-                            if (!installer_ready)
-                            {
-                                // Download installer.
-                                var binary_uris = (List<object>)obj_web["uri"];
-                                while (binary_uris.Count > 0)
-                                {
-                                    Abort.Token.ThrowIfCancellationRequested();
-                                    var uri_idx = random.Next(binary_uris.Count);
-                                    try
-                                    {
-                                        var binary_uri = new Uri(discovery_uri, (string)binary_uris[uri_idx]);
-                                        Trace.TraceInformation("Downloading installer file from {0}...", binary_uri.AbsoluteUri);
-                                        var request = WebRequest.Create(binary_uri);
-                                        using (var response = request.GetResponse())
-                                        using (var stream = response.GetResponseStream())
-                                        {
-                                            try
-                                            {
-                                                // Read to file.
-                                                using (BinaryWriter writer = new BinaryWriter(File.Open(installer_filename, FileMode.Create)))
-                                                {
-                                                    var hash = new eduEd25519.SHA256();
-                                                    var buffer = new byte[1048576];
-
-                                                    for (; ; )
-                                                    {
-                                                        // Wait for the data to arrive.
-                                                        Abort.Token.ThrowIfCancellationRequested();
-                                                        var buffer_length = stream.Read(buffer, 0, buffer.Length);
-                                                        if (buffer_length == 0)
-                                                            break;
-
-                                                        // Append it to the file and hash it.
-                                                        Abort.Token.ThrowIfCancellationRequested();
-                                                        writer.Write(buffer, 0, buffer_length);
-                                                        hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
-                                                    }
-
-                                                    hash.TransformFinalBlock(buffer, 0, 0);
-                                                    if (!hash.Hash.SequenceEqual(repo_hash))
-                                                        throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, binary_uri.AbsoluteUri));
-                                                }
-
-                                                installer_ready = true;
-                                                break;
-                                            }
-                                            catch
-                                            {
-                                                // Delete file. If possible.
-                                                Trace.TraceInformation("Deleting file {0}...", installer_filename);
-                                                try { File.Delete(installer_filename); }
-                                                catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
-
-                                                throw;
-                                            }
-                                        }
-                                    }
-                                    catch (OperationCanceledException) { throw; }
-                                    catch (Exception ex)
-                                    {
-                                        Trace.TraceWarning("Error: {0}", ex.ToString());
-                                        binary_uris.RemoveAt(uri_idx);
-                                    }
-                                }
-                            }
-
-                            if (!installer_ready)
-                            {
-                                // The installer file is not ready.
-                                Trace.TraceWarning("Installer file not available. Aborting...");
-                                continue;
-                            }
-
                             // We're in the background thread - raise the prompt event via dispatcher.
                             Trace.TraceInformation("Prompting user to update...");
                             var e_prompt = new PromptSelfUpdateEventArgs(
@@ -980,76 +861,22 @@ namespace eduVPN.ViewModels.Windows
                                 repo_version,
                                 eduJSON.Parser.GetValue(obj_web, "changelog_uri", out string changelog) ? new Uri(changelog) : null);
                             Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => PromptSelfUpdate?.Invoke(this, e_prompt)));
-                            bool quit = false;
 
                             switch (e_prompt.Action)
                             {
                                 case PromptSelfUpdateActionType.Update:
+                                    // Pass control to the self-update page.
+                                    SelfUpdatingPage.ObjWeb = obj_web;
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                     {
-                                        // Prepare WSF file.
-                                        Trace.TraceInformation("Creating update script file {0}...", updater_filename);
-                                        using (XmlTextWriter writer = new XmlTextWriter(updater_filename, null))
-                                        {
-                                            writer.WriteStartDocument();
-                                            writer.WriteStartElement("package");
-                                            writer.WriteStartElement("job");
-
-                                            writer.WriteStartElement("reference");
-                                            writer.WriteAttributeString("object", "WScript.Shell");
-                                            writer.WriteEndElement(); // reference
-
-                                            writer.WriteStartElement("reference");
-                                            writer.WriteAttributeString("object", "Scripting.FileSystemObject");
-                                            writer.WriteEndElement(); // reference
-
-                                            writer.WriteStartElement("script");
-                                            writer.WriteAttributeString("language", "JScript");
-                                            var installer_arguments_esc = eduJSON.Parser.GetValue(obj_web, "arguments", out string installer_arguments) ? " " + HttpUtility.JavaScriptStringEncode(installer_arguments) : "";
-                                            var argv = Environment.GetCommandLineArgs();
-                                            var arguments = new StringBuilder();
-                                            for (long i = 1, n = argv.LongLength; i < n; i++)
-                                            {
-                                                if (i > 1) arguments.Append(" ");
-                                                arguments.Append("\"");
-                                                arguments.Append(argv[i].Replace("\"", "\"\""));
-                                                arguments.Append("\"");
-                                            }
-                                            var script = new StringBuilder();
-                                            script.AppendLine("// This script was auto-generated.");
-                                            script.AppendLine("// Launch installer file and wait for the update to finish.");
-                                            script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
-                                            script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installer_filename.Replace("\"", "\"\"")) + "\\\"" + installer_arguments_esc + "\", 0, true) == 0) {");
-                                            script.AppendLine("  // Installer succeeded. Relaunch the application.");
-                                            script.AppendLine("  var shl = WScript.CreateObject(\"Shell.Application\");");
-                                            script.AppendLine("  shl.ShellExecute(\"" + HttpUtility.JavaScriptStringEncode(argv[0]) + "\", \"" + HttpUtility.JavaScriptStringEncode(arguments.ToString()) + "\", \"" + HttpUtility.JavaScriptStringEncode(Environment.CurrentDirectory) + "\");");
-                                            script.AppendLine("  // Delete the installer file.");
-                                            script.AppendLine("  var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");");
-                                            script.AppendLine("  try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(installer_filename) + "\", true); } catch (err) {}");
-                                            script.AppendLine("}");
-                                            writer.WriteCData(script.ToString());
-                                            writer.WriteEndElement(); // script
-
-                                            writer.WriteEndElement(); // job
-                                            writer.WriteEndElement(); // package
-                                            writer.WriteEndDocument();
-                                        }
-
-                                        // Launch wscript.exe with WSF file.
-                                        Trace.TraceInformation("Launching update script file {0}...", updater_filename);
-                                        var process = new Process();
-                                        process.StartInfo.FileName = "wscript.exe";
-                                        process.StartInfo.Arguments = "\"" + updater_filename + "\"";
-                                        process.StartInfo.WorkingDirectory = working_folder;
-                                        process.Start();
-
-                                        // Quit the client.
-                                        quit = true;
-                                    }
+                                        if (NavigateTo.CanExecute(SelfUpdatingPage))
+                                            NavigateTo.Execute(SelfUpdatingPage);
+                                    }));
                                     goto case PromptSelfUpdateActionType.AskLater;
 
                                 case PromptSelfUpdateActionType.AskLater:
                                     // Mark the timestamp of the prompt.
-                                    Trace.TraceInformation("User will be reminded after three days again. (Should an update is still required.)");
+                                    Trace.TraceInformation("User will be reminded after three days again. (Should the update be still required.)");
                                     Properties.Settings.Default.SelfUpdateLastReminder = DateTime.UtcNow;
                                     break;
 
@@ -1062,16 +889,9 @@ namespace eduVPN.ViewModels.Windows
 
                             // Mark the version of this prompt.
                             Properties.Settings.Default.SelfUpdateLastVersion = repo_version.ToString();
-
-                            if (quit)
-                            {
-                                // Ask the view to quit.
-                                Trace.TraceInformation("Quitting client...");
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => QuitApplication?.Invoke(this, EventArgs.Empty)));
-                            }
                         }
                         catch (OperationCanceledException) { }
-                        catch (Exception ex) { Trace.TraceError("Error: {0}", ex.ToString()); }
+                        catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
                         finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                     }
                     // Sleep for 23-24h, then retry.
@@ -1307,6 +1127,16 @@ namespace eduVPN.ViewModels.Windows
                 // We're in the background thread - raise event via dispatcher.
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestTwoFactorAuthentication?.Invoke(sender, e)));
             }
+        }
+
+        /// <summary>
+        /// Ask view to quit.
+        /// </summary>
+        /// <param name="sender"></param>
+        public void OnQuitApplication(object sender)
+        {
+            Trace.TraceInformation("Quitting client...");
+            QuitApplication?.Invoke(sender, EventArgs.Empty);
         }
 
         #endregion

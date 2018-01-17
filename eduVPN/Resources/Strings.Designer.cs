@@ -115,6 +115,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Installer file not available. Updating aborted..
+        /// </summary>
+        internal static string ErrorInstallerFileUnavailable {
+            get {
+                return ResourceManager.GetString("ErrorInstallerFileUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading of the provider source {0} failed..
         /// </summary>
         internal static string ErrorInstanceSourceInfoLoad {

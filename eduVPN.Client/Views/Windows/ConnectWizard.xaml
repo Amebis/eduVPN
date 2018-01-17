@@ -69,6 +69,9 @@
         <DataTemplate DataType="{x:Type vmpages:AboutPage}">
             <pages:AboutPage/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:SelfUpdatingPage}">
+            <pages:SelfUpdatingPage/>
+        </DataTemplate>
 
         <ContextMenu x:Key="SystemTrayMenu">
             <MenuItem

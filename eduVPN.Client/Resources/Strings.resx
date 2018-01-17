@@ -330,8 +330,8 @@ Powered by SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication</value>
   </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>A newer version of the VPN client was downloaded and is ready to update from {0} to {1}.</value>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>Version {0} of VPN client is installed. A newer version {1} is is available online.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
@@ -343,8 +343,8 @@ Powered by SURFnet</value>
   <data name="SelfUpdatePopupSkip" xml:space="preserve">
     <value>Skip this version</value>
   </data>
-  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
-    <value>Update now
+  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
+    <value>Download and update now
 (Client will restart)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
@@ -395,5 +395,8 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Please wait...</value>
     <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+    <value>Preparing update...</value>
   </data>
 </root>

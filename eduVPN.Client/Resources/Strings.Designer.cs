@@ -423,11 +423,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A newer version of the VPN client was downloaded and is ready to update from {0} to {1}..
+        ///   Looks up a localized string similar to Version {0} of VPN client is installed. A newer version {1} is is available online..
         /// </summary>
-        public static string SelfUpdatePopupMessage2 {
+        public static string SelfUpdatePopupMessage3 {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupMessage2", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupMessage3", resourceCulture);
             }
         }
         
@@ -450,12 +450,21 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update now
+        ///   Looks up a localized string similar to Download and update now
         ///(Client will restart).
         /// </summary>
-        public static string SelfUpdatePopupUpdate3 {
+        public static string SelfUpdatePopupUpdate4 {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupUpdate3", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupUpdate4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing update....
+        /// </summary>
+        public static string SelfUpdatingPageTitle {
+            get {
+                return ResourceManager.GetString("SelfUpdatingPageTitle", resourceCulture);
             }
         }
         

@@ -21,7 +21,7 @@
     Style="{StaticResource eduVPNPopupWindow}">
 
     <windows:Window.Description>
-        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage2}">
+        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage3}">
             <Binding Path="InstalledVersion"/>
             <Binding Path="AvailableVersion"/>
         </MultiBinding>
@@ -30,7 +30,7 @@
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding Path=ShowChangelog, Converter={StaticResource CommandRowHeightConverter}, FallbackValue=0}"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <!--
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -72,7 +72,7 @@
                     Grid.Column="1"
                     Margin="10"
                     Style="{StaticResource eduVPNChoiceNoteStyle}"
-                    Text="{x:Static res:Strings.SelfUpdatePopupUpdate3}"/>
+                    Text="{x:Static res:Strings.SelfUpdatePopupUpdate4}"/>
             </Grid>
         </Button>
 

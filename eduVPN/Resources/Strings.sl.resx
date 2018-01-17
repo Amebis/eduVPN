@@ -238,4 +238,7 @@
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
     <value>Povezujem se na strežnik TCP ...</value>
   </data>
+  <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
+    <value>Namestitvena datoteka ni na voljo. Posodabljanje prekinjeno.</value>
+  </data>
 </root>
