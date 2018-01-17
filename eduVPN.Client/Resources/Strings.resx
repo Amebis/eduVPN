@@ -406,7 +406,7 @@ If you continue, your user settings will be reset to the default.</value>
 (Client will restart)</value>
   </data>
   <data name="SelfUpdatePopupMessage3" xml:space="preserve">
-    <value>Version {0} of VPN client is installed. A newer version {1} is is available online.</value>
+    <value>Version {0} of VPN client is installed. A newer version {1} is available online.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
