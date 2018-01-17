@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -149,7 +149,7 @@
     <value>Loading of user info failed.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Saving of profile's OpenVPN configuration to "{0}" failed.</value>
+    <value>Saving of profile&apos;s OpenVPN configuration to &quot;{0}&quot; failed.</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Client authorization failed.</value>
