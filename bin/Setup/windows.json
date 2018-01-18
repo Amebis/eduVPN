@@ -1,10 +1,10 @@
 {
-    "arguments": "/install /passive",
-    "hash-sha256": "F2E8ABD07C52B53947EDFA8404410882790B99367799C64BF4659E092F13D7D2",
-    "seq": 22,
+    "arguments": "/install",
+    "hash-sha256": "070C9DE3764DC824F205D70515C40E19005E272AF41001570D46EADF4CE54D53",
+    "seq": 25,
     "uri": [
-        "eduVPNClient_1.0.15.exe"
+        "eduVPNClient_1.0.17.exe"
     ],
-    "version": "1.0.15",
+    "version": "1.0.17",
     "changelog_uri": "https://github.com/Amebis/eduVPN/releases"
 }
