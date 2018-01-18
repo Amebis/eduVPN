@@ -52,8 +52,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
-	FILEVERSION 1,0,17,0
-	PRODUCTVERSION 1,0,17,0
+	FILEVERSION 1,0,18,0
+	PRODUCTVERSION 1,0,18,0
 	FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
 #ifdef _DEBUG
 	FILEFLAGS VS_FF_DEBUG
@@ -70,11 +70,11 @@ BEGIN
 		BEGIN
 			VALUE "CompanyName",      "SURF"
 			VALUE "FileDescription",  "eduVPN Native Resources"
-			VALUE "FileVersion",      "1.0.17"
+			VALUE "FileVersion",      "1.0.18"
 			VALUE "LegalCopyright",   "Copyright © The Commons Conservancy eduVPN Programme 2017"
 			VALUE "OriginalFilename", "eduVPN.Resources.dll"
 			VALUE "ProductName",      "eduVPN"
-			VALUE "ProductVersion",   "1.0.17"
+			VALUE "ProductVersion",   "1.0.18"
 		END
 	END
 	BLOCK "VarFileInfo"
