@@ -163,7 +163,23 @@
             IsCancel="True"
             Style="{StaticResource eduVPNHeaderButtonStyle}"
             AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}"
-            Click="Hide_Click">×</Button>
+            Click="Hide_Click">
+            <Border
+                Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                BorderBrush="{x:Null}"
+                BorderThickness="0">
+                <Canvas Width="12" Height="12">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="0.075" ScaleX="0.075"/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Polygon
+                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        Points="147.74561,34.36035 135.71924,22.33301 85.03955,73.0127 34.35986,22.33301 22.3335,34.36035 73.0127,85.03906 22.3335,135.71875 34.35986,147.74609 85.03955,97.06641 135.71924,147.74609 147.74561,135.71875 97.06641,85.03906 "/>
+                </Canvas>
+            </Border>
+        </Button>
 
         <Control
             Grid.Row="1"
