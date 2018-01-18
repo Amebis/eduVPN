@@ -144,83 +144,86 @@ namespace eduVPN.Xml
 
             ct.ThrowIfCancellationRequested();
 
-            // Read the data.
-            var data = new byte[0];
-            using (var stream = response.GetResponseStream())
+            using (response)
             {
-                var buffer = new byte[1048576];
-                for (; ; )
+                // Read the data.
+                var data = new byte[0];
+                using (var stream = response.GetResponseStream())
                 {
-                    // Read data chunk.
-                    var task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
-                    try { task.Wait(ct); }
-                    catch (AggregateException ex) { throw ex.InnerException; }
-                    if (task.Result == 0)
-                        break;
-
-                    // Append it to the data.
-                    var data_new = new byte[data.LongLength + task.Result];
-                    Array.Copy(data, data_new, data.LongLength);
-                    Array.Copy(buffer, 0, data_new, data.LongLength, task.Result);
-                    data = data_new;
-                }
-            }
-
-            if (pub_key != null)
-            {
-                // Generate signature URI.
-                var builder_sig = new UriBuilder(uri);
-                builder_sig.Path += ".sig";
-
-                // Create signature request.
-                request = WebRequest.Create(builder_sig.Uri);
-                request.CachePolicy = CachePolicy;
-                if (token != null)
-                    token.AddToRequest(request);
-                if (request is HttpWebRequest request_http_sig)
-                {
-                    request_http_sig.UserAgent = UserAgent;
-                    request_http_sig.Accept = "application/pgp-signature";
-                }
-
-                // Read the signature.
-                byte[] signature = null;
-                using (var response_sig = request.GetResponse())
-                using (var stream_sig = response_sig.GetResponseStream())
-                {
-                    ct.ThrowIfCancellationRequested();
-
-                    using (var reader_sig = new StreamReader(stream_sig))
+                    var buffer = new byte[1048576];
+                    for (; ; )
                     {
-                        var task = reader_sig.ReadToEndAsync();
+                        // Read data chunk.
+                        var task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
                         try { task.Wait(ct); }
                         catch (AggregateException ex) { throw ex.InnerException; }
-                        signature = Convert.FromBase64String(task.Result);
+                        if (task.Result == 0)
+                            break;
+
+                        // Append it to the data.
+                        var data_new = new byte[data.LongLength + task.Result];
+                        Array.Copy(data, data_new, data.LongLength);
+                        Array.Copy(buffer, 0, data_new, data.LongLength, task.Result);
+                        data = data_new;
                     }
                 }
 
-                ct.ThrowIfCancellationRequested();
+                if (pub_key != null)
+                {
+                    // Generate signature URI.
+                    var builder_sig = new UriBuilder(uri);
+                    builder_sig.Path += ".sig";
 
-                // Verify signature.
-                using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
-                    if (!key.VerifyDetached(data, signature))
-                        throw new System.Security.SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, uri));
+                    // Create signature request.
+                    request = WebRequest.Create(builder_sig.Uri);
+                    request.CachePolicy = CachePolicy;
+                    if (token != null)
+                        token.AddToRequest(request);
+                    if (request is HttpWebRequest request_http_sig)
+                    {
+                        request_http_sig.UserAgent = UserAgent;
+                        request_http_sig.Accept = "application/pgp-signature";
+                    }
+
+                    // Read the signature.
+                    byte[] signature = null;
+                    using (var response_sig = request.GetResponse())
+                    using (var stream_sig = response_sig.GetResponseStream())
+                    {
+                        ct.ThrowIfCancellationRequested();
+
+                        using (var reader_sig = new StreamReader(stream_sig))
+                        {
+                            var task = reader_sig.ReadToEndAsync();
+                            try { task.Wait(ct); }
+                            catch (AggregateException ex) { throw ex.InnerException; }
+                            signature = Convert.FromBase64String(task.Result);
+                        }
+                    }
+
+                    ct.ThrowIfCancellationRequested();
+
+                    // Verify signature.
+                    using (eduEd25519.ED25519 key = new eduEd25519.ED25519(pub_key))
+                        if (!key.VerifyDetached(data, signature))
+                            throw new System.Security.SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, uri));
+                }
+
+                return
+                    response is HttpWebResponse response_web ?
+                    new Response()
+                    {
+                        Value = Encoding.UTF8.GetString(data),
+                        Timestamp = DateTime.TryParse(response_web.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
+                        ETag = response_web.GetResponseHeader("ETag"),
+                        IsFresh = true
+                    } :
+                    new Response()
+                    {
+                        Value = Encoding.UTF8.GetString(data),
+                        IsFresh = true
+                    };
             }
-
-            return
-                response is HttpWebResponse response_web ?
-                new Response()
-                {
-                    Value = Encoding.UTF8.GetString(data),
-                    Timestamp = DateTime.TryParse(response_web.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
-                    ETag = response_web.GetResponseHeader("ETag"),
-                    IsFresh = true
-                } :
-                new Response()
-                {
-                    Value = Encoding.UTF8.GetString(data),
-                    IsFresh = true
-                };
         }
 
         #endregion
