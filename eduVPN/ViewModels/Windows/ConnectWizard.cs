@@ -758,7 +758,6 @@ namespace eduVPN.ViewModels.Windows
                         {
                             Dictionary<string, object> obj_web = null;
                             Version repo_version = null, product_version = null;
-                            var discovery_uri = Properties.Settings.Default.SelfUpdateDescr.Uri;
 
                             try
                             {
@@ -767,6 +766,7 @@ namespace eduVPN.ViewModels.Windows
                                     () =>
                                     {
                                         // Get self-update.
+                                        var discovery_uri = Properties.Settings.Default.SelfUpdateDescr.Uri;
                                         Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", discovery_uri.AbsoluteUri);
                                         obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
                                             discovery_uri,
