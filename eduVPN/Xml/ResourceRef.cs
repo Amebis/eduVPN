@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -17,6 +18,15 @@ namespace eduVPN.Xml
     /// </summary>
     public class ResourceRef : IXmlSerializable
     {
+        #region Fields
+
+        /// <summary>
+        /// Base URI to be used for reading relative URIs
+        /// </summary>
+        private static readonly Uri _assembly_uri = new Uri(Assembly.GetExecutingAssembly().Location);
+        
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -42,7 +52,7 @@ namespace eduVPN.Xml
         {
             string v;
 
-            Uri = !string.IsNullOrWhiteSpace(v = reader[nameof(Uri)]) ? new Uri(v) : null;
+            Uri = !string.IsNullOrWhiteSpace(v = reader[nameof(Uri)]) ? new Uri(_assembly_uri, v) : null;
             PublicKey = !string.IsNullOrWhiteSpace(v = reader[nameof(PublicKey)]) ? PublicKey = Convert.FromBase64String(v) : null;
         }
 
