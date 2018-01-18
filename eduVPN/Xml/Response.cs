@@ -134,10 +134,15 @@ namespace eduVPN.Xml
             catch (WebException ex)
             {
                 // When the content was not modified, return the previous one.
-                if (ex.Response != null && ex.Response is HttpWebResponse response_http && response_http.StatusCode == HttpStatusCode.NotModified)
+                if (ex.Response is HttpWebResponse response_http)
                 {
-                    previous.IsFresh = false;
-                    return previous;
+                    if (response_http.StatusCode == HttpStatusCode.NotModified)
+                    {
+                        previous.IsFresh = false;
+                        return previous;
+                    }
+
+                    throw;
                 }
                 else
                     throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
