@@ -642,14 +642,16 @@ namespace eduVPN.ViewModels.Windows
             var worker = new BackgroundWorker() { WorkerReportsProgress = true };
             worker.DoWork += (object sender, DoWorkEventArgs e) =>
             {
-                var source_type_length = (int)InstanceSourceType._end;
-                _instance_sources = new InstanceSource[source_type_length];
+                int
+                    source_type_start = (int)InstanceSourceType._start,
+                    source_type_end = (int)InstanceSourceType._end;
+                _instance_sources = new InstanceSource[source_type_end];
 
                 // Setup progress feedback.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, (source_type_length - (int)InstanceSourceType._start) * 2, 0)));
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, (source_type_end - source_type_start) * 2, 0)));
 
                 // Spawn instance source loading threads.
-                Parallel.For((int)InstanceSourceType._start, source_type_length, source_index =>
+                Parallel.For(source_type_start, source_type_end, source_index =>
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
                     try
@@ -713,7 +715,6 @@ namespace eduVPN.ViewModels.Windows
                                     InitializingPage.Progress.Value -= ticks;
                                 }));
                             }
-
                         }
                         // Sleep for 3s, then retry.
                         while (!Abort.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(3)));
