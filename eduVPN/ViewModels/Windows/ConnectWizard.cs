@@ -960,6 +960,7 @@ namespace eduVPN.ViewModels.Windows
                                 // Prepare web request.
                                 var request = WebRequest.Create(api.TokenEndpoint);
                                 request.CachePolicy = Xml.Response.CachePolicy;
+                                request.Proxy = null;
                                 if (request is HttpWebRequest request_http)
                                     request_http.UserAgent = Xml.Response.UserAgent;
 
@@ -1030,6 +1031,7 @@ namespace eduVPN.ViewModels.Windows
                             // Prepare web request.
                             var request = WebRequest.Create(api.TokenEndpoint);
                             request.CachePolicy = Xml.Response.CachePolicy;
+                            request.Proxy = null;
                             if (request is HttpWebRequest request_http)
                                 request_http.UserAgent = Xml.Response.UserAgent;
 

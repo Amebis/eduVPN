@@ -90,6 +90,7 @@ namespace eduVPN.ViewModels.Pages
                             var binary_uri = new Uri(discovery_uri, (string)binary_uris[uri_idx]);
                             Trace.TraceInformation("Downloading installer file from {0}...", binary_uri.AbsoluteUri);
                             var request = WebRequest.Create(binary_uri);
+                            request.Proxy = null;
                             using (var response = request.GetResponse())
                             using (var stream = response.GetResponseStream())
                             {

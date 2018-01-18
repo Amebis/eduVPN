@@ -90,6 +90,7 @@ namespace eduVPN.Xml
             // Create request.
             var request = WebRequest.Create(uri);
             request.CachePolicy = CachePolicy;
+            request.Proxy = null;
             if (token != null)
                 token.AddToRequest(request);
             if (request is HttpWebRequest request_http)
@@ -177,6 +178,7 @@ namespace eduVPN.Xml
                     // Create signature request.
                     request = WebRequest.Create(builder_sig.Uri);
                     request.CachePolicy = CachePolicy;
+                    request.Proxy = null;
                     if (token != null)
                         token.AddToRequest(request);
                     if (request is HttpWebRequest request_http_sig)

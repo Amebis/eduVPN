@@ -108,6 +108,7 @@ namespace eduVPN.Views.Controls
                         // Download the specified image.
                         var request = WebRequest.Create(uri);
                         request.CachePolicy = _default_request_cache_policy;
+                        request.Proxy = null;
                         using (var response = request.GetResponse())
                         using (var stream = response.GetResponseStream())
                         {
