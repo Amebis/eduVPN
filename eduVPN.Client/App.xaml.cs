@@ -115,6 +115,10 @@ namespace eduVPN.Client
             // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
+            // Client is using parallelism in web data retrieval.
+            // The default maximum concurrent connections set to 2 is a bottleneck.
+            ServicePointManager.DefaultConnectionLimit = 5;
+
             //// Set language preference.
             //var culture = new System.Globalization.CultureInfo("sl-SI");
             //System.Globalization.CultureInfo.DefaultThreadCurrentCulture = culture;
