@@ -250,8 +250,8 @@ Omogoča SURFnet</value>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
     <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za tega odjemalca VPN.</value>
   </data>
-  <data name="SettingsPageInterfaceTitle" xml:space="preserve">
-    <value>Izberite vmesnik TAP</value>
+  <data name="SettingsPageInterfaceTitle2" xml:space="preserve">
+    <value>_Izberite vmesnik TAP</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>Na_stavitve ...</value>
@@ -262,8 +262,8 @@ Omogoča SURFnet</value>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
     <value>Če se odjemalec VPN ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
   </data>
-  <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
-    <value>Vsili TCP</value>
+  <data name="SettingsPageForceTCPInterfaceTitle2" xml:space="preserve">
+    <value>Vsili _TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
     <value>Vnesite svoje geslo za »{0}«:</value>

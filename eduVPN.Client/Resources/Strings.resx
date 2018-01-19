@@ -249,8 +249,8 @@ Powered by SURFnet</value>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
     <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for this VPN client below.</value>
   </data>
-  <data name="SettingsPageInterfaceTitle" xml:space="preserve">
-    <value>Select TAP Interface</value>
+  <data name="SettingsPageInterfaceTitle2" xml:space="preserve">
+    <value>Select TAP _Interface</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Settings...</value>
@@ -261,8 +261,8 @@ Powered by SURFnet</value>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
     <value>If the VPN client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
   </data>
-  <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
-    <value>Connect Over TCP</value>
+  <data name="SettingsPageForceTCPInterfaceTitle2" xml:space="preserve">
+    <value>Connect Over _TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
     <value>Enter your password for "{0}":</value>

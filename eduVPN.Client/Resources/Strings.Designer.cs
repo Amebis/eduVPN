@@ -456,11 +456,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect Over TCP.
+        ///   Looks up a localized string similar to Connect Over _TCP.
         /// </summary>
-        public static string SettingsPageForceTCPInterfaceTitle {
+        public static string SettingsPageForceTCPInterfaceTitle2 {
             get {
-                return ResourceManager.GetString("SettingsPageForceTCPInterfaceTitle", resourceCulture);
+                return ResourceManager.GetString("SettingsPageForceTCPInterfaceTitle2", resourceCulture);
             }
         }
         
@@ -474,11 +474,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select TAP Interface.
+        ///   Looks up a localized string similar to Select TAP _Interface.
         /// </summary>
-        public static string SettingsPageInterfaceTitle {
+        public static string SettingsPageInterfaceTitle2 {
             get {
-                return ResourceManager.GetString("SettingsPageInterfaceTitle", resourceCulture);
+                return ResourceManager.GetString("SettingsPageInterfaceTitle2", resourceCulture);
             }
         }
         

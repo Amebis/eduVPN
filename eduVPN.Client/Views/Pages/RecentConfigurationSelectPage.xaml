@@ -66,6 +66,7 @@
                     Source="pack://application:,,,/Resources/SecureInternetBlue.png"/>
 
                 <TextBlock
+                    Name="SecureInternetLabel"
                     Grid.Column="1"
                     Margin="5,2"
                     Style="{StaticResource eduVPNSectionTitleStyle}"
@@ -82,7 +83,8 @@
                 Grid.Row="1"
                 Margin="5"
                 IsTabStop="False"
-                Content="{Binding Path=Panels[1]}"/>
+                Content="{Binding Path=Panels[1]}"
+                AutomationProperties.LabeledBy="{Binding ElementName=SecureInternetLabel}"/>
         </Grid>
 
         <Grid
@@ -110,6 +112,7 @@
                     Source="pack://application:,,,/Resources/InstituteAccessBlue.png"/>
 
                 <TextBlock
+                    Name="InstituteAccessLabel"
                     Grid.Column="1"
                     Margin="5,2"
                     Style="{StaticResource eduVPNSectionTitleStyle}"
@@ -126,7 +129,8 @@
                 Grid.Row="1"
                 Margin="5"
                 IsTabStop="False"
-                Content="{Binding Path=Panels[2]}"/>
+                Content="{Binding Path=Panels[2]}"
+                AutomationProperties.LabeledBy="{Binding ElementName=InstituteAccessLabel}"/>
         </Grid>
 
         <Button

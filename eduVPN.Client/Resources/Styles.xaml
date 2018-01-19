@@ -197,6 +197,12 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="eduVPNVisualSeparatorStyle" TargetType="{x:Type Rectangle}">
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Fill" Value="{StaticResource eduVPNHeaderBrush}"/>
+    </Style>
+
 
     <!--
         eduVPN ListBoxes
@@ -1013,6 +1019,26 @@
     -->
 
     <Style x:Key="eduVPNSectionTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
+    </Style>
+
+
+    <!--
+        Labels
+    -->
+
+    <Style x:Key="eduVPNLabelStyle" TargetType="{x:Type Label}">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Style.Resources>
+            <Style TargetType="AccessText">
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="Margin" Value="-5"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="eduVPNSectionLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource eduVPNLabelStyle}">
         <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
     </Style>
 
