@@ -24,9 +24,9 @@
                 <RowDefinition Height="43"/>
             </Grid.RowDefinitions>
 
-            <Separator
+            <Rectangle
                 Grid.ColumnSpan="2"
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <controls:ImageWithFallback
                 Grid.Column="0"
@@ -82,9 +82,9 @@
                 <RowDefinition Height="43"/>
             </Grid.RowDefinitions>
 
-            <Separator
+            <Rectangle
                 Grid.ColumnSpan="3"
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <Image
                 Grid.Column="0"
@@ -142,9 +142,9 @@
                 <RowDefinition Height="32"/>
             </Grid.RowDefinitions>
 
-            <Separator
+            <Rectangle
                 Grid.ColumnSpan="3"
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <Image
                 Grid.Column="0"
@@ -201,9 +201,9 @@
                 <RowDefinition Height="43"/>
             </Grid.RowDefinitions>
 
-            <Separator
+            <Rectangle
                 Grid.ColumnSpan="3"
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <controls:ImageWithFallback
                 Grid.Column="0"
@@ -282,8 +282,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Separator
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+            <Rectangle
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -306,8 +306,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Separator
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+            <Rectangle
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -331,9 +331,9 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Separator
+            <Rectangle
                 Grid.ColumnSpan="2"
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -384,8 +384,8 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Separator
-                Style="{StaticResource eduVPNListBoxItemSeparatorStyle}"/>
+            <Rectangle
+                Style="{StaticResource eduVPNListBoxItemVisualSeparatorStyle}"/>
 
             <TextBlock
                 Grid.Column="1"

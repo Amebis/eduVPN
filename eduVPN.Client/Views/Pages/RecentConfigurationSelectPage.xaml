@@ -72,11 +72,11 @@
                     Style="{StaticResource eduVPNSectionTitleStyle}"
                     Text="{x:Static res:Strings.SecureInternetTitle}"/>
 
-                <Separator
+                <Rectangle
                     Grid.ColumnSpan="2"
                     Grid.Row="1"
                     Margin="5,2"
-                    Style="{StaticResource eduVPNSeparatorStyle}"/>
+                    Style="{StaticResource eduVPNVisualSeparatorStyle}"/>
             </Grid>
 
             <ContentControl
@@ -118,11 +118,11 @@
                     Style="{StaticResource eduVPNSectionTitleStyle}"
                     Text="{x:Static res:Strings.InstituteAccessTitle}"/>
 
-                <Separator
+                <Rectangle
                     Grid.ColumnSpan="2"
                     Grid.Row="1"
                     Margin="5,2"
-                    Style="{StaticResource eduVPNSeparatorStyle}"/>
+                    Style="{StaticResource eduVPNVisualSeparatorStyle}"/>
             </Grid>
 
             <ContentControl
