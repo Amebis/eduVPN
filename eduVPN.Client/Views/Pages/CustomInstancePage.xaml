@@ -23,14 +23,26 @@
     <Grid
         VerticalAlignment="Top"
         Style="{StaticResource eduVPNPageContentGridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <TextBlock
+            VerticalAlignment="Center"
+            Margin="5,5,0,5"
+            Style="{StaticResource eduVPNTextBlockStyle}"
+            Text="https://"/>
+
         <ComboBox
             x:Name="InstanceHostname"
-            Margin="5"
+            Grid.Column="1"
+            Margin="0,5,5,5"
+            VerticalAlignment="Center"
             Style="{StaticResource eduVPNComboBoxStyle}"
             Text="{Binding Path=Hostname, UpdateSourceTrigger=PropertyChanged}"
             TextSearch.TextPath=""
@@ -39,6 +51,7 @@
             IsEditable="True"/>
 
         <Button
+            Grid.ColumnSpan="2"
             Grid.Row="1"
             Margin="5"
             IsDefault="True"
