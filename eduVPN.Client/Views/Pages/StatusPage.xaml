@@ -17,7 +17,7 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.StatusPageTitle}"
+    Title="{Binding Path=Title}"
     Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Page.Resources>

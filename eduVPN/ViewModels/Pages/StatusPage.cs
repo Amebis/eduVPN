@@ -14,6 +14,18 @@ namespace eduVPN.ViewModels.Pages
     /// </summary>
     public class StatusPage : ConnectWizardPage
     {
+        #region Properties
+
+        /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.StatusPageTitle; }
+        }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>

@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Select VPN Type</value>
-  </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
     <value>The VPN client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization...</value>
   </data>
@@ -135,29 +132,14 @@
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Next &gt;</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
-    <value>Select Your Country</value>
-  </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Other Address</value>
-  </data>
-  <data name="CustomInstancePageDescription" xml:space="preserve">
-    <value>Enter hostname of your VPN provider.</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Connect</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Requires two-factor authentication</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
     <value>Warning! Your account is disabled. Please, contact your helpdesk for support.</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN Connection</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
     <value>Provider</value>
@@ -179,9 +161,6 @@
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notification</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Select Your Institution</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
     <value>Bytes In</value>
@@ -217,22 +196,16 @@
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Add other address</value>
   </data>
-  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Select one of the VPN types below.</value>
-  </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>E_xit</value>
   </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Initializing...</value>
-  </data>
   <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Access your institute&apos;s network.</value>
+    <value>Access your institute's network.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
@@ -258,9 +231,6 @@
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Open</value>
-  </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>About</value>
   </data>
   <data name="AboutPageCopyright" xml:space="preserve">
     <value>Copyright © 2017
@@ -288,24 +258,21 @@ Powered by SURFnet</value>
   <data name="ButtonSettingsTitle" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
-  </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>If the VPN client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this.</value>
+    <value>If the VPN client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
   </data>
   <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
     <value>Connect Over TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Enter your password for &quot;{0}&quot;:</value>
+    <value>Enter your password for "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Enter your username and password for &quot;{0}&quot;:</value>
+    <value>Enter your username and password for "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -325,7 +292,7 @@ Powered by SURFnet</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Select your two-factor method and enter the security token:</value>
-    <comment>&quot;securirty token&quot; sounds wrong</comment>
+    <comment>"securirty token" sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication</value>
@@ -357,7 +324,7 @@ If you continue, your user settings will be reset to the default.</value>
     <value>Corrupt User Settings</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>The required OAuth parameter &quot;state&quot; is missing or incorrect.</value>
+    <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Enroll</value>
@@ -395,7 +362,7 @@ If you continue, your user settings will be reset to the default.</value>
     <comment>{0}=installed version, {1}=available version</comment>
   </data>
   <data name="SelfUpdatePopupChangelog" xml:space="preserve">
-    <value>What&apos;s New?</value>
+    <value>What's New?</value>
   </data>
   <data name="SelfUpdatePopupMessage2" xml:space="preserve">
     <value>A newer version of the VPN client was downloaded and is ready to update from {0} to {1}.</value>
@@ -416,8 +383,5 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Please wait...</value>
     <comment>Displayed when a list is loading</comment>
-  </data>
-  <data name="SelfUpdatingPageTitle" xml:space="preserve">
-    <value>Preparing update...</value>
   </data>
 </root>

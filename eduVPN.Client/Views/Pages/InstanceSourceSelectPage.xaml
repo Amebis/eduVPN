@@ -16,8 +16,8 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.InstanceSourceSelectPageTitle}"
-    Description="{x:Static res:Strings.InstanceSourceSelectPageDescription}"
+    Title="{Binding Path=Title}"
+    Description="{Binding Path=Description}"
     Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Grid

@@ -17,7 +17,7 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.ConnectingProfileSelectPageTitle}"
+    Title="{Binding Path=Title}"
     Style="{StaticResource eduVPNConnectWizardPageWithSettings}">
 
     <pages:ConnectWizardPage.Resources>

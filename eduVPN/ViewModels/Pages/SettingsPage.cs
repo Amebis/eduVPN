@@ -22,6 +22,14 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.SettingsPageTitle; }
+        }
+
+        /// <summary>
         /// List of installed TAP network interfaces
         /// </summary>
         public ObservableCollection<eduVPN.Models.NetworkInterface> InterfaceList

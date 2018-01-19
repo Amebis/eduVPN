@@ -22,6 +22,22 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.InstanceSourceSelectPageTitle; }
+        }
+
+        /// <summary>
+        /// The page description
+        /// </summary>
+        public override string Description
+        {
+            get { return Resources.Strings.InstanceSourceSelectPageDescription; }
+        }
+
+        /// <summary>
         /// Select instance source command
         /// </summary>
         public DelegateCommand<InstanceSourceType?> SelectInstanceSource

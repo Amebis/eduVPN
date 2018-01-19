@@ -61,6 +61,60 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string AboutPageTitle {
+            get {
+                return ResourceManager.GetString("AboutPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Your Country.
+        /// </summary>
+        internal static string AuthenticatingCountrySelectPageTitle {
+            get {
+                return ResourceManager.GetString("AuthenticatingCountrySelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Your Institution.
+        /// </summary>
+        internal static string AuthenticatingInstituteSelectPageTitle {
+            get {
+                return ResourceManager.GetString("AuthenticatingInstituteSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect.
+        /// </summary>
+        internal static string ConnectingProfileSelectPageTitle {
+            get {
+                return ResourceManager.GetString("ConnectingProfileSelectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter hostname of your VPN provider..
+        /// </summary>
+        internal static string CustomInstancePageDescription {
+            get {
+                return ResourceManager.GetString("CustomInstancePageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other Address.
+        /// </summary>
+        internal static string CustomInstancePageTitle {
+            get {
+                return ResourceManager.GetString("CustomInstancePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to API server replied with an error..
         /// </summary>
         internal static string ErrorAPIServerReply {
@@ -268,11 +322,38 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initializing....
+        /// </summary>
+        internal static string InitializingPageTitle {
+            get {
+                return ResourceManager.GetString("InitializingPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forget {0}.
         /// </summary>
         internal static string InstanceForget {
             get {
                 return ResourceManager.GetString("InstanceForget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select one of the VPN types below..
+        /// </summary>
+        internal static string InstanceSourceSelectPageDescription {
+            get {
+                return ResourceManager.GetString("InstanceSourceSelectPageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select VPN Type.
+        /// </summary>
+        internal static string InstanceSourceSelectPageTitle {
+            get {
+                return ResourceManager.GetString("InstanceSourceSelectPageTitle", resourceCulture);
             }
         }
         
@@ -399,6 +480,33 @@ namespace eduVPN.Resources {
         internal static string ProfileTitle {
             get {
                 return ResourceManager.GetString("ProfileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing update....
+        /// </summary>
+        internal static string SelfUpdatingPageTitle {
+            get {
+                return ResourceManager.GetString("SelfUpdatingPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string SettingsPageTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VPN Connection.
+        /// </summary>
+        internal static string StatusPageTitle {
+            get {
+                return ResourceManager.GetString("StatusPageTitle", resourceCulture);
             }
         }
         

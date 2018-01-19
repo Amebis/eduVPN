@@ -16,8 +16,8 @@
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.CustomInstancePageTitle}"
-    Description="{x:Static res:Strings.CustomInstancePageDescription}"
+    Title="{Binding Path=Title}"
+    Description="{Binding Path=Description}"
     Style="{StaticResource eduVPNConnectWizardPage}"
     FocusManager.FocusedElement="{Binding ElementName=InstanceHostname}">
 

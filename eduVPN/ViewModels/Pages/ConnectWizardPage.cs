@@ -20,6 +20,16 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public virtual string Title { get; }
+
+        /// <summary>
+        /// The page description
+        /// </summary>
+        public virtual string Description { get; }
+
+        /// <summary>
         /// The connecting wizard
         /// </summary>
         public ConnectWizard Wizard { get; }

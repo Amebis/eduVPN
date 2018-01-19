@@ -23,6 +23,22 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.CustomInstancePageTitle; }
+        }
+
+        /// <summary>
+        /// The page description
+        /// </summary>
+        public override string Description
+        {
+            get { return Resources.Strings.CustomInstancePageDescription; }
+        }
+
+        /// <summary>
         /// Instance host name
         /// </summary>
         [CustomValidation(typeof(CustomInstancePage), nameof(CheckHostname))]

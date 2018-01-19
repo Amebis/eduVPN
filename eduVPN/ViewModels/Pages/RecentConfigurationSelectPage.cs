@@ -21,6 +21,14 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.ConnectingProfileSelectPageTitle; }
+        }
+
+        /// <summary>
         /// Configuration history panels
         /// </summary>
         public ConnectingSelectPanel[] Panels

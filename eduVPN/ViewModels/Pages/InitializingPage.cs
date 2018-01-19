@@ -17,6 +17,14 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.InitializingPageTitle; }
+        }
+
+        /// <summary>
         /// Initialization progress value
         /// </summary>
         public Range<int> Progress

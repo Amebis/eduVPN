@@ -19,6 +19,14 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.AboutPageTitle; }
+        }
+
+        /// <summary>
         /// Program version
         /// </summary>
         public Version Version

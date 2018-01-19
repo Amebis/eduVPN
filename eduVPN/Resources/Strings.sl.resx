@@ -149,7 +149,7 @@
     <value>Nalaganje podatkov o uporabniku ni uspelo.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Shranjevanje profilovih nastavitev OpenVPN v &quot;{0}&quot; ni uspelo.</value>
+    <value>Shranjevanje profilovih nastavitev OpenVPN v "{0}" ni uspelo.</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Pooblaščanje odjemalca ni uspelo.</value>
@@ -240,5 +240,41 @@
   </data>
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>Namestitvena datoteka ni na voljo. Posodabljanje prekinjeno.</value>
+  </data>
+  <data name="AboutPageTitle" xml:space="preserve">
+    <value>O programu</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
+    <value>Izberite svojo državo</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
+    <value>Izberite svojo ustanovo</value>
+  </data>
+  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
+    <value>Poveži</value>
+  </data>
+  <data name="CustomInstancePageDescription" xml:space="preserve">
+    <value>Vnesite ime gostitelja svojega ponudnika VPN.</value>
+  </data>
+  <data name="CustomInstancePageTitle" xml:space="preserve">
+    <value>Drug naslov</value>
+  </data>
+  <data name="InitializingPageTitle" xml:space="preserve">
+    <value>Vzpostavljam ...</value>
+  </data>
+  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
+    <value>Izberite eno izmed vrst VPN spodaj.</value>
+  </data>
+  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
+    <value>Izberite vrsto VPN</value>
+  </data>
+  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+    <value>Pripravljam posodobitev ...</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Nastavitve</value>
+  </data>
+  <data name="StatusPageTitle" xml:space="preserve">
+    <value>Povezava VPN</value>
   </data>
 </root>

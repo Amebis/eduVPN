@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Izberite vrsto VPN</value>
-  </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
     <value>Odjemalec VPN potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
 Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
@@ -136,29 +133,14 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Naprej &gt;</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo državo</value>
-  </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Drug naslov</value>
-  </data>
-  <data name="CustomInstancePageDescription" xml:space="preserve">
-    <value>Vnesite ime gostitelja svojega ponudnika VPN.</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Poveži</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Zahteva dvojno preverjanje pristnosti</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
     <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati. Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>Povezava VPN</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
     <value>Ponudnik</value>
@@ -180,9 +162,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Obvestilo</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo ustanovo</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
     <value>Dohodno</value>
@@ -218,19 +197,13 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="InstanceSourceSelectCustom" xml:space="preserve">
     <value>Dodaj drug naslov</value>
   </data>
-  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Izberite eno izmed vrst VPN spodaj.</value>
-  </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>I_zhod</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Vzpostavljam ...</value>
   </data>
   <data name="InstituteAccessNote" xml:space="preserve">
     <value>Dostopajte do omrežja svoje ustanove zunaj ustanove.</value>
@@ -260,9 +233,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Odpri</value>
   </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>O programu</value>
-  </data>
   <data name="AboutPageCopyright" xml:space="preserve">
     <value>Copyright © 2017
 Program Commons Conservancy eduVPN</value>
@@ -289,9 +259,6 @@ Omogoča SURFnet</value>
   <data name="ButtonSettingsTitle" xml:space="preserve">
     <value>Nastavitve</value>
   </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Nastavitve</value>
-  </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
     <value>Če se odjemalec VPN ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
   </data>
@@ -306,7 +273,7 @@ Omogoča SURFnet</value>
     <value>Geslo</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Vnesite svoje uporabniško ime in geslo za &quot;{0}&quot;:</value>
+    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -357,7 +324,7 @@ Omogoča SURFnet</value>
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>Zahtevani parameter OAuth &quot;state&quot; manjka ali je napačen.</value>
+    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
   <data name="TwoFactorEnrollmentButton" xml:space="preserve">
     <value>Včlani</value>
@@ -416,8 +383,5 @@ Omogoča SURFnet</value>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Prosimo počakajte ...</value>
     <comment>Displayed when a list is loading</comment>
-  </data>
-  <data name="SelfUpdatingPageTitle" xml:space="preserve">
-    <value>Pripravljam posodobitev ...</value>
   </data>
 </root>

@@ -13,11 +13,10 @@
     xmlns:vmpanels="clr-namespace:eduVPN.ViewModels.Panels;assembly=eduVPN"
     xmlns:panels="clr-namespace:eduVPN.Views.Panels"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
-    xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
-    Title="{x:Static res:Strings.ConnectingProfileSelectPageTitle}"
+    Title="{Binding Path=Title}"
     Style="{StaticResource eduVPNConnectWizardPageWithSettings}">
 
     <pages:ConnectWizardPage.Resources>

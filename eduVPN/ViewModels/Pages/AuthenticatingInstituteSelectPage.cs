@@ -14,6 +14,18 @@ namespace eduVPN.ViewModels.Pages
     /// </summary>
     public class AuthenticatingInstituteSelectPage : AuthenticatingInstanceSelectPage
     {
+        #region Properties
+
+        /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.AuthenticatingInstituteSelectPageTitle; }
+        }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>

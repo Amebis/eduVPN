@@ -135,12 +135,10 @@
             <pages:InstanceSourceSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:AuthenticatingCountrySelectPage}">
-            <pages:AuthenticatingInstanceSelectPage
-                Title="{x:Static res:Strings.AuthenticatingCountrySelectPageTitle}"/>
+            <pages:AuthenticatingInstanceSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:AuthenticatingInstituteSelectPage}">
-            <pages:AuthenticatingInstanceSelectPage
-                Title="{x:Static res:Strings.AuthenticatingInstituteSelectPageTitle}"/>
+            <pages:AuthenticatingInstanceSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:CustomInstancePage}">
             <pages:CustomInstancePage/>
@@ -212,7 +210,8 @@
             <Frame
                 NavigationUIVisibility="Hidden"
                 IsTabStop="False"
-                Content="{Binding Path=CurrentPage}">
+                Content="{Binding Path=CurrentPage}"
+                AutomationProperties.Name="{Binding Path=CurrentPage.Title}">
             </Frame>
         </DockPanel>
     </Grid>

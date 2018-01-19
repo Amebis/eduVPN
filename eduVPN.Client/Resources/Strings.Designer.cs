@@ -81,38 +81,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string AboutPageTitle {
-            get {
-                return ResourceManager.GetString("AboutPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Version {0}.
         /// </summary>
         public static string AboutPageVersion {
             get {
                 return ResourceManager.GetString("AboutPageVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Your Country.
-        /// </summary>
-        public static string AuthenticatingCountrySelectPageTitle {
-            get {
-                return ResourceManager.GetString("AuthenticatingCountrySelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Your Institution.
-        /// </summary>
-        public static string AuthenticatingInstituteSelectPageTitle {
-            get {
-                return ResourceManager.GetString("AuthenticatingInstituteSelectPageTitle", resourceCulture);
             }
         }
         
@@ -189,33 +162,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect.
-        /// </summary>
-        public static string ConnectingProfileSelectPageTitle {
-            get {
-                return ResourceManager.GetString("ConnectingProfileSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter hostname of your VPN provider..
-        /// </summary>
-        public static string CustomInstancePageDescription {
-            get {
-                return ResourceManager.GetString("CustomInstancePageDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Other Address.
-        /// </summary>
-        public static string CustomInstancePageTitle {
-            get {
-                return ResourceManager.GetString("CustomInstancePageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The required OAuth parameter &quot;state&quot; is missing or incorrect..
         /// </summary>
         public static string ErrorOAuthState {
@@ -225,38 +171,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Initializing....
-        /// </summary>
-        public static string InitializingPageTitle {
-            get {
-                return ResourceManager.GetString("InitializingPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add other address.
         /// </summary>
         public static string InstanceSourceSelectCustom {
             get {
                 return ResourceManager.GetString("InstanceSourceSelectCustom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select one of the VPN types below..
-        /// </summary>
-        public static string InstanceSourceSelectPageDescription {
-            get {
-                return ResourceManager.GetString("InstanceSourceSelectPageDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select VPN Type.
-        /// </summary>
-        public static string InstanceSourceSelectPageTitle {
-            get {
-                return ResourceManager.GetString("InstanceSourceSelectPageTitle", resourceCulture);
             }
         }
         
@@ -423,7 +342,25 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version {0} of VPN client is installed. A newer version {1} is is available online..
+        ///   Looks up a localized string similar to A newer version of the VPN client was downloaded and is ready to install..
+        /// </summary>
+        public static string SelfUpdatePopupMessage {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A newer version of the VPN client was downloaded and is ready to update from {0} to {1}..
+        /// </summary>
+        public static string SelfUpdatePopupMessage2 {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0} of VPN client is installed. A newer version {1} is available online..
         /// </summary>
         public static string SelfUpdatePopupMessage3 {
             get {
@@ -450,21 +387,42 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update to {0} now
+        ///(Client will restart).
+        /// </summary>
+        public static string SelfUpdatePopupUpdate {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update {0} to {1} now
+        ///(Client will restart).
+        /// </summary>
+        public static string SelfUpdatePopupUpdate2 {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupUpdate2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update now
+        ///(Client will restart).
+        /// </summary>
+        public static string SelfUpdatePopupUpdate3 {
+            get {
+                return ResourceManager.GetString("SelfUpdatePopupUpdate3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download and update now
         ///(Client will restart).
         /// </summary>
         public static string SelfUpdatePopupUpdate4 {
             get {
                 return ResourceManager.GetString("SelfUpdatePopupUpdate4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Preparing update....
-        /// </summary>
-        public static string SelfUpdatingPageTitle {
-            get {
-                return ResourceManager.GetString("SelfUpdatingPageTitle", resourceCulture);
             }
         }
         
@@ -521,15 +479,6 @@ namespace eduVPN.Client.Resources {
         public static string SettingsPageInterfaceTitle {
             get {
                 return ResourceManager.GetString("SettingsPageInterfaceTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
-        /// </summary>
-        public static string SettingsPageTitle {
-            get {
-                return ResourceManager.GetString("SettingsPageTitle", resourceCulture);
             }
         }
         
@@ -629,15 +578,6 @@ namespace eduVPN.Client.Resources {
         public static string StatusPageStatus {
             get {
                 return ResourceManager.GetString("StatusPageStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to VPN Connection.
-        /// </summary>
-        public static string StatusPageTitle {
-            get {
-                return ResourceManager.GetString("StatusPageTitle", resourceCulture);
             }
         }
         

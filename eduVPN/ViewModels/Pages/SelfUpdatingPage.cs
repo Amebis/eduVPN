@@ -29,6 +29,14 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// The page title
+        /// </summary>
+        public override string Title
+        {
+            get { return Resources.Strings.SelfUpdatingPageTitle; }
+        }
+
+        /// <summary>
         /// Self-updater JSON content retrieved from web
         /// </summary>
         public Dictionary<string, object> ObjWeb { get; set; }
