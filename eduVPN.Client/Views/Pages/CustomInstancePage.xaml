@@ -48,7 +48,9 @@
             TextSearch.TextPath=""
             ItemsSource="{Binding Source={x:Static prop:Settings.Default}, Path=CustomInstanceHistory}"
             IsSynchronizedWithCurrentItem="True"
-            IsEditable="True"/>
+            IsEditable="True"
+            AutomationProperties.Name="{x:Static res:Strings.CustomInstancePageHostnameLabel}"
+            AutomationProperties.IsRequiredForForm="True"/>
 
         <Button
             Grid.ColumnSpan="2"
@@ -56,8 +58,11 @@
             Margin="5"
             IsDefault="True"
             Style="{StaticResource eduVPNButtonStyle}"
-            Content="{x:Static res:Strings.ButtonNextTitle}"
+            AutomationProperties.Name="{x:Static res:Strings.ButtonNextTitle2}"
             Command="{Binding Path=SelectCustomInstance}"
-            Click="Button_Click"/>
+            Click="Button_Click">
+            <AccessText
+                Text="{x:Static res:Strings.ButtonNextTitle}"/>
+        </Button>
     </Grid>
 </pages:ConnectWizardPage>

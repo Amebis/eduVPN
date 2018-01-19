@@ -135,11 +135,20 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next &gt;.
+        ///   Looks up a localized string similar to _Next &gt;.
         /// </summary>
         public static string ButtonNextTitle {
             get {
                 return ResourceManager.GetString("ButtonNextTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string ButtonNextTitle2 {
+            get {
+                return ResourceManager.GetString("ButtonNextTitle2", resourceCulture);
             }
         }
         
@@ -158,6 +167,15 @@ namespace eduVPN.Client.Resources {
         public static string ButtonSettingsTitle {
             get {
                 return ResourceManager.GetString("ButtonSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hostname.
+        /// </summary>
+        public static string CustomInstancePageHostnameLabel {
+            get {
+                return ResourceManager.GetString("CustomInstancePageHostnameLabel", resourceCulture);
             }
         }
         

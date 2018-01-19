@@ -130,7 +130,7 @@
     <value>Close</value>
   </data>
   <data name="ButtonNextTitle" xml:space="preserve">
-    <value>Next &gt;</value>
+    <value>_Next &gt;</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
@@ -383,5 +383,11 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Please wait...</value>
     <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
+    <value>Hostname</value>
+  </data>
+  <data name="ButtonNextTitle2" xml:space="preserve">
+    <value>Next</value>
   </data>
 </root>
