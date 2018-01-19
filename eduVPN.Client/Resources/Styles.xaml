@@ -681,7 +681,20 @@
                                 x:Name="eduVPNBackButton"
                                 Style="{StaticResource eduVPNNavigationButtonStyle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                                Command="{Binding Path=NavigateBack}">&lt;</Button>
+                                Command="{Binding Path=NavigateBack}">
+                                <Canvas
+                                    Height="14"
+                                    Width="14">
+                                    <Canvas.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="0.075" ScaleX="0.075"/>
+                                        </TransformGroup>
+                                    </Canvas.RenderTransform>
+                                    <Polygon
+                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                        Points="107.37256,147.74512 44.6665,85.03906 107.37256,22.33301 119.39893,34.36035 68.71924,85.03906 119.39893,135.71973 "/>
+                                </Canvas>
+                            </Button>
 
                             <TextBlock
                                 Grid.Column="1"
@@ -730,7 +743,20 @@
                                 Style="{StaticResource eduVPNNavigationButtonStyle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                                 ToolTip="{x:Static res:Strings.ButtonBackTitle}"
-                                Command="{Binding Path=NavigateBack}">&lt;</Button>
+                                Command="{Binding Path=NavigateBack}">
+                                <Canvas
+                                    Height="14"
+                                    Width="14">
+                                    <Canvas.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="0.075" ScaleX="0.075"/>
+                                        </TransformGroup>
+                                    </Canvas.RenderTransform>
+                                    <Polygon
+                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                        Points="107.37256,147.74512 44.6665,85.03906 107.37256,22.33301 119.39893,34.36035 68.71924,85.03906 119.39893,135.71973 "/>
+                                </Canvas>
+                            </Button>
 
                             <TextBlock
                                 Grid.Column="1"
