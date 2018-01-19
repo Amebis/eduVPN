@@ -149,7 +149,7 @@
     <value>Nalaganje podatkov o uporabniku ni uspelo.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Shranjevanje profilovih nastavitev OpenVPN v &quot;{0}&quot; ni uspelo.</value>
+    <value>Shranjevanje profilovih nastavitev OpenVPN v "{0}" ni uspelo.</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Pooblaščanje odjemalca ni uspelo.</value>
@@ -276,5 +276,11 @@
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
     <value>Povezava VPN</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>Države</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>Ustanove</value>
   </data>
 </root>

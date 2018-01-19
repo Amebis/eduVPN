@@ -149,7 +149,7 @@
     <value>Loading of user info failed.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Saving of profile&apos;s OpenVPN configuration to &quot;{0}&quot; failed.</value>
+    <value>Saving of profile's OpenVPN configuration to "{0}" failed.</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Client authorization failed.</value>
@@ -276,5 +276,11 @@
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
     <value>VPN Connection</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>Institutions</value>
   </data>
 </root>

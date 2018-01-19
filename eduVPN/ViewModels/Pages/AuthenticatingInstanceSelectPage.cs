@@ -22,6 +22,11 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// Instance list label
+        /// </summary>
+        public virtual string InstanceListLabel { get; }
+
+        /// <summary>
         /// Selected instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
