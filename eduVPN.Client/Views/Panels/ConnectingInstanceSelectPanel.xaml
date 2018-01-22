@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:panels="clr-namespace:eduVPN.Views.Panels"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="300">
@@ -36,7 +37,8 @@
             ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource InstanceListBoxStyle}"
             ItemsSource="{Binding Source={StaticResource ConfigurationListView}}"
-            SelectedItem="{Binding Path=SelectedInstance}">
+            SelectedItem="{Binding Path=SelectedInstance}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectingInstanceSelectPanelInstanceListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
 
             <ListBox.ContextMenu>
                 <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">

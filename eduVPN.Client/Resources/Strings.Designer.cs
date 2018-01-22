@@ -189,6 +189,51 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Provider.
+        /// </summary>
+        public static string ConnectingInstanceAndProfileSelectPanelInstanceListLabel {
+            get {
+                return ResourceManager.GetString("ConnectingInstanceAndProfileSelectPanelInstanceListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Profile.
+        /// </summary>
+        public static string ConnectingInstanceAndProfileSelectPanelProfileListLabel {
+            get {
+                return ResourceManager.GetString("ConnectingInstanceAndProfileSelectPanelProfileListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Profile.
+        /// </summary>
+        public static string ConnectingInstanceProfileSelectPanelInstanceProfileListLabel {
+            get {
+                return ResourceManager.GetString("ConnectingInstanceProfileSelectPanelInstanceProfileListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Provider.
+        /// </summary>
+        public static string ConnectingInstanceSelectPanelInstanceListLabel {
+            get {
+                return ResourceManager.GetString("ConnectingInstanceSelectPanelInstanceListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Profile.
+        /// </summary>
+        public static string ConnectingProfileSelectPanelProfileListLabel {
+            get {
+                return ResourceManager.GetString("ConnectingProfileSelectPanelProfileListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hostname.
         /// </summary>
         public static string CustomInstancePageHostnameLabel {
