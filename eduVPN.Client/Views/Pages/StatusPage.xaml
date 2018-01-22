@@ -70,18 +70,6 @@
                 Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageStatus}"/>
 
-            <TextBlock
-                Grid.Column="1"
-                Margin="5,0,5,2"
-                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageInstance}"/>
-
-            <TextBlock
-                Grid.Column="2"
-                Margin="5,0,0,2"
-                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageProfile}"/>
-
             <Image
                 Grid.Row="1"
                 Margin="0,2,5,0"
@@ -92,6 +80,12 @@
                 ToolTip="{Binding Path=Wizard.ActiveSession.StateDescription}"
                 AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.StateDescription}"
                 RenderOptions.BitmapScalingMode="Fant"/>
+
+            <TextBlock
+                Grid.Column="1"
+                Margin="5,0,5,2"
+                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
+                Text="{x:Static res:Strings.StatusPageInstance}"/>
 
             <controls:ImageWithFallback
                 Grid.Row="1"
@@ -105,6 +99,12 @@
                 ToolTip="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
                 AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
                 RenderOptions.BitmapScalingMode="Fant"/>
+
+            <TextBlock
+                Grid.Column="2"
+                Margin="5,0,0,2"
+                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
+                Text="{x:Static res:Strings.StatusPageProfile}"/>
 
             <TextBlock
                 Grid.Row="1"
@@ -162,6 +162,34 @@
                 Text="{Binding Path=Wizard.ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
             <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,0,1,0"
+                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                Text="{x:Static res:Strings.StatusPageSessionInfoBytesIn}"/>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="1,0,4,0"
+                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Text="{Binding Path=Wizard.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="0,0,1,0"
+                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                Text="{x:Static res:Strings.StatusPageSessionInfoBytesOut}"/>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="1,0,4,0"
+                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Text="{Binding Path=Wizard.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+
+            <TextBlock
                 Grid.Row="1"
                 Grid.Column="2"
                 Margin="4,2,1,0"
@@ -177,20 +205,6 @@
 
             <TextBlock
                 Grid.Row="2"
-                Grid.Column="0"
-                Margin="0,0,1,0"
-                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageSessionInfoBytesIn}"/>
-
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="1,0,4,0"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
-
-            <TextBlock
-                Grid.Row="2"
                 Grid.Column="2"
                 Margin="4,0,1,0"
                 Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
@@ -202,20 +216,6 @@
                 Margin="1,0,0,0"
                 Style="{StaticResource eduVPNInfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.IPv6TunnelAddress}"/>
-
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="0"
-                Margin="0,0,1,0"
-                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageSessionInfoBytesOut}"/>
-
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="1"
-                Margin="1,0,4,0"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <Button
                 x:Name="ShowLog"
