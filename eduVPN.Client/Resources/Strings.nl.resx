@@ -249,7 +249,7 @@ Powered by SURFnet</value>
     <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze VPN-client hieronder.</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Select TAP _Interface</value>
+    <value>Selecteer TAP-_interface</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Instellingen...</value>
@@ -261,7 +261,7 @@ Powered by SURFnet</value>
     <value>Als de VPN-client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect Over _TCP</value>
+    <value>Via _TCP verbinden</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
     <value>Voer je wachtwoord in voor &quot;{0}&quot;:</value>
