@@ -277,10 +277,4 @@
   <data name="StatusPageTitle" xml:space="preserve">
     <value>Povezava VPN</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
-    <value>Države</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
-    <value>Ustanove</value>
-  </data>
 </root>

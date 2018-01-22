@@ -56,6 +56,7 @@
     <Compile Include="Converters\InstanceSourceVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListRowHeightConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />
+    <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
     <Compile Include="Converters\TOTPSecretConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
     <Compile Include="Converters\StringVisibilityConverter.cs" />
@@ -67,6 +68,13 @@
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="QRCoder\XamlQRCode.cs" />
+    <Compile Include="Views\Pages\AuthenticatingInstituteSelectPage.xaml.cs">
+      <DependentUpon>AuthenticatingInstituteSelectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\AuthenticatingCountrySelectPage.xaml.cs">
+      <DependentUpon>AuthenticatingCountrySelectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\AuthenticatingInstanceSelectPage.cs" />
     <Compile Include="Views\Pages\SelfUpdatingPage.xaml.cs">
       <DependentUpon>SelfUpdatingPage.xaml</DependentUpon>
     </Compile>
@@ -161,6 +169,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\AuthenticatingInstituteSelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Pages\AuthenticatingCountrySelectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Pages\SelfUpdatingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -241,10 +257,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\AuthenticatingInstanceSelectPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Windows\ConnectWizard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -258,9 +270,6 @@
     </Compile>
     <Compile Include="Views\Windows\AuthorizationPopup.xaml.cs">
       <DependentUpon>AuthorizationPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\AuthenticatingInstanceSelectPage.xaml.cs">
-      <DependentUpon>AuthenticatingInstanceSelectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\ConnectWizard.xaml.cs">
       <DependentUpon>ConnectWizard.xaml</DependentUpon>

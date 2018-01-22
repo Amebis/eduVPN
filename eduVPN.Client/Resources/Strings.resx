@@ -390,4 +390,10 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ButtonNextTitle2" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>_Country</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>_Institution</value>
+  </data>
 </root>

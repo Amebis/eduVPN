@@ -390,4 +390,10 @@ Omogoča SURFnet</value>
   <data name="ButtonNextTitle2" xml:space="preserve">
     <value>Naprej</value>
   </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>_Država</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>_Ustanova</value>
+  </data>
 </root>

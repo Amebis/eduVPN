@@ -1,0 +1,43 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<pages:AuthenticatingInstanceSelectPage
+    x:Class="eduVPN.Views.Pages.AuthenticatingCountrySelectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:pages="clr-namespace:eduVPN.Views.Pages"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Title="{Binding Path=Title}"
+    Style="{StaticResource eduVPNConnectWizardPage}">
+
+    <pages:ConnectWizardPage.Resources>
+        <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstanceList_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="InstanceList_PreviewKeyDown"/>
+        </Style>
+    </pages:ConnectWizardPage.Resources>
+
+    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ListBox
+            x:Name="InstanceList"
+            Margin="5"
+            Style="{StaticResource eduVPNListStyle}"
+            ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource InstanceListBoxStyle}"
+            ItemsSource="{Binding Path=Wizard.InstanceSource.InstanceList}"
+            SelectedItem="{Binding Path=SelectedInstance}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.AuthenticatingCountrySelectPageListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+    </Grid>
+</pages:AuthenticatingInstanceSelectPage>

@@ -20,6 +20,7 @@
     <conv:MessageListRowHeightConverter x:Key="MessageListRowHeightConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
+    <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
     <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
     <conv:TOTPAuthenticationNoteVisibilityConverter x:Key="TOTPAuthenticationNoteVisibilityConverter"/>

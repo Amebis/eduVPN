@@ -135,10 +135,10 @@
             <pages:InstanceSourceSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:AuthenticatingCountrySelectPage}">
-            <pages:AuthenticatingInstanceSelectPage/>
+            <pages:AuthenticatingCountrySelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:AuthenticatingInstituteSelectPage}">
-            <pages:AuthenticatingInstanceSelectPage/>
+            <pages:AuthenticatingInstituteSelectPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:CustomInstancePage}">
             <pages:CustomInstancePage/>

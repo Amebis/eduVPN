@@ -277,10 +277,4 @@
   <data name="StatusPageTitle" xml:space="preserve">
     <value>VPN Connection</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
-    <value>Countries</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
-    <value>Institutions</value>
-  </data>
 </root>

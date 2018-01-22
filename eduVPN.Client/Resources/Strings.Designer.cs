@@ -90,6 +90,24 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Country.
+        /// </summary>
+        public static string AuthenticatingCountrySelectPageListLabel {
+            get {
+                return ResourceManager.GetString("AuthenticatingCountrySelectPageListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Institution.
+        /// </summary>
+        public static string AuthenticatingInstituteSelectPageListLabel {
+            get {
+                return ResourceManager.GetString("AuthenticatingInstituteSelectPageListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The VPN client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization....
         /// </summary>
         public static string AuthorizationPopupMessage {

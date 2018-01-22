@@ -24,14 +24,6 @@ namespace eduVPN.ViewModels.Pages
             get { return Resources.Strings.AuthenticatingCountrySelectPageTitle; }
         }
 
-        /// <summary>
-        /// Instance list label
-        /// </summary>
-        public override string InstanceListLabel
-        {
-            get { return Resources.Strings.AuthenticatingCountrySelectPageListLabel; }
-        }
-
         #endregion
 
         #region Constructors
