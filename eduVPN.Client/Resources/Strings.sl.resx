@@ -400,4 +400,7 @@ Omogoča SURFnet</value>
   <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
     <value>_Profil</value>
   </data>
+  <data name="StatusPageMessagesLabel" xml:space="preserve">
+    <value>_Sporočila</value>
+  </data>
 </root>

@@ -123,7 +123,8 @@
             Style="{StaticResource eduVPNListStyle}"
             ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MessageListView}}"
-            Visibility="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+            Visibility="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageMessagesLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
 
         <Grid
             Grid.Row="3"

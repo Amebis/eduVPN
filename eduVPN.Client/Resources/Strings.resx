@@ -399,4 +399,7 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
     <value>_Profile</value>
   </data>
+  <data name="StatusPageMessagesLabel" xml:space="preserve">
+    <value>_Messages</value>
+  </data>
 </root>

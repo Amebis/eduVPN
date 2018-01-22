@@ -534,6 +534,15 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Messages.
+        /// </summary>
+        public static string StatusPageMessagesLabel {
+            get {
+                return ResourceManager.GetString("StatusPageMessagesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string StatusPageProfile {
