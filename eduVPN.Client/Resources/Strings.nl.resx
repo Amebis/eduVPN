@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Kies een VPN-type</value>
-  </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
     <value>de VPN-client heeft {0} toestemming nodig en heeft een pagina in je browser geopend. De applicatie zal verder gaan na het geven van toestemming...</value>
   </data>
@@ -135,29 +132,14 @@
   <data name="ButtonNextTitle" xml:space="preserve">
     <value>Volge_nde &gt;</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
-    <value>Selecteer je land</value>
-  </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>eduVPN</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Andere server</value>
-  </data>
-  <data name="CustomInstancePageDescription" xml:space="preserve">
-    <value>Voer de servernaam van je VPN-provider in.</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Verbinden</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Vereist twee-factorauthenticatie</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
     <value>Waarschuwing! Je account is uitgeschakeld. Neem contact op met de helpdesk.</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN-verbinding</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
     <value>Provider</value>
@@ -179,9 +161,6 @@
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
     <value>Notificatie</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Selecteer je instituut</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
     <value>Bytes (in)</value>
@@ -218,19 +197,10 @@
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
-  </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
-    <value>V_oeg ander adres toe</value>
-  </data>
-  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Selecteer een van de VPN-types hieronder.</value>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>S_luiten</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Initialiseren...</value>
   </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
     <value>Toegang tot netwerk van je _instituut.</value>
@@ -261,9 +231,6 @@
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Open</value>
   </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>Over</value>
-  </data>
   <data name="AboutPageCopyright" xml:space="preserve">
     <value>Copyright © 2017
 The Commons Conservancy eduVPN Programme</value>
@@ -281,8 +248,8 @@ Powered by SURFnet</value>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
     <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze VPN-client hieronder.</value>
   </data>
-  <data name="SettingsPageInterfaceTitle" xml:space="preserve">
-    <value>Selecteer TAP-interface</value>
+  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
+    <value>Select TAP _Interface</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Instellingen...</value>
@@ -290,24 +257,21 @@ Powered by SURFnet</value>
   <data name="ButtonSettingsTitle" xml:space="preserve">
     <value>Instellingen</value>
   </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Instellingen</value>
-  </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
     <value>Als de VPN-client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
   </data>
-  <data name="SettingsPageForceTCPInterfaceTitle" xml:space="preserve">
-    <value>Via TCP verbinden</value>
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
+    <value>Connect Over _TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Voer je wachtwoord in voor "{0}":</value>
+    <value>Voer je wachtwoord in voor &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Wachtwoord</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
+    <value>Voer je gebruikersnaam en wachtwoord in voor &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -320,13 +284,14 @@ Powered by SURFnet</value>
     <value>_Wachtwoord</value>
   </data>
   <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
-    <value>&amp;Wachtwoord</value>
+    <value>_Wachtwoord</value>
   </data>
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
-    <value>&amp;Gebruikersnaam</value>
+    <value>_Gebruikersnaam</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
+    <comment>&quot;securirty token&quot; sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Twee-factorauthenticatie</value>
@@ -350,7 +315,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
+    <value>De vereiste OAuth paramter &quot;state&quot; ontbreekt of is onjuist.</value>
   </data>
   <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Enroll</value>
@@ -396,13 +361,43 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Even geduld...</value>
     <comment>Displayed when a list is loading</comment>
   </data>
-  <data name="SelfUpdatingPageTitle" xml:space="preserve">
-    <value>Update voorbereiden...</value>
+  <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
+    <value>Hostname</value>
   </data>
   <data name="ButtonNextTitleAlt" xml:space="preserve">
     <value>Volgende</value>
   </data>
+  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
+    <value>_Method</value>
+  </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>V_oeg ander adres toe</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
+    <value>TOTP Secret QR Code</value>
+  </data>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>_Country</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>_Institution</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Provider</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Provider</value>
+  </data>
+  <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
   </data>
 </root>
