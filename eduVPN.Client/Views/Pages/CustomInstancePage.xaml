@@ -18,6 +18,7 @@
     d:DesignHeight="373"
     Title="{Binding Path=Title}"
     Description="{Binding Path=Description}"
+    AutomationProperties.HelpText="{Binding Path=Description}"
     Style="{StaticResource eduVPNConnectWizardPage}">
 
     <Grid
