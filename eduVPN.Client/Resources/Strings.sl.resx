@@ -197,13 +197,19 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>I_zhod</value>
   </data>
+  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
+    <value>Dostopajte do omrežja svoje _ustanove zunaj ustanove.</value>
+  </data>
   <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
     <value>Dostop do ustanove</value>
+  </data>
+  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
+    <value>Povežite se na _splet varno. Na primer, kadar uporabljate javni WiFi.</value>
   </data>
   <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
     <value>Varni splet</value>
@@ -264,7 +270,7 @@ Omogoča SURFnet</value>
     <value>Geslo</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
+    <value>Vnesite svoje uporabniško ime in geslo za &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -283,7 +289,8 @@ Omogoča SURFnet</value>
     <value>_Up. ime</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
-    <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostni žeton:</value>
+    <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostno kodo:</value>
+    <comment>&quot;securirty token&quot; sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-stopenjsko overovljanje</value>
@@ -307,7 +314,7 @@ Omogoča SURFnet</value>
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
+    <value>Zahtevani parameter OAuth &quot;state&quot; manjka ali je napačen.</value>
   </data>
   <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Včlani</value>
@@ -365,12 +372,6 @@ Omogoča SURFnet</value>
   </data>
   <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>D_odaj drug naslov</value>
-  </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
-    <value>Dostopajte do omrežja svoje _ustanove zunaj ustanove.</value>
-  </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
-    <value>Povežite se na _splet varno. Na primer, kadar uporabljate javni WiFi.</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
     <value>Koda QR skrivnosti TOTP</value>
