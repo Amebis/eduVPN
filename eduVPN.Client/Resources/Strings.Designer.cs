@@ -234,7 +234,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hostname.
+        ///   Looks up a localized string similar to _Hostname.
         /// </summary>
         public static string CustomInstancePageHostnameLabel {
             get {
@@ -741,7 +741,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select your two-factor method and enter the security token:.
+        ///   Looks up a localized string similar to Select your two-factor method and enter the security code:.
         /// </summary>
         public static string TwoFactorAuthenticationPopupMessage {
             get {

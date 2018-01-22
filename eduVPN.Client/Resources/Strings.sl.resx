@@ -197,7 +197,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>I_zhod</value>
@@ -270,7 +270,7 @@ Omogoča SURFnet</value>
     <value>Geslo</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Vnesite svoje uporabniško ime in geslo za &quot;{0}&quot;:</value>
+    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -290,7 +290,7 @@ Omogoča SURFnet</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostno kodo:</value>
-    <comment>&quot;securirty token&quot; sounds wrong</comment>
+    <comment>"securirty token" sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-stopenjsko overovljanje</value>
@@ -314,7 +314,7 @@ Omogoča SURFnet</value>
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>Zahtevani parameter OAuth &quot;state&quot; manjka ali je napačen.</value>
+    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
   <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Včlani</value>
@@ -362,7 +362,7 @@ Omogoča SURFnet</value>
     <comment>Displayed when a list is loading</comment>
   </data>
   <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
-    <value>Ime gostitelja</value>
+    <value>Ime _gostitelja</value>
   </data>
   <data name="ButtonNextTitleAlt" xml:space="preserve">
     <value>Naprej</value>
