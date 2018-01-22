@@ -27,6 +27,13 @@
         </MultiBinding>
     </windows:Window.Description>
 
+    <AutomationProperties.HelpText>
+        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage3}">
+            <Binding Path="InstalledVersion"/>
+            <Binding Path="AvailableVersion"/>
+        </MultiBinding>
+    </AutomationProperties.HelpText>
+
     <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding Path=ShowChangelog, Converter={StaticResource CommandRowHeightConverter}, FallbackValue=0}"/>

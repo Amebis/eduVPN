@@ -20,6 +20,7 @@
     Height="300"
     Title="{x:Static res:Strings.TwoFactorAuthenticationPopupTitle}"
     Description="{x:Static res:Strings.TwoFactorAuthenticationPopupMessage}"
+    AutomationProperties.HelpText="{x:Static res:Strings.TwoFactorAuthenticationPopupMessage}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">
 

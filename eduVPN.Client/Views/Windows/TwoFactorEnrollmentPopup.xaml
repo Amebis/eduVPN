@@ -30,6 +30,14 @@
         </MultiBinding>
     </windows:Window.Description>
 
+    <AutomationProperties.HelpText>
+        <MultiBinding
+            StringFormat="{x:Static res:Strings.TwoFactorEnrollmentPopupMessage}">
+            <Binding Path="Profile"/>
+            <Binding Path="AuthenticatingInstance"/>
+        </MultiBinding>
+    </AutomationProperties.HelpText>
+
     <Window.Resources>
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="MethodListView" Source="{Binding Path=MethodList}">

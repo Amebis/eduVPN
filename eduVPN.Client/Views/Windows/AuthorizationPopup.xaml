@@ -17,6 +17,7 @@
     Height="216"
     Title="{x:Static res:Strings.AuthorizationPopupTitle}"
     Description="{Binding Path=Instance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
+    AutomationProperties.HelpText="{Binding Path=Instance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">
 
