@@ -21,7 +21,7 @@
             HorizontalContentAlignment="Center"
             Style="{StaticResource eduVPNCodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TOTPEnrollmentPanelResponseLabel2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TOTPEnrollmentPanelResponseLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"
             AutomationProperties.IsRequiredForForm="True"/>
 
         <Grid
@@ -41,7 +41,7 @@
                 Grid.Column="1"
                 Margin="5,2,5,5"
                 Style="{StaticResource eduVPNTextBlockStyle}"
-                Text="{x:Static res:Strings.TOTPAuthenticationNote}"/>
+                Text="{x:Static res:Strings.TOTPAuthenticationPanelNote}"/>
         </Grid>
     </Grid>
 </UserControl>

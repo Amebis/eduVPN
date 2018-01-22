@@ -132,7 +132,7 @@
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Sluiten</value>
   </data>
-  <data name="ButtonNextTitle3" xml:space="preserve">
+  <data name="ButtonNextTitle" xml:space="preserve">
     <value>Volge_nde &gt;</value>
   </data>
   <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
@@ -202,10 +202,10 @@
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Verbindingsinformatie</value>
   </data>
-  <data name="StatusPageSessionInfoViewLog2" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
     <value>Bekijk _log</value>
   </data>
-  <data name="StatusPageDisconnect2" xml:space="preserve">
+  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
     <value>_Verbreken</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
@@ -220,7 +220,7 @@
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="InstanceSourceSelectCustom2" xml:space="preserve">
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>V_oeg ander adres toe</value>
   </data>
   <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
@@ -232,19 +232,19 @@
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiseren...</value>
   </data>
-  <data name="InstituteAccessNote2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
     <value>Toegang tot netwerk van je _instituut.</value>
   </data>
-  <data name="InstituteAccessTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
   </data>
-  <data name="SecureInternetNote2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
     <value>Verbind _veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi-netwerken.</value>
   </data>
-  <data name="SecureInternetTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddEntry2" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
     <value>_Andere provider toevoegen</value>
     <comment>Fuzzy</comment>
   </data>
@@ -255,7 +255,7 @@
     <value>Geen items</value>
     <comment>Displayed when a list is empty</comment>
   </data>
-  <data name="ButtonCopy" xml:space="preserve">
+  <data name="ButtonCopyTitle" xml:space="preserve">
     <value>_Kopiëren</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
@@ -313,16 +313,16 @@ Powered by SURFnet</value>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
     <value>Authenticatie</value>
   </data>
-  <data name="ButtonOKTitle2" xml:space="preserve">
+  <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
   </data>
-  <data name="PasswordPopupPasswordTitle2" xml:space="preserve">
+  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
     <value>_Wachtwoord</value>
   </data>
-  <data name="UsernamePasswordPopupPasswordTitle2" xml:space="preserve">
+  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
     <value>&amp;Wachtwoord</value>
   </data>
-  <data name="UsernamePasswordPopupUsernameTitle2" xml:space="preserve">
+  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>&amp;Gebruikersnaam</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
@@ -334,10 +334,10 @@ Powered by SURFnet</value>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update beschikbaar</value>
   </data>
-  <data name="SelfUpdatePopupAskLater2" xml:space="preserve">
+  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>Vraag _later</value>
   </data>
-  <data name="SelfUpdatePopupSkip2" xml:space="preserve">
+  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Sla deze _versie over</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
@@ -352,7 +352,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
   </data>
-  <data name="TwoFactorEnrollmentButton2" xml:space="preserve">
+  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Enroll</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
@@ -362,13 +362,13 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Twee-factorauthenticatie aanmelding</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel2" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretLabel2" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
     <value>_Sleutel</value>
   </data>
-  <data name="TOTPAuthenticationNote" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Gebruik niet dezelfde TOTP-code. Wacht tot er een nieuwe code is gegenereerd.</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
@@ -382,14 +382,14 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Het VPN-clientvenster is hier geminimaliseerd.</value>
   </data>
-  <data name="SelfUpdatePopupChangelog2" xml:space="preserve">
+  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>Wat is _nieuw?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
     <value>Versie {0} van de VPN-client is geïnstalleerd. Een nieuwere versie {1} is beschikbaar.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
-  <data name="SelfUpdatePopupUpdate5" xml:space="preserve">
+  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
     <value>Download en _update nu (client zal herstarten)</value>
   </data>
   <data name="ListBoxNull" xml:space="preserve">
@@ -399,7 +399,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
     <value>Update voorbereiden...</value>
   </data>
-  <data name="ButtonNextTitle2" xml:space="preserve">
+  <data name="ButtonNextTitleAlt" xml:space="preserve">
     <value>Volgende</value>
   </data>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">

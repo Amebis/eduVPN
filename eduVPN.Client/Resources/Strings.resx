@@ -129,7 +129,7 @@
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="ButtonNextTitle3" xml:space="preserve">
+  <data name="ButtonNextTitle" xml:space="preserve">
     <value>_Next &gt;</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
@@ -180,10 +180,10 @@
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Connection Info</value>
   </data>
-  <data name="StatusPageSessionInfoViewLog2" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
     <value>View _log</value>
   </data>
-  <data name="StatusPageDisconnect2" xml:space="preserve">
+  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
     <value>_Disconnect</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
@@ -201,19 +201,19 @@
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>E_xit</value>
   </data>
-  <data name="InstituteAccessNote2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
     <value>Access your _institute's network.</value>
   </data>
-  <data name="InstituteAccessTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
   </data>
-  <data name="SecureInternetNote2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
     <value>Connect to the Internet _securely, for example when using public WiFi.</value>
   </data>
-  <data name="SecureInternetTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddEntry2" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
     <value>Add _another provider</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
@@ -223,7 +223,7 @@
     <value>No items</value>
     <comment>Displayed when a list is empty</comment>
   </data>
-  <data name="ButtonCopy2" xml:space="preserve">
+  <data name="ButtonCopyTitle" xml:space="preserve">
     <value>_Copy</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
@@ -246,7 +246,7 @@ Powered by SURFnet</value>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
     <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for this VPN client below.</value>
   </data>
-  <data name="SettingsPageInterfaceTitle2" xml:space="preserve">
+  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Select TAP _Interface</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
@@ -258,7 +258,7 @@ Powered by SURFnet</value>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
     <value>If the VPN client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
   </data>
-  <data name="SettingsPageForceTCPInterfaceTitle2" xml:space="preserve">
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Connect Over _TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
@@ -275,16 +275,16 @@ Powered by SURFnet</value>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
     <value>Authentication</value>
   </data>
-  <data name="ButtonOKTitle2" xml:space="preserve">
+  <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
   </data>
-  <data name="PasswordPopupPasswordTitle2" xml:space="preserve">
+  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
     <value>_Password</value>
   </data>
-  <data name="UsernamePasswordPopupPasswordTitle2" xml:space="preserve">
+  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
     <value>_Password</value>
   </data>
-  <data name="UsernamePasswordPopupUsernameTitle2" xml:space="preserve">
+  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Username</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
@@ -297,10 +297,10 @@ Powered by SURFnet</value>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update Available</value>
   </data>
-  <data name="SelfUpdatePopupAskLater2" xml:space="preserve">
+  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>Ask me _later</value>
   </data>
-  <data name="SelfUpdatePopupSkip2" xml:space="preserve">
+  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Skip this _version</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
@@ -315,7 +315,7 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>
-  <data name="TwoFactorEnrollmentButton2" xml:space="preserve">
+  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Enroll</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
@@ -325,13 +325,13 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication Enrollment</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel2" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Response</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretLabel2" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
     <value>_Secret</value>
   </data>
-  <data name="TOTPAuthenticationNote" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Please do not reuse the TOTP. Wait until a fresh TOTP is generated.</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
@@ -345,14 +345,14 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>The window has been minimized here.</value>
   </data>
-  <data name="SelfUpdatePopupChangelog2" xml:space="preserve">
+  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>What's _New?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
     <value>Version {0} of VPN client is installed. A newer version {1} is available online.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
-  <data name="SelfUpdatePopupUpdate5" xml:space="preserve">
+  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
     <value>Download and _update now
 (Client will restart)</value>
   </data>
@@ -363,16 +363,16 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
     <value>Hostname</value>
   </data>
-  <data name="ButtonNextTitle2" xml:space="preserve">
+  <data name="ButtonNextTitleAlt" xml:space="preserve">
     <value>Next</value>
   </data>
-  <data name="TwoFactorAuthenticationMethodLabel" xml:space="preserve">
+  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
     <value>_Method</value>
   </data>
-  <data name="InstanceSourceSelectCustom2" xml:space="preserve">
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>Add _other address</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretQRTitle" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
     <value>TOTP Secret QR Code</value>
   </data>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">

@@ -26,7 +26,7 @@
             VerticalAlignment="Center"
             Target="{Binding ElementName=Secret}"
             Style="{StaticResource eduVPNLabelStyle}"
-            Content="{x:Static res:Strings.TOTPEnrollmentPanelSecretLabel2}"/>
+            Content="{x:Static res:Strings.TOTPEnrollmentPanelSecretLabel}"/>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -39,7 +39,7 @@
                 HorizontalAlignment="Center"
                 Stretch="None"
                 RenderOptions.BitmapScalingMode="Fant"
-                AutomationProperties.Name="{x:Static res:Strings.TOTPEnrollmentPanelSecretQRTitle}">
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.TOTPEnrollmentPanelSecretQRLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
                 <Image.Source>
                     <MultiBinding
                         Converter="{StaticResource TOTPQRConverter}">
@@ -75,7 +75,7 @@
             VerticalAlignment="Center"
             Target="{Binding ElementName=Response}"
             Style="{StaticResource eduVPNLabelStyle}"
-            Content="{x:Static res:Strings.TOTPEnrollmentPanelResponseLabel2}"/>
+            Content="{x:Static res:Strings.TOTPEnrollmentPanelResponseLabel}"/>
 
         <TextBox
             Grid.Row="1"

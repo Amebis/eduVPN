@@ -621,9 +621,9 @@
                                     VerticalAlignment="Top"
                                     Style="{StaticResource eduVPNLinkButtonStyle}"
                                     Command="{Binding Path=CopyError}"
-                                    AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopy2}, Converter={StaticResource RemoveAccessKeyConverter}}">
+                                    AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopyTitle}, Converter={StaticResource RemoveAccessKeyConverter}}">
                                     <AccessText
-                                        Text="{x:Static res:Strings.ButtonCopy2}"/>
+                                        Text="{x:Static res:Strings.ButtonCopyTitle}"/>
                                 </Button>
                             </Grid>
                         </StatusBarItem>

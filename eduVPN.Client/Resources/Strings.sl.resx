@@ -130,7 +130,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Zapri</value>
   </data>
-  <data name="ButtonNextTitle3" xml:space="preserve">
+  <data name="ButtonNextTitle" xml:space="preserve">
     <value>_Naprej &gt;</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
@@ -181,10 +181,10 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Podatki povezave</value>
   </data>
-  <data name="StatusPageSessionInfoViewLog2" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
     <value>Ogled _dnevnika</value>
   </data>
-  <data name="StatusPageDisconnect2" xml:space="preserve">
+  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
     <value>_Prekini</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
@@ -202,13 +202,13 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>I_zhod</value>
   </data>
-  <data name="InstituteAccessTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
     <value>Dostop do ustanove</value>
   </data>
-  <data name="SecureInternetTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
     <value>Varni splet</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddEntry2" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
     <value>Dodaj drugeg_a ponudnika</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
@@ -218,8 +218,8 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Brez elementov</value>
     <comment>Displayed when a list is empty</comment>
   </data>
-  <data name="ButtonCopy" xml:space="preserve">
-    <value>Kopiraj</value>
+  <data name="ButtonCopyTitle" xml:space="preserve">
+    <value>_Kopiraj</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Odpri</value>
@@ -241,7 +241,7 @@ Omogoča SURFnet</value>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
     <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za tega odjemalca VPN.</value>
   </data>
-  <data name="SettingsPageInterfaceTitle2" xml:space="preserve">
+  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>_Izberite vmesnik TAP</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
@@ -253,7 +253,7 @@ Omogoča SURFnet</value>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
     <value>Če se odjemalec VPN ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
   </data>
-  <data name="SettingsPageForceTCPInterfaceTitle2" xml:space="preserve">
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Vsili _TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
@@ -270,16 +270,16 @@ Omogoča SURFnet</value>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
     <value>Overovitev</value>
   </data>
-  <data name="ButtonOKTitle2" xml:space="preserve">
+  <data name="ButtonOKTitle" xml:space="preserve">
     <value>_V redu</value>
   </data>
-  <data name="PasswordPopupPasswordTitle2" xml:space="preserve">
+  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
     <value>_Geslo</value>
   </data>
-  <data name="UsernamePasswordPopupPasswordTitle2" xml:space="preserve">
+  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
     <value>_Geslo</value>
   </data>
-  <data name="UsernamePasswordPopupUsernameTitle2" xml:space="preserve">
+  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Up. ime</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
@@ -291,10 +291,10 @@ Omogoča SURFnet</value>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Posodobitev na voljo</value>
   </data>
-  <data name="SelfUpdatePopupAskLater2" xml:space="preserve">
+  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>_Vprašaj me pozneje</value>
   </data>
-  <data name="SelfUpdatePopupSkip2" xml:space="preserve">
+  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Preskoči to _verzijo</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
@@ -309,7 +309,7 @@ Omogoča SURFnet</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
-  <data name="TwoFactorEnrollmentButton2" xml:space="preserve">
+  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Včlani</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
@@ -319,13 +319,13 @@ Omogoča SURFnet</value>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Včlanitev v 2-stopenjsko overovljanje</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel2" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>Odgovo_r</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretLabel2" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
     <value>_Skrivnost</value>
   </data>
-  <data name="TOTPAuthenticationNote" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Ne uporabite istega TOTP dvakrat. Počakajte, da bo ustvarjen svež TOTP.</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
@@ -339,14 +339,14 @@ Omogoča SURFnet</value>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Okno je bilo pomanjšano semle.</value>
   </data>
-  <data name="SelfUpdatePopupChangelog2" xml:space="preserve">
+  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>Kaj je _novega?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
     <value>Nameščena verzija odjemalca VPN je {0}. Na spletu je na voljo novejša verzija {1}.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
-  <data name="SelfUpdatePopupUpdate5" xml:space="preserve">
+  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
     <value>Prenesi in _posodobi zdaj
 (Odjemalec se bo ponovno zagnal)</value>
   </data>
@@ -357,22 +357,22 @@ Omogoča SURFnet</value>
   <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
     <value>Ime gostitelja</value>
   </data>
-  <data name="ButtonNextTitle2" xml:space="preserve">
+  <data name="ButtonNextTitleAlt" xml:space="preserve">
     <value>Naprej</value>
   </data>
-  <data name="TwoFactorAuthenticationMethodLabel" xml:space="preserve">
+  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
     <value>_Način</value>
   </data>
-  <data name="InstanceSourceSelectCustom2" xml:space="preserve">
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>D_odaj drug naslov</value>
   </data>
-  <data name="InstituteAccessNote2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
     <value>Dostopajte do omrežja svoje _ustanove zunaj ustanove.</value>
   </data>
-  <data name="SecureInternetNote2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
     <value>Povežite se na _splet varno. Na primer, kadar uporabljate javni WiFi.</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretQRTitle" xml:space="preserve">
+  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
     <value>Koda QR skrivnosti TOTP</value>
   </data>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">

@@ -73,7 +73,7 @@
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MethodListView}}"
             SelectedValue="{Binding Path=SelectedMethod}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorAuthenticationMethodLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorAuthenticationPopupMethodLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
 
         <ContentControl
             Grid.Row="1"
@@ -87,11 +87,11 @@
             Margin="5"
             IsDefault="True"
             Style="{StaticResource eduVPNButtonStyle}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorEnrollmentButton2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorEnrollmentPopupEnrollButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=ApplyEnrollment}"
             Click="OK_Click">
             <AccessText
-                Text="{x:Static res:Strings.TwoFactorEnrollmentButton2}"/>
+                Text="{x:Static res:Strings.TwoFactorEnrollmentPopupEnrollButtonTitle}"/>
         </Button>
     </Grid>
 </windows:Window>

@@ -60,7 +60,7 @@
                     Margin="0,-3,-3,-3"
                     Target="{Binding ElementName=OpenVPNForceTCP}"
                     Style="{StaticResource eduVPNSectionLabelStyle}"
-                    Content="{x:Static res:Strings.SettingsPageForceTCPInterfaceTitle2}"/>
+                    Content="{x:Static res:Strings.SettingsPageForceTCPLabel}"/>
 
                 <CheckBox
                     x:Name="OpenVPNForceTCP"
@@ -106,7 +106,7 @@
                     Margin="0,-3"
                     Target="{Binding ElementName=OpenVPNInterface}"
                     Style="{StaticResource eduVPNSectionLabelStyle}"
-                    Content="{x:Static res:Strings.SettingsPageInterfaceTitle2}"/>
+                    Content="{x:Static res:Strings.SettingsPageInterfaceLabel}"/>
 
                 <Rectangle
                     Grid.Row="1"

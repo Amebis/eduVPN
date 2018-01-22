@@ -227,10 +227,10 @@
                 FontSize="11"
                 HorizontalAlignment="Left"
                 Style="{StaticResource eduVPNButtonStyle}"
-                AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageSessionInfoViewLog2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
                 Command="{Binding Path=Wizard.ActiveSession.ShowLog}">
                 <AccessText
-                    Text="{x:Static res:Strings.StatusPageSessionInfoViewLog2}"/>
+                    Text="{x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}"/>
             </Button>
         </Grid>
 
@@ -242,10 +242,10 @@
             FontSize="16"
             VerticalAlignment="Center"
             Style="{StaticResource eduVPNButtonStyle}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageDisconnect2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageDisconnectButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=Wizard.ActiveSession.Disconnect}">
             <AccessText
-                Text="{x:Static res:Strings.StatusPageDisconnect2}"/>
+                Text="{x:Static res:Strings.StatusPageDisconnectButtonTitle}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>

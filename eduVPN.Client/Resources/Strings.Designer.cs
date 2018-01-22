@@ -146,36 +146,36 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to _Copy.
         /// </summary>
-        public static string ButtonCopy2 {
+        public static string ButtonCopyTitle {
             get {
-                return ResourceManager.GetString("ButtonCopy2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Next.
-        /// </summary>
-        public static string ButtonNextTitle2 {
-            get {
-                return ResourceManager.GetString("ButtonNextTitle2", resourceCulture);
+                return ResourceManager.GetString("ButtonCopyTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to _Next &gt;.
         /// </summary>
-        public static string ButtonNextTitle3 {
+        public static string ButtonNextTitle {
             get {
-                return ResourceManager.GetString("ButtonNextTitle3", resourceCulture);
+                return ResourceManager.GetString("ButtonNextTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string ButtonNextTitleAlt {
+            get {
+                return ResourceManager.GetString("ButtonNextTitleAlt", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to _OK.
         /// </summary>
-        public static string ButtonOKTitle2 {
+        public static string ButtonOKTitle {
             get {
-                return ResourceManager.GetString("ButtonOKTitle2", resourceCulture);
+                return ResourceManager.GetString("ButtonOKTitle", resourceCulture);
             }
         }
         
@@ -209,27 +209,27 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Add _other address.
         /// </summary>
-        public static string InstanceSourceSelectCustom2 {
+        public static string InstanceSourcePageCustomButtonTitle {
             get {
-                return ResourceManager.GetString("InstanceSourceSelectCustom2", resourceCulture);
+                return ResourceManager.GetString("InstanceSourcePageCustomButtonTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Access your _institute&apos;s network..
         /// </summary>
-        public static string InstituteAccessNote2 {
+        public static string InstanceSourcePageInstituteAccessButtonTitle {
             get {
-                return ResourceManager.GetString("InstituteAccessNote2", resourceCulture);
+                return ResourceManager.GetString("InstanceSourcePageInstituteAccessButtonTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Institute Access.
+        ///   Looks up a localized string similar to Connect to the Internet _securely, for example when using public WiFi..
         /// </summary>
-        public static string InstituteAccessTitle {
+        public static string InstanceSourcePageSecureInternetButtonTitle {
             get {
-                return ResourceManager.GetString("InstituteAccessTitle", resourceCulture);
+                return ResourceManager.GetString("InstanceSourcePageSecureInternetButtonTitle", resourceCulture);
             }
         }
         
@@ -317,9 +317,9 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to _Password.
         /// </summary>
-        public static string PasswordPopupPasswordTitle2 {
+        public static string PasswordPopupPasswordLabel {
             get {
-                return ResourceManager.GetString("PasswordPopupPasswordTitle2", resourceCulture);
+                return ResourceManager.GetString("PasswordPopupPasswordLabel", resourceCulture);
             }
         }
         
@@ -335,63 +335,63 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Add _another provider.
         /// </summary>
-        public static string RecentConfigurationSelectPageAddEntry2 {
+        public static string RecentConfigurationSelectPageAddButtonTitle {
             get {
-                return ResourceManager.GetString("RecentConfigurationSelectPageAddEntry2", resourceCulture);
+                return ResourceManager.GetString("RecentConfigurationSelectPageAddButtonTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect to the Internet _securely, for example when using public WiFi..
+        ///   Looks up a localized string similar to Institute Access.
         /// </summary>
-        public static string SecureInternetNote2 {
+        public static string RecentConfigurationSelectPageInstituteAccessTitle {
             get {
-                return ResourceManager.GetString("SecureInternetNote2", resourceCulture);
+                return ResourceManager.GetString("RecentConfigurationSelectPageInstituteAccessTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Secure Internet.
         /// </summary>
-        public static string SecureInternetTitle {
+        public static string RecentConfigurationSelectPageSecureInternetTitle {
             get {
-                return ResourceManager.GetString("SecureInternetTitle", resourceCulture);
+                return ResourceManager.GetString("RecentConfigurationSelectPageSecureInternetTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Ask me _later.
         /// </summary>
-        public static string SelfUpdatePopupAskLater2 {
+        public static string SelfUpdatePopupAskLaterButtonTitle {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupAskLater2", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupAskLaterButtonTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to What&apos;s _New?.
         /// </summary>
-        public static string SelfUpdatePopupChangelog2 {
+        public static string SelfUpdatePopupChangelogButtonTitle {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupChangelog2", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupChangelogButtonTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Version {0} of VPN client is installed. A newer version {1} is available online..
         /// </summary>
-        public static string SelfUpdatePopupMessage3 {
+        public static string SelfUpdatePopupMessage {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupMessage3", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Skip this _version.
         /// </summary>
-        public static string SelfUpdatePopupSkip2 {
+        public static string SelfUpdatePopupSkipButtonTitle {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupSkip2", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupSkipButtonTitle", resourceCulture);
             }
         }
         
@@ -408,9 +408,9 @@ namespace eduVPN.Client.Resources {
         ///   Looks up a localized string similar to Download and _update now
         ///(Client will restart).
         /// </summary>
-        public static string SelfUpdatePopupUpdate5 {
+        public static string SelfUpdatePopupUpdateButtonTitle {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupUpdate5", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupUpdateButtonTitle", resourceCulture);
             }
         }
         
@@ -446,9 +446,9 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Connect Over _TCP.
         /// </summary>
-        public static string SettingsPageForceTCPInterfaceTitle2 {
+        public static string SettingsPageForceTCPLabel {
             get {
-                return ResourceManager.GetString("SettingsPageForceTCPInterfaceTitle2", resourceCulture);
+                return ResourceManager.GetString("SettingsPageForceTCPLabel", resourceCulture);
             }
         }
         
@@ -464,18 +464,18 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Select TAP _Interface.
         /// </summary>
-        public static string SettingsPageInterfaceTitle2 {
+        public static string SettingsPageInterfaceLabel {
             get {
-                return ResourceManager.GetString("SettingsPageInterfaceTitle2", resourceCulture);
+                return ResourceManager.GetString("SettingsPageInterfaceLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to _Disconnect.
         /// </summary>
-        public static string StatusPageDisconnect2 {
+        public static string StatusPageDisconnectButtonTitle {
             get {
-                return ResourceManager.GetString("StatusPageDisconnect2", resourceCulture);
+                return ResourceManager.GetString("StatusPageDisconnectButtonTitle", resourceCulture);
             }
         }
         
@@ -554,9 +554,9 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to View _log.
         /// </summary>
-        public static string StatusPageSessionInfoViewLog2 {
+        public static string StatusPageSessionInfoViewLogButtonTitle {
             get {
-                return ResourceManager.GetString("StatusPageSessionInfoViewLog2", resourceCulture);
+                return ResourceManager.GetString("StatusPageSessionInfoViewLogButtonTitle", resourceCulture);
             }
         }
         
@@ -662,45 +662,36 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Please do not reuse the TOTP. Wait until a fresh TOTP is generated..
         /// </summary>
-        public static string TOTPAuthenticationNote {
+        public static string TOTPAuthenticationPanelNote {
             get {
-                return ResourceManager.GetString("TOTPAuthenticationNote", resourceCulture);
+                return ResourceManager.GetString("TOTPAuthenticationPanelNote", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to _Response.
         /// </summary>
-        public static string TOTPEnrollmentPanelResponseLabel2 {
+        public static string TOTPEnrollmentPanelResponseLabel {
             get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelResponseLabel2", resourceCulture);
+                return ResourceManager.GetString("TOTPEnrollmentPanelResponseLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to _Secret.
         /// </summary>
-        public static string TOTPEnrollmentPanelSecretLabel2 {
+        public static string TOTPEnrollmentPanelSecretLabel {
             get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelSecretLabel2", resourceCulture);
+                return ResourceManager.GetString("TOTPEnrollmentPanelSecretLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to TOTP Secret QR Code.
         /// </summary>
-        public static string TOTPEnrollmentPanelSecretQRTitle {
+        public static string TOTPEnrollmentPanelSecretQRLabel {
             get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelSecretQRTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Method.
-        /// </summary>
-        public static string TwoFactorAuthenticationMethodLabel {
-            get {
-                return ResourceManager.GetString("TwoFactorAuthenticationMethodLabel", resourceCulture);
+                return ResourceManager.GetString("TOTPEnrollmentPanelSecretQRLabel", resourceCulture);
             }
         }
         
@@ -710,6 +701,15 @@ namespace eduVPN.Client.Resources {
         public static string TwoFactorAuthenticationPopupMessage {
             get {
                 return ResourceManager.GetString("TwoFactorAuthenticationPopupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Method.
+        /// </summary>
+        public static string TwoFactorAuthenticationPopupMethodLabel {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthenticationPopupMethodLabel", resourceCulture);
             }
         }
         
@@ -734,9 +734,9 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to _Enroll.
         /// </summary>
-        public static string TwoFactorEnrollmentButton2 {
+        public static string TwoFactorEnrollmentPopupEnrollButtonTitle {
             get {
-                return ResourceManager.GetString("TwoFactorEnrollmentButton2", resourceCulture);
+                return ResourceManager.GetString("TwoFactorEnrollmentPopupEnrollButtonTitle", resourceCulture);
             }
         }
         
@@ -779,9 +779,9 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to _Password.
         /// </summary>
-        public static string UsernamePasswordPopupPasswordTitle2 {
+        public static string UsernamePasswordPopupPasswordLabel {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupPasswordTitle2", resourceCulture);
+                return ResourceManager.GetString("UsernamePasswordPopupPasswordLabel", resourceCulture);
             }
         }
         
@@ -797,9 +797,9 @@ namespace eduVPN.Client.Resources {
         /// <summary>
         ///   Looks up a localized string similar to _Username.
         /// </summary>
-        public static string UsernamePasswordPopupUsernameTitle2 {
+        public static string UsernamePasswordPopupUsernameLabel {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupUsernameTitle2", resourceCulture);
+                return ResourceManager.GetString("UsernamePasswordPopupUsernameLabel", resourceCulture);
             }
         }
         

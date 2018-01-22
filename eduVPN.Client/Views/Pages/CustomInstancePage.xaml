@@ -58,11 +58,11 @@
             Margin="5"
             IsDefault="True"
             Style="{StaticResource eduVPNButtonStyle}"
-            AutomationProperties.Name="{x:Static res:Strings.ButtonNextTitle2}"
+            AutomationProperties.Name="{x:Static res:Strings.ButtonNextTitleAlt}"
             Command="{Binding Path=SelectCustomInstance}"
             Click="Button_Click">
             <AccessText
-                Text="{x:Static res:Strings.ButtonNextTitle3}"/>
+                Text="{x:Static res:Strings.ButtonNextTitle}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>

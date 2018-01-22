@@ -70,7 +70,7 @@
                     Grid.Column="1"
                     Margin="5,2"
                     Style="{StaticResource eduVPNSectionTitleStyle}"
-                    Text="{x:Static res:Strings.SecureInternetTitle}"/>
+                    Text="{x:Static res:Strings.RecentConfigurationSelectPageSecureInternetTitle}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
@@ -116,7 +116,7 @@
                     Grid.Column="1"
                     Margin="5,2"
                     Style="{StaticResource eduVPNSectionTitleStyle}"
-                    Text="{x:Static res:Strings.InstituteAccessTitle}"/>
+                    Text="{x:Static res:Strings.RecentConfigurationSelectPageInstituteAccessTitle}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
@@ -137,10 +137,10 @@
             Grid.Row="3"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.RecentConfigurationSelectPageAddEntry2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.RecentConfigurationSelectPageAddButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=AddAnotherEntry}">
             <AccessText
-                Text="{x:Static res:Strings.RecentConfigurationSelectPageAddEntry2}"/>
+                Text="{x:Static res:Strings.RecentConfigurationSelectPageAddButtonTitle}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>
