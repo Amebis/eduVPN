@@ -23,6 +23,9 @@ namespace eduVPN.Views.Pages
                 Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
 
             InitializeComponent();
+
+            // Set initial focus.
+            Loaded += (object sender, System.Windows.RoutedEventArgs e) => InstanceHostname.Focus();
         }
 
         #endregion
