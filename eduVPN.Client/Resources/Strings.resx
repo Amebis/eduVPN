@@ -196,13 +196,13 @@
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>E_xit</value>
   </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
-    <value>Access your _institute's network.</value>
+    <value>Access your _institute&apos;s network.</value>
   </data>
   <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
@@ -256,20 +256,20 @@ Powered by SURFnet</value>
     <value>Settings</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>If the VPN client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
+    <value>If the VPN client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this.</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Connect Over _TCP</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Enter your password for "{0}":</value>
+    <value>Enter your password for &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Enter your username and password for "{0}":</value>
+    <value>Enter your username and password for &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -288,8 +288,8 @@ Powered by SURFnet</value>
     <value>_Username</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
-    <value>Select your two-factor method and enter the security token:</value>
-    <comment>"securirty token" sounds wrong</comment>
+    <value>Select your two-factor method and enter the security code:</value>
+    <comment>&quot;securirty token&quot; sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication</value>
@@ -313,7 +313,7 @@ If you continue, your user settings will be reset to the default.</value>
     <value>Corrupt User Settings</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>The required OAuth parameter "state" is missing or incorrect.</value>
+    <value>The required OAuth parameter &quot;state&quot; is missing or incorrect.</value>
   </data>
   <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Enroll</value>
@@ -346,7 +346,7 @@ If you continue, your user settings will be reset to the default.</value>
     <value>The window has been minimized here.</value>
   </data>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
-    <value>What's _New?</value>
+    <value>What&apos;s _New?</value>
   </data>
   <data name="SelfUpdatePopupMessage" xml:space="preserve">
     <value>Version {0} of VPN client is installed. A newer version {1} is available online.</value>
