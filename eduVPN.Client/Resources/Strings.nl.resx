@@ -316,14 +316,14 @@ Powered by SURFnet</value>
   <data name="ButtonOKTitle2" xml:space="preserve">
     <value>_OK</value>
   </data>
-  <data name="PasswordPopupPasswordTitle" xml:space="preserve">
-    <value>Wachtwoord:</value>
+  <data name="PasswordPopupPasswordTitle2" xml:space="preserve">
+    <value>_Wachtwoord</value>
   </data>
-  <data name="UsernamePasswordPopupPasswordTitle" xml:space="preserve">
-    <value>Wachtwoord:</value>
+  <data name="UsernamePasswordPopupPasswordTitle2" xml:space="preserve">
+    <value>&amp;Wachtwoord</value>
   </data>
-  <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
-    <value>Gebruikersnaam:</value>
+  <data name="UsernamePasswordPopupUsernameTitle2" xml:space="preserve">
+    <value>&amp;Gebruikersnaam</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
@@ -362,11 +362,11 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Twee-factorauthenticatie aanmelding</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseTitle" xml:space="preserve">
-    <value>Antwoord:</value>
+  <data name="TOTPEnrollmentPanelResponseLabel2" xml:space="preserve">
+    <value>_Antwoord</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretTitle" xml:space="preserve">
-    <value>Sleutel:</value>
+  <data name="TOTPEnrollmentPanelSecretLabel2" xml:space="preserve">
+    <value>_Sleutel</value>
   </data>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
     <value>Gebruik niet dezelfde TOTP-code. Wacht tot er een nieuwe code is gegenereerd.</value>
@@ -401,5 +401,8 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   </data>
   <data name="ButtonNextTitle2" xml:space="preserve">
     <value>Volgende</value>
+  </data>
+  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Antwoord</value>
   </data>
 </root>

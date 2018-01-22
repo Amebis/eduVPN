@@ -4,10 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="320"
-    d:DesignHeight="100"
-    FocusManager.FocusedElement="{Binding ElementName=Response}">
+    d:DesignHeight="100">
 
     <Grid Margin="-5">
         <Grid.RowDefinitions>
@@ -19,6 +19,8 @@
             Margin="5"
             HorizontalContentAlignment="Center"
             Style="{StaticResource eduVPNCodeTextBoxStyle}"
-            Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
+            AutomationProperties.Name="{x:Static res:Strings.YubiKeyEnrollmentPanelResponseLabel}"
+            AutomationProperties.IsRequiredForForm="True"/>
     </Grid>
 </UserControl>

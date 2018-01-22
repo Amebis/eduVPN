@@ -315,11 +315,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to _Password.
         /// </summary>
-        public static string PasswordPopupPasswordTitle {
+        public static string PasswordPopupPasswordTitle2 {
             get {
-                return ResourceManager.GetString("PasswordPopupPasswordTitle", resourceCulture);
+                return ResourceManager.GetString("PasswordPopupPasswordTitle2", resourceCulture);
             }
         }
         
@@ -669,20 +669,38 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Response.
+        ///   Looks up a localized string similar to _Response.
         /// </summary>
-        public static string TOTPEnrollmentPanelResponseTitle {
+        public static string TOTPEnrollmentPanelResponseLabel2 {
             get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelResponseTitle", resourceCulture);
+                return ResourceManager.GetString("TOTPEnrollmentPanelResponseLabel2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Secret.
+        ///   Looks up a localized string similar to _Secret.
         /// </summary>
-        public static string TOTPEnrollmentPanelSecretTitle {
+        public static string TOTPEnrollmentPanelSecretLabel2 {
             get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelSecretTitle", resourceCulture);
+                return ResourceManager.GetString("TOTPEnrollmentPanelSecretLabel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOTP Secret QR Code.
+        /// </summary>
+        public static string TOTPEnrollmentPanelSecretQRTitle {
+            get {
+                return ResourceManager.GetString("TOTPEnrollmentPanelSecretQRTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Method.
+        /// </summary>
+        public static string TwoFactorAuthenticationMethodLabel {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthenticationMethodLabel", resourceCulture);
             }
         }
         
@@ -759,11 +777,11 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to _Password.
         /// </summary>
-        public static string UsernamePasswordPopupPasswordTitle {
+        public static string UsernamePasswordPopupPasswordTitle2 {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupPasswordTitle", resourceCulture);
+                return ResourceManager.GetString("UsernamePasswordPopupPasswordTitle2", resourceCulture);
             }
         }
         
@@ -777,11 +795,20 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username.
+        ///   Looks up a localized string similar to _Username.
         /// </summary>
-        public static string UsernamePasswordPopupUsernameTitle {
+        public static string UsernamePasswordPopupUsernameTitle2 {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupUsernameTitle", resourceCulture);
+                return ResourceManager.GetString("UsernamePasswordPopupUsernameTitle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Response.
+        /// </summary>
+        public static string YubiKeyEnrollmentPanelResponseLabel {
+            get {
+                return ResourceManager.GetString("YubiKeyEnrollmentPanelResponseLabel", resourceCulture);
             }
         }
     }

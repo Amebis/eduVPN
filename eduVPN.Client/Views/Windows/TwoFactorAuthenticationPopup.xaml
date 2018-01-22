@@ -58,7 +58,8 @@
             ItemTemplate="{StaticResource eduVPNSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MethodListView}}"
-            SelectedValue="{Binding Path=SelectedMethod}"/>
+            SelectedValue="{Binding Path=SelectedMethod}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorAuthenticationMethodLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
 
         <ContentControl
             Grid.Row="1"

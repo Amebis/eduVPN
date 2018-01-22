@@ -1,7 +1,7 @@
 ﻿/*
     eduVPN - End-user friendly VPN
 
-    Copyright: 2017, The Commons Conservancy eduVPN Programme
+Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -17,6 +17,9 @@ namespace eduVPN.Views.Windows
         public PasswordPopup()
         {
             InitializeComponent();
+
+            // Set initial focus.
+            Loaded += (object sender, System.Windows.RoutedEventArgs e) => Password.Focus();
         }
 
         #endregion

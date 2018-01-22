@@ -19,6 +19,9 @@ namespace eduVPN.Views.Panels
         public TOTPEnrollmentPanel()
         {
             InitializeComponent();
+
+            // Set initial focus.
+            Loaded += (object sender, System.Windows.RoutedEventArgs e) => Response.Focus();
         }
 
         #endregion

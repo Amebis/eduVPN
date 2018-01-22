@@ -8,8 +8,7 @@
     xmlns:windows="clr-namespace:eduVPN.Views.Windows"
     mc:Ignorable="d"
     d:DesignWidth="320"
-    d:DesignHeight="100"
-    FocusManager.FocusedElement="{Binding ElementName=Response}">
+    d:DesignHeight="100">
 
     <Grid Margin="-5">
         <Grid.ColumnDefinitions>
@@ -21,11 +20,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock
-            Margin="5,5,2,5"
+        <Label
+            Name="SecretLabel"
+            Margin="0,0,-3,0"
             VerticalAlignment="Center"
-            Style="{StaticResource eduVPNTextBlockStyle}"
-            Text="{x:Static res:Strings.TOTPEnrollmentPanelSecretTitle}"/>
+            Target="{Binding ElementName=Secret}"
+            Style="{StaticResource eduVPNLabelStyle}"
+            Content="{x:Static res:Strings.TOTPEnrollmentPanelSecretLabel2}"/>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -37,7 +38,8 @@
                 Margin="2,5,5,2"
                 HorizontalAlignment="Center"
                 Stretch="None"
-                RenderOptions.BitmapScalingMode="Fant">
+                RenderOptions.BitmapScalingMode="Fant"
+                AutomationProperties.Name="{x:Static res:Strings.TOTPEnrollmentPanelSecretQRTitle}">
                 <Image.Source>
                     <MultiBinding
                         Converter="{StaticResource TOTPQRConverter}">
@@ -62,15 +64,18 @@
                 TextWrapping="Wrap"
                 Style="{StaticResource eduVPNCodeTextBoxStyle}"
                 Text="{Binding Path=Secret, Converter={StaticResource TOTPSecretConverter}}"
-                IsReadOnly="True"/>
+                IsReadOnly="True"
+                AutomationProperties.LabeledBy="{Binding ElementName=SecretLabel}"/>
         </Grid>
 
-        <TextBlock
+        <Label
+            Name="ResponseLabel"
             Grid.Row="1"
-            Margin="5,5,2,5"
+            Margin="0,0,-3,0"
             VerticalAlignment="Center"
-            Style="{StaticResource eduVPNTextBlockStyle}"
-            Text="{x:Static res:Strings.TOTPEnrollmentPanelResponseTitle}"/>
+            Target="{Binding ElementName=Response}"
+            Style="{StaticResource eduVPNLabelStyle}"
+            Content="{x:Static res:Strings.TOTPEnrollmentPanelResponseLabel2}"/>
 
         <TextBox
             Grid.Row="1"
@@ -79,6 +84,8 @@
             Margin="2,5,5,5"
             HorizontalContentAlignment="Center"
             Style="{StaticResource eduVPNCodeTextBoxStyle}"
-            Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
+            AutomationProperties.LabeledBy="{Binding ElementName=ResponseLabel}"
+            AutomationProperties.IsRequiredForForm="True"/>
     </Grid>
 </UserControl>

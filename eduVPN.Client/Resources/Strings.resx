@@ -278,14 +278,14 @@ Powered by SURFnet</value>
   <data name="ButtonOKTitle2" xml:space="preserve">
     <value>_OK</value>
   </data>
-  <data name="PasswordPopupPasswordTitle" xml:space="preserve">
-    <value>Password</value>
+  <data name="PasswordPopupPasswordTitle2" xml:space="preserve">
+    <value>_Password</value>
   </data>
-  <data name="UsernamePasswordPopupPasswordTitle" xml:space="preserve">
-    <value>Password</value>
+  <data name="UsernamePasswordPopupPasswordTitle2" xml:space="preserve">
+    <value>_Password</value>
   </data>
-  <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
-    <value>Username</value>
+  <data name="UsernamePasswordPopupUsernameTitle2" xml:space="preserve">
+    <value>_Username</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Select your two-factor method and enter the security token:</value>
@@ -325,11 +325,11 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication Enrollment</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseTitle" xml:space="preserve">
-    <value>Response</value>
+  <data name="TOTPEnrollmentPanelResponseLabel2" xml:space="preserve">
+    <value>_Response</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretTitle" xml:space="preserve">
-    <value>Secret</value>
+  <data name="TOTPEnrollmentPanelSecretLabel2" xml:space="preserve">
+    <value>_Secret</value>
   </data>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
     <value>Please do not reuse the TOTP. Wait until a fresh TOTP is generated.</value>
@@ -366,8 +366,17 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ButtonNextTitle2" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="TwoFactorAuthenticationMethodLabel" xml:space="preserve">
+    <value>_Method</value>
+  </data>
   <data name="InstanceSourceSelectCustom2" xml:space="preserve">
     <value>Add _other address</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretQRTitle" xml:space="preserve">
+    <value>TOTP Secret QR Code</value>
+  </data>
+  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Response</value>
   </data>
   <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
     <value>_Country</value>

@@ -7,8 +7,7 @@
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="320"
-    d:DesignHeight="100"
-    FocusManager.FocusedElement="{Binding ElementName=Response}">
+    d:DesignHeight="100">
 
     <Grid Margin="-5">
         <Grid.RowDefinitions>
@@ -21,7 +20,9 @@
             Margin="5,5,5,2"
             HorizontalContentAlignment="Center"
             Style="{StaticResource eduVPNCodeTextBoxStyle}"
-            Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TOTPEnrollmentPanelResponseLabel2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.IsRequiredForForm="True"/>
 
         <Grid
             Grid.Row="1"

@@ -273,6 +273,15 @@ Omogoča SURFnet</value>
   <data name="ButtonOKTitle2" xml:space="preserve">
     <value>_V redu</value>
   </data>
+  <data name="PasswordPopupPasswordTitle2" xml:space="preserve">
+    <value>_Geslo</value>
+  </data>
+  <data name="UsernamePasswordPopupPasswordTitle2" xml:space="preserve">
+    <value>_Geslo</value>
+  </data>
+  <data name="UsernamePasswordPopupUsernameTitle2" xml:space="preserve">
+    <value>_Up. ime</value>
+  </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostni žeton:</value>
   </data>
@@ -310,6 +319,12 @@ Omogoča SURFnet</value>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Včlanitev v 2-stopenjsko overovljanje</value>
   </data>
+  <data name="TOTPEnrollmentPanelResponseLabel2" xml:space="preserve">
+    <value>Odgovo_r</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretLabel2" xml:space="preserve">
+    <value>_Skrivnost</value>
+  </data>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
     <value>Ne uporabite istega TOTP dvakrat. Počakajte, da bo ustvarjen svež TOTP.</value>
   </data>
@@ -345,6 +360,9 @@ Omogoča SURFnet</value>
   <data name="ButtonNextTitle2" xml:space="preserve">
     <value>Naprej</value>
   </data>
+  <data name="TwoFactorAuthenticationMethodLabel" xml:space="preserve">
+    <value>_Način</value>
+  </data>
   <data name="InstanceSourceSelectCustom2" xml:space="preserve">
     <value>D_odaj drug naslov</value>
   </data>
@@ -353,6 +371,12 @@ Omogoča SURFnet</value>
   </data>
   <data name="SecureInternetNote2" xml:space="preserve">
     <value>Povežite se na _splet varno. Na primer, kadar uporabljate javni WiFi.</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretQRTitle" xml:space="preserve">
+    <value>Koda QR skrivnosti TOTP</value>
+  </data>
+  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Odgovor</value>
   </data>
   <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
     <value>_Država</value>
