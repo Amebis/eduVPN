@@ -130,7 +130,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Zapri</value>
   </data>
-  <data name="ButtonNextTitle" xml:space="preserve">
+  <data name="ButtonNextTitle3" xml:space="preserve">
     <value>_Naprej &gt;</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
@@ -181,11 +181,11 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Podatki povezave</value>
   </data>
-  <data name="StatusPageSessionInfoViewLog" xml:space="preserve">
-    <value>Ogled dnevnika</value>
+  <data name="StatusPageSessionInfoViewLog2" xml:space="preserve">
+    <value>Ogled _dnevnika</value>
   </data>
-  <data name="StatusPageDisconnect" xml:space="preserve">
-    <value>Prekini</value>
+  <data name="StatusPageDisconnect2" xml:space="preserve">
+    <value>_Prekini</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>h\:mm\:ss</value>
@@ -199,26 +199,17 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>{0:G} {1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="InstanceSourceSelectCustom" xml:space="preserve">
-    <value>Dodaj drug naslov</value>
-  </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>I_zhod</value>
-  </data>
-  <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Dostopajte do omrežja svoje ustanove zunaj ustanove.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Dostop do ustanove</value>
   </data>
-  <data name="SecureInternetNote" xml:space="preserve">
-    <value>Povežite se na splet varno. Na primer, kadar uporabljate javni WiFi.</value>
-  </data>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Varni splet</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
-    <value>Dodaj drugega ponudnika</value>
+  <data name="RecentConfigurationSelectPageAddEntry2" xml:space="preserve">
+    <value>Dodaj drugeg_a ponudnika</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Podatk_i povezave ...</value>
@@ -279,17 +270,8 @@ Omogoča SURFnet</value>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
     <value>Overovitev</value>
   </data>
-  <data name="ButtonOKTitle" xml:space="preserve">
-    <value>V redu</value>
-  </data>
-  <data name="PasswordPopupPasswordTitle" xml:space="preserve">
-    <value>Geslo:</value>
-  </data>
-  <data name="UsernamePasswordPopupPasswordTitle" xml:space="preserve">
-    <value>Geslo:</value>
-  </data>
-  <data name="UsernamePasswordPopupUsernameTitle" xml:space="preserve">
-    <value>Up. ime:</value>
+  <data name="ButtonOKTitle2" xml:space="preserve">
+    <value>_V redu</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostni žeton:</value>
@@ -297,22 +279,14 @@ Omogoča SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>2-stopenjsko overovljanje</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Novejša verzija odjemalca eduVPN je prenešena in pripravljena na namestitev.</value>
-  </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Posodobitev na voljo</value>
   </data>
-  <data name="SelfUpdatePopupAskLater" xml:space="preserve">
-    <value>Vprašaj me pozneje</value>
+  <data name="SelfUpdatePopupAskLater2" xml:space="preserve">
+    <value>_Vprašaj me pozneje</value>
   </data>
-  <data name="SelfUpdatePopupSkip" xml:space="preserve">
-    <value>Preskoči to verzijo</value>
-  </data>
-  <data name="SelfUpdatePopupUpdate" xml:space="preserve">
-    <value>Posodobi na {0} zdaj
-(Odjemalec se bo ponovno zagnal)</value>
-    <comment>{0}=version</comment>
+  <data name="SelfUpdatePopupSkip2" xml:space="preserve">
+    <value>Preskoči to _verzijo</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>Program {0} je zaznal, da se je datoteka z vašimi uporabniškimi nastavitvami {1} pokvarila. Lahko gre za posledico zrušenja ali nepravilne zaustavitve programa.
@@ -326,8 +300,8 @@ Omogoča SURFnet</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
-  <data name="TwoFactorEnrollmentButton" xml:space="preserve">
-    <value>Včlani</value>
+  <data name="TwoFactorEnrollmentButton2" xml:space="preserve">
+    <value>_Včlani</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
     <value>{0} zahteva vašo včlanitev v 2-stopenjsko overovljanje pri ponudniku {1}.</value>
@@ -335,12 +309,6 @@ Omogoča SURFnet</value>
   </data>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
     <value>Včlanitev v 2-stopenjsko overovljanje</value>
-  </data>
-  <data name="TOTPEnrollmentPanelResponseTitle" xml:space="preserve">
-    <value>Odgovor:</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretTitle" xml:space="preserve">
-    <value>Skrivnost:</value>
   </data>
   <data name="TOTPAuthenticationNote" xml:space="preserve">
     <value>Ne uporabite istega TOTP dvakrat. Počakajte, da bo ustvarjen svež TOTP.</value>
@@ -356,28 +324,15 @@ Omogoča SURFnet</value>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Okno je bilo pomanjšano semle.</value>
   </data>
-  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
-    <value>Posodobi {0} na {1} zdaj
-(Odjemalec se bo ponovno zagnal)</value>
-    <comment>{0}=installed version, {1}=available version</comment>
-  </data>
-  <data name="SelfUpdatePopupChangelog" xml:space="preserve">
-    <value>Kaj je novega?</value>
-  </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>Novejša verzija odjemalca VPN je prenešena in pripravljena na posodobitev iz {0} na {1}.</value>
-    <comment>{0}=Installed version, {1}=Avaliable version</comment>
-  </data>
-  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
-    <value>Posodobi zdaj
-(Odjemalec se bo ponovno zagnal)</value>
+  <data name="SelfUpdatePopupChangelog2" xml:space="preserve">
+    <value>Kaj je _novega?</value>
   </data>
   <data name="SelfUpdatePopupMessage3" xml:space="preserve">
     <value>Nameščena verzija odjemalca VPN je {0}. Na spletu je na voljo novejša verzija {1}.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
-  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
-    <value>Prenesi in posodobi zdaj
+  <data name="SelfUpdatePopupUpdate5" xml:space="preserve">
+    <value>Prenesi in _posodobi zdaj
 (Odjemalec se bo ponovno zagnal)</value>
   </data>
   <data name="ListBoxNull" xml:space="preserve">
@@ -389,6 +344,15 @@ Omogoča SURFnet</value>
   </data>
   <data name="ButtonNextTitle2" xml:space="preserve">
     <value>Naprej</value>
+  </data>
+  <data name="InstanceSourceSelectCustom2" xml:space="preserve">
+    <value>D_odaj drug naslov</value>
+  </data>
+  <data name="InstituteAccessNote2" xml:space="preserve">
+    <value>Dostopajte do omrežja svoje _ustanove zunaj ustanove.</value>
+  </data>
+  <data name="SecureInternetNote2" xml:space="preserve">
+    <value>Povežite se na _splet varno. Na primer, kadar uporabljate javni WiFi.</value>
   </data>
   <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
     <value>_Država</value>

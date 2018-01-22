@@ -621,7 +621,10 @@
                                     VerticalAlignment="Top"
                                     Style="{StaticResource eduVPNLinkButtonStyle}"
                                     Command="{Binding Path=CopyError}"
-                                    Content="{x:Static res:Strings.ButtonCopy}"/>
+                                    AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopy2}, Converter={StaticResource RemoveAccessKeyConverter}}">
+                                    <AccessText
+                                        Text="{x:Static res:Strings.ButtonCopy2}"/>
+                                </Button>
                             </Grid>
                         </StatusBarItem>
                     </StatusBar>
@@ -1003,12 +1006,6 @@
         <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
     </Style>
 
-    <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
-    </Style>
-
 
     <!--
         Sections
@@ -1022,6 +1019,18 @@
     <!--
         Labels
     -->
+
+    <Style x:Key="eduVPNAccessTextStyle" TargetType="{x:Type AccessText}">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type AccessText}" BasedOn="{StaticResource eduVPNAccessTextStyle}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
+    </Style>
 
     <Style x:Key="eduVPNLabelStyle" TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Segoe UI"/>

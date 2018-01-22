@@ -129,7 +129,7 @@
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="ButtonNextTitle" xml:space="preserve">
+  <data name="ButtonNextTitle3" xml:space="preserve">
     <value>_Next &gt;</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
@@ -180,11 +180,11 @@
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Connection Info</value>
   </data>
-  <data name="StatusPageSessionInfoViewLog" xml:space="preserve">
-    <value>View log</value>
+  <data name="StatusPageSessionInfoViewLog2" xml:space="preserve">
+    <value>View _log</value>
   </data>
-  <data name="StatusPageDisconnect" xml:space="preserve">
-    <value>Disconnect</value>
+  <data name="StatusPageDisconnect2" xml:space="preserve">
+    <value>_Disconnect</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>h\:mm\:ss</value>
@@ -198,26 +198,23 @@
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="InstanceSourceSelectCustom" xml:space="preserve">
-    <value>Add other address</value>
-  </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>E_xit</value>
   </data>
-  <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Access your institute's network.</value>
+  <data name="InstituteAccessNote2" xml:space="preserve">
+    <value>Access your _institute's network.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
   </data>
-  <data name="SecureInternetNote" xml:space="preserve">
-    <value>Connect to the Internet securely, for example when using public WiFi.</value>
+  <data name="SecureInternetNote2" xml:space="preserve">
+    <value>Connect to the Internet _securely, for example when using public WiFi.</value>
   </data>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
-    <value>Add another provider</value>
+  <data name="RecentConfigurationSelectPageAddEntry2" xml:space="preserve">
+    <value>Add _another provider</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Connection _info...</value>
@@ -226,8 +223,8 @@
     <value>No items</value>
     <comment>Displayed when a list is empty</comment>
   </data>
-  <data name="ButtonCopy" xml:space="preserve">
-    <value>Copy</value>
+  <data name="ButtonCopy2" xml:space="preserve">
+    <value>_Copy</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Open</value>
@@ -278,8 +275,8 @@ Powered by SURFnet</value>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
     <value>Authentication</value>
   </data>
-  <data name="ButtonOKTitle" xml:space="preserve">
-    <value>OK</value>
+  <data name="ButtonOKTitle2" xml:space="preserve">
+    <value>_OK</value>
   </data>
   <data name="PasswordPopupPasswordTitle" xml:space="preserve">
     <value>Password</value>
@@ -297,22 +294,14 @@ Powered by SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Two-factor Authentication</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>A newer version of the VPN client was downloaded and is ready to install.</value>
-  </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update Available</value>
   </data>
-  <data name="SelfUpdatePopupAskLater" xml:space="preserve">
-    <value>Ask me later</value>
+  <data name="SelfUpdatePopupAskLater2" xml:space="preserve">
+    <value>Ask me _later</value>
   </data>
-  <data name="SelfUpdatePopupSkip" xml:space="preserve">
-    <value>Skip this version</value>
-  </data>
-  <data name="SelfUpdatePopupUpdate" xml:space="preserve">
-    <value>Update to {0} now
-(Client will restart)</value>
-    <comment>{0}=version</comment>
+  <data name="SelfUpdatePopupSkip2" xml:space="preserve">
+    <value>Skip this _version</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
@@ -326,8 +315,8 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>
-  <data name="TwoFactorEnrollmentButton" xml:space="preserve">
-    <value>Enroll</value>
+  <data name="TwoFactorEnrollmentButton2" xml:space="preserve">
+    <value>_Enroll</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
     <value>{0} requires you to enroll for two-factor authentication at {1}.</value>
@@ -356,28 +345,15 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>The window has been minimized here.</value>
   </data>
-  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
-    <value>Update {0} to {1} now
-(Client will restart)</value>
-    <comment>{0}=installed version, {1}=available version</comment>
-  </data>
-  <data name="SelfUpdatePopupChangelog" xml:space="preserve">
-    <value>What's New?</value>
-  </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>A newer version of the VPN client was downloaded and is ready to update from {0} to {1}.</value>
-    <comment>{0}=Installed version, {1}=Avaliable version</comment>
-  </data>
-  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
-    <value>Update now
-(Client will restart)</value>
+  <data name="SelfUpdatePopupChangelog2" xml:space="preserve">
+    <value>What's _New?</value>
   </data>
   <data name="SelfUpdatePopupMessage3" xml:space="preserve">
     <value>Version {0} of VPN client is installed. A newer version {1} is available online.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
-  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
-    <value>Download and update now
+  <data name="SelfUpdatePopupUpdate5" xml:space="preserve">
+    <value>Download and _update now
 (Client will restart)</value>
   </data>
   <data name="ListBoxNull" xml:space="preserve">
@@ -389,6 +365,9 @@ If you continue, your user settings will be reset to the default.</value>
   </data>
   <data name="ButtonNextTitle2" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="InstanceSourceSelectCustom2" xml:space="preserve">
+    <value>Add _other address</value>
   </data>
   <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
     <value>_Country</value>

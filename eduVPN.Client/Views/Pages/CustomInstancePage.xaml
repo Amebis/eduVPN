@@ -62,7 +62,7 @@
             Command="{Binding Path=SelectCustomInstance}"
             Click="Button_Click">
             <AccessText
-                Text="{x:Static res:Strings.ButtonNextTitle}"/>
+                Text="{x:Static res:Strings.ButtonNextTitle3}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>

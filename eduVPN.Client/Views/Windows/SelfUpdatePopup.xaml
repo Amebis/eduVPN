@@ -48,8 +48,11 @@
             x:Name="Changelog"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            Content="{x:Static res:Strings.SelfUpdatePopupChangelog}"
-            Command="{Binding Path=ShowChangelog}"/>
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupChangelog2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=ShowChangelog}">
+            <AccessText
+                Text="{x:Static res:Strings.SelfUpdatePopupChangelog2}"/>
+        </Button>
 
         <Button
             Grid.Row="1"
@@ -57,6 +60,7 @@
             Margin="5"
             IsDefault="True"
             Style="{StaticResource eduVPNChoiceButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupUpdate5}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=DoAction}"
             CommandParameter="{x:Static model:PromptSelfUpdateActionType.Update}"
             Click="OK_Click">
@@ -75,11 +79,11 @@
                     Style="{StaticResource eduVPNChoiceIconStyle}"
                     Source="pack://application:,,,/Resources/Update.png"/>
 
-                <TextBlock
+                <AccessText
                     Grid.Column="1"
                     Margin="10"
                     Style="{StaticResource eduVPNChoiceNoteStyle}"
-                    Text="{x:Static res:Strings.SelfUpdatePopupUpdate4}"/>
+                    Text="{x:Static res:Strings.SelfUpdatePopupUpdate5}"/>
             </Grid>
         </Button>
 
@@ -89,20 +93,26 @@
             x:Name="AskLater"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            Content="{x:Static res:Strings.SelfUpdatePopupAskLater}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupAskLater2}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=DoAction}"
             CommandParameter="{x:Static model:PromptSelfUpdateActionType.AskLater}"
-            Click="OK_Click"/>
+            Click="OK_Click">
+            <AccessText
+                Text="{x:Static res:Strings.SelfUpdatePopupAskLater2}"/>
+        </Button>
 
         <Button
             Grid.Row="3"
             x:Name="Skip"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            Content="{x:Static res:Strings.SelfUpdatePopupSkip}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupSkip2}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=DoAction}"
             CommandParameter="{x:Static model:PromptSelfUpdateActionType.Skip}"
-            Click="OK_Click"/>
+            Click="OK_Click">
+            <AccessText
+                Text="{x:Static res:Strings.SelfUpdatePopupSkip2}"/>
+        </Button>
         -->
     </Grid>
 </windows:Window>

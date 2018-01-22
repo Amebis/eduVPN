@@ -72,8 +72,11 @@
             Margin="5"
             IsDefault="True"
             Style="{StaticResource eduVPNButtonStyle}"
-            Content="{x:Static res:Strings.ButtonOKTitle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonOKTitle2}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=ApplyResponse}"
-            Click="OK_Click"/>
+            Click="OK_Click">
+            <AccessText
+                Text="{x:Static res:Strings.ButtonOKTitle2}"/>
+        </Button>
     </Grid>
 </windows:Window>

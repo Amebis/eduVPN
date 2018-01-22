@@ -137,7 +137,10 @@
             Grid.Row="3"
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
-            Content="{x:Static res:Strings.RecentConfigurationSelectPageAddEntry}"
-            Command="{Binding Path=AddAnotherEntry}"/>
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.RecentConfigurationSelectPageAddEntry2}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=AddAnotherEntry}">
+            <AccessText
+                Text="{x:Static res:Strings.RecentConfigurationSelectPageAddEntry2}"/>
+        </Button>
     </Grid>
 </pages:ConnectWizardPage>

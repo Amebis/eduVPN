@@ -132,8 +132,8 @@
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Sluiten</value>
   </data>
-  <data name="ButtonNextTitle" xml:space="preserve">
-    <value>Volgende &gt;</value>
+  <data name="ButtonNextTitle3" xml:space="preserve">
+    <value>Volge_nde &gt;</value>
   </data>
   <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
     <value>Selecteer je land</value>
@@ -202,11 +202,11 @@
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Verbindingsinformatie</value>
   </data>
-  <data name="StatusPageSessionInfoViewLog" xml:space="preserve">
-    <value>Bekijk log</value>
+  <data name="StatusPageSessionInfoViewLog2" xml:space="preserve">
+    <value>Bekijk _log</value>
   </data>
-  <data name="StatusPageDisconnect" xml:space="preserve">
-    <value>Verbreken</value>
+  <data name="StatusPageDisconnect2" xml:space="preserve">
+    <value>_Verbreken</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>hh\:mm\:ss</value>
@@ -218,10 +218,10 @@
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="InstanceSourceSelectCustom" xml:space="preserve">
-    <value>Voeg ander adres toe</value>
+  <data name="InstanceSourceSelectCustom2" xml:space="preserve">
+    <value>V_oeg ander adres toe</value>
   </data>
   <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
     <value>Selecteer een van de VPN-types hieronder.</value>
@@ -232,20 +232,20 @@
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiseren...</value>
   </data>
-  <data name="InstituteAccessNote" xml:space="preserve">
-    <value>Toegang tot netwerk van je instituut.</value>
+  <data name="InstituteAccessNote2" xml:space="preserve">
+    <value>Toegang tot netwerk van je _instituut.</value>
   </data>
   <data name="InstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
   </data>
-  <data name="SecureInternetNote" xml:space="preserve">
-    <value>Verbind veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi-netwerken.</value>
+  <data name="SecureInternetNote2" xml:space="preserve">
+    <value>Verbind _veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi-netwerken.</value>
   </data>
   <data name="SecureInternetTitle" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddEntry" xml:space="preserve">
-    <value>Andere provider toevoegen</value>
+  <data name="RecentConfigurationSelectPageAddEntry2" xml:space="preserve">
+    <value>_Andere provider toevoegen</value>
     <comment>Fuzzy</comment>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
@@ -256,7 +256,7 @@
     <comment>Displayed when a list is empty</comment>
   </data>
   <data name="ButtonCopy" xml:space="preserve">
-    <value>Kopiëren</value>
+    <value>_Kopiëren</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Open</value>
@@ -300,21 +300,21 @@ Powered by SURFnet</value>
     <value>Via TCP verbinden</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Voer je wachtwoord in voor &quot;{0}&quot;:</value>
+    <value>Voer je wachtwoord in voor "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Wachtwoord</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Voer je gebruikersnaam en wachtwoord in voor &quot;{0}&quot;:</value>
+    <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
     <value>Authenticatie</value>
   </data>
-  <data name="ButtonOKTitle" xml:space="preserve">
-    <value>OK</value>
+  <data name="ButtonOKTitle2" xml:space="preserve">
+    <value>_OK</value>
   </data>
   <data name="PasswordPopupPasswordTitle" xml:space="preserve">
     <value>Wachtwoord:</value>
@@ -331,22 +331,14 @@ Powered by SURFnet</value>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Twee-factorauthenticatie</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Een nieuwe versie van de VPN-client is gedownload en klaar om geïnstalleerd te worden.</value>
-  </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
     <value>Update beschikbaar</value>
   </data>
-  <data name="SelfUpdatePopupAskLater" xml:space="preserve">
-    <value>Vraag later</value>
+  <data name="SelfUpdatePopupAskLater2" xml:space="preserve">
+    <value>Vraag _later</value>
   </data>
-  <data name="SelfUpdatePopupSkip" xml:space="preserve">
-    <value>Sla deze versie over</value>
-  </data>
-  <data name="SelfUpdatePopupUpdate" xml:space="preserve">
-    <value>Update naar {0} nu
-(applicatie start opnieuw)</value>
-    <comment>{0}=version</comment>
+  <data name="SelfUpdatePopupSkip2" xml:space="preserve">
+    <value>Sla deze _versie over</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} heeft gedetecteerd dat je gebruikersinstellingenbestand {1} beschadigd is geraakt. Dit kan komen door een crash. 
@@ -358,10 +350,10 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>De vereiste OAuth paramter &quot;state&quot; ontbreekt of is onjuist.</value>
+    <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
   </data>
-  <data name="TwoFactorEnrollmentButton" xml:space="preserve">
-    <value>Enroll</value>
+  <data name="TwoFactorEnrollmentButton2" xml:space="preserve">
+    <value>_Enroll</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
     <value>{0} vereist dat je aangemeld bent voor twee-factorauthenticatie bij {1}.</value>
@@ -390,26 +382,15 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Het VPN-clientvenster is hier geminimaliseerd.</value>
   </data>
-  <data name="SelfUpdatePopupUpdate2" xml:space="preserve">
-    <value>Update {0} naar {1} nu (Applicatie zal herstarten)</value>
-    <comment>{0}=installed version, {1}=available version</comment>
-  </data>
-  <data name="SelfUpdatePopupChangelog" xml:space="preserve">
-    <value>Wat is nieuw?</value>
-  </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>Een nieuwere versie van de VPN-client is gedownload en staat klaar om te updaten van {0} naar {1}.</value>
-    <comment>{0}=Installed version, {1}=Avaliable version</comment>
-  </data>
-  <data name="SelfUpdatePopupUpdate3" xml:space="preserve">
-    <value>Nu updaten (Client zal herstarten)</value>
+  <data name="SelfUpdatePopupChangelog2" xml:space="preserve">
+    <value>Wat is _nieuw?</value>
   </data>
   <data name="SelfUpdatePopupMessage3" xml:space="preserve">
     <value>Versie {0} van de VPN-client is geïnstalleerd. Een nieuwere versie {1} is beschikbaar.</value>
     <comment>{0}=Installed version, {1}=Avaliable version</comment>
   </data>
-  <data name="SelfUpdatePopupUpdate4" xml:space="preserve">
-    <value>Download en update nu (client zal herstarten)</value>
+  <data name="SelfUpdatePopupUpdate5" xml:space="preserve">
+    <value>Download en _update nu (client zal herstarten)</value>
   </data>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Even geduld...</value>
@@ -417,5 +398,8 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   </data>
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
     <value>Update voorbereiden...</value>
+  </data>
+  <data name="ButtonNextTitle2" xml:space="preserve">
+    <value>Volgende</value>
   </data>
 </root>
