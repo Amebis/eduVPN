@@ -96,8 +96,7 @@
             Style="{StaticResource eduVPNLinkButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageCustomButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=SelectCustomInstance}">
-            <AccessText
-                Text="{x:Static res:Strings.InstanceSourcePageCustomButtonTitle}"/>
+            <AccessText Text="{x:Static res:Strings.InstanceSourcePageCustomButtonTitle}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>

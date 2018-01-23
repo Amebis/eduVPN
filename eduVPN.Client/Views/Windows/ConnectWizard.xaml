@@ -202,8 +202,7 @@
         </Grid.RowDefinitions>
 
         <Control
-            Style="{StaticResource eduVPNErrorStatusBar}">
-        </Control>
+            Style="{StaticResource eduVPNErrorStatusBar}"/>
 
         <DockPanel
             Grid.Row="1">

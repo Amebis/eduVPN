@@ -50,8 +50,7 @@
             Style="{StaticResource eduVPNLinkButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupChangelogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=ShowChangelog}">
-            <AccessText
-                Text="{x:Static res:Strings.SelfUpdatePopupChangelogButtonTitle}"/>
+            <AccessText Text="{x:Static res:Strings.SelfUpdatePopupChangelogButtonTitle}"/>
         </Button>
 
         <Button
@@ -97,8 +96,7 @@
             Command="{Binding Path=DoAction}"
             CommandParameter="{x:Static model:PromptSelfUpdateActionType.AskLater}"
             Click="OK_Click">
-            <AccessText
-                Text="{x:Static res:Strings.SelfUpdatePopupAskLaterButtonTitle}"/>
+            <AccessText Text="{x:Static res:Strings.SelfUpdatePopupAskLaterButtonTitle}"/>
         </Button>
 
         <Button
@@ -110,8 +108,7 @@
             Command="{Binding Path=DoAction}"
             CommandParameter="{x:Static model:PromptSelfUpdateActionType.Skip}"
             Click="OK_Click">
-            <AccessText
-                Text="{x:Static res:Strings.SelfUpdatePopupSkipButtonTitle}"/>
+            <AccessText Text="{x:Static res:Strings.SelfUpdatePopupSkipButtonTitle}"/>
         </Button>
         -->
     </Grid>

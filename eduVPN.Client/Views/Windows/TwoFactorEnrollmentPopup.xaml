@@ -90,8 +90,7 @@
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorEnrollmentPopupEnrollButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=ApplyEnrollment}"
             Click="OK_Click">
-            <AccessText
-                Text="{x:Static res:Strings.TwoFactorEnrollmentPopupEnrollButtonTitle}"/>
+            <AccessText Text="{x:Static res:Strings.TwoFactorEnrollmentPopupEnrollButtonTitle}"/>
         </Button>
     </Grid>
 </windows:Window>

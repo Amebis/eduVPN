@@ -230,8 +230,7 @@
                 Style="{StaticResource eduVPNButtonStyle}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
                 Command="{Binding Path=Wizard.ActiveSession.ShowLog}">
-                <AccessText
-                    Text="{x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}"/>
+                <AccessText Text="{x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}"/>
             </Button>
         </Grid>
 
@@ -245,8 +244,7 @@
             Style="{StaticResource eduVPNButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageDisconnectButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=Wizard.ActiveSession.Disconnect}">
-            <AccessText
-                Text="{x:Static res:Strings.StatusPageDisconnectButtonTitle}"/>
+            <AccessText Text="{x:Static res:Strings.StatusPageDisconnectButtonTitle}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>
