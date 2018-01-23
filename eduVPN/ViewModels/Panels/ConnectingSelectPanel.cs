@@ -347,8 +347,8 @@ namespace eduVPN.ViewModels.Panels
             if (InstanceSource.AuthenticatingInstance != null && InstanceSource.AuthenticatingInstance.Equals(instance))
                 return;
             for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
-                if (Wizard.InstanceSources[source_index].AuthenticatingInstance != null && Wizard.InstanceSources[source_index].AuthenticatingInstance.Equals(instance)/* ||
-                    Wizard.InstanceSources[source_index].ConnectingInstanceList.FirstOrDefault(inst => inst.Equals(instance)) != null*/)
+                if (Wizard.InstanceSources[source_index]?.AuthenticatingInstance != null && Wizard.InstanceSources[source_index].AuthenticatingInstance.Equals(instance)/* ||
+                    Wizard.InstanceSources[source_index]?.ConnectingInstanceList.FirstOrDefault(inst => inst.Equals(instance)) != null*/)
                     return;
 
             instance.Forget();

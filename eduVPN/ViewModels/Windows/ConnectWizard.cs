@@ -451,10 +451,25 @@ namespace eduVPN.ViewModels.Windows
             get
             {
                 for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
-                    if (InstanceSources[source_index].ConnectingInstance != null)
+                    if (InstanceSources[source_index]?.ConnectingInstance != null)
                         return RecentConfigurationSelectPage;
 
-                return InstanceSourceSelectPage;
+                return AddConnectionPage;
+            }
+        }
+
+        /// <summary>
+        /// Add another instance or profile of the wizard
+        /// </summary>
+        public ConnectWizardPage AddConnectionPage
+        {
+            get
+            {
+                for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
+                    if (InstanceSources[source_index] != null && InstanceSources[source_index].InstanceList.Count > 0)
+                        return InstanceSourceSelectPage;
+
+                return CustomInstancePage;
             }
         }
 
@@ -664,40 +679,66 @@ namespace eduVPN.ViewModels.Windows
                             {
                                 // Get instance source.
                                 var source = Properties.Settings.Default.GetResourceRef(Global.InstanceDirectoryId[source_index] + "Discovery");
-                                var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
-                                    source.Uri,
-                                    source.PublicKey,
-                                    Abort.Token);
-
-                                // Add a tick.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                ticks++;
-
-                                // Load instance source.
-                                _instance_sources[source_index] = InstanceSource.FromJSON(obj_web);
-
+                                if (source.Uri != null)
                                 {
-                                    // Attach to instance events.
-                                    if (_instance_sources[source_index] is FederatedInstanceSource instance_source_federated)
+                                    var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
+                                        source.Uri,
+                                        source.PublicKey,
+                                        Abort.Token);
+
+                                    // Add a tick.
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                    ticks++;
+
+                                    // Load instance source.
+                                    _instance_sources[source_index] = InstanceSource.FromJSON(obj_web);
+
                                     {
-                                        instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
-                                        instance_source_federated.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
+                                        // Attach to instance events.
+                                        if (_instance_sources[source_index] is FederatedInstanceSource instance_source_federated)
+                                        {
+                                            instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                            instance_source_federated.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
+                                        }
+
+                                        foreach (var instance in _instance_sources[source_index].InstanceList)
+                                        {
+                                            instance.RequestAuthorization += Instance_RequestAuthorization;
+                                            instance.ForgetAuthorization += Instance_ForgetAuthorization;
+                                        }
                                     }
 
-                                    foreach (var instance in _instance_sources[source_index].InstanceList)
-                                    {
-                                        instance.RequestAuthorization += Instance_RequestAuthorization;
-                                        instance.ForgetAuthorization += Instance_ForgetAuthorization;
-                                    }
+                                    // Import settings.
+                                    Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
+                                    InstanceSources[source_index].FromSettings(this, h);
+
+                                    // Add a tick.
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                    ticks++;
                                 }
+                                else
+                                {
+                                    // Add a tick.
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                    ticks++;
 
-                                // Import settings.
-                                Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
-                                InstanceSources[source_index].FromSettings(this, h);
+                                    if (source_index == (int)InstanceSourceType.InstituteAccess)
+                                    {
+                                        // Institute access is required. When it is missing the discovery JSON, use a blank one.
+                                        _instance_sources[source_index] = new LocalInstanceSource();
 
-                                // Add a tick.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                ticks++;
+                                        // Import settings.
+                                        Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
+                                        InstanceSources[source_index].FromSettings(this, h);
+
+                                        // Preset source type.
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceSourceType = InstanceSourceType.InstituteAccess));
+                                    }
+
+                                    // Add a tick.
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                    ticks++;
+                                }
 
                                 break;
                             }
@@ -734,6 +775,7 @@ namespace eduVPN.ViewModels.Windows
 
                     // Proceed to the "first" page.
                     RaisePropertyChanged(nameof(StartingPage));
+                    RaisePropertyChanged(nameof(AddConnectionPage));
                     CurrentPage = StartingPage;
                 }
                 finally { ChangeTaskCount(-1); }

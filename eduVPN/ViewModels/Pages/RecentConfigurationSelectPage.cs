@@ -50,7 +50,7 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             Wizard.ChangeTaskCount(+1);
-                            try { Wizard.CurrentPage = Wizard.InstanceSourceSelectPage; }
+                            try { Wizard.CurrentPage = Wizard.AddConnectionPage; }
                             catch (Exception ex) { Wizard.Error = ex; }
                             finally { Wizard.ChangeTaskCount(-1); }
                         });
@@ -102,7 +102,8 @@ namespace eduVPN.ViewModels.Pages
 
             // Synchronize selected instance => triggers profile list refresh.
             for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
-                Panels[source_index].SelectedInstance = Wizard.InstanceSources[source_index].ConnectingInstance;
+                if (Panels[source_index] != null)
+                    Panels[source_index].SelectedInstance = Wizard.InstanceSources[source_index].ConnectingInstance;
         }
 
         #endregion

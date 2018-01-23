@@ -137,7 +137,10 @@ namespace eduVPN.ViewModels.Pages
         {
             base.DoNavigateBack();
 
-            Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
+            if (Wizard.AddConnectionPage == this)
+                Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
+            else
+                Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
         }
 
         /// <inheritdoc/>
