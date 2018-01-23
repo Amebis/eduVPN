@@ -72,9 +72,8 @@ namespace eduVPN.ViewModels.Pages
             base(wizard)
         {
             // Create history panels.
-            var source_type_length = (int)InstanceSourceType._end;
             _panels = new ConnectingSelectPanel[Wizard.InstanceSources.Length];
-            for (var source_index = (int)InstanceSourceType._start; source_index < source_type_length; source_index++)
+            for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
             {
                 if (Wizard.InstanceSources[source_index] is LocalInstanceSource)
                 {
