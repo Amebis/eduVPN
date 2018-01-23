@@ -51,8 +51,7 @@ namespace eduVPN.Models
                         connecting_instance.RequestAuthorization += wizard.Instance_RequestAuthorization;
                         connecting_instance.ForgetAuthorization += wizard.Instance_ForgetAuthorization;
                     }
-                    else
-                        connecting_instance.Popularity = h_instance.Popularity;
+                    connecting_instance.Popularity = h_instance.Popularity;
 
                     // Restore connecting profiles (optionally).
                     ObservableCollection<Profile> profile_list = null;
@@ -112,10 +111,7 @@ namespace eduVPN.Models
 
                     var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
                     if (instance == null)
-                    {
                         ConnectingInstanceList.Add(connecting_instance);
-                        instance = connecting_instance;
-                    }
                     else
                         instance.Popularity = Math.Max(instance.Popularity, h_instance.Popularity);
                 }
