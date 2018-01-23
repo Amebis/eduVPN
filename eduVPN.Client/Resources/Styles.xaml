@@ -1007,15 +1007,6 @@
 
 
     <!--
-        Sections
-    -->
-
-    <Style x:Key="eduVPNSectionTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
-    </Style>
-
-
-    <!--
         Labels
     -->
 

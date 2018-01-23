@@ -65,12 +65,13 @@
                     Style="{StaticResource eduVPNChoiceIconStyle}"
                     Source="pack://application:,,,/Resources/SecureInternetBlue.png"/>
 
-                <TextBlock
+                <Label
                     Name="SecureInternetLabel"
                     Grid.Column="1"
-                    Margin="5,2"
-                    Style="{StaticResource eduVPNSectionTitleStyle}"
-                    Text="{x:Static res:Strings.RecentConfigurationSelectPageSecureInternetTitle}"/>
+                    Margin="0,-3"
+                    Target="{Binding ElementName=SecureInternet}"
+                    Style="{StaticResource eduVPNSectionLabelStyle}"
+                    Content="{x:Static res:Strings.RecentConfigurationSelectPageSecureInternetTitle}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
@@ -80,6 +81,7 @@
             </Grid>
 
             <ContentControl
+                x:Name="SecureInternet"
                 Grid.Row="1"
                 Margin="5"
                 IsTabStop="False"
@@ -111,12 +113,13 @@
                     Style="{StaticResource eduVPNChoiceIconStyle}"
                     Source="pack://application:,,,/Resources/InstituteAccessBlue.png"/>
 
-                <TextBlock
+                <Label
                     Name="InstituteAccessLabel"
                     Grid.Column="1"
-                    Margin="5,2"
-                    Style="{StaticResource eduVPNSectionTitleStyle}"
-                    Text="{x:Static res:Strings.RecentConfigurationSelectPageInstituteAccessTitle}"/>
+                    Margin="0,-3"
+                    Target="{Binding ElementName=InstituteAccess}"
+                    Style="{StaticResource eduVPNSectionLabelStyle}"
+                    Content="{x:Static res:Strings.RecentConfigurationSelectPageInstituteAccessTitle}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
@@ -126,6 +129,7 @@
             </Grid>
 
             <ContentControl
+                x:Name="InstituteAccess"
                 Grid.Row="1"
                 Margin="5"
                 IsTabStop="False"
