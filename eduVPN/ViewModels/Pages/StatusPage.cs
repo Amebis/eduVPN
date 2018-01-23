@@ -6,6 +6,8 @@
 */
 
 using eduVPN.ViewModels.Windows;
+using Prism.Commands;
+using System;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -24,6 +26,27 @@ namespace eduVPN.ViewModels.Pages
             get { return Resources.Strings.StatusPageTitle; }
         }
 
+        /// <inheritdoc/>
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_navigate_back == null)
+                    _navigate_back = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Wizard.ChangeTaskCount(+1);
+                            try { Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
+                        });
+
+                return _navigate_back;
+            }
+        }
+        private DelegateCommand _navigate_back;
+
         #endregion
 
         #region Constructors
@@ -35,24 +58,6 @@ namespace eduVPN.ViewModels.Pages
         public StatusPage(ConnectWizard wizard) :
             base(wizard)
         {
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <inheritdoc/>
-        protected override void DoNavigateBack()
-        {
-            base.DoNavigateBack();
-
-            Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
-        }
-
-        /// <inheritdoc/>
-        protected override bool CanNavigateBack()
-        {
-            return true;
         }
 
         #endregion

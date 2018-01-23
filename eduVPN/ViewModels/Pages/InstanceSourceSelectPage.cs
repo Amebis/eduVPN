@@ -9,6 +9,7 @@ using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -153,6 +154,35 @@ namespace eduVPN.ViewModels.Pages
         }
         private DelegateCommand _select_custom_instance;
 
+        /// <inheritdoc/>
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_navigate_back == null)
+                {
+                    _navigate_back = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Wizard.ChangeTaskCount(+1);
+                            try { Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () => Wizard.StartingPage != this);
+
+                    // Setup canExecute refreshing.
+                    Wizard.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Wizard.StartingPage)) _navigate_back.RaiseCanExecuteChanged(); };
+                }
+
+                return _navigate_back;
+            }
+        }
+        private DelegateCommand _navigate_back;
+
         #endregion
 
         #region Constructors
@@ -164,24 +194,6 @@ namespace eduVPN.ViewModels.Pages
         public InstanceSourceSelectPage(ConnectWizard wizard) :
             base(wizard)
         {
-        }
-
-        #endregion
-
-        #region Members
-
-        /// <inheritdoc/>
-        protected override void DoNavigateBack()
-        {
-            base.DoNavigateBack();
-
-            Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
-        }
-
-        /// <inheritdoc/>
-        protected override bool CanNavigateBack()
-        {
-            return Wizard.StartingPage != this;
         }
 
         #endregion

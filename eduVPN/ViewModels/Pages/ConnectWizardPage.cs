@@ -8,7 +8,6 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
-using System;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -37,23 +36,17 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Navigate back command
         /// </summary>
-        public DelegateCommand NavigateBack
+        public virtual DelegateCommand NavigateBack
         {
             get
             {
                 if (_navigate_back == null)
                     _navigate_back = new DelegateCommand(
                         // execute
-                        () =>
-                        {
-                            Wizard.ChangeTaskCount(+1);
-                            try { DoNavigateBack(); }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                            finally { Wizard.ChangeTaskCount(-1); }
-                        },
+                        () => { },
 
                         // canExecute
-                        CanNavigateBack);
+                        () => false);
 
                 return _navigate_back;
             }
@@ -76,22 +69,6 @@ namespace eduVPN.ViewModels.Pages
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Called when NavigateBack command is invoked.
-        /// </summary>
-        protected virtual void DoNavigateBack()
-        {
-        }
-
-        /// <summary>
-        /// Called to test if NavigateBack command is enabled.
-        /// </summary>
-        /// <returns><c>true</c> if enabled; <c>false</c> otherwise</returns>
-        protected virtual bool CanNavigateBack()
-        {
-            return false;
-        }
 
         /// <summary>
         /// Called when the page is activated.

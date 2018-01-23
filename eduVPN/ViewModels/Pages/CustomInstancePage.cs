@@ -115,6 +115,41 @@ namespace eduVPN.ViewModels.Pages
         }
         private DelegateCommand _select_custom_instance;
 
+        /// <inheritdoc/>
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_navigate_back == null)
+                {
+                    _navigate_back = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Wizard.ChangeTaskCount(+1);
+                            try
+                            {
+                                if (Wizard.AddConnectionPage == this)
+                                    Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
+                                else
+                                    Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
+                        },
+
+                        // canExecute
+                        () => Wizard.StartingPage != this);
+
+                    // Setup canExecute refreshing.
+                    Wizard.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Wizard.StartingPage)) _navigate_back.RaiseCanExecuteChanged(); };
+                }
+
+                return _navigate_back;
+            }
+        }
+        private DelegateCommand _navigate_back;
+
         #endregion
 
         #region Constructors
@@ -131,23 +166,6 @@ namespace eduVPN.ViewModels.Pages
         #endregion
 
         #region Methods
-
-        /// <inheritdoc/>
-        protected override void DoNavigateBack()
-        {
-            base.DoNavigateBack();
-
-            if (Wizard.AddConnectionPage == this)
-                Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
-            else
-                Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
-        }
-
-        /// <inheritdoc/>
-        protected override bool CanNavigateBack()
-        {
-            return true;
-        }
 
         /// <summary>
         /// Validates the hostname

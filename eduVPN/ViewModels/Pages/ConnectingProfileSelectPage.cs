@@ -8,6 +8,8 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Panels;
 using eduVPN.ViewModels.Windows;
+using Prism.Commands;
+using System;
 using System.ComponentModel;
 
 namespace eduVPN.ViewModels.Pages
@@ -43,6 +45,48 @@ namespace eduVPN.ViewModels.Pages
         }
         private ConnectingRefreshableProfileSelectPanel[] _panels = new ConnectingRefreshableProfileSelectPanel[(int)InstanceSourceType._end];
 
+        /// <inheritdoc/>
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_navigate_back == null)
+                    _navigate_back = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Wizard.ChangeTaskCount(+1);
+                            try
+                            {
+                                if (Wizard.InstanceSource is LocalInstanceSource)
+                                {
+                                    switch (Properties.Settings.Default.ConnectingProfileSelectMode)
+                                    {
+                                        case 0:
+                                        case 2:
+                                            if (Wizard.InstanceSource.InstanceList.IndexOf(Wizard.InstanceSource.AuthenticatingInstance) >= 0)
+                                                Wizard.CurrentPage = Wizard.AuthenticatingInstanceSelectPage;
+                                            else
+                                                Wizard.CurrentPage = Wizard.CustomInstancePage;
+                                            break;
+
+                                        case 1:
+                                            Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
+                                            break;
+                                    }
+                                }
+                                else
+                                    Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
+                        });
+
+                return _navigate_back;
+            }
+        }
+        private DelegateCommand _navigate_back;
+
         #endregion
 
         #region Constructors
@@ -65,44 +109,13 @@ namespace eduVPN.ViewModels.Pages
 
         #region Methods
 
+        /// <inheritdoc/>
         public override void OnActivate()
         {
             base.OnActivate();
 
             // Synchronize selected instance => triggers profile list refresh.
             Panel.SelectedInstance = Wizard.InstanceSource.ConnectingInstance;
-        }
-
-        /// <inheritdoc/>
-        protected override void DoNavigateBack()
-        {
-            base.DoNavigateBack();
-
-            if (Wizard.InstanceSource is LocalInstanceSource)
-            {
-                switch (Properties.Settings.Default.ConnectingProfileSelectMode)
-                {
-                    case 0:
-                    case 2:
-                        if (Wizard.InstanceSource.InstanceList.IndexOf(Wizard.InstanceSource.AuthenticatingInstance) >= 0)
-                            Wizard.CurrentPage = Wizard.AuthenticatingInstanceSelectPage;
-                        else
-                            Wizard.CurrentPage = Wizard.CustomInstancePage;
-                        break;
-
-                    case 1:
-                        Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
-                        break;
-                }
-            }
-            else
-                Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
-        }
-
-        /// <inheritdoc/>
-        protected override bool CanNavigateBack()
-        {
-            return true;
         }
 
         #endregion
