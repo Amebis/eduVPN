@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\CommandRowHeightConverter.cs" />
+    <Compile Include="Converters\CommandVisibilityConverter.cs" />
     <Compile Include="Converters\ConnectingInstanceEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ConnectingProfileEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />

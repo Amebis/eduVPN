@@ -10,6 +10,7 @@
     xmlns:conv="clr-namespace:eduVPN.Client.Converters">
 
     <conv:CommandRowHeightConverter x:Key="CommandRowHeightConverter"/>
+    <conv:CommandVisibilityConverter x:Key="CommandVisibilityConverter"/>
     <conv:ConnectingProfileEqualVisibilityConverter x:Key="ConnectingProfileEqualVisibilityConverter"/>
     <conv:ConnectingInstanceEqualVisibilityConverter x:Key="ConnectingInstanceEqualVisibilityConverter"/>
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>

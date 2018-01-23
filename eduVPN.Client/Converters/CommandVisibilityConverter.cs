@@ -14,22 +14,13 @@ using System.Windows.Input;
 namespace eduVPN.Client.Converters
 {
     /// <summary>
-    /// Returns <c>GridLength.Auto</c> if command can execute; or <c>0</c> otherwise.
+    /// Returns <c>Visibility.Visible</c> if command can execute; or <c>Visibility.Collapsed</c> otherwise.
     /// </summary>
-    public class CommandRowHeightConverter : IValueConverter
+    public class CommandVisibilityConverter : IValueConverter
     {
-        #region Fields
-
-        /// <summary>
-        /// 1* grid length
-        /// </summary>
-        private static readonly GridLength _zero_grid_length = new GridLength(0);
-
-        #endregion
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is ICommand command && command.CanExecute(parameter) ? GridLength.Auto : _zero_grid_length;
+            return value is ICommand command && command.CanExecute(parameter) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
