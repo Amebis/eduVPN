@@ -13,10 +13,10 @@
         UriSource="pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico"/>
 
     <DataTemplate x:Key="eduVPNExclamationIcon">
-        <Canvas Width="25" Height="25">
+        <Canvas Width="22" Height="22">
             <Canvas.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleY="0.147" ScaleX="0.147"/>
+                    <ScaleTransform ScaleY="0.129" ScaleX="0.129"/>
                 </TransformGroup>
             </Canvas.RenderTransform>
             <Path

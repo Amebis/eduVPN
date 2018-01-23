@@ -144,11 +144,20 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Copy.
+        ///   Looks up a localized string similar to _Copy Error Text.
         /// </summary>
-        public static string ButtonCopyTitle {
+        public static string ButtonCopyErrorTitle {
             get {
-                return ResourceManager.GetString("ButtonCopyTitle", resourceCulture);
+                return ResourceManager.GetString("ButtonCopyErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Dismiss Error.
+        /// </summary>
+        public static string ButtonDismissErrorTitle {
+            get {
+                return ResourceManager.GetString("ButtonDismissErrorTitle", resourceCulture);
             }
         }
         

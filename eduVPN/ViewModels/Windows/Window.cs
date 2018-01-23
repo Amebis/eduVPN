@@ -65,6 +65,31 @@ namespace eduVPN.ViewModels.Windows
         private object _task_count_lock = new object();
 
         /// <summary>
+        /// Clears current error information
+        /// </summary>
+        public DelegateCommand DismissError
+        {
+            get
+            {
+                if (_dismiss_error == null)
+                {
+                    _dismiss_error = new DelegateCommand(
+                        // execute
+                        () => Error = null,
+
+                        // canExecute
+                        () => Error != null);
+
+                    // Setup canExecute refreshing.
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Error)) _dismiss_error.RaiseCanExecuteChanged(); };
+                }
+
+                return _dismiss_error;
+            }
+        }
+        private DelegateCommand _dismiss_error;
+
+        /// <summary>
         /// Copies current error information to the clipboard
         /// </summary>
         public DelegateCommand CopyError

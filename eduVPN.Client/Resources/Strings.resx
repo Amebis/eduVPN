@@ -223,8 +223,8 @@
     <value>No items</value>
     <comment>Displayed when a list is empty</comment>
   </data>
-  <data name="ButtonCopyTitle" xml:space="preserve">
-    <value>_Copy</value>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_Copy Error Text</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_Open</value>
@@ -401,5 +401,8 @@ If you continue, your user settings will be reset to the default.</value>
   </data>
   <data name="StatusPageMessagesLabel" xml:space="preserve">
     <value>_Messages</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_Dismiss Error</value>
   </data>
 </root>
