@@ -50,6 +50,7 @@
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="True">
                 <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="AutomationProperties.HelpText" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -745,8 +746,8 @@
 
                             <Button
                                 Style="{StaticResource eduVPNNavigationButtonStyle}"
-                                AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                                 ToolTip="{x:Static res:Strings.ButtonBackTitle}"
+                                AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                                 Command="{Binding Path=NavigateBack}">
                                 <Canvas
                                     Height="14"
@@ -772,8 +773,8 @@
                             <Button
                                 Grid.Column="2"
                                 Style="{StaticResource eduVPNNavigationButtonStyle}"
-                                AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
                                 ToolTip="{x:Static res:Strings.ButtonSettingsTitle}"
+                                AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
                                 Command="{Binding Path=Wizard.NavigateTo}"
                                 CommandParameter="{Binding Path=Wizard.SettingsPage}">
                                 <Button.Template>
