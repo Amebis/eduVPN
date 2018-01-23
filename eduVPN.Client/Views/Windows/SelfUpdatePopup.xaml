@@ -49,6 +49,7 @@
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupChangelogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Visibility="{Binding Path=ShowChangelog, Converter={StaticResource CommandVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
             Command="{Binding Path=ShowChangelog}">
             <AccessText Text="{x:Static res:Strings.SelfUpdatePopupChangelogButtonTitle}"/>
         </Button>

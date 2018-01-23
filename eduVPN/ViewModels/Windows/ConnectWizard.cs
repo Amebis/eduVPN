@@ -826,6 +826,8 @@ namespace eduVPN.ViewModels.Windows
                                 }
                             }
 
+                            product_version = new Version(1, 0, 0);
+                            /*
                             try
                             {
                                 if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == repo_version &&
@@ -854,6 +856,7 @@ namespace eduVPN.ViewModels.Windows
                                 Trace.TraceInformation("Update not required.");
                                 continue;
                             }
+                            */
 
                             // We're in the background thread - raise the prompt event via dispatcher.
                             Trace.TraceInformation("Prompting user to update...");
