@@ -203,6 +203,7 @@ namespace eduVPN.ViewModels.VPN
                                     3000,
                                     _quit.Token);
                             }
+                            catch (OperationCanceledException) { throw; }
                             catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorInteractiveService, ex); }
 
                             try
