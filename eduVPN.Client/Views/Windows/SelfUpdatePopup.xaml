@@ -15,7 +15,7 @@
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     mc:Ignorable="d"
     Width="350"
-    Height="280"
+    SizeToContent="Height"
     Title="{x:Static res:Strings.SelfUpdatePopupTitle}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">

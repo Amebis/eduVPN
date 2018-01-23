@@ -14,7 +14,7 @@
     xmlns:windows="clr-namespace:eduVPN.Views.Windows"
     mc:Ignorable="d"
     Width="350"
-    Height="216"
+    SizeToContent="Height"
     Title="{x:Static res:Strings.AuthorizationPopupTitle}"
     Description="{Binding Path=Instance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
     AutomationProperties.HelpText="{Binding Path=Instance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
