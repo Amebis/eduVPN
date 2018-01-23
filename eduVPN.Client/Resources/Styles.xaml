@@ -597,7 +597,8 @@
                     <StatusBar
                         x:Name="StatusBar"
                         Height="Auto"
-                        Style="{StaticResource eduVPNInfoBarStyle}">
+                        Style="{StaticResource eduVPNInfoBarStyle}"
+                        AutomationProperties.Name="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}">
                         <StatusBarItem>
                             <ContentControl
                                 IsTabStop="False"
@@ -908,8 +909,7 @@
 
                                     <Control
                                         Grid.Row="1"
-                                        Style="{StaticResource eduVPNErrorStatusBar}">
-                                    </Control>
+                                        Style="{StaticResource eduVPNErrorStatusBar}"/>
 
                                     <TextBlock
                                         Grid.Row="2"
