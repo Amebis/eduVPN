@@ -34,6 +34,18 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            <TextBox
+                Grid.Row="1"
+                x:Name="Secret"
+                Margin="2,2,5,5"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                TextWrapping="Wrap"
+                Style="{StaticResource eduVPNCodeTextBoxStyle}"
+                Text="{Binding Path=Secret, Converter={StaticResource TOTPSecretConverter}}"
+                IsReadOnly="True"
+                AutomationProperties.LabeledBy="{Binding ElementName=SecretLabel}"/>
+
             <Image
                 Margin="2,5,5,2"
                 HorizontalAlignment="Center"
@@ -54,18 +66,6 @@
                     </MultiBinding>
                 </Image.Source>
             </Image>
-
-            <TextBox
-                Grid.Row="1"
-                x:Name="Secret"
-                Margin="2,2,5,5"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                TextWrapping="Wrap"
-                Style="{StaticResource eduVPNCodeTextBoxStyle}"
-                Text="{Binding Path=Secret, Converter={StaticResource TOTPSecretConverter}}"
-                IsReadOnly="True"
-                AutomationProperties.LabeledBy="{Binding ElementName=SecretLabel}"/>
         </Grid>
 
         <Label

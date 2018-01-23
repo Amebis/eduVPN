@@ -741,7 +741,7 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TOTP Secret QR Code.
+        ///   Looks up a localized string similar to Secret as QR Code.
         /// </summary>
         public static string TOTPEnrollmentPanelSecretQRLabel {
             get {

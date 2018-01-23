@@ -374,7 +374,7 @@ Omogoča SURFnet</value>
     <value>D_odaj drug naslov</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Koda QR skrivnosti TOTP</value>
+    <value>Skrivnost kot koda QR</value>
   </data>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Odgovor</value>

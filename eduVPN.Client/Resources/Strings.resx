@@ -373,7 +373,7 @@ If you continue, your user settings will be reset to the default.</value>
     <value>Add _other address</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>TOTP Secret QR Code</value>
+    <value>Secret as QR Code</value>
   </data>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Response</value>
