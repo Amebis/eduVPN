@@ -47,6 +47,20 @@ namespace eduVPN.Client.Converters
                         }
                     }
 
+                    // Should read-out-loud give better results without line-breaks,
+                    // replace them with double spaces.
+                    //if (str[i] == '\n')
+                    //{
+                    //    // Replace LF with double space.
+                    //    sb.Append("  ");
+                    //    continue;
+                    //}
+                    //else if (str[i] == '\r')
+                    //{
+                    //    // Remove CR.
+                    //    continue;
+                    //}
+
                     // Other chars: Append.
                     sb.Append(str[i]);
                 }
