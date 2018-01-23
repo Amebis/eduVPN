@@ -688,12 +688,10 @@
                                 Style="{StaticResource eduVPNNavigationButtonStyle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                                 Command="{Binding Path=NavigateBack}">
-                                <Canvas
-                                    Height="14"
-                                    Width="14">
+                                <Canvas Height="14" Width="14">
                                     <Canvas.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="0.075" ScaleX="0.075"/>
+                                            <ScaleTransform ScaleY="0.082" ScaleX="0.082"/>
                                         </TransformGroup>
                                     </Canvas.RenderTransform>
                                     <Polygon
@@ -750,12 +748,10 @@
                                 ToolTip="{x:Static res:Strings.ButtonBackTitle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                                 Command="{Binding Path=NavigateBack}">
-                                <Canvas
-                                    Height="14"
-                                    Width="14">
+                                <Canvas Height="14" Width="14">
                                     <Canvas.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="0.075" ScaleX="0.075"/>
+                                            <ScaleTransform ScaleY="0.082" ScaleX="0.082"/>
                                         </TransformGroup>
                                     </Canvas.RenderTransform>
                                     <Polygon
@@ -937,7 +933,7 @@
                                         <Canvas Width="12" Height="12">
                                             <Canvas.RenderTransform>
                                                 <TransformGroup>
-                                                    <ScaleTransform ScaleY="0.075" ScaleX="0.075"/>
+                                                    <ScaleTransform ScaleY="0.071" ScaleX="0.071"/>
                                                 </TransformGroup>
                                             </Canvas.RenderTransform>
                                             <Polygon

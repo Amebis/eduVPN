@@ -58,11 +58,10 @@
                             Grid.ColumnSpan="3"
                             Background="{StaticResource eduVPNHeaderBrush}"/>
 
-                        <Canvas
-                            Margin="6">
+                        <Canvas Width="28" Height="28">
                             <Canvas.RenderTransform>
                                 <TransformGroup>
-                                    <ScaleTransform ScaleX="0.040" ScaleY="0.040"/>
+                                    <ScaleTransform ScaleX="0.041" ScaleY="0.041"/>
                                 </TransformGroup>
                             </Canvas.RenderTransform>
                             <Path
@@ -107,7 +106,7 @@
                                 <Canvas Width="12" Height="12">
                                     <Canvas.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="0.075" ScaleX="0.075"/>
+                                            <ScaleTransform ScaleY="0.071" ScaleX="0.071"/>
                                         </TransformGroup>
                                     </Canvas.RenderTransform>
                                     <Polygon

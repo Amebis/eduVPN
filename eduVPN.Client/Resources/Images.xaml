@@ -16,7 +16,7 @@
         <Canvas Width="25" Height="25">
             <Canvas.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleY="0.15" ScaleX="0.15"/>
+                    <ScaleTransform ScaleY="0.147" ScaleX="0.147"/>
                 </TransformGroup>
             </Canvas.RenderTransform>
             <Path
@@ -32,7 +32,7 @@
         <Canvas Width="25" Height="25">
             <Canvas.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleY="0.15" ScaleX="0.15"/>
+                    <ScaleTransform ScaleY="0.147" ScaleX="0.147"/>
                 </TransformGroup>
             </Canvas.RenderTransform>
             <Path
@@ -47,7 +47,7 @@
     <Canvas x:Key="eduVPNUserDisabledIcon" Width="25" Height="25">
         <Canvas.RenderTransform>
             <TransformGroup>
-                <ScaleTransform ScaleY="0.15" ScaleX="0.15"/>
+                <ScaleTransform ScaleY="0.147" ScaleX="0.147"/>
             </TransformGroup>
         </Canvas.RenderTransform>
         <Path
