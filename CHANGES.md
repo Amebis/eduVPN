@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.18...HEAD)
 
+- Accessibility and screen reader support
+- GUI reinements
+- Fixes and cleanups
 
 
 ## [1.0.18](https://github.com/Amebis/eduVPN/compare/1.0.17...1.0.18) (2018-01-18)
