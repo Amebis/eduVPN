@@ -73,6 +73,7 @@ namespace eduVPN.Models
                         connecting_instance.Forget();
                         continue;
                     }
+                    var add_instance = false;
                     switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
                         case 0:
@@ -85,7 +86,10 @@ namespace eduVPN.Models
                                     {
                                         profile.Popularity = h_profile.Popularity;
                                         if (ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
+                                        {
                                             ConnectingProfileList.Add(profile);
+                                            add_instance = true;
+                                        }
                                     }
                                 }
                             }
@@ -106,14 +110,20 @@ namespace eduVPN.Models
                                 }
                             }
 
+                            add_instance = true;
+                            break;
+
+                        default:
+                            add_instance = true;
                             break;
                     }
 
-                    var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
-                    if (instance == null)
-                        ConnectingInstanceList.Add(connecting_instance);
-                    else
-                        instance.Popularity = Math.Max(instance.Popularity, h_instance.Popularity);
+                    if (add_instance)
+                    {
+                        var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
+                        if (instance == null)
+                            ConnectingInstanceList.Add(connecting_instance);
+                    }
                 }
                 ConnectingInstance = h_local.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_local.ConnectingInstance.AbsoluteUri) : null;
             }
