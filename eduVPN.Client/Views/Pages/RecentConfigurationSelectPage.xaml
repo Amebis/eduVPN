@@ -142,7 +142,7 @@
             Margin="5"
             Style="{StaticResource eduVPNLinkButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.RecentConfigurationSelectPageAddButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-            Command="{Binding Path=AddAnotherEntry}">
+            Command="{Binding Path=AddConnection}">
             <AccessText Text="{x:Static res:Strings.RecentConfigurationSelectPageAddButtonTitle}"/>
         </Button>
     </Grid>

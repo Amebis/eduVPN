@@ -40,12 +40,12 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Add another instance or profile
         /// </summary>
-        public DelegateCommand AddAnotherEntry
+        public DelegateCommand AddConnection
         {
             get
             {
-                if (_add_another_entry == null)
-                    _add_another_entry = new DelegateCommand(
+                if (_add_connection == null)
+                    _add_connection = new DelegateCommand(
                         //execute
                         () =>
                         {
@@ -55,10 +55,10 @@ namespace eduVPN.ViewModels.Pages
                             finally { Wizard.ChangeTaskCount(-1); }
                         });
 
-                return _add_another_entry;
+                return _add_connection;
             }
         }
-        private DelegateCommand _add_another_entry;
+        private DelegateCommand _add_connection;
 
         #endregion
 
