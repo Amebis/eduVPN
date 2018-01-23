@@ -362,7 +362,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <comment>Displayed when a list is loading</comment>
   </data>
   <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
-    <value>Hostname</value>
+    <value>_Hostname</value>
   </data>
   <data name="ButtonNextTitleAlt" xml:space="preserve">
     <value>Volgende</value>
@@ -374,7 +374,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>V_oeg ander adres toe</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>TOTP Secret QR Code</value>
+    <value>Secret as QR Code</value>
   </data>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
@@ -399,5 +399,14 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   </data>
   <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
     <value>_Profile</value>
+  </data>
+  <data name="StatusPageMessagesLabel" xml:space="preserve">
+    <value>_Messages</value>
+  </data>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_Copy Error Text</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_Dismiss Error</value>
   </data>
 </root>
