@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +13,7 @@ namespace eduVPN.Views.Pages
     /// <summary>
     /// Interaction logic for connection wizard pages
     /// </summary>
-    public class ConnectWizardPage : Page, INotifyPropertyChanged
+    public class ConnectWizardPage : Page
     {
         #region Properties
 
@@ -28,14 +27,6 @@ namespace eduVPN.Views.Pages
         }
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ConnectWizardPage), null);
 
-        #endregion
-
-        #region INotifyPropertyChanged Support
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
     }
 }

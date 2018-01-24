@@ -22,7 +22,9 @@ namespace QRCoder
         /// Constructs a QR generator
         /// </summary>
         /// <param name="data">QR code data</param>
-        public XamlQRCode(QRCodeData data) : base(data) { }
+        public XamlQRCode(QRCodeData data) :
+            base(data)
+        { }
 
         #endregion
 
@@ -40,7 +42,7 @@ namespace QRCoder
         /// </remarks>
         public override DrawingImage GetGraphic(int pixelsPerModule)
         {
-            return this.GetGraphic(pixelsPerModule, true);
+            return GetGraphic(pixelsPerModule, true);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace QRCoder
         {
             var drawableModulesCount = this.QrCodeData.ModuleMatrix.Count - (drawQuietZones ? 0 : 8);
             var viewBox = new Size(pixelsPerModule * drawableModulesCount, pixelsPerModule * drawableModulesCount);
-            return this.GetGraphic(viewBox, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), drawQuietZones);
+            return GetGraphic(viewBox, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), drawQuietZones);
         }
 
         /// <summary>
@@ -72,7 +74,7 @@ namespace QRCoder
         /// </remarks>
         public DrawingImage GetGraphic(Size viewBox, bool drawQuietZones = true)
         {
-            return this.GetGraphic(viewBox, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), drawQuietZones);
+            return GetGraphic(viewBox, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), drawQuietZones);
         }
 
         /// <summary>
@@ -136,8 +138,8 @@ namespace QRCoder
             {
                 if (disposing)
                 {
-                    if (this.QrCodeData != null)
-                        this.QrCodeData.Dispose();
+                    if (QrCodeData != null)
+                        QrCodeData.Dispose();
                 }
 
                 disposedValue = true;
