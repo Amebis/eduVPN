@@ -15,6 +15,9 @@ namespace eduVPN.Properties
     /// </summary>
     public sealed partial class Settings : ApplicationSettingsBase
     {
+        /// <summary>
+        /// TAP interface name
+        /// </summary>
         [UserScopedSetting()]
         [DefaultSettingValue("")]
         [Obsolete("Please use OpenVPNInterfaceID instead")]
@@ -25,6 +28,9 @@ namespace eduVPN.Properties
             set { throw new NotSupportedException("OpenVPNInterface is obsolete"); }
         }
 
+        /// <summary>
+        /// Secure internet configuration history
+        /// </summary>
         [UserScopedSetting()]
         [DefaultSettingValue("")]
         [Obsolete("Please use SecureInternetInstanceSourceInfo instead")]
@@ -35,6 +41,9 @@ namespace eduVPN.Properties
             set { throw new NotSupportedException("SecureInternetConfigHistory is obsolete"); }
         }
 
+        /// <summary>
+        /// Institute access configuration history
+        /// </summary>
         [UserScopedSetting()]
         [DefaultSettingValue("")]
         [Obsolete("Please use InstituteAccessInstanceSourceInfo instead")]
@@ -45,6 +54,9 @@ namespace eduVPN.Properties
             set { throw new NotSupportedException("InstituteAccessConfigHistory is obsolete"); }
         }
 
+        /// <summary>
+        /// Access token cache
+        /// </summary>
         [UserScopedSetting()]
         [DefaultSettingValue("<SerializableStringDictionary />")]
         [Obsolete("Please use AccessTokenCache instead")]
@@ -82,6 +94,9 @@ namespace eduVPN.Properties
             get { return GetResourceRef("SecureInternetDiscovery"); }
         }
 
+        /// <summary>
+        /// Secure Internet discovery URL
+        /// </summary>
         [ApplicationScopedSetting()]
         [SpecialSetting(SpecialSetting.WebServiceUrl)]
         [DefaultSettingValue("https://static.eduvpn.nl/disco/secure_internet.json")]
@@ -91,6 +106,9 @@ namespace eduVPN.Properties
             get { return ((string)(this["SecureInternetDiscovery"])); }
         }
 
+        /// <summary>
+        /// Secure Internet discovery Ed25519 public key
+        /// </summary>
         [ApplicationScopedSetting()]
         [DefaultSettingValue("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
         [Obsolete("Please use SecureInternetDiscoveryDescr instead")]
@@ -109,6 +127,9 @@ namespace eduVPN.Properties
             get { return GetResourceRef("InstituteAccessDiscovery"); }
         }
 
+        /// <summary>
+        /// Institute Access discovery URL
+        /// </summary>
         [ApplicationScopedSetting()]
         [SpecialSetting(SpecialSetting.WebServiceUrl)]
         [DefaultSettingValue("https://static.eduvpn.nl/disco/institute_access.json")]
@@ -118,6 +139,9 @@ namespace eduVPN.Properties
             get { return ((string)(this["InstituteAccessDiscovery"])); }
         }
 
+        /// <summary>
+        /// Institute Access discovery Ed25519 public key
+        /// </summary>
         [ApplicationScopedSetting()]
         [DefaultSettingValue("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=")]
         [Obsolete("Please use InstituteAccessDiscoveryDescr instead")]
@@ -136,6 +160,9 @@ namespace eduVPN.Properties
             get { return GetResourceRef("SelfUpdate"); }
         }
 
+        /// <summary>
+        /// Self-updating discovery URL
+        /// </summary>
         [ApplicationScopedSetting()]
         [SpecialSetting(SpecialSetting.WebServiceUrl)]
         [DefaultSettingValue("https://static.eduvpn.nl/auto-update/windows.json")]
@@ -145,6 +172,9 @@ namespace eduVPN.Properties
             get { return ((string)(this["SelfUpdate"])); }
         }
 
+        /// <summary>
+        /// Self-updating discovery Ed25519 public key
+        /// </summary>
         [ApplicationScopedSetting()]
         [DefaultSettingValue("15nh06ilJd5f9hbH5rWGgU+qw9IxBHE+j2wVKshidkA=")]
         [Obsolete("Please use SelfUpdateDescr instead")]
