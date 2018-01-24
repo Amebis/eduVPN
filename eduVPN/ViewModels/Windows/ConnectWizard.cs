@@ -309,7 +309,7 @@ namespace eduVPN.ViewModels.Windows
                                 throw new InvalidOperationException();
 
                             // Update settings.
-                            Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSources[source_index].ToSettings() };
+                            Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSources[source_index].ToSettings() };
                         },
 
                         // canExecute
@@ -678,7 +678,7 @@ namespace eduVPN.ViewModels.Windows
                             try
                             {
                                 // Get instance source.
-                                var source = Properties.Settings.Default.GetResourceRef(Global.InstanceDirectoryId[source_index] + "Discovery");
+                                var source = Properties.Settings.Default.GetResourceRef(Properties.Settings.InstanceDirectoryId[source_index] + "Discovery");
                                 if (source.Uri != null)
                                 {
                                     var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
@@ -709,7 +709,7 @@ namespace eduVPN.ViewModels.Windows
                                     }
 
                                     // Import settings.
-                                    Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
+                                    Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
                                     InstanceSources[source_index].FromSettings(this, h);
 
                                     // Add a tick.
@@ -728,7 +728,7 @@ namespace eduVPN.ViewModels.Windows
                                         _instance_sources[source_index] = new LocalInstanceSource();
 
                                         // Import settings.
-                                        Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Global.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
+                                        Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
                                         InstanceSources[source_index].FromSettings(this, h);
 
                                         // Preset source type.
@@ -750,7 +750,7 @@ namespace eduVPN.ViewModels.Windows
                                 {
                                     // Notify the sender the instance source loading failed.
                                     // This will overwrite all previous error messages.
-                                    Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, Global.InstanceDirectoryId[source_index]), ex);
+                                    Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, Properties.Settings.InstanceDirectoryId[source_index]), ex);
 
                                     // Revert progress indicator value.
                                     InitializingPage.Progress.Value -= ticks;

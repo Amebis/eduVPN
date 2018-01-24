@@ -87,7 +87,7 @@ namespace eduVPN.Client
                     }
                 }
 
-                Global.Initialize();
+                eduVPN.Properties.Settings.Initialize();
 
                 if (Client.Properties.Settings.Default.SettingsVersion == 0)
                 {
