@@ -200,7 +200,7 @@ namespace Microsoft.Shell
         /// Handles secondary application instance invocation.
         /// </summary>
         /// <param name="args">Command line parameters</param>
-        bool SignalExternalCommandLineArgs(IList<string> args);
+        void SignalExternalCommandLineArgs(IList<string> args);
     }
 
     /// <summary>

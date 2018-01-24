@@ -146,8 +146,7 @@ namespace eduVPN.Client
         /// Handles secondary application instance invocation.
         /// </summary>
         /// <param name="args">Command line parameters</param>
-        /// <returns><c>true</c></returns>
-        public bool SignalExternalCommandLineArgs(IList<string> args)
+        public void SignalExternalCommandLineArgs(IList<string> args)
         {
             // (Re)activate main window.
             if (!MainWindow.IsActive)
@@ -162,8 +161,6 @@ namespace eduVPN.Client
             {
                 MainWindow.Topmost = false;
             }
-
-            return true;
         }
 
         #endregion
