@@ -25,7 +25,7 @@ namespace eduVPN.Views.Pages
             get { return GetValue(DescriptionProperty) as string; }
             set { SetValue(DescriptionProperty, value); }
         }
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ConnectWizardPage), null);
+        private static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(ConnectWizardPage), null);
 
         #endregion
     }

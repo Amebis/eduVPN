@@ -45,7 +45,7 @@ namespace eduVPN.Views.Controls
             get { return GetValue(UriSourceProperty) as Uri; }
             set { SetValue(UriSourceProperty, value); }
         }
-        public static readonly DependencyProperty UriSourceProperty = DependencyProperty.Register("UriSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriSourceChanged));
+        private static readonly DependencyProperty UriSourceProperty = DependencyProperty.Register("UriSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriSourceChanged));
 
         /// <summary>
         /// Image source URI when <see cref="UriSource"/> failed downloading or decoding
@@ -54,7 +54,7 @@ namespace eduVPN.Views.Controls
             get { return GetValue(UriFallbackSourceProperty) as Uri; }
             set { SetValue(UriFallbackSourceProperty, value); }
         }
-        public static readonly DependencyProperty UriFallbackSourceProperty = DependencyProperty.Register("UriFallbackSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriFallbackSourceChanged));
+        private static readonly DependencyProperty UriFallbackSourceProperty = DependencyProperty.Register("UriFallbackSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriFallbackSourceChanged));
 
         #endregion
 
