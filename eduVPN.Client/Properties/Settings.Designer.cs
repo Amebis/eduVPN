@@ -23,7 +23,11 @@ namespace eduVPN.Client.Properties {
             }
         }
         
+        /// <summary>
+        /// Client window top coordinate
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client window top coordinate")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
         public double WindowTop {
@@ -35,7 +39,11 @@ namespace eduVPN.Client.Properties {
             }
         }
         
+        /// <summary>
+        /// Client window left coordinate
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client window left coordinate")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
         public double WindowLeft {
@@ -47,7 +55,11 @@ namespace eduVPN.Client.Properties {
             }
         }
         
+        /// <summary>
+        /// Recently used hostnames for custom instance connections
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Recently used hostnames for custom instance connections")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::System.Collections.Specialized.StringCollection CustomInstanceHistory {
             get {
@@ -58,7 +70,11 @@ namespace eduVPN.Client.Properties {
             }
         }
         
+        /// <summary>
+        /// A flag to trigger setting upgrade from the previous version
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("A flag to trigger setting upgrade from the previous version")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int SettingsVersion {
@@ -70,7 +86,11 @@ namespace eduVPN.Client.Properties {
             }
         }
         
+        /// <summary>
+        /// Has user been informed that the client minimizes to the system tray already?
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Has user been informed that the client minimizes to the system tray already?")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool SystemTrayMinimizedWarned {

@@ -2,40 +2,46 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPN.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ResponseCache" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User">
+    <Setting Name="ResponseCache" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User" Description="Cache of sequenced JSON responses">
       <Value Profile="(Default)">&lt;JSONResponseDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="SecureInternetInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
+    <Setting Name="SecureInternetInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User" Description="Secure Internet settings">
       <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
-    <Setting Name="InstituteAccessInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
+    <Setting Name="InstituteAccessInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User" Description="Secure Internet settings">
       <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
-    <Setting Name="SelfUpdateLastVersion" Type="System.String" Scope="User">
+    <Setting Name="SelfUpdateLastVersion" Type="System.String" Scope="User" Description="The last product version user was prompted to update to">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SelfUpdateLastReminder" Type="System.DateTime" Scope="User">
+    <Setting Name="SelfUpdateLastReminder" Type="System.DateTime" Scope="User" Description="The last time user was prompted to update at">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenVPNInteractiveServiceNamedPipe" Type="System.String" Scope="Application">
+    <Setting Name="OpenVPNInteractiveServiceNamedPipe" Type="System.String" Scope="Application" Description="Which OpenVPN interactive service instance (named pipe) client should use to manipulate openvpn.exe process:
+ - &quot;openvpn$eduVPN\service&quot; - Use OpenVPN installation bundled with eduVPN Client (default).
+ - &quot;openvpn\service - Use original OpenVPN installation.">
       <Value Profile="(Default)">openvpn$eduVPN\service</Value>
     </Setting>
-    <Setting Name="ConnectingProfileSelectMode" Type="System.Int32" Scope="Application">
+    <Setting Name="ConnectingProfileSelectMode" Type="System.Int32" Scope="Application" Description="The client profile management mode is described in detail here: https://github.com/Amebis/eduVPN/blob/master/doc/ConnectingProfileSelectMode.md
+
+ Note: It is recommended to delete client user settings in %LOCALAPPDATA%\SURF
+ when the mode is changed.">
       <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="OpenVPNInterfaceID" Type="System.Guid" Scope="User">
+    <Setting Name="OpenVPNInterfaceID" Type="System.Guid" Scope="User" Description="Which TAP interface to use when connecting.
+ Leave &quot;00000000-0000-0000-0000-000000000000&quot; for auto-selection by openvpn.exe.">
       <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>
     </Setting>
-    <Setting Name="OpenVPNForceTCP" Type="System.Boolean" Scope="User">
+    <Setting Name="OpenVPNForceTCP" Type="System.Boolean" Scope="User" Description="Always connect using TCP.">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AccessTokenCache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
+    <Setting Name="AccessTokenCache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User" Description="Access token cache">
       <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="InstanceSettings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User">
+    <Setting Name="InstanceSettings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User" Description="Instance-specific user settings">
       <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
+    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User" Description="A flag to trigger setting upgrade from the previous version">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

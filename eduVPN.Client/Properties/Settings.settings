@@ -2,19 +2,19 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPN.Client.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="WindowTop" Type="System.Double" Scope="User">
+    <Setting Name="WindowTop" Type="System.Double" Scope="User" Description="Client window top coordinate">
       <Value Profile="(Default)">NaN</Value>
     </Setting>
-    <Setting Name="WindowLeft" Type="System.Double" Scope="User">
+    <Setting Name="WindowLeft" Type="System.Double" Scope="User" Description="Client window left coordinate">
       <Value Profile="(Default)">NaN</Value>
     </Setting>
-    <Setting Name="CustomInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="CustomInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User" Description="Recently used hostnames for custom instance connections">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
+    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User" Description="A flag to trigger setting upgrade from the previous version">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SystemTrayMinimizedWarned" Type="System.Boolean" Scope="User">
+    <Setting Name="SystemTrayMinimizedWarned" Type="System.Boolean" Scope="User" Description="Has user been informed that the client minimizes to the system tray already?">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
