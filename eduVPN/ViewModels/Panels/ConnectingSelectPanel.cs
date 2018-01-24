@@ -86,7 +86,7 @@ namespace eduVPN.ViewModels.Panels
         private DelegateCommand _set_connecting_instance;
 
         /// <summary>
-        /// Menu label for <c>ForgetSelectedInstance</c> command
+        /// Menu label for <see cref="ForgetSelectedInstance"/> command
         /// </summary>
         public string ForgetSelectedInstanceLabel
         {
@@ -223,7 +223,7 @@ namespace eduVPN.ViewModels.Panels
         private DelegateCommand _connect_selected_profile;
 
         /// <summary>
-        /// Menu label for <c>ForgetSelectedProfile</c> command
+        /// Menu label for <see cref="ForgetSelectedProfile"/> command
         /// </summary>
         public string ForgetSelectedProfileLabel
         {

@@ -361,43 +361,43 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Instance request authorization event
         /// </summary>
-        /// <remarks>Sender is the connection wizard <c>eduVPN.ViewModels.Windows.ConnectingWizard</c>.</remarks>
+        /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
         public event EventHandler<RequestInstanceAuthorizationEventArgs> RequestInstanceAuthorization;
 
         /// <summary>
         /// 2-Factor Authentication enrollment requested
         /// </summary>
-        /// <remarks>Sender is the profile select panel <c>eduVPN.ViewModels.Panels.ConnectingSelectPanel</c>.</remarks>
+        /// <remarks>Sender is the profile select panel <see cref="Panels.ConnectingSelectPanel"/>.</remarks>
         public event EventHandler<RequestTwoFactorEnrollmentEventArgs> RequestTwoFactorEnrollment;
 
         /// <summary>
         /// OpenVPN requested a password
         /// </summary>
-        /// <remarks>Sender is the OpenVPN session <c>eduOpenVPN.ViewModel.VPN.OpenVPNSession</c>.</remarks>
+        /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
         public event EventHandler<eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs> RequestOpenVPNPasswordAuthentication;
 
         /// <summary>
         /// OpenVPN requested a username and password
         /// </summary>
-        /// <remarks>Sender is the OpenVPN session <c>eduOpenVPN.ViewModel.VPN.OpenVPNSession</c>.</remarks>
+        /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestOpenVPNUsernamePasswordAuthentication;
 
         /// <summary>
         /// 2-Factor Authentication requested
         /// </summary>
-        /// <remarks>Sender is the OpenVPN session <c>eduOpenVPN.ViewModel.VPN.OpenVPNSession</c>.</remarks>
+        /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestTwoFactorAuthentication;
 
         /// <summary>
         /// Product update is available
         /// </summary>
-        /// <remarks>Sender is the connection wizard <c>eduVPN.ViewModels.Windows.ConnectingWizard</c>.</remarks>
+        /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
         public event EventHandler<PromptSelfUpdateEventArgs> PromptSelfUpdate;
 
         /// <summary>
         /// Application should quit
         /// </summary>
-        /// <remarks>Sender is the connection wizard <c>eduVPN.ViewModels.Windows.ConnectingWizard</c>.</remarks>
+        /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
         public event EventHandler QuitApplication;
 
         #region Pages
@@ -504,7 +504,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Authenticating instance selection page
         /// </summary>
-        /// <remarks>Available only when authenticating and connecting instances can be different. I.e. <c>InstanceSource</c> is <c>eduVPN.LocalInstanceSource</c> or <c>eduVPN.DistributedInstanceSource</c>.</remarks>
+        /// <remarks>Available only when authenticating and connecting instances can be different. I.e. <see cref="InstanceSource"/> is <see cref="LocalInstanceSource"/> or <see cref="DistributedInstanceSource"/>.</remarks>
         public AuthenticatingInstanceSelectPage AuthenticatingInstanceSelectPage
         {
             get
@@ -976,7 +976,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Called when an instance requests user authorization
         /// </summary>
-        /// <param name="sender">Instance of type <c>eduVPN.Instance</c> requiring authorization</param>
+        /// <param name="sender">Instance of type <see cref="Instance"/> requiring authorization</param>
         /// <param name="e">Authorization request event arguments</param>
         public void Instance_RequestAuthorization(object sender, RequestAuthorizationEventArgs e)
         {
@@ -1098,7 +1098,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Called when an instance requests authorization delete
         /// </summary>
-        /// <param name="sender">Instance of type <c>eduVPN.Instance</c> requiring authorization</param>
+        /// <param name="sender">Instance of type <see cref="Instance"/> requiring authorization</param>
         /// <param name="e">Authorization forget event arguments</param>
         public void Instance_ForgetAuthorization(object sender, ForgetAuthorizationEventArgs e)
         {
@@ -1110,6 +1110,11 @@ namespace eduVPN.ViewModels.Windows
             }
         }
 
+        /// <summary>
+        /// Invokes <see cref="RequestTwoFactorEnrollment"/> event in GUI thread.
+        /// </summary>
+        /// <param name="sender"><see cref="RequestTwoFactorEnrollment"/> event sender</param>
+        /// <param name="e"><see cref="RequestTwoFactorEnrollment"/> event arguments</param>
         public void Profile_RequestTwoFactorEnrollment(object sender, RequestTwoFactorEnrollmentEventArgs e)
         {
             // Re-raise this event as ConnectWizard event, to simplify view.
@@ -1126,6 +1131,11 @@ namespace eduVPN.ViewModels.Windows
             }
         }
 
+        /// <summary>
+        /// Invokes <see cref="RequestOpenVPNPasswordAuthentication"/> event in GUI thread.
+        /// </summary>
+        /// <param name="sender"><see cref="RequestOpenVPNPasswordAuthentication"/> event sender</param>
+        /// <param name="e"><see cref="RequestOpenVPNPasswordAuthentication"/> event arguments</param>
         public void OpenVPNSession_RequestPasswordAuthentication(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
         {
             // Re-raise this event as ConnectWizard event, to simplify view.
@@ -1142,6 +1152,11 @@ namespace eduVPN.ViewModels.Windows
             }
         }
 
+        /// <summary>
+        /// Invokes <see cref="RequestOpenVPNUsernamePasswordAuthentication"/> event in GUI thread.
+        /// </summary>
+        /// <param name="sender"><see cref="RequestOpenVPNUsernamePasswordAuthentication"/> event sender</param>
+        /// <param name="e"><see cref="RequestOpenVPNUsernamePasswordAuthentication"/> event arguments</param>
         public void OpenVPNSession_RequestUsernamePasswordAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
         {
             // Re-raise this event as ConnectWizard event, to simplify view.
@@ -1158,6 +1173,11 @@ namespace eduVPN.ViewModels.Windows
             }
         }
 
+        /// <summary>
+        /// Invokes <see cref="RequestTwoFactorAuthentication"/> event in GUI thread.
+        /// </summary>
+        /// <param name="sender"><see cref="RequestTwoFactorAuthentication"/> event sender</param>
+        /// <param name="e"><see cref="RequestTwoFactorAuthentication"/> event arguments</param>
         public void OpenVPNSession_RequestTwoFactorAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
         {
             // Re-raise this event as ConnectWizard event, to simplify view.

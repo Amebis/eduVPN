@@ -93,7 +93,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Performs a validation of a property, adding the results in the <paramref name="property_errors"/> list.
         /// </summary>
-        /// <param name="property_info">The <c>PropertyInfo</c> of the property to validate</param>
+        /// <param name="property_info">The <see cref="PropertyInfo"/> of the property to validate</param>
         /// <param name="property_errors">A list containing the current error messages of the property.</param>
         /// <returns><c>true</c> if the property is valid; <c>false</c> otherwise</returns>
         private bool TryValidateProperty(PropertyInfo property_info, List<ValidationResult> property_errors)
@@ -111,13 +111,24 @@ namespace eduVPN.Models
         #endregion
 
         #region INotifyDataErrorInfo support
+        /// <summary>
+        /// Gets a value that indicates whether the entity has validation errors.
+        /// </summary>
         public bool HasErrors { get => _errors_container.HasErrors; }
 
+        /// <summary>
+        /// Gets the validation errors for a specified property or for the entire entity.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to retrieve validation errors for; or <c>null</c> or empty, to retrieve entity-level errors.</param>
+        /// <returns>The validation errors for the property or entity.</returns>
         public IEnumerable GetErrors(string propertyName)
         {
             return _errors_container.GetErrors(propertyName);
         }
 
+        /// <summary>
+        /// Occurs when the validation errors have changed for a property or for the entire entity.
+        /// </summary>
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
         #endregion
     }

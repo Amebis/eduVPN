@@ -45,6 +45,9 @@ namespace eduVPN.Views.Windows
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a window
+        /// </summary>
         public ConnectWizard()
         {
             InitializeComponent();
@@ -164,6 +167,7 @@ namespace eduVPN.Views.Windows
             base.OnInitialized(e);
         }
 
+        /// <inheritdoc/>
         protected override void OnClosed(EventArgs e)
         {
             // Stop the OAuth listener.
@@ -260,7 +264,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Called when one of the ConnectWizard's instances requests user authorization
         /// </summary>
-        /// <param name="sender"><c>eduVPN.ViewModels.Windows.ConnectWizard</c> requiring instance authorization</param>
+        /// <param name="sender"><see cref="eduVPN.ViewModels.Windows.ConnectWizard"/> requiring instance authorization</param>
         /// <param name="e">Authorization request event arguments</param>
         private void ConnectWizard_RequestInstanceAuthorization(object sender, RequestInstanceAuthorizationEventArgs e)
         {
@@ -298,7 +302,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Called when user tries to connect to a profile that required 2-Factor Authentication user is not enrolled with
         /// </summary>
-        /// <param name="sender"><c>eduVPN.ViewModels.Panels.ConnectingSelectPanel</c> requiring enrollment</param>
+        /// <param name="sender"><see cref="eduVPN.ViewModels.Panels.ConnectingSelectPanel"/> requiring enrollment</param>
         /// <param name="e">Enrollment event arguments</param>
         private void ConnectWizard_RequestTwoFactorEnrollment(object sender, RequestTwoFactorEnrollmentEventArgs e)
         {
@@ -327,7 +331,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Called when an OpenVPN session requests a password authentication
         /// </summary>
-        /// <param name="sender"><c>eduVPN.ViewModels.Windows.ConnectWizard</c> requiring authentication</param>
+        /// <param name="sender"><see cref="eduVPN.ViewModels.Windows.ConnectWizard"/> requiring authentication</param>
         /// <param name="e">Authentication request event arguments</param>
         private void ConnectWizard_RequestOpenVPNPasswordAuthentication(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
         {
@@ -350,7 +354,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Called when an OpenVPN session requests a password authentication
         /// </summary>
-        /// <param name="sender"><c>eduVPN.ViewModels.Windows.ConnectWizard</c> requiring authentication</param>
+        /// <param name="sender"><see cref="eduVPN.ViewModels.Windows.ConnectWizard"/> requiring authentication</param>
         /// <param name="e">Authentication request event arguments</param>
         private void ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
         {
@@ -423,8 +427,20 @@ namespace eduVPN.Views.Windows
         #endregion
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        private bool disposedValue = false;
 
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -444,7 +460,13 @@ namespace eduVPN.Views.Windows
             }
         }
 
-        // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

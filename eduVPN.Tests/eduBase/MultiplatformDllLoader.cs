@@ -14,7 +14,9 @@ namespace eduBase
     /// <summary>
     /// A helper class to register our custom assembly resolver
     /// </summary>
-    /// <remarks>Based on code found at <see cref="<see cref="https://stackoverflow.com/a/9951658/2071884"/>"/></remarks>
+    /// <remarks>
+    /// Based on this <a href="https://stackoverflow.com/a/9951658/2071884">example</a>.
+    /// </remarks>
     class MultiplatformDllLoader
     {
         private static bool is_enabled;

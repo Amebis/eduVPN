@@ -17,6 +17,11 @@ namespace eduVPN.Models
     {
         #region Methods
 
+        /// <summary>
+        /// Loads class from a dictionary object (provided by JSON)
+        /// </summary>
+        /// <param name="obj">A dictionary object</param>
+        /// <exception cref="eduJSON.InvalidParameterTypeException">Incorrect parameter <paramref name="obj"/> type</exception>
         public void Load(object obj)
         {
             if (obj is List<object> obj2)

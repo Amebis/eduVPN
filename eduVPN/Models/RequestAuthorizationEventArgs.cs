@@ -88,7 +88,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Access token origin
         /// </summary>
-        /// <remarks>Should be set appropriately on event end, or <c>TokenOriginType.None</c> if no authorization token available.</remarks>
+        /// <remarks>Should be set appropriately on event end, or <see cref="TokenOriginType.None"/> if no authorization token available.</remarks>
         public TokenOriginType TokenOrigin { get; set; }
 
         /// <summary>

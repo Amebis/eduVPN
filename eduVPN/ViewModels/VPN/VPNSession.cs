@@ -48,6 +48,11 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks>Actions will be run in parallel and session run will wait for all to finish.</remarks>
         protected List<Action> _pre_run_actions;
 
+        /// <summary>
+        /// Connected time update timer
+        /// </summary>
+        protected DispatcherTimer _connected_time_updater;
+
         #endregion
 
         #region Properties
@@ -104,7 +109,7 @@ namespace eduVPN.ViewModels.VPN
         private VPNSessionStatusType _state;
 
         /// <summary>
-        /// Descriptive string (used mostly on <c>StateType.Reconnecting</c> and <c>StateType.Exiting</c> to show the reason for the disconnect)
+        /// Descriptive string (used mostly on <see cref="eduOpenVPN.OpenVPNStateType.Reconnecting"/> and <see cref="eduOpenVPN.OpenVPNStateType.Exiting"/> to show the reason for the disconnect)
         /// </summary>
         public string StateDescription
         {
@@ -158,7 +163,6 @@ namespace eduVPN.ViewModels.VPN
         {
             get { return _connected_since != null ? DateTimeOffset.UtcNow - _connected_since : null; }
         }
-        protected DispatcherTimer _connected_time_updater;
 
         /// <summary>
         /// Number of bytes that have been received from the server
@@ -413,8 +417,20 @@ namespace eduVPN.ViewModels.VPN
         #endregion
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        private bool disposedValue = false;
 
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -435,7 +451,13 @@ namespace eduVPN.ViewModels.VPN
             }
         }
 
-        // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

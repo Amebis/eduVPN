@@ -46,6 +46,11 @@ namespace eduVPN.Views.Windows
                 };
         }
 
+        /// <summary>
+        /// Sets <see cref="System.Windows.Window.DialogResult"/> to <c>true</c> to close the dialog.
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         protected void OK_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             DialogResult = true;

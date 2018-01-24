@@ -14,6 +14,9 @@ namespace eduVPN.Views.Windows
     {
         #region Constructors
 
+        /// <summary>
+        /// Constructs a popup
+        /// </summary>
         public PasswordPopup()
         {
             InitializeComponent();

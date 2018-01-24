@@ -12,12 +12,15 @@ using System.Linq;
 
 namespace eduVPN
 {
+    /// <summary>
+    /// Global eduVPN methods
+    /// </summary>
     public static class Global
     {
         #region Fields
 
         /// <summary>
-        /// Instance directory URI IDs as used in <c>Properties.Settings.Default</c> collection
+        /// Instance directory URI IDs as used in <see cref="Properties.Settings.Default"/> collection
         /// </summary>
         public static readonly string[] InstanceDirectoryId = new string[]
         {

@@ -20,9 +20,7 @@ namespace eduVPN.ViewModels.Pages
     {
         #region Properties
 
-        /// <summary>
-        /// The page title
-        /// </summary>
+        /// <inheritdoc/>
         public override string Title
         {
             get { return Resources.Strings.ConnectingProfileSelectPageTitle; }
@@ -96,6 +94,7 @@ namespace eduVPN.ViewModels.Pages
 
         #region Methods
 
+        /// <inheritdoc/>
         public override void OnActivate()
         {
             base.OnActivate();

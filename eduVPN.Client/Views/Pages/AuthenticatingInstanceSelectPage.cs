@@ -16,6 +16,11 @@ namespace eduVPN.Views.Pages
     {
         #region Methods
 
+        /// <summary>
+        /// Authorizes selected instance on the list.
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         protected void InstanceList_SelectItem(object sender, InputEventArgs e)
         {
             if (DataContext is ViewModels.Pages.AuthenticatingInstanceSelectPage view_model)
@@ -28,6 +33,11 @@ namespace eduVPN.Views.Pages
             }
         }
 
+        /// <summary>
+        /// Authorizes selected instance on the list when <see cref="Key.Enter"/> or <see cref="Key.Space"/> is pressed.
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         protected void InstanceList_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter ||

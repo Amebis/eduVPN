@@ -99,13 +99,13 @@ namespace eduVPN.Models
         /// <summary>
         /// Request authorization event
         /// </summary>
-        /// <remarks>Sender is the authenticating instance <c>eduVPN.Models.Instance</c>.</remarks>
+        /// <remarks>Sender is the authenticating instance <see cref="eduVPN.Models.Instance"/>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         /// <summary>
         /// Forget authorization event
         /// </summary>
-        /// <remarks>Sender is the authenticating instance <c>eduVPN.Models.Instance</c>.</remarks>
+        /// <remarks>Sender is the authenticating instance <see cref="eduVPN.Models.Instance"/>.</remarks>
         public event EventHandler<ForgetAuthorizationEventArgs> ForgetAuthorization;
 
         #endregion

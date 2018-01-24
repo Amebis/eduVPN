@@ -10,7 +10,7 @@ using System;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// <c>RequestTwoFactorEnrollment</c> event parameters
+    /// <see cref="ViewModels.Windows.ConnectWizard.RequestTwoFactorEnrollment"/> event parameters
     /// </summary>
     public class RequestTwoFactorEnrollmentEventArgs : EventArgs
     {

@@ -22,17 +22,13 @@ namespace eduVPN.ViewModels.Pages
     {
         #region Properties
 
-        /// <summary>
-        /// The page title
-        /// </summary>
+        /// <inheritdoc/>
         public override string Title
         {
             get { return Resources.Strings.CustomInstancePageTitle; }
         }
 
-        /// <summary>
-        /// The page description
-        /// </summary>
+        /// <inheritdoc/>
         public override string Description
         {
             get { return Resources.Strings.CustomInstancePageDescription; }
@@ -193,7 +189,7 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         /// <param name="value">Hostname</param>
         /// <param name="context">Validation context</param>
-        /// <returns><c>ValidationResult.Success</c> if valid hostname; <c>ValidationResult</c> issue descriptor otherwise</returns>
+        /// <returns><see cref="ValidationResult.Success"/> if valid hostname; <see cref="ValidationResult"/> issue descriptor otherwise</returns>
         public static ValidationResult CheckHostname(string value, ValidationContext context)
         {
             if (!string.IsNullOrEmpty(value) && !TryParseUri(value, out var output))

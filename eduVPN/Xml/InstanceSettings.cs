@@ -39,11 +39,19 @@ namespace eduVPN.Xml
 
         #region IXmlSerializable Support
 
+        /// <summary>
+        /// This method is reserved and should not be used.
+        /// </summary>
+        /// <returns><c>null</c></returns>
         public XmlSchema GetSchema()
         {
             return null;
         }
 
+        /// <summary>
+        /// Generates an object from its XML representation.
+        /// </summary>
+        /// <param name="reader">The <see cref="XmlReader"/> stream from which the object is deserialized.</param>
         public virtual void ReadXml(XmlReader reader)
         {
             string v;
@@ -53,6 +61,10 @@ namespace eduVPN.Xml
             LastTwoFactorAuthenticationResponse = (v = reader[nameof(LastTwoFactorAuthenticationResponse)]) != null && DateTime.TryParse(v, out var last_response) ? (DateTime?)last_response : null;
         }
 
+        /// <summary>
+        /// Converts an object into its XML representation.
+        /// </summary>
+        /// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
         public virtual void WriteXml(XmlWriter writer)
         {
             if (LastUsername != null)

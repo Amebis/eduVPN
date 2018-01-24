@@ -191,8 +191,15 @@ namespace Microsoft.Shell
 
     }
 
+    /// <summary>
+    /// Implements single instance application
+    /// </summary>
     public interface ISingleInstanceApp
     {
+        /// <summary>
+        /// Handles secondary application instance invocation.
+        /// </summary>
+        /// <param name="args">Command line parameters</param>
         bool SignalExternalCommandLineArgs(IList<string> args);
     }
 

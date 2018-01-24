@@ -14,6 +14,9 @@ namespace eduVPN.Views.Panels
     {
         #region Constructors
 
+        /// <summary>
+        /// Constructs a panel
+        /// </summary>
         public ConnectingInstanceProfileSelectPanel()
         {
             InitializeComponent();

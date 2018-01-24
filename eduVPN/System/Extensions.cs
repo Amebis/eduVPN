@@ -9,6 +9,9 @@ using System.Collections.Generic;
 
 namespace System
 {
+    /// <summary>
+    /// <see cref="System"/> namespace extension methods
+    /// </summary>
     public static class Extensions
     {
         /// <summary>

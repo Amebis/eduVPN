@@ -48,7 +48,7 @@ namespace eduVPN.Views.Controls
         public static readonly DependencyProperty UriSourceProperty = DependencyProperty.Register("UriSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriSourceChanged));
 
         /// <summary>
-        /// Image source URI when <c>UriSource</c> failed downloading or decoding
+        /// Image source URI when <see cref="UriSource"/> failed downloading or decoding
         /// </summary>
         public Uri UriFallbackSource {
             get { return GetValue(UriFallbackSourceProperty) as Uri; }

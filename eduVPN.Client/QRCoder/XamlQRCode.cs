@@ -11,15 +11,48 @@ using System.Windows.Media;
 
 namespace QRCoder
 {
+    /// <summary>
+    /// XAML QR code generator
+    /// </summary>
     public class XamlQRCode : AbstractQRCode<DrawingImage>, IDisposable
     {
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a QR generator
+        /// </summary>
+        /// <param name="data">QR code data</param>
         public XamlQRCode(QRCodeData data) : base(data) { }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Get QR graphics data
+        /// </summary>
+        /// <param name="pixelsPerModule">Width and height in px of each QR module</param>
+        /// <returns>Data</returns>
+        /// <remarks>
+        /// <see cref="Colors.Black"/> solid brush is used for dark QR modules.
+        /// <see cref="Colors.White"/> solid brush is used for light QR modules.
+        /// The QR graphics will contain light margin (quiet zone).
+        /// </remarks>
         public override DrawingImage GetGraphic(int pixelsPerModule)
         {
             return this.GetGraphic(pixelsPerModule, true);
         }
 
+        /// <summary>
+        /// Get QR graphics data
+        /// </summary>
+        /// <param name="pixelsPerModule">Width and height in px of each QR module</param>
+        /// <param name="drawQuietZones">Should QR graphics contain light margin (quiet zone)?</param>
+        /// <returns>Data</returns>
+        /// <remarks>
+        /// <see cref="Colors.Black"/> solid brush is used for dark QR modules.
+        /// <see cref="Colors.White"/> solid brush is used for light QR modules.
+        /// </remarks>
         public DrawingImage GetGraphic(int pixelsPerModule, bool drawQuietZones)
         {
             var drawableModulesCount = this.QrCodeData.ModuleMatrix.Count - (drawQuietZones ? 0 : 8);
@@ -27,11 +60,29 @@ namespace QRCoder
             return this.GetGraphic(viewBox, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), drawQuietZones);
         }
 
+        /// <summary>
+        /// Get QR graphics data
+        /// </summary>
+        /// <param name="viewBox">Final size of QR graphics</param>
+        /// <param name="drawQuietZones">Should QR graphics contain light margin (quiet zone)?</param>
+        /// <returns>Data</returns>
+        /// <remarks>
+        /// <see cref="Colors.Black"/> solid brush is used for dark QR modules.
+        /// <see cref="Colors.White"/> solid brush is used for light QR modules.
+        /// </remarks>
         public DrawingImage GetGraphic(Size viewBox, bool drawQuietZones = true)
         {
             return this.GetGraphic(viewBox, new SolidColorBrush(Colors.Black), new SolidColorBrush(Colors.White), drawQuietZones);
         }
 
+        /// <summary>
+        /// Get QR graphics data
+        /// </summary>
+        /// <param name="viewBox">Final size of QR graphics</param>
+        /// <param name="darkBrush">Brush used for dark QR modules</param>
+        /// <param name="lightBrush">Brush used for light QR modules</param>
+        /// <param name="drawQuietZones">Should QR graphics contain light margin (quiet zone)?</param>
+        /// <returns>Data</returns>
         public DrawingImage GetGraphic(Size viewBox, Brush darkBrush, Brush lightBrush, bool drawQuietZones = true)
         {
             var drawableModulesCount = this.QrCodeData.ModuleMatrix.Count - (drawQuietZones ? 0 : 8);
@@ -62,9 +113,23 @@ namespace QRCoder
             return new DrawingImage(drawing);
         }
 
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        #endregion
 
+        #region IDisposable Support
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -79,7 +144,13 @@ namespace QRCoder
             }
         }
 
-        // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

@@ -16,9 +16,7 @@ namespace eduVPN.ViewModels.Pages
     {
         #region Properties
 
-        /// <summary>
-        /// The page title
-        /// </summary>
+        /// <inheritdoc/>
         public override string Title
         {
             get { return Resources.Strings.InitializingPageTitle; }

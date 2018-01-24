@@ -11,6 +11,9 @@ using System.Threading;
 
 namespace System.Collections.ObjectModel
 {
+    /// <summary>
+    /// <see cref="ObjectModel"/> namespace extension methods
+    /// </summary>
     public static class Extensions
     {
         /// <summary>

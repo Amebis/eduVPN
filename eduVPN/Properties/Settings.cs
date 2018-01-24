@@ -10,6 +10,9 @@ using System.Configuration;
 
 namespace eduVPN.Properties
 {
+    /// <summary>
+    /// eduVPN settings
+    /// </summary>
     public sealed partial class Settings : ApplicationSettingsBase
     {
         [UserScopedSetting()]
@@ -72,7 +75,7 @@ namespace eduVPN.Properties
         /// <summary>
         /// Secure Internet discovery URL and Ed25519 public key
         /// </summary>
-        /// <remarks>When not defined, the value is obtained from <c>SecureInternetDiscovery</c> and <c>SecureInternetDiscoveryPubKey</c>, which also provide the default fallback values.</remarks>
+        /// <remarks>When not defined, the value is obtained from <see cref="SecureInternetDiscovery"/> and <see cref="SecureInternetDiscoveryPubKey"/>, which also provide the default fallback values.</remarks>
         [ApplicationScopedSetting()]
         public Xml.ResourceRef SecureInternetDiscoveryDescr
         {
@@ -99,7 +102,7 @@ namespace eduVPN.Properties
         /// <summary>
         /// Institute Access discovery URL and Ed25519 public key
         /// </summary>
-        /// <remarks>When not defined, the value is obtained from <c>InstituteAccessDiscovery</c> and <c>InstituteAccessDiscoveryPubKey</c>, which also provide the default fallback values.</remarks>
+        /// <remarks>When not defined, the value is obtained from <see cref="InstituteAccessDiscovery"/> and <see cref="InstituteAccessDiscoveryPubKey"/>, which also provide the default fallback values.</remarks>
         [ApplicationScopedSetting()]
         public Xml.ResourceRef InstituteAccessDiscoveryDescr
         {
@@ -126,7 +129,7 @@ namespace eduVPN.Properties
         /// <summary>
         /// Self-updating feature base URI and Ed25519 public key
         /// </summary>
-        /// <remarks>When not defined, the value is obtained from <c>SelfUpdate</c> and <c>SelfUpdatePubKey</c>, which also provide the default fallback values.</remarks>
+        /// <remarks>When not defined, the value is obtained from <see cref="SelfUpdate"/> and <see cref="SelfUpdatePubKey"/>, which also provide the default fallback values.</remarks>
         [ApplicationScopedSetting()]
         public Xml.ResourceRef SelfUpdateDescr
         {

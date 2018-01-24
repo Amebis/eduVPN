@@ -11,6 +11,9 @@ using System.Text;
 
 namespace System.IO
 {
+    /// <summary>
+    /// <see cref="IO"/> namespace extension methods
+    /// </summary>
     public static class Extensions
     {
         /// <summary>
@@ -62,7 +65,7 @@ namespace System.IO
         /// <param name="reader">Stream of ASN.1 data</param>
         /// <returns>Integer value</returns>
         /// <exception cref="ArgumentException">Zero-width integer</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Integer too wide to fit in <c>int</c></exception>
+        /// <exception cref="ArgumentOutOfRangeException">Integer too wide to fit in <see cref="int"/></exception>
         public static int ReadASN1IntegerInt(this BinaryReader reader)
         {
             var data = reader.ReadASN1Integer();

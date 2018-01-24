@@ -85,7 +85,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Request authorization event
         /// </summary>
-        /// <remarks>Sender is the profile <c>eduVPN.Models.Profile</c>.</remarks>
+        /// <remarks>Sender is the profile <see cref="eduVPN.Models.Profile"/>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         #endregion

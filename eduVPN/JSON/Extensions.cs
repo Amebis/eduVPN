@@ -10,6 +10,9 @@ using System.Threading;
 
 namespace eduVPN.JSON
 {
+    /// <summary>
+    /// <see cref="JSON"/> namespace extension methods
+    /// </summary>
     public static class Extensions
     {
         /// <summary>

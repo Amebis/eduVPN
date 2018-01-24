@@ -78,7 +78,9 @@ namespace eduVPN.Models
         /// <param name="pem">PEM encoded text</param>
         /// <param name="section">Section name to decode ("CERTIFICATE", "PRIVATE KEY", etc.)</param>
         /// <returns>BLOB</returns>
-        /// <see cref="https://stackoverflow.com/a/10498045/2071884"/>
+        /// <remarks>
+        /// Based on this <a href="https://stackoverflow.com/a/10498045/2071884">example</a>.
+        /// </remarks>
         private static byte[] GetBytesFromPEM(string pem, string section)
         {
             var header = String.Format("-----BEGIN {0}-----", section);
@@ -101,7 +103,9 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="priv_key">ASN.1 data</param>
         /// <returns>Private key</returns>
-        /// <see cref="https://tools.ietf.org/html/rfc3447#appendix-A.1.2"/>
+        /// <remarks>
+        /// <a href="https://tools.ietf.org/html/rfc3447#appendix-A.1.2">RFC3447 Appendix A.1.2</a>
+        /// </remarks>
         private static RSACryptoServiceProvider DecodePrivateKeyPKCS1(byte[] priv_key)
         {
             var stream = new MemoryStream(priv_key);
@@ -124,8 +128,10 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="priv_key">ASN.1 data</param>
         /// <returns>Private key</returns>
-        /// <remarks>Currently, only RSA private keys are supported.</remarks>
-        /// <see cref="https://tools.ietf.org/html/rfc5208#section-5"/>
+        /// <remarks>
+        /// Currently, only RSA private keys are supported.
+        /// <a href="https://tools.ietf.org/html/rfc5208#section-5">RFC5208 Section 5</a>
+        /// </remarks>
         private static AsymmetricAlgorithm DecodePrivateKeyPKCS8(byte[] priv_key)
         {
             var stream = new MemoryStream(priv_key);

@@ -14,6 +14,9 @@ namespace eduVPN.Views.Pages
     {
         #region Constructors
 
+        /// <summary>
+        /// Constructs a page
+        /// </summary>
         public AboutPage()
         {
             InitializeComponent();
