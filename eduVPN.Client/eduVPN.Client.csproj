@@ -298,14 +298,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">
-      <Project>{a25c3684-302e-4c4d-96e9-176c12fe7423}</Project>
-      <Name>eduEd25519</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\eduJSON\eduJSON\eduJSON.csproj">
-      <Project>{8f4c3f22-1988-4077-9220-ed2512fc0248}</Project>
-      <Name>eduJSON</Name>
-    </ProjectReference>
     <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
       <Project>{44ea054c-0c39-4aac-9e40-253e919c1e2f}</Project>
       <Name>eduOAuth</Name>

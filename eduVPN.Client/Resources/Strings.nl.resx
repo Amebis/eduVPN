@@ -293,15 +293,6 @@ Powered by SURFnet</value>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Sla deze _versie over</value>
   </data>
-  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>{0} heeft gedetecteerd dat je gebruikersinstellingenbestand {1} beschadigd is geraakt. Dit kan komen door een crash. 
-
-Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden hersteld.</value>
-    <comment>{0}=application name, {1}=filename</comment>
-  </data>
-  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Beschadigde gebruikersinstellingen</value>
-  </data>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
   </data>

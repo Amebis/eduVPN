@@ -292,15 +292,6 @@ Omogoča SURFnet</value>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Preskoči to _verzijo</value>
   </data>
-  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>Program {0} je zaznal, da se je datoteka z vašimi uporabniškimi nastavitvami {1} pokvarila. Lahko gre za posledico zrušenja ali nepravilne zaustavitve programa.
-
-Če nadaljujete, bodo vaše uporabniške nastavitve ponastavljene na privzeto.</value>
-    <comment>{0}=application name, {1}=filename</comment>
-  </data>
-  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Pokvarjene uporabniške nastavitve</value>
-  </data>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>

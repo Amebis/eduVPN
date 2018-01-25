@@ -121,6 +121,15 @@
     <value>{0:G} {1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
+  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
+    <value>Program {0} je zaznal, da se je datoteka z vašimi uporabniškimi nastavitvami {1} pokvarila. Lahko gre za posledico zrušenja ali nepravilne zaustavitve programa.
+
+Če nadaljujete, bodo vaše uporabniške nastavitve ponastavljene na privzeto.</value>
+    <comment>{0}=application name, {1}=filename</comment>
+  </data>
+  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
+    <value>Pokvarjene uporabniške nastavitve</value>
+  </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>h\:mm\:ss</value>
     <comment>Display format of the duration times less then one day</comment>

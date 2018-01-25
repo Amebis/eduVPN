@@ -460,26 +460,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
-        ///
-        ///If you continue, your user settings will be reset to the default..
-        /// </summary>
-        public static string SettingsCorruptErrorMessage {
-            get {
-                return ResourceManager.GetString("SettingsCorruptErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Corrupt User Settings.
-        /// </summary>
-        public static string SettingsCorruptErrorTitle {
-            get {
-                return ResourceManager.GetString("SettingsCorruptErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to If the VPN client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
         /// </summary>
         public static string SettingsPageForceTCPDescription {

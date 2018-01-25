@@ -291,15 +291,6 @@ Powered by SURFnet</value>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Skip this _version</value>
   </data>
-  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
-
-If you continue, your user settings will be reset to the default.</value>
-    <comment>{0}=application name, {1}=filename</comment>
-  </data>
-  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Corrupt User Settings</value>
-  </data>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>

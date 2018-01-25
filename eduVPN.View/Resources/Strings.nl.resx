@@ -121,6 +121,15 @@
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
+  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
+    <value>{0} heeft gedetecteerd dat je gebruikersinstellingenbestand {1} beschadigd is geraakt. Dit kan komen door een crash. 
+
+Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden hersteld.</value>
+    <comment>{0}=application name, {1}=filename</comment>
+  </data>
+  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
+    <value>Beschadigde gebruikersinstellingen</value>
+  </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>hh\:mm\:ss</value>
     <comment>Display format of the duration times less then one day</comment>
