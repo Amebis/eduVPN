@@ -92,7 +92,6 @@
     <Compile Include="Views\Panels\TOTPAuthenticationPanel.xaml.cs">
       <DependentUpon>TOTPAuthenticationPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ImageWithFallback.cs" />
     <Compile Include="Views\Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
