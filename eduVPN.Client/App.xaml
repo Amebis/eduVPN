@@ -8,7 +8,7 @@
     x:Class="eduVPN.Client.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:view="clr-namespace:eduVPN.View;assembly=eduVPN.View"
+    xmlns:view="clr-namespace:eduVPN.Views;assembly=eduVPN.Views"
     StartupUri="Views/Windows/ConnectWizard.xaml">
 
     <Application.Resources>

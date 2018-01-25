@@ -13,8 +13,8 @@
     <ProjectGuid>{EC9AD583-409A-4C11-8BB9-9035CE5C806A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>eduVPN.View</RootNamespace>
-    <AssemblyName>eduVPN.View</AssemblyName>
+    <RootNamespace>eduVPN.Views</RootNamespace>
+    <AssemblyName>eduVPN.Views</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

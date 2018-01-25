@@ -11,18 +11,18 @@
             Components
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="eduVPN.View.dll" Guid="{34C9B131-FFE8-4A07-9393-9683C6FDB3F7}">
-                <File Source="eduVPN.View.dll"/>
+            <Component Id="eduVPN.Views.dll" Guid="{34C9B131-FFE8-4A07-9393-9683C6FDB3F7}">
+                <File Source="eduVPN.Views.dll"/>
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="RESDIRNL">
-            <Component Id="eduVPN.View.resources.dll.nl" Guid="{0FA52766-C1A8-447D-8C1B-D706F6C9F9B2}">
-                <File Id="eduVPN.View.resources.dll.nl" Source="nl\eduVPN.View.resources.dll"/>
+            <Component Id="eduVPN.Views.resources.dll.nl" Guid="{0FA52766-C1A8-447D-8C1B-D706F6C9F9B2}">
+                <File Id="eduVPN.Views.resources.dll.nl" Source="nl\eduVPN.Views.resources.dll"/>
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="RESDIRSL">
-            <Component Id="eduVPN.View.resources.dll.sl" Guid="{427ECC36-EB2D-4326-8417-6983A1B62FC5}">
-                <File Id="eduVPN.View.resources.dll.sl" Source="sl\eduVPN.View.resources.dll"/>
+            <Component Id="eduVPN.Views.resources.dll.sl" Guid="{427ECC36-EB2D-4326-8417-6983A1B62FC5}">
+                <File Id="eduVPN.Views.resources.dll.sl" Source="sl\eduVPN.Views.resources.dll"/>
             </Component>
         </DirectoryRef>
 
@@ -30,15 +30,15 @@
         <!--
             Component groups
         -->
-        <ComponentGroup Id="eduVPN.View.dll">
+        <ComponentGroup Id="eduVPN.Views.dll">
             <ComponentGroupRef Id="eduVPN.dll"/>
             <ComponentGroupRef Id="Prism.dll"/>
             <ComponentGroupRef Id="QRCoder.dll"/>
             <ComponentGroupRef Id="UnityEngine.dll"/>
 
-            <ComponentRef Id="eduVPN.View.dll"/>
-            <ComponentRef Id="eduVPN.View.resources.dll.nl"/>
-            <ComponentRef Id="eduVPN.View.resources.dll.sl"/>
+            <ComponentRef Id="eduVPN.Views.dll"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.nl"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.sl"/>
         </ComponentGroup>
     </Fragment>
 </Wix>

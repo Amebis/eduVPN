@@ -306,9 +306,9 @@
       <Project>{ddf40a25-1180-40b1-9bf1-8d3d66d734ad}</Project>
       <Name>eduOpenVPN</Name>
     </ProjectReference>
-    <ProjectReference Include="..\eduVPN.View\eduVPN.View.csproj">
+    <ProjectReference Include="..\eduVPN.Views\eduVPN.Views.csproj">
       <Project>{ec9ad583-409a-4c11-8bb9-9035ce5c806a}</Project>
-      <Name>eduVPN.View</Name>
+      <Name>eduVPN.Views</Name>
     </ProjectReference>
     <ProjectReference Include="..\eduVPN\eduVPN.csproj">
       <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>

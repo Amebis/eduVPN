@@ -15,7 +15,7 @@ using System.Net;
 using System.Reflection;
 using System.Windows;
 
-namespace eduVPN.View
+namespace eduVPN.Views
 {
     /// <summary>
     /// View application base class
@@ -76,8 +76,8 @@ namespace eduVPN.View
                 var assembly_title = (Attribute.GetCustomAttributes(Assembly.GetExecutingAssembly(), typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title;
                 var filename = ex.Filename;
                 if (MessageBox.Show(
-                    string.Format(View.Resources.Strings.SettingsCorruptErrorMessage, assembly_title, filename),
-                    View.Resources.Strings.SettingsCorruptErrorTitle,
+                    string.Format(Views.Resources.Strings.SettingsCorruptErrorMessage, assembly_title, filename),
+                    Views.Resources.Strings.SettingsCorruptErrorTitle,
                     MessageBoxButton.OKCancel,
                     MessageBoxImage.Error) == MessageBoxResult.OK)
                 {

@@ -34,7 +34,7 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.View.dll.wixobj" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**

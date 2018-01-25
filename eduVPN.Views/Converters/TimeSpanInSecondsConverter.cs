@@ -31,8 +31,8 @@ namespace eduVPN.Converters
             return value is TimeSpan timespan ?
                 timespan.ToString(
                     timespan < _one_day ?
-                        View.Resources.Strings.TimeSpanInSeconds :
-                        View.Resources.Strings.TimeSpanInSecondsWithDays,
+                        Views.Resources.Strings.TimeSpanInSeconds :
+                        Views.Resources.Strings.TimeSpanInSecondsWithDays,
                     culture) :
                 null;
         }
