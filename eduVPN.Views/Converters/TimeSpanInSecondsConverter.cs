@@ -16,7 +16,13 @@ namespace eduVPN.Converters
     /// </summary>
     public class TimeSpanInSecondsConverter : IValueConverter
     {
-        private static TimeSpan _one_day = new TimeSpan(1, 0, 0, 0);
+        #region Fields
+
+        private static readonly TimeSpan _one_day = new TimeSpan(1, 0, 0, 0);
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Converts a value.
@@ -51,5 +57,7 @@ namespace eduVPN.Converters
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

@@ -19,6 +19,8 @@ namespace eduVPN.Converters
     /// <remarks>Only integer numbers supported</remarks>
     public class TOTPSecretConverter : BindableBase, IValueConverter
     {
+        #region Methods
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -57,5 +59,7 @@ namespace eduVPN.Converters
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

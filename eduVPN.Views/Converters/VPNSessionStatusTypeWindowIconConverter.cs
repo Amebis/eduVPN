@@ -18,6 +18,8 @@ namespace eduVPN.Converters
     /// </summary>
     public class VPNSessionStatusTypeWindowIconConverter : IValueConverter
     {
+        #region Methods
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -58,5 +60,7 @@ namespace eduVPN.Converters
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

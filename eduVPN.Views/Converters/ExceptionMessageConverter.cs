@@ -16,6 +16,8 @@ namespace eduVPN.Converters
     /// </summary>
     public class ExceptionMessageConverter : IValueConverter
     {
+        #region Methods
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -48,5 +50,7 @@ namespace eduVPN.Converters
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

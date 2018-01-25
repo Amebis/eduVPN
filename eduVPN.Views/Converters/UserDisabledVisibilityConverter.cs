@@ -17,6 +17,8 @@ namespace eduVPN.Converters
     /// </summary>
     public class UserDisabledVisibilityConverter : IValueConverter
     {
+        #region Methods
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -44,5 +46,7 @@ namespace eduVPN.Converters
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
