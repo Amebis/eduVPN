@@ -117,9 +117,149 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutPageCopyright" xml:space="preserve">
+    <value>Copyright © 2017
+Program Commons Conservancy eduVPN</value>
+  </data>
+  <data name="AboutPageeduVPN" xml:space="preserve">
+    <value>eduVPN
+Omogoča SURFnet</value>
+  </data>
+  <data name="AboutPageVersion" xml:space="preserve">
+    <value>Verzija {0}</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>_Država</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>_Ustanova</value>
+  </data>
+  <data name="AuthorizationPopupMessage" xml:space="preserve">
+    <value>Odjemalec VPN potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
+Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
+  </data>
+  <data name="AuthorizationPopupTitle" xml:space="preserve">
+    <value>Čakam na pooblastilo</value>
+  </data>
+  <data name="ButtonBackTitle" xml:space="preserve">
+    <value>Nazaj</value>
+  </data>
+  <data name="ButtonCloseTitle" xml:space="preserve">
+    <value>Zapri</value>
+  </data>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_Kopiraj besedilo napake</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_Opusti napako</value>
+  </data>
+  <data name="ButtonNextTitle" xml:space="preserve">
+    <value>_Naprej &gt;</value>
+  </data>
+  <data name="ButtonNextTitleAlt" xml:space="preserve">
+    <value>Naprej</value>
+  </data>
+  <data name="ButtonOKTitle" xml:space="preserve">
+    <value>_V redu</value>
+  </data>
+  <data name="ButtonSettingsTitle" xml:space="preserve">
+    <value>Nastavitve</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Ponudnik</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profil</value>
+  </data>
+  <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
+    <value>_Profil</value>
+  </data>
+  <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Ponudnik</value>
+  </data>
+  <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profil</value>
+  </data>
+  <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
+    <value>Ime _gostitelja</value>
+  </data>
+  <data name="ErrorOAuthState" xml:space="preserve">
+    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
+  </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>D_odaj drug naslov</value>
+  </data>
+  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
+    <value>Dostopajte do omrežja svoje _ustanove zunaj ustanove.</value>
+  </data>
+  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
+    <value>Povežite se na _splet varno. Na primer, kadar uporabljate javni WiFi.</value>
+  </data>
+  <data name="ListBoxNoItems" xml:space="preserve">
+    <value>Brez elementov</value>
+    <comment>Displayed when a list is empty</comment>
+  </data>
+  <data name="ListBoxNull" xml:space="preserve">
+    <value>Prosimo počakajte ...</value>
+    <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="MainWindowTitle" xml:space="preserve">
+    <value>eduVPN</value>
+  </data>
+  <data name="MessageMaintenanceBegin" xml:space="preserve">
+    <value>Začetek</value>
+  </data>
+  <data name="MessageMaintenanceEnd" xml:space="preserve">
+    <value>Konec</value>
+  </data>
+  <data name="MessageMaintenanceTitle" xml:space="preserve">
+    <value>Obvestilo o vzdrževanju</value>
+  </data>
+  <data name="MessageNotificationTitle" xml:space="preserve">
+    <value>Obvestilo</value>
+  </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
+  <data name="PasswordPopupMessage" xml:space="preserve">
+    <value>Vnesite svoje geslo za »{0}«:</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_Geslo</value>
+  </data>
+  <data name="PasswordPopupTitle" xml:space="preserve">
+    <value>Geslo</value>
+  </data>
+  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+    <value>Dodaj drugeg_a ponudnika</value>
+  </data>
+  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
+    <value>Dostop do ustanove</value>
+  </data>
+  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
+    <value>Varni splet</value>
+  </data>
+  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+    <value>_Vprašaj me pozneje</value>
+  </data>
+  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+    <value>Kaj je _novega?</value>
+  </data>
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
+    <value>Nameščena verzija odjemalca VPN je {0}. Na spletu je na voljo novejša verzija {1}.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+  </data>
+  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+    <value>Preskoči to _verzijo</value>
+  </data>
+  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+    <value>Posodobitev na voljo</value>
+  </data>
+  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+    <value>Prenesi in _posodobi zdaj
+(Odjemalec se bo ponovno zagnal)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>Program {0} je zaznal, da se je datoteka z vašimi uporabniškimi nastavitvami {1} pokvarila. Lahko gre za posledico zrušenja ali nepravilne zaustavitve programa.
@@ -130,6 +270,80 @@
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
+  <data name="SettingsPageForceTCPDescription" xml:space="preserve">
+    <value>Če se odjemalec VPN ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
+  </data>
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
+    <value>Vsili _TCP</value>
+  </data>
+  <data name="SettingsPageInterfaceDescription" xml:space="preserve">
+    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za tega odjemalca VPN.</value>
+  </data>
+  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
+    <value>_Izberite vmesnik TAP</value>
+  </data>
+  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+    <value>_Prekini</value>
+  </data>
+  <data name="StatusPageInstance" xml:space="preserve">
+    <value>Ponudnik</value>
+  </data>
+  <data name="StatusPageMessagesLabel" xml:space="preserve">
+    <value>_Sporočila</value>
+  </data>
+  <data name="StatusPageProfile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
+    <value>Dohodno</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
+    <value>Odhodno</value>
+  </data>
+  <data name="StatusPageSessionInfoDuration" xml:space="preserve">
+    <value>Trajanje</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
+    <value>IPv4</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="StatusPageSessionInfoTitle" xml:space="preserve">
+    <value>Podatki povezave</value>
+  </data>
+  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+    <value>Ogled _dnevnika</value>
+  </data>
+  <data name="StatusPageStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
+    <value>IP={0}, IPv6={1}</value>
+    <comment>{0}=IP address, {1}=IPv6 address</comment>
+  </data>
+  <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
+    <value>{0} je povezan</value>
+    <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
+    <value>Okno je bilo pomanjšano semle.</value>
+  </data>
+  <data name="SystemTrayMenuAbout" xml:space="preserve">
+    <value>O progr_amu ...</value>
+  </data>
+  <data name="SystemTrayMenuExit" xml:space="preserve">
+    <value>I_zhod</value>
+  </data>
+  <data name="SystemTrayMenuOpen" xml:space="preserve">
+    <value>_Odpri</value>
+  </data>
+  <data name="SystemTrayMenuSettings" xml:space="preserve">
+    <value>Na_stavitve ...</value>
+  </data>
+  <data name="SystemTrayMenuStatus" xml:space="preserve">
+    <value>Podatk_i povezave ...</value>
+  </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>h\:mm\:ss</value>
     <comment>Display format of the duration times less then one day</comment>
@@ -137,5 +351,59 @@
   <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
     <value>d\.hh\:mm\:ss</value>
     <comment>Display format of the duration times one day or longer</comment>
+  </data>
+  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
+    <value>Ne uporabite istega TOTP dvakrat. Počakajte, da bo ustvarjen svež TOTP.</value>
+  </data>
+  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>Odgovo_r</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
+    <value>_Skrivnost</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
+    <value>Skrivnost kot koda QR</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
+    <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostno kodo:</value>
+    <comment>"securirty token" sounds wrong</comment>
+  </data>
+  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
+    <value>_Način</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
+    <value>2-stopenjsko overovljanje</value>
+  </data>
+  <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
+    <value>Zahteva dvojno preverjanje pristnosti</value>
+  </data>
+  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
+    <value>_Včlani</value>
+  </data>
+  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
+    <value>{0} zahteva vašo včlanitev v 2-stopenjsko overovljanje pri ponudniku {1}.</value>
+    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
+  </data>
+  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
+    <value>Včlanitev v 2-stopenjsko overovljanje</value>
+  </data>
+  <data name="UserDisabledMessage" xml:space="preserve">
+    <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati. Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
+  </data>
+  <data name="UsernamePasswordPopupMessage" xml:space="preserve">
+    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_Geslo</value>
+  </data>
+  <data name="UsernamePasswordPopupTitle" xml:space="preserve">
+    <value>Overovitev</value>
+  </data>
+  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
+    <value>_Up. ime</value>
+  </data>
+  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Odgovor</value>
   </data>
 </root>

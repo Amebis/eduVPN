@@ -117,9 +117,148 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutPageCopyright" xml:space="preserve">
+    <value>Copyright © 2017
+The Commons Conservancy eduVPN Programme</value>
+  </data>
+  <data name="AboutPageeduVPN" xml:space="preserve">
+    <value>eduVPN
+Powered by SURFnet</value>
+  </data>
+  <data name="AboutPageVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>_Country</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>_Institution</value>
+  </data>
+  <data name="AuthorizationPopupMessage" xml:space="preserve">
+    <value>The VPN client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization...</value>
+  </data>
+  <data name="AuthorizationPopupTitle" xml:space="preserve">
+    <value>Waiting For Authorization</value>
+  </data>
+  <data name="ButtonBackTitle" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="ButtonCloseTitle" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_Copy Error Text</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_Dismiss Error</value>
+  </data>
+  <data name="ButtonNextTitle" xml:space="preserve">
+    <value>_Next &gt;</value>
+  </data>
+  <data name="ButtonNextTitleAlt" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="ButtonOKTitle" xml:space="preserve">
+    <value>_OK</value>
+  </data>
+  <data name="ButtonSettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Provider</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Provider</value>
+  </data>
+  <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
+    <value>_Hostname</value>
+  </data>
+  <data name="ErrorOAuthState" xml:space="preserve">
+    <value>The required OAuth parameter "state" is missing or incorrect.</value>
+  </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>Add _other address</value>
+  </data>
+  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
+    <value>Access your _institute's network.</value>
+  </data>
+  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
+    <value>Connect to the Internet _securely, for example when using public WiFi.</value>
+  </data>
+  <data name="ListBoxNoItems" xml:space="preserve">
+    <value>No items</value>
+    <comment>Displayed when a list is empty</comment>
+  </data>
+  <data name="ListBoxNull" xml:space="preserve">
+    <value>Please wait...</value>
+    <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="MainWindowTitle" xml:space="preserve">
+    <value>eduVPN</value>
+  </data>
+  <data name="MessageMaintenanceBegin" xml:space="preserve">
+    <value>Begin</value>
+  </data>
+  <data name="MessageMaintenanceEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="MessageMaintenanceTitle" xml:space="preserve">
+    <value>Maintenance Notification</value>
+  </data>
+  <data name="MessageNotificationTitle" xml:space="preserve">
+    <value>Notification</value>
+  </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
+  <data name="PasswordPopupMessage" xml:space="preserve">
+    <value>Enter your password for "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_Password</value>
+  </data>
+  <data name="PasswordPopupTitle" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+    <value>Add _another provider</value>
+  </data>
+  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
+    <value>Institute Access</value>
+  </data>
+  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
+    <value>Secure Internet</value>
+  </data>
+  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+    <value>Ask me _later</value>
+  </data>
+  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+    <value>What's _New?</value>
+  </data>
+  <data name="SelfUpdatePopupMessage" xml:space="preserve">
+    <value>Version {0} of VPN client is installed. A newer version {1} is available online.</value>
+    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+  </data>
+  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+    <value>Skip this _version</value>
+  </data>
+  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+    <value>Update Available</value>
+  </data>
+  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+    <value>Download and _update now
+(Client will restart)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
@@ -130,6 +269,80 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Corrupt User Settings</value>
   </data>
+  <data name="SettingsPageForceTCPDescription" xml:space="preserve">
+    <value>If the VPN client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
+  </data>
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
+    <value>Connect Over _TCP</value>
+  </data>
+  <data name="SettingsPageInterfaceDescription" xml:space="preserve">
+    <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for this VPN client below.</value>
+  </data>
+  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
+    <value>Select TAP _Interface</value>
+  </data>
+  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+    <value>_Disconnect</value>
+  </data>
+  <data name="StatusPageInstance" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="StatusPageMessagesLabel" xml:space="preserve">
+    <value>_Messages</value>
+  </data>
+  <data name="StatusPageProfile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
+    <value>Bytes In</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
+    <value>Bytes Out</value>
+  </data>
+  <data name="StatusPageSessionInfoDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
+    <value>IPv4</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="StatusPageSessionInfoTitle" xml:space="preserve">
+    <value>Connection Info</value>
+  </data>
+  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+    <value>View _log</value>
+  </data>
+  <data name="StatusPageStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
+    <value>IP={0}, IPv6={1}</value>
+    <comment>{0}=IP address, {1}=IPv6 address</comment>
+  </data>
+  <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
+    <value>{0} Connected</value>
+    <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
+    <value>The window has been minimized here.</value>
+  </data>
+  <data name="SystemTrayMenuAbout" xml:space="preserve">
+    <value>_About...</value>
+  </data>
+  <data name="SystemTrayMenuExit" xml:space="preserve">
+    <value>E_xit</value>
+  </data>
+  <data name="SystemTrayMenuOpen" xml:space="preserve">
+    <value>_Open</value>
+  </data>
+  <data name="SystemTrayMenuSettings" xml:space="preserve">
+    <value>_Settings...</value>
+  </data>
+  <data name="SystemTrayMenuStatus" xml:space="preserve">
+    <value>Connection _info...</value>
+  </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>h\:mm\:ss</value>
     <comment>Display format of the duration times less then one day</comment>
@@ -137,5 +350,59 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
     <value>d\.hh\:mm\:ss</value>
     <comment>Display format of the duration times one day or longer</comment>
+  </data>
+  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
+    <value>Please do not reuse the TOTP. Wait until a fresh TOTP is generated.</value>
+  </data>
+  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Response</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
+    <value>_Secret</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
+    <value>Secret as QR Code</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
+    <value>Select your two-factor method and enter the security code:</value>
+    <comment>"securirty token" sounds wrong</comment>
+  </data>
+  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
+    <value>_Method</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
+    <value>Two-factor Authentication</value>
+  </data>
+  <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
+    <value>Requires two-factor authentication</value>
+  </data>
+  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
+    <value>_Enroll</value>
+  </data>
+  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
+    <value>{0} requires you to enroll for two-factor authentication at {1}.</value>
+    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
+  </data>
+  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
+    <value>Two-factor Authentication Enrollment</value>
+  </data>
+  <data name="UserDisabledMessage" xml:space="preserve">
+    <value>Warning! Your account is disabled. Please, contact your helpdesk for support.</value>
+  </data>
+  <data name="UsernamePasswordPopupMessage" xml:space="preserve">
+    <value>Enter your username and password for "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_Password</value>
+  </data>
+  <data name="UsernamePasswordPopupTitle" xml:space="preserve">
+    <value>Authentication</value>
+  </data>
+  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
+    <value>_Username</value>
+  </data>
+  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Response</value>
   </data>
 </root>

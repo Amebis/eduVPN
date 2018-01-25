@@ -10,7 +10,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:res="clr-namespace:eduVPN.Client.Resources"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
     mc:Ignorable="d"
     Width="350"

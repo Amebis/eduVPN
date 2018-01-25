@@ -13,7 +13,7 @@
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages;assembly=eduVPN.Views"
-    xmlns:res="clr-namespace:eduVPN.Client.Resources"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
