@@ -54,13 +54,22 @@ namespace eduVPN.Client
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
+        {
+            base.OnSessionEnding(e);
+
+            // Save client settings on logout.
+            Client.Properties.Settings.Default.Save();
+        }
 
         /// <inheritdoc/>
         protected override void OnExit(ExitEventArgs e)
         {
-            Client.Properties.Settings.Default.Save();
-
             base.OnExit(e);
+
+            // Save client settings on exit.
+            Client.Properties.Settings.Default.Save();
         }
 
         #endregion

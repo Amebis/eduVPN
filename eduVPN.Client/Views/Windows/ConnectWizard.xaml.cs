@@ -72,8 +72,8 @@ namespace eduVPN.Views.Windows
             foreach (var status_type in Enum.GetValues(typeof(VPNSessionStatusType)).Cast<VPNSessionStatusType>())
             {
                 var icon_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
-                try { _icons.Add(status_type, new Icon(Application.GetResourceStream(icon_uri).Stream, icon_size)); }
-                catch { _icons.Add(status_type, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico")).Stream, icon_size)); }
+                try { _icons.Add(status_type, new Icon(System.Windows.Application.GetResourceStream(icon_uri).Stream, icon_size)); }
+                catch { _icons.Add(status_type, new Icon(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico")).Stream, icon_size)); }
             }
 
             var view_model = (ViewModels.Windows.ConnectWizard)DataContext;
@@ -122,15 +122,11 @@ namespace eduVPN.Views.Windows
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
 
-            Application.Current.SessionEnding += (object sender, SessionEndingCancelEventArgs e_session_end) =>
+            System.Windows.Application.Current.SessionEnding += (object sender, SessionEndingCancelEventArgs e_session_end) =>
             {
-                // Save view settings on logout.
+                // Save window position on logout.
                 Client.Properties.Settings.Default.WindowTop = Top;
                 Client.Properties.Settings.Default.WindowLeft = Left;
-                Client.Properties.Settings.Default.Save();
-
-                // Save view model settings on logout.
-                Properties.Settings.Default.Save();
             };
 
             // Bind to HttpCallback to process OAuth authorization grant.

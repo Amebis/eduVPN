@@ -97,11 +97,21 @@ namespace eduVPN.Views
         }
 
         /// <inheritdoc/>
+        protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
+        {
+            base.OnSessionEnding(e);
+
+            // Save view model settings on logout.
+            eduVPN.Properties.Settings.Default.Save();
+        }
+
+        /// <inheritdoc/>
         protected override void OnExit(ExitEventArgs e)
         {
-            eduVPN.Properties.Settings.Default.Save();
-
             base.OnExit(e);
+
+            // Save view model settings on exit.
+            eduVPN.Properties.Settings.Default.Save();
         }
 
         #endregion
