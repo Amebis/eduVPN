@@ -68,7 +68,6 @@
             <ComponentSearch Id="QRCoder.dll" Guid="{A862393E-2555-41D9-A971-1D15508DB323}"/>
             <ComponentSearch Id="UnityEngine.dll" Guid="{E17FDCC0-E1AC-408C-9DD6-F34BC1D55629}"/>
             <ComponentSearch Id="eduVPN.dll" Guid="{363C4CCB-B18B-4BA8-AB89-797564B388C2}"/>
-            <ComponentSearch Id="eduVPN.dll.config" Guid="{EDE7F8DE-521D-4034-8BB7-B6545CA7F49E}"/>
             <ComponentSearch Id="eduVPN.Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}"/>
             <ComponentSearch Id="eduVPN.Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}"/>
             <ComponentSearch Id="eduVPN.Resources.dll" Guid="{39778E20-4F27-40B2-90C3-FC16A28E70B5}"/>
