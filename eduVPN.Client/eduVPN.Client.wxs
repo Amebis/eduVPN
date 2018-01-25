@@ -63,10 +63,9 @@
             <ComponentGroupRef Id="eduOAuth.dll"/>
             <ComponentGroupRef Id="eduOpenVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.dll"/>
+            <ComponentGroupRef Id="eduVPN.View.dll"/>
             <ComponentGroupRef Id="eduVPN.Resources.dll"/>
             <ComponentGroupRef Id="Prism.dll"/>
-            <ComponentGroupRef Id="QRCoder.dll"/>
-            <ComponentGroupRef Id="UnityEngine.dll"/>
 
             <ComponentRef Id="eduVPN.Client.exe"/>
             <ComponentRef Id="eduVPN.Client.exe.config"/>

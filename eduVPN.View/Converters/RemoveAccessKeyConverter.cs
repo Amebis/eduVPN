@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
     /// Returns string with access key underscore removed (if any).

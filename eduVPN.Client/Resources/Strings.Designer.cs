@@ -351,15 +351,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0:G}{1}{2}.
-        /// </summary>
-        public static string NumberToHumanReadable {
-            get {
-                return ResourceManager.GetString("NumberToHumanReadable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter your password for &quot;{0}&quot;:.
         /// </summary>
         public static string PasswordPopupMessage {
@@ -701,24 +692,6 @@ namespace eduVPN.Client.Resources {
         public static string SystemTrayMenuStatus {
             get {
                 return ResourceManager.GetString("SystemTrayMenuStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to h\:mm\:ss.
-        /// </summary>
-        public static string TimeSpanInSeconds {
-            get {
-                return ResourceManager.GetString("TimeSpanInSeconds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to d\.hh\:mm\:ss.
-        /// </summary>
-        public static string TimeSpanInSecondsWithDays {
-            get {
-                return ResourceManager.GetString("TimeSpanInSecondsWithDays", resourceCulture);
             }
         }
         

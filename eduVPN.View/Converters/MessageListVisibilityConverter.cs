@@ -10,12 +10,12 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if input value is non-empty string; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="Visibility.Visible"/> if message list contains at least one message; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
-    public class StringVisibilityConverter : IValueConverter
+    public class MessageListVisibilityConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -27,7 +27,7 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is string str && str.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
+            return value is int count && count > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

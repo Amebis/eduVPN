@@ -7,17 +7,17 @@
 
 using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
-using System.Windows.Input;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if command can execute; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="TimeSpan"/> up to seconds accurate
     /// </summary>
-    public class CommandVisibilityConverter : IValueConverter
+    public class TimeSpanInSecondsConverter : IValueConverter
     {
+        private static TimeSpan _one_day = new TimeSpan(1, 0, 0, 0);
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -28,7 +28,13 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is ICommand command && command.CanExecute(parameter) ? Visibility.Visible : Visibility.Collapsed;
+            return value is TimeSpan timespan ?
+                timespan.ToString(
+                    timespan < _one_day ?
+                        View.Resources.Strings.TimeSpanInSeconds :
+                        View.Resources.Strings.TimeSpanInSecondsWithDays,
+                    culture) :
+                null;
         }
 
         /// <summary>

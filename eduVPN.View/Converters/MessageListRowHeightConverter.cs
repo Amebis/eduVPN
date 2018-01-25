@@ -9,21 +9,20 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Input;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="GridLength.Auto"/> if command can execute; or <c>0</c> otherwise.
+    /// Returns <c>1*</c> if message list contains at least one message; or <see cref="GridLength.Auto"/> otherwise.
     /// </summary>
-    public class CommandRowHeightConverter : IValueConverter
+    public class MessageListRowHeightConverter : IValueConverter
     {
         #region Fields
 
         /// <summary>
         /// 1* grid length
         /// </summary>
-        private static readonly GridLength _zero_grid_length = new GridLength(0);
+        private static readonly GridLength _one_star_grid_length = new GridLength(1.0, GridUnitType.Star);
 
         #endregion
 
@@ -37,7 +36,7 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is ICommand command && command.CanExecute(parameter) ? GridLength.Auto : _zero_grid_length;
+            return value is int count && count > 0 ? _one_star_grid_length : GridLength.Auto;
         }
 
         /// <summary>

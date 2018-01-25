@@ -5,19 +5,19 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="TimeSpan"/> up to seconds accurate
+    /// Returns <see cref="Visibility.Visible"/> if instance source contains any connecting instances; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
-    public class TimeSpanInSecondsConverter : IValueConverter
+    public class InstanceSourceVisibilityConverter : IValueConverter
     {
-        private static TimeSpan _one_day = new TimeSpan(1, 0, 0, 0);
-
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -28,13 +28,7 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is TimeSpan timespan ?
-                timespan.ToString(
-                    timespan < _one_day ?
-                        Resources.Strings.TimeSpanInSeconds :
-                        Resources.Strings.TimeSpanInSecondsWithDays,
-                    culture) :
-                null;
+            return value as Instance != null ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

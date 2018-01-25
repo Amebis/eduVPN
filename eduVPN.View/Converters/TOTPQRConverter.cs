@@ -12,7 +12,7 @@ using System.Globalization;
 using System.Web;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
     /// Returns TOTP QR code generated from TOTP secret and authenticating instance host name and display name.

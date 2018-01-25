@@ -5,28 +5,18 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.Models;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <c>1*</c> if instance source contains any connecting instances; or <see cref="GridLength.Auto"/> otherwise.
+    /// Returns <see cref="Visibility.Visible"/> if input value is non-empty string; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
-    class InstanceSourceRowHeightConverter : IValueConverter
+    public class StringVisibilityConverter : IValueConverter
     {
-        #region Fields
-
-        /// <summary>
-        /// 1* grid length
-        /// </summary>
-        private static readonly GridLength _one_star_grid_length = new GridLength(1.0, GridUnitType.Star);
-
-        #endregion
-
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -37,7 +27,7 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value as Instance != null ? _one_star_grid_length : GridLength.Auto;
+            return value is string str && str.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

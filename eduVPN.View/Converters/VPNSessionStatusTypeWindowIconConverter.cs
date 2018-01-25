@@ -5,19 +5,18 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Mvvm;
+using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Converts and returns TOTP secret as human readable string
+    /// Returns window icon according to status state.
     /// </summary>
-    /// <remarks>Only integer numbers supported</remarks>
-    public class TOTPSecretConverter : BindableBase, IValueConverter
+    public class VPNSessionStatusTypeWindowIconConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -29,18 +28,20 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string secret)
+            if (value is VPNSessionStatusType status_type)
             {
-                // Divide line in 4-tuples separated by spaces.
-                int group_counter = 0;
-                return string.Join(
-                    " ",
-                    secret
-                        .GroupBy(_ => group_counter++ / 4)
-                        .Select(g => new String(g.ToArray())));
+                try
+                {
+                    return new BitmapImage(
+                        new Uri(
+                            String.Format(
+                                "pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico",
+                                Enum.GetName(typeof(VPNSessionStatusType), status_type))));
+                }
+                catch { }
             }
 
-            return null;
+            return new BitmapImage(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico"));
         }
 
         /// <summary>

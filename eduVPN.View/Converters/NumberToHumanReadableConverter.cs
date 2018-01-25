@@ -10,7 +10,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
     /// Converts and returns number as human readable string using metric prefixes
@@ -81,7 +81,7 @@ namespace eduVPN.Client.Converters
 
             int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(b)), _prefixes.Length) : 0;
             return String.Format(
-                Resources.Strings.NumberToHumanReadable,
+                View.Resources.Strings.NumberToHumanReadable,
                 n > 0 ?
                     Math.Truncate(number / Math.Pow(b, n)) :
                     number,

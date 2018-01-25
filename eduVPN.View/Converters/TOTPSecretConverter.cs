@@ -5,17 +5,19 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using Prism.Mvvm;
 using System;
 using System.Globalization;
-using System.Windows;
+using System.Linq;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if user has used TOTP in the last 30sec; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Converts and returns TOTP secret as human readable string
     /// </summary>
-    public class TOTPAuthenticationNoteVisibilityConverter : IValueConverter
+    /// <remarks>Only integer numbers supported</remarks>
+    public class TOTPSecretConverter : BindableBase, IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -27,17 +29,18 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is TimeSpan time_span)
+            if (value is string secret)
             {
-                try
-                {
-                    if (time_span < TimeSpan.FromSeconds(30))
-                        return Visibility.Visible;
-                }
-                catch { }
+                // Divide line in 4-tuples separated by spaces.
+                int group_counter = 0;
+                return string.Join(
+                    " ",
+                    secret
+                        .GroupBy(_ => group_counter++ / 4)
+                        .Select(g => new String(g.ToArray())));
             }
 
-            return Visibility.Collapsed;
+            return null;
         }
 
         /// <summary>

@@ -5,17 +5,19 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if message list contains at least one message; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns status icon according to status state.
     /// </summary>
-    public class MessageListVisibilityConverter : IValueConverter
+    public class VPNSessionStatusTypeIconConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -27,7 +29,19 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is int count && count > 0 ? Visibility.Visible : Visibility.Collapsed;
+            if (value is VPNSessionStatusType status_type)
+            {
+                var image_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.png", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
+                try {
+                    // If resource with given image URI exist, return the URI.
+                    Application.GetResourceStream(image_uri);
+                    return image_uri;
+                }
+                catch (IOException) { }
+            }
+
+            // Fallback to blank image.
+            return new Uri("pack://application:,,,/Resources/Blank.png");
         }
 
         /// <summary>

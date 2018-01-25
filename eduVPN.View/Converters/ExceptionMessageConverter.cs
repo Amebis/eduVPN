@@ -5,19 +5,16 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
-using System.IO;
-using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns status icon according to status state.
+    /// Returns readable exception message.
     /// </summary>
-    public class VPNSessionStatusTypeIconConverter : IValueConverter
+    public class ExceptionMessageConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -29,19 +26,12 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is VPNSessionStatusType status_type)
-            {
-                var image_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.png", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
-                try {
-                    // If resource with given image URI exist, return the URI.
-                    Application.GetResourceStream(image_uri);
-                    return image_uri;
-                }
-                catch (IOException) { }
-            }
-
-            // Fallback to blank image.
-            return new Uri("pack://application:,,,/Resources/Blank.png");
+            if (value is AggregateException ex_agg)
+                return ex_agg.Message + "\r\n" + new ExceptionMessageConverter().Convert(ex_agg.InnerException, targetType, parameter, culture);
+            else if (value is Exception ex)
+                return ex.Message;
+            else
+                return null;
         }
 
         /// <summary>

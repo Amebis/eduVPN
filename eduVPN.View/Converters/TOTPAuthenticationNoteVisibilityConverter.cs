@@ -10,12 +10,12 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if input value is <c>true</c>; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="Visibility.Visible"/> if user has used TOTP in the last 30sec; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
-    public class TwoFactorAuthenticationIconVisibilityConverter : IValueConverter
+    public class TOTPAuthenticationNoteVisibilityConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -27,7 +27,17 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (bool)value ? Visibility.Visible : Visibility.Collapsed;
+            if (value is TimeSpan time_span)
+            {
+                try
+                {
+                    if (time_span < TimeSpan.FromSeconds(30))
+                        return Visibility.Visible;
+                }
+                catch { }
+            }
+
+            return Visibility.Collapsed;
         }
 
         /// <summary>

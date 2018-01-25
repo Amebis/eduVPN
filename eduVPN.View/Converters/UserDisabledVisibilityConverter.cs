@@ -5,18 +5,17 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns window icon according to status state.
+    /// Returns <see cref="Visibility.Visible"/> if user is disabled; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
-    public class VPNSessionStatusTypeWindowIconConverter : IValueConverter
+    public class UserDisabledVisibilityConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -28,20 +27,7 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is VPNSessionStatusType status_type)
-            {
-                try
-                {
-                    return new BitmapImage(
-                        new Uri(
-                            String.Format(
-                                "pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico",
-                                Enum.GetName(typeof(VPNSessionStatusType), status_type))));
-                }
-                catch { }
-            }
-
-            return new BitmapImage(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico"));
+            return value is bool is_enabled && !is_enabled ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

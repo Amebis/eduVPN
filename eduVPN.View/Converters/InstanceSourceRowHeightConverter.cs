@@ -5,17 +5,28 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns readable exception message.
+    /// Returns <c>1*</c> if instance source contains any connecting instances; or <see cref="GridLength.Auto"/> otherwise.
     /// </summary>
-    public class ExceptionMessageConverter : IValueConverter
+    public class InstanceSourceRowHeightConverter : IValueConverter
     {
+        #region Fields
+
+        /// <summary>
+        /// 1* grid length
+        /// </summary>
+        private static readonly GridLength _one_star_grid_length = new GridLength(1.0, GridUnitType.Star);
+
+        #endregion
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -26,12 +37,7 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is AggregateException ex_agg)
-                return ex_agg.Message + "\r\n" + new ExceptionMessageConverter().Convert(ex_agg.InnerException, targetType, parameter, culture);
-            else if (value is Exception ex)
-                return ex.Message;
-            else
-                return null;
+            return value as Instance != null ? _one_star_grid_length : GridLength.Auto;
         }
 
         /// <summary>

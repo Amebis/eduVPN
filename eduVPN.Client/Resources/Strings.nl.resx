@@ -187,18 +187,6 @@
   <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
     <value>_Verbreken</value>
   </data>
-  <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>hh\:mm\:ss</value>
-    <comment>Display format of the duration times less then one day</comment>
-  </data>
-  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
-    <comment>Display format of the duration times one day or longer</comment>
-  </data>
-  <data name="NumberToHumanReadable" xml:space="preserve">
-    <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
-  </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>S_luiten</value>
   </data>
@@ -264,14 +252,14 @@ Powered by SURFnet</value>
     <value>Via _TCP verbinden</value>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Voer je wachtwoord in voor &quot;{0}&quot;:</value>
+    <value>Voer je wachtwoord in voor "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Wachtwoord</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Voer je gebruikersnaam en wachtwoord in voor &quot;{0}&quot;:</value>
+    <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
@@ -291,7 +279,7 @@ Powered by SURFnet</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
-    <comment>&quot;securirty token&quot; sounds wrong</comment>
+    <comment>"securirty token" sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
     <value>Twee-factorauthenticatie</value>
@@ -315,7 +303,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>De vereiste OAuth paramter &quot;state&quot; ontbreekt of is onjuist.</value>
+    <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
   </data>
   <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>_Enroll</value>

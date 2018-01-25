@@ -186,18 +186,6 @@
   <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
     <value>_Disconnect</value>
   </data>
-  <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>h\:mm\:ss</value>
-    <comment>Display format of the duration times less then one day</comment>
-  </data>
-  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
-    <comment>Display format of the duration times one day or longer</comment>
-  </data>
-  <data name="NumberToHumanReadable" xml:space="preserve">
-    <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
-  </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>E_xit</value>
   </data>

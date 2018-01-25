@@ -11,12 +11,12 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if <c>value[0]</c> represent the same instance as <c>value[1]</c>; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="Visibility.Visible"/> if <c>value[0]</c> represent the same profile as <c>value[1]</c>; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
-    public class ConnectingInstanceEqualVisibilityConverter : IMultiValueConverter
+    public class ConnectingProfileEqualVisibilityConverter : IMultiValueConverter
     {
         /// <summary>
         /// Converts source values to a value for the binding target. The data binding engine calls this method when it propagates the values from source bindings to the binding target.
@@ -34,9 +34,9 @@ namespace eduVPN.Client.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             return
-                values[0] is Instance instance1 &&
-                values[1] is Instance instance2 &&
-                instance1.Equals(instance2) ? Visibility.Visible : Visibility.Collapsed;
+                values[0] is Profile profile1 &&
+                values[1] is Profile profile2 &&
+                profile1.Equals(profile2) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

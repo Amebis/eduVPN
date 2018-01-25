@@ -30,13 +30,9 @@
     <Reference Include="Prism, Version=7.0.0.396, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)\packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
     </Reference>
-    <Reference Include="QRCoder, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\QRCoder.1.3.2\lib\net40\QRCoder.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
@@ -46,29 +42,6 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\CommandRowHeightConverter.cs" />
-    <Compile Include="Converters\CommandVisibilityConverter.cs" />
-    <Compile Include="Converters\ConnectingInstanceEqualVisibilityConverter.cs" />
-    <Compile Include="Converters\ConnectingProfileEqualVisibilityConverter.cs" />
-    <Compile Include="Converters\ExceptionMessageConverter.cs" />
-    <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
-    <Compile Include="Converters\InstanceSourceInverseVisibilityConverter.cs" />
-    <Compile Include="Converters\InstanceSourceRowHeightConverter.cs" />
-    <Compile Include="Converters\InstanceSourceVisibilityConverter.cs" />
-    <Compile Include="Converters\MessageListRowHeightConverter.cs" />
-    <Compile Include="Converters\MessageListVisibilityConverter.cs" />
-    <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
-    <Compile Include="Converters\TOTPSecretConverter.cs" />
-    <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
-    <Compile Include="Converters\StringVisibilityConverter.cs" />
-    <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
-    <Compile Include="Converters\TOTPQRConverter.cs" />
-    <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
-    <Compile Include="Converters\TOTPAuthenticationNoteVisibilityConverter.cs" />
-    <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
-    <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
-    <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
-    <Compile Include="QRCoder\XamlQRCode.cs" />
     <Compile Include="Views\Pages\AuthenticatingInstituteSelectPage.xaml.cs">
       <DependentUpon>AuthenticatingInstituteSelectPage.xaml</DependentUpon>
     </Compile>
@@ -141,7 +114,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Microsoft\Shell\SingleInstance.cs" />
     <Page Include="Resources\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -341,6 +313,10 @@
     <ProjectReference Include="..\eduOpenVPN\eduOpenVPN\eduOpenVPN.csproj">
       <Project>{ddf40a25-1180-40b1-9bf1-8d3d66d734ad}</Project>
       <Name>eduOpenVPN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eduVPN.View\eduVPN.View.csproj">
+      <Project>{ec9ad583-409a-4c11-8bb9-9035ce5c806a}</Project>
+      <Name>eduVPN.View</Name>
     </ProjectReference>
     <ProjectReference Include="..\eduVPN\eduVPN.csproj">
       <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>

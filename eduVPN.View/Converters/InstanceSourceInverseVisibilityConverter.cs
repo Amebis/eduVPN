@@ -5,17 +5,18 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace eduVPN.Client.Converters
+namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if input value is a non-null exception; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="Visibility.Collapsed"/> if instance source contains any connecting instances; or <see cref="Visibility.Visible"/> otherwise.
     /// </summary>
-    public class ExceptionMessageVisibilityConverter : IValueConverter
+    public class InstanceSourceInverseVisibilityConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -27,7 +28,7 @@ namespace eduVPN.Client.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && value is Exception ? Visibility.Visible : Visibility.Collapsed;
+            return value as Instance != null ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
