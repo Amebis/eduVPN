@@ -64,7 +64,7 @@
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
     <Compile Include="Pages\AuthenticatingInstanceSelectPage.cs" />
     <Compile Include="Pages\ConnectWizardPage.cs" />
-    <Compile Include="Panels\ConnectingSelectBasePanel.cs" />
+    <Compile Include="Panels\ConnectingSelectPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QRCoder\XamlQRCode.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
