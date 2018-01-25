@@ -48,7 +48,6 @@
     <Compile Include="Views\Pages\AuthenticatingCountrySelectPage.xaml.cs">
       <DependentUpon>AuthenticatingCountrySelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\AuthenticatingInstanceSelectPage.cs" />
     <Compile Include="Views\Pages\SelfUpdatingPage.xaml.cs">
       <DependentUpon>SelfUpdatingPage.xaml</DependentUpon>
     </Compile>
@@ -58,7 +57,6 @@
     <Compile Include="Views\Windows\SelfUpdatePopup.xaml.cs">
       <DependentUpon>SelfUpdatePopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Panels\ConnectingSelectBasePanel.cs" />
     <Compile Include="Views\Panels\ConnectingInstanceProfileSelectPanel.xaml.cs">
       <DependentUpon>ConnectingInstanceProfileSelectPanel.xaml</DependentUpon>
     </Compile>
@@ -101,14 +99,12 @@
     <Compile Include="Views\Pages\RecentConfigurationSelectPage.xaml.cs">
       <DependentUpon>RecentConfigurationSelectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\ConnectWizardPage.cs" />
     <Compile Include="Views\Pages\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\Window.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

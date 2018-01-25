@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:panels="clr-namespace:eduVPN.Views.Panels"
+    xmlns:panels="clr-namespace:eduVPN.Views.Panels;assembly=eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignHeight="300"

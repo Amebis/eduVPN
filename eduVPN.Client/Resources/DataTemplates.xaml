@@ -9,7 +9,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
-    xmlns:panels="clr-namespace:eduVPN.Views.Panels"
+    xmlns:panels="clr-namespace:eduVPN.Views.Panels;assembly=eduVPN.Views"
     xmlns:controls="clr-namespace:eduVPN.Views.Controls;assembly=eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Client.Resources">
 

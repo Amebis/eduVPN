@@ -11,7 +11,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
-    xmlns:windows="clr-namespace:eduVPN.Views.Windows"
+    xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     mc:Ignorable="d"
     Width="350"

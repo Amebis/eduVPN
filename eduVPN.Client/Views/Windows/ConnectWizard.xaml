@@ -12,7 +12,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
-    xmlns:windows="clr-namespace:eduVPN.Views.Windows"
+    xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
     xmlns:vmwindows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     xmlns:vmpages="clr-namespace:eduVPN.ViewModels.Pages;assembly=eduVPN"
     mc:Ignorable="d"

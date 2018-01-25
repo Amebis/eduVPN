@@ -14,7 +14,7 @@
     xmlns:res="clr-namespace:eduVPN.Client.Resources"
     xmlns:vmpanels="clr-namespace:eduVPN.ViewModels.Panels;assembly=eduVPN"
     xmlns:panels="clr-namespace:eduVPN.Views.Panels"
-    xmlns:windows="clr-namespace:eduVPN.Views.Windows"
+    xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
     mc:Ignorable="d"
     Width="350"
     SizeToContent="Height"
