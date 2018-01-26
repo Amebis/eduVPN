@@ -334,7 +334,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.AuthorizationPopup(sender, e);
 
             // Create a new authorization pop-up.
-            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Views/Windows/AuthorizationPopup.xaml", UriKind.Relative));
+            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Windows/AuthorizationPopup.xaml", UriKind.Relative));
             popup.Owner = this;
             popup.DataContext = view_model;
             view_model.PropertyChanged += (object sender2, PropertyChangedEventArgs e2) =>
@@ -375,7 +375,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.TwoFactorEnrollmentPopup(sender, e);
 
             // Create a new 2FA enroll pop-up.
-            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Views/Windows/TwoFactorEnrollmentPopup.xaml", UriKind.Relative));
+            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Windows/TwoFactorEnrollmentPopup.xaml", UriKind.Relative));
             popup.Owner = this;
             popup.DataContext = view_model;
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
@@ -407,7 +407,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.PasswordPopup(sender, e);
 
             // Create a new authentication pop-up.
-            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Views/Windows/PasswordPopup.xaml", UriKind.Relative));
+            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Windows/PasswordPopup.xaml", UriKind.Relative));
             popup.Owner = this;
             popup.DataContext = view_model;
 
@@ -433,7 +433,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.UsernamePasswordPopup(sender, e);
 
             // Create a new authentication pop-up.
-            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Views/Windows/UsernamePasswordPopup.xaml", UriKind.Relative));
+            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Windows/UsernamePasswordPopup.xaml", UriKind.Relative));
             popup.Owner = this;
             popup.DataContext = view_model;
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
@@ -464,7 +464,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.TwoFactorAuthenticationPopup(sender, e);
 
             // Create a new authentication pop-up.
-            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Views/Windows/TwoFactorAuthenticationPopup.xaml", UriKind.Relative));
+            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Windows/TwoFactorAuthenticationPopup.xaml", UriKind.Relative));
             popup.Owner = this;
             popup.DataContext = view_model;
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
@@ -496,7 +496,7 @@ namespace eduVPN.Views.Windows
             var view_model = new ViewModels.Windows.SelfUpdatePopup(sender, e);
 
             // Create a new prompt pop-up.
-            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Views/Windows/SelfUpdatePopup.xaml", UriKind.Relative));
+            var popup = (System.Windows.Window)Application.LoadComponent(new Uri("Windows/SelfUpdatePopup.xaml", UriKind.Relative));
             popup.Owner = this;
             popup.DataContext = view_model;
 
