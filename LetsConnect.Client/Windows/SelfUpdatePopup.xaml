@@ -1,0 +1,119 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<windows:Window
+    x:Class="LetsConnect.Client.Windows.SelfUpdatePopup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
+    xmlns:rescli="clr-namespace:LetsConnect.Client.Resources"
+    xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
+    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
+    mc:Ignorable="d"
+    Width="350"
+    SizeToContent="Height"
+    Title="{x:Static res:Strings.SelfUpdatePopupTitle}"
+    WindowStartupLocation="CenterOwner"
+    Style="{StaticResource eduVPNPopupWindow}">
+
+    <windows:Window.Description>
+        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage}">
+            <Binding Source="{x:Static rescli:Strings.ConnectWizardTitle}"/>
+            <Binding Path="InstalledVersion"/>
+            <Binding Path="AvailableVersion"/>
+        </MultiBinding>
+    </windows:Window.Description>
+
+    <AutomationProperties.HelpText>
+        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage}">
+            <Binding Source="{x:Static rescli:Strings.ConnectWizardTitle}"/>
+            <Binding Path="InstalledVersion"/>
+            <Binding Path="AvailableVersion"/>
+        </MultiBinding>
+    </AutomationProperties.HelpText>
+
+    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding Path=ShowChangelog, Converter={StaticResource CommandRowHeightConverter}, FallbackValue=0}"/>
+            <RowDefinition Height="Auto"/>
+            <!--
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            -->
+        </Grid.RowDefinitions>
+
+        <Button
+            x:Name="Changelog"
+            Margin="5"
+            Style="{StaticResource eduVPNLinkButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupChangelogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Visibility="{Binding Path=ShowChangelog, Converter={StaticResource CommandVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+            Command="{Binding Path=ShowChangelog}">
+            <AccessText Text="{x:Static res:Strings.SelfUpdatePopupChangelogButtonTitle}"/>
+        </Button>
+
+        <Button
+            Grid.Row="1"
+            x:Name="Update"
+            Margin="5"
+            IsDefault="True"
+            Style="{StaticResource eduVPNChoiceButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupUpdateButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=DoAction}"
+            CommandParameter="{x:Static model:PromptSelfUpdateActionType.Update}"
+            Click="OK_Click">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Margin="13"
+                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Source="pack://application:,,,/Resources/Update.png"/>
+
+                <AccessText
+                    Grid.Column="1"
+                    Margin="10"
+                    Style="{StaticResource eduVPNChoiceNoteStyle}"
+                    Text="{x:Static res:Strings.SelfUpdatePopupUpdateButtonTitle}"/>
+            </Grid>
+        </Button>
+
+        <!--
+        <Button
+            Grid.Row="2"
+            x:Name="AskLater"
+            Margin="5"
+            Style="{StaticResource eduVPNLinkButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupAskLaterButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=DoAction}"
+            CommandParameter="{x:Static model:PromptSelfUpdateActionType.AskLater}"
+            Click="OK_Click">
+            <AccessText Text="{x:Static res:Strings.SelfUpdatePopupAskLaterButtonTitle}"/>
+        </Button>
+
+        <Button
+            Grid.Row="3"
+            x:Name="Skip"
+            Margin="5"
+            Style="{StaticResource eduVPNLinkButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePopupSkipButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=DoAction}"
+            CommandParameter="{x:Static model:PromptSelfUpdateActionType.Skip}"
+            Click="OK_Click">
+            <AccessText Text="{x:Static res:Strings.SelfUpdatePopupSkipButtonTitle}"/>
+        </Button>
+        -->
+    </Grid>
+</windows:Window>

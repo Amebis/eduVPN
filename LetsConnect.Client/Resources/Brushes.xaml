@@ -1,0 +1,28 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="eduVPNHeaderBrush" Color="{StaticResource eduVPNBlueColor}"/>
+    <SolidColorBrush x:Key="eduVPNHeaderTextBrush" Color="{StaticResource eduVPNWhiteColor}"/>
+    <SolidColorBrush x:Key="eduVPNWindowBrush" Color="{StaticResource eduVPNWhiteColor}"/>
+    <SolidColorBrush x:Key="eduVPNWindowTextBrush" Color="{StaticResource eduVPNBlackColor}"/>
+    <SolidColorBrush x:Key="eduVPNWindowBorderBrush" Color="{StaticResource eduVPNGrayColor}"/>
+    <SolidColorBrush x:Key="eduVPNControlBorderBrush" Color="{StaticResource eduVPNLightGrayColor}"/>
+    <SolidColorBrush x:Key="eduVPNCheckboxKnobBorderBrush" Color="{StaticResource eduVPNBlueColor}"/>
+    <SolidColorBrush x:Key="eduVPNCheckboxSlotBrush" Color="{StaticResource eduVPNLightBlueColor}"/>
+    <SolidColorBrush x:Key="eduVPNLogoOrangeBrush" Color="{StaticResource eduVPNOrangeColor}"/>
+    <SolidColorBrush x:Key="eduVPNLogoGreenBrush" Color="{StaticResource eduVPNGreenColor}"/>
+    <SolidColorBrush x:Key="eduVPNLogoRedBrush" Color="{StaticResource eduVPNRedColor}"/>
+    <SolidColorBrush x:Key="eduVPNLogoWhiteBrush" Color="{StaticResource eduVPNWhiteColor}"/>
+    <SolidColorBrush x:Key="eduVPNLogoBlackBrush" Color="{StaticResource eduVPNBlackColor}"/>
+    <SolidColorBrush x:Key="eduVPNButtonHoverBrush" Color="{StaticResource eduVPNBlueLightColor}"/>
+    <SolidColorBrush x:Key="eduVPNButtonPressedBrush" Color="{StaticResource eduVPNOrangeColor}"/>
+    <SolidColorBrush x:Key="eduVPNErrorBrush" Color="{StaticResource eduVPNRedColor}"/>
+    <SolidColorBrush x:Key="eduVPNErrorTextBrush" Color="{StaticResource eduVPNWhiteColor}"/>
+</ResourceDictionary>
