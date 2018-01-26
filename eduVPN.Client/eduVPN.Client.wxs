@@ -58,10 +58,6 @@
             Component groups
         -->
         <ComponentGroup Id="eduVPN.Client.exe">
-            <ComponentGroupRef Id="eduEd25519.dll"/>
-            <ComponentGroupRef Id="eduJSON.dll"/>
-            <ComponentGroupRef Id="eduOAuth.dll"/>
-            <ComponentGroupRef Id="eduOpenVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.Views.dll"/>
             <ComponentGroupRef Id="eduVPN.Resources.dll"/>
