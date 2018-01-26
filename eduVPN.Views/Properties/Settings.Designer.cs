@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace eduVPN.Client.Properties {
+namespace eduVPN.Views.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -24,17 +24,34 @@ namespace eduVPN.Client.Properties {
         }
         
         /// <summary>
-        /// Recently used hostnames for custom instance connections
+        /// Client window top coordinate
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Recently used hostnames for custom instance connections")]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client window top coordinate")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection CustomInstanceHistory {
+        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
+        public double WindowTop {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["CustomInstanceHistory"]));
+                return ((double)(this["WindowTop"]));
             }
             set {
-                this["CustomInstanceHistory"] = value;
+                this["WindowTop"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Client window left coordinate
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client window left coordinate")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
+        public double WindowLeft {
+            get {
+                return ((double)(this["WindowLeft"]));
+            }
+            set {
+                this["WindowLeft"] = value;
             }
         }
         
@@ -51,6 +68,22 @@ namespace eduVPN.Client.Properties {
             }
             set {
                 this["SettingsVersion"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Has user been informed that the client minimizes to the system tray already?
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Has user been informed that the client minimizes to the system tray already?")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SystemTrayMinimizedWarned {
+            get {
+                return ((bool)(this["SystemTrayMinimizedWarned"]));
+            }
+            set {
+                this["SystemTrayMinimizedWarned"] = value;
             }
         }
     }

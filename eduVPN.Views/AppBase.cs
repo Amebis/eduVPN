@@ -93,6 +93,13 @@ namespace eduVPN.Views
 
             eduVPN.Properties.Settings.Initialize();
 
+            if (Views.Properties.Settings.Default.SettingsVersion == 0)
+            {
+                // Migrate settings from previous version.
+                Views.Properties.Settings.Default.Upgrade();
+                Views.Properties.Settings.Default.SettingsVersion = 1;
+            }
+
             base.OnStartup(e);
         }
 
@@ -100,6 +107,9 @@ namespace eduVPN.Views
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
         {
             base.OnSessionEnding(e);
+
+            // Save view settings on logout.
+            Views.Properties.Settings.Default.Save();
 
             // Save view model settings on logout.
             eduVPN.Properties.Settings.Default.Save();
@@ -109,6 +119,9 @@ namespace eduVPN.Views
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
+
+            // Save view settings on exit.
+            Views.Properties.Settings.Default.Save();
 
             // Save view model settings on exit.
             eduVPN.Properties.Settings.Default.Save();

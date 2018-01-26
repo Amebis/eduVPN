@@ -31,10 +31,6 @@
       <HintPath>$(SolutionDir)\packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -282,14 +278,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
-      <Project>{44ea054c-0c39-4aac-9e40-253e919c1e2f}</Project>
-      <Name>eduOAuth</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\eduOpenVPN\eduOpenVPN\eduOpenVPN.csproj">
-      <Project>{ddf40a25-1180-40b1-9bf1-8d3d66d734ad}</Project>
-      <Name>eduOpenVPN</Name>
-    </ProjectReference>
     <ProjectReference Include="..\eduVPN.Views\eduVPN.Views.csproj">
       <Project>{ec9ad583-409a-4c11-8bb9-9035ce5c806a}</Project>
       <Name>eduVPN.Views</Name>
