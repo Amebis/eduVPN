@@ -38,6 +38,7 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Settings.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
       <AutoGen>True</AutoGen>

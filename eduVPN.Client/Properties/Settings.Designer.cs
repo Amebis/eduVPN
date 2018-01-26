@@ -24,21 +24,6 @@ namespace eduVPN.Client.Properties {
         }
         
         /// <summary>
-        /// Recently used hostnames for custom instance connections
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Recently used hostnames for custom instance connections")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection CustomInstanceHistory {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["CustomInstanceHistory"]));
-            }
-            set {
-                this["CustomInstanceHistory"] = value;
-            }
-        }
-        
-        /// <summary>
         /// A flag to trigger setting upgrade from the previous version
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]

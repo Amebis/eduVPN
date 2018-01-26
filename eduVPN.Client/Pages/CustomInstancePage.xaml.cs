@@ -10,7 +10,7 @@ namespace eduVPN.Client.Pages
     /// <summary>
     /// Interaction logic for CustomInstancePage.xaml
     /// </summary>
-    public partial class CustomInstancePage : Views.Pages.ConnectWizardPage
+    public partial class CustomInstancePage : Views.Pages.CustomInstancePage
     {
         #region Constructors
 
@@ -19,25 +19,10 @@ namespace eduVPN.Client.Pages
         /// </summary>
         public CustomInstancePage()
         {
-            if (Client.Properties.Settings.Default.CustomInstanceHistory == null)
-                Client.Properties.Settings.Default.CustomInstanceHistory = new System.Collections.Specialized.StringCollection();
-
             InitializeComponent();
 
             // Set initial focus.
             Loaded += (object sender, System.Windows.RoutedEventArgs e) => InstanceHostname.Focus();
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var hostname = InstanceHostname.Text;
-
-            if (!Client.Properties.Settings.Default.CustomInstanceHistory.Contains(hostname))
-                Client.Properties.Settings.Default.CustomInstanceHistory.Insert(0, hostname);
         }
 
         #endregion

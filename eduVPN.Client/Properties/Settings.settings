@@ -2,10 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPN.Client.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="CustomInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User" Description="Recently used hostnames for custom instance connections">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User" Description="A flag to trigger setting upgrade from the previous version">
+    <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

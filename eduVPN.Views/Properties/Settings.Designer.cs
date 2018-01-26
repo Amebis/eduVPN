@@ -24,6 +24,22 @@ namespace eduVPN.Views.Properties {
         }
         
         /// <summary>
+        /// A flag to trigger setting upgrade from the previous version
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("A flag to trigger setting upgrade from the previous version")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SettingsVersion {
+            get {
+                return ((int)(this["SettingsVersion"]));
+            }
+            set {
+                this["SettingsVersion"] = value;
+            }
+        }
+        
+        /// <summary>
         /// Client window top coordinate
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -56,18 +72,17 @@ namespace eduVPN.Views.Properties {
         }
         
         /// <summary>
-        /// A flag to trigger setting upgrade from the previous version
+        /// Recently used hostnames for custom instance connections
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("A flag to trigger setting upgrade from the previous version")]
+        [global::System.Configuration.SettingsDescriptionAttribute("Recently used hostnames for custom instance connections")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SettingsVersion {
+        public global::System.Collections.Specialized.StringCollection CustomInstanceHistory {
             get {
-                return ((int)(this["SettingsVersion"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["CustomInstanceHistory"]));
             }
             set {
-                this["SettingsVersion"] = value;
+                this["CustomInstanceHistory"] = value;
             }
         }
         

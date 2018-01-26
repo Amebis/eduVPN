@@ -46,30 +46,26 @@ namespace eduVPN.Client
         {
             base.OnStartup(e);
 
-            if (Client.Properties.Settings.Default.SettingsVersion == 0)
-            {
-                // Migrate settings from previous version.
-                Client.Properties.Settings.Default.Upgrade();
-                Client.Properties.Settings.Default.SettingsVersion = 1;
-            }
+            // Initialize settings.
+            Client.Properties.Settings.Initialize();
         }
 
         /// <inheritdoc/>
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
         {
-            base.OnSessionEnding(e);
-
             // Save client settings on logout.
             Client.Properties.Settings.Default.Save();
+
+            base.OnSessionEnding(e);
         }
 
         /// <inheritdoc/>
         protected override void OnExit(ExitEventArgs e)
         {
-            base.OnExit(e);
-
             // Save client settings on exit.
             Client.Properties.Settings.Default.Save();
+
+            base.OnExit(e);
         }
 
         #endregion
