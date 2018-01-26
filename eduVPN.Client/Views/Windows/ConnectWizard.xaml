@@ -11,12 +11,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
+    xmlns:rescli="clr-namespace:eduVPN.Client.Resources"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
     xmlns:vmwindows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     xmlns:vmpages="clr-namespace:eduVPN.ViewModels.Pages;assembly=eduVPN"
     mc:Ignorable="d"
-    Title="{x:Static res:Strings.MainWindowTitle}"
+    Title="{x:Static rescli:Strings.ConnectWizardTitle}"
     Height="460"
     Width="300"
     Icon="{Binding Path=ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource eduVPNVPNSessionStatusTypeIconInitializingImage}}"
@@ -88,7 +89,7 @@
                             Grid.Column="1"
                             Margin="0,5"
                             Style="{StaticResource eduVPNHeaderTextBlockStyle}"
-                            Text="{x:Static res:Strings.MainWindowTitle}"/>
+                            Text="{x:Static rescli:Strings.ConnectWizardTitle}"/>
 
                         <Button
                             Grid.Column="2"

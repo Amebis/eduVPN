@@ -71,16 +71,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eduVPN
-        ///Powered by SURFnet.
-        /// </summary>
-        public static string AboutPageeduVPN {
-            get {
-                return ResourceManager.GetString("AboutPageeduVPN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Version {0}.
         /// </summary>
         public static string AboutPageVersion {
@@ -302,15 +292,6 @@ namespace eduVPN.Views.Resources {
         public static string ListBoxNull {
             get {
                 return ResourceManager.GetString("ListBoxNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to eduVPN.
-        /// </summary>
-        public static string MainWindowTitle {
-            get {
-                return ResourceManager.GetString("MainWindowTitle", resourceCulture);
             }
         }
         

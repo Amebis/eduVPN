@@ -12,6 +12,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages;assembly=eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
+    xmlns:rescli="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
@@ -29,7 +30,7 @@
         <Image
             Margin="5"
             Source="pack://application:,,,/Resources/AppBanner.png"
-            AutomationProperties.Name="{x:Static res:Strings.AboutPageeduVPN}"
+            AutomationProperties.Name="{x:Static rescli:Strings.AboutPageAppBannerTitle}"
             RenderOptions.BitmapScalingMode="Fant"/>
 
         <TextBlock

@@ -121,10 +121,6 @@
     <value>Copyright © 2017
 The Commons Conservancy eduVPN Programme</value>
   </data>
-  <data name="AboutPageeduVPN" xml:space="preserve">
-    <value>eduVPN
-Powered by SURFnet</value>
-  </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Versie {0}</value>
   </data>
@@ -204,9 +200,6 @@ Powered by SURFnet</value>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Even geduld...</value>
     <comment>Displayed when a list is loading</comment>
-  </data>
-  <data name="MainWindowTitle" xml:space="preserve">
-    <value>eduVPN</value>
   </data>
   <data name="MessageMaintenanceBegin" xml:space="preserve">
     <value>Begin</value>

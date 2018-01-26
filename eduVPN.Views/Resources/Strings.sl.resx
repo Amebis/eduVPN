@@ -121,10 +121,6 @@
     <value>Copyright © 2017
 Program Commons Conservancy eduVPN</value>
   </data>
-  <data name="AboutPageeduVPN" xml:space="preserve">
-    <value>eduVPN
-Omogoča SURFnet</value>
-  </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Verzija {0}</value>
   </data>
@@ -202,9 +198,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ListBoxNull" xml:space="preserve">
     <value>Prosimo počakajte ...</value>
     <comment>Displayed when a list is loading</comment>
-  </data>
-  <data name="MainWindowTitle" xml:space="preserve">
-    <value>eduVPN</value>
   </data>
   <data name="MessageMaintenanceBegin" xml:space="preserve">
     <value>Začetek</value>

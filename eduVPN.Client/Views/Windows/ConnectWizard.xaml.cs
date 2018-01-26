@@ -165,7 +165,7 @@ namespace eduVPN.Views.Windows
                 // Notify user that the eduVPN client did not close, but was "minimized" to system tray.
                 _tray_icon.ShowBalloonTip(
                     10000,
-                    Views.Resources.Strings.MainWindowTitle,
+                    Client.Resources.Strings.ConnectWizardTitle,
                     Views.Resources.Strings.SystemTrayBalloonHiddenMessage,
                     System.Windows.Forms.ToolTipIcon.Info);
 
