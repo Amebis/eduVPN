@@ -98,7 +98,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The VPN client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization....
+        ///   Looks up a localized string similar to The {0} client needs {1} authorization, and has opened your web browser. The client will continue after you complete the authorization....
         /// </summary>
         public static string AuthorizationPopupMessage {
             get {
@@ -413,7 +413,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version {0} of VPN client is installed. A newer version {1} is available online..
+        ///   Looks up a localized string similar to Version {1} of {0} client is installed. A newer version {2} is available online..
         /// </summary>
         public static string SelfUpdatePopupMessage {
             get {
@@ -470,7 +470,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the VPN client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
+        ///   Looks up a localized string similar to If the {0} client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
         /// </summary>
         public static string SettingsPageForceTCPDescription {
             get {
@@ -488,7 +488,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections, select the TAP interface for this VPN client below..
+        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections, select the TAP interface for the {0} client below..
         /// </summary>
         public static string SettingsPageInterfaceDescription {
             get {

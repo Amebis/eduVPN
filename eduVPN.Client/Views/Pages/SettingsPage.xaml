@@ -14,6 +14,7 @@
     xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages;assembly=eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
+    xmlns:rescli="clr-namespace:eduVPN.Client.Resources"
     mc:Ignorable="d"
     d:DesignWidth="298"
     d:DesignHeight="373"
@@ -83,7 +84,7 @@
                 Grid.Row="1"
                 Margin="0,2,0,0"
                 Style="{StaticResource eduVPNTextBlockStyle}"
-                Text="{x:Static res:Strings.SettingsPageForceTCPDescription}"/>
+                Text="{Binding Source={x:Static rescli:Strings.ConnectWizardTitle}, StringFormat={x:Static res:Strings.SettingsPageForceTCPDescription}}"/>
         </Grid>
 
         <Grid
@@ -125,7 +126,7 @@
                 <TextBlock
                     Margin="5,2"
                     Style="{StaticResource eduVPNTextBlockStyle}"
-                    Text="{x:Static res:Strings.SettingsPageInterfaceDescription}"/>
+                    Text="{Binding Source={x:Static rescli:Strings.ConnectWizardTitle}, StringFormat={x:Static res:Strings.SettingsPageInterfaceDescription}}"/>
 
                 <ComboBox
                     x:Name="OpenVPNInterface"

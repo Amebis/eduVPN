@@ -11,6 +11,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
+    xmlns:rescli="clr-namespace:eduVPN.Client.Resources"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
     mc:Ignorable="d"
@@ -22,6 +23,7 @@
 
     <windows:Window.Description>
         <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage}">
+            <Binding Source="{x:Static rescli:Strings.ConnectWizardTitle}"/>
             <Binding Path="InstalledVersion"/>
             <Binding Path="AvailableVersion"/>
         </MultiBinding>
@@ -29,6 +31,7 @@
 
     <AutomationProperties.HelpText>
         <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage}">
+            <Binding Source="{x:Static rescli:Strings.ConnectWizardTitle}"/>
             <Binding Path="InstalledVersion"/>
             <Binding Path="AvailableVersion"/>
         </MultiBinding>

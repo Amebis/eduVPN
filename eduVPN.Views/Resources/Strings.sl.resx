@@ -131,8 +131,9 @@ Program Commons Conservancy eduVPN</value>
     <value>_Ustanova</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>Odjemalec VPN potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
+    <value>Odjemalec {0} potrebuje pooblastilo od {1} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
 Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
+    <comment>{0}=Client name, {1}=Instance name</comment>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Čakam na pooblastilo</value>
@@ -241,8 +242,8 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Kaj je _novega?</value>
   </data>
   <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Nameščena verzija odjemalca VPN je {0}. Na spletu je na voljo novejša verzija {1}.</value>
-    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+    <value>Nameščena verzija odjemalca {0} je {1}. Na spletu je na voljo novejša verzija {2}.</value>
+    <comment>{0}=Client name, {1}=Installed version, {2}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Preskoči to _verzijo</value>
@@ -264,13 +265,15 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>Če se odjemalec VPN ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
+    <value>Če se odjemalec {0} ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
+    <comment>{0}=Client name</comment>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Vsili _TCP</value>
   </data>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za tega odjemalca VPN.</value>
+    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za odjemalca {0}.</value>
+    <comment>{0}=Client name</comment>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>_Izberite vmesnik TAP</value>

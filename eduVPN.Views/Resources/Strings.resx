@@ -131,7 +131,8 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Institution</value>
   </data>
   <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>The VPN client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization...</value>
+    <value>The {0} client needs {1} authorization, and has opened your web browser. The client will continue after you complete the authorization...</value>
+    <comment>{0}=Client name, {1}=Instance name</comment>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Waiting For Authorization</value>
@@ -240,8 +241,8 @@ The Commons Conservancy eduVPN Programme</value>
     <value>What's _New?</value>
   </data>
   <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Version {0} of VPN client is installed. A newer version {1} is available online.</value>
-    <comment>{0}=Installed version, {1}=Avaliable version</comment>
+    <value>Version {1} of {0} client is installed. A newer version {2} is available online.</value>
+    <comment>{0}=Client name, {1}=Installed version, {2}=Avaliable version</comment>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Skip this _version</value>
@@ -263,13 +264,15 @@ If you continue, your user settings will be reset to the default.</value>
     <value>Corrupt User Settings</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>If the VPN client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
+    <value>If the {0} client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
+    <comment>{0}=Client name</comment>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Connect Over _TCP</value>
   </data>
   <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for this VPN client below.</value>
+    <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for the {0} client below.</value>
+    <comment>{0}=Client name</comment>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Select TAP _Interface</value>

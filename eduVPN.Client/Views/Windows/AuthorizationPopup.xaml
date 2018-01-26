@@ -11,15 +11,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views"
+    xmlns:rescli="clr-namespace:eduVPN.Client.Resources"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows;assembly=eduVPN.Views"
     mc:Ignorable="d"
     Width="350"
     SizeToContent="Height"
     Title="{x:Static res:Strings.AuthorizationPopupTitle}"
-    Description="{Binding Path=Instance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
-    AutomationProperties.HelpText="{Binding Path=Instance, StringFormat={x:Static res:Strings.AuthorizationPopupMessage}}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource eduVPNPopupWindow}">
+
+    <windows:Window.Description>
+        <MultiBinding StringFormat="{x:Static res:Strings.AuthorizationPopupMessage}">
+            <Binding Source="{x:Static rescli:Strings.ConnectWizardTitle}"/>
+            <Binding Path="Instance"/>
+        </MultiBinding>
+    </windows:Window.Description>
+
+    <AutomationProperties.HelpText>
+        <MultiBinding StringFormat="{x:Static res:Strings.AuthorizationPopupMessage}">
+            <Binding Source="{x:Static rescli:Strings.ConnectWizardTitle}"/>
+            <Binding Path="Instance"/>
+        </MultiBinding>
+    </AutomationProperties.HelpText>
 
     <Grid
         VerticalAlignment="Top"
