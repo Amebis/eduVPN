@@ -18,7 +18,7 @@
 
                 <ResourceDictionary Source="pack://application:,,,/eduVPN.Views;component/Resources/Converters.xaml"/>
 
-                <ResourceDictionary Source="Resources/Colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/eduVPN.Views;component/Resources/Colors.xaml"/>
                 <ResourceDictionary Source="Resources/Brushes.xaml"/>
                 <ResourceDictionary Source="Resources/Images.xaml"/>
 

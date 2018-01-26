@@ -129,6 +129,10 @@
     <Resource Include="Resources\VPNSessionStatusTypeIconConnected.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Constants.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
