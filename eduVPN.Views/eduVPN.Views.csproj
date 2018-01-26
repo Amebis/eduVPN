@@ -72,9 +72,14 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Windows\ConnectWizard.cs" />
     <Compile Include="Windows\Window.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
+      <Project>{44ea054c-0c39-4aac-9e40-253e919c1e2f}</Project>
+      <Name>eduOAuth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\eduVPN\eduVPN.csproj">
       <Project>{2e6427e4-0c1a-49b9-a80d-886035995cbe}</Project>
       <Name>eduVPN</Name>

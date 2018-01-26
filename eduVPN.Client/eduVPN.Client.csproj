@@ -225,7 +225,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\ConnectWizard.xaml">
+    <Page Include="Views\Windows\eduVPNConnectWizard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -239,8 +239,8 @@
     <Compile Include="Views\Windows\AuthorizationPopup.xaml.cs">
       <DependentUpon>AuthorizationPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\ConnectWizard.xaml.cs">
-      <DependentUpon>ConnectWizard.xaml</DependentUpon>
+    <Compile Include="Views\Windows\eduVPNConnectWizard.xaml.cs">
+      <DependentUpon>eduVPNConnectWizard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Pages\CustomInstancePage.xaml">

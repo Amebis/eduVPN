@@ -21,20 +21,15 @@ using System.Windows.Threading;
 namespace eduVPN.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for ConnectWizard.xaml
+    /// Interaction logic for eduVPNConnectWizard.xaml
     /// </summary>
-    public partial class ConnectWizard : Window, IDisposable
+    public partial class eduVPNConnectWizard : ConnectWizard, IDisposable
     {
         #region Fields
 
         private System.Windows.Forms.NotifyIcon _tray_icon;
         private Dictionary<VPNSessionStatusType, Icon> _icons;
         private bool _do_close = false;
-
-        /// <summary>
-        /// HTTP listener for OAuth authorization callback and response
-        /// </summary>
-        private eduOAuth.HttpListener _listener = new eduOAuth.HttpListener(IPAddress.Loopback, 0);
 
         /// <summary>
         /// Authorization pop-up windows
@@ -48,7 +43,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Constructs a window
         /// </summary>
-        public ConnectWizard()
+        public eduVPNConnectWizard()
         {
             InitializeComponent();
 
@@ -129,47 +124,36 @@ namespace eduVPN.Views.Windows
                 Client.Properties.Settings.Default.WindowLeft = Left;
             };
 
-            // Bind to HttpCallback to process OAuth authorization grant.
-            _listener.HttpCallback += (object sender, eduOAuth.HttpCallbackEventArgs e_callback) =>
-            {
-                var query = HttpUtility.ParseQueryString(e_callback.Uri.Query);
-                if (!_authorization_popups.TryGetValue(query["state"], out var popup))
-                    throw new HttpException(400, Views.Resources.Strings.ErrorOAuthState);
-
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                {
-                    // Set the callback URI. This will close the pop-up.
-                    ((ViewModels.Windows.AuthorizationPopup)popup.DataContext).CallbackURI = e_callback.Uri;
-
-                    // (Re)activate main window.
-                    if (!IsActive)
-                        Show();
-                    Topmost = true;
-                    try
-                    {
-                        Activate();
-                        Focus();
-                    }
-                    finally
-                    {
-                        Topmost = false;
-                    }
-                }));
-            };
-
-            // Launch HTTP listener on the loopback interface.
-            _listener.Start();
-
             base.OnInitialized(e);
         }
 
         /// <inheritdoc/>
-        protected override void OnClosed(EventArgs e)
+        protected override void OnHttpCallback(object sender, eduOAuth.HttpCallbackEventArgs e)
         {
-            // Stop the OAuth listener.
-            _listener.Stop();
+            // Get popup window out of "state" parameter.
+            var query = HttpUtility.ParseQueryString(e.Uri.Query);
+            if (!_authorization_popups.TryGetValue(query["state"], out var popup))
+                throw new HttpException(400, Views.Resources.Strings.ErrorOAuthState);
 
-            base.OnClosed(e);
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            {
+                // Set the callback URI. This will close the pop-up.
+                ((ViewModels.Windows.AuthorizationPopup)popup.DataContext).CallbackURI = e.Uri;
+
+                // (Re)activate main window.
+                if (!IsActive)
+                    Show();
+                Topmost = true;
+                try
+                {
+                    Activate();
+                    Focus();
+                }
+                finally
+                {
+                    Topmost = false;
+                }
+            }));
         }
 
         private void Hide_Click(object sender, RoutedEventArgs e)
@@ -278,7 +262,7 @@ namespace eduVPN.Views.Windows
             };
 
             // Set the redirect URI and make the final authorization URI.
-            view_model.AuthorizationGrant.RedirectEndpoint = new Uri(String.Format("http://{0}:{1}/callback", IPAddress.Loopback, ((IPEndPoint)_listener.LocalEndpoint).Port));
+            view_model.AuthorizationGrant.RedirectEndpoint = new Uri(String.Format("http://{0}:{1}/callback", HttpListenerEndpoint.Address, HttpListenerEndpoint.Port));
             var authorization_uri = view_model.AuthorizationGrant.AuthorizationURI;
 
             // Extract the state. We use it as a key to support multiple pending authorizations.
