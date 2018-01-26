@@ -55,7 +55,7 @@ namespace eduVPN.Converters
             catch { }
 
             // Fallback to blank image.
-            return new Uri("pack://application:,,,/Resources/Blank.png");
+            return new Uri("pack://application:,,,/eduVPN.Views;component/Resources/Blank.png");
         }
 
         /// <summary>

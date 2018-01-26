@@ -300,18 +300,12 @@
     <Resource Include="Resources\InstituteAccessBlue.png" />
     <Resource Include="Resources\SecureInternet.png" />
     <Resource Include="Resources\SecureInternetBlue.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnected.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconError.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.png" />
     <Resource Include="Resources\GenericInstance.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.png" />
-    <Resource Include="Resources\Blank.png" />
     <Resource Include="Resources\eduVPNBanner.png" />
   </ItemGroup>
   <ItemGroup>

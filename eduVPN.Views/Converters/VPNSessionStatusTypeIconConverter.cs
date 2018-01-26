@@ -33,7 +33,7 @@ namespace eduVPN.Converters
         {
             if (value is VPNSessionStatusType status_type)
             {
-                var image_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.png", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
+                var image_uri = new Uri(String.Format("pack://application:,,,/eduVPN.Views;component/Resources/VPNSessionStatusTypeIcon{0}.png", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
                 try {
                     // If resource with given image URI exist, return the URI.
                     Application.GetResourceStream(image_uri);
@@ -43,7 +43,7 @@ namespace eduVPN.Converters
             }
 
             // Fallback to blank image.
-            return new Uri("pack://application:,,,/Resources/Blank.png");
+            return new Uri("pack://application:,,,/eduVPN.Views;component/Resources/Blank.png");
         }
 
         /// <summary>
