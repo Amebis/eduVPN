@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.Views.Panels
+namespace eduVPN.Client.Panels
 {
     /// <summary>
     /// Interaction logic for ConnectingInstanceSelectPanel.xaml
     /// </summary>
-    public partial class ConnectingInstanceSelectPanel : ConnectingSelectPanel
+    public partial class ConnectingInstanceSelectPanel : Views.Panels.ConnectingSelectPanel
     {
         #region Constructors
 

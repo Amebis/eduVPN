@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.Views.Pages
+namespace eduVPN.Client.Pages
 {
     /// <summary>
     /// Interaction logic for AboutPage.xaml
     /// </summary>
-    public partial class AboutPage : ConnectWizardPage
+    public partial class AboutPage : Views.Pages.ConnectWizardPage
     {
         #region Constructors
 

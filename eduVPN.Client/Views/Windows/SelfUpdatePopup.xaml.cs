@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.Views.Windows
+namespace eduVPN.Client.Windows
 {
     /// <summary>
     /// Interaction logic for SelfUpdatePopup.xaml
     /// </summary>
-    public partial class SelfUpdatePopup : Window
+    public partial class SelfUpdatePopup : Views.Windows.Window
     {
         #region Constructors
 

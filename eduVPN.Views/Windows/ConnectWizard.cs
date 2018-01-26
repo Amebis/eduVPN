@@ -23,7 +23,7 @@ namespace eduVPN.Views.Windows
     /// <summary>
     /// Connect wizard base class
     /// </summary>
-    public class ConnectWizardBase : Window, IDisposable
+    public class ConnectWizard : Window, IDisposable
     {
         #region Fields
 
@@ -68,7 +68,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Constructs a window
         /// </summary>
-        public ConnectWizardBase()
+        public ConnectWizard()
         {
             // Launch HTTP listener on the loopback interface.
             _http_listener = new eduOAuth.HttpListener(IPAddress.Loopback, 0);

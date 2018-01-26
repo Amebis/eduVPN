@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.Views.Windows
+namespace eduVPN.Client.Windows
 {
     /// <summary>
     /// Interaction logic for TwoFactorAuthenticationPopup.xaml
     /// </summary>
-    public partial class TwoFactorAuthenticationPopup : Window
+    public partial class TwoFactorAuthenticationPopup : Views.Windows.Window
     {
         #region Constructors
 

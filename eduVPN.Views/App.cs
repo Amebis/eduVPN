@@ -20,7 +20,7 @@ namespace eduVPN.Views
     /// <summary>
     /// View application base class
     /// </summary>
-    public class AppBase : System.Windows.Application, ISingleInstanceApp
+    public class App : Application, ISingleInstanceApp
     {
         #region Methods
 

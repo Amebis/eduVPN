@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.Views.Windows
+namespace eduVPN.Client.Windows
 {
     /// <summary>
     /// Interaction logic for AuthorizationPopup.xaml
     /// </summary>
-    public partial class AuthorizationPopup : Window
+    public partial class AuthorizationPopup : Views.Windows.Window
     {
         #region Constructors
 

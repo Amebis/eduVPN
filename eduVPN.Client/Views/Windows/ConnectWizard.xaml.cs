@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.Views.Windows
+namespace eduVPN.Client.Windows
 {
     /// <summary>
     /// Interaction logic for ConnectWizard.xaml
     /// </summary>
-    public partial class ConnectWizard : ConnectWizardBase
+    public partial class ConnectWizard : Views.Windows.ConnectWizard
     {
         #region Properties
 

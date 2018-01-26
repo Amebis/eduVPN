@@ -39,7 +39,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppBase.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="Controls\ImageWithFallback.cs" />
     <Compile Include="Converters\CommandRowHeightConverter.cs" />
     <Compile Include="Converters\CommandVisibilityConverter.cs" />
@@ -79,7 +79,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Windows\ConnectWizardBase.cs" />
+    <Compile Include="Windows\ConnectWizard.cs" />
     <Compile Include="Windows\Window.cs" />
   </ItemGroup>
   <ItemGroup>

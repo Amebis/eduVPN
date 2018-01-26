@@ -1,5 +1,11 @@
-﻿<UserControl
-    x:Class="eduVPN.Views.Panels.TOTPAuthenticationPanel"
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<UserControl
+    x:Class="eduVPN.Client.Panels.TOTPAuthenticationPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

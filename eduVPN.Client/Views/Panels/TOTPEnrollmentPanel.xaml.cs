@@ -7,7 +7,7 @@
 
 using System.Windows.Controls;
 
-namespace eduVPN.Views.Panels
+namespace eduVPN.Client.Panels
 {
     /// <summary>
     /// Interaction logic for TOTPEnrollmentPanel.xaml

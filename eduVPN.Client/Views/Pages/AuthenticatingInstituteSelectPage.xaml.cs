@@ -5,12 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-namespace eduVPN.Views.Pages
+namespace eduVPN.Client.Pages
 {
     /// <summary>
     /// Interaction logic for AuthenticatingInstituteSelectPage.xaml
     /// </summary>
-    public partial class AuthenticatingInstituteSelectPage : AuthenticatingInstanceSelectPage
+    public partial class AuthenticatingInstituteSelectPage : Views.Pages.AuthenticatingInstanceSelectPage
     {
         #region Constructors
 

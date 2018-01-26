@@ -14,7 +14,7 @@ namespace eduVPN.Client
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Views.AppBase
+    public partial class App : Views.App
     {
         #region Methods
 
@@ -24,7 +24,7 @@ namespace eduVPN.Client
         [STAThread]
         public static void Main()
         {
-            if (SingleInstance<Views.AppBase>.InitializeAsFirstInstance("org.eduvpn.app"))
+            if (SingleInstance<Views.App>.InitializeAsFirstInstance("org.eduvpn.app"))
             {
                 try
                 {
@@ -36,7 +36,7 @@ namespace eduVPN.Client
                 finally
                 {
                     // Allow single instance code to perform cleanup operations.
-                    SingleInstance<Views.AppBase>.Cleanup();
+                    SingleInstance<Views.App>.Cleanup();
                 }
             }
         }
