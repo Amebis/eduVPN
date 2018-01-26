@@ -280,6 +280,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\App.ico" />
+    <Resource Include="Resources\Logo.png" />
     <Resource Include="Resources\InstituteAccess.png" />
     <Resource Include="Resources\InstituteAccessBlue.png" />
     <Resource Include="Resources\SecureInternet.png" />
