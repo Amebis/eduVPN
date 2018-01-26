@@ -28,7 +28,7 @@
 
         <Image
             Margin="5"
-            Source="pack://application:,,,/Resources/eduVPNBanner.png"
+            Source="pack://application:,,,/Resources/AppBanner.png"
             AutomationProperties.Name="{x:Static res:Strings.AboutPageeduVPN}"
             RenderOptions.BitmapScalingMode="Fant"/>
 

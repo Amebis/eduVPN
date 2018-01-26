@@ -72,7 +72,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Windows\ConnectWizard.cs" />
+    <Compile Include="Windows\ConnectWizardBase.cs" />
     <Compile Include="Windows\Window.cs" />
   </ItemGroup>
   <ItemGroup>

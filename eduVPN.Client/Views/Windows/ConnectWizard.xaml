@@ -4,8 +4,8 @@
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
-<windows:ConnectWizard
-    x:Class="eduVPN.Views.Windows.eduVPNConnectWizard"
+<windows:ConnectWizardBase
+    x:Class="eduVPN.Views.Windows.ConnectWizard"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -214,4 +214,4 @@
             </Frame>
         </DockPanel>
     </Grid>
-</windows:ConnectWizard>
+</windows:ConnectWizardBase>

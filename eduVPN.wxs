@@ -16,7 +16,7 @@
         Manufacturer="!(loc.ManufacturerName)"
         AboutUrl="https://eduvpn.org/"
         Copyright="!(loc.LegalCopyright)"
-        IconSourceFile="eduVPN.Client\Resources\eduVPN.ico"
+        IconSourceFile="eduVPN.Client\Resources\App.ico"
         Compressed="yes">
 
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">

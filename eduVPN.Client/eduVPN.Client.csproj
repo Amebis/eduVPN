@@ -19,7 +19,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
-    <ApplicationIcon>Resources\eduVPN.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>eduVPN.Client.App</StartupObject>
@@ -225,7 +225,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\eduVPNConnectWizard.xaml">
+    <Page Include="Views\Windows\ConnectWizard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -239,8 +239,8 @@
     <Compile Include="Views\Windows\AuthorizationPopup.xaml.cs">
       <DependentUpon>AuthorizationPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\eduVPNConnectWizard.xaml.cs">
-      <DependentUpon>eduVPNConnectWizard.xaml</DependentUpon>
+    <Compile Include="Views\Windows\ConnectWizard.xaml.cs">
+      <DependentUpon>ConnectWizard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Pages\CustomInstancePage.xaml">
@@ -295,7 +295,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\eduVPN.ico" />
+    <None Include="Resources\App.ico" />
     <Resource Include="Resources\InstituteAccess.png" />
     <Resource Include="Resources\InstituteAccessBlue.png" />
     <Resource Include="Resources\SecureInternet.png" />
@@ -306,7 +306,7 @@
     <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
-    <Resource Include="Resources\eduVPNBanner.png" />
+    <Resource Include="Resources\AppBanner.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Settings.png" />

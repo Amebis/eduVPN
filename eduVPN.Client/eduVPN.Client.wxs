@@ -14,7 +14,7 @@
             <Component Id="eduVPN.Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}">
                 <File Source="eduVPN.Client.exe" KeyPath="yes"/>
 
-                <!-- Note: "eduVPN.Client" feature and "eduVPN.ico" icon are defined elsewhere. -->
+                <!-- Note: "eduVPN.Client" feature and "App.ico" icon are defined elsewhere. -->
                 <Shortcut
                     Id="eduVPN.Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
@@ -22,7 +22,7 @@
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
                     Target="eduVPN.Client"
                     WorkingDirectory="BINDIR"
-                    Icon="eduVPN.ico"/>
+                    Icon="App.ico"/>
             </Component>
             <Component Id="eduVPN.Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}">
                 <File Source="eduVPN.Client.exe.config"/>
@@ -36,7 +36,7 @@
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
                     Target="[BINDIR]eduVPN.Client.exe"
                     WorkingDirectory="BINDIR"
-                    Icon="eduVPN.ico"/>
+                    Icon="App.ico"/>
                 <RemoveFolder Id="eduVPN.Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
                 <RegistryValue Root="HKCU" Key="SOFTWARE\org.eduvpn.app" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>

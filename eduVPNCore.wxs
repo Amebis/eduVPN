@@ -29,10 +29,10 @@
             EmbedCab="yes"/>
 
         <Icon
-            Id="eduVPN.ico"
-            SourceFile="eduVPN.Client\Resources\eduVPN.ico"/>
+            Id="App.ico"
+            SourceFile="eduVPN.Client\Resources\App.ico"/>
 
-        <Property Id="ARPPRODUCTICON" Value="eduVPN.ico"/>
+        <Property Id="ARPPRODUCTICON" Value="App.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
 
 

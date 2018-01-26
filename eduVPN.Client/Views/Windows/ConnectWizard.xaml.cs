@@ -21,9 +21,9 @@ using System.Windows.Threading;
 namespace eduVPN.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for eduVPNConnectWizard.xaml
+    /// Interaction logic for ConnectWizard.xaml
     /// </summary>
-    public partial class eduVPNConnectWizard : ConnectWizard, IDisposable
+    public partial class ConnectWizard : ConnectWizardBase, IDisposable
     {
         #region Fields
 
@@ -43,7 +43,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Constructs a window
         /// </summary>
-        public eduVPNConnectWizard()
+        public ConnectWizard()
         {
             InitializeComponent();
 
