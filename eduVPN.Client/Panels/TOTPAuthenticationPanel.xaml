@@ -25,7 +25,7 @@
             x:Name="Response"
             Margin="5,5,5,2"
             HorizontalContentAlignment="Center"
-            Style="{StaticResource eduVPNCodeTextBoxStyle}"
+            Style="{StaticResource CodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.TOTPEnrollmentPanelResponseLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"
             AutomationProperties.IsRequiredForForm="True"/>
@@ -41,12 +41,12 @@
             <ContentControl
                 Margin="5,2,5,5"
                 IsTabStop="False"
-                ContentTemplate="{StaticResource eduVPNExclamationIcon}"/>
+                ContentTemplate="{StaticResource ExclamationIcon}"/>
 
             <TextBlock
                 Grid.Column="1"
                 Margin="5,2,5,5"
-                Style="{StaticResource eduVPNTextBlockStyle}"
+                Style="{StaticResource TextBlockStyle}"
                 Text="{x:Static res:Strings.TOTPAuthenticationPanelNote}"/>
         </Grid>
     </Grid>

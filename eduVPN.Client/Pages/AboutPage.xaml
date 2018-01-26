@@ -17,9 +17,9 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{Binding Path=Title}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource ConnectWizardPageStyle}">
 
-    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
+    <Grid Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -37,14 +37,14 @@
             Grid.Row="1"
             Margin="5"
             TextAlignment="Center"
-            Style="{StaticResource eduVPNVersionTextBlockStyle}"
+            Style="{StaticResource VersionTextBlockStyle}"
             Text="{Binding Path=Version, StringFormat={x:Static res:Strings.AboutPageVersion}}"/>
 
         <TextBlock
             Grid.Row="2"
             Margin="5"
             TextAlignment="Center"
-            Style="{StaticResource eduVPNCopyrightTextBlockStyle}"
+            Style="{StaticResource CopyrightTextBlockStyle}"
             Text="{x:Static res:Strings.AboutPageCopyright}"/>
     </Grid>
 </pages:ConnectWizardPage>

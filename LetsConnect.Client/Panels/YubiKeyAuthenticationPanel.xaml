@@ -24,7 +24,7 @@
             x:Name="Response"
             Margin="5"
             HorizontalContentAlignment="Center"
-            Style="{StaticResource eduVPNCodeTextBoxStyle}"
+            Style="{StaticResource CodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
             AutomationProperties.Name="{x:Static res:Strings.YubiKeyEnrollmentPanelResponseLabel}"
             AutomationProperties.IsRequiredForForm="True"/>

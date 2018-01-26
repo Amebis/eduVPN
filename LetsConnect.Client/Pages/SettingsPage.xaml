@@ -19,7 +19,7 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{Binding Path=Title}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource ConnectWizardPageStyle}">
 
     <Page.Resources>
         <!-- eduVPN collection view sources -->
@@ -32,7 +32,7 @@
 
     <Grid
         VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+        Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -60,7 +60,7 @@
                     Name="OpenVPNForceTCPLabel"
                     Margin="0,-3,-3,-3"
                     Target="{Binding ElementName=OpenVPNForceTCP}"
-                    Style="{StaticResource eduVPNSectionLabelStyle}"
+                    Style="{StaticResource SectionLabelStyle}"
                     Content="{x:Static res:Strings.SettingsPageForceTCPLabel}"/>
 
                 <CheckBox
@@ -69,7 +69,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Margin="2,2,5,2"
-                    Style="{StaticResource eduVPNCheckBox}"
+                    Style="{StaticResource CheckBoxStyle}"
                     IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNForceTCP}"
                     AutomationProperties.LabeledBy="{Binding ElementName=OpenVPNForceTCPLabel}"/>
 
@@ -77,13 +77,13 @@
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
                     Margin="5,2"
-                    Style="{StaticResource eduVPNVisualSeparatorStyle}"/>
+                    Style="{StaticResource VisualSeparatorStyle}"/>
             </Grid>
 
             <TextBlock
                 Grid.Row="1"
                 Margin="0,2,0,0"
-                Style="{StaticResource eduVPNTextBlockStyle}"
+                Style="{StaticResource TextBlockStyle}"
                 Text="{Binding Source={x:Static rescli:Strings.ConnectWizardTitle}, StringFormat={x:Static res:Strings.SettingsPageForceTCPDescription}}"/>
         </Grid>
 
@@ -106,13 +106,13 @@
                     Name="OpenVPNInterfaceLabel"
                     Margin="0,-3"
                     Target="{Binding ElementName=OpenVPNInterface}"
-                    Style="{StaticResource eduVPNSectionLabelStyle}"
+                    Style="{StaticResource SectionLabelStyle}"
                     Content="{x:Static res:Strings.SettingsPageInterfaceLabel}"/>
 
                 <Rectangle
                     Grid.Row="1"
                     Margin="5,2"
-                    Style="{StaticResource eduVPNVisualSeparatorStyle}"/>
+                    Style="{StaticResource VisualSeparatorStyle}"/>
             </Grid>
 
             <Grid
@@ -125,7 +125,7 @@
 
                 <TextBlock
                     Margin="5,2"
-                    Style="{StaticResource eduVPNTextBlockStyle}"
+                    Style="{StaticResource TextBlockStyle}"
                     Text="{Binding Source={x:Static rescli:Strings.ConnectWizardTitle}, StringFormat={x:Static res:Strings.SettingsPageInterfaceDescription}}"/>
 
                 <ComboBox
@@ -133,9 +133,9 @@
                     Grid.Row="1"
                     Margin="5,2"
                     HorizontalContentAlignment="Center"
-                    Style="{StaticResource eduVPNComboBoxStyle}"
-                    ItemTemplate="{StaticResource eduVPNSelectionItemTemplate}"
-                    ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
+                    Style="{StaticResource ComboBoxStyle}"
+                    ItemTemplate="{StaticResource SelectionItemTemplate}"
+                    ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
                     ItemsSource="{Binding Source={StaticResource InterfaceListView}}"
                     SelectedValue="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNInterfaceID}"
                     SelectedValuePath="ID"

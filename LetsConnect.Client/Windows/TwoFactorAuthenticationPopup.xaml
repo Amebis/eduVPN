@@ -22,7 +22,7 @@
     Description="{x:Static res:Strings.TwoFactorAuthenticationPopupMessage}"
     AutomationProperties.HelpText="{x:Static res:Strings.TwoFactorAuthenticationPopupMessage}"
     WindowStartupLocation="CenterOwner"
-    Style="{StaticResource eduVPNPopupWindow}">
+    Style="{StaticResource PopupWindowStyle}">
 
     <Window.Resources>
         <!-- eduVPN collection view sources -->
@@ -43,7 +43,7 @@
 
     <Grid
         VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+        Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -54,9 +54,9 @@
             x:Name="Method"
             Margin="5"
             HorizontalContentAlignment="Center"
-            Style="{StaticResource eduVPNComboBoxStyle}"
-            ItemTemplate="{StaticResource eduVPNSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
+            Style="{StaticResource ComboBoxStyle}"
+            ItemTemplate="{StaticResource SelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MethodListView}}"
             SelectedValue="{Binding Path=SelectedMethod}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorAuthenticationPopupMethodLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"
@@ -73,7 +73,7 @@
             Grid.Row="2"
             Margin="5"
             IsDefault="True"
-            Style="{StaticResource eduVPNButtonStyle}"
+            Style="{StaticResource ButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonOKTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=ApplyResponse}"
             Click="OK_Click">

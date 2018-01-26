@@ -25,7 +25,7 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
-        <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+        <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
         </Style>
@@ -40,9 +40,9 @@
         <ComboBox
             x:Name="InstanceList"
             Margin="5,5,5,2"
-            Style="{StaticResource eduVPNComboBoxStyle}"
-            ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
+            Style="{StaticResource ComboBoxStyle}"
+            ItemTemplate="{StaticResource InstanceSelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource InstanceListView}}"
             SelectedItem="{Binding Path=SelectedInstance}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectingInstanceAndProfileSelectPanelInstanceListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
@@ -60,8 +60,8 @@
             x:Name="ProfileList"
             Grid.Row="1"
             Margin="5,2,5,5"
-            Style="{StaticResource eduVPNListStyle}"
-            ItemTemplate="{StaticResource eduVPNCompactProfileSelectionItemTemplate}"
+            Style="{StaticResource ListStyle}"
+            ItemTemplate="{StaticResource CompactProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
             ItemsSource="{Binding Path=ProfileList}"
             SelectedItem="{Binding Path=SelectedProfile}"

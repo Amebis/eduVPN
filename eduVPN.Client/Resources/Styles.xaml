@@ -12,10 +12,10 @@
     xmlns:res="clr-namespace:eduVPN.Views.Resources;assembly=eduVPN.Views">
 
     <!--
-        eduVPN Generic Styles
+        Generic Styles
     -->
 
-    <Style x:Key="eduVPNBaseStyle" TargetType="{x:Type Control}">
+    <Style x:Key="BaseStyle" TargetType="{x:Type Control}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Validation.ErrorTemplate">
@@ -32,11 +32,11 @@
                                 Height="14"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Fill="{StaticResource eduVPNErrorBrush}"
+                                Fill="{StaticResource ErrorBrush}"
                                 ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
 
                             <TextBlock
-                                Foreground="{StaticResource eduVPNErrorTextBrush}"
+                                Foreground="{StaticResource ErrorTextBrush}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"
@@ -57,13 +57,13 @@
 
 
     <!--
-        eduVPN Buttons
+        Buttons
     -->
 
-    <Style x:Key="eduVPNButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Width" Value="100"/>
         <Setter Property="Height" Value="32"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -73,7 +73,7 @@
                     <AdornerDecorator>
                         <Border
                             x:Name="Border"
-                            Background="{StaticResource eduVPNHeaderBrush}"
+                            Background="{StaticResource HeaderBrush}"
                             CornerRadius="6">
                             <ContentPresenter
                                 Margin="3"
@@ -87,13 +87,13 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonHoverBrush}"/>
+                                Value="{StaticResource ButtonHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                                Value="{StaticResource ButtonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -106,9 +106,9 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="eduVPNLinkButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -126,10 +126,10 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonHoverBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource ButtonHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource ButtonPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -139,59 +139,59 @@
 
 
     <!--
-        eduVPN Text Blocks
+        Text Blocks
     -->
 
-    <Style x:Key="eduVPNTextBlockStyle" TargetType="{x:Type TextBlock}">
+    <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
-    <Style x:Key="eduVPNListBoxItemTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="ListBoxItemTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="TextAlignment" Value="Center"/>
     </Style>
 
-    <Style x:Key="eduVPNInfoTitleTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="InfoTitleTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
     </Style>
 
-    <Style x:Key="eduVPNInfoLabelTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="InfoLabelTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="FontSize" Value="11"/>
     </Style>
 
-    <Style x:Key="eduVPNInfoDataBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNInfoLabelTextBlockStyle}">
+    <Style x:Key="InfoDataBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource InfoLabelTextBlockStyle}">
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
 
-    <Style x:Key="eduVPNMessageBodyStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="MessageBodyStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="FontSize" Value="11"/>
     </Style>
 
-    <Style x:Key="eduVPNNoteTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="NoteTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="FontStyle" Value="Italic"/>
     </Style>
 
-    <Style x:Key="eduVPNVersionTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="VersionTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
     </Style>
 
-    <Style x:Key="eduVPNCopyrightTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="CopyrightTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="FontSize" Value="12"/>
     </Style>
 
 
     <!--
-        eduVPN Separator Styles
+        Separator Styles
     -->
 
-    <Style x:Key="eduVPNVisualSeparatorStyle" TargetType="{x:Type Rectangle}">
+    <Style x:Key="VisualSeparatorStyle" TargetType="{x:Type Rectangle}">
         <Setter Property="Height" Value="1"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Fill" Value="{StaticResource eduVPNHeaderBrush}"/>
+        <Setter Property="Fill" Value="{StaticResource HeaderBrush}"/>
     </Style>
 
-    <Style x:Key="eduVPNListBoxItemVisualSeparatorStyle" TargetType="{x:Type Rectangle}" BasedOn="{StaticResource eduVPNVisualSeparatorStyle}">
+    <Style x:Key="ListBoxItemVisualSeparatorStyle" TargetType="{x:Type Rectangle}" BasedOn="{StaticResource VisualSeparatorStyle}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -201,10 +201,10 @@
 
 
     <!--
-        eduVPN ListBoxes
+        List Boxes
     -->
 
-    <Style x:Key="eduVPNListStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="ListStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -220,7 +220,7 @@
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Style="{StaticResource eduVPNNoteTextBlockStyle}"
+                                Style="{StaticResource NoteTextBlockStyle}"
                                 Text="{x:Static res:Strings.ListBoxNoItems}"/>
                         </ControlTemplate>
                     </Setter.Value>
@@ -235,7 +235,7 @@
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Style="{StaticResource eduVPNNoteTextBlockStyle}"
+                                Style="{StaticResource NoteTextBlockStyle}"
                                 Text="{x:Static res:Strings.ListBoxNull}"/>
                         </ControlTemplate>
                     </Setter.Value>
@@ -244,14 +244,14 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="eduVPNListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ButtonHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ButtonPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -261,33 +261,33 @@
 
 
     <!--
-        eduVPN Text Boxes
+        Text Boxes
     -->
-    <Style x:Key="eduVPNTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderBrush}"/>
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="3"/>
     </Style>
 
-    <Style x:Key="eduVPNCodeTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource eduVPNTextBoxStyle}">
+    <Style x:Key="CodeTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}">
         <Setter Property="FontFamily" Value="Lucida Console"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
-    <Style x:Key="eduVPNPasswordBoxStyle" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderBrush}"/>
+    <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="3"/>
     </Style>
 
 
     <!--
-        eduVPN Combo Boxes
+        Combo Boxes
     -->
 
-    <Style x:Key="eduVPNComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource eduVPNBaseStyle}">
-        <Setter Property="Background" Value="{StaticResource eduVPNWindowBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNControlBorderBrush}"/>
+    <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -296,14 +296,14 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="eduVPNComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonHoverBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ButtonHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter Property="Background" Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ButtonPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -313,19 +313,19 @@
 
 
     <!--
-        eduVPN Grids
+        Grids
     -->
 
-    <Style x:Key="eduVPNPageContentGridStyle" TargetType="{x:Type Grid}">
+    <Style x:Key="PageContentGridStyle" TargetType="{x:Type Grid}">
         <Setter Property="Margin" Value="-5"/>
     </Style>
 
 
     <!--
-        eduVPN Status Bars
+        Status Bars
     -->
 
-    <Style x:Key="eduVPNInlineInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="InlineInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
         <Style.Resources>
@@ -335,7 +335,7 @@
         </Style.Resources>
     </Style>
 
-    <Style x:Key="eduVPNInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="InfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
@@ -349,9 +349,9 @@
 
 
     <!--
-        eduVPN Progress Bars
+        Progress Bars
     -->
-    <Style x:Key="eduVPNProgressBarStyle" TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Height" Value="16"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
@@ -360,9 +360,9 @@
 
 
     <!--
-        eduVPN Check Boxes
+        Check Boxes
     -->
-    <Style x:Key="eduVPNCheckBox" TargetType="{x:Type CheckBox}">
+    <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
@@ -370,7 +370,7 @@
                         <Border
                             x:Name="Slot"
                             Margin="3"
-                            Background="{StaticResource eduVPNCheckboxSlotBrush}"
+                            Background="{StaticResource CheckboxSlotBrush}"
                             CornerRadius="6"/>
 
                         <Ellipse
@@ -378,7 +378,7 @@
                             HorizontalAlignment="Left"
                             Width="15"
                             Height="15"
-                            Stroke="{StaticResource eduVPNCheckboxKnobBorderBrush}"
+                            Stroke="{StaticResource CheckboxKnobBorderBrush}"
                             StrokeThickness="1">
                             <Ellipse.Fill>
                                 <SolidColorBrush Color="{StaticResource eduVPNWhiteColor}"/>
@@ -455,12 +455,12 @@
         Windows
     -->
 
-    <Style x:Key="eduVPNWindow" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="WindowStyle" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
-        <Setter Property="Background" Value="{StaticResource eduVPNWindowBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNWindowTextBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource eduVPNWindowBorderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WindowBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=IsBusy}" Value="True">
@@ -474,16 +474,16 @@
         ConnectWizard
     -->
 
-    <Style x:Key="eduVPNHeaderTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
+    <Style x:Key="HeaderTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
-    <Style x:Key="eduVPNHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+    <Style x:Key="HeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
         <Setter Property="Width" Value="26"/>
         <Setter Property="Height" Value="26"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -506,7 +506,7 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNHeaderTextBrush}"/>
+                                Value="{StaticResource HeaderTextBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -514,7 +514,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -527,18 +527,18 @@
         ConnectWizard Page Templates
     -->
 
-    <Style x:Key="eduVPNPageTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource eduVPNTextBlockStyle}">
+    <Style x:Key="PageTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
-    <Style x:Key="eduVPNNavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNBaseStyle}">
+    <Style x:Key="NavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Width" Value="22"/>
         <Setter Property="Height" Value="22"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
-        <Setter Property="Background" Value="{StaticResource eduVPNWindowBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="Template">
@@ -549,7 +549,7 @@
                             <Ellipse
                                 x:Name="Border"
                                 Fill="{x:Null}"
-                                Stroke="{StaticResource eduVPNHeaderBrush}"/>
+                                Stroke="{StaticResource HeaderBrush}"/>
 
                             <ContentPresenter
                                 HorizontalAlignment="Center"
@@ -562,17 +562,17 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Fill"
-                                Value="{StaticResource eduVPNHeaderBrush}"/>
+                                Value="{StaticResource HeaderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter
                                 TargetName="Border"
                                 Property="Fill"
-                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                                Value="{StaticResource ButtonPressedBrush}"/>
                             <Setter
                                 TargetName="Border"
                                 Property="Stroke"
-                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                                Value="{StaticResource ButtonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -580,7 +580,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -588,7 +588,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="eduVPNErrorStatusBar" TargetType="{x:Type Control}">
+    <Style x:Key="ErrorStatusBarStyle" TargetType="{x:Type Control}">
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Visibility" Value="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
         <Setter Property="Template">
@@ -597,7 +597,7 @@
                     <StatusBar
                         x:Name="StatusBar"
                         Height="Auto"
-                        Style="{StaticResource eduVPNInfoBarStyle}"
+                        Style="{StaticResource InfoBarStyle}"
                         AutomationProperties.Name="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}">
                         <StatusBar.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -618,7 +618,7 @@
                         <StatusBarItem>
                             <ContentControl
                                 IsTabStop="False"
-                                ContentTemplate="{StaticResource eduVPNExclamationIcon}"/>
+                                ContentTemplate="{StaticResource ExclamationIcon}"/>
                         </StatusBarItem>
 
                         <StatusBarItem
@@ -632,7 +632,7 @@
                         <StatusBarItem
                             Grid.Column="2">
                             <Button
-                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                Style="{StaticResource NavigationButtonStyle}"
                                 ToolTip="{Binding Source={x:Static res:Strings.ButtonCopyErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
                                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopyErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
                                 Command="{Binding Path=CopyError}">
@@ -652,7 +652,7 @@
                         <StatusBarItem
                             Grid.Column="3">
                             <Button
-                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                Style="{StaticResource NavigationButtonStyle}"
                                 ToolTip="{Binding Source={x:Static res:Strings.ButtonDismissErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
                                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonDismissErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
                                 Command="{Binding Path=DismissError}">
@@ -705,7 +705,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="eduVPNConnectWizardPage" TargetType="{x:Type Page}">
+    <Style x:Key="ConnectWizardPageStyle" TargetType="{x:Type Page}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Template">
@@ -724,8 +724,7 @@
                             </Grid.RowDefinitions>
 
                             <Button
-                                x:Name="eduVPNBackButton"
-                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                Style="{StaticResource NavigationButtonStyle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                                 Command="{Binding Path=NavigateBack}">
                                 <Canvas Height="14" Width="14">
@@ -744,14 +743,14 @@
                                 Grid.Column="1"
                                 Margin="-35,10,10,10"
                                 VerticalAlignment="Top"
-                                Style="{StaticResource eduVPNPageTitleStyle}"
+                                Style="{StaticResource PageTitleStyle}"
                                 Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                             <TextBlock
                                 Grid.ColumnSpan="2"
                                 Grid.Row="1"
                                 Margin="30,10"
-                                Style="{StaticResource eduVPNTextBlockStyle}"
+                                Style="{StaticResource TextBlockStyle}"
                                 Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                                 Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
@@ -766,7 +765,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="eduVPNConnectWizardPageWithSettings" TargetType="{x:Type Page}" BasedOn="{StaticResource eduVPNConnectWizardPage}">
+    <Style x:Key="ConnectWizardPageWithSettingsStyle" TargetType="{x:Type Page}" BasedOn="{StaticResource ConnectWizardPageStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type pages:ConnectWizardPage}">
@@ -784,7 +783,7 @@
                             </Grid.RowDefinitions>
 
                             <Button
-                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                Style="{StaticResource NavigationButtonStyle}"
                                 ToolTip="{x:Static res:Strings.ButtonBackTitle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
                                 Command="{Binding Path=NavigateBack}">
@@ -804,12 +803,12 @@
                                 Grid.Column="1"
                                 Margin="-35,10,-35,10"
                                 VerticalAlignment="Top"
-                                Style="{StaticResource eduVPNPageTitleStyle}"
+                                Style="{StaticResource PageTitleStyle}"
                                 Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                             <Button
                                 Grid.Column="2"
-                                Style="{StaticResource eduVPNNavigationButtonStyle}"
+                                Style="{StaticResource NavigationButtonStyle}"
                                 ToolTip="{x:Static res:Strings.ButtonSettingsTitle}"
                                 AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
                                 Command="{Binding Path=Wizard.NavigateTo}"
@@ -820,7 +819,7 @@
                                             <Ellipse
                                                 x:Name="Border"
                                                 Fill="{x:Null}"
-                                                Stroke="{StaticResource eduVPNHeaderBrush}"/>
+                                                Stroke="{StaticResource HeaderBrush}"/>
 
                                             <Image
                                                 x:Name="Image"
@@ -837,7 +836,7 @@
                                                 <Setter
                                                     TargetName="Border"
                                                     Property="Fill"
-                                                    Value="{StaticResource eduVPNHeaderBrush}"/>
+                                                    Value="{StaticResource HeaderBrush}"/>
                                                 <Setter
                                                     TargetName="Image"
                                                     Property="Source"
@@ -847,11 +846,11 @@
                                                 <Setter
                                                     TargetName="Border"
                                                     Property="Fill"
-                                                    Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                                                    Value="{StaticResource ButtonPressedBrush}"/>
                                                 <Setter
                                                     TargetName="Border"
                                                     Property="Stroke"
-                                                    Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                                                    Value="{StaticResource ButtonPressedBrush}"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -862,7 +861,7 @@
                                 Grid.ColumnSpan="3"
                                 Grid.Row="1"
                                 Margin="30,10"
-                                Style="{StaticResource eduVPNTextBlockStyle}"
+                                Style="{StaticResource TextBlockStyle}"
                                 Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                                 Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
@@ -882,8 +881,8 @@
         Popups
     -->
 
-    <Style x:Key="eduVPNPopupHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNHeaderButtonStyle}">
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
+    <Style x:Key="PopupHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource HeaderButtonStyle}">
+        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -905,7 +904,7 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNHeaderBrush}"/>
+                                Value="{StaticResource HeaderBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -913,7 +912,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -921,15 +920,15 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="eduVPNPopupWindow" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource eduVPNWindow}">
+    <Style x:Key="PopupWindowStyle" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource WindowStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type windows:Window}">
                     <Border
-                        BorderBrush="{StaticResource eduVPNWindowBorderBrush}"
+                        BorderBrush="{StaticResource WindowBorderBrush}"
                         BorderThickness="1">
                         <AdornerDecorator>
-                            <Grid Background="{StaticResource eduVPNWindowBrush}">
+                            <Grid Background="{StaticResource WindowBrush}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -940,17 +939,17 @@
 
                                     <TextBlock
                                         Margin="5"
-                                        Style="{StaticResource eduVPNPageTitleStyle}"
+                                        Style="{StaticResource PageTitleStyle}"
                                         Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                                     <Control
                                         Grid.Row="1"
-                                        Style="{StaticResource eduVPNErrorStatusBar}"/>
+                                        Style="{StaticResource ErrorStatusBarStyle}"/>
 
                                     <TextBlock
                                         Grid.Row="2"
                                         Margin="30,10"
-                                        Style="{StaticResource eduVPNTextBlockStyle}"
+                                        Style="{StaticResource TextBlockStyle}"
                                         Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                                         Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
@@ -964,7 +963,7 @@
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
                                     IsCancel="True"
-                                    Style="{StaticResource eduVPNPopupHeaderButtonStyle}"
+                                    Style="{StaticResource PopupHeaderButtonStyle}"
                                     AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}">
                                     <Border
                                         Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
@@ -995,11 +994,11 @@
         Choice Buttons
     -->
 
-    <Style x:Key="eduVPNChoiceItemsControlStyle" TargetType="{x:Type ItemsControl}">
+    <Style x:Key="ChoiceItemsControlStyle" TargetType="{x:Type ItemsControl}">
         <Setter Property="IsTabStop" Value="False"/>
     </Style>
 
-    <Style x:Key="eduVPNChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource eduVPNButtonStyle}">
+    <Style x:Key="ChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="MinHeight" Value="90"/>
         <Setter Property="Template">
@@ -1008,7 +1007,7 @@
                     <AdornerDecorator>
                         <Border
                             x:Name="Border"
-                            Background="{StaticResource eduVPNHeaderBrush}"
+                            Background="{StaticResource HeaderBrush}"
                             CornerRadius="6">
                             <ContentPresenter
                                 Margin="3"
@@ -1022,13 +1021,13 @@
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonHoverBrush}"/>
+                                Value="{StaticResource ButtonHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter
                                 TargetName="Border"
                                 Property="Background"
-                                Value="{StaticResource eduVPNButtonPressedBrush}"/>
+                                Value="{StaticResource ButtonPressedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1036,7 +1035,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="eduVPNChoiceIconStyle" TargetType="{x:Type Image}">
+    <Style x:Key="ChoiceIconStyle" TargetType="{x:Type Image}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
@@ -1047,19 +1046,19 @@
         Labels
     -->
 
-    <Style x:Key="eduVPNAccessTextStyle" TargetType="{x:Type AccessText}">
+    <Style x:Key="AccessTextStyle" TargetType="{x:Type AccessText}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
-    <Style x:Key="eduVPNChoiceNoteStyle" TargetType="{x:Type AccessText}" BasedOn="{StaticResource eduVPNAccessTextStyle}">
+    <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}" BasedOn="{StaticResource AccessTextStyle}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
     </Style>
 
-    <Style x:Key="eduVPNLabelStyle" TargetType="{x:Type Label}">
+    <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
         <Style.Resources>
@@ -1070,8 +1069,8 @@
         </Style.Resources>
     </Style>
 
-    <Style x:Key="eduVPNSectionLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource eduVPNLabelStyle}">
-        <Setter Property="Foreground" Value="{StaticResource eduVPNHeaderBrush}"/>
+    <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
+        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
     </Style>
 
 </ResourceDictionary>

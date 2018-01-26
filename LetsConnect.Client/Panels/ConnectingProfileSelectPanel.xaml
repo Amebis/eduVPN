@@ -17,7 +17,7 @@
     d:DesignWidth="300">
 
     <UserControl.Resources>
-        <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+        <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
         </Style>
@@ -31,8 +31,8 @@
         <ListBox
             x:Name="ProfileList"
             Margin="5,2,5,5"
-            Style="{StaticResource eduVPNListStyle}"
-            ItemTemplate="{StaticResource eduVPNProfileSelectionItemTemplate}"
+            Style="{StaticResource ListStyle}"
+            ItemTemplate="{StaticResource ProfileSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
             ItemsSource="{Binding Path=ProfileList}"
             SelectedItem="{Binding Path=SelectedProfile}"

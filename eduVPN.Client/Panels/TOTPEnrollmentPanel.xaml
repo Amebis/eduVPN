@@ -31,7 +31,7 @@
             Margin="0,0,-3,0"
             VerticalAlignment="Center"
             Target="{Binding ElementName=Secret}"
-            Style="{StaticResource eduVPNLabelStyle}"
+            Style="{StaticResource LabelStyle}"
             Content="{x:Static res:Strings.TOTPEnrollmentPanelSecretLabel}"/>
 
         <Grid Grid.Column="1">
@@ -47,7 +47,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 TextWrapping="Wrap"
-                Style="{StaticResource eduVPNCodeTextBoxStyle}"
+                Style="{StaticResource CodeTextBoxStyle}"
                 Text="{Binding Path=Secret, Converter={StaticResource TOTPSecretConverter}}"
                 IsReadOnly="True"
                 AutomationProperties.LabeledBy="{Binding ElementName=SecretLabel}"/>
@@ -80,7 +80,7 @@
             Margin="0,0,-3,0"
             VerticalAlignment="Center"
             Target="{Binding ElementName=Response}"
-            Style="{StaticResource eduVPNLabelStyle}"
+            Style="{StaticResource LabelStyle}"
             Content="{x:Static res:Strings.TOTPEnrollmentPanelResponseLabel}"/>
 
         <TextBox
@@ -89,7 +89,7 @@
             x:Name="Response"
             Margin="2,5,5,5"
             HorizontalContentAlignment="Center"
-            Style="{StaticResource eduVPNCodeTextBoxStyle}"
+            Style="{StaticResource CodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
             AutomationProperties.LabeledBy="{Binding ElementName=ResponseLabel}"
             AutomationProperties.IsRequiredForForm="True"/>

@@ -18,7 +18,7 @@
     SizeToContent="Height"
     Title="{x:Static res:Strings.AuthorizationPopupTitle}"
     WindowStartupLocation="CenterOwner"
-    Style="{StaticResource eduVPNPopupWindow}">
+    Style="{StaticResource PopupWindowStyle}">
 
     <windows:Window.Description>
         <MultiBinding StringFormat="{x:Static res:Strings.AuthorizationPopupMessage}">
@@ -36,7 +36,7 @@
 
     <Grid
         VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+        Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>

@@ -19,11 +19,11 @@
     Title="{Binding Path=Title}"
     Description="{Binding Path=Description}"
     AutomationProperties.HelpText="{Binding Path=Description}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource ConnectWizardPageStyle}">
 
     <Grid
         VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+        Style="{StaticResource PageContentGridStyle}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
@@ -36,7 +36,7 @@
         <TextBlock
             VerticalAlignment="Center"
             Margin="5,5,0,5"
-            Style="{StaticResource eduVPNTextBlockStyle}"
+            Style="{StaticResource TextBlockStyle}"
             Text="https://"/>
 
         <ComboBox
@@ -44,7 +44,7 @@
             Grid.Column="1"
             Margin="0,5,5,5"
             VerticalAlignment="Center"
-            Style="{StaticResource eduVPNComboBoxStyle}"
+            Style="{StaticResource ComboBoxStyle}"
             Text="{Binding Path=Hostname, UpdateSourceTrigger=PropertyChanged}"
             TextSearch.TextPath=""
             ItemsSource="{Binding Source={x:Static prop:Settings.Default}, Path=CustomInstanceHistory}"
@@ -58,7 +58,7 @@
             Grid.Row="1"
             Margin="5"
             IsDefault="True"
-            Style="{StaticResource eduVPNButtonStyle}"
+            Style="{StaticResource ButtonStyle}"
             AutomationProperties.Name="{x:Static res:Strings.ButtonNextTitleAlt}"
             Command="{Binding Path=SelectCustomInstance}"
             Click="Button_Click">

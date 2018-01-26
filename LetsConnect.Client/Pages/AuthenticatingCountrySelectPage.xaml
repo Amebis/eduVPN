@@ -16,16 +16,16 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{Binding Path=Title}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource ConnectWizardPageStyle}">
 
     <pages:ConnectWizardPage.Resources>
-        <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource eduVPNListBoxItemStyle}">
+        <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstanceList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="InstanceList_PreviewKeyDown"/>
         </Style>
     </pages:ConnectWizardPage.Resources>
 
-    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
+    <Grid Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -33,8 +33,8 @@
         <ListBox
             x:Name="InstanceList"
             Margin="5"
-            Style="{StaticResource eduVPNListStyle}"
-            ItemTemplate="{StaticResource eduVPNInstanceSelectionItemTemplate}"
+            Style="{StaticResource ListStyle}"
+            ItemTemplate="{StaticResource InstanceSelectionItemTemplate}"
             ItemContainerStyle="{StaticResource InstanceListBoxStyle}"
             ItemsSource="{Binding Path=Wizard.InstanceSource.InstanceList}"
             SelectedItem="{Binding Path=SelectedInstance}"

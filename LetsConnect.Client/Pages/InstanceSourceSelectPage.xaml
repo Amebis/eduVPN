@@ -19,11 +19,11 @@
     Title="{Binding Path=Title}"
     Description="{Binding Path=Description}"
     AutomationProperties.HelpText="{Binding Path=Description}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource ConnectWizardPageStyle}">
 
     <Grid
         VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+        Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -32,7 +32,7 @@
 
         <Button
             Margin="5"
-            Style="{StaticResource eduVPNChoiceButtonStyle}"
+            Style="{StaticResource ChoiceButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=SelectInstanceSource}"
             CommandParameter="{x:Static model:InstanceSourceType.SecureInternet}"
@@ -49,13 +49,13 @@
 
                 <Image
                     Margin="13"
-                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Style="{StaticResource ChoiceIconStyle}"
                     Source="pack://application:,,,/Resources/SecureInternet.png"/>
 
                 <AccessText
                     Grid.Column="1"
                     Margin="10"
-                    Style="{StaticResource eduVPNChoiceNoteStyle}"
+                    Style="{StaticResource ChoiceNoteStyle}"
                     Text="{x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle}"/>
             </Grid>
         </Button>
@@ -63,7 +63,7 @@
         <Button
             Grid.Row="1"
             Margin="5"
-            Style="{StaticResource eduVPNChoiceButtonStyle}"
+            Style="{StaticResource ChoiceButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=SelectInstanceSource}"
             CommandParameter="{x:Static model:InstanceSourceType.InstituteAccess}">
@@ -79,13 +79,13 @@
 
                 <Image
                     Margin="13"
-                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Style="{StaticResource ChoiceIconStyle}"
                     Source="pack://application:,,,/Resources/InstituteAccess.png"/>
 
                 <AccessText
                     Grid.Column="1"
                     Margin="10"
-                    Style="{StaticResource eduVPNChoiceNoteStyle}"
+                    Style="{StaticResource ChoiceNoteStyle}"
                     Text="{x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}"/>
             </Grid>
         </Button>
@@ -93,7 +93,7 @@
         <Button
             Grid.Row="2"
             Margin="5"
-            Style="{StaticResource eduVPNLinkButtonStyle}"
+            Style="{StaticResource LinkButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageCustomButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=SelectCustomInstance}">
             <AccessText Text="{x:Static res:Strings.InstanceSourcePageCustomButtonTitle}"/>

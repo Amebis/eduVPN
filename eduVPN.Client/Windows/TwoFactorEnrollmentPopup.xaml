@@ -20,7 +20,7 @@
     SizeToContent="Height"
     Title="{x:Static res:Strings.TwoFactorEnrollmentPopupTitle}"
     WindowStartupLocation="CenterOwner"
-    Style="{StaticResource eduVPNPopupWindow}">
+    Style="{StaticResource PopupWindowStyle}">
 
     <windows:Window.Description>
         <MultiBinding
@@ -57,7 +57,7 @@
 
     <Grid
         VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+        Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -68,9 +68,9 @@
             x:Name="Method"
             Margin="5"
             HorizontalContentAlignment="Center"
-            Style="{StaticResource eduVPNComboBoxStyle}"
-            ItemTemplate="{StaticResource eduVPNSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource eduVPNComboBoxItemStyle}"
+            Style="{StaticResource ComboBoxStyle}"
+            ItemTemplate="{StaticResource SelectionItemTemplate}"
+            ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MethodListView}}"
             SelectedValue="{Binding Path=SelectedMethod}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorAuthenticationPopupMethodLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"
@@ -87,7 +87,7 @@
             x:Name="OK"
             Margin="5"
             IsDefault="True"
-            Style="{StaticResource eduVPNButtonStyle}"
+            Style="{StaticResource ButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.TwoFactorEnrollmentPopupEnrollButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=ApplyEnrollment}"
             Click="OK_Click">

@@ -18,7 +18,7 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{Binding Path=Title}"
-    Style="{StaticResource eduVPNConnectWizardPageWithSettings}">
+    Style="{StaticResource ConnectWizardPageWithSettingsStyle}">
 
     <pages:ConnectWizardPage.Resources>
         <!-- Panel view model to view mapping -->
@@ -35,7 +35,7 @@
 
     <Grid
         VerticalAlignment="Top"
-        Style="{StaticResource eduVPNPageContentGridStyle}">
+        Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding Path=Wizard.InstanceSources[1].ConnectingInstance, Converter={StaticResource InstanceSourceRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
             <RowDefinition Height="{Binding Path=Wizard.InstanceSources[2].ConnectingInstance, Converter={StaticResource InstanceSourceRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
@@ -62,7 +62,7 @@
 
                 <Image
                     Margin="5,2"
-                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Style="{StaticResource ChoiceIconStyle}"
                     Source="pack://application:,,,/Resources/SecureInternetBlue.png"/>
 
                 <Label
@@ -70,14 +70,14 @@
                     Grid.Column="1"
                     Margin="0,-3"
                     Target="{Binding ElementName=SecureInternet}"
-                    Style="{StaticResource eduVPNSectionLabelStyle}"
+                    Style="{StaticResource SectionLabelStyle}"
                     Content="{x:Static res:Strings.RecentConfigurationSelectPageSecureInternetTitle}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
                     Grid.Row="1"
                     Margin="5,2"
-                    Style="{StaticResource eduVPNVisualSeparatorStyle}"/>
+                    Style="{StaticResource VisualSeparatorStyle}"/>
             </Grid>
 
             <ContentControl
@@ -110,7 +110,7 @@
 
                 <Image
                     Margin="5,2"
-                    Style="{StaticResource eduVPNChoiceIconStyle}"
+                    Style="{StaticResource ChoiceIconStyle}"
                     Source="pack://application:,,,/Resources/InstituteAccessBlue.png"/>
 
                 <Label
@@ -118,14 +118,14 @@
                     Grid.Column="1"
                     Margin="0,-3"
                     Target="{Binding ElementName=InstituteAccess}"
-                    Style="{StaticResource eduVPNSectionLabelStyle}"
+                    Style="{StaticResource SectionLabelStyle}"
                     Content="{x:Static res:Strings.RecentConfigurationSelectPageInstituteAccessTitle}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
                     Grid.Row="1"
                     Margin="5,2"
-                    Style="{StaticResource eduVPNVisualSeparatorStyle}"/>
+                    Style="{StaticResource VisualSeparatorStyle}"/>
             </Grid>
 
             <ContentControl
@@ -140,7 +140,7 @@
         <Button
             Grid.Row="3"
             Margin="5"
-            Style="{StaticResource eduVPNLinkButtonStyle}"
+            Style="{StaticResource LinkButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.RecentConfigurationSelectPageAddButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=AddConnection}">
             <AccessText Text="{x:Static res:Strings.RecentConfigurationSelectPageAddButtonTitle}"/>

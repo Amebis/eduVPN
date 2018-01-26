@@ -18,7 +18,7 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{Binding Path=Title}"
-    Style="{StaticResource eduVPNConnectWizardPage}">
+    Style="{StaticResource ConnectWizardPageStyle}">
 
     <Page.Resources>
         <!-- eduVPN collection view sources -->
@@ -29,7 +29,7 @@
         </CollectionViewSource>
     </Page.Resources>
 
-    <Grid Style="{StaticResource eduVPNPageContentGridStyle}">
+    <Grid Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -40,10 +40,10 @@
 
         <StatusBar
             Margin="5"
-            Style="{StaticResource eduVPNInlineInfoBarStyle}"
+            Style="{StaticResource InlineInfoBarStyle}"
             Visibility="{Binding Path=Wizard.ActiveSession.UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <StatusBarItem>
-                <ContentControl Content="{StaticResource eduVPNUserDisabledIcon}"/>
+                <ContentControl Content="{StaticResource UserDisabledIcon}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <TextBlock
@@ -67,7 +67,7 @@
 
             <TextBlock
                 Margin="0,0,5,2"
-                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
+                Style="{StaticResource InfoTitleTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageStatus}"/>
 
             <Image
@@ -84,7 +84,7 @@
             <TextBlock
                 Grid.Column="1"
                 Margin="5,0,5,2"
-                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
+                Style="{StaticResource InfoTitleTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageInstance}"/>
 
             <controls:ImageWithFallback
@@ -103,7 +103,7 @@
             <TextBlock
                 Grid.Column="2"
                 Margin="5,0,0,2"
-                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
+                Style="{StaticResource InfoTitleTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageProfile}"/>
 
             <TextBlock
@@ -112,7 +112,7 @@
                 Margin="5,2,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.ConnectingProfile.DisplayName}"/>
         </Grid>
 
@@ -120,8 +120,8 @@
             x:Name="Messages"
             Grid.Row="2"
             Margin="5"
-            Style="{StaticResource eduVPNListStyle}"
-            ItemContainerStyle="{StaticResource eduVPNListBoxItemStyle}"
+            Style="{StaticResource ListStyle}"
+            ItemContainerStyle="{StaticResource ListBoxItemStyle}"
             ItemsSource="{Binding Source={StaticResource MessageListView}}"
             Visibility="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageMessagesLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
@@ -145,77 +145,77 @@
             <TextBlock
                 Grid.ColumnSpan="4"
                 Margin="0,0,0,2"
-                Style="{StaticResource eduVPNInfoTitleTextBlockStyle}"
+                Style="{StaticResource InfoTitleTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoTitle}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="0,2,1,0"
-                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoDuration}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="1,2,4,0"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
                 Margin="0,0,1,0"
-                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoBytesIn}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="1"
                 Margin="1,0,4,0"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
                 Margin="0,0,1,0"
-                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoBytesOut}"/>
 
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="1"
                 Margin="1,0,4,0"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="2"
                 Margin="4,2,1,0"
-                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoIPv4}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="3"
                 Margin="1,2,0,0"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.TunnelAddress}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="2"
                 Margin="4,0,1,0"
-                Style="{StaticResource eduVPNInfoLabelTextBlockStyle}"
+                Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoIPv6}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="3"
                 Margin="1,0,0,0"
-                Style="{StaticResource eduVPNInfoDataBlockStyle}"
+                Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.IPv6TunnelAddress}"/>
 
             <Button
@@ -227,7 +227,7 @@
                 Height="20"
                 FontSize="11"
                 HorizontalAlignment="Left"
-                Style="{StaticResource eduVPNButtonStyle}"
+                Style="{StaticResource ButtonStyle}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
                 Command="{Binding Path=Wizard.ActiveSession.ShowLog}">
                 <AccessText Text="{x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}"/>
@@ -241,7 +241,7 @@
             Width="170"
             FontSize="16"
             VerticalAlignment="Center"
-            Style="{StaticResource eduVPNButtonStyle}"
+            Style="{StaticResource ButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageDisconnectButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=Wizard.ActiveSession.Disconnect}">
             <AccessText Text="{x:Static res:Strings.StatusPageDisconnectButtonTitle}"/>
