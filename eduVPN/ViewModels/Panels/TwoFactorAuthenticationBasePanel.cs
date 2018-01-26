@@ -92,7 +92,7 @@ namespace eduVPN.ViewModels.Panels
                         // canExecute
                         e =>
                             e is UsernamePasswordAuthenticationRequestedEventArgs &&
-                            !string.IsNullOrEmpty(Response) &&
+                            !String.IsNullOrEmpty(Response) &&
                             !HasErrors);
 
                     // Setup canExecute refreshing.
@@ -131,7 +131,7 @@ namespace eduVPN.ViewModels.Panels
                         // canExecute
                         e =>
                             e is RequestTwoFactorEnrollmentEventArgs &&
-                            !string.IsNullOrEmpty(Response) &&
+                            !String.IsNullOrEmpty(Response) &&
                             !HasErrors);
 
                     // Setup canExecute refreshing.

@@ -90,7 +90,7 @@ namespace eduVPN.ViewModels.Panels
         /// </summary>
         public string ForgetSelectedInstanceLabel
         {
-            get { return string.Format(Resources.Strings.InstanceForget, SelectedInstance); }
+            get { return String.Format(Resources.Strings.InstanceForget, SelectedInstance); }
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace eduVPN.ViewModels.Panels
         /// </summary>
         public string ForgetSelectedProfileLabel
         {
-            get { return string.Format(Resources.Strings.InstanceForget, SelectedProfile); }
+            get { return String.Format(Resources.Strings.InstanceForget, SelectedProfile); }
         }
 
         /// <summary>

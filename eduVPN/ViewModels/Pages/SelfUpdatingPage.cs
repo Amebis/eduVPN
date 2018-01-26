@@ -125,7 +125,7 @@ namespace eduVPN.ViewModels.Pages
 
                                 hash.TransformFinalBlock(buffer, 0, 0);
                                 if (!hash.Hash.SequenceEqual(repo_hash))
-                                    throw new DownloadedFileCorruptException(string.Format(Resources.Strings.ErrorDownloadedFileCorrupt, binary_uri.AbsoluteUri));
+                                    throw new DownloadedFileCorruptException(String.Format(Resources.Strings.ErrorDownloadedFileCorrupt, binary_uri.AbsoluteUri));
 
                                 installer_file.SetLength(installer_file.Position);
                                 installer_ready = true;

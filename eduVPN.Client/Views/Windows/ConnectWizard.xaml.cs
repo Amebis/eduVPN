@@ -103,8 +103,8 @@ namespace eduVPN.Views.Windows
                                             // Client connected while "minimized". Popup the balloon message.
                                             _tray_icon.ShowBalloonTip(
                                                 5000,
-                                                string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
-                                                string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
+                                                String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
+                                                String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
                                                 System.Windows.Forms.ToolTipIcon.Info);
                                         }
                                     }
@@ -278,7 +278,7 @@ namespace eduVPN.Views.Windows
             };
 
             // Set the redirect URI and make the final authorization URI.
-            view_model.AuthorizationGrant.RedirectEndpoint = new Uri(string.Format("http://{0}:{1}/callback", IPAddress.Loopback, ((IPEndPoint)_listener.LocalEndpoint).Port));
+            view_model.AuthorizationGrant.RedirectEndpoint = new Uri(String.Format("http://{0}:{1}/callback", IPAddress.Loopback, ((IPEndPoint)_listener.LocalEndpoint).Port));
             var authorization_uri = view_model.AuthorizationGrant.AuthorizationURI;
 
             // Extract the state. We use it as a key to support multiple pending authorizations.
@@ -361,7 +361,7 @@ namespace eduVPN.Views.Windows
             popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
             {
                 // Set initial focus.
-                if (string.IsNullOrEmpty(view_model.Username))
+                if (String.IsNullOrEmpty(view_model.Username))
                     popup.Username.Focus();
                 else
                     popup.Password.Focus();

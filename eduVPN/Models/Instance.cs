@@ -512,7 +512,7 @@ namespace eduVPN.Models
             {
                 Uri uri = null;
                 var param = new NameValueCollection();
-                String name = null;
+                string name = null;
                 if (credentials is TOTPEnrollmentCredentials cred_totp)
                 {
                     uri = api.TOTPAuthenticationEnroll;

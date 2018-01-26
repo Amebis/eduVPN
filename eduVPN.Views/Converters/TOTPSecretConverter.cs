@@ -35,7 +35,7 @@ namespace eduVPN.Converters
             {
                 // Divide line in 4-tuples separated by spaces.
                 int group_counter = 0;
-                return string.Join(
+                return String.Join(
                     " ",
                     secret
                         .GroupBy(_ => group_counter++ / 4)

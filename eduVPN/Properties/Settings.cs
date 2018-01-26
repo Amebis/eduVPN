@@ -99,7 +99,7 @@ namespace eduVPN.Properties
                 new Xml.ResourceRef()
                 {
                     Uri = new Uri((string)this[key]),
-                    PublicKey = this[key + "PubKey"] is string pub_key && !string.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null
+                    PublicKey = this[key + "PubKey"] is string pub_key && !String.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null
                 };
         }
 

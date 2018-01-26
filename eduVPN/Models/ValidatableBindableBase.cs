@@ -53,7 +53,7 @@ namespace eduVPN.Models
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             var result = base.SetProperty(ref storage, value, propertyName);
-            if (result && !string.IsNullOrEmpty(propertyName))
+            if (result && !String.IsNullOrEmpty(propertyName))
                 ValidateProperty(propertyName);
 
             return result;
@@ -63,7 +63,7 @@ namespace eduVPN.Models
         protected override bool SetProperty<T>(ref T storage, T value, Action onChanged, [CallerMemberName] string propertyName = null)
         {
             var result = base.SetProperty(ref storage, value, onChanged, propertyName);
-            if (result && !string.IsNullOrEmpty(propertyName))
+            if (result && !String.IsNullOrEmpty(propertyName))
                 ValidateProperty(propertyName);
 
             return result;
@@ -76,7 +76,7 @@ namespace eduVPN.Models
         /// <returns><c>true</c> if the property is valid; <c>false</c> otherwise</returns>
         public bool ValidateProperty(string property_name)
         {
-            if (string.IsNullOrEmpty(property_name))
+            if (String.IsNullOrEmpty(property_name))
                 throw new ArgumentNullException(nameof(property_name));
 
             var property_info = GetType().GetRuntimeProperty(property_name);

@@ -187,7 +187,7 @@ namespace eduVPN.ViewModels.VPN
                             }
                         }
                         catch (OperationCanceledException) { throw; }
-                        catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
+                        catch (Exception ex) { throw new AggregateException(String.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
 
                         // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
                         using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Session())
@@ -367,7 +367,7 @@ namespace eduVPN.ViewModels.VPN
                                                         break;
                                                 }
 
-                                                if (!string.IsNullOrEmpty(e.Message))
+                                                if (!String.IsNullOrEmpty(e.Message))
                                                 {
                                                     if (msg != null)
                                                     {
