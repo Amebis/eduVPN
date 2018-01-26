@@ -47,8 +47,8 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Creates a pop-up window
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Event sender (ignored)</param>
+        /// <param name="e">Event arguments</param>
         public AuthorizationPopup(object sender, RequestInstanceAuthorizationEventArgs e)
         {
             Instance = e.Instance;

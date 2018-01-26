@@ -359,43 +359,43 @@ namespace eduVPN.ViewModels.Windows
         }
 
         /// <summary>
-        /// Instance request authorization event
+        /// Occurs when instance requests authorization.
         /// </summary>
         /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
         public event EventHandler<RequestInstanceAuthorizationEventArgs> RequestInstanceAuthorization;
 
         /// <summary>
-        /// 2-Factor Authentication enrollment requested
+        /// Occurs when 2-Factor Authentication enrollment is requested.
         /// </summary>
         /// <remarks>Sender is the profile select panel <see cref="Panels.ConnectingSelectPanel"/>.</remarks>
         public event EventHandler<RequestTwoFactorEnrollmentEventArgs> RequestTwoFactorEnrollment;
 
         /// <summary>
-        /// OpenVPN requested a password
+        /// Occurs when OpenVPN requests a password.
         /// </summary>
         /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
         public event EventHandler<eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs> RequestOpenVPNPasswordAuthentication;
 
         /// <summary>
-        /// OpenVPN requested a username and password
+        /// Occurs when OpenVPN requests a username and password.
         /// </summary>
         /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestOpenVPNUsernamePasswordAuthentication;
 
         /// <summary>
-        /// 2-Factor Authentication requested
+        /// Occurs when 2-Factor Authentication is requested.
         /// </summary>
         /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestTwoFactorAuthentication;
 
         /// <summary>
-        /// Product update is available
+        /// Occurs when product update is available.
         /// </summary>
         /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
         public event EventHandler<PromptSelfUpdateEventArgs> PromptSelfUpdate;
 
         /// <summary>
-        /// Application should quit
+        /// Occurs when application should quit.
         /// </summary>
         /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
         public event EventHandler QuitApplication;
@@ -1197,7 +1197,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Ask view to quit.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Event sender</param>
         public void OnQuitApplication(object sender)
         {
             Trace.TraceInformation("Quitting client...");

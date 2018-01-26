@@ -58,7 +58,7 @@ namespace eduVPN.ViewModels.Windows
         /// Creates a pop-up window
         /// </summary>
         /// <param name="sender">VPN session</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         public TwoFactorAuthenticationPopup(object sender, UsernamePasswordAuthenticationRequestedEventArgs e) :
             base(sender, e)
         {

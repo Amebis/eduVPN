@@ -112,8 +112,8 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Constructs a popup
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Event sender (ignored)</param>
+        /// <param name="e">Event arguments</param>
         public SelfUpdatePopup(object sender, PromptSelfUpdateEventArgs e)
         {
             InstalledVersion = e.InstalledVersion;
