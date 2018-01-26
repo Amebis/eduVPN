@@ -180,12 +180,6 @@
         </ContextMenu>
     </Window.Resources>
 
-    <!-- The window icon reflects all the VPN states and does not require an additional overlay from v1.0.3 on.
-    <Window.TaskbarItemInfo>
-        <TaskbarItemInfo Overlay="{Binding Path=ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"/>
-    </Window.TaskbarItemInfo>
-    -->
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
