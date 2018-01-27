@@ -61,7 +61,7 @@ namespace LetsConnect.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let&apos;s Connect
+        ///   Looks up a localized string similar to Let&apos;s Connect!
         ///Powered by SURFnet.
         /// </summary>
         public static string AboutPageAppBannerTitle {
@@ -71,7 +71,7 @@ namespace LetsConnect.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let&apos;s Connect.
+        ///   Looks up a localized string similar to Let&apos;s Connect!.
         /// </summary>
         public static string ConnectWizardTitle {
             get {
