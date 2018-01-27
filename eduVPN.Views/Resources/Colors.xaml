@@ -18,4 +18,9 @@
     <Color x:Key="eduVPNBlackColor">#FF000000</Color>
     <Color x:Key="eduVPNGrayColor">#FF666666</Color>
     <Color x:Key="eduVPNLightGrayColor">#FFCCCCCC</Color>
+
+    <Color x:Key="LetsConnectBlueColor">#FF1193F5</Color>
+    <Color x:Key="LetsConnectLightBlueColor">#FFCFEAFF</Color>
+    <Color x:Key="LetsConnectYellowColor">#FFFFFCBD</Color>
+    <Color x:Key="LetsConnectWhiteColor">#FFFFFFFF</Color>
 </ResourceDictionary>
