@@ -63,6 +63,7 @@
     <Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Width" Value="100"/>
         <Setter Property="Height" Value="32"/>
+        <Setter Property="FontWeight" Value="{x:Static FontWeights.SemiBold}"/>
         <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
@@ -163,7 +164,7 @@
     </Style>
 
     <Style x:Key="InfoDataBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource InfoLabelTextBlockStyle}">
-        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontWeight" Value="{x:Static FontWeights.Bold}"/>
     </Style>
 
     <Style x:Key="MessageBodyStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
