@@ -828,7 +828,7 @@
                                                 MaxWidth="14"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Source="pack://application:,,,/Resources/SettingsBlue.png"
+                                                Source="pack://application:,,,/Resources/SettingsButton.png"
                                                 RenderOptions.BitmapScalingMode="Fant"/>
                                         </Grid>
 
@@ -841,7 +841,7 @@
                                                 <Setter
                                                     TargetName="Image"
                                                     Property="Source"
-                                                    Value="pack://application:,,,/Resources/Settings.png"/>
+                                                    Value="pack://application:,,,/Resources/SettingsButtonHot.png"/>
                                             </Trigger>
                                             <Trigger Property="IsPressed" Value="True">
                                                 <Setter

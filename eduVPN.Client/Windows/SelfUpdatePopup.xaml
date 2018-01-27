@@ -80,7 +80,7 @@
                 <Image
                     Margin="13"
                     Style="{StaticResource ChoiceIconStyle}"
-                    Source="pack://application:,,,/Resources/Update.png"/>
+                    Source="pack://application:,,,/Resources/UpdateButton.png"/>
 
                 <AccessText
                     Grid.Column="1"

@@ -63,7 +63,7 @@
                 <Image
                     Margin="5,2"
                     Style="{StaticResource ChoiceIconStyle}"
-                    Source="pack://application:,,,/Resources/SecureInternetBlue.png"/>
+                    Source="pack://application:,,,/Resources/SecureInternet.png"/>
 
                 <Label
                     Name="SecureInternetLabel"
@@ -111,7 +111,7 @@
                 <Image
                     Margin="5,2"
                     Style="{StaticResource ChoiceIconStyle}"
-                    Source="pack://application:,,,/Resources/InstituteAccessBlue.png"/>
+                    Source="pack://application:,,,/Resources/InstituteAccess.png"/>
 
                 <Label
                     Name="InstituteAccessLabel"

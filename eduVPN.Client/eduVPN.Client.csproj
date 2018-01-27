@@ -278,10 +278,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\App.ico" />
+    <Resource Include="Resources\InstituteAccessButton.png" />
     <Resource Include="Resources\InstituteAccess.png" />
-    <Resource Include="Resources\InstituteAccessBlue.png" />
+    <Resource Include="Resources\SecureInternetButton.png" />
     <Resource Include="Resources\SecureInternet.png" />
-    <Resource Include="Resources\SecureInternetBlue.png" />
     <Resource Include="Resources\GenericInstance.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
@@ -291,13 +291,13 @@
     <Resource Include="Resources\AppBanner.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Settings.png" />
+    <Resource Include="Resources\SettingsButtonHot.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\SettingsBlue.png" />
+    <Resource Include="Resources\SettingsButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Update.png" />
+    <Resource Include="Resources\UpdateButton.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.nl.resx">
