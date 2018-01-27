@@ -23,7 +23,7 @@
                 <ResourceDictionary Source="Resources/Images.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/eduVPN.Views;component/Resources/Icons.xaml"/>
 
-                <ResourceDictionary Source="Resources/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/eduVPN.Views;component/Resources/Styles.xaml"/>
                 <ResourceDictionary Source="Resources/DataTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
