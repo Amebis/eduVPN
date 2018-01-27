@@ -14,8 +14,6 @@
     <SolidColorBrush x:Key="WindowTextBrush" Color="{StaticResource eduVPNBlackColor}"/>
     <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource eduVPNGrayColor}"/>
     <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource eduVPNLightGrayColor}"/>
-    <SolidColorBrush x:Key="CheckboxKnobBorderBrush" Color="{StaticResource eduVPNBlueColor}"/>
-    <SolidColorBrush x:Key="CheckboxSlotBrush" Color="{StaticResource eduVPNLightBlueColor}"/>
     <SolidColorBrush x:Key="LogoOrangeBrush" Color="{StaticResource eduVPNOrangeColor}"/>
     <SolidColorBrush x:Key="LogoGreenBrush" Color="{StaticResource eduVPNGreenColor}"/>
     <SolidColorBrush x:Key="LogoRedBrush" Color="{StaticResource eduVPNRedColor}"/>
@@ -27,4 +25,9 @@
     <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource eduVPNOrangeColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource eduVPNRedColor}"/>
     <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource eduVPNWhiteColor}"/>
+
+    <Color x:Key="CheckboxKnobUncheckedColor">#FFFFFFFF</Color>
+    <Color x:Key="CheckboxKnobCheckedColor">#FF02B4D2</Color>
+    <SolidColorBrush x:Key="CheckboxKnobBorderBrush" Color="{StaticResource eduVPNBlueColor}"/>
+    <SolidColorBrush x:Key="CheckboxSlotBrush" Color="{StaticResource eduVPNLightBlueColor}"/>
 </ResourceDictionary>

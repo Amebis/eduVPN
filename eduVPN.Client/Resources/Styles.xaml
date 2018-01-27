@@ -382,7 +382,7 @@
                             Stroke="{StaticResource CheckboxKnobBorderBrush}"
                             StrokeThickness="1">
                             <Ellipse.Fill>
-                                <SolidColorBrush Color="{StaticResource eduVPNWhiteColor}"/>
+                                <SolidColorBrush Color="{StaticResource CheckboxKnobUncheckedColor}"/>
                             </Ellipse.Fill>
                             <Ellipse.RenderTransform>
                                 <TransformGroup>
@@ -409,8 +409,8 @@
                                             <ColorAnimation
                                                 Storyboard.TargetName="Knob"
                                                 Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
-                                                From="{StaticResource eduVPNWhiteColor}"
-                                                To="{StaticResource eduVPNBlueColor}"
+                                                From="{StaticResource CheckboxKnobUncheckedColor}"
+                                                To="{StaticResource CheckboxKnobCheckedColor}"
                                                 Duration="0:0:0.1"
                                                 AutoReverse="False"/>
                                         </Storyboard>
@@ -433,8 +433,8 @@
                                             <ColorAnimation
                                                 Storyboard.TargetName="Knob"
                                                 Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
-                                                From="{StaticResource eduVPNBlueColor}"
-                                                To="{StaticResource eduVPNWhiteColor}"
+                                                From="{StaticResource CheckboxKnobCheckedColor}"
+                                                To="{StaticResource CheckboxKnobUncheckedColor}"
                                                 Duration="0:0:0.1"
                                                 AutoReverse="False"/>
                                         </Storyboard>
