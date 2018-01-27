@@ -23,4 +23,5 @@
     <Color x:Key="LetsConnectLightBlueColor">#FFCFEAFF</Color>
     <Color x:Key="LetsConnectYellowColor">#FFFFFCBD</Color>
     <Color x:Key="LetsConnectWhiteColor">#FFFFFFFF</Color>
+    <Color x:Key="LetsConnectGrayColor">#FF999999</Color>
 </ResourceDictionary>
