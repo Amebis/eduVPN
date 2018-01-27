@@ -183,6 +183,40 @@
 
 
     <!--
+        Labels
+    -->
+
+    <Style x:Key="AccessTextStyle" TargetType="{x:Type AccessText}">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}" BasedOn="{StaticResource AccessTextStyle}">
+        <Setter Property="FontWeight" Value="{x:Static FontWeights.Normal}"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
+    </Style>
+
+    <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Style.Resources>
+            <Style TargetType="AccessText">
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="Margin" Value="-5"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
+        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
+    </Style>
+
+
+    <!--
         Separator Styles
     -->
 
@@ -1077,38 +1111,6 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
-    </Style>
-
-
-    <!--
-        Labels
-    -->
-
-    <Style x:Key="AccessTextStyle" TargetType="{x:Type AccessText}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="TextWrapping" Value="Wrap"/>
-    </Style>
-
-    <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}" BasedOn="{StaticResource AccessTextStyle}">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
-    </Style>
-
-    <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Style.Resources>
-            <Style TargetType="AccessText">
-                <Setter Property="TextWrapping" Value="Wrap"/>
-                <Setter Property="Margin" Value="-5"/>
-            </Style>
-        </Style.Resources>
-    </Style>
-
-    <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
-        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
     </Style>
 
 </ResourceDictionary>
