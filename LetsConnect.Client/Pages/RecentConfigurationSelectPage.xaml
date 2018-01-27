@@ -42,103 +42,25 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid
-            Visibility="{Binding Path=Wizard.InstanceSources[1].ConnectingInstance, Converter={StaticResource InstanceSourceVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <ContentControl
+            x:Name="SecureInternet"
+            Margin="5"
+            IsTabStop="False"
+            Content="{Binding Path=Panels[1]}"
+            AutomationProperties.Name="{x:Static res:Strings.RecentConfigurationSelectPageSecureInternetTitle}"
+            Visibility="{Binding Path=Wizard.InstanceSources[1].ConnectingInstance, Converter={StaticResource InstanceSourceVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
 
-            <Grid
-                Margin="0,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Image
-                    Margin="5,2"
-                    Style="{StaticResource ChoiceIconStyle}"
-                    Source="pack://application:,,,/Resources/SecureInternet.png"/>
-
-                <Label
-                    Name="SecureInternetLabel"
-                    Grid.Column="1"
-                    Margin="0,-3"
-                    Target="{Binding ElementName=SecureInternet}"
-                    Style="{StaticResource SectionLabelStyle}"
-                    Content="{x:Static res:Strings.RecentConfigurationSelectPageSecureInternetTitle}"/>
-
-                <Rectangle
-                    Grid.ColumnSpan="2"
-                    Grid.Row="1"
-                    Margin="5,2"
-                    Style="{StaticResource VisualSeparatorStyle}"/>
-            </Grid>
-
-            <ContentControl
-                x:Name="SecureInternet"
-                Grid.Row="1"
-                Margin="5"
-                IsTabStop="False"
-                Content="{Binding Path=Panels[1]}"
-                AutomationProperties.LabeledBy="{Binding ElementName=SecureInternetLabel}"/>
-        </Grid>
-
-        <Grid
+        <ContentControl
+            x:Name="InstituteAccess"
             Grid.Row="1"
-            Visibility="{Binding Path=Wizard.InstanceSources[2].ConnectingInstance, Converter={StaticResource InstanceSourceVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            
-            <Grid
-                Margin="0,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Image
-                    Margin="5,2"
-                    Style="{StaticResource ChoiceIconStyle}"
-                    Source="pack://application:,,,/Resources/InstituteAccess.png"/>
-
-                <Label
-                    Name="InstituteAccessLabel"
-                    Grid.Column="1"
-                    Margin="0,-3"
-                    Target="{Binding ElementName=InstituteAccess}"
-                    Style="{StaticResource SectionLabelStyle}"
-                    Content="{x:Static res:Strings.RecentConfigurationSelectPageInstituteAccessTitle}"/>
-
-                <Rectangle
-                    Grid.ColumnSpan="2"
-                    Grid.Row="1"
-                    Margin="5,2"
-                    Style="{StaticResource VisualSeparatorStyle}"/>
-            </Grid>
-
-            <ContentControl
-                x:Name="InstituteAccess"
-                Grid.Row="1"
-                Margin="5"
-                IsTabStop="False"
-                Content="{Binding Path=Panels[2]}"
-                AutomationProperties.LabeledBy="{Binding ElementName=InstituteAccessLabel}"/>
-        </Grid>
+            Margin="5"
+            IsTabStop="False"
+            Content="{Binding Path=Panels[2]}"
+            AutomationProperties.Name="{x:Static res:Strings.RecentConfigurationSelectPageInstituteAccessTitle}"
+            Visibility="{Binding Path=Wizard.InstanceSources[2].ConnectingInstance, Converter={StaticResource InstanceSourceVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
 
         <Button
-            Grid.Row="3"
+            Grid.Row="2"
             Margin="5"
             Style="{StaticResource LinkButtonStyle}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.RecentConfigurationSelectPageAddButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
