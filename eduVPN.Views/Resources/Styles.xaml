@@ -16,8 +16,6 @@
     -->
 
     <Style x:Key="BaseStyle" TargetType="{x:Type Control}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -134,40 +132,40 @@
         Text Blocks
     -->
 
-    <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
+    <Style TargetType="{x:Type TextBlock}">
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
-    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}"/>
 
-    <Style x:Key="ListBoxItemTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="ListBoxItemTextStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="TextAlignment" Value="Center"/>
     </Style>
 
-    <Style x:Key="InfoTitleTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="InfoTitleTextBlockStyle" TargetType="{x:Type TextBlock}">
     </Style>
 
-    <Style x:Key="InfoLabelTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="InfoLabelTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="11"/>
     </Style>
 
-    <Style x:Key="InfoDataBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource InfoLabelTextBlockStyle}">
+    <Style x:Key="InfoDataBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="11"/>
         <Setter Property="FontWeight" Value="{x:Static FontWeights.Bold}"/>
     </Style>
 
-    <Style x:Key="MessageBodyStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="MessageBodyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="11"/>
     </Style>
 
-    <Style x:Key="NoteTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="NoteTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontStyle" Value="Italic"/>
     </Style>
 
-    <Style x:Key="VersionTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="VersionTextBlockStyle" TargetType="{x:Type TextBlock}">
     </Style>
 
-    <Style x:Key="CopyrightTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="CopyrightTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="12"/>
     </Style>
 
@@ -176,32 +174,27 @@
         Labels
     -->
 
-    <Style x:Key="AccessTextStyle" TargetType="{x:Type AccessText}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
+    <Style TargetType="{x:Type AccessText}">
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
-    <Style TargetType="{x:Type AccessText}" BasedOn="{StaticResource AccessTextStyle}" />
 
-    <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}" BasedOn="{StaticResource AccessTextStyle}">
+    <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}">
         <Setter Property="FontWeight" Value="{x:Static FontWeights.Normal}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
     </Style>
 
-    <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+    <Style TargetType="{x:Type Label}">
         <Style.Resources>
             <Style TargetType="AccessText">
                 <Setter Property="Margin" Value="-5"/>
             </Style>
         </Style.Resources>
     </Style>
-    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}"/>
 
-    <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
-        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
+    <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="{StaticResource WindowHeadingBrush}"/>
     </Style>
 
 
@@ -542,7 +535,7 @@
         ConnectWizard
     -->
 
-    <Style x:Key="HeaderTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="HeaderTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -595,7 +588,7 @@
         ConnectWizard Page Templates
     -->
 
-    <Style x:Key="PageTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+    <Style x:Key="PageTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>

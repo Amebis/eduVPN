@@ -28,6 +28,7 @@
     <SolidColorBrush x:Key="HeaderTextBrush" Color="{StaticResource LetsConnectBlueColor}"/>
     <SolidColorBrush x:Key="WindowBrush" Color="{StaticResource LetsConnectBlueColor}"/>
     <SolidColorBrush x:Key="WindowTextBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
+    <SolidColorBrush x:Key="WindowHeadingBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
     <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource LetsConnectGrayColor}"/>
     <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
     <SolidColorBrush x:Key="IconFillBrush" Color="{StaticResource LetsConnectBlueColor}"/>
