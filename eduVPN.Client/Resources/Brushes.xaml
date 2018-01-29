@@ -33,6 +33,10 @@
     <SolidColorBrush x:Key="WindowHeadingBrush" Color="{StaticResource eduVPNBlueColor}"/>
     <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource eduVPNGrayColor}"/>
     <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource eduVPNLightGrayColor}"/>
+    <SolidColorBrush x:Key="ControlBorderHoverBrush" Color="{StaticResource eduVPNGrayColor}"/>
+    <SolidColorBrush x:Key="ControlBorderFocusBrush" Color="{StaticResource eduVPNBlueColor}"/>
+    <SolidColorBrush x:Key="ControlSelectionBrush" Color="{StaticResource eduVPNBlueColor}"/>
+    <SolidColorBrush x:Key="ControlCursorBrush" Color="{StaticResource eduVPNBlackColor}"/>
     <SolidColorBrush x:Key="LogoOrangeBrush" Color="{StaticResource eduVPNOrangeColor}"/>
     <SolidColorBrush x:Key="LogoGreenBrush" Color="{StaticResource eduVPNGreenColor}"/>
     <SolidColorBrush x:Key="LogoRedBrush" Color="{StaticResource eduVPNRedColor}"/>

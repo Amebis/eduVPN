@@ -56,6 +56,44 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="BorderedControlStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Border
+                        x:Name="Border"
+                        Background="{StaticResource WindowBrush}"
+                        BorderBrush="{StaticResource ControlBorderBrush}"
+                        BorderThickness="0,0,0,2">
+
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            BorderThickness="0"
+                            IsTabStop="False"
+                            Padding="{TemplateBinding Padding}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="BorderBrush"
+                                Value="{StaticResource ControlBorderHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="BorderBrush"
+                                Value="{StaticResource ControlBorderFocusBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <!--
         Buttons
@@ -272,25 +310,20 @@
     <!--
         Text Boxes
     -->
-    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
-        <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="3"/>
+
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BorderedControlStyle}">
+        <Setter Property="SelectionBrush" Value="{StaticResource ControlSelectionBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource ControlCursorBrush}"/>
     </Style>
 
-    <Style x:Key="CodeTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}">
+    <Style x:Key="CodeTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="FontFamily" Value="Lucida Console"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
-    <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
-        <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="3"/>
+    <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource BorderedControlStyle}">
+        <Setter Property="SelectionBrush" Value="{StaticResource ControlSelectionBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource ControlCursorBrush}"/>
     </Style>
 
 
