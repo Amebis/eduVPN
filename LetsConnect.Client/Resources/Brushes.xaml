@@ -9,6 +9,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="LetsConnectBlueColor">#FF1193F5</Color>
+    <Color x:Key="LetsConnectMidBlueColor">#FF5DB4F5</Color>
+    <Color x:Key="LetsConnectPaleBlueColor">#FFFF0000</Color>
     <Color x:Key="LetsConnectLightBlueColor">#FFCFEAFF</Color>
     <Color x:Key="LetsConnectYellowColor">#FFFFFCBD</Color>
     <Color x:Key="LetsConnectWhiteColor">#FFFFFFFF</Color>
@@ -32,6 +34,8 @@
     <SolidColorBrush x:Key="IconOutlineBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
     <SolidColorBrush x:Key="ButtonHoverBrush" Color="{StaticResource LetsConnectLightBlueColor}"/>
     <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource LetsConnectYellowColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemHoverBrush" Color="{StaticResource LetsConnectMidBlueColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemPressedBrush" Color="{StaticResource LetsConnectPaleBlueColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource LetsConnectRedColor}"/>
     <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
 </ResourceDictionary>

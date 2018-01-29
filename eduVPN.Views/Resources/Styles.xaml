@@ -284,10 +284,10 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource ButtonHoverBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ListBoxItemHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{StaticResource ButtonPressedBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ListBoxItemPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>

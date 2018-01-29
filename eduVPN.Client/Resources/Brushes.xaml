@@ -41,6 +41,8 @@
     <SolidColorBrush x:Key="IconOutlineBrush" Color="{StaticResource eduVPNBlackColor}"/>
     <SolidColorBrush x:Key="ButtonHoverBrush" Color="{StaticResource eduVPNBlueLightColor}"/>
     <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource eduVPNOrangeColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemHoverBrush" Color="{StaticResource eduVPNBlueLightColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemPressedBrush" Color="{StaticResource eduVPNOrangeColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource eduVPNRedColor}"/>
     <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource eduVPNWhiteColor}"/>
 </ResourceDictionary>
