@@ -8,6 +8,20 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <Color x:Key="LetsConnectBlueColor">#FF1193F5</Color>
+    <Color x:Key="LetsConnectLightBlueColor">#FFCFEAFF</Color>
+    <Color x:Key="LetsConnectYellowColor">#FFFFFCBD</Color>
+    <Color x:Key="LetsConnectWhiteColor">#FFFFFFFF</Color>
+    <Color x:Key="LetsConnectGrayColor">#FF999999</Color>
+    <Color x:Key="LetsConnectRedColor">#FFE31B23</Color>
+
+    <Color x:Key="CheckboxSlotUncheckedColor">#FFFFFFFF</Color>
+    <Color x:Key="CheckboxSlotCheckedColor">#FFFFFFFF</Color>
+    <Color x:Key="CheckboxKnobUncheckedOutlineColor">#FFFFFFFF</Color>
+    <Color x:Key="CheckboxKnobUncheckedFillColor">#FF1193F5</Color>
+    <Color x:Key="CheckboxKnobCheckedOutlineColor">#FF1193F5</Color>
+    <Color x:Key="CheckboxKnobCheckedFillColor">#FFFFFFFF</Color>
+
     <SolidColorBrush x:Key="HeaderBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
     <SolidColorBrush x:Key="HeaderTextBrush" Color="{StaticResource LetsConnectBlueColor}"/>
     <SolidColorBrush x:Key="WindowBrush" Color="{StaticResource LetsConnectBlueColor}"/>
@@ -18,13 +32,6 @@
     <SolidColorBrush x:Key="IconOutlineBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
     <SolidColorBrush x:Key="ButtonHoverBrush" Color="{StaticResource LetsConnectLightBlueColor}"/>
     <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource LetsConnectYellowColor}"/>
-    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource eduVPNRedColor}"/>
-    <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource eduVPNWhiteColor}"/>
-
-    <Color x:Key="CheckboxSlotUncheckedColor">#FFFFFFFF</Color>
-    <Color x:Key="CheckboxSlotCheckedColor">#FFFFFFFF</Color>
-    <Color x:Key="CheckboxKnobUncheckedOutlineColor">#FFFFFFFF</Color>
-    <Color x:Key="CheckboxKnobUncheckedFillColor">#FF1193F5</Color>
-    <Color x:Key="CheckboxKnobCheckedOutlineColor">#FF1193F5</Color>
-    <Color x:Key="CheckboxKnobCheckedFillColor">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource LetsConnectRedColor}"/>
+    <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
 </ResourceDictionary>
