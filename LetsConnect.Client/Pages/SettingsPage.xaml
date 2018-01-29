@@ -83,7 +83,6 @@
             <TextBlock
                 Grid.Row="1"
                 Margin="0,2,0,0"
-                Style="{StaticResource TextBlockStyle}"
                 Text="{Binding Source={x:Static rescli:Strings.ConnectWizardTitle}, StringFormat={x:Static res:Strings.SettingsPageForceTCPDescription}}"/>
         </Grid>
 
@@ -125,7 +124,6 @@
 
                 <TextBlock
                     Margin="5,2"
-                    Style="{StaticResource TextBlockStyle}"
                     Text="{Binding Source={x:Static rescli:Strings.ConnectWizardTitle}, StringFormat={x:Static res:Strings.SettingsPageInterfaceDescription}}"/>
 
                 <ComboBox

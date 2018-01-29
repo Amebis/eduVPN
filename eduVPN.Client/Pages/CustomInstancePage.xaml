@@ -36,7 +36,6 @@
         <TextBlock
             VerticalAlignment="Center"
             Margin="5,5,0,5"
-            Style="{StaticResource TextBlockStyle}"
             Text="https://"/>
 
         <ComboBox
@@ -58,7 +57,6 @@
             Grid.Row="1"
             Margin="5"
             IsDefault="True"
-            Style="{StaticResource ButtonStyle}"
             AutomationProperties.Name="{x:Static res:Strings.ButtonNextTitleAlt}"
             Command="{Binding Path=SelectCustomInstance}"
             Click="Button_Click">

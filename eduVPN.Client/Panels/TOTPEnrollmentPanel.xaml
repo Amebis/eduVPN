@@ -31,7 +31,6 @@
             Margin="0,0,-3,0"
             VerticalAlignment="Center"
             Target="{Binding ElementName=Secret}"
-            Style="{StaticResource LabelStyle}"
             Content="{x:Static res:Strings.TOTPEnrollmentPanelSecretLabel}"/>
 
         <Grid Grid.Column="1">
@@ -80,7 +79,6 @@
             Margin="0,0,-3,0"
             VerticalAlignment="Center"
             Target="{Binding ElementName=Response}"
-            Style="{StaticResource LabelStyle}"
             Content="{x:Static res:Strings.TOTPEnrollmentPanelResponseLabel}"/>
 
         <TextBox

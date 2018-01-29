@@ -39,8 +39,16 @@
     <SolidColorBrush x:Key="LogoBlackBrush" Color="{StaticResource eduVPNBlackColor}"/>
     <SolidColorBrush x:Key="IconFillBrush" Color="{StaticResource eduVPNWhiteColor}"/>
     <SolidColorBrush x:Key="IconOutlineBrush" Color="{StaticResource eduVPNBlackColor}"/>
+
+    <SolidColorBrush x:Key="ButtonBrush" Color="{StaticResource eduVPNBlueColor}"/>
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="{StaticResource eduVPNWhiteColor}"/>
     <SolidColorBrush x:Key="ButtonHoverBrush" Color="{StaticResource eduVPNBlueLightColor}"/>
     <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource eduVPNOrangeColor}"/>
+
+    <SolidColorBrush x:Key="LinkButtonTextBrush" Color="{StaticResource eduVPNBlueColor}"/>
+    <SolidColorBrush x:Key="LinkButtonHoverBrush" Color="{StaticResource eduVPNBlueLightColor}"/>
+    <SolidColorBrush x:Key="LinkButtonPressedBrush" Color="{StaticResource eduVPNOrangeColor}"/>
+
     <SolidColorBrush x:Key="ListBoxItemHoverBrush" Color="{StaticResource eduVPNBlueLightColor}"/>
     <SolidColorBrush x:Key="ListBoxItemPressedBrush" Color="{StaticResource eduVPNOrangeColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource eduVPNRedColor}"/>

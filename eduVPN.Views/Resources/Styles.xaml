@@ -60,21 +60,18 @@
         Buttons
     -->
 
-    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
+    <Style TargetType="{x:Type Button}">
         <Setter Property="Width" Value="100"/>
         <Setter Property="Height" Value="32"/>
         <Setter Property="FontWeight" Value="{x:Static FontWeights.SemiBold}"/>
-        <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}"/>
-        <Setter Property="Background" Value="{x:Null}"/>
-        <Setter Property="BorderBrush" Value="{x:Null}"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <AdornerDecorator>
                         <Border
                             x:Name="Border"
-                            Background="{StaticResource HeaderBrush}"
+                            Background="{StaticResource ButtonBrush}"
                             CornerRadius="6">
                             <ContentPresenter
                                 Margin="3"
@@ -107,30 +104,24 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
+    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
-        <Setter Property="Background" Value="{x:Null}"/>
-        <Setter Property="BorderBrush" Value="{x:Null}"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{StaticResource LinkButtonTextBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <AdornerDecorator>
-                        <Border
-                            Background="{x:Null}">
-                            <ContentPresenter/>
-                        </Border>
+                        <ContentPresenter/>
                     </AdornerDecorator>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource ButtonHoverBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource LinkButtonHoverBrush}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource ButtonPressedBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource LinkButtonPressedBrush}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
@@ -144,11 +135,9 @@
     -->
 
     <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
     </Style>
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}"/>
 
     <Style x:Key="ListBoxItemTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -192,6 +181,7 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
+    <Style TargetType="{x:Type AccessText}" BasedOn="{StaticResource AccessTextStyle}" />
 
     <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}" BasedOn="{StaticResource AccessTextStyle}">
         <Setter Property="FontWeight" Value="{x:Static FontWeights.Normal}"/>
@@ -202,15 +192,13 @@
 
     <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
         <Style.Resources>
             <Style TargetType="AccessText">
-                <Setter Property="TextWrapping" Value="Wrap"/>
                 <Setter Property="Margin" Value="-5"/>
             </Style>
         </Style.Resources>
     </Style>
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}"/>
 
     <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
         <Setter Property="Foreground" Value="{StaticResource HeaderBrush}"/>
@@ -830,7 +818,6 @@
                                 Grid.ColumnSpan="2"
                                 Grid.Row="1"
                                 Margin="30,10"
-                                Style="{StaticResource TextBlockStyle}"
                                 Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                                 Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
@@ -941,7 +928,6 @@
                                 Grid.ColumnSpan="3"
                                 Grid.Row="1"
                                 Margin="30,10"
-                                Style="{StaticResource TextBlockStyle}"
                                 Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                                 Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
@@ -1029,7 +1015,6 @@
                                     <TextBlock
                                         Grid.Row="2"
                                         Margin="30,10"
-                                        Style="{StaticResource TextBlockStyle}"
                                         Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                                         Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
@@ -1078,7 +1063,7 @@
         <Setter Property="IsTabStop" Value="False"/>
     </Style>
 
-    <Style x:Key="ChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+    <Style x:Key="ChoiceButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="MinHeight" Value="90"/>
         <Setter Property="Template">

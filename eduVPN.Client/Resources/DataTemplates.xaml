@@ -249,15 +249,13 @@
 
                 <TextBlock
                     Margin="0,0,0,-1"
-                    Text="{Binding Path=DisplayName}"
-                    Style="{StaticResource TextBlockStyle}"/>
+                    Text="{Binding Path=DisplayName}"/>
 
                 <TextBlock
                     Grid.Row="1"
                     Margin="0,-1,0,0"
                     Text="{Binding Path=Instance.DisplayName}"
-                    FontSize="10"
-                    Style="{StaticResource TextBlockStyle}"/>
+                    FontSize="10"/>
             </Grid>
 
             <ContentControl

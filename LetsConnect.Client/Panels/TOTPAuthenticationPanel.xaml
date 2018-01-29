@@ -46,7 +46,6 @@
             <TextBlock
                 Grid.Column="1"
                 Margin="5,2,5,5"
-                Style="{StaticResource TextBlockStyle}"
                 Text="{x:Static res:Strings.TOTPAuthenticationPanelNote}"/>
         </Grid>
     </Grid>

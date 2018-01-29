@@ -32,8 +32,16 @@
     <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
     <SolidColorBrush x:Key="IconFillBrush" Color="{StaticResource LetsConnectBlueColor}"/>
     <SolidColorBrush x:Key="IconOutlineBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
+
+    <SolidColorBrush x:Key="ButtonBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="{StaticResource LetsConnectBlueColor}"/>
     <SolidColorBrush x:Key="ButtonHoverBrush" Color="{StaticResource LetsConnectLightBlueColor}"/>
     <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource LetsConnectYellowColor}"/>
+
+    <SolidColorBrush x:Key="LinkButtonTextBrush" Color="{StaticResource LetsConnectWhiteColor}"/>
+    <SolidColorBrush x:Key="LinkButtonHoverBrush" Color="{StaticResource LetsConnectLightBlueColor}"/>
+    <SolidColorBrush x:Key="LinkButtonPressedBrush" Color="{StaticResource LetsConnectYellowColor}"/>
+
     <SolidColorBrush x:Key="ListBoxItemHoverBrush" Color="{StaticResource LetsConnectMidBlueColor}"/>
     <SolidColorBrush x:Key="ListBoxItemPressedBrush" Color="{StaticResource LetsConnectPaleBlueColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource LetsConnectRedColor}"/>
