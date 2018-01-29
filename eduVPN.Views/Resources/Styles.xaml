@@ -500,6 +500,8 @@
     <Style x:Key="WindowStyle" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource WindowBorderBrush}"/>
