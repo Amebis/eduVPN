@@ -56,44 +56,6 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="BorderedControlStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
-        <Setter Property="Padding" Value="3"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Control}">
-                    <Border
-                        x:Name="Border"
-                        Background="{StaticResource WindowBrush}"
-                        BorderBrush="{StaticResource ControlBorderBrush}"
-                        BorderThickness="0,0,0,2">
-
-                        <ScrollViewer
-                            x:Name="PART_ContentHost"
-                            BorderThickness="0"
-                            IsTabStop="False"
-                            Padding="{TemplateBinding Padding}"/>
-                    </Border>
-
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="BorderBrush"
-                                Value="{StaticResource ControlBorderHoverBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="BorderBrush"
-                                Value="{StaticResource ControlBorderFocusBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
 
     <!--
         Buttons
@@ -227,7 +189,7 @@
     </Style>
 
     <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{StaticResource WindowHeadingBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource SectionLabelTextBrush}"/>
     </Style>
 
 
@@ -238,7 +200,7 @@
     <Style x:Key="VisualSeparatorStyle" TargetType="{x:Type Rectangle}">
         <Setter Property="Height" Value="1"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Fill" Value="{StaticResource HeaderBrush}"/>
+        <Setter Property="Fill" Value="{StaticResource SeparatorBrush}"/>
     </Style>
 
     <Style x:Key="ListBoxItemVisualSeparatorStyle" TargetType="{x:Type Rectangle}" BasedOn="{StaticResource VisualSeparatorStyle}">
@@ -253,7 +215,6 @@
     <!--
         List Boxes
     -->
-
     <Style x:Key="ListStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
@@ -311,9 +272,47 @@
         Text Boxes
     -->
 
-    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BorderedControlStyle}">
-        <Setter Property="SelectionBrush" Value="{StaticResource ControlSelectionBrush}" />
-        <Setter Property="CaretBrush" Value="{StaticResource ControlCursorBrush}"/>
+    <Style x:Key="TextBoxBaseStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Border
+                        x:Name="Border"
+                        Background="{StaticResource ControlBrush}"
+                        BorderBrush="{StaticResource ControlBorderBrush}"
+                        BorderThickness="0,0,0,2">
+
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            BorderThickness="0"
+                            IsTabStop="False"
+                            Padding="{TemplateBinding Padding}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="BorderBrush"
+                                Value="{StaticResource ControlBorderHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter
+                                TargetName="Border"
+                                Property="BorderBrush"
+                                Value="{StaticResource ControlBorderFocusBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxSelectionBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxCursorBrush}"/>
     </Style>
 
     <Style x:Key="CodeTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -321,16 +320,15 @@
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
-    <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource BorderedControlStyle}">
-        <Setter Property="SelectionBrush" Value="{StaticResource ControlSelectionBrush}" />
-        <Setter Property="CaretBrush" Value="{StaticResource ControlCursorBrush}"/>
+    <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
+        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxSelectionBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxCursorBrush}"/>
     </Style>
 
 
     <!--
         Combo Boxes
     -->
-
     <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
@@ -365,7 +363,6 @@
     <!--
         Status Bars
     -->
-
     <Style x:Key="InlineInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
