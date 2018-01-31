@@ -2,8 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.18...HEAD)
 
+- Let's Connect! client
 - Accessibility and screen reader support
-- GUI reinements
+- GUI refinements
 - Fixes and cleanups
 
 
