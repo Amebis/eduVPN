@@ -47,6 +47,8 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Fill="{StaticResource ErrorBrush}"
+                                Stroke="{StaticResource ErrorTextBrush}"
+                                StrokeThickness="0.5"
                                 ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
 
                             <TextBlock
