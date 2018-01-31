@@ -12,12 +12,12 @@
 "$(OUTPUT_DIR)\$(CFG)" :
 	if not exist $@ md $@
 
-"$(OUTPUT_DIR)\$(CFG)\eduVPN.wixobj" : "eduVPN.wxs"
+"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" : "$(CLIENT_TARGET).wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS) -out $@ $**
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\eduVPN.wixobj" del /f /q "$(OUTPUT_DIR)\$(CFG)\eduVPN.wixobj"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 "$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj" : "TAP-Windows.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**

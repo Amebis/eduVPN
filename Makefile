@@ -14,7 +14,8 @@ OPENVPN_VERSION=2.4.4.3
 OPENVPN_VERSION_GUID={EAA1D8B1-192B-4CF9-A94F-3565F33E0F7F}
 
 CORE_VERSION=1.0.19
-CORE_VERSION_GUID={78738805-E2DC-407B-89E7-A26D789BAF9E}
+EDUVPN_CORE_VERSION_GUID={78738805-E2DC-407B-89E7-A26D789BAF9E}
+LETSCONNECT_CORE_VERSION_GUID={062F3398-EA38-4BFF-B440-4A1D918B5D82}
 
 MSVC_VERSION=14.12.25810
 
@@ -39,7 +40,8 @@ WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo \
 	-deduVPN.TAPWinPre.Version="$(TAPWINPRE_VERSION)" -deduVPN.TAPWinPre.ProductGUID="$(TAPWINPRE_VERSION_GUID)" \
 	-deduVPN.OpenVPN.Version="$(OPENVPN_VERSION)" -deduVPN.OpenVPN.ProductGUID="$(OPENVPN_VERSION_GUID)" \
-	-deduVPN.Core.Version="$(CORE_VERSION)" -deduVPN.Core.ProductGUID="$(CORE_VERSION_GUID)" \
+	-deduVPN.Core.Version="$(CORE_VERSION)" -deduVPN.Core.ProductGUID="$(EDUVPN_CORE_VERSION_GUID)" \
+	-dLetsConnect.Core.Version="$(CORE_VERSION)" -dLetsConnect.Core.ProductGUID="$(LETSCONNECT_CORE_VERSION_GUID)" \
 	-deduVPN.Version="$(BUNDLE_VERSION)" \
 	$(WIX_EXTENSIONS)
 WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 $(WIX_EXTENSIONS)
@@ -194,8 +196,26 @@ SetupExe :: \
 	"$(SETUP_DIR)\eduVPNCore_$(CORE_VERSION)_x64.msi"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "eduVPN.wxl" -out $@ "$(OUTPUT_DIR)\Release\eduVPN.wixobj" "$(OUTPUT_DIR)\Release\TAP-Windows.wixobj"
 
+"$(OUTPUT_DIR)\Release\LetsConnectClient_$(BUNDLE_VERSION).exe" : \
+	"eduVPN.wxl" \
+	"eduVPN.Install\eduVPN.thm.wxl" \
+	"eduVPN.Install\eduVPN.thm.nl.wxl" \
+	"eduVPN.Install\eduVPN.thm.sl.wxl" \
+	"eduVPN.Install\eduVPN.thm.xml" \
+	"eduVPN.Install\eduVPN.logo.png" \
+	"$(OUTPUT_DIR)\Release\LetsConnect.wixobj" \
+	"$(OUTPUT_DIR)\Release\TAP-Windows.wixobj" \
+	"$(SETUP_DIR)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_x86.msi" \
+	"$(SETUP_DIR)\eduVPNTAPWinPre_$(TAPWINPRE_VERSION)_x64.msi" \
+	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_x86.msi" \
+	"$(SETUP_DIR)\eduVPNOpenVPN_$(OPENVPN_VERSION)_x64.msi" \
+	"$(SETUP_DIR)\LetsConnectCore_$(CORE_VERSION)_x86.msi" \
+	"$(SETUP_DIR)\LetsConnectCore_$(CORE_VERSION)_x64.msi"
+	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "eduVPN.wxl" -out $@ "$(OUTPUT_DIR)\Release\LetsConnect.wixobj" "$(OUTPUT_DIR)\Release\TAP-Windows.wixobj"
+
 Clean ::
-	-if exist "$(OUTPUT_DIR)\Release\eduVPNClient_*.exe" del /f /q "$(OUTPUT_DIR)\Release\eduVPNClient_*.exe"
+	-if exist "$(OUTPUT_DIR)\Release\eduVPNClient_*.exe"      del /f /q "$(OUTPUT_DIR)\Release\eduVPNClient_*.exe"
+	-if exist "$(OUTPUT_DIR)\Release\LetsConnectClient_*.exe" del /f /q "$(OUTPUT_DIR)\Release\LetsConnectClient_*.exe"
 
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 
@@ -214,6 +234,13 @@ Clean ::
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "eduVPN Client" /q "$(@:"=).tmp"
 	move /y "$(@:"=).tmp" $@ > NUL
 
+"$(SETUP_DIR)\LetsConnectClient_$(BUNDLE_VERSION).exe" : \
+	"$(OUTPUT_DIR)\Release\LetsConnectClient_$(BUNDLE_VERSION).exe" \
+	"$(OUTPUT_DIR)\Release\x86\Engine_eduVPNClient_$(BUNDLE_VERSION).exe"
+	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ab "$(OUTPUT_DIR)\Release\x86\Engine_LetsConnectClient_$(BUNDLE_VERSION).exe" "$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe" -o "$(@:"=).tmp"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "eduVPN Client" /q "$(@:"=).tmp"
+	move /y "$(@:"=).tmp" $@ > NUL
+
 !ELSE
 
 "$(SETUP_DIR)\eduVPNClient_$(BUNDLE_VERSION).exe" : "$(OUTPUT_DIR)\Release\eduVPNClient_$(BUNDLE_VERSION).exe"
@@ -228,6 +255,8 @@ Clean ::
 ######################################################################
 # Configuration specific rules
 ######################################################################
+
+CLIENT_TARGET=eduVPN
 
 CFG=Debug
 !INCLUDE "MakefileCfg.mak"
