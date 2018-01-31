@@ -427,80 +427,6 @@
     <SolidColorBrush x:Key="ComboBoxToggleButtonBrush" Color="{StaticResource ComboBoxToggleButtonColor}"/>
     <SolidColorBrush x:Key="ComboBoxToggleButtonHoverBrush" Color="{StaticResource ComboBoxToggleButtonHoverColor}"/>
 
-    <Style x:Key="ComboBoxToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-        <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="Focusable" Value="False"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <!-- Display button as text/content on hollow rounded rectangle with a triangle on the right. -->
-                    <AdornerDecorator>
-                        <Border
-                            x:Name="Border"
-                            Background="{StaticResource ControlBrush}"
-                            BorderBrush="{StaticResource ControlBorderBrush}"
-                            BorderThickness="1"
-                            CornerRadius="6">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ContentPresenter
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-
-                                <Canvas
-                                    Grid.Column="1"
-                                    Width="20" Height="20">
-                                    <Canvas.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleY="0.118" ScaleX="0.118"/>
-                                        </TransformGroup>
-                                    </Canvas.RenderTransform>
-                                    <Polygon
-                                        x:Name="Shape"
-                                        Fill="{StaticResource ComboBoxToggleButtonBrush}"
-                                        Points="131.41602,44.87598 85.03955,125.20215 38.66309,44.87598"/>
-                                </Canvas>
-                            </Grid>
-                        </Border>
-                    </AdornerDecorator>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Change border corner radius and button shape on checked. -->
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="CornerRadius"
-                                Value="6,6,0,0"/>
-                            <Setter
-                                TargetName="Shape"
-                                Property="Points"
-                                Value="38.66309,125.20215 85.03955,44.87598 131.41602,125.20215"/>
-                        </Trigger>
-
-                        <!-- Change button border and button fill on mouse over. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="BorderBrush"
-                                Value="{StaticResource ControlBorderHoverBrush}"/>
-                            <Setter
-                                TargetName="Shape"
-                                Property="Fill"
-                                Value="{StaticResource ComboBoxToggleButtonHoverBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="ComboBoxEditableToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource ComboBoxToggleButtonBrush}"/>
         <Setter Property="IsTabStop" Value="False"/>
@@ -561,22 +487,87 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Grid>
+                    <Grid
+                        x:Name="OuterGrid"
+                        SnapsToDevicePixels="True">
                         <!-- Display combo-box as a toggle button with a drop-down menu. -->
                         <ToggleButton
-                            x:Name="Border"
+                            x:Name="Button"
                             IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Foreground="{StaticResource ControlTextBrush}"
+                            BorderBrush="{StaticResource ControlBorderBrush}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Style="{StaticResource ComboBoxToggleButtonStyle}">
-                            <ContentControl>
-                                <ContentPresenter
-                                    Margin="{TemplateBinding Padding}"
-                                    ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                    ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                    Content="{TemplateBinding SelectionBoxItem}"
-                                    ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"/>
-                            </ContentControl>
+                            IsTabStop="False"
+                            Focusable="False"
+                            SnapsToDevicePixels="True">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <!-- Display button as text/content on hollow rounded rectangle with a triangle on the right. -->
+                                    <AdornerDecorator>
+                                        <Border
+                                            x:Name="Border"
+                                            Background="{StaticResource ControlBrush}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="6">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                                                <Canvas
+                                                    Grid.Column="1"
+                                                    Width="20" Height="20">
+                                                    <Canvas.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleY="0.118" ScaleX="0.118"/>
+                                                        </TransformGroup>
+                                                    </Canvas.RenderTransform>
+                                                    <Polygon
+                                                        x:Name="Shape"
+                                                        Fill="{StaticResource ComboBoxToggleButtonBrush}"
+                                                        Points="131.41602,44.87598 85.03955,125.20215 38.66309,44.87598"/>
+                                                </Canvas>
+                                            </Grid>
+                                        </Border>
+                                    </AdornerDecorator>
+
+                                    <ControlTemplate.Triggers>
+                                        <!-- Change border corner radius and button shape on checked. -->
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter
+                                                TargetName="Border"
+                                                Property="CornerRadius"
+                                                Value="6,6,0,0"/>
+                                            <Setter
+                                                TargetName="Shape"
+                                                Property="Points"
+                                                Value="38.66309,125.20215 85.03955,44.87598 131.41602,125.20215"/>
+                                        </Trigger>
+
+                                        <!-- Change button fill on mouse over. -->
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter
+                                                TargetName="Shape"
+                                                Property="Fill"
+                                                Value="{StaticResource ComboBoxToggleButtonHoverBrush}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                Content="{TemplateBinding SelectionBoxItem}"
+                                ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"/>
                         </ToggleButton>
 
                         <Popup
@@ -585,10 +576,10 @@
                             Style="{StaticResource ComboBoxPopupStyle}">
                             <Border
                                 MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                MinWidth="{Binding ActualWidth, ElementName=Border}"
+                                MinWidth="{Binding ActualWidth, ElementName=OuterGrid}"
                                 HorizontalAlignment="Stretch"
                                 Background="{StaticResource ControlBrush}"
-                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                BorderBrush="{StaticResource ControlBorderFocusBrush}"
                                 BorderThickness="1">
                                 <ScrollViewer>
                                     <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
@@ -596,6 +587,22 @@
                             </Border>
                         </Popup>
                     </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Change button border on mouse over or keyboard focus. -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter
+                                TargetName="Button"
+                                Property="BorderBrush"
+                                Value="{StaticResource ControlBorderHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter
+                                TargetName="Button"
+                                Property="BorderBrush"
+                                Value="{StaticResource ControlBorderFocusBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -606,7 +613,9 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ComboBox}">
-                            <Grid>
+                            <Grid
+                                x:Name="OuterGrid"
+                                SnapsToDevicePixels="True">
                                 <!-- Display combo-box as an underlined text box and a drop-down menu. -->
                                 <Border
                                     x:Name="Border"
@@ -652,10 +661,10 @@
                                     Style="{StaticResource ComboBoxPopupStyle}">
                                     <Border
                                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                        MinWidth="{Binding ActualWidth, ElementName=Border}"
+                                        MinWidth="{Binding ActualWidth, ElementName=OuterGrid}"
                                         HorizontalAlignment="Stretch"
                                         Background="{StaticResource ControlBrush}"
-                                        BorderBrush="{StaticResource ControlBorderBrush}"
+                                        BorderBrush="{StaticResource ControlBorderFocusBrush}"
                                         BorderThickness="1">
                                         <ScrollViewer>
                                             <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
