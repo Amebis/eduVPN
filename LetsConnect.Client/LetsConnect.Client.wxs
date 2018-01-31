@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    eduVPN - End-user friendly VPN
+    Let's Connect! - End-user friendly VPN
 
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
@@ -18,8 +18,8 @@
                 <Shortcut
                     Id="LetsConnect.Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
-                    Name="eduVPN Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="1"
-                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
+                    Name="Lets Connect Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
+                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="102"
                     Target="LetsConnect.Client"
                     WorkingDirectory="BINDIR"
                     Icon="App.ico"/>
@@ -32,13 +32,13 @@
                 <Shortcut
                     Id="LetsConnect.Client.exe.DesktopShortcut"
                     Directory="DesktopFolder"
-                    Name="eduVPN Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="1"
-                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
+                    Name="Lets Connect Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
+                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="102"
                     Target="[BINDIR]LetsConnect.Client.exe"
                     WorkingDirectory="BINDIR"
                     Icon="App.ico"/>
                 <RemoveFolder Id="LetsConnect.Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
-                <RegistryValue Root="HKCU" Key="SOFTWARE\org.eduvpn.app" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                <RegistryValue Root="HKCU" Key="SOFTWARE\nl.letsconnect.app" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
             -->
         </DirectoryRef>
