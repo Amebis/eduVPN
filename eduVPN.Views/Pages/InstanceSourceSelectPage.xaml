@@ -1,0 +1,102 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<pages:ConnectWizardPage
+    x:Class="eduVPN.Views.Pages.InstanceSourceSelectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:pages="clr-namespace:eduVPN.Views.Pages"
+    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Title="{Binding Path=Title}"
+    Description="{Binding Path=Description}"
+    AutomationProperties.HelpText="{Binding Path=Description}"
+    Style="{StaticResource ConnectWizardPageStyle}">
+
+    <Grid
+        VerticalAlignment="Top"
+        Style="{StaticResource PageContentGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button
+            Margin="5"
+            Style="{StaticResource ChoiceButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=SelectInstanceSource}"
+            CommandParameter="{x:Static model:InstanceSourceType.SecureInternet}"
+            Visibility="{Binding Path=Wizard.InstanceSources[1].ConnectingInstance, Converter={StaticResource InstanceSourceInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Visible}}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Margin="13"
+                    Style="{StaticResource ChoiceIconStyle}"
+                    Source="pack://application:,,,/Resources/SecureInternetButton.png"/>
+
+                <AccessText
+                    Grid.Column="1"
+                    Margin="10"
+                    Style="{StaticResource ChoiceNoteStyle}"
+                    Text="{x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle}"/>
+            </Grid>
+        </Button>
+
+        <Button
+            Grid.Row="1"
+            Margin="5"
+            Style="{StaticResource ChoiceButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=SelectInstanceSource}"
+            CommandParameter="{x:Static model:InstanceSourceType.InstituteAccess}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Margin="13"
+                    Style="{StaticResource ChoiceIconStyle}"
+                    Source="pack://application:,,,/Resources/InstituteAccessButton.png"/>
+
+                <AccessText
+                    Grid.Column="1"
+                    Margin="10"
+                    Style="{StaticResource ChoiceNoteStyle}"
+                    Text="{x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}"/>
+            </Grid>
+        </Button>
+
+        <Button
+            Grid.Row="2"
+            Margin="5"
+            Style="{StaticResource LinkButtonStyle}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageCustomButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Path=SelectCustomInstance}">
+            <AccessText Text="{x:Static res:Strings.InstanceSourcePageCustomButtonTitle}"/>
+        </Button>
+    </Grid>
+</pages:ConnectWizardPage>

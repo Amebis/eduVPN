@@ -16,6 +16,13 @@ namespace eduVPN.Client
     /// </summary>
     public partial class App : Views.App
     {
+        #region Properties
+
+        /// <inheritdoc/>
+        public override string ClientTitle { get => Client.Resources.Strings.ConnectWizardTitle; }
+
+        #endregion
+
         #region Methods
 
         /// <summary>

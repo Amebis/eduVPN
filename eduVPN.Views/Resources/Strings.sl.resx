@@ -402,4 +402,9 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Odgovor</value>
   </data>
+  <data name="AboutPageAppBannerTitle" xml:space="preserve">
+    <value>{0}
+Omogoča SURFnet</value>
+    <comment>{0}=Client name</comment>
+  </data>
 </root>

@@ -8,6 +8,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <SolidColorBrush x:Key="IconFillBrush" Color="{StaticResource WindowColor}"/>
+    <SolidColorBrush x:Key="IconOutlineBrush" Color="{StaticResource WindowTextColor}"/>
+
     <DataTemplate x:Key="ExclamationIcon">
         <Canvas Width="22" Height="22">
             <Canvas.RenderTransform>

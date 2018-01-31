@@ -61,16 +61,6 @@ namespace LetsConnect.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let&apos;s Connect!
-        ///Powered by SURFnet.
-        /// </summary>
-        public static string AboutPageAppBannerTitle {
-            get {
-                return ResourceManager.GetString("AboutPageAppBannerTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Let&apos;s Connect!.
         /// </summary>
         public static string ConnectWizardTitle {

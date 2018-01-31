@@ -61,16 +61,6 @@ namespace eduVPN.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eduVPN
-        ///Powered by SURFnet.
-        /// </summary>
-        public static string AboutPageAppBannerTitle {
-            get {
-                return ResourceManager.GetString("AboutPageAppBannerTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to eduVPN.
         /// </summary>
         public static string ConnectWizardTitle {

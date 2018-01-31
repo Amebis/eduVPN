@@ -43,78 +43,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Pages\AuthenticatingInstituteSelectPage.xaml.cs">
-      <DependentUpon>AuthenticatingInstituteSelectPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AuthenticatingCountrySelectPage.xaml.cs">
-      <DependentUpon>AuthenticatingCountrySelectPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SelfUpdatingPage.xaml.cs">
-      <DependentUpon>SelfUpdatingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\TOTPEnrollmentPanel.xaml.cs">
-      <DependentUpon>TOTPEnrollmentPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\SelfUpdatePopup.xaml.cs">
-      <DependentUpon>SelfUpdatePopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingInstanceProfileSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingInstanceProfileSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingProfileSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingInstanceSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingInstanceSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ConnectingProfileSelectPage.xaml.cs">
-      <DependentUpon>ConnectingProfileSelectPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\YubiKeyAuthenticationPanel.xaml.cs">
-      <DependentUpon>YubiKeyAuthenticationPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\TwoFactorEnrollmentPopup.xaml.cs">
-      <DependentUpon>TwoFactorEnrollmentPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\TwoFactorAuthenticationPopup.xaml.cs">
-      <DependentUpon>TwoFactorAuthenticationPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\UsernamePasswordPopup.xaml.cs">
-      <DependentUpon>UsernamePasswordPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\PasswordPopup.xaml.cs">
-      <DependentUpon>PasswordPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\TOTPAuthenticationPanel.xaml.cs">
-      <DependentUpon>TOTPAuthenticationPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AboutPage.xaml.cs">
-      <DependentUpon>AboutPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\RecentConfigurationSelectPage.xaml.cs">
-      <DependentUpon>RecentConfigurationSelectPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\InitializingPage.xaml.cs">
-      <DependentUpon>InitializingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\StatusPage.xaml.cs">
-      <DependentUpon>StatusPage.xaml</DependentUpon>
-    </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Brushes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\DataTemplates.xaml">
+    <Page Include="Resources\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,125 +55,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AuthenticatingInstituteSelectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\AuthenticatingCountrySelectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\SelfUpdatingPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\TOTPEnrollmentPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\SelfUpdatePopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\ConnectingInstanceProfileSelectPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\ConnectingProfileSelectPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\ConnectingInstanceSelectPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ConnectingProfileSelectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\YubiKeyAuthenticationPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\TwoFactorEnrollmentPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\TwoFactorAuthenticationPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\UsernamePasswordPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\PasswordPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\ConnectingInstanceAndProfileSelectPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Panels\TOTPAuthenticationPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AboutPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\SettingsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\RecentConfigurationSelectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\InitializingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\InstanceSourceSelectPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\AuthorizationPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\ConnectWizard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Pages\InstanceSourceSelectPage.xaml.cs">
-      <DependentUpon>InstanceSourceSelectPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\AuthorizationPopup.xaml.cs">
-      <DependentUpon>AuthorizationPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ConnectWizard.xaml.cs">
-      <DependentUpon>ConnectWizard.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Pages\CustomInstancePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\StatusPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\CustomInstancePage.xaml.cs">
-      <DependentUpon>CustomInstancePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -264,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\App.ico" />
-    <Resource Include="Resources\Logo.png" />
+    <Resource Include="Resources\App.png" />
     <Resource Include="Resources\InstituteAccessButton.png" />
     <Resource Include="Resources\InstituteAccess.png" />
     <Resource Include="Resources\SecureInternetButton.png" />

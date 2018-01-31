@@ -405,4 +405,9 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
   </data>
+  <data name="AboutPageAppBannerTitle" xml:space="preserve">
+    <value>{0}
+Powered by SURFnet</value>
+    <comment>{0}=Client name</comment>
+  </data>
 </root>

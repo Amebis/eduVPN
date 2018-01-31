@@ -1,0 +1,176 @@
+﻿<!--
+    eduVPN - End-user friendly VPN
+
+    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<windows:Window
+    x:Class="eduVPN.Views.Windows.ConnectWizard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    xmlns:pages="clr-namespace:eduVPN.Views.Pages"
+    xmlns:windows="clr-namespace:eduVPN.Views.Windows"
+    xmlns:vmwindows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
+    xmlns:vmpages="clr-namespace:eduVPN.ViewModels.Pages;assembly=eduVPN"
+    mc:Ignorable="d"
+    Title="{Binding Path=ClientTitle, Source={x:Static Application.Current}}"
+    Height="460"
+    Width="300"
+    Icon="{Binding Path=ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIconInitializingImage}}"
+    Style="{StaticResource WindowStyle}">
+
+    <Window.DataContext>
+        <vmwindows:ConnectWizard/>
+    </Window.DataContext>
+
+    <Window.Template>
+        <ControlTemplate
+            TargetType="{x:Type windows:Window}">
+            <Border
+                BorderBrush="{StaticResource WindowBorderBrush}"
+                BorderThickness="1">
+                <AdornerDecorator>
+                    <Grid
+                        Background="{StaticResource WindowBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Border
+                            Grid.ColumnSpan="3"
+                            Background="{StaticResource WindowHeaderBrush}"/>
+
+                        <Image
+                            Width="28" Height="28"
+                            Source="pack://application:,,,/Resources/App.png"
+                            RenderOptions.BitmapScalingMode="Fant"/>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="0,5"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Text="{Binding Path=ClientTitle, Source={x:Static Application.Current}}"/>
+
+                        <Button
+                            Grid.Column="2"
+                            Margin="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            IsCancel="True"
+                            Style="{StaticResource HeaderButtonStyle}"
+                            AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}"
+                            Click="Hide_Click">
+                            <Canvas Width="12" Height="12">
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="0.071" ScaleX="0.071"/>
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
+                                <Polygon
+                                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                    Points="147.74561,34.36035 135.71924,22.33301 85.03955,73.0127 34.35986,22.33301 22.3335,34.36035 73.0127,85.03906 22.3335,135.71875 34.35986,147.74609 85.03955,97.06641 135.71924,147.74609 147.74561,135.71875 97.06641,85.03906 "/>
+                            </Canvas>
+                        </Button>
+
+                        <ContentPresenter
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"/>
+                    </Grid>
+                </AdornerDecorator>
+            </Border>
+        </ControlTemplate>
+    </Window.Template>
+
+    <Window.Resources>
+        <!-- Page view model to view mapping -->
+        <DataTemplate DataType="{x:Type vmpages:InitializingPage}">
+            <pages:InitializingPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:InstanceSourceSelectPage}">
+            <pages:InstanceSourceSelectPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:AuthenticatingCountrySelectPage}">
+            <pages:AuthenticatingCountrySelectPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:AuthenticatingInstituteSelectPage}">
+            <pages:AuthenticatingInstituteSelectPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:CustomInstancePage}">
+            <pages:CustomInstancePage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:RecentConfigurationSelectPage}">
+            <pages:RecentConfigurationSelectPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:ConnectingProfileSelectPage}">
+            <pages:ConnectingProfileSelectPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:StatusPage}">
+            <pages:StatusPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:SettingsPage}">
+            <pages:SettingsPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:AboutPage}">
+            <pages:AboutPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmpages:SelfUpdatingPage}">
+            <pages:SelfUpdatingPage/>
+        </DataTemplate>
+
+        <ContextMenu x:Key="SystemTrayMenu">
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuOpen}"
+                Click="Open_Click"
+                FontWeight="Bold"/>
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuStatus}"
+                Command="{Binding Path=SessionInfo}"
+                Click="Open_Click"/>
+            <Separator/>
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuSettings}"
+                Command="{Binding Path=NavigateTo}"
+                CommandParameter="{Binding Path=SettingsPage}"
+                Click="Open_Click"/>
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuAbout}"
+                Command="{Binding Path=NavigateTo}"
+                CommandParameter="{Binding Path=AboutPage}"
+                Click="Open_Click"/>
+            <Separator/>
+            <MenuItem
+                Header="{x:Static res:Strings.SystemTrayMenuExit}"
+                Click="Exit_Click"/>
+        </ContextMenu>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Control
+            Style="{StaticResource ErrorStatusBarStyle}"/>
+
+        <DockPanel
+            Grid.Row="1">
+            <Frame
+                NavigationUIVisibility="Hidden"
+                IsTabStop="False"
+                Content="{Binding Path=CurrentPage}"
+                AutomationProperties.Name="{Binding Path=CurrentPage.Title}"
+                AutomationProperties.HelpText="{Binding Path=CurrentPage.Description}">
+            </Frame>
+        </DockPanel>
+    </Grid>
+</windows:Window>

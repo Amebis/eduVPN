@@ -61,6 +61,16 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}
+        ///Powered by SURFnet.
+        /// </summary>
+        public static string AboutPageAppBannerTitle {
+            get {
+                return ResourceManager.GetString("AboutPageAppBannerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copyright © 2017
         ///The Commons Conservancy eduVPN Programme.
         /// </summary>

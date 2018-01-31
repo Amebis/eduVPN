@@ -15,6 +15,13 @@ namespace LetsConnect.Client
     /// </summary>
     public partial class App : eduVPN.Views.App
     {
+        #region Properties
+
+        /// <inheritdoc/>
+        public override string ClientTitle { get => Client.Resources.Strings.ConnectWizardTitle; }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
