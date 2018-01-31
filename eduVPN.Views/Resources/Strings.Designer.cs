@@ -378,11 +378,20 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add _another provider.
+        ///   Looks up a localized string similar to Add _another.
         /// </summary>
         public static string RecentConfigurationSelectPageAddButtonTitle {
             get {
                 return ResourceManager.GetString("RecentConfigurationSelectPageAddButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added VPN Profiles.
+        /// </summary>
+        public static string RecentConfigurationSelectPageConnectionListTitle {
+            get {
+                return ResourceManager.GetString("RecentConfigurationSelectPageConnectionListTitle", resourceCulture);
             }
         }
         

@@ -226,7 +226,7 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Password</value>
   </data>
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
-    <value>Add _another provider</value>
+    <value>Add _another</value>
   </data>
   <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
     <value>Institute Access</value>
@@ -405,5 +405,8 @@ If you continue, your user settings will be reset to the default.</value>
     <value>{0}
 Powered by SURFnet</value>
     <comment>{0}=Client name</comment>
+  </data>
+  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
+    <value>Added VPN Profiles</value>
   </data>
 </root>

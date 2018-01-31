@@ -52,6 +52,21 @@ namespace eduVPN.ViewModels.Windows
         private InstanceSource[] _instance_sources;
 
         /// <summary>
+        /// Are instance sources available?
+        /// </summary>
+        public bool HasInstanceSources
+        {
+            get
+            {
+                for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
+                    if (InstanceSources[source_index] != null && InstanceSources[source_index].InstanceList.Count > 0)
+                        return true;
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Selected instance source
         /// </summary>
         /// <remarks>This property is used in a process of adding new instance/profile.</remarks>
@@ -454,22 +469,10 @@ namespace eduVPN.ViewModels.Windows
                     if (InstanceSources[source_index]?.ConnectingInstance != null)
                         return RecentConfigurationSelectPage;
 
-                return AddConnectionPage;
-            }
-        }
-
-        /// <summary>
-        /// Add another instance or profile of the wizard
-        /// </summary>
-        public ConnectWizardPage AddConnectionPage
-        {
-            get
-            {
-                for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
-                    if (InstanceSources[source_index] != null && InstanceSources[source_index].InstanceList.Count > 0)
-                        return InstanceSourceSelectPage;
-
-                return CustomInstancePage;
+                if (HasInstanceSources)
+                    return InstanceSourceSelectPage;
+                else
+                    return CustomInstancePage;
             }
         }
 
@@ -774,8 +777,8 @@ namespace eduVPN.ViewModels.Windows
                         return;
 
                     // Proceed to the "first" page.
+                    RaisePropertyChanged(nameof(HasInstanceSources));
                     RaisePropertyChanged(nameof(StartingPage));
-                    RaisePropertyChanged(nameof(AddConnectionPage));
                     CurrentPage = StartingPage;
                 }
                 finally { ChangeTaskCount(-1); }

@@ -229,7 +229,7 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Wachtwoord</value>
   </data>
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
-    <value>_Andere provider toevoegen</value>
+    <value>_Andere toevoegen</value>
     <comment>Fuzzy</comment>
   </data>
   <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">

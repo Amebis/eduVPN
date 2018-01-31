@@ -48,7 +48,12 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             Wizard.ChangeTaskCount(+1);
-                            try { Wizard.CurrentPage = Wizard.AddConnectionPage; }
+                            try {
+                                if (Wizard.HasInstanceSources)
+                                    Wizard.CurrentPage = Wizard.InstanceSourceSelectPage;
+                                else
+                                    Wizard.CurrentPage = Wizard.CustomInstancePage;
+                            }
                             catch (Exception ex) { Wizard.Error = ex; }
                             finally { Wizard.ChangeTaskCount(-1); }
                         });

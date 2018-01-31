@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Controls\ImageWithFallback.cs" />
+    <Compile Include="Converters\BooleanInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\CommandRowHeightConverter.cs" />
     <Compile Include="Converters\CommandVisibilityConverter.cs" />
     <Compile Include="Converters\ConnectingInstanceEqualVisibilityConverter.cs" />

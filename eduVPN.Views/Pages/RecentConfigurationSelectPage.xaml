@@ -50,7 +50,8 @@
             </Grid.RowDefinitions>
 
             <Grid
-                Margin="0,3">
+                Margin="0,3"
+                Visibility="{Binding Path=Wizard.HasInstanceSources, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="24"/>
                     <ColumnDefinition/>
@@ -98,7 +99,8 @@
             </Grid.RowDefinitions>
             
             <Grid
-                Margin="0,3">
+                Margin="0,3"
+                Visibility="{Binding Path=Wizard.HasInstanceSources, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="24"/>
                     <ColumnDefinition/>
@@ -123,6 +125,27 @@
 
                 <Rectangle
                     Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Margin="5,2"
+                    Style="{StaticResource VisualSeparatorStyle}"/>
+            </Grid>
+
+            <Grid
+                Margin="0,3"
+                Visibility="{Binding Path=Wizard.HasInstanceSources, Converter={StaticResource BooleanInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Visible}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label
+                    Name="ConnectionListLabel"
+                    Margin="0,-3"
+                    Target="{Binding ElementName=InstituteAccess}"
+                    Style="{StaticResource SectionLabelStyle}"
+                    Content="{x:Static res:Strings.RecentConfigurationSelectPageConnectionListTitle}"/>
+
+                <Rectangle
                     Grid.Row="1"
                     Margin="5,2"
                     Style="{StaticResource VisualSeparatorStyle}"/>

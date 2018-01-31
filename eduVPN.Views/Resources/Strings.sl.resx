@@ -227,7 +227,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Geslo</value>
   </data>
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
-    <value>Dodaj drugeg_a ponudnika</value>
+    <value>Dodaj drugeg_a</value>
   </data>
   <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
     <value>Dostop do ustanove</value>
@@ -406,5 +406,8 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>{0}
 Omogoča SURFnet</value>
     <comment>{0}=Client name</comment>
+  </data>
+  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
+    <value>Dodani profili VPN</value>
   </data>
 </root>
