@@ -114,11 +114,19 @@ namespace eduVPN.Views.Windows
 
             // Create notify icon, set default icon, and setup events.
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
-            _tray_icon = new System.Windows.Forms.NotifyIcon();
-            _tray_icon.Icon = _icons[view_model.ActiveSession.State];
+            _tray_icon = new System.Windows.Forms.NotifyIcon()
+            {
+                Text = String.Format(
+                    view_model.ActiveSession.ConnectingProfile != null ? "{1} - {2}\r\n{3}" : "{0}",
+                    ((App)Application.Current).ClientTitle,
+                    view_model.ActiveSession.ConnectingProfile?.Instance,
+                    view_model.ActiveSession.ConnectingProfile,
+                    view_model.ActiveSession.StateDescription).Left(63),
+                Icon = _icons[view_model.ActiveSession.State]
+            };
             _tray_icon.Click += TrayIcon_Click;
 
-            // Bind to "ActiveSession.State" property to keep tray icon up-to-date.
+            // Bind to "ActiveSession.StateDescription" and "ActiveSession.State" property to keep tray icon up-to-date.
             view_model.PropertyChanged += (object sender, PropertyChangedEventArgs e2) =>
             {
                 if (e2.PropertyName == nameof(view_model.ActiveSession))
@@ -128,19 +136,33 @@ namespace eduVPN.Views.Windows
                         // Active session changed: Bind to the session for property changes.
                         view_model.ActiveSession.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
                         {
-                            if (e_Session.PropertyName == nameof(view_model.ActiveSession.State))
+                            switch (e_Session.PropertyName)
                             {
-                                _tray_icon.Icon = _icons[view_model.ActiveSession.State];
+                                case nameof(view_model.ActiveSession.ConnectingProfile):
+                                case nameof(view_model.ActiveSession.StateDescription):
+                                    _tray_icon.Text = String.Format(
+                                        view_model.ActiveSession.ConnectingProfile != null ? "{1} - {2}\r\n{3}" : "{0}",
+                                        ((App)Application.Current).ClientTitle,
+                                        view_model.ActiveSession.ConnectingProfile?.Instance,
+                                        view_model.ActiveSession.ConnectingProfile,
+                                        view_model.ActiveSession.StateDescription).Left(63);
+                                    break;
 
-                                if (view_model.ActiveSession.State == VPNSessionStatusType.Connected && !IsVisible)
-                                {
-                                    // Client connected while "minimized". Popup the balloon message.
-                                    _tray_icon.ShowBalloonTip(
-                                        5000,
-                                        String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
-                                        String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
-                                        System.Windows.Forms.ToolTipIcon.Info);
-                                }
+                                case nameof(view_model.ActiveSession.State):
+                                    {
+                                        _tray_icon.Icon = _icons[view_model.ActiveSession.State];
+
+                                        if (view_model.ActiveSession.State == VPNSessionStatusType.Connected && !IsVisible)
+                                        {
+                                            // Client connected while "minimized". Popup the balloon message.
+                                            _tray_icon.ShowBalloonTip(
+                                                5000,
+                                                String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
+                                                String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
+                                                System.Windows.Forms.ToolTipIcon.Info);
+                                        }
+                                    }
+                                    break;
                             }
                         };
                     }
