@@ -259,7 +259,7 @@
 
     <Style x:Key="TextBoxBaseStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Padding" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
@@ -270,14 +270,14 @@
                         x:Name="Border"
                         Background="{StaticResource ControlBrush}"
                         BorderBrush="{StaticResource ControlBorderBrush}"
-                        BorderThickness="0,0,0,2">
+                        BorderThickness="0,0,0,2"
+                        SnapsToDevicePixels="True">
                         <ScrollViewer
                             x:Name="PART_ContentHost"
-                            BorderThickness="0"
-                            IsTabStop="False"
+                            Focusable="False"
                             Padding="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -610,7 +610,8 @@
                                     x:Name="Border"
                                     Background="{StaticResource ControlBrush}"
                                     BorderBrush="{StaticResource ControlBorderBrush}"
-                                    BorderThickness="0,0,0,2">
+                                    BorderThickness="0,0,0,2"
+                                    SnapsToDevicePixels="True">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
@@ -628,11 +629,10 @@
                                                     <!-- Display combo-box text boxes without any decoration. -->
                                                     <ScrollViewer
                                                         x:Name="PART_ContentHost"
-                                                        BorderThickness="0"
-                                                        IsTabStop="False"
+                                                        Focusable="False"
                                                         Padding="{TemplateBinding Padding}"
-                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                                 </ControlTemplate>
                                             </TextBox.Template>
                                         </TextBox>
