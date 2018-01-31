@@ -253,12 +253,6 @@
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
     <value>Verbinden</value>
   </data>
-  <data name="CustomInstancePageDescription" xml:space="preserve">
-    <value>Voer de servernaam van je VPN-provider in.</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Andere server</value>
-  </data>
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiseren...</value>
   </data>

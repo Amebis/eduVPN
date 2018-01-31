@@ -149,12 +149,6 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
     <value>_Dismiss Error</value>
   </data>
-  <data name="ButtonNextTitle" xml:space="preserve">
-    <value>_Next &gt;</value>
-  </data>
-  <data name="ButtonNextTitleAlt" xml:space="preserve">
-    <value>Next</value>
-  </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
   </data>
@@ -408,5 +402,8 @@ Powered by SURFnet</value>
   </data>
   <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
     <value>Added VPN Profiles</value>
+  </data>
+  <data name="ButtonConnectTitle" xml:space="preserve">
+    <value>_Connect!</value>
   </data>
 </root>

@@ -17,7 +17,6 @@
     d:DesignWidth="298"
     d:DesignHeight="373"
     Title="{Binding Path=Title}"
-    Description="{Binding Path=Description}"
     AutomationProperties.HelpText="{Binding Path=Description}"
     Style="{StaticResource ConnectWizardPageStyle}">
 
@@ -35,7 +34,7 @@
 
         <TextBlock
             VerticalAlignment="Center"
-            Margin="5,5,0,5"
+            Margin="5,5,0,8.5"
             Text="https://"/>
 
         <ComboBox
@@ -56,10 +55,10 @@
             Grid.Row="1"
             Margin="5"
             IsDefault="True"
-            AutomationProperties.Name="{x:Static res:Strings.ButtonNextTitleAlt}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonConnectTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=SelectCustomInstance}"
             Click="Button_Click">
-            <AccessText Text="{x:Static res:Strings.ButtonNextTitle}"/>
+            <AccessText Text="{x:Static res:Strings.ButtonConnectTitle}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>

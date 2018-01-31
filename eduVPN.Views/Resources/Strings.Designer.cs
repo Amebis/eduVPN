@@ -144,6 +144,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Connect!.
+        /// </summary>
+        public static string ButtonConnectTitle {
+            get {
+                return ResourceManager.GetString("ButtonConnectTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Copy Error Text.
         /// </summary>
         public static string ButtonCopyErrorTitle {
@@ -158,24 +167,6 @@ namespace eduVPN.Views.Resources {
         public static string ButtonDismissErrorTitle {
             get {
                 return ResourceManager.GetString("ButtonDismissErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Next &gt;.
-        /// </summary>
-        public static string ButtonNextTitle {
-            get {
-                return ResourceManager.GetString("ButtonNextTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Next.
-        /// </summary>
-        public static string ButtonNextTitleAlt {
-            get {
-                return ResourceManager.GetString("ButtonNextTitleAlt", resourceCulture);
             }
         }
         

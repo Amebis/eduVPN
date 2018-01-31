@@ -28,12 +28,6 @@ namespace eduVPN.ViewModels.Pages
             get { return Resources.Strings.CustomInstancePageTitle; }
         }
 
-        /// <inheritdoc/>
-        public override string Description
-        {
-            get { return Resources.Strings.CustomInstancePageDescription; }
-        }
-
         /// <summary>
         /// Instance host name
         /// </summary>

@@ -97,16 +97,7 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter hostname of your VPN provider..
-        /// </summary>
-        internal static string CustomInstancePageDescription {
-            get {
-                return ResourceManager.GetString("CustomInstancePageDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Other Address.
+        ///   Looks up a localized string similar to Enter URL of your Provider.
         /// </summary>
         internal static string CustomInstancePageTitle {
             get {

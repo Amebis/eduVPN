@@ -410,4 +410,7 @@ Omogoča SURFnet</value>
   <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
     <value>Dodani profili VPN</value>
   </data>
+  <data name="ButtonConnectTitle" xml:space="preserve">
+    <value>_Poveži!</value>
+  </data>
 </root>
