@@ -413,4 +413,7 @@ Omogoča SURFnet</value>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Poveži!</value>
   </data>
+  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
+    <value>_Kopiraj skrivnost</value>
+  </data>
 </root>

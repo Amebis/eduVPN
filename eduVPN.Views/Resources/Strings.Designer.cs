@@ -732,6 +732,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Copy Secret.
+        /// </summary>
+        public static string TOTPEnrollmentPanelSecretCopyLabel {
+            get {
+                return ResourceManager.GetString("TOTPEnrollmentPanelSecretCopyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Secret.
         /// </summary>
         public static string TOTPEnrollmentPanelSecretLabel {

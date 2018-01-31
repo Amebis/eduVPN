@@ -7,8 +7,10 @@
 
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
+using Prism.Commands;
 using System.Net;
 using System.Security.Cryptography;
+using System.Windows;
 
 namespace eduVPN.ViewModels.Panels
 {
@@ -34,6 +36,30 @@ namespace eduVPN.ViewModels.Panels
             set { SetProperty(ref _secret, value); }
         }
         private string _secret;
+
+        /// <summary>
+        /// Copies TOTP secret to the clipboard
+        /// </summary>
+        public DelegateCommand CopySecret
+        {
+            get
+            {
+                if (_copy_secret == null)
+                {
+                    _copy_secret = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            Wizard.ChangeTaskCount(+1);
+                            try { Clipboard.SetText(Secret); }
+                            finally { Wizard.ChangeTaskCount(-1); }
+                        });
+                }
+
+                return _copy_secret;
+            }
+        }
+        private DelegateCommand _copy_secret;
 
         #endregion
 
