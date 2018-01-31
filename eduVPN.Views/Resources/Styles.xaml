@@ -983,11 +983,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
+                    <!-- Draw the button in a hollow circle. -->
                     <AdornerDecorator>
                         <Grid>
                             <Ellipse
                                 x:Name="Border"
-                                Fill="{x:Null}"
+                                Fill="{StaticResource WindowBrush}"
                                 Stroke="{StaticResource HeadingTextBrush}"/>
 
                             <ContentPresenter
@@ -997,6 +998,7 @@
                     </AdornerDecorator>
 
                     <ControlTemplate.Triggers>
+                        <!-- Fill the circle when mouse over. -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter
                                 TargetName="Border"
@@ -1007,10 +1009,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
         <Style.Triggers>
+            <!-- Change button text/content color when mouse over. -->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowHeaderTextBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource WindowBrush}"/>
             </Trigger>
+
+            <!-- When navigation buttons are disabled, hide them. -->
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Visibility" Value="Collapsed"/>
             </Trigger>
