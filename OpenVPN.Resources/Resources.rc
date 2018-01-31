@@ -90,11 +90,15 @@ END
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_OPENVPN_TITLE           "eduVPN Client OpenVPN Components"
-	IDS_EDUVPN_OPENVPN_PUBLISHER       "SURF"
+	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN Client OpenVPN Components"
+	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
 
-	IDS_EDUVPN_INTERACTIVE_TITLE       "OpenVPN Interactive Service (eduVPN)"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! Client OpenVPN Components"
+	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
 END
 
 #endif    // English (United States) resources
@@ -114,11 +118,15 @@ LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_OPENVPN_TITLE           "eduVPN Client OpenVPN Components"
-	IDS_EDUVPN_OPENVPN_PUBLISHER       "SURF"
+	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN Client OpenVPN Components"
+	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
 
-	IDS_EDUVPN_INTERACTIVE_TITLE       "OpenVPN Interactive Service (eduVPN)"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! Client OpenVPN Components"
+	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
 END
 
 #endif    // Dutch (Netherlands) resources
@@ -138,11 +146,15 @@ LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_OPENVPN_TITLE           "Odjemalec eduVPN - komponente OpenVPN"
-	IDS_EDUVPN_OPENVPN_PUBLISHER       "SURF"
+	IDS_EDUVPN_OPENVPN_TITLE                "Odjemalec eduVPN - komponente OpenVPN"
+	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Interaktivna storitev OpenVPN (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec eduVPN ne bo deloval."
 
-	IDS_EDUVPN_INTERACTIVE_TITLE       "Interaktivna storitev OpenVPN (eduVPN)"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec eduVPN ne bo deloval."
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Odjemalec Let's Connect! - komponente OpenVPN"
+	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Interaktivna storitev OpenVPN (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec Let's Connect! ne bo deloval."
 END
 
 #endif    // Slovenian (Slovenia) resources

@@ -67,10 +67,12 @@ Unregister :: \
 	UnregisterOpenVPNInteractiveService
 
 RegisterShortcuts :: \
-	"$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\eduVPN Client.lnk"
+	"$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\eduVPN Client.lnk" \
+	"$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\Lets Connect Client.lnk"
 
 UnregisterShortcuts ::
-	-if exist "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\eduVPN Client.lnk" del /f /q "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\eduVPN Client.lnk"
+	-if exist "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\eduVPN Client.lnk"       del /f /q "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\eduVPN Client.lnk"
+	-if exist "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\Lets Connect Client.lnk" del /f /q "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\Lets Connect Client.lnk"
 
 RegisterOpenVPNInteractiveService :: \
 	UnregisterOpenVPNInteractiveServiceSCM \
@@ -97,20 +99,44 @@ RegisterOpenVPNInteractiveService :: \
 		depend= "tap0901/Dhcp"
 	sc.exe description OpenVPNServiceInteractive$$eduVPN "@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-4"
 	net.exe start OpenVPNServiceInteractive$$eduVPN
+	reg.exe add "HKLM\Software\OpenVPN$$LetsConnect" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$LetsConnect" /v "config_dir"       /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)"             $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$LetsConnect" /v "config_ext"       /t REG_SZ /d "conf"                                                $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$LetsConnect" /v "log_dir"          /t REG_SZ /d "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)"             $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$LetsConnect" /v "log_append"       /t REG_SZ /d "0"                                                   $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$LetsConnect" /v "priority"         /t REG_SZ /d "NORMAL_PRIORITY_CLASS"                               $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$LetsConnect" /v "ovpn_admin_group" /t REG_SZ /d "Users"                                               $(REG_FLAGS)
+	sc.exe create OpenVPNServiceInteractive$$LetsConnect \
+		binpath= "\"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe\" -instance interactive $$LetsConnect" \
+		DisplayName= "@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-103" \
+		type= own \
+		start= auto \
+		depend= "tap0901/Dhcp"
+	sc.exe description OpenVPNServiceInteractive$$LetsConnect "@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-104"
+	net.exe start OpenVPNServiceInteractive$$LetsConnect
 
 UnregisterOpenVPNInteractiveService :: \
 	UnregisterOpenVPNInteractiveServiceSCM
-	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "exe_path"         $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "config_dir"       $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "config_ext"       $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "log_dir"          $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "log_append"       $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "priority"         $(REG_FLAGS) > NUL 2>&1
-	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN" /v "ovpn_admin_group" $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN"      /v "exe_path"         $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN"      /v "config_dir"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN"      /v "config_ext"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN"      /v "log_dir"          $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN"      /v "log_append"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN"      /v "priority"         $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$eduVPN"      /v "ovpn_admin_group" $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$LetsConnect" /v "exe_path"         $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$LetsConnect" /v "config_dir"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$LetsConnect" /v "config_ext"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$LetsConnect" /v "log_dir"          $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$LetsConnect" /v "log_append"       $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$LetsConnect" /v "priority"         $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\Software\OpenVPN$$LetsConnect" /v "ovpn_admin_group" $(REG_FLAGS) > NUL 2>&1
 
 UnregisterOpenVPNInteractiveServiceSCM ::
-	-net.exe stop OpenVPNServiceInteractive$$eduVPN > NUL 2>&1
-	-sc.exe delete OpenVPNServiceInteractive$$eduVPN > NUL 2>&1
+	-net.exe stop OpenVPNServiceInteractive$$eduVPN       > NUL 2>&1
+	-sc.exe delete OpenVPNServiceInteractive$$eduVPN      > NUL 2>&1
+	-net.exe stop OpenVPNServiceInteractive$$LetsConnect  > NUL 2>&1
+	-sc.exe delete OpenVPNServiceInteractive$$LetsConnect > NUL 2>&1
 
 
 ######################################################################
@@ -137,6 +163,14 @@ SetupExe :: \
 		/F:"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)" \
 		/LN:"@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-1" \
 		/C:"@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-2"
+
+"$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\Lets Connect Client.lnk" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\LetsConnect.Client.exe" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
+	cscript.exe "bin\MkLnk.wsf" //Nologo $@ "$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\LetsConnect.Client.exe" \
+		/F:"$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)" \
+		/LN:"@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-101" \
+		/C:"@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-102"
 
 
 ######################################################################

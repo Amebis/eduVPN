@@ -80,6 +80,7 @@ SetupMSI :: \
 	copy /y $** $@ > NUL
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Client.exe" \
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\LetsConnect.Client.exe" \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll" ::
 	nuget.exe restore $(NUGET_FLAGS)

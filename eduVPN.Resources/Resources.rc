@@ -90,11 +90,15 @@ END
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE       "eduVPN Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION "VPN for education and research"
-	IDS_EDUVPN_CLIENT_PUBLISHER   "SURF"
+	IDS_EDUVPN_CLIENT_TITLE            "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN for education and research"
+	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
+	IDS_EDUVPN_CORE_TITLE              "eduVPN Client Core"
 
-	IDS_EDUVPN_CORE_TITLE         "eduVPN Client Core"
+	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "VPN for enterprise"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
+	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! Client Core"
 END
 
 #endif    // English (United States) resources
@@ -114,11 +118,15 @@ LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE       "eduVPN Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION "VPN-dienst voor educatie en onderzoek"
-	IDS_EDUVPN_CLIENT_PUBLISHER   "SURF"
+	IDS_EDUVPN_CLIENT_TITLE            "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN for education and research"
+	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
+	IDS_EDUVPN_CORE_TITLE              "eduVPN Client Core"
 
-	IDS_EDUVPN_CORE_TITLE         "eduVPN Client Core"
+	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "VPN for enterprise"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
+	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! Client Core"
 END
 
 #endif    // Dutch (Netherlands) resources
@@ -138,11 +146,15 @@ LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE       "Odjemalec eduVPN"
-	IDS_EDUVPN_CLIENT_DESCRIPTION "VPN za izobraževanje in raziskave"
-	IDS_EDUVPN_CLIENT_PUBLISHER   "SURF"
+	IDS_EDUVPN_CLIENT_TITLE            "Odjemalec eduVPN"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN za izobraževanje in raziskave"
+	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
+	IDS_EDUVPN_CORE_TITLE              "Odjemalec eduVPN - jedro"
 
-	IDS_EDUVPN_CORE_TITLE         "Odjemalec eduVPN - jedro"
+	IDS_LETSCONNECT_CLIENT_TITLE       "Odjemalec Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "VPN za podjetja"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
+	IDS_LETSCONNECT_CORE_TITLE         "Odjemalec Let's Connect! - jedro"
 END
 
 #endif    // Slovenian (Slovenia) resources
