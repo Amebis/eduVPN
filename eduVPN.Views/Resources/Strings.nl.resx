@@ -146,17 +146,8 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
     <value>_Copy Error Text</value>
   </data>
-  <data name="ButtonCopyTitle" xml:space="preserve">
-    <value>_Kopiëren</value>
-  </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
     <value>_Dismiss Error</value>
-  </data>
-  <data name="ButtonNextTitle" xml:space="preserve">
-    <value>Volge_nde &gt;</value>
-  </data>
-  <data name="ButtonNextTitleAlt" xml:space="preserve">
-    <value>Volgende</value>
   </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
@@ -183,7 +174,7 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Hostname</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
+    <value>De vereiste OAuth paramter &quot;state&quot; ontbreekt of is onjuist.</value>
   </data>
   <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>V_oeg ander adres toe</value>
@@ -216,10 +207,10 @@ The Commons Conservancy eduVPN Programme</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Voer je wachtwoord in voor "{0}":</value>
+    <value>Voer je wachtwoord in voor &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupPasswordLabel" xml:space="preserve">
@@ -365,7 +356,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
-    <comment>"securirty token" sounds wrong</comment>
+    <comment>&quot;securirty token&quot; sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
     <value>_Method</value>
@@ -390,7 +381,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Waarschuwing! Je account is uitgeschakeld. Neem contact op met de helpdesk.</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
+    <value>Voer je gebruikersnaam en wachtwoord in voor &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
@@ -409,5 +400,14 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>{0}
 Powered by SURFnet</value>
     <comment>{0}=Client name</comment>
+  </data>
+  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
+    <value>Added VPN Profiles</value>
+  </data>
+  <data name="ButtonConnectTitle" xml:space="preserve">
+    <value>_Connect!</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
+    <value>_Copy Secret</value>
   </data>
 </root>
