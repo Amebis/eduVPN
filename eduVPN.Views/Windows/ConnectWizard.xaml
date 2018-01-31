@@ -167,6 +167,7 @@
             <Frame
                 NavigationUIVisibility="Hidden"
                 IsTabStop="False"
+                Focusable="False"
                 Content="{Binding Path=CurrentPage}"
                 AutomationProperties.Name="{Binding Path=CurrentPage.Title}"
                 AutomationProperties.HelpText="{Binding Path=CurrentPage.Description}">
