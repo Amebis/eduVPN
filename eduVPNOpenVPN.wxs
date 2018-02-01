@@ -206,6 +206,14 @@
             <Component Id="ssleay32.dll" Guid="{72639C55-D063-4A57-B7B7-1CD60945B97A}">
                 <File Source="ssleay32.dll"/>
             </Component>
+
+            <!-- Add/Remove Programs Localization -->
+            <Component Id="ARP.DisplayName" Guid="{DFE94916-719C-4D78-A188-35E8DC1933F5}">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-1"/>
+            </Component>
+            <Component Id="ARP.Publisher" Guid="{E374F094-604D-4E75-BA7D-8D21FA6AE50F}">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-2"/>
+            </Component>
         </DirectoryRef>
 
 
@@ -226,6 +234,8 @@
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
             <ComponentRef Id="ssleay32.dll"/>
+            <ComponentRef Id="ARP.DisplayName"/>
+            <ComponentRef Id="ARP.Publisher"/>
             <ComponentGroupRef Id="OpenVPN.Resources.dll"/>
         </Feature>
     </Product>

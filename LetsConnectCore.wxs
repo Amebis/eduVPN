@@ -107,10 +107,26 @@
 
 
         <!--
+            Compontents
+        -->
+        <DirectoryRef Id="BINDIR">
+            <!-- Add/Remove Programs Localization -->
+            <Component Id="ARP.DisplayName" Guid="{F21C1412-AC8F-465B-B70A-89789A82964F}">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-104"/>
+            </Component>
+            <Component Id="ARP.Publisher" Guid="{667D4687-F06C-4A85-A053-DCCFE3766D55}">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-103"/>
+            </Component>
+        </DirectoryRef>
+
+
+        <!--
             Features
         -->
         <Feature Id="$(var.ClientTarget).Client" Title="!(loc.ApplicationCoreName)" Level="1">
             <MergeRef Id="VC150Redist"/>
+            <ComponentRef Id="ARP.DisplayName"/>
+            <ComponentRef Id="ARP.Publisher"/>
 
             <ComponentGroupRef Id="$(var.ClientTarget).Client.exe"/>
         </Feature>

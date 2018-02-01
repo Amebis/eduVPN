@@ -121,8 +121,8 @@
                 <ServiceInstall
                     Id="OpenVPNServiceInteractive.$(var.ClientTarget)"
                     Name="OpenVPNServiceInteractive$$$(var.ClientTarget)"
-                    DisplayName="@[BINDIR]OpenVPN.Resources.dll,-3"
-                    Description="@[BINDIR]OpenVPN.Resources.dll,-4"
+                    DisplayName="@[BINDIR]OpenVPN.Resources.dll,-103"
+                    Description="@[BINDIR]OpenVPN.Resources.dll,-104"
                     Arguments="-instance interactive $$$(var.ClientTarget)"
                     Type="ownProcess"
                     Start="auto"
@@ -190,6 +190,14 @@
             <Component Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}">
                 <File Source="ssleay32.dll"/>
             </Component>
+
+            <!-- Add/Remove Programs Localization -->
+            <Component Id="ARP.DisplayName" Guid="{D5F701F1-640F-434A-94F4-6150E63E340B}">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-101"/>
+            </Component>
+            <Component Id="ARP.Publisher" Guid="{6FF63400-4447-43F6-A905-30B1855B9453}">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-102"/>
+            </Component>
         </DirectoryRef>
 
 
@@ -210,6 +218,8 @@
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
             <ComponentRef Id="ssleay32.dll"/>
+            <ComponentRef Id="ARP.DisplayName"/>
+            <ComponentRef Id="ARP.Publisher"/>
             <ComponentGroupRef Id="OpenVPN.Resources.dll"/>
         </Feature>
     </Product>
