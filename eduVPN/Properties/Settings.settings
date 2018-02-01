@@ -2,47 +2,44 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPN.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ResponseCache" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User" Description="Cache of sequenced JSON responses">
+    <Setting Name="ResponseCache" Description="Cache of sequenced JSON responses" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User">
       <Value Profile="(Default)">&lt;JSONResponseDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="SecureInternetInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User" Description="Secure Internet settings">
+    <Setting Name="SecureInternetInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
       <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
-    <Setting Name="InstituteAccessInstanceSourceSettings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User" Description="Secure Internet settings">
+    <Setting Name="InstituteAccessInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
       <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
     </Setting>
-    <Setting Name="SelfUpdateLastVersion" Type="System.String" Scope="User" Description="The last product version user was prompted to update to">
+    <Setting Name="SelfUpdateLastVersion" Description="The last product version user was prompted to update to" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SelfUpdateLastReminder" Type="System.DateTime" Scope="User" Description="The last time user was prompted to update at">
+    <Setting Name="SelfUpdateLastReminder" Description="The last time user was prompted to update at" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenVPNInteractiveServiceNamedPipe" Type="System.String" Scope="Application" Description="Which OpenVPN interactive service instance (named pipe) client should use to manipulate openvpn.exe process:
- - &quot;openvpn$eduVPN\service&quot; - Use OpenVPN installation bundled with eduVPN Client (default).
- - &quot;openvpn\service - Use original OpenVPN installation.">
+    <Setting Name="OpenVPNInteractiveServiceNamedPipe" Description="Which OpenVPN interactive service instance (named pipe) client should use to manipulate openvpn.exe process:&#xD;&#xA; - &quot;openvpn$eduVPN\service&quot; - Use OpenVPN installation bundled with eduVPN Client (default).&#xD;&#xA; - &quot;openvpn\service - Use original OpenVPN installation." Type="System.String" Scope="Application">
       <Value Profile="(Default)">openvpn$eduVPN\service</Value>
     </Setting>
-    <Setting Name="ConnectingProfileSelectMode" Type="System.Int32" Scope="Application" Description="The client profile management mode is described in detail here: https://github.com/Amebis/eduVPN/blob/master/doc/ConnectingProfileSelectMode.md
-
- Note: It is recommended to delete client user settings in %LOCALAPPDATA%\SURF
- when the mode is changed.">
+    <Setting Name="ConnectingProfileSelectMode" Description="The client profile management mode is described in detail here: https://github.com/Amebis/eduVPN/blob/master/doc/ConnectingProfileSelectMode.md&#xD;&#xA;&#xD;&#xA; Note: It is recommended to delete client user settings in %LOCALAPPDATA%\SURF&#xD;&#xA; when the mode is changed." Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="OpenVPNInterfaceID" Type="System.Guid" Scope="User" Description="Which TAP interface to use when connecting.
- Leave &quot;00000000-0000-0000-0000-000000000000&quot; for auto-selection by openvpn.exe.">
+    <Setting Name="OpenVPNInterfaceID" Description="Which TAP interface to use when connecting.&#xD;&#xA; Leave &quot;00000000-0000-0000-0000-000000000000&quot; for auto-selection by openvpn.exe." Type="System.Guid" Scope="User">
       <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>
     </Setting>
-    <Setting Name="OpenVPNForceTCP" Type="System.Boolean" Scope="User" Description="Always connect using TCP.">
+    <Setting Name="OpenVPNForceTCP" Description="Always connect using TCP." Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AccessTokenCache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User" Description="Access token cache">
+    <Setting Name="AccessTokenCache" Description="Access token cache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
       <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="InstanceSettings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User" Description="Instance-specific user settings">
+    <Setting Name="InstanceSettings" Description="Instance-specific user settings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User">
       <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User" Description="A flag to trigger setting upgrade from the previous version">
+    <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SelfUpdateBundleID" Description="GUID of the installer EXE bundle" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}</Value>
     </Setting>
   </Settings>
 </SettingsFile>

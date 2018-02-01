@@ -219,5 +219,18 @@ namespace eduVPN.Properties {
                 this["SettingsVersion"] = value;
             }
         }
+        
+        /// <summary>
+        /// GUID of the installer EXE bundle
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("GUID of the installer EXE bundle")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}")]
+        public string SelfUpdateBundleID {
+            get {
+                return ((string)(this["SelfUpdateBundleID"]));
+            }
+        }
     }
 }
