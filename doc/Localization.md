@@ -8,7 +8,7 @@
 3. [eduOAuth at POEditor](https://poeditor.com/join/project/KluhCNBAWP) (terms not starting with "Error…")
 4. Setup
    - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.wxl)
-   - EXE bundle [eduVPN.thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Install/eduVPN.thm.wxl)
+   - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Install/thm.wxl)
    - Start menu shortcut and ARP texts [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
 
 

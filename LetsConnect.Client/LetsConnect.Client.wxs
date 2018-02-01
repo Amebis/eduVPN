@@ -11,63 +11,62 @@
             Components
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="LetsConnect.Client.exe" Guid="{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}">
-                <File Source="LetsConnect.Client.exe" KeyPath="yes"/>
+            <Component Id="$(var.ClientTarget).Client.exe" Guid="{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}">
+                <File Source="$(var.ClientTarget).Client.exe" KeyPath="yes"/>
 
-                <!-- Note: "LetsConnect.Client" feature and "App.ico" icon are defined elsewhere. -->
+                <!-- Note: "$(var.ClientTarget).Client" feature and "App.ico" icon are defined elsewhere. -->
                 <Shortcut
-                    Id="LetsConnect.Client.exe.StartMenuShortcut"
+                    Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
                     Name="Lets Connect Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="102"
-                    Target="LetsConnect.Client"
+                    Target="$(var.ClientTarget).Client"
                     WorkingDirectory="BINDIR"
                     Icon="App.ico"/>
             </Component>
-            <Component Id="LetsConnect.Client.exe.config" Guid="{03C290E0-70A5-4594-9801-F51D07CCF06B}">
-                <File Source="LetsConnect.Client.exe.config"/>
+            <Component Id="$(var.ClientTarget).Client.exe.config" Guid="{03C290E0-70A5-4594-9801-F51D07CCF06B}">
+                <File Source="$(var.ClientTarget).Client.exe.config"/>
             </Component>
             <!--
-            <Component Id="LetsConnect.Client.exe.DesktopShortcut" Guid="{B7186C84-2C86-45A5-B346-4CAC2C878DC0}">
+            <Component Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Guid="{B7186C84-2C86-45A5-B346-4CAC2C878DC0}">
                 <Shortcut
-                    Id="LetsConnect.Client.exe.DesktopShortcut"
+                    Id="$(var.ClientTarget).Client.exe.DesktopShortcut"
                     Directory="DesktopFolder"
                     Name="Lets Connect Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="102"
-                    Target="[BINDIR]LetsConnect.Client.exe"
+                    Target="[BINDIR]$(var.ClientTarget).Client.exe"
                     WorkingDirectory="BINDIR"
                     Icon="App.ico"/>
-                <RemoveFolder Id="LetsConnect.Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
-                <RegistryValue Root="HKCU" Key="SOFTWARE\nl.letsconnect.app" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                <RemoveFolder Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="SOFTWARE\org.letsconnect-vpn.app" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
             -->
         </DirectoryRef>
         <DirectoryRef Id="RESDIRNL">
-            <Component Id="LetsConnect.Client.resources.dll.nl" Guid="{0165D00B-7AE8-4FFE-8855-66F7D92369BE}">
-                <File Id="LetsConnect.Client.resources.dll.nl" Source="nl\LetsConnect.Client.resources.dll"/>
+            <Component Id="$(var.ClientTarget).Client.resources.dll.nl" Guid="{0165D00B-7AE8-4FFE-8855-66F7D92369BE}">
+                <File Id="$(var.ClientTarget).Client.resources.dll.nl" Source="nl\$(var.ClientTarget).Client.resources.dll"/>
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="RESDIRSL">
-            <Component Id="LetsConnect.Client.resources.dll.sl" Guid="{E29A6895-4BD1-40F1-90CA-4FC775208CD7}">
-                <File Id="LetsConnect.Client.resources.dll.sl" Source="sl\LetsConnect.Client.resources.dll"/>
+            <Component Id="$(var.ClientTarget).Client.resources.dll.sl" Guid="{E29A6895-4BD1-40F1-90CA-4FC775208CD7}">
+                <File Id="$(var.ClientTarget).Client.resources.dll.sl" Source="sl\$(var.ClientTarget).Client.resources.dll"/>
             </Component>
         </DirectoryRef>
-
 
         <!--
             Component groups
         -->
-        <ComponentGroup Id="LetsConnect.Client.exe">
+        <ComponentGroup Id="$(var.ClientTarget).Client.exe">
             <ComponentGroupRef Id="eduVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.Views.dll"/>
             <ComponentGroupRef Id="eduVPN.Resources.dll"/>
             <ComponentGroupRef Id="Prism.dll"/>
 
-            <ComponentRef Id="LetsConnect.Client.exe"/>
-            <ComponentRef Id="LetsConnect.Client.exe.config"/>
-            <ComponentRef Id="LetsConnect.Client.resources.dll.nl"/>
-            <ComponentRef Id="LetsConnect.Client.resources.dll.sl"/>
-            <!--<ComponentRef Id="LetsConnect.Client.exe.DesktopShortcut"/>-->
+            <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.nl"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.sl"/>
+            <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
         </ComponentGroup>
     </Fragment>
 </Wix>

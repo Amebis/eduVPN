@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    eduVPN - End-user friendly VPN
+    Let's Connect! - End-user friendly VPN
 
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
@@ -27,22 +27,12 @@
             Cabinet="OpenVPN.cab"
             EmbedCab="yes"/>
 
-        <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+        <Property Id="ARPURLINFOABOUT" Value="https://letsconnect-vpn.org/"/>
 
 
         <!--
             Upgrading functionality
         -->
-        <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
-        <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
-            <UpgradeVersion
-                Minimum="0.0.0.0"
-                Maximum="2.4.4.1"
-                Property="OLDVERSIONSINSTALLED"
-                IncludeMinimum="yes"
-                IncludeMaximum="yes"
-                MigrateFeatures="yes"/>
-        </Upgrade>
         <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="$(var.OpenVPN.UpgradeGUID)">
             <UpgradeVersion
@@ -55,12 +45,12 @@
             <RemoveExistingProducts Before="InstallInitialize"/>
         </InstallExecuteSequence>
         <Property Id="BINDIRPREV">
-            <ComponentSearch Id="libeay32.dll" Guid="{AE04C029-0B1B-4F2A-B810-58C8DEE72AE4}"/>
-            <ComponentSearch Id="liblzo2_2.dll" Guid="{4C072186-6C47-49B3-B945-D09503A20FB3}"/>
-            <ComponentSearch Id="libpkcs11_helper_1.dll" Guid="{1D7D0360-15AD-466F-B667-840C8C8827C5}"/>
-            <ComponentSearch Id="openvpn.exe" Guid="{101FF3BB-DD5A-41CB-8A8C-0B582F7BF1D7}"/>
-            <ComponentSearch Id="openvpnserv.exe" Guid="{1A38AF86-1516-49FA-91AE-D48EAE37468D}"/>
-            <ComponentSearch Id="ssleay32.dll" Guid="{72639C55-D063-4A57-B7B7-1CD60945B97A}"/>
+            <ComponentSearch Id="libeay32.dll" Guid="{0B2BF74E-5C4A-448A-8B2C-1FC076B5B824}"/>
+            <ComponentSearch Id="liblzo2_2.dll" Guid="{D073932D-4ECF-480C-B54A-4FEBCE3FB015}"/>
+            <ComponentSearch Id="libpkcs11_helper_1.dll" Guid="{8EFE985A-9800-440D-8517-DAEFB50ECA74}"/>
+            <ComponentSearch Id="openvpn.exe" Guid="{46C7AD2F-6AA7-408A-BD02-9E8C59DD8C76}"/>
+            <ComponentSearch Id="openvpnserv.exe" Guid="{D54DD0B1-8C81-42F8-BD3F-BB988B786782}"/>
+            <ComponentSearch Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}"/>
         </Property>
         <SetProperty
             After="AppSearch"
@@ -97,7 +87,7 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
-                <Directory Id="PRODUCTDIR" Name="eduVPN">
+                <Directory Id="PRODUCTDIR" Name="Let's Connect!">
                     <Directory Id="BINDIR" Name="OpenVPN" FileSource="$(var.TargetDir)"/>
                 </Directory>
             </Directory>
@@ -108,26 +98,20 @@
             Compontents
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="libeay32.dll" Guid="{AE04C029-0B1B-4F2A-B810-58C8DEE72AE4}">
+            <Component Id="libeay32.dll" Guid="{0B2BF74E-5C4A-448A-8B2C-1FC076B5B824}">
                 <File Source="libeay32.dll"/>
             </Component>
-            <Component Id="liblzo2_2.dll" Guid="{4C072186-6C47-49B3-B945-D09503A20FB3}">
+            <Component Id="liblzo2_2.dll" Guid="{D073932D-4ECF-480C-B54A-4FEBCE3FB015}">
                 <File Source="liblzo2-2.dll"/>
             </Component>
-            <Component Id="libpkcs11_helper_1.dll" Guid="{1D7D0360-15AD-466F-B667-840C8C8827C5}">
+            <Component Id="libpkcs11_helper_1.dll" Guid="{8EFE985A-9800-440D-8517-DAEFB50ECA74}">
                 <File Source="libpkcs11-helper-1.dll"/>
             </Component>
-            <Component Id="openvpn.exe" Guid="{101FF3BB-DD5A-41CB-8A8C-0B582F7BF1D7}">
+            <Component Id="openvpn.exe" Guid="{46C7AD2F-6AA7-408A-BD02-9E8C59DD8C76}">
                 <File Source="openvpn.exe"/>
             </Component>
-            <Component Id="openvpnserv.exe" Guid="{1A38AF86-1516-49FA-91AE-D48EAE37468D}">
+            <Component Id="openvpnserv.exe" Guid="{D54DD0B1-8C81-42F8-BD3F-BB988B786782}">
                 <File Source="openvpnserv.exe"/>
-                <!-- Until 1.0-alpha6, Interactive Service was installed as eduVPNServiceInteractive. -->
-                <ServiceControl
-                    Id="eduVPNServiceInteractive"
-                    Name="eduVPNServiceInteractive"
-                    Stop="install"
-                    Remove="install"/>
                 <ServiceControl
                     Id="OpenVPNServiceInteractive.$(var.ClientTarget)"
                     Name="OpenVPNServiceInteractive$$$(var.ClientTarget)"
@@ -147,7 +131,7 @@
                     <ServiceDependency Id="Dhcp"/>
                 </ServiceInstall>
             </Component>
-            <Component Id="openvpnserv.exe.reg1" Guid="{457AD4F6-7330-409B-8AA9-11C5AA17B2AD}">
+            <Component Id="openvpnserv.exe.reg1" Guid="{7EF617D1-1B9E-4B96-A4C7-9A4597370AA2}">
                 <RegistryValue
                     Root="HKLM"
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
@@ -155,7 +139,7 @@
                     Type="string"
                     Value="[BINDIR]openvpn.exe"/>
             </Component>
-            <Component Id="openvpnserv.exe.reg2" Guid="{5A36E0F2-D707-4A43-A039-2D6B4231BF23}">
+            <Component Id="openvpnserv.exe.reg2" Guid="{5E0F8717-1CCF-40B3-A3FE-AFE367973C73}">
                 <RegistryValue
                     Root="HKLM"
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
@@ -163,7 +147,7 @@
                     Type="string"
                     Value="[BINDIR]"/>
             </Component>
-            <Component Id="openvpnserv.exe.reg3" Guid="{3D89AA2C-04E3-49C2-A2BC-19B957ED4F74}">
+            <Component Id="openvpnserv.exe.reg3" Guid="{CF896642-99B2-4BD1-9FD2-89E73F3C38B2}">
                 <RegistryValue
                     Root="HKLM"
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
@@ -171,7 +155,7 @@
                     Type="string"
                     Value="conf"/>
             </Component>
-            <Component Id="openvpnserv.exe.reg4" Guid="{E551E92B-B79A-41E7-909C-656AEDDFAE1C}">
+            <Component Id="openvpnserv.exe.reg4" Guid="{F9F27191-D01C-4DF2-8112-288B9D086628}">
                 <RegistryValue
                     Root="HKLM"
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
@@ -179,7 +163,7 @@
                     Type="string"
                     Value="[BINDIR]"/>
             </Component>
-            <Component Id="openvpnserv.exe.reg5" Guid="{9C350B91-873A-4F0F-BBDD-D422071AE78C}">
+            <Component Id="openvpnserv.exe.reg5" Guid="{2D450249-CCD0-4C4C-AD9A-793C864FE1B7}">
                 <RegistryValue
                     Root="HKLM"
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
@@ -187,7 +171,7 @@
                     Type="string"
                     Value="0"/>
             </Component>
-            <Component Id="openvpnserv.exe.reg6" Guid="{D59FD7FA-E687-4A43-B8A2-077ECDD02B6D}">
+            <Component Id="openvpnserv.exe.reg6" Guid="{EB68C746-5E50-4F66-9A21-2E6BB07EEA38}">
                 <RegistryValue
                     Root="HKLM"
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
@@ -195,7 +179,7 @@
                     Type="string"
                     Value="NORMAL_PRIORITY_CLASS"/>
             </Component>
-            <Component Id="openvpnserv.exe.reg7" Guid="{2140688F-04A2-42C9-B9C8-1314B721C82D}">
+            <Component Id="openvpnserv.exe.reg7" Guid="{A40AFCF3-E0DE-4844-91CE-64D55C3FA8B5}">
                 <RegistryValue
                     Root="HKLM"
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
@@ -203,7 +187,7 @@
                     Type="string"
                     Value="Users"/>
             </Component>
-            <Component Id="ssleay32.dll" Guid="{72639C55-D063-4A57-B7B7-1CD60945B97A}">
+            <Component Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}">
                 <File Source="ssleay32.dll"/>
             </Component>
         </DirectoryRef>

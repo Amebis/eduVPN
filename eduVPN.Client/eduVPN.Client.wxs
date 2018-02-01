@@ -11,45 +11,45 @@
             Components
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="eduVPN.Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}">
-                <File Source="eduVPN.Client.exe" KeyPath="yes"/>
+            <Component Id="$(var.ClientTarget).Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}">
+                <File Source="$(var.ClientTarget).Client.exe" KeyPath="yes"/>
 
-                <!-- Note: "eduVPN.Client" feature and "App.ico" icon are defined elsewhere. -->
+                <!-- Note: "$(var.ClientTarget).Client" feature and "App.ico" icon are defined elsewhere. -->
                 <Shortcut
-                    Id="eduVPN.Client.exe.StartMenuShortcut"
+                    Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
                     Name="eduVPN Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="1"
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
-                    Target="eduVPN.Client"
+                    Target="$(var.ClientTarget).Client"
                     WorkingDirectory="BINDIR"
                     Icon="App.ico"/>
             </Component>
-            <Component Id="eduVPN.Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}">
-                <File Source="eduVPN.Client.exe.config"/>
+            <Component Id="$(var.ClientTarget).Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}">
+                <File Source="$(var.ClientTarget).Client.exe.config"/>
             </Component>
             <!--
-            <Component Id="eduVPN.Client.exe.DesktopShortcut" Guid="{9DE24D79-5251-4D41-B151-737E372975FA}">
+            <Component Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Guid="{9DE24D79-5251-4D41-B151-737E372975FA}">
                 <Shortcut
-                    Id="eduVPN.Client.exe.DesktopShortcut"
+                    Id="$(var.ClientTarget).Client.exe.DesktopShortcut"
                     Directory="DesktopFolder"
                     Name="eduVPN Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="1"
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="2"
-                    Target="[BINDIR]eduVPN.Client.exe"
+                    Target="[BINDIR]$(var.ClientTarget).Client.exe"
                     WorkingDirectory="BINDIR"
                     Icon="App.ico"/>
-                <RemoveFolder Id="eduVPN.Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
+                <RemoveFolder Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
                 <RegistryValue Root="HKCU" Key="SOFTWARE\org.eduvpn.app" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
             -->
         </DirectoryRef>
         <DirectoryRef Id="RESDIRNL">
-            <Component Id="eduVPN.Client.resources.dll.nl" Guid="{A66DDC19-8153-411F-AFD7-41DF490B1D95}">
-                <File Id="eduVPN.Client.resources.dll.nl" Source="nl\eduVPN.Client.resources.dll"/>
+            <Component Id="$(var.ClientTarget).Client.resources.dll.nl" Guid="{A66DDC19-8153-411F-AFD7-41DF490B1D95}">
+                <File Id="$(var.ClientTarget).Client.resources.dll.nl" Source="nl\$(var.ClientTarget).Client.resources.dll"/>
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="RESDIRSL">
-            <Component Id="eduVPN.Client.resources.dll.sl" Guid="{662C9FC3-23A8-4174-8AD7-86EC67F916B4}">
-                <File Id="eduVPN.Client.resources.dll.sl" Source="sl\eduVPN.Client.resources.dll"/>
+            <Component Id="$(var.ClientTarget).Client.resources.dll.sl" Guid="{662C9FC3-23A8-4174-8AD7-86EC67F916B4}">
+                <File Id="$(var.ClientTarget).Client.resources.dll.sl" Source="sl\$(var.ClientTarget).Client.resources.dll"/>
             </Component>
         </DirectoryRef>
 
@@ -57,17 +57,17 @@
         <!--
             Component groups
         -->
-        <ComponentGroup Id="eduVPN.Client.exe">
+        <ComponentGroup Id="$(var.ClientTarget).Client.exe">
             <ComponentGroupRef Id="eduVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.Views.dll"/>
             <ComponentGroupRef Id="eduVPN.Resources.dll"/>
             <ComponentGroupRef Id="Prism.dll"/>
 
-            <ComponentRef Id="eduVPN.Client.exe"/>
-            <ComponentRef Id="eduVPN.Client.exe.config"/>
-            <ComponentRef Id="eduVPN.Client.resources.dll.nl"/>
-            <ComponentRef Id="eduVPN.Client.resources.dll.sl"/>
-            <!--<ComponentRef Id="eduVPN.Client.exe.DesktopShortcut"/>-->
+            <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.nl"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.sl"/>
+            <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
         </ComponentGroup>
     </Fragment>
 </Wix>

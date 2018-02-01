@@ -5,6 +5,7 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
+# WiX parameters
 !IF "$(LANG)" == "en-US"
 WIX_LOC_FILE=$(CLIENT_TARGET).wxl
 !ELSE

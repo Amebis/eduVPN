@@ -11,5 +11,8 @@
         <Test Id="WhitespacePrecedingNodeWrong"/>
         <Test Id="WhitespacePrecedingEndElementWrong"/>
         -->
+
+        <!-- Some components identifiers are dynamic: using pre-compile $(var...) macros -->
+        <Test Id="InvalidIdentifier"/>
     </IgnoreErrors> 
  </Settings>

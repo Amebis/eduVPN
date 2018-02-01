@@ -5,19 +5,16 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
+# WiX parameters
+WIX_CANDLE_FLAGS_CFG=$(WIX_CANDLE_FLAGS)
+
+
 ######################################################################
 # Building
 ######################################################################
 
 "$(OUTPUT_DIR)\$(CFG)" :
 	if not exist $@ md $@
-
-"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" : "$(CLIENT_TARGET).wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS) -out $@ $**
-
-Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 "$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj" : "TAP-Windows.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
@@ -37,3 +34,16 @@ PLAT=x86
 
 PLAT=x64
 !INCLUDE "MakefileCfgPlat.mak"
+
+
+######################################################################
+# Client-specific rules
+######################################################################
+
+CLIENT_TARGET=eduVPN
+CLIENT_TITLE=eduVPN
+!INCLUDE "MakefileCfgClient.mak"
+
+CLIENT_TARGET=LetsConnect
+CLIENT_TITLE=Let's Connect!
+!INCLUDE "MakefileCfgClient.mak"

@@ -1,18 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGES.md = CHANGES.md
 		eduVPN.sl.wxl = eduVPN.sl.wxl
 		eduVPN.wxl = eduVPN.wxl
 		eduVPN.wxs = eduVPN.wxs
 		eduVPNCore.wxs = eduVPNCore.wxs
 		eduVPNOpenVPN.wxs = eduVPNOpenVPN.wxs
 		eduVPNTAPWinPre.wxs = eduVPNTAPWinPre.wxs
+		LetsConnect.nl.wxl = LetsConnect.nl.wxl
+		LetsConnect.sl.wxl = LetsConnect.sl.wxl
+		LetsConnect.wxl = LetsConnect.wxl
+		LetsConnect.wxs = LetsConnect.wxs
+		LetsConnectCore.wxs = LetsConnectCore.wxs
+		LetsConnectOpenVPN.wxs = LetsConnectOpenVPN.wxs
+		LetsConnectTAPWinPre.wxs = LetsConnectTAPWinPre.wxs
 		LICENSE = LICENSE
 		LICENSE.spdx = LICENSE.spdx
+		Makefile = Makefile
+		MakefileCfg.mak = MakefileCfg.mak
+		MakefileCfgClient.mak = MakefileCfgClient.mak
+		MakefileCfgPlat.mak = MakefileCfgPlat.mak
+		MakefileCfgPlatClient.mak = MakefileCfgPlatClient.mak
+		MakefileCfgPlatClientLang.mak = MakefileCfgPlatClientLang.mak
+		README.md = README.md
 		TAP-Windows.wxs = TAP-Windows.wxs
 		wixcop.xml = wixcop.xml
 	EndProjectSection
@@ -47,10 +62,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduVPN.Resources", "eduVPN.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install", "Install", "{E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}"
 	ProjectSection(SolutionItems) = preProject
-		eduVPN.Install\eduVPN.logo.png = eduVPN.Install\eduVPN.logo.png
-		eduVPN.Install\eduVPN.thm.sl.wxl = eduVPN.Install\eduVPN.thm.sl.wxl
-		eduVPN.Install\eduVPN.thm.wxl = eduVPN.Install\eduVPN.thm.wxl
-		eduVPN.Install\eduVPN.thm.xml = eduVPN.Install\eduVPN.thm.xml
+		Install\eduVPN\logo.png = Install\eduVPN\logo.png
+		Install\thm.nl.wxl = Install\thm.nl.wxl
+		Install\thm.sl.wxl = Install\thm.sl.wxl
+		Install\thm.wxl = Install\thm.wxl
+		Install\thm.xml = Install\thm.xml
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenVPN.Resources", "OpenVPN.Resources\OpenVPN.Resources.vcxproj", "{DDBFFCA2-1731-4AA0-81CC-EA41F6C0344E}"
@@ -58,6 +74,25 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPN.Views", "eduVPN.Views\eduVPN.Views.csproj", "{EC9AD583-409A-4C11-8BB9-9035CE5C806A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetsConnect.Client", "LetsConnect.Client\LetsConnect.Client.csproj", "{C6003E42-C1B4-4DA1-9E93-D7AD3A9C12E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{00CAF4A2-A3BA-4012-95E6-9D622EA3C06F}"
+	ProjectSection(SolutionItems) = preProject
+		doc\ConnectingProfileSelectMode.md = doc\ConnectingProfileSelectMode.md
+		doc\Deployment.md = doc\Deployment.md
+		doc\Development.md = doc\Development.md
+		doc\Installation.md = doc\Installation.md
+		doc\Localization.md = doc\Localization.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eduVPN", "eduVPN", "{85E5721B-F4A7-422A-8B54-54E5F36BB752}"
+	ProjectSection(SolutionItems) = preProject
+		Install\eduVPN\logo.png = Install\eduVPN\logo.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LetsConnect", "LetsConnect", "{9A8D4BF5-259A-413C-889A-8AA238B7D2D1}"
+	ProjectSection(SolutionItems) = preProject
+		Install\LetsConnect\logo.png = Install\LetsConnect\logo.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -248,6 +283,9 @@ Global
 		{DDF40A25-1180-40B1-9BF1-8D3D66D734AD} = {62C4825F-1F58-4BA1-BD10-DABB139FCC47}
 		{EC9E752D-3228-47B1-AB68-9FCF0FAA3B8A} = {34019D9B-CB1A-4C13-B6F8-992DE8AB6F39}
 		{E2BBEBA8-DA57-42E8-BB75-78F13BD05E86} = {DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}
+		{00CAF4A2-A3BA-4012-95E6-9D622EA3C06F} = {DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}
+		{85E5721B-F4A7-422A-8B54-54E5F36BB752} = {E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}
+		{9A8D4BF5-259A-413C-889A-8AA238B7D2D1} = {E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7FC9EE6-11F6-4153-B5AE-66D3DA7A7A61}

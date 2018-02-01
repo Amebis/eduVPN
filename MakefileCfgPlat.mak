@@ -17,25 +17,18 @@ SETUP_TARGET=$(SETUP_TARGET)D
 !ENDIF
 
 # WiX parameters
-WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS) -arch $(PLAT) \
-	-d$(CLIENT_TARGET).TargetDir="bin\$(CFG)\$(PLAT)\\" \
-	-d$(CLIENT_TARGET).TAPWinPre.VersionInformational="$(TAPWINPRE_VERSION) $(SETUP_TARGET)" \
-	-d$(CLIENT_TARGET).OpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
-	-d$(CLIENT_TARGET).Core.VersionInformational="$(CORE_VERSION) $(SETUP_TARGET)"
+WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
+	-arch $(PLAT) \
+	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
+	-dTAPWinPre.VersionInformational="$(TAPWINPRE_VERSION) $(SETUP_TARGET)" \
+	-dOpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
+	-dCore.VersionInformational="$(CORE_VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
-WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) \
-	-d$(CLIENT_TARGET).ProgramFilesFolder="ProgramFiles64Folder" \
-	-deduVPN.TAPWinPre.UpgradeGUID="{D6F9001D-05D8-4107-BCDD-41FB5520691E}" \
-	-deduVPN.OpenVPN.UpgradeGUID="{75C79E9E-5486-4568-814D-80C56E113FB8}" \
-	-deduVPN.Core.UpgradeGUID="{02EBD828-2565-4BCD-ABFF-E3F48C3F9A23}" \
-	-dLetsConnect.Core.UpgradeGUID="{090C24F6-1F11-4DB8-9338-68E3526139F5}"
+WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
+	-dProgramFilesFolder="ProgramFiles64Folder"
 !ELSE
-WIX_CANDLE_FLAGS_LOCAL=$(WIX_CANDLE_FLAGS_LOCAL) \
-	-d$(CLIENT_TARGET).ProgramFilesFolder="ProgramFilesFolder" \
-	-deduVPN.TAPWinPre.UpgradeGUID="{FE30D203-C056-42D5-AF56-273F65A7709A}" \
-	-deduVPN.OpenVPN.UpgradeGUID="{258634EA-316E-434E-9AE9-13926FB26B12}" \
-	-deduVPN.Core.UpgradeGUID="{E3746042-5041-4E2F-83E8-0240EF3C60CA}" \
-	-dLetsConnect.Core.UpgradeGUID="{76E93AAB-1F90-4AA3-B7EE-F697A4B1B479}"
+WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
+	-dProgramFilesFolder="ProgramFilesFolder"
 !ENDIF
 
 !IF "$(CFG)" == "Debug"
@@ -63,11 +56,6 @@ SetupBuild :: \
 SetupBuild ::
 	nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
-
-SetupMSI :: \
-	"$(SETUP_DIR)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET).msi" \
-	"$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" \
-	"$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET).msi"
 !ENDIF
 
 
@@ -81,7 +69,6 @@ SetupMSI :: \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer" : "$(OUTPUT_DIR)\Setup\tap0901.cer"
 	copy /y $** $@ > NUL
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll" ::
 	nuget.exe restore $(NUGET_FLAGS)
@@ -112,7 +99,7 @@ Clean ::
 	copy /y $** "$(@:"=).tmp" > NUL
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 !IF "$(CFG)" == "Release"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /q "$(@:"=).tmp"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "OpenVPN Interactive Service" /q "$(@:"=).tmp"
 !ENDIF
 !ENDIF
 	move /y "$(@:"=).tmp" $@ > NUL
@@ -135,63 +122,40 @@ Clean ::
 Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)"
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre.wixobj" : \
-	"$(CLIENT_TARGET)TAPWinPre.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "$(CLIENT_TARGET)TAPWinPre.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ "$(CLIENT_TARGET)TAPWinPre.wxs"
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" : \
-	"$(CLIENT_TARGET)OpenVPN.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "$(CLIENT_TARGET)OpenVPN.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ "$(CLIENT_TARGET)OpenVPN.wxs"
-
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj" : "OpenVPN.Resources\OpenVPN.Resources.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" : \
-	"$(CLIENT_TARGET)Core.wxs" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "$(CLIENT_TARGET)Core.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -deduVPN.VC150RedistMSM="$(VC141REDIST_MSM)" -out $@ "$(CLIENT_TARGET)Core.wxs"
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" : "eduEd25519\eduEd25519\eduEd25519.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduJSON.dll.wixobj" : "eduJSON\eduJSON\eduJSON.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj" : "eduOAuth\eduOAuth\eduOAuth.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj" : "eduOpenVPN\eduOpenVPN\eduOpenVPN.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.dll.wixobj" : "eduVPN\eduVPN.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj" : "eduVPN.Views\eduVPN.Views.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj" : "eduVPN.Resources\eduVPN.Resources.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj" : "$(CLIENT_TARGET).Client\$(CLIENT_TARGET).Client.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_LOCAL) -out $@ $**
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre.wixobj"   del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre.wixobj"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"     del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj"       del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"        del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj"              del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduJSON.dll.wixobj"                 del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduJSON.dll.wixobj"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj"                del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj"
@@ -199,65 +163,16 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.dll.wixobj"                  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.dll.wixobj"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj"            del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj"        del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj"
-
-"$(SETUP_DIR)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET).msi" : \
-#	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_nl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_sl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_en-US.msi"
-	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
-#	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client TAP-Windows Prerequisites" /q "$(@:"=).tmp"
-!ENDIF
-	attrib.exe +r "$(@:"=).tmp"
-	if exist $@ attrib.exe -r $@
-	move /y "$(@:"=).tmp" $@ > NUL
-
-"$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" : \
-#	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi"
-	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
-#	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client OpenVPN Components" /q "$(@:"=).tmp"
-!ENDIF
-	attrib.exe +r "$(@:"=).tmp"
-	if exist $@ attrib.exe -r $@
-	move /y "$(@:"=).tmp" $@ > NUL
-
-"$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET).msi" : \
-#	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_nl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi"
-	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
-#	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /t "$(MANIFESTTIMESTAMPURL)" /d "eduVPN Client Core" /q "$(@:"=).tmp"
-!ENDIF
-	attrib.exe +r "$(@:"=).tmp"
-	if exist $@ attrib.exe -r $@
-	move /y "$(@:"=).tmp" $@ > NUL
-
-Clean ::
-	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET).msi" del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_$(SETUP_TARGET).msi"
-	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi"     del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi"
-	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET).msi"           del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET).msi"
 
 
 ######################################################################
-# Locale-specific rules
+# Client-specific rules
 ######################################################################
 
-LANG=en-US
-!INCLUDE "MakefileCfgPlatLang.mak"
+CLIENT_TARGET=eduVPN
+CLIENT_TITLE=eduVPN
+!INCLUDE "MakefileCfgPlatClient.mak"
 
-LANG=nl
-!INCLUDE "MakefileCfgPlatLang.mak"
-
-LANG=sl
-!INCLUDE "MakefileCfgPlatLang.mak"
+CLIENT_TARGET=LetsConnect
+CLIENT_TITLE=Let's Connect!
+!INCLUDE "MakefileCfgPlatClient.mak"

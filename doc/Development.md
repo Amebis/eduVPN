@@ -12,9 +12,11 @@
 - _eduOAuth_: OAuth 2.0 library
 - _eduOpenVPN_: OpenVPN IPC for C#/.NET
 - _eduVPN_: eduVPN client business logic (Model and View Model)
-- _eduVPN.Client_: eduVPN client UI (View)
-- _eduVPN.Install_: Theme files for WiX Standard Bootstrapper Application
+- _eduVPN.Client_: eduVPN client shell
 - _eduVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for Start Menu shortcuts etc.
+- _eduVPN.Views_: eduVPN client UI (View)
+- _Install_: Theme files for WiX Standard Bootstrapper Application
+- _LetsConnect.Client_: Let's Connect! client shell
 - _OpenVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for system services names etc.
 
 ## Building

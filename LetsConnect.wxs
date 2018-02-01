@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    eduVPN - End-user friendly VPN
+    Let's Connect! - End-user friendly VPN
 
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
@@ -10,11 +10,11 @@
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
     <Bundle
-        UpgradeCode="{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}"
+        UpgradeCode="{5F7860D5-5563-4492-930B-C8C77A539504}"
         Version="$(var.Version)"
         Name="!(loc.ApplicationName) $(var.Version)"
         Manufacturer="!(loc.ManufacturerName)"
-        AboutUrl="https://eduvpn.org/"
+        AboutUrl="https://letsconnect-vpn.org/"
         Copyright="!(loc.LegalCopyright)"
         IconSourceFile="$(var.ClientTarget).Client\Resources\App.ico"
         Compressed="yes">

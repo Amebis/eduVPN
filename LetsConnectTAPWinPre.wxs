@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    eduVPN - End-user friendly VPN
+    Let's Connect! - End-user friendly VPN
 
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
@@ -28,7 +28,7 @@
             Cabinet="TAPWinPre.cab"
             EmbedCab="yes"/>
 
-        <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+        <Property Id="ARPURLINFOABOUT" Value="https://letsconnect-vpn.org/"/>
 
         <Binary Id="tap0901.cer" SourceFile="tap0901.cer"/>
 
@@ -48,7 +48,7 @@
             <RemoveExistingProducts Before="InstallInitialize"/>
         </InstallExecuteSequence>
         <Property Id="BINDIRPREV">
-            <ComponentSearch Id="tap0901.cer" Guid="{CDCB8AE6-B105-409F-8539-5642A2BC3910}"/>
+            <ComponentSearch Id="tap0901.cer" Guid="{DA41DE05-8DED-4573-A42B-23E583CCD6E6}"/>
         </Property>
         <SetProperty
             After="AppSearch"
@@ -69,7 +69,7 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
-                <Directory Id="PRODUCTDIR" Name="eduVPN">
+                <Directory Id="PRODUCTDIR" Name="Let's Connect!">
                     <Directory Id="BINDIR" Name="TAPWinPre" FileSource="$(var.TargetDir)"/>
                 </Directory>
             </Directory>
@@ -80,7 +80,7 @@
             Compontents
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="tap0901.cer" Guid="{CDCB8AE6-B105-409F-8539-5642A2BC3910}">
+            <Component Id="tap0901.cer" Guid="{DA41DE05-8DED-4573-A42B-23E583CCD6E6}">
                 <File Source="tap0901.cer"/>
                 <iis:Certificate
                     Id="OpenVPNTechCert"

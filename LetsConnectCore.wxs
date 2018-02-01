@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    eduVPN - End-user friendly VPN
+    Let's Connect! - End-user friendly VPN
 
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
@@ -33,7 +33,7 @@
             SourceFile="$(var.ClientTarget).Client\Resources\App.ico"/>
 
         <Property Id="ARPPRODUCTICON" Value="App.ico"/>
-        <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+        <Property Id="ARPURLINFOABOUT" Value="https://letsconnect-vpn.org/"/>
 
 
         <!--
@@ -60,11 +60,11 @@
             <RemoveExistingProducts Before="InstallInitialize"/>
         </InstallExecuteSequence>
         <Property Id="BINDIRPREV">
-            <ComponentSearch Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}"/>
-            <ComponentSearch Id="QRCoder.dll" Guid="{A862393E-2555-41D9-A971-1D15508DB323}"/>
-            <ComponentSearch Id="UnityEngine.dll" Guid="{E17FDCC0-E1AC-408C-9DD6-F34BC1D55629}"/>
-            <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}"/>
-            <ComponentSearch Id="$(var.ClientTarget).Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}"/>
+            <ComponentSearch Id="Prism.dll" Guid="{9B4F3694-9A5E-41AF-AA24-E2E5F39A48C6}"/>
+            <ComponentSearch Id="QRCoder.dll" Guid="{D9B63915-FA40-457F-8CBB-E7F3863D7F40}"/>
+            <ComponentSearch Id="UnityEngine.dll" Guid="{F22574BF-7ED3-4451-A508-78A0F6AF48AB}"/>
+            <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}"/>
+            <ComponentSearch Id="$(var.ClientTarget).Client.exe.config" Guid="{03C290E0-70A5-4594-9801-F51D07CCF06B}"/>
         </Property>
         <SetProperty
             After="AppSearch"
@@ -92,7 +92,7 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
-                <Directory Id="PRODUCTDIR" Name="eduVPN">
+                <Directory Id="PRODUCTDIR" Name="Let's Connect!">
                     <Directory Id="BINDIR" Name="Core" FileSource="$(var.TargetDir)">
                         <Directory Id="RESDIRNL" Name="nl"/>
                         <Directory Id="RESDIRSL" Name="sl"/>
@@ -120,7 +120,7 @@
             Prism
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}">
+            <Component Id="Prism.dll" Guid="{9B4F3694-9A5E-41AF-AA24-E2E5F39A48C6}">
                 <File Source="Prism.dll"/>
             </Component>
         </DirectoryRef>
@@ -133,7 +133,7 @@
             QRCoder
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="QRCoder.dll" Guid="{A862393E-2555-41D9-A971-1D15508DB323}">
+            <Component Id="QRCoder.dll" Guid="{D9B63915-FA40-457F-8CBB-E7F3863D7F40}">
                 <File Source="QRCoder.dll"/>
             </Component>
         </DirectoryRef>
@@ -146,7 +146,7 @@
             UnityEngine
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="UnityEngine.dll" Guid="{E17FDCC0-E1AC-408C-9DD6-F34BC1D55629}">
+            <Component Id="UnityEngine.dll" Guid="{F22574BF-7ED3-4451-A508-78A0F6AF48AB}">
                 <File Source="UnityEngine.dll"/>
             </Component>
         </DirectoryRef>
