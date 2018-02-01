@@ -438,7 +438,7 @@
 
     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Padding" Value="2"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
