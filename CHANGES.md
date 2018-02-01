@@ -2,8 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.18...HEAD)
 
-- GUI redesign
 - Let's Connect! client
+- GUI redesign
 - Accessibility and screen reader support
 - Fixes and cleanups
 
