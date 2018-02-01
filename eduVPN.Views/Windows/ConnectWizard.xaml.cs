@@ -65,6 +65,7 @@ namespace eduVPN.Views.Windows
             // Launch HTTP listener on the loopback interface.
             _http_listener = new eduOAuth.HttpListener(IPAddress.Loopback, 0);
             _http_listener.HttpCallback += HttpListener_HttpCallback;
+            _http_listener.HttpRequest += HttpListener_HttpRequest;
             _http_listener.Start();
 
             InitializeComponent();
@@ -212,6 +213,22 @@ namespace eduVPN.Views.Windows
                 // (Re)activate main window.
                 Open_Click(sender, new RoutedEventArgs());
             }));
+        }
+
+        /// <summary>
+        /// Returns /favicon.ico.
+        /// </summary>
+        /// <param name="sender">HTTP peer/client of type <see cref="System.Net.Sockets.TcpClient"/></param>
+        /// <param name="e">Event arguments</param>
+        /// <remarks>Occurs when browser requests data.</remarks>
+        private void HttpListener_HttpRequest(object sender, eduOAuth.HttpRequestEventArgs e)
+        {
+            if (e.Uri.AbsolutePath.ToLowerInvariant() == "/favicon.ico")
+            {
+                var res = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/App.ico"));
+                e.Type = res.ContentType;
+                e.Content = res.Stream;
+            }
         }
 
         /// <summary>
