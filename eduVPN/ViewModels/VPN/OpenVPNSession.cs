@@ -239,6 +239,9 @@ namespace eduVPN.ViewModels.VPN
                                                     msg += "\r\n" + e.Message;
                                                 }
                                                 StateDescription = msg;
+
+                                                // Also, display the error message in the connect wizard.
+                                                Wizard.Error = new Exception(msg);
                                             }));
 
                                     mgmt_session.HoldReported += (object sender, HoldReportedEventArgs e) =>
