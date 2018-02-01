@@ -51,7 +51,7 @@
 
                         <Image
                             Width="28" Height="28"
-                            Source="pack://application:,,,/Resources/App.png"
+                            Source="pack://application:,,,/Resources/App.ico"
                             RenderOptions.BitmapScalingMode="Fant"/>
 
                         <TextBlock

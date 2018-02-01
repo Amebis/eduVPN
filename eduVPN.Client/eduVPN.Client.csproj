@@ -93,8 +93,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\App.ico" />
-    <Resource Include="Resources\App.png" />
+    <Resource Include="Resources\App.ico" />
     <Resource Include="Resources\InstituteAccessButton.png" />
     <Resource Include="Resources\InstituteAccess.png" />
     <Resource Include="Resources\SecureInternetButton.png" />
