@@ -30,7 +30,7 @@ namespace LetsConnect.Client
         [STAThread]
         public static void Main()
         {
-            if (SingleInstance<eduVPN.Views.App>.InitializeAsFirstInstance("nl.letsconnect.app"))
+            if (SingleInstance<eduVPN.Views.App>.InitializeAsFirstInstance("org.letsconnect-vpn.app"))
             {
                 try
                 {
