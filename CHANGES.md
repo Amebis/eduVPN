@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.18...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.19...HEAD)
+
+
+## [1.0.19](https://github.com/Amebis/eduVPN/compare/1.0.18...1.0.19)
 
 - Let's Connect! client
 - GUI redesign
