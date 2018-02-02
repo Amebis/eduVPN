@@ -1,5 +1,5 @@
 ﻿/*
-    Let's Connect! - End-user friendly VPN
+    Let's Connect! - The open source VPN
 
     Copyright: 2017, The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
