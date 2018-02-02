@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGES.md = CHANGES.md
+		eduVPN.nl.wxl = eduVPN.nl.wxl
 		eduVPN.sl.wxl = eduVPN.sl.wxl
 		eduVPN.wxl = eduVPN.wxl
 		eduVPN.wxs = eduVPN.wxs
