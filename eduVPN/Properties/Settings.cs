@@ -209,6 +209,13 @@ namespace eduVPN.Properties
         [SettingsDescription("GUID of the installer EXE bundle")]
         public string SelfUpdateBundleID { get; set; }
 
+        /// <summary>
+        /// Client ID
+        /// </summary>
+        [ApplicationScopedSetting()]
+        [SettingsDescription("Client ID")]
+        public string ClientID { get; set; }
+
         #endregion
 
         #region Methods

@@ -55,6 +55,7 @@ namespace eduVPN.Client
 
             // Set client-specific settings.
             eduVPN.Properties.Settings.Default.SelfUpdateBundleID = "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}";
+            eduVPN.Properties.Settings.Default.ClientID = "org.eduvpn.app";
 
             // Initialize settings.
             Client.Properties.Settings.Initialize();

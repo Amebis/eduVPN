@@ -368,7 +368,7 @@ namespace eduVPN.Models
                 if (_client_certificate == null)
                 {
                     // Open eduVPN client certificate store.
-                    var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
+                    var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
                     store.Open(OpenFlags.ReadWrite);
                     try
                     {
@@ -469,7 +469,7 @@ namespace eduVPN.Models
                 var friendly_name = Base.AbsoluteUri;
 
                 // Open eduVPN client certificate store.
-                var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
+                var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
                 store.Open(OpenFlags.ReadWrite);
                 try
                 {
@@ -578,7 +578,7 @@ namespace eduVPN.Models
             lock (_client_certificate_lock)
             {
                 // Open eduVPN client certificate store.
-                var store = new X509Store("org.eduvpn.app", StoreLocation.CurrentUser);
+                var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
                 store.Open(OpenFlags.ReadWrite);
                 try
                 {
