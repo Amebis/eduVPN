@@ -223,9 +223,10 @@
         </Setter>
 
         <Style.Triggers>
-            <!-- Change button text color on mouse over or pressed. -->
+            <!-- Change button text color and mouse cursor on mouse over or pressed. -->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource ButtonTextHoverBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -993,9 +994,10 @@
         </Setter>
 
         <Style.Triggers>
-            <!-- Invert button text/content color on mouse over. -->
+            <!-- Invert button text/content color and change mouse cursor on mouse over. -->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource HeadingTextBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -1049,9 +1051,10 @@
         </Setter>
 
         <Style.Triggers>
-            <!-- Change button text/content color when mouse over. -->
+            <!-- Change button text/content color and mouse cursor when mouse over. -->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource WindowBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
 
             <!-- When navigation buttons are disabled, hide them. -->
