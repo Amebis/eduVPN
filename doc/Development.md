@@ -21,10 +21,7 @@
 - _OpenVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for system services names
 
 
-## Building
-
-
-### Pre-requisites
+## Pre-requisites
 
 1. [Visual Studio 2017 Community Edition](https://www.visualstudio.com/vs/community/)
    - Workloads
@@ -54,7 +51,11 @@ In order to have the build process digitally sign the release output files, one 
    - `ManifestTimestampRFC3161Url` - set the value to URL used to perform timestamp signature (e.g. `http://sha256timestamp.ws.symantec.com/sha256/timestamp`). In order to perform the timestamp signing successfully, the computer running the build should be online and able to access this URL.
 
 
-### Initial Registration
+## Building and Packaging
+
+### Testing and Debugging
+
+#### Initial Registration
 
 The registration prepares the working environment for the eduVPN and Let's Connect! clients, much like the setup does. It performs the following:
 - Prepares local OpenVPN binaries.
@@ -71,7 +72,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
 4. The clients can now be started using the Start menu shortcut.
 
 
-### Debugging Clients
+#### Debugging Clients
 
 1. Perform the [initial registration](#initial-registration) described above.
 2. Open the `eduVPN.sln` file (with VS2017).
