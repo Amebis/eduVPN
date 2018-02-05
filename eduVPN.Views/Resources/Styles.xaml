@@ -254,9 +254,10 @@
         </Setter>
 
         <Style.Triggers>
-            <!-- Change button text color on mouse over or pressed. -->
+            <!-- Change button text color and mouse cursor on mouse over or pressed. -->
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource LinkButtonTextHoverBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -1459,49 +1460,12 @@
         Choice Buttons
     -->
 
-    <Style x:Key="ChoiceButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="ChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="MinHeight" Value="90"/>
-        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <AdornerDecorator>
-                        <Border
-                            x:Name="Border"
-                            Background="{StaticResource ButtonBrush}"
-                            BorderBrush="{StaticResource ButtonBorderBrush}"
-                            BorderThickness="1"
-                            CornerRadius="6">
-                            <ContentPresenter
-                                Margin="3"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"/>
-                        </Border>
-                    </AdornerDecorator>
-
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="Background"
-                                Value="{StaticResource ButtonHoverBrush}"/>
-                            <Setter
-                                TargetName="Border"
-                                Property="BorderBrush"
-                                Value="{StaticResource ButtonBorderHoverBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <!-- Change button text color on mouse over or pressed. -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource ButtonTextHoverBrush}"/>
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
 
     <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}">
