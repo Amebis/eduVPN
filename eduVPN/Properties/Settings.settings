@@ -38,8 +38,5 @@
     <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SelfUpdateBundleID" Description="GUID of the installer EXE bundle" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

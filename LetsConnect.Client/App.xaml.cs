@@ -7,6 +7,7 @@
 
 using Microsoft.Shell;
 using System;
+using System.Windows;
 
 namespace LetsConnect.Client
 {
@@ -45,6 +46,15 @@ namespace LetsConnect.Client
                     SingleInstance<eduVPN.Views.App>.Cleanup();
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // Set client-specific settings.
+            eduVPN.Properties.Settings.Default.SelfUpdateBundleID = "{5F7860D5-5563-4492-930B-C8C77A539504}";
         }
 
         #endregion

@@ -202,6 +202,13 @@ namespace eduVPN.Properties
             get { return ((string)(this["SelfUpdatePubKey"])); }
         }
 
+        /// <summary>
+        /// GUID of the installer EXE bundle
+        /// </summary>
+        [ApplicationScopedSetting()]
+        [SettingsDescription("GUID of the installer EXE bundle")]
+        public string SelfUpdateBundleID { get; set; }
+
         #endregion
 
         #region Methods
