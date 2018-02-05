@@ -103,12 +103,6 @@
     <Resource Include="Resources\AppBanner.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\SettingsButtonHot.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\SettingsButton.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.nl.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
