@@ -65,7 +65,7 @@
                 <Canvas Height="14" Width="14">
                     <Canvas.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform ScaleY="0.082" ScaleX="0.082"/>
+                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
                     <Path

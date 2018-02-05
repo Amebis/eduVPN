@@ -516,7 +516,7 @@
                                                     Width="20" Height="20">
                                                     <Canvas.RenderTransform>
                                                         <TransformGroup>
-                                                            <ScaleTransform ScaleY="0.118" ScaleX="0.118"/>
+                                                            <ScaleTransform ScaleX="0.11759" ScaleY="0.11759"/>
                                                         </TransformGroup>
                                                     </Canvas.RenderTransform>
                                                     <Polygon
@@ -653,7 +653,7 @@
                                                                 Width="20" Height="20">
                                                                 <Canvas.RenderTransform>
                                                                     <TransformGroup>
-                                                                        <ScaleTransform ScaleY="0.118" ScaleX="0.118"/>
+                                                                        <ScaleTransform ScaleX="0.11759" ScaleY="0.11759"/>
                                                                     </TransformGroup>
                                                                 </Canvas.RenderTransform>
                                                                 <Polygon
@@ -1091,7 +1091,7 @@
                             <Canvas Width="22" Height="22">
                                 <Canvas.RenderTransform>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleY="0.129" ScaleX="0.129"/>
+                                        <ScaleTransform ScaleX="0.12935" ScaleY="0.12935"/>
                                     </TransformGroup>
                                 </Canvas.RenderTransform>
                                 <Path
@@ -1121,7 +1121,7 @@
                                 <Canvas Height="14" Width="14">
                                     <Canvas.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="0.082" ScaleX="0.082"/>
+                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
                                         </TransformGroup>
                                     </Canvas.RenderTransform>
                                     <Path
@@ -1141,7 +1141,7 @@
                                 <Canvas Width="14" Height="14">
                                     <Canvas.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="0.082" ScaleX="0.082"/>
+                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
                                         </TransformGroup>
                                     </Canvas.RenderTransform>
                                     <Polygon
@@ -1213,7 +1213,7 @@
                                 <Canvas Height="14" Width="14">
                                     <Canvas.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="0.082" ScaleX="0.082"/>
+                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
                                         </TransformGroup>
                                     </Canvas.RenderTransform>
                                     <Polygon
@@ -1272,7 +1272,7 @@
                                 <Canvas Height="14" Width="14">
                                     <Canvas.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="0.082" ScaleX="0.082"/>
+                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
                                         </TransformGroup>
                                     </Canvas.RenderTransform>
                                     <Polygon
@@ -1438,7 +1438,7 @@
                                     <Canvas Width="12" Height="12">
                                         <Canvas.RenderTransform>
                                             <TransformGroup>
-                                                <ScaleTransform ScaleY="0.071" ScaleX="0.071"/>
+                                                <ScaleTransform ScaleX="0.07056" ScaleY="0.07056"/>
                                             </TransformGroup>
                                         </Canvas.RenderTransform>
                                         <Polygon

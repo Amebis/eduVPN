@@ -15,7 +15,7 @@
         <Canvas Width="25" Height="25">
             <Canvas.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleY="0.147" ScaleX="0.147"/>
+                    <ScaleTransform ScaleX="0.14699" ScaleY="0.14699"/>
                 </TransformGroup>
             </Canvas.RenderTransform>
             <Path
@@ -31,7 +31,7 @@
         <Canvas Width="25" Height="25">
             <Canvas.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleY="0.147" ScaleX="0.147"/>
+                    <ScaleTransform ScaleX="0.14699" ScaleY="0.14699"/>
                 </TransformGroup>
             </Canvas.RenderTransform>
             <Path
@@ -46,7 +46,7 @@
     <Canvas x:Key="UserDisabledIcon" Width="25" Height="25">
         <Canvas.RenderTransform>
             <TransformGroup>
-                <ScaleTransform ScaleY="0.147" ScaleX="0.147"/>
+                <ScaleTransform ScaleX="0.14699" ScaleY="0.14699"/>
             </TransformGroup>
         </Canvas.RenderTransform>
         <Path

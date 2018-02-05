@@ -72,7 +72,7 @@
                             <Canvas Width="12" Height="12">
                                 <Canvas.RenderTransform>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleY="0.071" ScaleX="0.071"/>
+                                        <ScaleTransform ScaleX="0.07056" ScaleY="0.07056"/>
                                     </TransformGroup>
                                 </Canvas.RenderTransform>
                                 <Polygon
