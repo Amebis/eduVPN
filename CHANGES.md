@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.19...HEAD)
 
 - GUI refinements
+- Let's Connect! client will self-update from this version on
 
 
 ## [1.0.19](https://github.com/Amebis/eduVPN/compare/1.0.18...1.0.19)
