@@ -1466,12 +1466,14 @@
         <Setter Property="Padding" Value="3"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-    </Style>
 
-    <Style x:Key="ChoiceNoteStyle" TargetType="{x:Type AccessText}">
-        <Setter Property="FontWeight" Value="{x:Static FontWeights.Normal}"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type AccessText}">
+                <Setter Property="FontWeight" Value="{x:Static FontWeights.Normal}"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Style.Resources>
     </Style>
 
 </ResourceDictionary>

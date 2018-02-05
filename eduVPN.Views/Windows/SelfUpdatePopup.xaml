@@ -92,7 +92,6 @@
                 <AccessText
                     Grid.Column="1"
                     Margin="10"
-                    Style="{StaticResource ChoiceNoteStyle}"
                     Text="{x:Static res:Strings.SelfUpdatePopupUpdateButtonTitle}"/>
             </Grid>
         </Button>

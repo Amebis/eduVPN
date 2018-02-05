@@ -63,7 +63,6 @@
                 <AccessText
                     Grid.Column="1"
                     Margin="10"
-                    Style="{StaticResource ChoiceNoteStyle}"
                     Text="{x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle}"/>
             </Grid>
         </Button>
@@ -104,7 +103,6 @@
                 <AccessText
                     Grid.Column="1"
                     Margin="10"
-                    Style="{StaticResource ChoiceNoteStyle}"
                     Text="{x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}"/>
             </Grid>
         </Button>
