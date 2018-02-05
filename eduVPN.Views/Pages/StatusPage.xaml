@@ -143,6 +143,7 @@
             Grid.Row="2"
             Margin="5"
             ItemsSource="{Binding Source={StaticResource MessageListView}}"
+            ItemContainerStyle="{StaticResource PassiveListBoxItemStyle}"
             Visibility="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageMessagesLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
 

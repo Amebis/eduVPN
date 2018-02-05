@@ -337,6 +337,31 @@
     <SolidColorBrush x:Key="ListBoxItemHoverBrush" Color="{StaticResource ListBoxItemHoverColor}"/>
     <SolidColorBrush x:Key="ListBoxItemSelectedBrush" Color="{StaticResource ListBoxItemSelectedColor}"/>
 
+    <Style x:Key="PassiveListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <!-- Display list item as text/content. -->
+                    <AdornerDecorator>
+                        <Border
+                            x:Name="Border"
+                            Background="{StaticResource ControlBrush}"
+                            Style="{StaticResource ListBoxItemBorderStyle}">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </AdornerDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
         <Setter Property="Padding" Value="2"/>
