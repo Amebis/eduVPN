@@ -29,7 +29,7 @@
     <Color x:Key="ButtonBorderHoverColor">#FF02B4D2</Color>
 
     <Color x:Key="LinkButtonTextColor">#FF02B4D2</Color>
-    <Color x:Key="LinkButtonTextHoverColor">#CC02B4D2</Color>
+    <Color x:Key="LinkButtonTextHoverColor">#BB02B4D2</Color>
 
     <Color x:Key="TextBoxSelectionColor">#FF02B4D2</Color>
     <Color x:Key="TextBoxCursorColor">#FF000000</Color>
