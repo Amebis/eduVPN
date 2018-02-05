@@ -60,60 +60,82 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
 
-            <TextBlock
-                Margin="0,0,5,2"
-                Style="{StaticResource InfoTitleTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageStatus}"/>
+            <Grid
+                Margin="0,0,5,0"
+                HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Image
-                Grid.Row="1"
-                Margin="0,2,5,0"
-                MaxHeight="22"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Source="{Binding Path=Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
-                ToolTip="{Binding Path=Wizard.ActiveSession.StateDescription}"
-                AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.StateDescription}"
-                RenderOptions.BitmapScalingMode="Fant"/>
+                <TextBlock
+                    Margin="0,0,0,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource InfoTitleTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageStatus}"/>
 
-            <TextBlock
+                <Image
+                    Grid.Row="1"
+                    Margin="0,2,0,0"
+                    MaxHeight="22"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="{Binding Path=Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
+                    ToolTip="{Binding Path=Wizard.ActiveSession.StateDescription}"
+                    AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.StateDescription}"
+                    RenderOptions.BitmapScalingMode="Fant"/>
+            </Grid>
+
+            <Grid
                 Grid.Column="1"
-                Margin="5,0,5,2"
-                Style="{StaticResource InfoTitleTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageInstance}"/>
+                Margin="5,0,5,0"
+                HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <controls:ImageWithFallback
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="5,2,5,0"
-                MaxHeight="22"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                UriSource="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.Logo}"
-                UriFallbackSource="pack://application:,,,/Resources/GenericInstance.png"
-                ToolTip="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
-                AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
-                RenderOptions.BitmapScalingMode="Fant"/>
+                <TextBlock
+                    Margin="0,0,0,2"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource InfoTitleTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageInstance}"/>
 
-            <TextBlock
+                <controls:ImageWithFallback
+                    Grid.Row="1"
+                    Margin="0,2,0,0"
+                    MaxHeight="22"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    UriSource="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.Logo}"
+                    UriFallbackSource="pack://application:,,,/Resources/GenericInstance.png"
+                    ToolTip="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
+                    AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.ConnectingProfile.Instance.DisplayName}"
+                    RenderOptions.BitmapScalingMode="Fant"/>
+            </Grid>
+
+            <Grid
                 Grid.Column="2"
-                Margin="5,0,0,2"
-                Style="{StaticResource InfoTitleTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageProfile}"/>
+                Margin="5,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="2"
-                Margin="5,2,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Style="{StaticResource InfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.ConnectingProfile.DisplayName}"/>
+                <TextBlock
+                    Margin="0,0,0,2"
+                    Style="{StaticResource InfoTitleTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageProfile}"/>
+
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="0,2,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource InfoDataBlockStyle}"
+                    Text="{Binding Path=Wizard.ActiveSession.ConnectingProfile.DisplayName}"/>
+            </Grid>
         </Grid>
 
         <ListBox
