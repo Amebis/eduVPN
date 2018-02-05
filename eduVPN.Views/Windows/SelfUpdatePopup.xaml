@@ -69,17 +69,25 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Image
-                    Margin="13"
-                    Style="{StaticResource ChoiceIconStyle}"
-                    Source="pack://application:,,,/Resources/UpdateButton.png"/>
+                <Canvas
+                    Margin="10"
+                    Width="50" Height="50">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="0.294" ScaleX="0.294"/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Path
+                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        Data="M165.688,67.244l-40.689-30.541l-6.107,50.511l14.124-6.027c-2.254,24.492-22.905,43.739-47.976,43.739c-26.571,0-48.189-21.617-48.189-48.188c0-12.872,5.013-24.974,14.115-34.075L38.938,30.635C26.624,42.949,19.842,59.322,19.842,76.737c0,35.949,29.247,65.196,65.197,65.196s65.197-29.247,65.197-65.196c0-0.956-0.029-1.913-0.07-2.869L165.688,67.244z"/>
+                </Canvas>
 
                 <AccessText
                     Grid.Column="1"

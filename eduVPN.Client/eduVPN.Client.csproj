@@ -94,10 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\App.ico" />
-    <Resource Include="Resources\InstituteAccessButton.png" />
-    <Resource Include="Resources\InstituteAccess.png" />
-    <Resource Include="Resources\SecureInternetButton.png" />
-    <Resource Include="Resources\SecureInternet.png" />
     <Resource Include="Resources\GenericInstance.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
@@ -111,9 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\SettingsButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\UpdateButton.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.nl.resx">

@@ -22,8 +22,11 @@
     <Color x:Key="SeparatorColor">#FF02B4D2</Color>
 
     <Color x:Key="ButtonColor">#FF02B4D2</Color>
+    <Color x:Key="ButtonHoverColor">#FFFFFFFF</Color>
     <Color x:Key="ButtonTextColor">#FFFFFFFF</Color>
-    <Color x:Key="ButtonHoverColor">#CC02B4D2</Color>
+    <Color x:Key="ButtonTextHoverColor">#FF02B4D2</Color>
+    <Color x:Key="ButtonBorderColor">#FF02B4D2</Color>
+    <Color x:Key="ButtonBorderHoverColor">#FF02B4D2</Color>
 
     <Color x:Key="LinkButtonTextColor">#FF02B4D2</Color>
     <Color x:Key="LinkButtonTextHoverColor">#CC02B4D2</Color>
