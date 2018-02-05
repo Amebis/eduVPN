@@ -825,7 +825,7 @@ namespace eduVPN.ViewModels.Windows
                                     () =>
                                     {
                                         // Evaluate installed products.
-                                        var product_id = Properties.Settings.Default.SelfUpdateBundleID;
+                                        var product_id = Properties.Settings.Default.SelfUpdateBundleID.ToUpperInvariant();
                                         Trace.TraceInformation("Evaluating installed products...");
                                         using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
                                         using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
@@ -837,7 +837,7 @@ namespace eduVPN.ViewModels.Windows
                                                 {
                                                     var bundle_upgrade_code = product_key.GetValue("BundleUpgradeCode");
                                                     if ((bundle_upgrade_code is string   bundle_upgrade_code_str   && bundle_upgrade_code_str.ToUpperInvariant() == product_id ||
-                                                            bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == product_id) != null) &&
+                                                         bundle_upgrade_code is string[] bundle_upgrade_code_array && bundle_upgrade_code_array.FirstOrDefault(code => code.ToUpperInvariant() == product_id) != null) &&
                                                         product_key.GetValue("BundleVersion") is string bundle_version_str)
                                                     {
                                                         // Our product entry found.
