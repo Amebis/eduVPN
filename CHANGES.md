@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.20...HEAD)
 
+- Fixes and cleanups
+
 
 ## [1.0.20](https://github.com/Amebis/eduVPN/compare/1.0.19...1.0.20)
 
