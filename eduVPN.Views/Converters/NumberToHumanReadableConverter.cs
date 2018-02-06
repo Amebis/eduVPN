@@ -83,9 +83,9 @@ namespace eduVPN.Converters
             double x = number / Math.Pow(b, n);
             return String.Format(
                 Views.Resources.Strings.NumberToHumanReadable,
-                n > 0 ?
-                    Math.Truncate(x) :
-                    number,
+                n > 0 && Math.Abs(x) < 10 ?
+                    (Math.Truncate(x * 10)/10).ToString("N1") :
+                     Math.Truncate(x     )    .ToString(    ),
                 _prefixes[n],
                 _unit);
         }
