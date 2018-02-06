@@ -80,10 +80,11 @@ namespace eduVPN.Converters
                 return "";
 
             int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(b)), _prefixes.Length) : 0;
+            double x = number / Math.Pow(b, n);
             return String.Format(
                 Views.Resources.Strings.NumberToHumanReadable,
                 n > 0 ?
-                    Math.Truncate(number / Math.Pow(b, n)) :
+                    Math.Truncate(x) :
                     number,
                 _prefixes[n],
                 _unit);
