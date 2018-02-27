@@ -251,10 +251,13 @@
     <value>Select Your Institution</value>
   </data>
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Connect</value>
+    <value>Select Your Profile</value>
+  </data>
+  <data name="CustomInstancePageDescription" xml:space="preserve">
+    <value>Enter hostname of your VPN provider.</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Enter URL of your Provider</value>
+    <value>Other Address</value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initializing...</value>
