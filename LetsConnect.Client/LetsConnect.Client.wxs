@@ -18,7 +18,7 @@
                 <Shortcut
                     Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
-                    Name="Lets Connect Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
+                    Name="Let's Connect! Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="102"
                     Target="$(var.ClientTarget).Client"
                     WorkingDirectory="BINDIR"
@@ -32,7 +32,7 @@
                 <Shortcut
                     Id="$(var.ClientTarget).Client.exe.DesktopShortcut"
                     Directory="DesktopFolder"
-                    Name="Lets Connect Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
+                    Name="Let's Connect! Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="101"
                     DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="102"
                     Target="[BINDIR]$(var.ClientTarget).Client.exe"
                     WorkingDirectory="BINDIR"
