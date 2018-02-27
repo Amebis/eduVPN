@@ -55,6 +55,40 @@ namespace eduVPN.Views.Windows
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Tray icon tool-tip text
+        /// </summary>
+        private string TrayIconToolTipText
+        {
+            get
+            {
+                var view_model = (ViewModels.Windows.ConnectWizard)DataContext;
+                return
+                    (view_model != null && view_model.ActiveSession.ConnectingProfile != null ?
+                        String.Format("{0} - {1}\r\n{2}",
+                            view_model.ActiveSession.ConnectingProfile?.Instance,
+                            view_model.ActiveSession.ConnectingProfile,
+                            view_model.ActiveSession.StateDescription) :
+                        ((App)Application.Current).ClientTitle).Left(63);
+            }
+        }
+
+        /// <summary>
+        /// Tray icon
+        /// </summary>
+        private Icon TrayIcon
+        {
+            get
+            {
+                var view_model = (ViewModels.Windows.ConnectWizard)DataContext;
+                return view_model != null ? _icons[view_model.ActiveSession.State] : null;
+            }
+        }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -117,13 +151,8 @@ namespace eduVPN.Views.Windows
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
             _tray_icon = new System.Windows.Forms.NotifyIcon()
             {
-                Text = String.Format(
-                    view_model.ActiveSession.ConnectingProfile != null ? "{1} - {2}\r\n{3}" : "{0}",
-                    ((App)Application.Current).ClientTitle,
-                    view_model.ActiveSession.ConnectingProfile?.Instance,
-                    view_model.ActiveSession.ConnectingProfile,
-                    view_model.ActiveSession.StateDescription).Left(63),
-                Icon = _icons[view_model.ActiveSession.State]
+                Text = TrayIconToolTipText,
+                Icon = TrayIcon
             };
             _tray_icon.Click += TrayIcon_Click;
 
@@ -132,26 +161,25 @@ namespace eduVPN.Views.Windows
             {
                 if (e2.PropertyName == nameof(view_model.ActiveSession))
                 {
+                    // Active session changed: sync the tray icon.
+                    _tray_icon.Text = TrayIconToolTipText;
+                    _tray_icon.Icon = TrayIcon;
+
                     if (view_model.ActiveSession != VPNSession.Blank)
                     {
-                        // Active session changed: Bind to the session for property changes.
+                        // Bind to the session for property changes.
                         view_model.ActiveSession.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
                         {
                             switch (e_Session.PropertyName)
                             {
                                 case nameof(view_model.ActiveSession.ConnectingProfile):
                                 case nameof(view_model.ActiveSession.StateDescription):
-                                    _tray_icon.Text = String.Format(
-                                        view_model.ActiveSession.ConnectingProfile != null ? "{1} - {2}\r\n{3}" : "{0}",
-                                        ((App)Application.Current).ClientTitle,
-                                        view_model.ActiveSession.ConnectingProfile?.Instance,
-                                        view_model.ActiveSession.ConnectingProfile,
-                                        view_model.ActiveSession.StateDescription).Left(63);
+                                    _tray_icon.Text = TrayIconToolTipText;
                                     break;
 
                                 case nameof(view_model.ActiveSession.State):
                                     {
-                                        _tray_icon.Icon = _icons[view_model.ActiveSession.State];
+                                        _tray_icon.Icon = TrayIcon;
 
                                         if (view_model.ActiveSession.State == VPNSessionStatusType.Connected && !IsVisible)
                                         {
@@ -166,11 +194,6 @@ namespace eduVPN.Views.Windows
                                     break;
                             }
                         };
-                    }
-                    else
-                    {
-                        // Active session ended, no more sessions: Reset tray icon to default.
-                        _tray_icon.Icon = _icons[view_model.ActiveSession.State];
                     }
                 }
             };
