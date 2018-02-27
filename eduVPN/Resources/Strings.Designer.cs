@@ -88,7 +88,7 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect.
+        ///   Looks up a localized string similar to Select Your Profile.
         /// </summary>
         internal static string ConnectingProfileSelectPageTitle {
             get {
