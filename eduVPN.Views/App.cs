@@ -22,15 +22,6 @@ namespace eduVPN.Views
     /// </summary>
     public class App : Application, ISingleInstanceApp
     {
-        #region Properties
-
-        /// <summary>
-        /// Localized client name
-        /// </summary>
-        public virtual string ClientTitle { get => ""; }
-
-        #endregion
-
         #region Methods
 
         /// <inheritdoc/>

@@ -16,13 +16,6 @@ namespace LetsConnect.Client
     /// </summary>
     public partial class App : eduVPN.Views.App
     {
-        #region Properties
-
-        /// <inheritdoc/>
-        public override string ClientTitle { get => Client.Resources.Strings.ConnectWizardTitle; }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -56,6 +49,7 @@ namespace LetsConnect.Client
             // Set client-specific settings.
             eduVPN.Properties.Settings.Default.SelfUpdateBundleID = "{5F7860D5-5563-4492-930B-C8C77A539504}";
             eduVPN.Properties.Settings.Default.ClientID = "org.letsconnect-vpn.app";
+            eduVPN.Properties.Settings.Default.ClientTitle = Client.Resources.Strings.ConnectWizardTitle;
         }
 
         #endregion

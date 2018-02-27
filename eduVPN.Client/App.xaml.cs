@@ -16,13 +16,6 @@ namespace eduVPN.Client
     /// </summary>
     public partial class App : Views.App
     {
-        #region Properties
-
-        /// <inheritdoc/>
-        public override string ClientTitle { get => Client.Resources.Strings.ConnectWizardTitle; }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -56,6 +49,7 @@ namespace eduVPN.Client
             // Set client-specific settings.
             eduVPN.Properties.Settings.Default.SelfUpdateBundleID = "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}";
             eduVPN.Properties.Settings.Default.ClientID = "org.eduvpn.app";
+            eduVPN.Properties.Settings.Default.ClientTitle = Client.Resources.Strings.ConnectWizardTitle;
 
             // Initialize settings.
             Client.Properties.Settings.Initialize();

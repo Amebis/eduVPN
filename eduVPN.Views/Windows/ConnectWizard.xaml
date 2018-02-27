@@ -10,13 +10,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows"
     xmlns:vmwindows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     xmlns:vmpages="clr-namespace:eduVPN.ViewModels.Pages;assembly=eduVPN"
     mc:Ignorable="d"
-    Title="{Binding Path=ClientTitle, Source={x:Static Application.Current}}"
+    Title="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}}"
     Height="460"
     Width="300"
     Icon="{Binding Path=ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIconInitializingImage}}"
@@ -58,7 +59,7 @@
                             Grid.Column="1"
                             Margin="0,5"
                             Style="{StaticResource HeaderTextBlockStyle}"
-                            Text="{Binding Path=ClientTitle, Source={x:Static Application.Current}}"/>
+                            Text="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}}"/>
 
                         <Button
                             Grid.Column="2"

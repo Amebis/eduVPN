@@ -216,6 +216,13 @@ namespace eduVPN.Properties
         [SettingsDescription("Client ID")]
         public string ClientID { get; set; }
 
+        /// <summary>
+        /// Client Title
+        /// </summary>
+        [ApplicationScopedSetting()]
+        [SettingsDescription("Client Title")]
+        public string ClientTitle { get; set; }
+
         #endregion
 
         #region Methods

@@ -10,6 +10,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     mc:Ignorable="d"
@@ -29,7 +30,7 @@
         <Image
             Margin="5"
             Source="pack://application:,,,/Resources/AppBanner.png"
-            AutomationProperties.Name="{Binding Path=ClientTitle, Source={x:Static Application.Current}, StringFormat={x:Static res:Strings.AboutPageAppBannerTitle}}"
+            AutomationProperties.Name="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}, StringFormat={x:Static res:Strings.AboutPageAppBannerTitle}}"
             RenderOptions.BitmapScalingMode="Fant"/>
 
         <TextBlock
