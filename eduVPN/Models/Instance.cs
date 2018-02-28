@@ -413,7 +413,7 @@ namespace eduVPN.Models
                                     uri: api.CreateCertificate,
                                     param: new NameValueCollection
                                     {
-                                        { "display_name", String.Format(Resources.Strings.ProfileTitle, Environment.MachineName) }
+                                        { "display_name", String.Format(Resources.Strings.ProfileTitle, Properties.Settings.Default.ClientTitle) }
                                     },
                                     token: e.AccessToken,
                                     ct: ct).Value, "create_keypair", ct);

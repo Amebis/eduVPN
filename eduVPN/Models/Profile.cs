@@ -204,7 +204,7 @@ namespace eduVPN.Models
                     uri: api.ProfileCompleteConfig,
                     param: new NameValueCollection
                     {
-                        { "display_name", String.Format(Resources.Strings.ProfileTitle, Environment.MachineName) },
+                        { "display_name", String.Format(Resources.Strings.ProfileTitle, Properties.Settings.Default.ClientTitle) },
                         { "profile_id", ID }
                     },
                     token: e.AccessToken,

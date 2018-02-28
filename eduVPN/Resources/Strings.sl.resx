@@ -124,8 +124,8 @@
     <value>Strežnik API je sporočil napako.</value>
   </data>
   <data name="ProfileTitle" xml:space="preserve">
-    <value>eduVPN za Windows@{0}</value>
-    <comment>{0}=Computer name</comment>
+    <value>Odjemalec {0} za Windows</value>
+    <comment>{0}=Client title</comment>
   </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value>Zasebni ključ ni veljaven ali je nepodprtega zapisa.</value>

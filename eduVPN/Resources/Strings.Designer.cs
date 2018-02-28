@@ -466,7 +466,7 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eduVPN for Windows@{0}.
+        ///   Looks up a localized string similar to {0} Client for Windows.
         /// </summary>
         internal static string ProfileTitle {
             get {

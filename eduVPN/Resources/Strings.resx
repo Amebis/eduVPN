@@ -124,8 +124,8 @@
     <value>API server replied with an error.</value>
   </data>
   <data name="ProfileTitle" xml:space="preserve">
-    <value>eduVPN for Windows@{0}</value>
-    <comment>{0}=Computer name</comment>
+    <value>{0} Client for Windows</value>
+    <comment>{0}=Client title</comment>
   </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value>Private key is invalid or of unsupported format.</value>
