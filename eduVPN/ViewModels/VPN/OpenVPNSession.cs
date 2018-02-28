@@ -405,14 +405,19 @@ namespace eduVPN.ViewModels.VPN
 
                                         if (e.State == OpenVPNStateType.Reconnecting)
                                         {
-                                            if (e.Message == "tls-error")
+                                            switch (e.Message)
                                             {
-                                                // TLS negotiation failed. Perhaps the cause was our cached password. Refresh it.
-                                                _client_certificate = ConnectingProfile.Instance.RefreshClientCertificate(AuthenticatingInstance, _quit.Token);
-                                                _ignore_hold_hint = true;
+                                                case "tls-error": // Client certificate is not compliant with this eduVPN instance. Was eduVPN instance reinstalled?
+                                                case "auth-failure": // Client certificate was deleted/revoked on the server side.
+                                                    // Refresh client certificate.
+                                                    _client_certificate = ConnectingProfile.Instance.RefreshClientCertificate(AuthenticatingInstance, _quit.Token);
+                                                    _ignore_hold_hint = true;
+                                                    break;
+
+                                                default:
+                                                    _ignore_hold_hint = false;
+                                                    break;
                                             }
-                                            else
-                                                _ignore_hold_hint = false;
 
                                             mgmt_session.QueueReleaseHold(_quit.Token);
                                         }
