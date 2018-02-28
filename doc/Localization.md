@@ -3,10 +3,9 @@
 
 ## The minimal set of resources to translate
 
-1. [eduVPN.Views at POEditor](https://poeditor.com/join/project/JNdH23JhOo)
-2. [eduVPN at POEditor](https://poeditor.com/join/project/0cJKTOUjzn)
-3. [eduOAuth at POEditor](https://poeditor.com/join/project/KluhCNBAWP) (terms not starting with "Error…")
-4. Setup
+1. [eduVPN at POEditor](https://poeditor.com/join/project/0cJKTOUjzn)
+2. [eduOAuth at POEditor](https://poeditor.com/join/project/KluhCNBAWP) (terms not starting with "Error…")
+3. Setup
    - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.wxl) and [LetsConnect.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/LetsConnect.wxl)
    - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/thm.wxl)
    - Start menu shortcut and ARP texts [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
