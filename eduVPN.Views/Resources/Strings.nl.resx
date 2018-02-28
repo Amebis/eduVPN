@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutPageCopyright" xml:space="preserve">
-    <value></value>
-  </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Versie {0}</value>
   </data>
@@ -141,12 +138,6 @@
   </data>
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Sluiten</value>
-  </data>
-  <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ButtonDismissErrorTitle" xml:space="preserve">
-    <value></value>
   </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
@@ -221,12 +212,6 @@
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
     <value>_Andere toevoegen</value>
     <comment>Fuzzy</comment>
-  </data>
-  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
-    <value></value>
   </data>
   <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>Vraag _later</value>
@@ -350,9 +335,6 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
     <value>_Sleutel</value>
   </data>
-  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value></value>
-  </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
     <comment>&quot;securirty token&quot; sounds wrong</comment>
@@ -395,17 +377,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
   </data>
-  <data name="AboutPageAppBannerTitle" xml:space="preserve">
-    <value></value>
-    <comment>{0}=Client name</comment>
-  </data>
-  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
-    <value></value>
-  </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Verbinden!</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value></value>
   </data>
 </root>
