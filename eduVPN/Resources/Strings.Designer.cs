@@ -466,15 +466,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Client for Windows.
-        /// </summary>
-        internal static string ProfileTitle {
-            get {
-                return ResourceManager.GetString("ProfileTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Preparing update....
         /// </summary>
         internal static string SelfUpdatingPageTitle {

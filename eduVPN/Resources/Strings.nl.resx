@@ -123,10 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value></value>
   </data>
-  <data name="ProfileTitle" xml:space="preserve">
-    <value></value>
-    <comment>{0}=Client title</comment>
-  </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
     <value></value>
   </data>
