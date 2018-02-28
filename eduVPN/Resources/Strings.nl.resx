@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ErrorInvalidSignature" xml:space="preserve">
+    <value>Verifying signature failed. Integrity of {0} is not valid.</value>
+  </data>
+  <data name="ErrorAPIServerReply" xml:space="preserve">
+    <value>API server replied with an error.</value>
+  </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>{0} Client for Windows</value>
+    <comment>{0}=Client title</comment>
+  </data>
+  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
+    <value>Private key is invalid or of unsupported format.</value>
+  </data>
+  <data name="ErrorEndpointsLoad" xml:space="preserve">
+    <value>Loading of API endpoints failed.</value>
+  </data>
+  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
+    <value>Loading of the provider source {0} failed.</value>
+  </data>
+  <data name="ErrorProfileListLoad" xml:space="preserve">
+    <value>Loading of the profile list failed.</value>
+  </data>
+  <data name="ErrorClientCertificateLoad" xml:space="preserve">
+    <value>Loading of client certificate failed.</value>
+  </data>
+  <data name="ErrorProfileConfigLoad" xml:space="preserve">
+    <value>Loading of profile configuration failed.</value>
+  </data>
+  <data name="ErrorUserInfoLoad" xml:space="preserve">
+    <value>Loading of user info failed.</value>
+  </data>
+  <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
+    <value>Saving of profile&apos;s OpenVPN configuration to &quot;{0}&quot; failed.</value>
+  </data>
+  <data name="ErrorAuthorization" xml:space="preserve">
+    <value>Client authorization failed.</value>
+  </data>
+  <data name="ErrorNullAccessToken" xml:space="preserve">
+    <value>No access token granted.</value>
+  </data>
+  <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
+    <value>Adding routes to system...</value>
+  </data>
+  <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
+    <value>Assigning IP address to virtual network interface...</value>
+  </data>
+  <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
+    <value>Authenticating with server...</value>
+  </data>
+  <data name="OpenVPNStateTypeConnected" xml:space="preserve">
+    <value>Verbonden.</value>
+  </data>
+  <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
+    <value>Verbinden...</value>
+  </data>
+  <data name="OpenVPNStateTypeExiting" xml:space="preserve">
+    <value>A graceful exit is in progress...</value>
+  </data>
+  <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
+    <value>OpenVPN reported fatal error.</value>
+  </data>
+  <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
+    <value>Downloading configuration options from server...</value>
+  </data>
+  <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
+    <value>A restart has occurred...</value>
+  </data>
+  <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
+    <value>Waiting for initial response from server...</value>
+  </data>
+  <data name="InterfaceNameAutomatic" xml:space="preserve">
+    <value>&lt;Automatisch&gt;</value>
+  </data>
+  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
+    <value>Network interface with {0} ID not found.</value>
+  </data>
+  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
+    <value>Network interface {0} not found.</value>
+  </data>
+  <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
+    <value>Time-based One-Time Password (TOTP)</value>
+  </data>
+  <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
+    <value>YubiKey</value>
+  </data>
+  <data name="ErrorInvalidTOTP" xml:space="preserve">
+    <value>Invalid TOTP response: it should contain exactly six (6) decimal numbers; no spaces or hyphens are allowed.</value>
+  </data>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Ongeldige servername: een servernaam bevat letters, nummers, koppeltekens en punten.</value>
+  </data>
+  <data name="ErrorInvalidPropertyName" xml:space="preserve">
+    <value>Property name {0} is not valid.</value>
+    <comment>{0}=Property name</comment>
+  </data>
+  <data name="ErrorInteractiveService" xml:space="preserve">
+    <value>Interactive Service failure.</value>
+  </data>
+  <data name="InstanceForget" xml:space="preserve">
+    <value>Vergeet {0}</value>
+    <comment>{0}=Provider</comment>
+  </data>
+  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
+    <value>Downloaded file {0} is corrupt.</value>
+    <comment>{0}=URI</comment>
+  </data>
+  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
+    <value>2-Factor Authentication enrollment failed.</value>
+  </data>
+  <data name="ErrorDownloading" xml:space="preserve">
+    <value>Downloading from web failed. Please check your internet connection.</value>
+  </data>
+  <data name="ErrorUploading" xml:space="preserve">
+    <value>Uploading to web failed. Please check your internet connection.</value>
+  </data>
+  <data name="OpenVPNStateTypeResolving" xml:space="preserve">
+    <value>Resolving server IP...</value>
+  </data>
+  <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
+    <value>Connecting to TCP server...</value>
+  </data>
+  <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
+    <value>Installer file not available. Updating aborted.</value>
+  </data>
+  <data name="AboutPageTitle" xml:space="preserve">
+    <value>Over</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
+    <value>Selecteer je land</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
+    <value>Selecteer je instituut</value>
+  </data>
+  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
+    <value>Selecteer je profiel</value>
+  </data>
+  <data name="CustomInstancePageTitle" xml:space="preserve">
+    <value>Enter URL of your Provider</value>
+  </data>
+  <data name="InitializingPageTitle" xml:space="preserve">
+    <value>Initialiseren...</value>
+  </data>
+  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
+    <value>Selecteer een van de VPN-types hieronder.</value>
+  </data>
+  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
+    <value>Kies een VPN-type</value>
+  </data>
+  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+    <value>Update voorbereiden...</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Instellingen</value>
+  </data>
+  <data name="StatusPageTitle" xml:space="preserve">
+    <value>VPN-verbinding</value>
+  </data>
+</root>
