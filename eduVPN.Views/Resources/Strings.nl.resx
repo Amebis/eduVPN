@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutPageCopyright" xml:space="preserve">
+    <value>Copyright © 2017
+The Commons Conservancy eduVPN Programme</value>
+  </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Versie {0}</value>
   </data>
@@ -138,6 +142,12 @@
   </data>
   <data name="ButtonCloseTitle" xml:space="preserve">
     <value>Sluiten</value>
+  </data>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_Copy Error Text</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_Dismiss Error</value>
   </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
@@ -164,7 +174,7 @@
     <value>_Hostnaam</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>De vereiste OAuth paramter &quot;state&quot; ontbreekt of is onjuist.</value>
+    <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
   </data>
   <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>V_oeg ander adres toe</value>
@@ -197,10 +207,10 @@
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Voer je wachtwoord in voor &quot;{0}&quot;:</value>
+    <value>Voer je wachtwoord in voor "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupPasswordLabel" xml:space="preserve">
@@ -211,7 +221,12 @@
   </data>
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
     <value>_Andere toevoegen</value>
-    <comment>Fuzzy</comment>
+  </data>
+  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
+    <value>Institute Access</value>
+  </data>
+  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
+    <value>Secure Internet</value>
   </data>
   <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>Vraag _later</value>
@@ -275,7 +290,6 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   </data>
   <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Duur</value>
-    <comment>Fuzzy</comment>
   </data>
   <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
     <value>IPv4</value>
@@ -335,9 +349,12 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
     <value>_Sleutel</value>
   </data>
+  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
+    <value>Secret as QR Code</value>
+  </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
-    <comment>&quot;securirty token&quot; sounds wrong</comment>
+    <comment>"securirty token" sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
     <value>_Methode</value>
@@ -362,7 +379,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Waarschuwing! Je account is uitgeschakeld. Neem contact op met de helpdesk.</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Voer je gebruikersnaam en wachtwoord in voor &quot;{0}&quot;:</value>
+    <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
@@ -377,7 +394,18 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
   </data>
+  <data name="AboutPageAppBannerTitle" xml:space="preserve">
+    <value>{0}
+Powered by SURFnet</value>
+    <comment>{0}=Client name</comment>
+  </data>
+  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
+    <value>Added VPN Profiles</value>
+  </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Verbinden!</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
+    <value>_Copy Secret</value>
   </data>
 </root>

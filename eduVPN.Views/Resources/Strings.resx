@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -174,13 +174,13 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Hostname</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>The required OAuth parameter &quot;state&quot; is missing or incorrect.</value>
+    <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>
   <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>Add _other address</value>
   </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
-    <value>Access your _institute&apos;s network.</value>
+    <value>Access your _institute's network.</value>
   </data>
   <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
     <value>Connect to the Internet _securely, for example when using public WiFi.</value>
@@ -207,10 +207,10 @@ The Commons Conservancy eduVPN Programme</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
-    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Enter your password for &quot;{0}&quot;:</value>
+    <value>Enter your password for "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupPasswordLabel" xml:space="preserve">
@@ -232,7 +232,7 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Ask me _later</value>
   </data>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
-    <value>What&apos;s _New?</value>
+    <value>What's _New?</value>
   </data>
   <data name="SelfUpdatePopupMessage" xml:space="preserve">
     <value>Version {1} of {0} client is installed. A newer version {2} is available online.</value>
@@ -258,7 +258,7 @@ If you continue, your user settings will be reset to the default.</value>
     <value>Corrupt User Settings</value>
   </data>
   <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>If the {0} client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this.</value>
+    <value>If the {0} client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
     <comment>{0}=Client name</comment>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
@@ -355,7 +355,7 @@ If you continue, your user settings will be reset to the default.</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Select your two-factor method and enter the security code:</value>
-    <comment>&quot;securirty token&quot; sounds wrong</comment>
+    <comment>"securirty token" sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
     <value>_Method</value>
@@ -380,7 +380,7 @@ If you continue, your user settings will be reset to the default.</value>
     <value>Warning! Your account is disabled. Please, contact your helpdesk for support.</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Enter your username and password for &quot;{0}&quot;:</value>
+    <value>Enter your username and password for "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
