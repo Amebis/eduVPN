@@ -118,8 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutPageCopyright" xml:space="preserve">
-    <value>Copyright © 2017
-The Commons Conservancy eduVPN Programme</value>
+    <value></value>
   </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Versie {0}</value>
@@ -144,10 +143,10 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Sluiten</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value>_Copy Error Text</value>
+    <value></value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
-    <value>_Dismiss Error</value>
+    <value></value>
   </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
@@ -224,10 +223,10 @@ The Commons Conservancy eduVPN Programme</value>
     <comment>Fuzzy</comment>
   </data>
   <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
-    <value>Institute Access</value>
+    <value></value>
   </data>
   <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value></value>
   </data>
   <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>Vraag _later</value>
@@ -352,7 +351,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>_Sleutel</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Secret as QR Code</value>
+    <value></value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
@@ -397,17 +396,16 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>_Antwoord</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
-    <value>{0}
-Powered by SURFnet</value>
+    <value></value>
     <comment>{0}=Client name</comment>
   </data>
   <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
-    <value>Added VPN Profiles</value>
+    <value></value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Verbinden!</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value>_Copy Secret</value>
+    <value></value>
   </data>
 </root>
