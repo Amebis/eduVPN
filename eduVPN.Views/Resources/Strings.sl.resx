@@ -150,12 +150,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
     <value>_Opusti napako</value>
   </data>
-  <data name="ButtonNextTitle" xml:space="preserve">
-    <value>_Naprej &gt;</value>
-  </data>
-  <data name="ButtonNextTitleAlt" xml:space="preserve">
-    <value>Naprej</value>
-  </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_V redu</value>
   </data>
@@ -181,7 +175,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Ime _gostitelja</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
+    <value>Zahtevani parameter OAuth &quot;state&quot; manjka ali je napačen.</value>
   </data>
   <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
     <value>D_odaj drug naslov</value>
@@ -214,7 +208,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1}{2}</value>
-    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+    <comment>{0}=number, {1}=prefix (&quot;k&quot;, &quot;M&quot;, &quot;G&quot;, etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
     <value>Vnesite svoje geslo za »{0}«:</value>
@@ -362,7 +356,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostno kodo:</value>
-    <comment>"securirty token" sounds wrong</comment>
+    <comment>&quot;securirty token&quot; sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
     <value>_Način</value>
@@ -387,7 +381,7 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
     <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati. Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
+    <value>Vnesite svoje uporabniško ime in geslo za &quot;{0}&quot;:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
