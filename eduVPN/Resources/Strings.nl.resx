@@ -199,7 +199,7 @@
     <value>YubiKey</value>
   </data>
   <data name="ErrorInvalidTOTP" xml:space="preserve">
-    <value>Invalid TOTP response: it should contain exactly six (6) decimal numbers; no spaces or hyphens are allowed.</value>
+    <value>Ongeldige TOTP-code: de code moet exact zes (6) decimale cijfers bevatten; geen spaties of streepjes zijn toegestaan.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Ongeldige servername: een servernaam bevat letters, nummers, koppeltekens en punten.</value>
@@ -220,7 +220,7 @@
     <comment>{0}=URI</comment>
   </data>
   <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
-    <value>2-Factor Authentication enrollment failed.</value>
+    <value>Aanmelden voor twee-factor authenticatie mislukt.</value>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Downloading from web failed. Please check your internet connection.</value>

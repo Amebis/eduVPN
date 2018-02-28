@@ -350,7 +350,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>_Sleutel</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Secret as QR Code</value>
+    <value>Sleutel als QR-code</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
@@ -400,12 +400,12 @@ Powered by SURFnet</value>
     <comment>{0}=Client name</comment>
   </data>
   <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
-    <value>Added VPN Profiles</value>
+    <value>Toegevoegde VPN-profielen</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Verbinden!</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value>_Copy Secret</value>
+    <value>_Kopieer sleutel</value>
   </data>
 </root>
