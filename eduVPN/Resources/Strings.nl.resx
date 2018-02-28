@@ -117,125 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorProfileConfigLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorNullAccessToken" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value></value>
-  </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
     <value>Verbonden.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
     <value>Verbinden...</value>
   </data>
-  <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
-    <value></value>
-  </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>&lt;Automatisch&gt;</value>
-  </data>
-  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInvalidTOTP" xml:space="preserve">
-    <value></value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Ongeldige servername: een servernaam bevat letters, nummers, koppeltekens en punten.</value>
   </data>
-  <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value></value>
-    <comment>{0}=Property name</comment>
-  </data>
-  <data name="ErrorInteractiveService" xml:space="preserve">
-    <value></value>
-  </data>
   <data name="InstanceForget" xml:space="preserve">
     <value>Vergeet {0}</value>
     <comment>{0}=Provider</comment>
-  </data>
-  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value></value>
-    <comment>{0}=URI</comment>
-  </data>
-  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorDownloading" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorUploading" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value></value>
   </data>
   <data name="AboutPageTitle" xml:space="preserve">
     <value>Over</value>
@@ -248,9 +144,6 @@
   </data>
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
     <value>Selecteer je profiel</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value></value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiseren...</value>
