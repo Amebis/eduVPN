@@ -47,8 +47,8 @@
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="libeay32.dll" Guid="{0B2BF74E-5C4A-448A-8B2C-1FC076B5B824}"/>
             <ComponentSearch Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}"/>
-            <ComponentSearch Id="libcrypto-1_1.dll" Guid="{3BB68B8B-913D-47BF-B092-CCC7CBB9A7CC}"/>
-            <ComponentSearch Id="libssl-1_1.dll" Guid="{D58368FD-3678-4762-9E5E-2F19A8E7613E}"/>
+            <ComponentSearch Id="libcrypto_1_1.dll" Guid="{3BB68B8B-913D-47BF-B092-CCC7CBB9A7CC}"/>
+            <ComponentSearch Id="libssl_1_1.dll" Guid="{D58368FD-3678-4762-9E5E-2F19A8E7613E}"/>
             <ComponentSearch Id="liblzo2_2.dll" Guid="{D073932D-4ECF-480C-B54A-4FEBCE3FB015}"/>
             <ComponentSearch Id="libpkcs11_helper_1.dll" Guid="{8EFE985A-9800-440D-8517-DAEFB50ECA74}"/>
             <ComponentSearch Id="openvpn.exe" Guid="{46C7AD2F-6AA7-408A-BD02-9E8C59DD8C76}"/>
@@ -100,10 +100,10 @@
             Compontents
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="libcrypto-1_1.dll" Guid="{3BB68B8B-913D-47BF-B092-CCC7CBB9A7CC}">
+            <Component Id="libcrypto_1_1.dll" Guid="{3BB68B8B-913D-47BF-B092-CCC7CBB9A7CC}">
                 <File Source="libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
-            <Component Id="libssl-1_1.dll" Guid="{D58368FD-3678-4762-9E5E-2F19A8E7613E}">
+            <Component Id="libssl_1_1.dll" Guid="{D58368FD-3678-4762-9E5E-2F19A8E7613E}">
                 <File Source="libssl-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="liblzo2_2.dll" Guid="{D073932D-4ECF-480C-B54A-4FEBCE3FB015}">
@@ -214,8 +214,8 @@
             Features
         -->
         <Feature Id="$(var.ClientTarget).OpenVPN" Title="!(loc.ApplicationOpenVPNName)" Level="1">
-            <ComponentRef Id="libcrypto-1_1.dll"/>
-            <ComponentRef Id="libssl-1_1.dll"/>
+            <ComponentRef Id="libcrypto_1_1.dll"/>
+            <ComponentRef Id="libssl_1_1.dll"/>
             <ComponentRef Id="liblzo2_2.dll"/>
             <ComponentRef Id="libpkcs11_helper_1.dll"/>
             <ComponentRef Id="openvpn.exe"/>
