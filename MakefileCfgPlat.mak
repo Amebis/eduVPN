@@ -16,12 +16,19 @@ SETUP_TARGET=$(PLAT)
 SETUP_TARGET=$(SETUP_TARGET)D
 !ENDIF
 
+!IF "$(PLAT)" == "x64"
+OPENSSL_PLAT=-$(PLAT)
+!ELSE
+OPENSSL_PLAT=
+!ENDIF
+
 # WiX parameters
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-arch $(PLAT) \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
 	-dTAPWinPre.VersionInformational="$(TAPWINPRE_VERSION) $(SETUP_TARGET)" \
 	-dOpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
+	-dOpenSSL.Plaftorm="$(OPENSSL_PLAT)" \
 	-dCore.VersionInformational="$(CORE_VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
@@ -46,11 +53,11 @@ VC141REDIST_MSM=Microsoft_VC141_CRT_$(PLAT).msm
 SetupBuild :: \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libeay32.dll" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\ssleay32.dll" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
 
 SetupBuild ::
@@ -83,7 +90,10 @@ Clean ::
 Clean ::
 	-msbuild.exe "OpenVPN\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_NATIVE)" $(MSBUILD_FLAGS)
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libeay32.dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libeay32.dll"
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
+	copy /y $** $@ > NUL
+
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
 	copy /y $** $@ > NUL
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\liblzo2-2.dll"
@@ -104,17 +114,14 @@ Clean ::
 !ENDIF
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\ssleay32.dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\ssleay32.dll"
-	copy /y $** $@ > NUL
-
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"            del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libeay32.dll"           del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libeay32.dll"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"          del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"            del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"        del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\ssleay32.dll"           del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\ssleay32.dll"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"                      del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"                    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"           del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"                      del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC141REDIST_MSM)"
 	copy /y $** $@ > NUL

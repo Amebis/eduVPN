@@ -46,11 +46,13 @@
         </InstallExecuteSequence>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="libeay32.dll" Guid="{0B2BF74E-5C4A-448A-8B2C-1FC076B5B824}"/>
+            <ComponentSearch Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}"/>
+            <ComponentSearch Id="libcrypto-1_1.dll" Guid="{3BB68B8B-913D-47BF-B092-CCC7CBB9A7CC}"/>
+            <ComponentSearch Id="libssl-1_1.dll" Guid="{D58368FD-3678-4762-9E5E-2F19A8E7613E}"/>
             <ComponentSearch Id="liblzo2_2.dll" Guid="{D073932D-4ECF-480C-B54A-4FEBCE3FB015}"/>
             <ComponentSearch Id="libpkcs11_helper_1.dll" Guid="{8EFE985A-9800-440D-8517-DAEFB50ECA74}"/>
             <ComponentSearch Id="openvpn.exe" Guid="{46C7AD2F-6AA7-408A-BD02-9E8C59DD8C76}"/>
             <ComponentSearch Id="openvpnserv.exe" Guid="{D54DD0B1-8C81-42F8-BD3F-BB988B786782}"/>
-            <ComponentSearch Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}"/>
         </Property>
         <SetProperty
             After="AppSearch"
@@ -98,8 +100,11 @@
             Compontents
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="libeay32.dll" Guid="{0B2BF74E-5C4A-448A-8B2C-1FC076B5B824}">
-                <File Source="libeay32.dll"/>
+            <Component Id="libcrypto-1_1.dll" Guid="{3BB68B8B-913D-47BF-B092-CCC7CBB9A7CC}">
+                <File Source="libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
+            </Component>
+            <Component Id="libssl-1_1.dll" Guid="{D58368FD-3678-4762-9E5E-2F19A8E7613E}">
+                <File Source="libssl-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="liblzo2_2.dll" Guid="{D073932D-4ECF-480C-B54A-4FEBCE3FB015}">
                 <File Source="liblzo2-2.dll"/>
@@ -130,6 +135,13 @@
                     <ServiceDependency Id="tap0901"/>
                     <ServiceDependency Id="Dhcp"/>
                 </ServiceInstall>
+            </Component>
+            <Component Id="openvpnserv.exe.reg0" Guid="{CD0E5551-72D5-487C-ADB6-3FF86EA83CC1}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Type="string"
+                    Value="[BINDIR]"/>
             </Component>
             <Component Id="openvpnserv.exe.reg1" Guid="{7EF617D1-1B9E-4B96-A4C7-9A4597370AA2}">
                 <RegistryValue
@@ -187,9 +199,6 @@
                     Type="string"
                     Value="Users"/>
             </Component>
-            <Component Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}">
-                <File Source="ssleay32.dll"/>
-            </Component>
 
             <!-- Add/Remove Programs Localization -->
             <Component Id="ARP.DisplayName" Guid="{D5F701F1-640F-434A-94F4-6150E63E340B}">
@@ -205,11 +214,13 @@
             Features
         -->
         <Feature Id="$(var.ClientTarget).OpenVPN" Title="!(loc.ApplicationOpenVPNName)" Level="1">
-            <ComponentRef Id="libeay32.dll"/>
+            <ComponentRef Id="libcrypto-1_1.dll"/>
+            <ComponentRef Id="libssl-1_1.dll"/>
             <ComponentRef Id="liblzo2_2.dll"/>
             <ComponentRef Id="libpkcs11_helper_1.dll"/>
             <ComponentRef Id="openvpn.exe"/>
             <ComponentRef Id="openvpnserv.exe"/>
+            <ComponentRef Id="openvpnserv.exe.reg0"/>
             <ComponentRef Id="openvpnserv.exe.reg1"/>
             <ComponentRef Id="openvpnserv.exe.reg2"/>
             <ComponentRef Id="openvpnserv.exe.reg3"/>
@@ -217,7 +228,6 @@
             <ComponentRef Id="openvpnserv.exe.reg5"/>
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
-            <ComponentRef Id="ssleay32.dll"/>
             <ComponentRef Id="ARP.DisplayName"/>
             <ComponentRef Id="ARP.Publisher"/>
             <ComponentGroupRef Id="OpenVPN.Resources.dll"/>
