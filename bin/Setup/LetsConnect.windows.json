@@ -1,8 +1,8 @@
 {
     "arguments": "/install",
-    "hash-sha256": "159F2702A54C5FE56BEAC87AA21D8F86C890B5B4D106DD60436CE7387708FEE0",
-    "uri": [ "LetsConnectClient_1.0.20.exe" ],
-    "version": "1.0.20",
+    "hash-sha256": "3496D17CF355748FDE18B98A4DEF2F34DD414556EE9E8D27AAD2854445C705A1",
+    "uri": [ "LetsConnectClient_1.0.21.exe" ],
+    "version": "1.0.21",
     "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
-    "seq": 2
+    "seq": 3
 }

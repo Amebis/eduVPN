@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.20...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.21...HEAD)
+
+
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.20...1.0.21)
 
 - Update to OpenVPN 2.4.5
 - Fixes and cleanups
