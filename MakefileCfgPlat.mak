@@ -84,12 +84,6 @@ SetupBuild ::
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
-"OpenVPN\$(PLAT_NATIVE)-Output\$(CFG)\openvpnserv.exe" ::
-	msbuild.exe "OpenVPN\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_NATIVE)" $(MSBUILD_FLAGS)
-
-Clean ::
-	-msbuild.exe "OpenVPN\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_NATIVE)" $(MSBUILD_FLAGS)
-
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
 	copy /y $** $@ > NUL
 
@@ -105,14 +99,8 @@ Clean ::
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\openvpn.exe"
 	copy /y $** $@ > NUL
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe" : "OpenVPN\$(PLAT_NATIVE)-Output\$(CFG)\openvpnserv.exe"
-	copy /y $** "$(@:"=).tmp" > NUL
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-!IF "$(CFG)" == "Release"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "OpenVPN Interactive Service" /q "$(@:"=).tmp"
-!ENDIF
-!ENDIF
-	move /y "$(@:"=).tmp" $@ > NUL
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\openvpnserv.exe"
+	copy /y $** $@ > NUL
 
 Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"                      del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"

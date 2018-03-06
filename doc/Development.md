@@ -30,10 +30,6 @@
    - Individual components
       - Code tools
          - Git for Windows (if not installed by other means)
-      - Compilers, build tools, and runtimes
-         - Windows Universal CRT SDK (required to compile openvpnserv.exe)
-      - SDKs, libraries, and frameworks
-         - Windows 8.1 SDK (required to compile openvpnserv.exe)
 2. Download [nuget.exe](https://www.nuget.org/downloads) and save it in a folder included in the path.
 3. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 4. Install TAP-Windows driver: [official](https://openvpn.net/index.php/open-source/downloads.html) or the one included in the eduVPN source tree in the _bin\Setup_ folder.
@@ -68,9 +64,9 @@ Before pulling a new version of the eduVPN source code from the GitHub a `nmake 
 
 #### Initial Registration
 
-The registration prepares the working environment for the eduVPN and Let's Connect! clients, much like the setup does. It performs the following:
+The registration prepares the working environment for the eduVPN and Let's Connect! clients for testing on the build/development computer. It performs the following:
 - Prepares local OpenVPN binaries.
-- Builds, installs and starts OpenVPN Interactive Service.
+- Installs and starts OpenVPN Interactive Service.
 - Builds the Debug version of the eduVPN and Let's Connect! clients.
 - Creates Start Menu shortcuts.
 
