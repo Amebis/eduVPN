@@ -414,6 +414,7 @@
     </Style>
 
     <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -438,7 +439,7 @@
                 </Setter>
             </DataTrigger>
 
-            <!-- When the list's item source is null, replace it with "Please wait." text. -->
+            <!-- When the list's item source is null, replace it with "Please wait..." text. -->
             <DataTrigger
                 Binding="{Binding Path=ItemsSource, RelativeSource={x:Static RelativeSource.Self}}"
                 Value="{x:Null}">
