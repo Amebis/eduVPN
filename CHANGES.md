@@ -3,19 +3,19 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.21...HEAD)
 
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.20...1.0.21)
+## [1.0.21](https://github.com/Amebis/eduVPN/compare/1.0.20...1.0.21) (2018-03-06)
 
 - Update to OpenVPN 2.4.5
 - Fixes and cleanups
 
 
-## [1.0.20](https://github.com/Amebis/eduVPN/compare/1.0.19...1.0.20)
+## [1.0.20](https://github.com/Amebis/eduVPN/compare/1.0.19...1.0.20) (2018-02-05)
 
 - GUI refinements
 - Let's Connect! client will self-update from this version on
 
 
-## [1.0.19](https://github.com/Amebis/eduVPN/compare/1.0.18...1.0.19)
+## [1.0.19](https://github.com/Amebis/eduVPN/compare/1.0.18...1.0.19) (2018-02-02)
 
 - Let's Connect! client
 - GUI redesign
