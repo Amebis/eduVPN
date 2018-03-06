@@ -113,6 +113,11 @@ namespace eduVPN.ViewModels.Pages
             base.OnActivate();
 
             // Synchronize selected instance => triggers profile list refresh.
+            // But reset it first: when the previous attempt to load the profile list failed,
+            // setting the Panel.SelectedInstance to the very same connecting instance again
+            // will not trigger a reload. This is not a performance regression, since the
+            // sucessfully retrieved profile lists are cached.
+            Panel.SelectedInstance = null;
             Panel.SelectedInstance = Wizard.InstanceSource.ConnectingInstance;
         }
 
