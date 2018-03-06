@@ -671,99 +671,97 @@ namespace eduVPN.ViewModels.Windows
                 // Spawn instance source loading threads.
                 Parallel.For(source_type_start, source_type_end, source_index =>
                 {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
-                    try
+                    do
                     {
-                        do
+                        int ticks = 0;
+                        object ticks_lock = new object();
+
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
+                        try
                         {
-                            int ticks = 0;
-                            object ticks_lock = new object();
-                            try
+                            // Get instance source.
+                            var source = Properties.Settings.Default.GetResourceRef(Properties.Settings.InstanceDirectoryId[source_index] + "Discovery");
+                            if (source.Uri != null)
                             {
-                                // Get instance source.
-                                var source = Properties.Settings.Default.GetResourceRef(Properties.Settings.InstanceDirectoryId[source_index] + "Discovery");
-                                if (source.Uri != null)
+                                var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
+                                    source.Uri,
+                                    source.PublicKey,
+                                    Abort.Token);
+
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
+
+                                // Load instance source.
+                                _instance_sources[source_index] = InstanceSource.FromJSON(obj_web);
+
                                 {
-                                    var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
-                                        source.Uri,
-                                        source.PublicKey,
-                                        Abort.Token);
-
-                                    // Add a tick.
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                    ticks++;
-
-                                    // Load instance source.
-                                    _instance_sources[source_index] = InstanceSource.FromJSON(obj_web);
-
+                                    // Attach to instance events.
+                                    if (_instance_sources[source_index] is FederatedInstanceSource instance_source_federated)
                                     {
-                                        // Attach to instance events.
-                                        if (_instance_sources[source_index] is FederatedInstanceSource instance_source_federated)
-                                        {
-                                            instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
-                                            instance_source_federated.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
-                                        }
-
-                                        foreach (var instance in _instance_sources[source_index].InstanceList)
-                                        {
-                                            instance.RequestAuthorization += Instance_RequestAuthorization;
-                                            instance.ForgetAuthorization += Instance_ForgetAuthorization;
-                                        }
+                                        instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
+                                        instance_source_federated.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
                                     }
+
+                                    foreach (var instance in _instance_sources[source_index].InstanceList)
+                                    {
+                                        instance.RequestAuthorization += Instance_RequestAuthorization;
+                                        instance.ForgetAuthorization += Instance_ForgetAuthorization;
+                                    }
+                                }
+
+                                // Import settings.
+                                Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
+                                InstanceSources[source_index].FromSettings(this, h);
+
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
+                            }
+                            else
+                            {
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
+
+                                if (source_index == (int)InstanceSourceType.InstituteAccess)
+                                {
+                                    // Institute access is required. When it is missing the discovery JSON, use a blank one.
+                                    _instance_sources[source_index] = new LocalInstanceSource();
 
                                     // Import settings.
                                     Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
                                     InstanceSources[source_index].FromSettings(this, h);
 
-                                    // Add a tick.
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                    ticks++;
-                                }
-                                else
-                                {
-                                    // Add a tick.
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                    ticks++;
-
-                                    if (source_index == (int)InstanceSourceType.InstituteAccess)
-                                    {
-                                        // Institute access is required. When it is missing the discovery JSON, use a blank one.
-                                        _instance_sources[source_index] = new LocalInstanceSource();
-
-                                        // Import settings.
-                                        Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;
-                                        InstanceSources[source_index].FromSettings(this, h);
-
-                                        // Preset source type.
-                                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceSourceType = InstanceSourceType.InstituteAccess));
-                                    }
-
-                                    // Add a tick.
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
-                                    ticks++;
+                                    // Preset source type.
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InstanceSourceType = InstanceSourceType.InstituteAccess));
                                 }
 
-                                break;
+                                // Add a tick.
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
+                                ticks++;
                             }
-                            catch (OperationCanceledException) { break; }
-                            catch (Exception ex)
-                            {
-                                // Do not re-throw the exception.
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                {
-                                    // Notify the sender the instance source loading failed.
-                                    // This will overwrite all previous error messages.
-                                    Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, Properties.Settings.InstanceDirectoryId[source_index]), ex);
 
-                                    // Revert progress indicator value.
-                                    InitializingPage.Progress.Value -= ticks;
-                                }));
-                            }
+                            break;
                         }
-                        // Sleep for 3s, then retry.
-                        while (!Abort.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(3)));
+                        catch (OperationCanceledException) { break; }
+                        catch (Exception ex)
+                        {
+                            // Do not re-throw the exception.
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                            {
+                                // Notify the sender the instance source loading failed.
+                                // This will overwrite all previous error messages.
+                                Error = new AggregateException(String.Format(Resources.Strings.ErrorInstanceSourceInfoLoad, Properties.Settings.InstanceDirectoryId[source_index]), ex);
+
+                                // Revert progress indicator value.
+                                InitializingPage.Progress.Value -= ticks;
+                            }));
+                        }
+                        finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
                     }
-                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                    // Sleep for 3s, then retry.
+                    while (!Abort.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(3)));
                 });
             };
 
