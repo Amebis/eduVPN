@@ -28,7 +28,7 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
 	-dTAPWinPre.VersionInformational="$(TAPWINPRE_VERSION) $(SETUP_TARGET)" \
 	-dOpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
-	-dOpenSSL.Plaftorm="$(OPENSSL_PLAT)" \
+	-dOpenSSL.Platform="$(OPENSSL_PLAT)" \
 	-dCore.VersionInformational="$(CORE_VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
