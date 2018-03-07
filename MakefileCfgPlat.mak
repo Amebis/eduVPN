@@ -5,12 +5,6 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
-!IF "$(PLAT)" == "x86"
-PLAT_NATIVE=Win32
-!ELSE
-PLAT_NATIVE=$(PLAT)
-!ENDIF
-
 SETUP_TARGET=$(PLAT)
 !IF "$(CFG)" == "Debug"
 SETUP_TARGET=$(SETUP_TARGET)D
