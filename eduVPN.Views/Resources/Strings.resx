@@ -176,9 +176,6 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
-    <value>Add _other address</value>
-  </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
     <value>Access your _institute's network.</value>
   </data>

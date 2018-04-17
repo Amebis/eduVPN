@@ -27,7 +27,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Button
@@ -105,15 +104,6 @@
                     Margin="10"
                     Text="{x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}"/>
             </Grid>
-        </Button>
-
-        <Button
-            Grid.Row="2"
-            Margin="5"
-            Style="{StaticResource LinkButtonStyle}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageCustomButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-            Command="{Binding Path=SelectCustomInstance}">
-            <AccessText Text="{x:Static res:Strings.InstanceSourcePageCustomButtonTitle}"/>
         </Button>
     </Grid>
 </pages:ConnectWizardPage>

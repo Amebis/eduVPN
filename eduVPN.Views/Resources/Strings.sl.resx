@@ -177,9 +177,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
-    <value>D_odaj drug naslov</value>
-  </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
     <value>Dostopajte do omrežja svoje _ustanove zunaj ustanove.</value>
   </data>

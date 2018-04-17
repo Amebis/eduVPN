@@ -119,37 +119,6 @@ namespace eduVPN.ViewModels.Pages
         }
         private DelegateCommand<InstanceSourceType?> _select_instance_source;
 
-        /// <summary>
-        /// Select custom instance source
-        /// </summary>
-        public DelegateCommand SelectCustomInstance
-        {
-            get
-            {
-                if (_select_custom_instance == null)
-                {
-                    _select_custom_instance = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            Wizard.ChangeTaskCount(+1);
-                            try
-                            {
-                                // Assume the custom instance would otherwise be a part of "Institute Access" source.
-                                Wizard.InstanceSourceType = InstanceSourceType.InstituteAccess;
-
-                                Wizard.CurrentPage = Wizard.CustomInstancePage;
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                            finally { Wizard.ChangeTaskCount(-1); }
-                        });
-                }
-
-                return _select_custom_instance;
-            }
-        }
-        private DelegateCommand _select_custom_instance;
-
         /// <inheritdoc/>
         public override DelegateCommand NavigateBack
         {
