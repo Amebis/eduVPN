@@ -13,7 +13,7 @@ using System.Windows.Data;
 namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if input value is non-empty string; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="Visibility.Visible"/> if input value is non-white-space string; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
     public class StringVisibilityConverter : IValueConverter
     {
@@ -29,7 +29,7 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is string str && str.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
+            return value is string str && !String.IsNullOrWhiteSpace(str) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

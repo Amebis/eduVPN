@@ -26,7 +26,7 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// The page description
         /// </summary>
-        public virtual string Description { get; }
+        public virtual string Description { get => ""; }
 
         /// <summary>
         /// The connecting wizard
