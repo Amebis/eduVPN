@@ -19,7 +19,7 @@ namespace eduVPN.ViewModels.Pages
         /// <inheritdoc/>
         public override string Title
         {
-            get { return Resources.Strings.AuthenticatingCountrySelectPageTitle; }
+            get { return Resources.Strings.AuthenticatingCountrySelectPageTitle2; }
         }
 
         #endregion

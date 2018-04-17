@@ -240,8 +240,8 @@
   <data name="AboutPageTitle" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
-    <value>Select Your Country</value>
+  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
+    <value>Select Your Institution's Country</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Select Your Institution</value>

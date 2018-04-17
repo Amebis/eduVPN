@@ -70,11 +70,11 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Your Country.
+        ///   Looks up a localized string similar to Select Your Institution&apos;s Country.
         /// </summary>
-        internal static string AuthenticatingCountrySelectPageTitle {
+        internal static string AuthenticatingCountrySelectPageTitle2 {
             get {
-                return ResourceManager.GetString("AuthenticatingCountrySelectPageTitle", resourceCulture);
+                return ResourceManager.GetString("AuthenticatingCountrySelectPageTitle2", resourceCulture);
             }
         }
         
