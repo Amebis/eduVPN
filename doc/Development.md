@@ -30,6 +30,10 @@
    - Individual components
       - Code tools
          - Git for Windows (if not installed by other means)
+      - Compilers, build tools, and runtimes
+         - Windows Universal CRT SDK (required by eduEd25519 submodule)
+      - SDKs, libraries, and frameworks
+         - Windows 8.1 SDK (required by eduEd25519 submodule)
 2. Download [nuget.exe](https://www.nuget.org/downloads) and save it in a folder included in the path.
 3. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 4. Install TAP-Windows driver: [official](https://openvpn.net/index.php/open-source/downloads.html) or the one included in the eduVPN source tree in the _bin\Setup_ folder.
