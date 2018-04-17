@@ -252,20 +252,20 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Access your _institute&apos;s network..
+        ///   Looks up a localized string similar to Connect to your _Organization.
         /// </summary>
-        public static string InstanceSourcePageInstituteAccessButtonTitle {
+        public static string InstanceSourcePageInstituteAccessButtonTitle2 {
             get {
-                return ResourceManager.GetString("InstanceSourcePageInstituteAccessButtonTitle", resourceCulture);
+                return ResourceManager.GetString("InstanceSourcePageInstituteAccessButtonTitle2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect to the Internet _securely, for example when using public WiFi..
+        ///   Looks up a localized string similar to Safely use the _Internet.
         /// </summary>
-        public static string InstanceSourcePageSecureInternetButtonTitle {
+        public static string InstanceSourcePageSecureInternetButtonTitle2 {
             get {
-                return ResourceManager.GetString("InstanceSourcePageSecureInternetButtonTitle", resourceCulture);
+                return ResourceManager.GetString("InstanceSourcePageSecureInternetButtonTitle2", resourceCulture);
             }
         }
         

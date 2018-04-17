@@ -331,20 +331,11 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select one of the VPN types below..
+        ///   Looks up a localized string similar to How do you want to use the VPN?.
         /// </summary>
-        internal static string InstanceSourceSelectPageDescription {
+        internal static string InstanceSourceSelectPageTitle2 {
             get {
-                return ResourceManager.GetString("InstanceSourceSelectPageDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select VPN Type.
-        /// </summary>
-        internal static string InstanceSourceSelectPageTitle {
-            get {
-                return ResourceManager.GetString("InstanceSourceSelectPageTitle", resourceCulture);
+                return ResourceManager.GetString("InstanceSourceSelectPageTitle2", resourceCulture);
             }
         }
         

@@ -25,13 +25,7 @@ namespace eduVPN.ViewModels.Pages
         /// <inheritdoc/>
         public override string Title
         {
-            get { return Resources.Strings.InstanceSourceSelectPageTitle; }
-        }
-
-        /// <inheritdoc/>
-        public override string Description
-        {
-            get { return Resources.Strings.InstanceSourceSelectPageDescription; }
+            get { return Resources.Strings.InstanceSourceSelectPageTitle2; }
         }
 
         /// <summary>

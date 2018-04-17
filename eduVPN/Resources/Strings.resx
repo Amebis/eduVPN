@@ -255,11 +255,8 @@
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initializing...</value>
   </data>
-  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Select one of the VPN types below.</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Select VPN Type</value>
+  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
+    <value>How do you want to use the VPN?</value>
   </data>
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
     <value>Preparing update...</value>

@@ -32,7 +32,7 @@
         <Button
             Margin="5"
             Style="{StaticResource ChoiceButtonStyle}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle2}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=SelectInstanceSource}"
             CommandParameter="{x:Static model:InstanceSourceType.SecureInternet}"
             Visibility="{Binding Path=Wizard.InstanceSources[1].ConnectingInstance, Converter={StaticResource InstanceSourceInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Visible}}">
@@ -62,7 +62,7 @@
                 <AccessText
                     Grid.Column="1"
                     Margin="10"
-                    Text="{x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle}"/>
+                    Text="{x:Static res:Strings.InstanceSourcePageSecureInternetButtonTitle2}"/>
             </Grid>
         </Button>
 
@@ -70,7 +70,7 @@
             Grid.Row="1"
             Margin="5"
             Style="{StaticResource ChoiceButtonStyle}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle2}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=SelectInstanceSource}"
             CommandParameter="{x:Static model:InstanceSourceType.InstituteAccess}">
 
@@ -102,7 +102,7 @@
                 <AccessText
                     Grid.Column="1"
                     Margin="10"
-                    Text="{x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle}"/>
+                    Text="{x:Static res:Strings.InstanceSourcePageInstituteAccessButtonTitle2}"/>
             </Grid>
         </Button>
     </Grid>
