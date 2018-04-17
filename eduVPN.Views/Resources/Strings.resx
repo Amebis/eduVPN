@@ -312,6 +312,9 @@ If you continue, your user settings will be reset to the default.</value>
     <value>{0} Connected</value>
     <comment>{0}=Profile name</comment>
   </data>
+  <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>The window has been minimized here.</value>
   </data>

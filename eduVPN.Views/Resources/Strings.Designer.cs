@@ -633,6 +633,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disconnected.
+        /// </summary>
+        public static string SystemTrayBalloonDisconnectedMessage {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonDisconnectedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The window has been minimized here..
         /// </summary>
         public static string SystemTrayBalloonHiddenMessage {

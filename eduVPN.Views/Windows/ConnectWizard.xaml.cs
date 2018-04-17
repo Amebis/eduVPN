@@ -39,6 +39,11 @@ namespace eduVPN.Views.Windows
         private Dictionary<string, System.Windows.Window> _authorization_popups = new Dictionary<string, System.Windows.Window>();
 
         /// <summary>
+        /// VPN session state
+        /// </summary>
+        private VPNSessionStatusType _session_state;
+
+        /// <summary>
         /// Tray icon
         /// </summary>
         private System.Windows.Forms.NotifyIcon _tray_icon;
@@ -167,6 +172,9 @@ namespace eduVPN.Views.Windows
 
                     if (view_model.ActiveSession != VPNSession.Blank)
                     {
+                        // Initialize VPN session state.
+                        _session_state = view_model.ActiveSession.State;
+
                         // Bind to the session for property changes.
                         view_model.ActiveSession.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
                         {
@@ -181,15 +189,36 @@ namespace eduVPN.Views.Windows
                                     {
                                         _tray_icon.Icon = TrayIcon;
 
-                                        if (view_model.ActiveSession.State == VPNSessionStatusType.Connected && !IsVisible)
+                                        if (!IsVisible)
                                         {
-                                            // Client connected while "minimized". Popup the balloon message.
-                                            _tray_icon.ShowBalloonTip(
-                                                5000,
-                                                String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
-                                                String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
-                                                System.Windows.Forms.ToolTipIcon.Info);
+                                            // Client is minimized.
+                                            switch (view_model.ActiveSession.State)
+                                            {
+                                                case VPNSessionStatusType.Connected:
+                                                    // Client connected. Popup the balloon message.
+                                                    _tray_icon.ShowBalloonTip(
+                                                        5000,
+                                                        String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
+                                                        String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
+                                                        System.Windows.Forms.ToolTipIcon.Info);
+                                                    break;
+
+                                                default:
+                                                    if (_session_state == VPNSessionStatusType.Connected)
+                                                    {
+                                                        // Client has been disconnected. Popup the balloon message.
+                                                        _tray_icon.ShowBalloonTip(
+                                                            5000,
+                                                            eduVPN.Properties.Settings.Default.ClientTitle,
+                                                            Views.Resources.Strings.SystemTrayBalloonDisconnectedMessage,
+                                                            System.Windows.Forms.ToolTipIcon.Info);
+                                                    }
+                                                    break;
+                                            }
                                         }
+
+                                        // Save VPN session state.
+                                        _session_state = view_model.ActiveSession.State;
                                     }
                                     break;
                             }
