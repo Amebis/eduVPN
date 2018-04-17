@@ -18,24 +18,10 @@
     Width="350"
     SizeToContent="Height"
     Title="{x:Static res:Strings.SelfUpdatePopupTitle}"
+    Description="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}, StringFormat={x:Static res:Strings.SelfUpdatePopupMessage2}}"
+    AutomationProperties.HelpText="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}, StringFormat={x:Static res:Strings.SelfUpdatePopupMessage2}}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource PopupWindowStyle}">
-
-    <windows:Window.Description>
-        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage}">
-            <Binding Path="ClientTitle" Source="{x:Static prop:Settings.Default}"/>
-            <Binding Path="InstalledVersion"/>
-            <Binding Path="AvailableVersion"/>
-        </MultiBinding>
-    </windows:Window.Description>
-
-    <AutomationProperties.HelpText>
-        <MultiBinding StringFormat="{x:Static res:Strings.SelfUpdatePopupMessage}">
-            <Binding Path="ClientTitle" Source="{x:Static prop:Settings.Default}"/>
-            <Binding Path="InstalledVersion"/>
-            <Binding Path="AvailableVersion"/>
-        </MultiBinding>
-    </AutomationProperties.HelpText>
 
     <Grid Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>

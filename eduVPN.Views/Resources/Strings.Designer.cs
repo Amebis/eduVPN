@@ -414,11 +414,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version {1} of {0} client is installed. A newer version {2} is available online..
+        ///   Looks up a localized string similar to A newer and improved version of {0} client is available. Stay updated!.
         /// </summary>
-        public static string SelfUpdatePopupMessage {
+        public static string SelfUpdatePopupMessage2 {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupMessage", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupMessage2", resourceCulture);
             }
         }
         

@@ -231,9 +231,9 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>What's _New?</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Version {1} of {0} client is installed. A newer version {2} is available online.</value>
-    <comment>{0}=Client name, {1}=Installed version, {2}=Avaliable version</comment>
+  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
+    <value>A newer and improved version of {0} client is available. Stay updated!</value>
+    <comment>{0}=Client name</comment>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Skip this _version</value>
