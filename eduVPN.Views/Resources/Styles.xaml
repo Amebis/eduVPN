@@ -1199,8 +1199,9 @@
                     <AdornerDecorator>
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="22"/>
                                 <ColumnDefinition/>
+                                <ColumnDefinition Width="22"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -1226,20 +1227,20 @@
 
                             <TextBlock
                                 Grid.Column="1"
-                                Margin="-35,10,10,10"
+                                Margin="10"
                                 VerticalAlignment="Top"
                                 Style="{StaticResource HeadingTextStyle}"
                                 Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                             <TextBlock
-                                Grid.ColumnSpan="2"
+                                Grid.ColumnSpan="3"
                                 Grid.Row="1"
                                 Margin="30,10"
                                 Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                                 Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                             <ContentPresenter
-                                Grid.ColumnSpan="2"
+                                Grid.ColumnSpan="3"
                                 Grid.Row="2"
                                 Margin="10"/>
                         </Grid>
@@ -1256,9 +1257,9 @@
                     <AdornerDecorator>
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="22"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="22"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -1285,7 +1286,7 @@
 
                             <TextBlock
                                 Grid.Column="1"
-                                Margin="-35,10,-35,10"
+                                Margin="10"
                                 VerticalAlignment="Top"
                                 Style="{StaticResource HeadingTextStyle}"
                                 Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
