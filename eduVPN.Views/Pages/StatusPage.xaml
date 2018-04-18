@@ -151,10 +151,10 @@
             Grid.Row="3"
             Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -172,70 +172,70 @@
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Margin="0,2,1,0"
+                Margin="0,2,2,0"
                 Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoDuration}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="1"
-                Margin="1,2,4,0"
+                Margin="2,2,4,0"
                 Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
-                Margin="0,0,1,0"
+                Margin="0,0,2,0"
                 Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoBytesIn}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="1,0,4,0"
+                Margin="2,0,4,0"
                 Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
-                Margin="0,0,1,0"
+                Margin="0,0,2,0"
                 Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoBytesOut}"/>
 
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="1"
-                Margin="1,0,4,0"
+                Margin="2,0,4,0"
                 Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="2"
-                Margin="4,2,1,0"
+                Margin="4,2,2,0"
                 Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoIPv4}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="3"
-                Margin="1,2,0,0"
+                Margin="2,2,0,0"
                 Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.TunnelAddress}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="2"
-                Margin="4,0,1,0"
+                Margin="4,0,2,0"
                 Style="{StaticResource InfoLabelTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoIPv6}"/>
 
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="3"
-                Margin="1,0,0,0"
+                Margin="2,0,0,0"
                 Style="{StaticResource InfoDataBlockStyle}"
                 Text="{Binding Path=Wizard.ActiveSession.IPv6TunnelAddress}"/>
 
@@ -259,7 +259,7 @@
             Grid.Row="4"
             Margin="5"
             Width="170"
-            FontSize="16"
+            FontSize="15"
             VerticalAlignment="Center"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageDisconnectButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=Wizard.ActiveSession.Disconnect}">

@@ -20,7 +20,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="43"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
             <controls:ImageWithFallback
@@ -72,7 +72,7 @@
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="43"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
             <Image
@@ -125,7 +125,7 @@
                 <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="32"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
             <Image
@@ -177,7 +177,7 @@
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="43"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
             <controls:ImageWithFallback

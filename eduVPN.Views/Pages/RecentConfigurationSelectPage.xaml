@@ -34,7 +34,6 @@
     </pages:ConnectWizardPage.Resources>
 
     <Grid
-        VerticalAlignment="Top"
         Style="{StaticResource PageContentGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding Path=Wizard.InstanceSources[1].ConnectingInstance, Converter={StaticResource InstanceSourceRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>

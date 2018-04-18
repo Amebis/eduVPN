@@ -18,8 +18,8 @@
     xmlns:vmpages="clr-namespace:eduVPN.ViewModels.Pages;assembly=eduVPN"
     mc:Ignorable="d"
     Title="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}}"
-    Height="460"
-    Width="300"
+    Height="534"
+    Width="330"
     Icon="{Binding Path=ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIconInitializingImage}}"
     Style="{StaticResource WindowStyle}">
 

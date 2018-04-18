@@ -102,7 +102,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{StaticResource HeadingTextBrush}"/>
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="15"/>
     </Style>
 
     <Style x:Key="InfoTitleTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -320,7 +320,7 @@
 
     <Style x:Key="CodeTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="FontFamily" Value="Lucida Console"/>
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="15"/>
     </Style>
 
     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
@@ -349,7 +349,6 @@
 
     <Style x:Key="PassiveListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="Padding" Value="2"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -374,7 +373,6 @@
 
     <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="Padding" Value="2"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -474,7 +472,6 @@
 
     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="Padding" Value="2"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -942,7 +939,7 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource WindowBorderBrush}"/>
@@ -1192,7 +1189,7 @@
     <Style x:Key="ConnectWizardPageStyle" TargetType="{x:Type Page}">
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type pages:ConnectWizardPage}">
