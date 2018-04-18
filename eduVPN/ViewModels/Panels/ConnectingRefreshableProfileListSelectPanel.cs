@@ -85,8 +85,8 @@ namespace eduVPN.ViewModels.Panels
                                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                 () =>
                                 {
-                                    ProfileList = profile_list;
                                     Wizard.Error = null;
+                                    ProfileList = profile_list;
                                 }));
                             }
                             catch (OperationCanceledException) { }
