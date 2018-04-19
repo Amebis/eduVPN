@@ -156,6 +156,39 @@ namespace eduVPN.Models
                 };
         }
 
+        /// <summary>
+        /// Removes given instance from history
+        /// </summary>
+        /// <param name="instance">Instance</param>
+        public override void ForgetInstance(Instance instance)
+        {
+            // Remove all instance profiles from history.
+            for (var i = ConnectingProfileList.Count; i-- > 0;)
+                if (ConnectingProfileList[i].Instance.Equals(instance))
+                    ConnectingProfileList.RemoveAt(i);
+
+            if (ConnectingInstance != null && ConnectingInstance.Equals(instance))
+            {
+                base.ForgetInstance(instance);
+
+                // Reset authenticating instance.
+                AuthenticatingInstance = ConnectingInstance;
+            }
+            else
+                base.ForgetInstance(instance);
+        }
+
+        /// <summary>
+        /// Removes entire instance source history
+        /// </summary>
+        public override void Forget()
+        {
+            // Remove all profiles from history.
+            ConnectingProfileList.Clear();
+
+            base.Forget();
+        }
+
         #endregion
     }
 }

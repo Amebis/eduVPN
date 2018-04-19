@@ -10,6 +10,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace eduVPN.Models
 {
@@ -141,6 +142,30 @@ namespace eduVPN.Models
         public virtual Xml.InstanceSourceSettingsBase ToSettings()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Removes given instance from history
+        /// </summary>
+        /// <param name="instance">Instance</param>
+        public virtual void ForgetInstance(Instance instance)
+        {
+            // Remove the instance from history.
+            ConnectingInstanceList.Remove(instance);
+
+            // Reset connecting instance.
+            if (ConnectingInstance != null && ConnectingInstance.Equals(instance))
+                ConnectingInstance = ConnectingInstanceList.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Removes entire instance source history
+        /// </summary>
+        public virtual void Forget()
+        {
+            // Remove all instances from history.
+            for (var i = ConnectingInstanceList.Count; i-- > 0;)
+                ForgetInstance(ConnectingInstanceList[i]);
         }
 
         #endregion

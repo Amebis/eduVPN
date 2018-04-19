@@ -90,7 +90,11 @@ namespace eduVPN.ViewModels.Panels
         /// </summary>
         public string ForgetSelectedInstanceLabel
         {
-            get { return String.Format(Resources.Strings.InstanceForget, SelectedInstance); }
+            get {
+                return String.Format(
+                    Resources.Strings.InstanceForget,
+                    InstanceSource is LocalInstanceSource ? SelectedInstance?.ToString() : InstanceSourceType.GetLocalizableName());
+            }
         }
 
         /// <summary>
@@ -109,7 +113,10 @@ namespace eduVPN.ViewModels.Panels
                             Wizard.ChangeTaskCount(+1);
                             try
                             {
-                                ForgetInstance(SelectedInstance);
+                                if (InstanceSource is LocalInstanceSource)
+                                    ForgetInstance(SelectedInstance);
+                                else
+                                    ForgetInstanceSource();
 
                                 // Update settings.
                                 Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[(int)InstanceSourceType] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSource.ToSettings() };
@@ -127,7 +134,8 @@ namespace eduVPN.ViewModels.Panels
                             InstanceSource is LocalInstanceSource &&
                             SelectedInstance != null &&
                             InstanceSource.ConnectingInstanceList.IndexOf(SelectedInstance) >= 0 &&
-                            !Wizard.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(SelectedInstance)));
+                            !Wizard.Sessions.Any(session => session.ConnectingProfile.Instance.Equals(SelectedInstance)) ||
+                            !Wizard.Sessions.Any(session => InstanceSource.ConnectingInstanceList.Any(instance => session.ConnectingProfile.Instance.Equals(instance))));
 
                     // Setup canExecute refreshing.
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(SelectedInstance)) _forget_selected_instance.RaiseCanExecuteChanged(); };
@@ -324,34 +332,44 @@ namespace eduVPN.ViewModels.Panels
         /// <param name="instance">Instance</param>
         private void ForgetInstance(Instance instance)
         {
-            if (InstanceSource is LocalInstanceSource instance_source_local)
-            {
-                // Remove all instance profiles from history.
-                for (var i = instance_source_local.ConnectingProfileList.Count; i-- > 0;)
-                    if (instance_source_local.ConnectingProfileList[i].Instance.Equals(instance))
-                        instance_source_local.ConnectingProfileList.RemoveAt(i);
-            }
-
-            // Remove the instance from history.
-            InstanceSource.ConnectingInstanceList.Remove(instance);
-
-            // Reset connecting instance.
-            if (InstanceSource.ConnectingInstance != null && InstanceSource.ConnectingInstance.Equals(instance))
-            {
-                InstanceSource.ConnectingInstance = InstanceSource.ConnectingInstanceList.FirstOrDefault();
-                if (InstanceSource is LocalInstanceSource)
-                    InstanceSource.AuthenticatingInstance = InstanceSource.ConnectingInstance;
-            }
+            InstanceSource.ForgetInstance(instance);
 
             // Test if it is safe to remove authorization token and certificate.
-            if (InstanceSource.AuthenticatingInstance != null && InstanceSource.AuthenticatingInstance.Equals(instance))
-                return;
             for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
-                if (Wizard.InstanceSources[source_index]?.AuthenticatingInstance != null && Wizard.InstanceSources[source_index].AuthenticatingInstance.Equals(instance)/* ||
-                    Wizard.InstanceSources[source_index]?.ConnectingInstanceList.FirstOrDefault(inst => inst.Equals(instance)) != null*/)
+                if (Wizard.InstanceSources[source_index]?.AuthenticatingInstance != null && Wizard.InstanceSources[source_index].AuthenticatingInstance.Equals(instance))
                     return;
 
             instance.Forget();
+        }
+
+        /// <summary>
+        /// Removes entire instance source from history
+        /// </summary>
+        private void ForgetInstanceSource()
+        {
+            // Deselect instance to prevent flickering of the profile list.
+            SelectedInstance = null;
+            SelectedProfile = null;
+
+            InstanceSource.Forget();
+
+            if (InstanceSource is DistributedInstanceSource instance_source_distributed)
+            {
+                // Distributed authenticating instance source
+                var authenticating_instance = instance_source_distributed.AuthenticatingInstance;
+                if (authenticating_instance != null)
+                {
+                    instance_source_distributed.AuthenticatingInstance = null;
+
+                    // Test if it is safe to remove authorization token and certificate.
+                    for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
+                        if (source_index != (int)InstanceSourceType &&
+                            Wizard.InstanceSources[source_index]?.AuthenticatingInstance != null && Wizard.InstanceSources[source_index].AuthenticatingInstance.Equals(authenticating_instance))
+                            return;
+
+                    authenticating_instance.Forget();
+                }
+            }
         }
 
         #endregion
