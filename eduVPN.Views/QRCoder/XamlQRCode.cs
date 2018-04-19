@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 
@@ -121,6 +122,7 @@ namespace QRCoder
         /// <summary>
         /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool disposedValue = false;
 
         /// <summary>

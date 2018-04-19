@@ -17,6 +17,7 @@ using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 
 namespace eduVPN.Views.Windows
@@ -596,6 +597,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool disposedValue = false;
 
         /// <summary>

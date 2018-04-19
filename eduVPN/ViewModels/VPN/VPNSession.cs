@@ -12,6 +12,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -420,6 +421,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool disposedValue = false;
 
         /// <summary>
