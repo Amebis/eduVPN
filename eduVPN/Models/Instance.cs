@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -28,18 +29,24 @@ namespace eduVPN.Models
         /// Instance API endpoints
         /// </summary>
         private InstanceEndpoints _endpoints;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _endpoints_lock = new object();
 
         /// <summary>
         /// List of available profiles
         /// </summary>
         private ObservableCollection<Profile> _profile_list;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _profile_list_lock = new object();
 
         /// <summary>
         /// Client certificate
         /// </summary>
         private X509Certificate2 _client_certificate;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _client_certificate_lock = new object();
 
         #endregion

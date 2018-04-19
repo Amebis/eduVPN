@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace eduVPN.Xml
@@ -18,7 +19,8 @@ namespace eduVPN.Xml
     {
         #region Fields
 
-        object _lock = new object();
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private object _lock = new object();
 
         #endregion
 

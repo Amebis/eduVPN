@@ -9,6 +9,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -62,6 +63,8 @@ namespace eduVPN.ViewModels.Windows
             get { lock (_task_count_lock) return _task_count; }
         }
         private int _task_count;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _task_count_lock = new object();
 
         /// <summary>
