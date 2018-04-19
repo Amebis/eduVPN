@@ -19,6 +19,7 @@
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
     <conv:InstanceSourceInverseVisibilityConverter x:Key="InstanceSourceInverseVisibilityConverter"/>
     <conv:InstanceSourceRowHeightConverter x:Key="InstanceSourceRowHeightConverter"/>
+    <conv:InstanceSourceTitleConverter x:Key="InstanceSourceTitleConverter"/>
     <conv:InstanceSourceVisibilityConverter x:Key="InstanceSourceVisibilityConverter"/>
     <conv:MessageListRowHeightConverter x:Key="MessageListRowHeightConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>

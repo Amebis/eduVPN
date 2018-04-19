@@ -43,6 +43,7 @@
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
+    <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
     <Compile Include="Models\TOTPEnrollmentCredentials.cs" />

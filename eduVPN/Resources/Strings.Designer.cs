@@ -340,6 +340,24 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Institute Access.
+        /// </summary>
+        internal static string InstanceSourceTypeInstituteAccess {
+            get {
+                return ResourceManager.GetString("InstanceSourceTypeInstituteAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secure Internet.
+        /// </summary>
+        internal static string InstanceSourceTypeSecureInternet {
+            get {
+                return ResourceManager.GetString("InstanceSourceTypeSecureInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;Automatic&gt;.
         /// </summary>
         internal static string InterfaceNameAutomatic {

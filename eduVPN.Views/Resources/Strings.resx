@@ -219,12 +219,6 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
     <value>Add _another</value>
   </data>
-  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
-    <value>Institute Access</value>
-  </data>
-  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
-    <value>Secure Internet</value>
-  </data>
   <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>Ask me _later</value>
   </data>

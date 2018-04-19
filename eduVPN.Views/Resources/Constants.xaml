@@ -7,8 +7,11 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN">
 
     <sys:Int32 x:Key="MetricPrefixBase">1024</sys:Int32>
     <GridLength x:Key="AutoGridLength">Auto</GridLength>
+    <model:InstanceSourceType x:Key="InstanceSourceTypeSecureInternet">1</model:InstanceSourceType>
+    <model:InstanceSourceType x:Key="InstanceSourceTypeInstituteAccess">2</model:InstanceSourceType>
 </ResourceDictionary>

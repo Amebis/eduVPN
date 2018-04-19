@@ -51,6 +51,7 @@
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\InstanceSourceInverseVisibilityConverter.cs" />
     <Compile Include="Converters\InstanceSourceRowHeightConverter.cs" />
+    <Compile Include="Converters\InstanceSourceTitleConverter.cs" />
     <Compile Include="Converters\InstanceSourceVisibilityConverter.cs" />
     <Compile Include="Converters\MessageListRowHeightConverter.cs" />
     <Compile Include="Converters\MessageListVisibilityConverter.cs" />

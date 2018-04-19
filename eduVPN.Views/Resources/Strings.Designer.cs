@@ -378,24 +378,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Institute Access.
-        /// </summary>
-        public static string RecentConfigurationSelectPageInstituteAccessTitle {
-            get {
-                return ResourceManager.GetString("RecentConfigurationSelectPageInstituteAccessTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Secure Internet.
-        /// </summary>
-        public static string RecentConfigurationSelectPageSecureInternetTitle {
-            get {
-                return ResourceManager.GetString("RecentConfigurationSelectPageSecureInternetTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Ask me _later.
         /// </summary>
         public static string SelfUpdatePopupAskLaterButtonTitle {

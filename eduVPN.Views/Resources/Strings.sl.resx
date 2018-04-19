@@ -220,12 +220,6 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
     <value>Dodaj drugeg_a</value>
   </data>
-  <data name="RecentConfigurationSelectPageInstituteAccessTitle" xml:space="preserve">
-    <value>Dostop do ustanove</value>
-  </data>
-  <data name="RecentConfigurationSelectPageSecureInternetTitle" xml:space="preserve">
-    <value>Varni splet</value>
-  </data>
   <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
     <value>_Vprašaj me pozneje</value>
   </data>

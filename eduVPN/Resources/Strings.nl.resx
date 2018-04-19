@@ -270,4 +270,10 @@
   <data name="StatusPageTitle" xml:space="preserve">
     <value>VPN-verbinding</value>
   </data>
+  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
+    <value>Institute Access</value>
+  </data>
+  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
+    <value>Secure Internet</value>
+  </data>
 </root>

@@ -79,7 +79,7 @@
                     Margin="0,-3"
                     Target="{Binding ElementName=SecureInternet}"
                     Style="{StaticResource SectionLabelStyle}"
-                    Content="{x:Static res:Strings.RecentConfigurationSelectPageSecureInternetTitle}"/>
+                    Content="{Binding Source={StaticResource InstanceSourceTypeSecureInternet}, Converter={StaticResource InstanceSourceTitleConverter}}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
@@ -139,7 +139,7 @@
                     Margin="0,-3"
                     Target="{Binding ElementName=InstituteAccess}"
                     Style="{StaticResource SectionLabelStyle}"
-                    Content="{x:Static res:Strings.RecentConfigurationSelectPageInstituteAccessTitle}"/>
+                    Content="{Binding Source={StaticResource InstanceSourceTypeInstituteAccess}, Converter={StaticResource InstanceSourceTitleConverter}}"/>
 
                 <Rectangle
                     Grid.ColumnSpan="2"
