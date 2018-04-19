@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -19,9 +20,6 @@ namespace eduBase
     /// </remarks>
     class MultiplatformDllLoader
     {
-        private static bool is_enabled;
-        private static object is_enabled_sync = new object();
-
         /// <summary>
         /// Property used to set or get registration status of our resolver
         /// </summary>
@@ -30,7 +28,7 @@ namespace eduBase
             get { return is_enabled; }
             set
             {
-                lock (is_enabled_sync)
+                lock (is_enabled_lock)
                 {
                     if (is_enabled != value)
                     {
@@ -43,6 +41,12 @@ namespace eduBase
                 }
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static bool is_enabled;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static object is_enabled_lock = new object();
 
         /// <summary>
         /// Resolve event handler that will attempt to load a missing assembly from either Win32 or x64 subdir
