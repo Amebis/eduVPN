@@ -36,6 +36,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// The alpha factor to increase/decrease popularity
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly float _popularity_alpha = 0.1f;
 
         #endregion

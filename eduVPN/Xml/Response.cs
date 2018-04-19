@@ -8,6 +8,7 @@
 using eduOAuth;
 using System;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace eduVPN.Xml
         /// <summary>
         /// Executing assembly
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly Assembly _assembly = Assembly.GetExecutingAssembly();
 
         /// <summary>

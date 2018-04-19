@@ -8,6 +8,7 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
+using System.Diagnostics;
 using System.Net;
 using System.Security.Cryptography;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace eduVPN.ViewModels.Panels
     {
         #region Fields
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly string _base32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
         #endregion

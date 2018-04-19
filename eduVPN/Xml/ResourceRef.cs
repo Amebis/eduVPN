@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
@@ -23,8 +24,9 @@ namespace eduVPN.Xml
         /// <summary>
         /// Base URI to be used for reading relative URIs
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly Uri _assembly_uri = new Uri(Assembly.GetExecutingAssembly().Location);
-        
+
         #endregion
 
         #region Properties

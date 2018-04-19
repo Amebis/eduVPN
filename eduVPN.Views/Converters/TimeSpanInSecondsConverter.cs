@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -18,6 +19,7 @@ namespace eduVPN.Converters
     {
         #region Fields
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly TimeSpan _one_day = new TimeSpan(1, 0, 0, 0);
 
         #endregion

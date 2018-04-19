@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -22,6 +23,7 @@ namespace eduVPN.Converters
         /// <summary>
         /// 1* grid length
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly GridLength _one_star_grid_length = new GridLength(1.0, GridUnitType.Star);
 
         #endregion
