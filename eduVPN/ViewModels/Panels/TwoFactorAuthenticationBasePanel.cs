@@ -11,6 +11,7 @@ using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -47,6 +48,8 @@ namespace eduVPN.ViewModels.Panels
             get { return _response; }
             set { SetProperty(ref _response, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _response;
 
         /// <summary>
@@ -62,6 +65,8 @@ namespace eduVPN.ViewModels.Panels
                         null;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DispatcherTimer _previous_response_time_updater;
 
         /// <summary>
@@ -102,6 +107,8 @@ namespace eduVPN.ViewModels.Panels
                 return _apply_response;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<UsernamePasswordAuthenticationRequestedEventArgs> _apply_response;
 
         /// <summary>
@@ -141,6 +148,8 @@ namespace eduVPN.ViewModels.Panels
                 return _apply_enrollment;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<RequestTwoFactorEnrollmentEventArgs> _apply_enrollment;
 
         #endregion

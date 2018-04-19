@@ -47,6 +47,7 @@ namespace eduVPN.Views.Controls
             get { return GetValue(UriSourceProperty) as Uri; }
             set { SetValue(UriSourceProperty, value); }
         }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly DependencyProperty UriSourceProperty = DependencyProperty.Register("UriSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriSourceChanged));
 
@@ -57,6 +58,7 @@ namespace eduVPN.Views.Controls
             get { return GetValue(UriFallbackSourceProperty) as Uri; }
             set { SetValue(UriFallbackSourceProperty, value); }
         }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly DependencyProperty UriFallbackSourceProperty = DependencyProperty.Register("UriFallbackSource", typeof(Uri), typeof(ImageWithFallback), new PropertyMetadata(null, OnUriFallbackSourceChanged));
 

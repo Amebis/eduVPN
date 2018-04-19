@@ -8,6 +8,7 @@
 using eduOpenVPN.Management;
 using eduVPN.ViewModels.VPN;
 using Prism.Commands;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels.Windows
@@ -32,6 +33,8 @@ namespace eduVPN.ViewModels.Windows
             get { return _realm; }
             set { SetProperty(ref _realm, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _realm;
 
         /// <summary>
@@ -57,6 +60,8 @@ namespace eduVPN.ViewModels.Windows
                 return _apply_response;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<PasswordAuthenticationRequestedEventArgs> _apply_response;
 
         #endregion

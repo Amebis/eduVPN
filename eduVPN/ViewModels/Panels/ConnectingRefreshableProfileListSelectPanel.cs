@@ -10,6 +10,7 @@ using eduVPN.ViewModels.Windows;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -39,6 +40,8 @@ namespace eduVPN.ViewModels.Panels
                 }
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ObservableCollection<Profile> _profile_list;
 
         #endregion

@@ -8,6 +8,7 @@
 using eduOAuth;
 using eduVPN.Models;
 using System;
+using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Windows
 {
@@ -38,6 +39,8 @@ namespace eduVPN.ViewModels.Windows
             get { return _callback_uri; }
             set { SetProperty(ref _callback_uri, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _callback_uri;
 
         #endregion

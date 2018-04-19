@@ -9,6 +9,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -30,6 +31,8 @@ namespace eduVPN.Models
             get { return _instance; }
             set { SetProperty(ref _instance, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Instance _instance;
 
         /// <summary>
@@ -40,6 +43,8 @@ namespace eduVPN.Models
             get { return _id; }
             set { SetProperty(ref _id, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _id;
 
         /// <summary>
@@ -50,6 +55,8 @@ namespace eduVPN.Models
             get { return _display_name; }
             set { SetProperty(ref _display_name, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _display_name;
 
         /// <summary>
@@ -60,6 +67,8 @@ namespace eduVPN.Models
             get { return _is_two_factor_authentication;  }
             set { SetProperty(ref _is_two_factor_authentication, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool _is_two_factor_authentication;
 
         /// <summary>
@@ -70,6 +79,8 @@ namespace eduVPN.Models
             get { return _two_factor_methods; }
             set { SetProperty(ref _two_factor_methods, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private TwoFactorAuthenticationMethods _two_factor_methods;
 
         /// <summary>
@@ -80,6 +91,8 @@ namespace eduVPN.Models
             get { return _popularity; }
             set { SetProperty(ref _popularity, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private float _popularity = 1.0f;
 
         /// <summary>

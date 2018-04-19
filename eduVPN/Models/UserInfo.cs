@@ -7,6 +7,7 @@
 
 using Prism.Mvvm;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace eduVPN.Models
 {
@@ -25,6 +26,8 @@ namespace eduVPN.Models
             get { return _id; }
             set { SetProperty(ref _id, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _id;
 
         /// <summary>
@@ -35,6 +38,8 @@ namespace eduVPN.Models
             get { return _is_enabled; }
             set { SetProperty(ref _is_enabled, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool _is_enabled = true;
 
         /// <summary>
@@ -45,6 +50,8 @@ namespace eduVPN.Models
             get { return _is_two_factor_authentication; }
             set { SetProperty(ref _is_two_factor_authentication, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool _is_two_factor_authentication;
 
         /// <summary>
@@ -55,6 +62,8 @@ namespace eduVPN.Models
             get { return _two_factor_methods; }
             set { SetProperty(ref _two_factor_methods, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private TwoFactorAuthenticationMethods _two_factor_methods;
 
         #endregion

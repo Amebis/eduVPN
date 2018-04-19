@@ -10,6 +10,7 @@ using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -111,6 +112,8 @@ namespace eduVPN.ViewModels.Pages
                 return _select_instance_source;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<InstanceSourceType?> _select_instance_source;
 
         /// <inheritdoc/>
@@ -140,6 +143,8 @@ namespace eduVPN.ViewModels.Pages
                 return _navigate_back;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _navigate_back;
 
         #endregion

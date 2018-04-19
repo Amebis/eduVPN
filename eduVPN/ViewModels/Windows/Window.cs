@@ -34,8 +34,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Token used to abort unfinished background processes in case of application shutdown.
         /// </summary>
-        public static CancellationTokenSource Abort { get => _abort; }
-        private static CancellationTokenSource _abort = new CancellationTokenSource();
+        public static CancellationTokenSource Abort { get; } = new CancellationTokenSource();
 
         /// <summary>
         /// The page error; <c>null</c> when no error condition.
@@ -45,6 +44,8 @@ namespace eduVPN.ViewModels.Windows
             get { return _error; }
             set { SetProperty(ref _error, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Exception _error;
 
         /// <summary>
@@ -62,6 +63,8 @@ namespace eduVPN.ViewModels.Windows
         {
             get { lock (_task_count_lock) return _task_count; }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int _task_count;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -90,6 +93,8 @@ namespace eduVPN.ViewModels.Windows
                 return _dismiss_error;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _dismiss_error;
 
         /// <summary>
@@ -120,6 +125,8 @@ namespace eduVPN.ViewModels.Windows
                 return _copy_error;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _copy_error;
 
         #endregion

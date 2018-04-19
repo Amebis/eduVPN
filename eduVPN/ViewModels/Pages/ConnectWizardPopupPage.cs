@@ -8,6 +8,7 @@
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
+using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -37,6 +38,8 @@ namespace eduVPN.ViewModels.Pages
                 return _navigate_back;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _navigate_back;
 
         #endregion

@@ -6,6 +6,7 @@
 */
 
 using Prism.Mvvm;
+using System.Diagnostics;
 
 namespace eduVPN
 {
@@ -24,6 +25,8 @@ namespace eduVPN
             get { return _minimum; }
             set { SetProperty(ref _minimum, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private T _minimum;
 
         /// <summary>
@@ -34,6 +37,8 @@ namespace eduVPN
             get { return _maximum; }
             set { SetProperty(ref _maximum, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private T _maximum;
 
         /// <summary>
@@ -44,6 +49,8 @@ namespace eduVPN
             get { return _value; }
             set { SetProperty(ref _value, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private T _value;
 
         #endregion

@@ -6,6 +6,7 @@
 */
 
 using eduVPN.ViewModels.Windows;
+using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -30,6 +31,8 @@ namespace eduVPN.ViewModels.Pages
             get { return _progress; }
             set { SetProperty(ref _progress, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Range<int> _progress;
 
         #endregion

@@ -8,6 +8,7 @@
 using System;
 using Prism.Mvvm;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace eduVPN.Models
 {
@@ -26,6 +27,8 @@ namespace eduVPN.Models
             get { return _text; }
             set { SetProperty(ref _text, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _text;
 
         /// <summary>
@@ -36,6 +39,8 @@ namespace eduVPN.Models
             get { return _date; }
             set { SetProperty(ref _date, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTime _date;
 
         #endregion

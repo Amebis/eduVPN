@@ -10,6 +10,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace eduVPN.Models
@@ -35,6 +36,8 @@ namespace eduVPN.Models
             get { return _authenticating_instance; }
             set { SetProperty(ref _authenticating_instance, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Instance _authenticating_instance;
 
         /// <summary>
@@ -54,6 +57,8 @@ namespace eduVPN.Models
             get { return _connecting_instance; }
             set { SetProperty(ref _connecting_instance, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Instance _connecting_instance;
 
         /// <summary>
@@ -64,6 +69,8 @@ namespace eduVPN.Models
             get { return _sequence; }
             set { SetProperty(ref _sequence, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private uint _sequence;
 
         /// <summary>
@@ -74,6 +81,8 @@ namespace eduVPN.Models
             get { return _signed_at; }
             set { SetProperty(ref _signed_at, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTime? _signed_at;
 
         #endregion

@@ -10,6 +10,7 @@ using eduVPN.Models;
 using eduVPN.ViewModels.Panels;
 using eduVPN.ViewModels.VPN;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace eduVPN.ViewModels.Windows
@@ -24,11 +25,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Authentication method list
         /// </summary>
-        public ObservableCollection<TwoFactorAuthenticationBasePanel> MethodList
-        {
-            get { return _method_list; }
-        }
-        private ObservableCollection<TwoFactorAuthenticationBasePanel> _method_list;
+        public ObservableCollection<TwoFactorAuthenticationBasePanel> MethodList { get; }
 
         /// <summary>
         /// 2-Factor authentication method
@@ -42,6 +39,8 @@ namespace eduVPN.ViewModels.Windows
                     RaisePropertyChanged(nameof(ApplyResponse));
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private TwoFactorAuthenticationBasePanel _selected_method;
 
         /// <inheritdoc/>
@@ -73,16 +72,16 @@ namespace eduVPN.ViewModels.Windows
 
             // Prepare the list of methods.
             var last_method = Properties.Settings.Default.InstanceSettings.TryGetValue(session.AuthenticatingInstance.Base.AbsoluteUri, out var settings) ? settings.LastTwoFactorAuthenticationMethod : null;
-            _method_list = new ObservableCollection<TwoFactorAuthenticationBasePanel>();
+            MethodList = new ObservableCollection<TwoFactorAuthenticationBasePanel>();
             TwoFactorAuthenticationBasePanel method;
             if (methods.HasFlag(TwoFactorAuthenticationMethods.TOTP))
             {
-                _method_list.Add(method = new TOTPAuthenticationPanel(session.Wizard, session.AuthenticatingInstance));
+                MethodList.Add(method = new TOTPAuthenticationPanel(session.Wizard, session.AuthenticatingInstance));
                 if (last_method == method.ID) _selected_method = method;
             }
             if (methods.HasFlag(TwoFactorAuthenticationMethods.YubiKey))
             {
-                _method_list.Add(method = new YubiKeyAuthenticationPanel(session.Wizard, session.AuthenticatingInstance));
+                MethodList.Add(method = new YubiKeyAuthenticationPanel(session.Wizard, session.AuthenticatingInstance));
                 if (last_method == method.ID) _selected_method = method;
             }
         }

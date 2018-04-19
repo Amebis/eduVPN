@@ -42,11 +42,7 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Self-update progress value
         /// </summary>
-        public Range<int> Progress
-        {
-            get { return _progress; }
-        }
-        private Range<int> _progress = new Range<int>(0, 100);
+        public Range<int> Progress { get; } = new Range<int>(0, 100);
 
         #endregion
 

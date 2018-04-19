@@ -7,6 +7,7 @@
 
 using Prism.Mvvm;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -20,7 +21,8 @@ namespace eduVPN.Converters
     {
         #region Fields
 
-        private static string[] _prefixes = new string[] { "", "k", "M", "G", "T", "P", "E" };
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static readonly string[] _prefixes = new string[] { "", "k", "M", "G", "T", "P", "E" };
 
         #endregion
 
@@ -34,6 +36,8 @@ namespace eduVPN.Converters
             get { return _unit; }
             set { SetProperty(ref _unit, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _unit = "";
 
         /// <summary>
@@ -44,6 +48,8 @@ namespace eduVPN.Converters
             get { return _base; }
             set { SetProperty(ref _base, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int _base = 1000;
 
         /// <summary>
@@ -54,6 +60,8 @@ namespace eduVPN.Converters
             get { return _empty_if_zero; }
             set { SetProperty(ref _empty_if_zero, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool _empty_if_zero = false;
 
         #endregion

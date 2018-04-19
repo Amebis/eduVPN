@@ -43,6 +43,8 @@ namespace eduVPN.ViewModels.Windows
             get { return _action; }
             set { SetProperty(ref _action, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private PromptSelfUpdateActionType _action;
 
         /// <summary>
@@ -73,6 +75,8 @@ namespace eduVPN.ViewModels.Windows
                 return _do_action;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<PromptSelfUpdateActionType?> _do_action;
 
         /// <summary>
@@ -103,6 +107,8 @@ namespace eduVPN.ViewModels.Windows
                 return _show_changelog;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _show_changelog;
 
         #endregion

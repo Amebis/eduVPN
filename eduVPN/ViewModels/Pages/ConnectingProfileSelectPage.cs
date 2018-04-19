@@ -11,6 +11,7 @@ using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -41,6 +42,8 @@ namespace eduVPN.ViewModels.Pages
                 return _panels[source_index];
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ConnectingRefreshableProfileSelectPanel[] _panels = new ConnectingRefreshableProfileSelectPanel[(int)InstanceSourceType._end];
 
         /// <inheritdoc/>
@@ -83,6 +86,8 @@ namespace eduVPN.ViewModels.Pages
                 return _navigate_back;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _navigate_back;
 
         #endregion

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace eduVPN.Models
 {
@@ -22,78 +23,104 @@ namespace eduVPN.Models
         /// Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.
         /// </summary>
         public Uri AuthorizationEndpoint { get => _authorization_endpoint; set => _authorization_endpoint = value; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _authorization_endpoint;
 
         /// <summary>
         /// Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.
         /// </summary>
         public Uri TokenEndpoint { get => _token_endpoint; set => _token_endpoint = value; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _token_endpoint;
 
         /// <summary>
         /// API base URI
         /// </summary>
         public Uri BaseURI { get => _base_uri; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _base_uri;
 
         /// <summary>
         /// Create client certificate URI
         /// </summary>
         public Uri CreateCertificate { get => _create_certificate; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _create_certificate;
 
         /// <summary>
         /// Profile complete OpenVPN configuration URI
         /// </summary>
         public Uri ProfileCompleteConfig { get => _profile_complete_config; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _profile_complete_config;
 
         /// <summary>
         /// Profile OpenVPN configuration URI
         /// </summary>
         public Uri ProfileConfig { get => _profile_config; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _profile_config;
 
         /// <summary>
         /// Profile list URI
         /// </summary>
         public Uri ProfileList { get => _profile_list; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _profile_list;
 
         /// <summary>
         /// System messages URI
         /// </summary>
         public Uri SystemMessages { get => _system_messages; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _system_messages;
 
         /// <summary>
         /// User messages URI
         /// </summary>
         public Uri UserMessages { get => _user_messages; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _user_messages;
 
         /// <summary>
         /// User info URI
         /// </summary>
         public Uri UserInfo { get => _user_info; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _user_info;
 
         /// <summary>
         /// TOTP Authentication enroll URI
         /// </summary>
         public Uri TOTPAuthenticationEnroll { get => _totp_authentication_enroll; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _totp_authentication_enroll;
 
         /// <summary>
         /// YubiKey Authentication enroll URI
         /// </summary>
         public Uri YubiKeyAuthenticationEnroll { get => _yubikey_authentication_enroll; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _yubikey_authentication_enroll;
 
         /// <summary>
         /// 2-Factor Authentication enroll URI (web based)
         /// </summary>
         public Uri TwoFactorAuthenticationEnroll { get => _two_factor_authentication_enroll; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _two_factor_authentication_enroll;
 
         #endregion

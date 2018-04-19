@@ -11,6 +11,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,6 +46,8 @@ namespace eduVPN.ViewModels.Panels
             get { return _selected_instance; }
             set { SetProperty(ref _selected_instance, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Instance _selected_instance;
 
         /// <summary>
@@ -83,6 +86,8 @@ namespace eduVPN.ViewModels.Panels
                 return _set_connecting_instance;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _set_connecting_instance;
 
         /// <summary>
@@ -146,6 +151,8 @@ namespace eduVPN.ViewModels.Panels
                 return _forget_selected_instance;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _forget_selected_instance;
 
         /// <summary>
@@ -156,6 +163,8 @@ namespace eduVPN.ViewModels.Panels
             get { return _selected_profile; }
             set { SetProperty(ref _selected_profile, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Profile _selected_profile;
 
         /// <summary>
@@ -228,6 +237,8 @@ namespace eduVPN.ViewModels.Panels
                 return _connect_selected_profile;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _connect_selected_profile;
 
         /// <summary>
@@ -297,6 +308,8 @@ namespace eduVPN.ViewModels.Panels
                 return _forget_selected_profile;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _forget_selected_profile;
 
         #endregion

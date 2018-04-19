@@ -10,6 +10,7 @@ using eduVPN.ViewModels.Panels;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
+using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -29,11 +30,7 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Configuration history panels
         /// </summary>
-        public ConnectingSelectPanel[] Panels
-        {
-            get { return _panels; }
-        }
-        private ConnectingSelectPanel[] _panels;
+        public ConnectingSelectPanel[] Panels { get; }
 
         /// <summary>
         /// Add another instance or profile
@@ -61,6 +58,8 @@ namespace eduVPN.ViewModels.Pages
                 return _add_connection;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _add_connection;
 
         #endregion
@@ -75,23 +74,23 @@ namespace eduVPN.ViewModels.Pages
             base(wizard)
         {
             // Create history panels.
-            _panels = new ConnectingSelectPanel[Wizard.InstanceSources.Length];
+            Panels = new ConnectingSelectPanel[Wizard.InstanceSources.Length];
             for (var source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
             {
                 if (Wizard.InstanceSources[source_index] is LocalInstanceSource)
                 {
                     switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
-                        case 0: _panels[source_index] = new ConnectingProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
-                        case 1: _panels[source_index] = new ConnectingInstanceSelectPanel(Wizard, (InstanceSourceType)source_index); break;
-                        case 2: _panels[source_index] = new ConnectingProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
-                        case 3: _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
+                        case 0: Panels[source_index] = new ConnectingProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
+                        case 1: Panels[source_index] = new ConnectingInstanceSelectPanel(Wizard, (InstanceSourceType)source_index); break;
+                        case 2: Panels[source_index] = new ConnectingProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
+                        case 3: Panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Wizard, (InstanceSourceType)source_index); break;
                     }
                 }
                 else if (
                     Wizard.InstanceSources[source_index] is DistributedInstanceSource ||
                     Wizard.InstanceSources[source_index] is FederatedInstanceSource)
-                    _panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Wizard, (InstanceSourceType)source_index);
+                    Panels[source_index] = new ConnectingInstanceAndProfileSelectPanel(Wizard, (InstanceSourceType)source_index);
             }
         }
 

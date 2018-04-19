@@ -46,11 +46,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Available instance sources
         /// </summary>
-        public InstanceSource[] InstanceSources
-        {
-            get { return _instance_sources; }
-        }
-        private InstanceSource[] _instance_sources;
+        public InstanceSource[] InstanceSources { get; }
 
         /// <summary>
         /// Are instance sources available?
@@ -83,6 +79,8 @@ namespace eduVPN.ViewModels.Windows
                 }
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private InstanceSourceType _instance_source_type;
 
         /// <summary>
@@ -97,18 +95,14 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// VPN session queue - session 0 is the active session
         /// </summary>
-        public ObservableCollection<VPNSession> Sessions
-        {
-            get { return _sessions; }
-        }
-        private ObservableCollection<VPNSession> _sessions;
+        public ObservableCollection<VPNSession> Sessions { get; }
 
         /// <summary>
         /// Active VPN session
         /// </summary>
         public VPNSession ActiveSession
         {
-            get { return _sessions.Count > 0 ? _sessions[0] : VPNSession.Blank; }
+            get { return Sessions.Count > 0 ? Sessions[0] : VPNSession.Blank; }
         }
 
         /// <summary>
@@ -134,6 +128,8 @@ namespace eduVPN.ViewModels.Windows
                 return _session_info;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _session_info;
 
         /// <summary>
@@ -157,6 +153,8 @@ namespace eduVPN.ViewModels.Windows
                 return _navigate_to;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<ConnectWizardPopupPage> _navigate_to;
 
         /// <summary>
@@ -337,6 +335,8 @@ namespace eduVPN.ViewModels.Windows
                 return _start_session;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<StartSessionParams> _start_session;
 
         /// <summary>
@@ -437,6 +437,8 @@ namespace eduVPN.ViewModels.Windows
                 }
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ConnectWizardPage _current_page;
 
         /// <summary>
@@ -457,6 +459,8 @@ namespace eduVPN.ViewModels.Windows
                 }
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ConnectWizardPopupPage _current_popup_page;
 
         /// <summary>
@@ -489,6 +493,8 @@ namespace eduVPN.ViewModels.Windows
                 return _initializing_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private InitializingPage _initializing_page;
 
         /// <summary>
@@ -503,6 +509,8 @@ namespace eduVPN.ViewModels.Windows
                 return _instance_source_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private InstanceSourceSelectPage _instance_source_page;
 
         /// <summary>
@@ -538,7 +546,11 @@ namespace eduVPN.ViewModels.Windows
                     return null;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AuthenticatingCountrySelectPage _authenticating_country_select_page;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AuthenticatingInstituteSelectPage _authenticating_institute_select_page;
 
         /// <summary>
@@ -553,6 +565,8 @@ namespace eduVPN.ViewModels.Windows
                 return _custom_instance_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private CustomInstancePage _custom_instance_page;
 
         /// <summary>
@@ -567,6 +581,8 @@ namespace eduVPN.ViewModels.Windows
                 return _recent_configuration_select_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private RecentConfigurationSelectPage _recent_configuration_select_page;
 
         /// <summary>
@@ -581,6 +597,8 @@ namespace eduVPN.ViewModels.Windows
                 return _profile_select_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ConnectingProfileSelectPage _profile_select_page;
 
         /// <summary>
@@ -595,6 +613,8 @@ namespace eduVPN.ViewModels.Windows
                 return _status_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private StatusPage _status_page;
 
         /// <summary>
@@ -609,6 +629,8 @@ namespace eduVPN.ViewModels.Windows
                 return _settings_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private SettingsPage _settings_page;
 
         /// <summary>
@@ -623,6 +645,8 @@ namespace eduVPN.ViewModels.Windows
                 return _about_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AboutPage _about_page;
 
         /// <summary>
@@ -637,6 +661,8 @@ namespace eduVPN.ViewModels.Windows
                 return _self_updating_page;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private SelfUpdatingPage _self_updating_page;
 
         #endregion
@@ -651,21 +677,21 @@ namespace eduVPN.ViewModels.Windows
         public ConnectWizard()
         {
             // Create session queue.
-            _sessions = new ObservableCollection<VPNSession>();
-            _sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(ActiveSession));
+            Sessions = new ObservableCollection<VPNSession>();
+            Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(ActiveSession));
 
             // Show initializing wizard page.
             _current_page = InitializingPage;
+
+            int
+                source_type_start = (int)InstanceSourceType._start,
+                source_type_end = (int)InstanceSourceType._end;
+            InstanceSources = new InstanceSource[source_type_end];
 
             // Setup initialization.
             var worker = new BackgroundWorker() { WorkerReportsProgress = true };
             worker.DoWork += (object sender, DoWorkEventArgs e) =>
             {
-                int
-                    source_type_start = (int)InstanceSourceType._start,
-                    source_type_end = (int)InstanceSourceType._end;
-                _instance_sources = new InstanceSource[source_type_end];
-
                 // Setup progress feedback.
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress = new Range<int>(0, (source_type_end - source_type_start) * 2, 0)));
 
@@ -694,17 +720,17 @@ namespace eduVPN.ViewModels.Windows
                                 ticks++;
 
                                 // Load instance source.
-                                _instance_sources[source_index] = InstanceSource.FromJSON(obj_web);
+                                InstanceSources[source_index] = InstanceSource.FromJSON(obj_web);
 
                                 {
                                     // Attach to instance events.
-                                    if (_instance_sources[source_index] is FederatedInstanceSource instance_source_federated)
+                                    if (InstanceSources[source_index] is FederatedInstanceSource instance_source_federated)
                                     {
                                         instance_source_federated.AuthenticatingInstance.RequestAuthorization += Instance_RequestAuthorization;
                                         instance_source_federated.AuthenticatingInstance.ForgetAuthorization += Instance_ForgetAuthorization;
                                     }
 
-                                    foreach (var instance in _instance_sources[source_index].InstanceList)
+                                    foreach (var instance in InstanceSources[source_index].InstanceList)
                                     {
                                         instance.RequestAuthorization += Instance_RequestAuthorization;
                                         instance.ForgetAuthorization += Instance_ForgetAuthorization;
@@ -728,7 +754,7 @@ namespace eduVPN.ViewModels.Windows
                                 if (source_index == (int)InstanceSourceType.InstituteAccess)
                                 {
                                     // Institute access is required. When it is missing the discovery JSON, use a blank one.
-                                    _instance_sources[source_index] = new LocalInstanceSource();
+                                    InstanceSources[source_index] = new LocalInstanceSource();
 
                                     // Import settings.
                                     Xml.InstanceSourceSettingsBase h = (Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] as Xml.InstanceSourceSettings)?.InstanceSource;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -24,6 +25,8 @@ namespace eduVPN.Models
         /// X509 Certificate
         /// </summary>
         public X509Certificate2 Value { get => _value; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private X509Certificate2 _value;
 
         #endregion

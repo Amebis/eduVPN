@@ -71,6 +71,8 @@ namespace eduVPN.Models
                 }
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _base;
 
         /// <summary>
@@ -81,6 +83,8 @@ namespace eduVPN.Models
             get { return _display_name; }
             set { SetProperty(ref _display_name, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _display_name;
 
         /// <summary>
@@ -91,6 +95,8 @@ namespace eduVPN.Models
             get { return _logo; }
             set { SetProperty(ref _logo, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _logo;
 
         /// <summary>
@@ -101,6 +107,8 @@ namespace eduVPN.Models
             get { return _popularity; }
             set { SetProperty(ref _popularity, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private float _popularity = 1.0f;
 
         /// <summary>

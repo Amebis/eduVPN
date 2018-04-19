@@ -9,6 +9,7 @@
 using eduVPN.ViewModels.Windows;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 //using System.Linq;
 using System.Net.NetworkInformation;
 
@@ -34,6 +35,8 @@ namespace eduVPN.ViewModels.Pages
         {
             get { return _interface_list; }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ObservableCollection<eduVPN.Models.NetworkInterface> _interface_list;
 
         #endregion

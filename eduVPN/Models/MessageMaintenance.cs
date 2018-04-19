@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace eduVPN.Models
 {
@@ -25,6 +26,8 @@ namespace eduVPN.Models
             get { return _begin; }
             set { SetProperty(ref _begin, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTime? _begin;
 
         /// <summary>
@@ -35,6 +38,8 @@ namespace eduVPN.Models
             get { return _end; }
             set { SetProperty(ref _end, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTime? _end;
 
         #endregion

@@ -11,6 +11,7 @@ using Prism.Commands;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 
 namespace eduVPN.ViewModels.Pages
@@ -37,6 +38,8 @@ namespace eduVPN.ViewModels.Pages
             get { return _hostname; }
             set { SetProperty(ref _hostname, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _hostname;
 
         /// <summary>
@@ -103,6 +106,8 @@ namespace eduVPN.ViewModels.Pages
                 return _select_custom_instance;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _select_custom_instance;
 
         /// <inheritdoc/>
@@ -138,6 +143,8 @@ namespace eduVPN.ViewModels.Pages
                 return _navigate_back;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _navigate_back;
 
         #endregion

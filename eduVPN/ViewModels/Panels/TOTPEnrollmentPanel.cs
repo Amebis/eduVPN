@@ -37,6 +37,8 @@ namespace eduVPN.ViewModels.Panels
             get { return _secret; }
             set { SetProperty(ref _secret, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _secret;
 
         /// <summary>
@@ -61,6 +63,8 @@ namespace eduVPN.ViewModels.Panels
                 return _copy_secret;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _copy_secret;
 
         #endregion

@@ -77,6 +77,8 @@ namespace eduVPN.ViewModels.VPN
         /// Event to signal VPN session finished
         /// </summary>
         public EventWaitHandle Finished { get => _finished; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private EventWaitHandle _finished;
 
         /// <summary>
@@ -87,6 +89,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _user_info; }
             set { SetProperty(ref _user_info, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private UserInfo _user_info;
 
         /// <summary>
@@ -97,6 +101,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _message_list; }
             set { SetProperty(ref _message_list, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private MessageList _message_list;
 
         /// <summary>
@@ -107,6 +113,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _state; }
             set { SetProperty(ref _state, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private VPNSessionStatusType _state;
 
         /// <summary>
@@ -117,6 +125,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _state_description; }
             set { SetProperty(ref _state_description, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _state_description;
 
         /// <summary>
@@ -128,6 +138,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _tunnel_address; }
             set { SetProperty(ref _tunnel_address, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IPAddress _tunnel_address;
 
         /// <summary>
@@ -139,6 +151,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _ipv6_tunnel_address; }
             set { SetProperty(ref _ipv6_tunnel_address, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IPAddress _ipv6_tunnel_address;
 
         /// <summary>
@@ -154,6 +168,8 @@ namespace eduVPN.ViewModels.VPN
                     RaisePropertyChanged(nameof(ConnectedTime));
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTimeOffset? _connected_since;
 
         /// <summary>
@@ -174,6 +190,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _bytes_in; }
             set { SetProperty(ref _bytes_in, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ulong? _bytes_in;
 
         /// <summary>
@@ -185,6 +203,8 @@ namespace eduVPN.ViewModels.VPN
             get { return _bytes_out; }
             set { SetProperty(ref _bytes_out, value); }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ulong? _bytes_out;
 
         /// <summary>
@@ -210,6 +230,8 @@ namespace eduVPN.ViewModels.VPN
                 return _disconnect_command;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _disconnect_command;
 
         /// <summary>
@@ -236,6 +258,8 @@ namespace eduVPN.ViewModels.VPN
                 return _show_log_command;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _show_log_command;
 
         #endregion
