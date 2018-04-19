@@ -19,6 +19,16 @@ namespace eduVPN.Models
         _unknown = 0,
 
         /// <summary>
+        /// Start-of-enum
+        /// </summary>
+        _start = 1,
+
+        /// <summary>
+        /// End-of-enum
+        /// </summary>
+        _end = 3,
+
+        /// <summary>
         /// Connect to the internet securely, for example when using public WiFi.
         /// </summary>
         SecureInternet = 1,
@@ -27,15 +37,5 @@ namespace eduVPN.Models
         /// Access your institute's network from outside the institution.
         /// </summary>
         InstituteAccess = 2,
-
-        /// <summary>
-        /// Start-of-enum
-        /// </summary>
-        _start = 1,
-
-        /// <summary>
-        /// End-of-enum
-        /// </summary>
-        _end = 3
     }
 }
