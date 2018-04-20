@@ -33,9 +33,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListRowHeightConverter}, FallbackValue={StaticResource AutoGridLength}}"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StatusBar
@@ -142,6 +142,7 @@
             x:Name="Messages"
             Grid.Row="2"
             Margin="5"
+            MaxHeight="236"
             ItemsSource="{Binding Source={StaticResource MessageListView}}"
             ItemContainerStyle="{StaticResource PassiveListBoxItemStyle}"
             Visibility="{Binding Path=Wizard.ActiveSession.MessageList.Count, Converter={StaticResource MessageListVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
@@ -151,107 +152,131 @@
             Grid.Row="3"
             Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock
-                Grid.ColumnSpan="4"
+                Grid.ColumnSpan="2"
                 Margin="0,0,0,2"
                 Style="{StaticResource InfoTitleTextBlockStyle}"
                 Text="{x:Static res:Strings.StatusPageSessionInfoTitle}"/>
 
-            <TextBlock
+            <Grid
                 Grid.Row="1"
                 Grid.Column="0"
-                Margin="0,2,2,0"
-                Style="{StaticResource InfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageSessionInfoDuration}"/>
+                Margin="0,2,4,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,2,0"
+                    Style="{StaticResource InfoLabelTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageSessionInfoDuration}"/>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="2,0,0,0"
+                    Style="{StaticResource InfoDataBlockStyle}"
+                    Text="{Binding Path=Wizard.ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,2,0"
+                    Style="{StaticResource InfoLabelTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageSessionInfoBytesIn}"/>
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="2,0,0,0"
+                    Style="{StaticResource InfoDataBlockStyle}"
+                    Text="{Binding Path=Wizard.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="0,0,2,0"
+                    Style="{StaticResource InfoLabelTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageSessionInfoBytesOut}"/>
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="2,0,0,0"
+                    Style="{StaticResource InfoDataBlockStyle}"
+                    Text="{Binding Path=Wizard.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+            </Grid>
+
+            <Grid
                 Grid.Row="1"
                 Grid.Column="1"
-                Margin="2,2,4,0"
-                Style="{StaticResource InfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
+                Margin="4,2,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="0"
-                Margin="0,0,2,0"
-                Style="{StaticResource InfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageSessionInfoBytesIn}"/>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,2,0"
+                    Style="{StaticResource InfoLabelTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageSessionInfoIPv4}"/>
 
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="2,0,4,0"
-                Style="{StaticResource InfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="2,0,0,0"
+                    Style="{StaticResource InfoDataBlockStyle}"
+                    Text="{Binding Path=Wizard.ActiveSession.TunnelAddress}"/>
 
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="0"
-                Margin="0,0,2,0"
-                Style="{StaticResource InfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageSessionInfoBytesOut}"/>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,2,0"
+                    Style="{StaticResource InfoLabelTextBlockStyle}"
+                    Text="{x:Static res:Strings.StatusPageSessionInfoIPv6}"/>
 
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="1"
-                Margin="2,0,4,0"
-                Style="{StaticResource InfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="2,0,0,0"
+                    Style="{StaticResource InfoDataBlockStyle}"
+                    Text="{Binding Path=Wizard.ActiveSession.IPv6TunnelAddress}"/>
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="2"
-                Margin="4,2,2,0"
-                Style="{StaticResource InfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageSessionInfoIPv4}"/>
-
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="3"
-                Margin="2,2,0,0"
-                Style="{StaticResource InfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.TunnelAddress}"/>
-
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="2"
-                Margin="4,0,2,0"
-                Style="{StaticResource InfoLabelTextBlockStyle}"
-                Text="{x:Static res:Strings.StatusPageSessionInfoIPv6}"/>
-
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="3"
-                Margin="2,0,0,0"
-                Style="{StaticResource InfoDataBlockStyle}"
-                Text="{Binding Path=Wizard.ActiveSession.IPv6TunnelAddress}"/>
-
-            <Button
-                x:Name="ShowLog"
-                Grid.Row="3"
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
-                Margin="4,0,0,0"
-                Height="20"
-                FontSize="11"
-                HorizontalAlignment="Left"
-                AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                Command="{Binding Path=Wizard.ActiveSession.ShowLog}">
-                <AccessText Text="{x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}"/>
-            </Button>
+                <Button
+                    x:Name="ShowLog"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Height="20"
+                    FontSize="11"
+                    HorizontalAlignment="Left"
+                    AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                    Command="{Binding Path=Wizard.ActiveSession.ShowLog}">
+                    <AccessText Text="{x:Static res:Strings.StatusPageSessionInfoViewLogButtonTitle}"/>
+                </Button>
+            </Grid>
         </Grid>
 
         <Button
@@ -260,7 +285,6 @@
             Margin="5"
             Width="170"
             FontSize="15"
-            VerticalAlignment="Center"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageDisconnectButtonTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Path=Wizard.ActiveSession.Disconnect}">
             <AccessText Text="{x:Static res:Strings.StatusPageDisconnectButtonTitle}"/>

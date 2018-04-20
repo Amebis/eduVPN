@@ -21,7 +21,6 @@
     <conv:InstanceSourceRowHeightConverter x:Key="InstanceSourceRowHeightConverter"/>
     <conv:InstanceSourceTitleConverter x:Key="InstanceSourceTitleConverter"/>
     <conv:InstanceSourceVisibilityConverter x:Key="InstanceSourceVisibilityConverter"/>
-    <conv:MessageListRowHeightConverter x:Key="MessageListRowHeightConverter"/>
     <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
     <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
