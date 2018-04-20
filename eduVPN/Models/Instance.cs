@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Web;
 
 namespace eduVPN.Models
 {
@@ -407,63 +408,123 @@ namespace eduVPN.Models
                                 store.Remove(cert);
                             }
                         }
+                    }
+                    finally { store.Close(); }
+                }
 
-                        if (_client_certificate == null)
+                if (_client_certificate != null)
+                {
+                    // Get API endpoints.
+                    var api = GetEndpoints(ct);
+                    var e = new RequestAuthorizationEventArgs("config");
+
+                    retry:
+                    // Request authentication token.
+                    RequestAuthorization?.Invoke(authenticating_instance, e);
+                    if (e.AccessToken == null)
+                        throw new AccessTokenNullException();
+
+                    // Perform an optional certificate check.
+                    try
+                    {
+                        // Check certificate.
+                        var uri_builder = new UriBuilder(api.CheckCertificate);
+                        var query = HttpUtility.ParseQueryString(uri_builder.Query);
+                        query["common_name"] = _client_certificate.GetNameInfo(X509NameType.SimpleName, false);
+                        uri_builder.Query = query.ToString();
+                        var cert_check = new CertificateCheck();
+                        cert_check.LoadJSONAPIResponse(Xml.Response.Get(
+                            uri: uri_builder.Uri,
+                            token: e.AccessToken,
+                            ct: ct).Value, "check_certificate", ct);
+
+                        if (!cert_check.IsValid)
                         {
-                            // Get API endpoints.
-                            var api = GetEndpoints(ct);
-                            var e = new RequestAuthorizationEventArgs("config");
-
-                            retry:
-                            // Request authentication token.
-                            RequestAuthorization?.Invoke(authenticating_instance, e);
-                            if (e.AccessToken == null)
-                                throw new AccessTokenNullException();
-
-                            try
-                            {
-                                // Get certificate and import it to Windows user certificate store.
-                                var cert = new Certificate();
-                                cert.LoadJSONAPIResponse(Xml.Response.Get(
-                                    uri: api.CreateCertificate,
-                                    param: new NameValueCollection
-                                    {
-                                        { "display_name", String.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) } // Always use English display_name
-                                    },
-                                    token: e.AccessToken,
-                                    ct: ct).Value, "create_keypair", ct);
-                                cert.Value.FriendlyName = friendly_name;
-                                store.Add(cert.Value);
-
-                                // If we got here, save the certificate.
-                                _client_certificate = cert.Value;
-                            }
-                            catch (OperationCanceledException) { throw; }
-                            catch (WebException ex)
-                            {
-                                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                                {
-                                    // Access token was rejected (401 Unauthorized).
-                                    if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
-                                    {
-                                        // Access token loaded from the settings was rejected.
-                                        // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
-                                        // Retry with forced access token refresh.
-                                        e.ForceRefresh = true;
-                                    }
-                                    else
-                                    {
-                                        // Retry with forced authorization, ignoring saved access token completely.
-                                        e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                                    }
-                                    goto retry;
-                                }
-                                else
-                                    throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
-                            }
-                            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
+                            // Server reported it will not accept this certificate.
+                            _client_certificate = null;
                         }
                     }
+                    catch (OperationCanceledException) { throw; }
+                    catch (WebException ex)
+                    {
+                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // Access token was rejected (401 Unauthorized).
+                            if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                            {
+                                // Access token loaded from the settings was rejected.
+                                // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                                // Retry with forced access token refresh.
+                                e.ForceRefresh = true;
+                            }
+                            else
+                            {
+                                // Retry with forced authorization, ignoring saved access token completely.
+                                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                            }
+                            goto retry;
+                        }
+                    }
+                    catch (Exception) { }
+                }
+
+                if (_client_certificate == null)
+                {
+                    // Get API endpoints.
+                    var api = GetEndpoints(ct);
+                    var e = new RequestAuthorizationEventArgs("config");
+
+                    retry:
+                    // Request authentication token.
+                    RequestAuthorization?.Invoke(authenticating_instance, e);
+                    if (e.AccessToken == null)
+                        throw new AccessTokenNullException();
+
+                    // Open eduVPN client certificate store.
+                    var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
+                    store.Open(OpenFlags.ReadWrite);
+                    try
+                    {
+                        // Get certificate and import it to Windows user certificate store.
+                        var cert = new Certificate();
+                        cert.LoadJSONAPIResponse(Xml.Response.Get(
+                            uri: api.CreateCertificate,
+                            param: new NameValueCollection
+                            {
+                                { "display_name", String.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) } // Always use English display_name
+                            },
+                            token: e.AccessToken,
+                            ct: ct).Value, "create_keypair", ct);
+                        cert.Value.FriendlyName = Base.AbsoluteUri;
+                        store.Add(cert.Value);
+
+                        // If we got here, save the certificate.
+                        _client_certificate = cert.Value;
+                    }
+                    catch (OperationCanceledException) { throw; }
+                    catch (WebException ex)
+                    {
+                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // Access token was rejected (401 Unauthorized).
+                            if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                            {
+                                // Access token loaded from the settings was rejected.
+                                // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                                // Retry with forced access token refresh.
+                                e.ForceRefresh = true;
+                            }
+                            else
+                            {
+                                // Retry with forced authorization, ignoring saved access token completely.
+                                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                            }
+                            goto retry;
+                        }
+                        else
+                            throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
+                    }
+                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
                     finally { store.Close(); }
                 }
 

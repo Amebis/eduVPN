@@ -41,6 +41,7 @@
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="Models\AccessTokenNullException.cs" />
     <Compile Include="Models\Certificate.cs" />
+    <Compile Include="Models\CertificateCheck.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\DistributedInstanceSource.cs" />
     <Compile Include="Models\Extensions.cs" />

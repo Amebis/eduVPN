@@ -34,9 +34,9 @@ namespace eduVPN.Models
         #region ILoadableItem Support
 
         /// <summary>
-        /// Loads APIv2 from a dictionary object (provided by JSON)
+        /// Loads client certificate from a dictionary object (provided by JSON)
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>authorization_endpoint</c>, <c>token_endpoint</c> and other optional elements. All elements should be strings representing URI(s).</param>
+        /// <param name="obj">Key/value dictionary with <c>certificate</c> and <c>private_key</c> elements. All elements should be PEM encoded strings.</param>
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
