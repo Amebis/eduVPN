@@ -177,10 +177,10 @@ The Commons Conservancy eduVPN Programme</value>
     <value>The required OAuth parameter "state" is missing or incorrect.</value>
   </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
-    <value>Connect to your _Organization</value>
+    <value>Connect to your _Institution</value>
   </data>
   <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
-    <value>Safely use the _Internet</value>
+    <value>_Safely use the Internet</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>No items</value>
