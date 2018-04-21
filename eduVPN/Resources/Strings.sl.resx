@@ -240,8 +240,8 @@
   <data name="AboutPageTitle" xml:space="preserve">
     <value>O programu</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo državo</value>
+  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
+    <value>Izberite državo svoje ustanove</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Izberite svojo ustanovo</value>
@@ -255,11 +255,8 @@
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Vzpostavljam ...</value>
   </data>
-  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Izberite eno izmed vrst VPN spodaj.</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Izberite vrsto VPN</value>
+  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
+    <value>Kako želite uporabljati VPN?</value>
   </data>
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
     <value>Pripravljam posodobitev ...</value>

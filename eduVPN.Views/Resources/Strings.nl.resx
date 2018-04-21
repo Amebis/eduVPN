@@ -176,11 +176,11 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
-    <value>Toegang tot netwerk van je _instituut.</value>
+  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+    <value>Connect to your _Institution</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
-    <value>Verbind _veilig met het internet, bijvoorbeeld bij het gebruik van publieke WiFi-netwerken.</value>
+  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+    <value>_Safely use the Internet</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>Geen items</value>
@@ -225,9 +225,9 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>Wat is _nieuw?</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Versie {1} van de {0}-client is geïnstalleerd. Een nieuwere versie {2} is beschikbaar.</value>
-    <comment>{0}=Client name, {1}=Installed version, {2}=Avaliable version</comment>
+  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
+    <value>A newer and improved version of {0} client is available. Stay updated!</value>
+    <comment>{0}=Client name</comment>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Sla deze _versie over</value>
@@ -304,6 +304,9 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
     <value>{0} Verbonden</value>
     <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
+    <value>Disconnected</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Het VPN-clientvenster is hier geminimaliseerd.</value>

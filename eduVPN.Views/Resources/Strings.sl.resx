@@ -177,11 +177,11 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle" xml:space="preserve">
-    <value>Dostopajte do omrežja svoje _ustanove zunaj ustanove.</value>
+  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+    <value>P_oveži se s svojo ustanovo</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle" xml:space="preserve">
-    <value>Povežite se na _splet varno. Na primer, kadar uporabljate javni WiFi.</value>
+  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+    <value>Varno uporabljaj _splet</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>Brez elementov</value>
@@ -226,9 +226,9 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>Kaj je _novega?</value>
   </data>
-  <data name="SelfUpdatePopupMessage" xml:space="preserve">
-    <value>Nameščena verzija odjemalca {0} je {1}. Na spletu je na voljo novejša verzija {2}.</value>
-    <comment>{0}=Client name, {1}=Installed version, {2}=Avaliable version</comment>
+  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
+    <value>Na voljo je novejša in izboljšana verzija odjemalca {0}. Ostanite posodobljeni!</value>
+    <comment>{0}=Client name</comment>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Preskoči to _verzijo</value>
@@ -306,6 +306,9 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
     <value>{0} je povezan</value>
     <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
+    <value>Odklopljen</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Okno je bilo pomanjšano semle.</value>

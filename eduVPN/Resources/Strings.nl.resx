@@ -240,8 +240,8 @@
   <data name="AboutPageTitle" xml:space="preserve">
     <value>Over</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageTitle" xml:space="preserve">
-    <value>Selecteer je land</value>
+  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
+    <value>Select Your Institution's Country</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Selecteer je instituut</value>
@@ -255,11 +255,8 @@
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiseren...</value>
   </data>
-  <data name="InstanceSourceSelectPageDescription" xml:space="preserve">
-    <value>Selecteer een van de VPN-types hieronder.</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle" xml:space="preserve">
-    <value>Kies een VPN-type</value>
+  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
+    <value>How do you want to use the VPN?</value>
   </data>
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
     <value>Update voorbereiden...</value>
