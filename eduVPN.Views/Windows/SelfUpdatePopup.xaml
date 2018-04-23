@@ -10,7 +10,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     xmlns:windows="clr-namespace:eduVPN.Views.Windows"
     xmlns:model="clr-namespace:eduVPN.Models;assembly=eduVPN"
@@ -18,8 +17,8 @@
     Width="350"
     SizeToContent="Height"
     Title="{x:Static res:Strings.SelfUpdatePopupTitle}"
-    Description="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}, StringFormat={x:Static res:Strings.SelfUpdatePopupMessage2}}"
-    AutomationProperties.HelpText="{Binding Path=ClientTitle, Source={x:Static prop:Settings.Default}, StringFormat={x:Static res:Strings.SelfUpdatePopupMessage2}}"
+    Description="{x:Static res:Strings.SelfUpdatePopupMessage3}"
+    AutomationProperties.HelpText="{x:Static res:Strings.SelfUpdatePopupMessage3}"
     WindowStartupLocation="CenterOwner"
     Style="{StaticResource PopupWindowStyle}">
 

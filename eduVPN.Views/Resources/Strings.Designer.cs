@@ -108,11 +108,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} client needs {1} authorization, and has opened your web browser. The client will continue after you complete the authorization....
+        ///   Looks up a localized string similar to The client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization....
         /// </summary>
-        public static string AuthorizationPopupMessage {
+        public static string AuthorizationPopupMessage2 {
             get {
-                return ResourceManager.GetString("AuthorizationPopupMessage", resourceCulture);
+                return ResourceManager.GetString("AuthorizationPopupMessage2", resourceCulture);
             }
         }
         
@@ -252,7 +252,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect to your _Organization.
+        ///   Looks up a localized string similar to Connect to your _Institution.
         /// </summary>
         public static string InstanceSourcePageInstituteAccessButtonTitle2 {
             get {
@@ -261,7 +261,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Safely use the _Internet.
+        ///   Looks up a localized string similar to _Safely use the Internet.
         /// </summary>
         public static string InstanceSourcePageSecureInternetButtonTitle2 {
             get {
@@ -396,11 +396,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A newer and improved version of {0} client is available. Stay updated!.
+        ///   Looks up a localized string similar to A newer and improved version of the client is available. Stay updated!.
         /// </summary>
-        public static string SelfUpdatePopupMessage2 {
+        public static string SelfUpdatePopupMessage3 {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupMessage2", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePopupMessage3", resourceCulture);
             }
         }
         
@@ -453,11 +453,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the {0} client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
+        ///   Looks up a localized string similar to If the client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
         /// </summary>
-        public static string SettingsPageForceTCPDescription {
+        public static string SettingsPageForceTCPDescription2 {
             get {
-                return ResourceManager.GetString("SettingsPageForceTCPDescription", resourceCulture);
+                return ResourceManager.GetString("SettingsPageForceTCPDescription2", resourceCulture);
             }
         }
         
@@ -471,11 +471,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections, select the TAP interface for the {0} client below..
+        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections, select the TAP interface for the client below..
         /// </summary>
-        public static string SettingsPageInterfaceDescription {
+        public static string SettingsPageInterfaceDescription2 {
             get {
-                return ResourceManager.GetString("SettingsPageInterfaceDescription", resourceCulture);
+                return ResourceManager.GetString("SettingsPageInterfaceDescription2", resourceCulture);
             }
         }
         

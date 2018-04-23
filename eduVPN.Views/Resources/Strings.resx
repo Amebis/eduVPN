@@ -130,9 +130,9 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
     <value>_Institution</value>
   </data>
-  <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>The {0} client needs {1} authorization, and has opened your web browser. The client will continue after you complete the authorization...</value>
-    <comment>{0}=Client name, {1}=Instance name</comment>
+  <data name="AuthorizationPopupMessage2" xml:space="preserve">
+    <value>The client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization...</value>
+    <comment>{0}=Instance name</comment>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Waiting For Authorization</value>
@@ -225,9 +225,8 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>What's _New?</value>
   </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>A newer and improved version of {0} client is available. Stay updated!</value>
-    <comment>{0}=Client name</comment>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>A newer and improved version of the client is available. Stay updated!</value>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Skip this _version</value>
@@ -248,16 +247,14 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Corrupt User Settings</value>
   </data>
-  <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>If the {0} client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
-    <comment>{0}=Client name</comment>
+  <data name="SettingsPageForceTCPDescription2" xml:space="preserve">
+    <value>If the client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Connect Over _TCP</value>
   </data>
-  <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for the {0} client below.</value>
-    <comment>{0}=Client name</comment>
+  <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
+    <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for the client below.</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Select TAP _Interface</value>
