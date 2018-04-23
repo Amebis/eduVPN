@@ -5,6 +5,9 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
+MSVC_VERSION = \
+!INCLUDE "$(VCINSTALLDIR)Auxiliary\Build\Microsoft.VCRedistVersion.default.txt"
+
 SETUP_TARGET=$(PLAT)
 !IF "$(CFG)" == "Debug"
 SETUP_TARGET=$(SETUP_TARGET)D
