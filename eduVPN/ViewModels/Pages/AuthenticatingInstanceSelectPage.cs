@@ -62,13 +62,23 @@ namespace eduVPN.ViewModels.Pages
                                     Wizard.InstanceSource.ConnectingInstanceList.Add(authenticating_instance);
                                 Wizard.InstanceSource.ConnectingInstance = authenticating_instance;
 
-                                // Go to (instance and) profile selection page.
                                 switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                                 {
-                                    case 0: Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage; break;
-                                    case 1: Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; break;
-                                    case 2: Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage; break;
-                                    case 3: Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage; break;
+                                    case 0:
+                                    case 2:
+                                        // Go to profile selection page.
+                                        Wizard.CurrentPage = Wizard.ConnectingProfileSelectPage;
+                                        break;
+
+                                    case 1:
+                                    case 3:
+                                        // Update settings.
+                                        var source_index = (int)Wizard.InstanceSourceType;
+                                        Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = Wizard.InstanceSources[source_index].ToSettings() };
+
+                                        // Go to recent configuration selection page.
+                                        Wizard.CurrentPage = Wizard.RecentConfigurationSelectPage;
+                                        break;
                                 }
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
