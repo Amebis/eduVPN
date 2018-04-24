@@ -22,4 +22,4 @@ Developers and anyone looking to build eduVPN Client for Windows are encouraged 
 
 # Translators
 
-Anyone wanting to translate the eduVPN Client for Windows is welcome to join the translation. Detailed instructions can be found [here](doc/Localization.md).
+Anyone wanting to translate the eduVPN Client for Windows is welcome to join the translation effort. Detailed instructions can be found [here](doc/Localization.md).
