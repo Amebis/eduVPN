@@ -340,7 +340,7 @@ namespace eduVPN.ViewModels.Windows
         private DelegateCommand<StartSessionParams> _start_session;
 
         /// <summary>
-        /// StartSession command parameter set
+        /// <see cref="StartSession"/> command parameter set
         /// </summary>
         public class StartSessionParams
         {
@@ -361,7 +361,7 @@ namespace eduVPN.ViewModels.Windows
             #region Constructors
 
             /// <summary>
-            /// Constructs a StartSession command parameter set
+            /// Constructs a <see cref="StartSession"/> command parameter set
             /// </summary>
             /// <param name="instance_source_type">Instance source type</param>
             /// <param name="connecting_profile">Connecting eduVPN instance profile</param>
