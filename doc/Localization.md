@@ -1,9 +1,11 @@
 # Localization of eduVPN Client for Windows
 
 1. [eduVPN at Transifex](https://www.transifex.com/amebis/eduvpn/)
+
    Though many terms are error messages and they never appear for lucky users, we do encourage you to translate them. The unlucky users might be grateful for better understanding the error message.
 
 2. Setup
+
    - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.wxl) and [LetsConnect.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/LetsConnect.wxl)
    - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/thm.wxl)
    - Start menu shortcut and ARP texts [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
