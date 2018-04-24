@@ -130,10 +130,9 @@ Program Commons Conservancy eduVPN</value>
   <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
     <value>_Ustanova</value>
   </data>
-  <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>Odjemalec {0} potrebuje pooblastilo od {1} in je odprl avtorizacijsko spletno stran v vašem brskalniku.
-Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
-    <comment>{0}=Client name, {1}=Instance name</comment>
+  <data name="AuthorizationPopupMessage2" xml:space="preserve">
+    <value>Odjemalec potrebuje pooblastilo od {0} in je odprl avtorizacijsko spletno stran v vašem brskalniku. Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
+    <comment>{0}=Instance name</comment>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Čakam na pooblastilo</value>
@@ -226,9 +225,8 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>Kaj je _novega?</value>
   </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>Na voljo je novejša in izboljšana verzija odjemalca {0}. Ostanite posodobljeni!</value>
-    <comment>{0}=Client name</comment>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>Na voljo je novejša in izboljšana verzija odjemalca. Ostanite posodobljeni!</value>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Preskoči to _verzijo</value>
@@ -249,16 +247,14 @@ Odjemalec bo nadaljeval, ko boste dokončali avtorizacijo ...</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
-  <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>Če se odjemalec {0} ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
-    <comment>{0}=Client name</comment>
+  <data name="SettingsPageForceTCPDescription2" xml:space="preserve">
+    <value>Če se odjemalec ne more povezati, ali se poveže a ne prenaša podatkov, povezava preko TCP mogoče težavo odpravi.</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Vsili _TCP</value>
   </data>
-  <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za odjemalca {0}.</value>
-    <comment>{0}=Client name</comment>
+  <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
+    <value>Kadar potrebujete več sočasnih povezav OpenVPN, spodaj izberite vmesnik TAP za tega odjemalca.</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>_Izberite vmesnik TAP</value>

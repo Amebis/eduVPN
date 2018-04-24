@@ -130,9 +130,9 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
     <value>_Instituut</value>
   </data>
-  <data name="AuthorizationPopupMessage" xml:space="preserve">
-    <value>de {0}-client heeft {1} toestemming nodig en heeft een pagina in je browser geopend. De applicatie zal verder gaan na het geven van toestemming...</value>
-    <comment>{0}=Client name, {1}=Instance name</comment>
+  <data name="AuthorizationPopupMessage2" xml:space="preserve">
+    <value>de client heeft {0} toestemming nodig en heeft een pagina in je browser geopend. De applicatie zal verder gaan na het geven van toestemming...</value>
+    <comment>{0}=Instance name</comment>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
     <value>Wachten op toestemming...</value>
@@ -225,9 +225,8 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
     <value>Wat is _nieuw?</value>
   </data>
-  <data name="SelfUpdatePopupMessage2" xml:space="preserve">
-    <value>A newer and improved version of {0} client is available. Stay updated!</value>
-    <comment>{0}=Client name</comment>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>A newer and improved version of the client is available. Stay updated!</value>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Sla deze _versie over</value>
@@ -247,16 +246,14 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
-  <data name="SettingsPageForceTCPDescription" xml:space="preserve">
-    <value>Als de {0}-client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
-    <comment>{0}=Client name</comment>
+  <data name="SettingsPageForceTCPDescription2" xml:space="preserve">
+    <value>Als de client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Via _TCP verbinden</value>
   </data>
-  <data name="SettingsPageInterfaceDescription" xml:space="preserve">
-    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze {0}-client hieronder.</value>
-    <comment>{0}=Client name</comment>
+  <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
+    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze client hieronder.</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Selecteer TAP-_interface</value>
