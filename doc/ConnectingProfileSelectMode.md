@@ -30,7 +30,7 @@ Pros:
 - `/profile_list` is loaded on demand. Client startup is faster.
 
 Cons:
-- The user needs an extra step to connect. However, profile selection could be ommited when instance has only one profile.
+- The user might need an extra step to connect: user must select a profile when instance has more than one profile.
 
 
 ## Mode 2
