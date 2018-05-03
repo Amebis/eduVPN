@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.21...HEAD)
 
+- Update to OpenVPN 2.4.6
 - Delay when reconnecting to a rebuilt VPN server fixed
 - "Add other address" depretiated from eduVPN Client in favour of Let's Connect Client
 - GUI refinements
