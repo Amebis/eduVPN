@@ -438,13 +438,26 @@ namespace eduVPN.Models
                             token: e.AccessToken,
                             ct: ct).Value, "check_certificate", ct);
 
-                        if (!cert_check.IsValid)
+                        switch (cert_check.Result)
                         {
-                            // Server reported it will not accept this certificate.
-                            _client_certificate = null;
+                            case CertificateCheck.ReasonType.Valid:
+                                // Certificate is valid.
+                                break;
+
+                            case CertificateCheck.ReasonType.UserDisabled:
+                                throw new CertificateCheckException(Resources.Strings.ErrorUserDisabled);
+
+                            case CertificateCheck.ReasonType.CertificateDisabled:
+                                throw new CertificateCheckException(Resources.Strings.ErrorCertificateDisabled);
+
+                            default:
+                                // Server reported it will not accept this certificate.
+                                _client_certificate = null;
+                                break;
                         }
                     }
                     catch (OperationCanceledException) { throw; }
+                    catch (CertificateCheckException) { throw; }
                     catch (WebException ex)
                     {
                         if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)

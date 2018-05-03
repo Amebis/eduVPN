@@ -124,6 +124,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The certificate was disabled by an administrator..
+        /// </summary>
+        internal static string ErrorCertificateDisabled {
+            get {
+                return ResourceManager.GetString("ErrorCertificateDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading of client certificate failed..
         /// </summary>
         internal static string ErrorClientCertificateLoad {
@@ -300,6 +309,15 @@ namespace eduVPN.Resources {
         internal static string ErrorUploading {
             get {
                 return ResourceManager.GetString("ErrorUploading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user account was disabled by an administrator..
+        /// </summary>
+        internal static string ErrorUserDisabled {
+            get {
+                return ResourceManager.GetString("ErrorUserDisabled", resourceCulture);
             }
         }
         
