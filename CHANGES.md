@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.22...HEAD)
 
-## [1.0.22](https://github.com/Amebis/eduVPN/compare/1.0.21...1.0.22)
+## [1.0.22](https://github.com/Amebis/eduVPN/compare/1.0.21...1.0.22) (2018-05-03)
 
 - Update to OpenVPN 2.4.6
 - Delay when reconnecting to a rebuilt VPN server fixed
