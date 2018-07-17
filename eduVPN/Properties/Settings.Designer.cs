@@ -12,7 +12,7 @@ namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -103,19 +103,19 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Which OpenVPN interactive service instance (named pipe) client should use to manipulate openvpn.exe process:
-        /// - &quot;openvpn$eduVPN\service&quot; - Use OpenVPN installation bundled with eduVPN Client (default).
-        /// - &quot;openvpn\service - Use original OpenVPN installation.
+        /// Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:
+        /// - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client (default).
+        /// - &quot;&quot; - Use original OpenVPN installation.
         /// </summary>
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute(@"Which OpenVPN interactive service instance (named pipe) client should use to manipulate openvpn.exe process:
- - ""openvpn$eduVPN\service"" - Use OpenVPN installation bundled with eduVPN Client (default).
- - ""openvpn\service - Use original OpenVPN installation.")]
+        [global::System.Configuration.SettingsDescriptionAttribute("Which OpenVPN interactive service instance client should use to manipulate openvp" +
+            "n.exe process:\r\n - \"$eduVPN\" - Use OpenVPN installation bundled with the client " +
+            "(default).\r\n - \"\" - Use original OpenVPN installation.")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("openvpn$eduVPN\\service")]
-        public string OpenVPNInteractiveServiceNamedPipe {
+        [global::System.Configuration.DefaultSettingValueAttribute("$eduVPN")]
+        public string OpenVPNInteractiveServiceInstance {
             get {
-                return ((string)(this["OpenVPNInteractiveServiceNamedPipe"]));
+                return ((string)(this["OpenVPNInteractiveServiceInstance"]));
             }
         }
         

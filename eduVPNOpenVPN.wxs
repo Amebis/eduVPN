@@ -17,7 +17,7 @@
 
         <Package
             InstallScope="perMachine"
-            InstallerVersion="200"
+            InstallerVersion="500"
             Compressed="yes"
             SummaryCodepage="!(loc.SummaryCodepage)"
             ReadOnly="yes"/>
@@ -100,7 +100,9 @@
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="PRODUCTDIR" Name="eduVPN">
-                    <Directory Id="BINDIR" Name="OpenVPN" FileSource="$(var.TargetDir)"/>
+                    <Directory Id="BINDIR" Name="OpenVPN" FileSource="$(var.TargetDir)">
+                        <Directory Id="CONFIGDIR" Name="config"/>
+                    </Directory>
                 </Directory>
             </Directory>
         </Directory>
@@ -127,6 +129,15 @@
             </Component>
             <Component Id="openvpnserv.exe" Guid="{1A38AF86-1516-49FA-91AE-D48EAE37468D}">
                 <File Source="openvpnserv.exe"/>
+                <CreateFolder Directory="CONFIGDIR">
+                    <!--
+                        SYSTEM (SY): full
+                        Administrators (BA): full
+                        Users (BU): create files
+                        CREATOR OWNER (CO): full
+                    -->
+                    <PermissionEx Id="CONFIGDIR" Sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;;0x100003;;;BU)(A;OIIO;FA;;;CO)"/>
+                </CreateFolder>
                 <!-- Until 1.0-alpha6, Interactive Service was installed as eduVPNServiceInteractive. -->
                 <ServiceControl
                     Id="eduVPNServiceInteractive"
@@ -173,7 +184,7 @@
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
                     Name="config_dir"
                     Type="string"
-                    Value="[BINDIR]"/>
+                    Value="[CONFIGDIR]"/>
             </Component>
             <Component Id="openvpnserv.exe.reg3" Guid="{3D89AA2C-04E3-49C2-A2BC-19B957ED4F74}">
                 <RegistryValue

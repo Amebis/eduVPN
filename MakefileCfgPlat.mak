@@ -99,6 +99,9 @@ Clean ::
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\openvpnserv.exe"
 	copy /y $** $@ > NUL
 
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config" : "$(OUTPUT_DIR)\$(CFG)\$(PLAT)"
+	if not exist $@ md $@
+
 Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"                      del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
@@ -107,6 +110,7 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"           del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"                      del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config"                           rd  /s /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC141REDIST_MSM)"
 	copy /y $** $@ > NUL

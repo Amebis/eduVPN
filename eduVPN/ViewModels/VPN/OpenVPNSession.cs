@@ -9,6 +9,7 @@ using eduOpenVPN;
 using eduOpenVPN.Management;
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -30,6 +31,11 @@ namespace eduVPN.ViewModels.VPN
     public class OpenVPNSession : VPNSession
     {
         #region Fields
+
+        /// <summary>
+        /// OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)
+        /// </summary>
+        private string _instance_name;
 
         /// <summary>
         /// OpenVPN connection ID
@@ -78,14 +84,36 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
+        /// <param name="instance_name">OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)</param>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
         /// <param name="connecting_profile">Connecting eduVPN profile</param>
-        public OpenVPNSession(ConnectWizard wizard, Instance authenticating_instance, Profile connecting_profile) :
+        public OpenVPNSession(string instance_name, ConnectWizard wizard, Instance authenticating_instance, Profile connecting_profile) :
             base(wizard, authenticating_instance, connecting_profile)
         {
-            _working_folder = Path.GetTempPath();
-            _connection_id = "eduVPN-" + Guid.NewGuid().ToString();
+            _instance_name = instance_name;
+            _connection_id = Guid.NewGuid().ToString();
+            try
+            {
+                // Use OpenVPN configuration folder.
+                using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                {
+                    using (var key = hklm_key.OpenSubKey("SOFTWARE\\OpenVPN" + _instance_name, false))
+                    {
+                        _working_folder = key.GetValue("config_dir").ToString().TrimEnd();
+                        string path_separator = Path.DirectorySeparatorChar.ToString();
+                        if (!_working_folder.EndsWith(path_separator))
+                            _working_folder += path_separator;
+                        if (!Directory.Exists(_working_folder))
+                            throw new FileNotFoundException();
+                    }
+                }
+            }
+            catch
+            {
+                // Use temporary folder.
+                _working_folder = Path.GetTempPath();
+            }
 
             // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
             new DispatcherTimer(
@@ -196,7 +224,7 @@ namespace eduVPN.ViewModels.VPN
                             try
                             {
                                 openvpn_interactive_service_connection.Connect(
-                                    Properties.Settings.Default.OpenVPNInteractiveServiceNamedPipe,
+                                    String.Format("openvpn{0}\\service", _instance_name),
                                     _working_folder,
                                     new string[] { "--config", _connection_id + ".conf", },
                                     mgmt_password + "\n",
