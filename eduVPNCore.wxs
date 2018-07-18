@@ -39,6 +39,8 @@
         <!--
             Upgrading functionality
         -->
+        <MajorUpgrade
+            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"/>
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
             <UpgradeVersion
@@ -48,17 +50,6 @@
                 IncludeMinimum="yes"
                 MigrateFeatures="yes"/>
         </Upgrade>
-        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
-        <Upgrade Id="$(var.Core.UpgradeGUID)">
-            <UpgradeVersion
-                Minimum="0.0.0.0"
-                Property="PREVIOUSVERSIONSINSTALLED"
-                IncludeMinimum="yes"
-                MigrateFeatures="yes"/>
-        </Upgrade>
-        <InstallExecuteSequence>
-            <RemoveExistingProducts Before="InstallInitialize"/>
-        </InstallExecuteSequence>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}"/>
             <ComponentSearch Id="QRCoder.dll" Guid="{A862393E-2555-41D9-A971-1D15508DB323}"/>

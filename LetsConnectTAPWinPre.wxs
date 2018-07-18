@@ -36,17 +36,8 @@
         <!--
             Upgrading functionality
         -->
-        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
-        <Upgrade Id="$(var.TAPWinPre.UpgradeGUID)">
-            <UpgradeVersion
-                Minimum="0.0.0.0"
-                Property="PREVIOUSVERSIONSINSTALLED"
-                IncludeMinimum="yes"
-                MigrateFeatures="yes"/>
-        </Upgrade>
-        <InstallExecuteSequence>
-            <RemoveExistingProducts Before="InstallInitialize"/>
-        </InstallExecuteSequence>
+        <MajorUpgrade
+            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"/>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="tap0901.cer" Guid="{DA41DE05-8DED-4573-A42B-23E583CCD6E6}"/>
         </Property>

@@ -33,17 +33,8 @@
         <!--
             Upgrading functionality
         -->
-        <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes"/>
-        <Upgrade Id="$(var.OpenVPN.UpgradeGUID)">
-            <UpgradeVersion
-                Minimum="0.0.0.0"
-                Property="PREVIOUSVERSIONSINSTALLED"
-                IncludeMinimum="yes"
-                MigrateFeatures="yes"/>
-        </Upgrade>
-        <InstallExecuteSequence>
-            <RemoveExistingProducts Before="InstallInitialize"/>
-        </InstallExecuteSequence>
+        <MajorUpgrade
+            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"/>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="libeay32.dll" Guid="{0B2BF74E-5C4A-448A-8B2C-1FC076B5B824}"/>
             <ComponentSearch Id="ssleay32.dll" Guid="{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}"/>
