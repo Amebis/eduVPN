@@ -273,4 +273,10 @@
   <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
     <value>Varni splet</value>
   </data>
+  <data name="ErrorCertificateDisabled" xml:space="preserve">
+    <value>Skrbnik je onemogočil digitalno potrdilo.</value>
+  </data>
+  <data name="ErrorUserDisabled" xml:space="preserve">
+    <value>Skrbnik je onemogočil uporabniški račun.</value>
+  </data>
 </root>

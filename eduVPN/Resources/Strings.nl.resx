@@ -273,4 +273,10 @@
   <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
+  <data name="ErrorCertificateDisabled" xml:space="preserve">
+    <value>The certificate was disabled by an administrator.</value>
+  </data>
+  <data name="ErrorUserDisabled" xml:space="preserve">
+    <value>The user account was disabled by an administrator.</value>
+  </data>
 </root>
