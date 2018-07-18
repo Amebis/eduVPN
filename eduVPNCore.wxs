@@ -40,7 +40,8 @@
             Upgrading functionality
         -->
         <MajorUpgrade
-            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"/>
+            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
+            Schedule="afterInstallExecute"/>
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
             <UpgradeVersion

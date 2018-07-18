@@ -37,7 +37,8 @@
             Upgrading functionality
         -->
         <MajorUpgrade
-            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"/>
+            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
+            Schedule="afterInstallExecute"/>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="tap0901.cer" Guid="{CDCB8AE6-B105-409F-8539-5642A2BC3910}"/>
         </Property>

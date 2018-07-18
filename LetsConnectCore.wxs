@@ -40,7 +40,8 @@
             Upgrading functionality
         -->
         <MajorUpgrade
-            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"/>
+            DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
+            Schedule="afterInstallExecute"/>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="Prism.dll" Guid="{9B4F3694-9A5E-41AF-AA24-E2E5F39A48C6}"/>
             <ComponentSearch Id="QRCoder.dll" Guid="{D9B63915-FA40-457F-8CBB-E7F3863D7F40}"/>
