@@ -35,7 +35,8 @@
         -->
         <MajorUpgrade
             DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
-            Schedule="afterInstallExecute"/>
+            Schedule="afterInstallExecute"
+            AllowSameVersionUpgrades="yes"/>
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
             <UpgradeVersion
