@@ -11,6 +11,7 @@ using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Microsoft.Win32;
 using System;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -165,7 +166,77 @@ namespace eduVPN.ViewModels.VPN
                             using (var sw = new StreamWriter(fs))
                             {
                                 // Save profile's configuration to file.
-                                sw.Write(_profile_config);
+
+                                if (Properties.Settings.Default.OpenVPNRemoveOptions is StringCollection)
+                                {
+                                    // Remove options on the OpenVPNRemoveOptions list on the fly.
+                                    using (var sr = new StringReader(_profile_config))
+                                    {
+                                        string inline_term = null;
+                                        bool inline_remove = false;
+                                        for (; ; )
+                                        {
+                                            var line = sr.ReadLine();
+                                            if (line == null)
+                                                break;
+
+                                            var line_t = line.Trim();
+                                            if (!String.IsNullOrEmpty(line_t))
+                                            {
+                                                // Not an empty line.
+                                                if (inline_term == null)
+                                                {
+                                                    // Not inside an inline option block = Regular parsing mode.
+                                                    if (!line_t.StartsWith("#") &&
+                                                        !line_t.StartsWith(";"))
+                                                    {
+                                                        // Not a comment.
+                                                        var option = eduOpenVPN.Configuration.ParseParams(line_t);
+                                                        if (option.Count > 0)
+                                                        {
+                                                            if (option[0].StartsWith("<") && !option[0].StartsWith("</") && option[0].EndsWith(">"))
+                                                            {
+                                                                // Start of an inline option.
+                                                                var o = option[0].Substring(1, option[0].Length - 2);
+                                                                inline_term = "</" + o + ">";
+                                                                inline_remove = Properties.Settings.Default.OpenVPNRemoveOptions.Contains(o);
+                                                                if (inline_remove)
+                                                                {
+                                                                    sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
+                                                                    line = "# " + line;
+                                                                }
+                                                            }
+                                                            else if (Properties.Settings.Default.OpenVPNRemoveOptions.Contains(option[0]))
+                                                            {
+                                                                sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
+                                                                line = "# " + line;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // Inside an inline option block.
+                                                    if (inline_remove)
+                                                    {
+                                                        // Remove the inline option content.
+                                                        line = "# " + line;
+                                                    }
+
+                                                    if (line_t == inline_term)
+                                                    {
+                                                        // Inline option terminator found. Returning to regular parsing mode.
+                                                        inline_term = null;
+                                                    }
+                                                }
+                                            }
+
+                                            sw.WriteLine(line);
+                                        }
+                                    }
+                                }
+                                else
+                                    sw.Write(_profile_config);
 
                                 // Append eduVPN Client specific configuration directives.
                                 sw.WriteLine();
@@ -211,6 +282,14 @@ namespace eduVPN.ViewModels.VPN
                                     // Increase to 64kB which is default from Windows 8 on.
                                     sw.WriteLine("sndbuf 65536");
                                     sw.WriteLine("rcvbuf 65536");
+                                }
+
+                                if (!String.IsNullOrWhiteSpace(Properties.Settings.Default.OpenVPNAddOptions))
+                                {
+                                    sw.WriteLine();
+                                    sw.WriteLine();
+                                    sw.WriteLine("# Added by OpenVPNAddOptions setting:");
+                                    sw.WriteLine(Properties.Settings.Default.OpenVPNAddOptions);
                                 }
                             }
                         }

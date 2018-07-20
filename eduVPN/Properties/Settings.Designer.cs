@@ -219,5 +219,33 @@ namespace eduVPN.Properties {
                 this["SettingsVersion"] = value;
             }
         }
+        
+        /// <summary>
+        /// Options to be removed from OpenVPN profile configuration (when provisioned). List OpenVPN option names only - i.e. without parameters. Use in combination with OpenVPNAddOptions setting to override the OpenVPN options provisioned by the VPN provider.
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Options to be removed from OpenVPN profile configuration (when provisioned). List" +
+            " OpenVPN option names only - i.e. without parameters. Use in combination with Op" +
+            "enVPNAddOptions setting to override the OpenVPN options provisioned by the VPN p" +
+            "rovider.")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection OpenVPNRemoveOptions {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["OpenVPNRemoveOptions"]));
+            }
+        }
+        
+        /// <summary>
+        /// Custom options to be added to OpenVPN profile configuration. This string is appended to the OpenVPN profile configuration file (OVPN) and should conform to the OVPN file syntax. It can contain multiple lines to specify multiple OpenVPN options. Use in combination with OpenVPNRemoveOptions setting to override the OpenVPN options provisioned by the VPN provider.
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute(@"Custom options to be added to OpenVPN profile configuration. This string is appended to the OpenVPN profile configuration file (OVPN) and should conform to the OVPN file syntax. It can contain multiple lines to specify multiple OpenVPN options. Use in combination with OpenVPNRemoveOptions setting to override the OpenVPN options provisioned by the VPN provider.")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpenVPNAddOptions {
+            get {
+                return ((string)(this["OpenVPNAddOptions"]));
+            }
+        }
     }
 }

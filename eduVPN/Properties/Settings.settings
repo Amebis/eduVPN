@@ -38,5 +38,11 @@
     <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="OpenVPNRemoveOptions" Description="Options to be removed from OpenVPN profile configuration (when provisioned). List OpenVPN option names only - i.e. without parameters. Use in combination with OpenVPNAddOptions setting to override the OpenVPN options provisioned by the VPN provider." Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OpenVPNAddOptions" Description="Custom options to be added to OpenVPN profile configuration. This string is appended to the OpenVPN profile configuration file (OVPN) and should conform to the OVPN file syntax. It can contain multiple lines to specify multiple OpenVPN options. Use in combination with OpenVPNRemoveOptions setting to override the OpenVPN options provisioned by the VPN provider." Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
