@@ -1,6 +1,14 @@
 # Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.22...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.23...HEAD)
+
+
+## [1.0.23](https://github.com/Amebis/eduVPN/compare/1.0.22...1.0.23) (2018-07-20)
+
+- Issue with non-Admin on non-English Windows fixed
+- Additional settings to allow OpenVPN profile configuration run-time changes by client
+- MSI updating switched from "Uninstall&Install" to "Update&Cleanup" strategy
+
 
 ## [1.0.22](https://github.com/Amebis/eduVPN/compare/1.0.21...1.0.22) (2018-05-03)
 
