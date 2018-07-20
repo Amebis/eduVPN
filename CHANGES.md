@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.23...HEAD)
 
+- GUI refinements
+
 
 ## [1.0.23](https://github.com/Amebis/eduVPN/compare/1.0.22...1.0.23) (2018-07-20)
 

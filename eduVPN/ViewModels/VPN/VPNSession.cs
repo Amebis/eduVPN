@@ -308,7 +308,7 @@ namespace eduVPN.ViewModels.VPN
                     Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
                 },
 
-                // Load messages from all possible sources: authenticating/connecting instance, user/system list.
+                // Load messages from multiple sources: connecting instance, user/system list.
                 // Any errors shall be ignored.
                 () =>
                 {
@@ -319,9 +319,7 @@ namespace eduVPN.ViewModels.VPN
                     if (e.AccessToken != null)
                     {
                         Parallel.ForEach(new List<KeyValuePair<Uri, string>>() {
-                                new KeyValuePair<Uri, string>(api_authenticating.UserMessages, "user_messages"),
                                 new KeyValuePair<Uri, string>(api_connecting.UserMessages, "user_messages"),
-                                new KeyValuePair<Uri, string>(api_authenticating.SystemMessages, "system_messages"),
                                 new KeyValuePair<Uri, string>(api_connecting.SystemMessages, "system_messages"),
                             }
                             .Where(list => list.Key != null)
