@@ -266,6 +266,7 @@ namespace eduVPN.ViewModels.VPN
 
                                 // Ask when username/password is denied.
                                 sw.WriteLine("auth-retry interact");
+                                sw.WriteLine("auth-nocache");
 
                                 // Set TAP interface to be used.
                                 if (NetworkInterface.TryFromID(Properties.Settings.Default.OpenVPNInterfaceID, out var iface))
