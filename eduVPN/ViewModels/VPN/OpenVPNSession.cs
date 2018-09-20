@@ -515,8 +515,21 @@ namespace eduVPN.ViewModels.VPN
                                         {
                                             switch (e.Message)
                                             {
+                                                case "auth-failure": // Client certificate was deleted/revoked on the server side, or the user is disabled.
+                                                    var user_info = AuthenticatingInstance.GetUserInfo(AuthenticatingInstance, _quit.Token);
+                                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info)); // BTW, update the UserInfo property with fresh data.
+                                                    if (user_info.IsEnabled)
+                                                    {
+                                                        // We read the user is enabled. Try with a new client certificate then.
+                                                        goto case "tls-error";
+                                                    }
+                                                    else
+                                                    {
+                                                        // User is disabled and this is the most likely cause for "auth-failure". Treat this as any other generic reconnect cases.
+                                                        goto default;
+                                                    }
+
                                                 case "tls-error": // Client certificate is not compliant with this eduVPN instance. Was eduVPN instance reinstalled?
-                                                case "auth-failure": // Client certificate was deleted/revoked on the server side.
                                                     // Refresh client certificate.
                                                     _client_certificate = ConnectingProfile.Instance.RefreshClientCertificate(AuthenticatingInstance, _quit.Token);
                                                     _ignore_hold_hint = true;
