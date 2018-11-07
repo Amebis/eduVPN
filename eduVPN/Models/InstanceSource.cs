@@ -154,6 +154,26 @@ namespace eduVPN.Models
         }
 
         /// <summary>
+        /// Select connecting instance by URI
+        /// </summary>
+        /// <remarks>When the instance with given URI is no longer available, this method returns the most popular instance from the <see cref="ConnectingInstanceList"/> list.</remarks>
+        /// <param name="uri">Preferred instance URI</param>
+        /// <returns>Connecting instance</returns>
+        public Instance SelectConnectingInstance(Uri uri)
+        {
+            if (uri == null)
+                return null;
+
+            // Find the connecting instance by URI.
+            var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == uri.AbsoluteUri);
+            if (instance != null)
+                return instance;
+
+            // The last connecting instance is no longer available. Select the most popular one among the remaining ones.
+            return ConnectingInstanceList.Count > 0 ? ConnectingInstanceList.Aggregate((most_popular_instance, inst) => (most_popular_instance == null || inst.Popularity > most_popular_instance.Popularity ? inst : most_popular_instance)) : null;
+        }
+
+        /// <summary>
         /// Removes given instance from history
         /// </summary>
         /// <param name="instance">Instance</param>

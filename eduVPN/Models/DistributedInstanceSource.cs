@@ -38,7 +38,7 @@ namespace eduVPN.Models
                 {
                     AuthenticatingInstance.RequestAuthorization += wizard.Instance_RequestAuthorization;
                     AuthenticatingInstance.ForgetAuthorization += wizard.Instance_ForgetAuthorization;
-                    ConnectingInstance = h_distributed.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_distributed.ConnectingInstance.AbsoluteUri) : null;
+                    ConnectingInstance = SelectConnectingInstance(h_distributed.ConnectingInstance);
                 }
             }
         }

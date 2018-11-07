@@ -8,7 +8,6 @@
 using eduVPN.ViewModels.Windows;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace eduVPN.Models
 {
@@ -34,7 +33,7 @@ namespace eduVPN.Models
             if (settings is Xml.FederatedInstanceSourceSettings h_federated)
             {
                 // - Restore connecting instance (optional).
-                ConnectingInstance = h_federated.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_federated.ConnectingInstance.AbsoluteUri) : null;
+                ConnectingInstance = SelectConnectingInstance(h_federated.ConnectingInstance);
             }
         }
 

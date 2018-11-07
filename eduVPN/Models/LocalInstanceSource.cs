@@ -125,7 +125,7 @@ namespace eduVPN.Models
                             ConnectingInstanceList.Add(connecting_instance);
                     }
                 }
-                ConnectingInstance = h_local.ConnectingInstance != null ? ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == h_local.ConnectingInstance.AbsoluteUri) : null;
+                ConnectingInstance = SelectConnectingInstance(h_local.ConnectingInstance);
             }
         }
 
