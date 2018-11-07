@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <Target Name="Sign" Inputs="$(OutDir)$(TargetName)$(TargetExt)" Outputs="$(OutDir)$(TargetName).sign">
-    <Exec Command="signtool.exe sign /sha1 &quot;%ManifestCertificateThumbprint%&quot; /fd sha256 /as /tr &quot;%ManifestTimestampRFC3161Url%&quot; /q &quot;$(TargetPath)&quot;" />
+    <Exec Command="signtool.exe sign /sha1 &quot;%ManifestCertificateThumbprint%&quot; /fd sha256 /as /tr &quot;%ManifestTimestampRFC3161Url%&quot; /td sha256 /q &quot;$(TargetPath)&quot;" />
     <Touch Files="$(OutDir)$(TargetName).sign" AlwaysCreate="true" />
   </Target>
 

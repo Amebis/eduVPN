@@ -23,7 +23,7 @@ SetupExe :: \
 	"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" \
 	"$(OUTPUT_DIR)\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe"
 	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ab "$(OUTPUT_DIR)\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" -o "$(@:"=).tmp"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
 	move /y "$(@:"=).tmp" $@ > NUL
 !ELSE
 	"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe"
@@ -70,7 +70,7 @@ Clean ::
 	"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe"
 	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ib $** -o "$(@:"=).tmp"
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
 !ENDIF
 	move /y "$(@:"=).tmp" $@ > NUL
 
