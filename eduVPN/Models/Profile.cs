@@ -108,7 +108,7 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override string ToString()
         {
-            return DisplayName;
+            return DisplayName ?? ID;
         }
 
         /// <inheritdoc/>

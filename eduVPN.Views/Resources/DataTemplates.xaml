@@ -60,7 +60,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 TextAlignment="Center"
-                Text="{Binding Path=DisplayName}"/>
+                Text="{Binding}"/>
         </Grid>
     </DataTemplate>
 
@@ -102,7 +102,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 TextAlignment="Center"
-                Text="{Binding Path=DisplayName}"/>
+                Text="{Binding}"/>
 
             <ContentControl
                 Grid.Column="2"
@@ -155,7 +155,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 TextAlignment="Center"
-                Text="{Binding Path=DisplayName}"/>
+                Text="{Binding}"/>
 
             <ContentControl
                 Grid.Column="2"
@@ -221,12 +221,12 @@
 
                 <TextBlock
                     Margin="0,0,0,-1"
-                    Text="{Binding Path=DisplayName}"/>
+                    Text="{Binding}"/>
 
                 <TextBlock
                     Grid.Row="1"
                     Margin="0,-1,0,0"
-                    Text="{Binding Path=Instance.DisplayName}"
+                    Text="{Binding Path=Instance}"
                     FontSize="10"/>
             </Grid>
 
