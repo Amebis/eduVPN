@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Globalization;
 using System.Xml;
 using System.Xml.Schema;
@@ -23,6 +24,11 @@ namespace eduVPN.Xml
         /// Profile ID
         /// </summary>
         public string ID { get; set; }
+
+        /// <summary>
+        /// Profile name to display in GUI
+        /// </summary>
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Popularity factor in the [0.0, 1.0] range (default 1.0)
@@ -51,6 +57,7 @@ namespace eduVPN.Xml
             string v;
 
             ID = reader[nameof(ID)];
+            DisplayName = !String.IsNullOrWhiteSpace(v = reader[nameof(DisplayName)]) ? v : null;
             Popularity = (v = reader[nameof(Popularity)]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
         }
 
@@ -61,6 +68,8 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(ID), ID);
+            if (DisplayName != null)
+                writer.WriteAttributeString(nameof(DisplayName), DisplayName);
             writer.WriteAttributeString(nameof(Popularity), Popularity.ToString(CultureInfo.InvariantCulture));
         }
 

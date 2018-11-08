@@ -62,6 +62,7 @@
     <Compile Include="Converters\TOTPQRConverter.cs" />
     <Compile Include="Converters\TOTPSecretConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
+    <Compile Include="Converters\UnavailableIconVisibilityConverter.cs" />
     <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />

@@ -119,6 +119,16 @@ namespace eduVPN.Models
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         /// <summary>
+        /// Called when a profile requests user authorization
+        /// </summary>
+        /// <param name="authenticating_instance">Authenticating instance</param>
+        /// <param name="e"><see cref="RequestAuthorization"/> event arguments</param>
+        public void OnRequestAuthorization(Instance authenticating_instance, RequestAuthorizationEventArgs e)
+        {
+            RequestAuthorization?.Invoke(authenticating_instance, e);
+        }
+
+        /// <summary>
         /// Forget authorization event
         /// </summary>
         /// <remarks>Sender is the authenticating instance <see cref="eduVPN.Models.Instance"/>.</remarks>
@@ -259,7 +269,7 @@ namespace eduVPN.Models
 
                     retry:
                     // Request authentication token.
-                    RequestAuthorization?.Invoke(authenticating_instance, e);
+                    OnRequestAuthorization(authenticating_instance, e);
                     if (e.AccessToken == null)
                         throw new AccessTokenNullException();
 
@@ -278,7 +288,7 @@ namespace eduVPN.Models
                             profile.Instance = this;
 
                             // Attach to RequestAuthorization profile events.
-                            profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => RequestAuthorization?.Invoke(authenticating_instance, e_profile);
+                            profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => OnRequestAuthorization(authenticating_instance, e_profile);
                         }
 
                         // If we got here, save the profile list.
@@ -331,7 +341,7 @@ namespace eduVPN.Models
 
             retry:
             // Request authentication token.
-            RequestAuthorization?.Invoke(authenticating_instance, e);
+            OnRequestAuthorization(authenticating_instance, e);
             if (e.AccessToken == null)
                 throw new AccessTokenNullException();
 
@@ -420,7 +430,7 @@ namespace eduVPN.Models
 
                     retry:
                     // Request authentication token.
-                    RequestAuthorization?.Invoke(authenticating_instance, e);
+                    OnRequestAuthorization(authenticating_instance, e);
                     if (e.AccessToken == null)
                         throw new AccessTokenNullException();
 
@@ -489,7 +499,7 @@ namespace eduVPN.Models
 
                     retry:
                     // Request authentication token.
-                    RequestAuthorization?.Invoke(authenticating_instance, e);
+                    OnRequestAuthorization(authenticating_instance, e);
                     if (e.AccessToken == null)
                         throw new AccessTokenNullException();
 
@@ -593,7 +603,7 @@ namespace eduVPN.Models
 
             retry:
             // Request authentication token.
-            RequestAuthorization?.Invoke(authenticating_instance, e);
+            OnRequestAuthorization(authenticating_instance, e);
             if (e.AccessToken == null)
                 throw new AccessTokenNullException();
 

@@ -48,6 +48,18 @@ namespace eduVPN.Models
         private string _id;
 
         /// <summary>
+        /// Is profile available?
+        /// </summary>
+        public bool IsAvailable
+        {
+            get { return _is_available; }
+            set { SetProperty(ref _is_available, value); }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool _is_available;
+
+        /// <summary>
         /// Profile name to display in GUI
         /// </summary>
         public string DisplayName
@@ -292,6 +304,9 @@ namespace eduVPN.Models
                 }
                 else
                     TwoFactorMethods = TwoFactorAuthenticationMethods.None;
+
+                // Mark profile as available.
+                IsAvailable = true;
             }
             else
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());

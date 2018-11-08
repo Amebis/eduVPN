@@ -73,7 +73,6 @@ namespace eduVPN.Models
                         connecting_instance.Forget();
                         continue;
                     }
-                    var add_instance = false;
                     switch (Properties.Settings.Default.ConnectingProfileSelectMode)
                     {
                         case 0:
@@ -84,16 +83,28 @@ namespace eduVPN.Models
                                     var profile = profile_list.FirstOrDefault(prof => prof.ID == h_profile.ID);
                                     if (profile != null)
                                     {
+                                        // Synchronise profile data.
+                                        h_profile.DisplayName = profile.DisplayName;
                                         profile.Popularity = h_profile.Popularity;
-                                        if (ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
-                                        {
-                                            ConnectingProfileList.Add(profile);
-                                            add_instance = true;
-                                        }
                                     }
+                                    else
+                                    {
+                                        // The profile is gone missing. Create an unavailable profile placeholder.
+                                        profile = new Profile
+                                        {
+                                            Instance    = connecting_instance,
+                                            ID          = h_profile.ID,
+                                            DisplayName = h_profile.DisplayName,
+                                            Popularity  = h_profile.Popularity
+                                        };
+                                        profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => connecting_instance.OnRequestAuthorization(connecting_instance, e_profile);
+                                    }
+
+                                    // Add to the list of connecting profiles.
+                                    if (ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
+                                        ConnectingProfileList.Add(profile);
                                 }
                             }
-
                             break;
 
                         case 2:
@@ -109,21 +120,12 @@ namespace eduVPN.Models
                                     ConnectingProfileList.Add(profile);
                                 }
                             }
-
-                            add_instance = true;
-                            break;
-
-                        default:
-                            add_instance = true;
                             break;
                     }
 
-                    if (add_instance)
-                    {
-                        var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
-                        if (instance == null)
-                            ConnectingInstanceList.Add(connecting_instance);
-                    }
+                    var instance = ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == connecting_instance.Base.AbsoluteUri);
+                    if (instance == null)
+                        ConnectingInstanceList.Add(connecting_instance);
                 }
                 ConnectingInstance = SelectConnectingInstance(h_local.ConnectingInstance);
             }
@@ -149,6 +151,7 @@ namespace eduVPN.Models
                                     .Select(prof => new Xml.ProfileRef()
                                     {
                                         ID = prof.ID,
+                                        DisplayName = prof.DisplayName,
                                         Popularity = prof.Popularity
                                     }))
                             }
