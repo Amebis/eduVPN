@@ -1,8 +1,13 @@
 # Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.23...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.24...HEAD)
 
+
+## [1.0.24](https://github.com/Amebis/eduVPN/compare/1.0.23...1.0.24) (2018-11-08)
+
+- Improved profile management in Let's Connect! client
 - GUI refinements
+- Fixes
 
 
 ## [1.0.23](https://github.com/Amebis/eduVPN/compare/1.0.22...1.0.23) (2018-07-20)
