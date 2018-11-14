@@ -1,7 +1,7 @@
 ﻿<!--
     eduVPN - VPN for education and research
 
-    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2018 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
 <pages:ConnectWizardPage
@@ -45,6 +45,6 @@
             Margin="5"
             TextAlignment="Center"
             Style="{StaticResource CopyrightTextBlockStyle}"
-            Text="{x:Static res:Strings.AboutPageCopyright}"/>
+            Text="{Binding Path=Build.Year, StringFormat={x:Static res:Strings.AboutPageCopyright2}}"/>
     </Grid>
 </pages:ConnectWizardPage>

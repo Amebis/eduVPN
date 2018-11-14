@@ -71,12 +71,12 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright © 2017
+        ///   Looks up a localized string similar to Copyright © 2017-{0}
         ///The Commons Conservancy eduVPN Programme.
         /// </summary>
-        public static string AboutPageCopyright {
+        public static string AboutPageCopyright2 {
             get {
-                return ResourceManager.GetString("AboutPageCopyright", resourceCulture);
+                return ResourceManager.GetString("AboutPageCopyright2", resourceCulture);
             }
         }
         

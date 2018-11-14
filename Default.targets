@@ -2,11 +2,23 @@
 <!--
     eduVPN - VPN for education and research
 
-    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2018 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Builtin" BeforeTargets="CoreCompile">
+    <!--
+        Compensates for missing __DATE__ and __TIME__ in C#
+    -->
+    <WriteLinesToFile File="$(IntermediateOutputPath)Builtin.cs" Lines="static partial class Builtin { public static long CompileTime = $([System.DateTime]::UtcNow.Ticks)%3B }" Overwrite="true" />
+    <ItemGroup>
+      <Compile Include="$(IntermediateOutputPath)Builtin.cs" />
+    </ItemGroup>
+  </Target>
 
+  <!--
+      Code signing
+  -->
   <PropertyGroup Condition="'$(ManifestCertificateThumbprint)' != '' AND '$(Configuration)'=='Release'">
     <BuildDependsOn>$(BuildDependsOn);Sign</BuildDependsOn>
   </PropertyGroup>

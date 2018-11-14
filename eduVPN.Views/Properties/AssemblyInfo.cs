@@ -1,7 +1,7 @@
 ﻿/*
     eduVPN - VPN for education and research
 
-    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2018 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("eduVPN View Library")]
 [assembly: AssemblyCompany("SURF")]
 [assembly: AssemblyProduct("eduVPN")]
-[assembly: AssemblyCopyright("Copyright © The Commons Conservancy eduVPN Programme 2017")]
+[assembly: AssemblyCopyright("Copyright © 2017-2018 The Commons Conservancy eduVPN Programme")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

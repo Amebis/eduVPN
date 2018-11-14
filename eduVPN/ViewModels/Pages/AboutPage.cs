@@ -1,7 +1,7 @@
 ﻿/*
     eduVPN - VPN for education and research
 
-    Copyright: 2017, The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2018 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -36,6 +36,29 @@ namespace eduVPN.ViewModels.Pages
                     ver.Revision != 0 ? new Version(ver.Major, ver.Minor, ver.Build, ver.Revision) :
                     ver.Build    != 0 ? new Version(ver.Major, ver.Minor, ver.Build) :
                                         new Version(ver.Major, ver.Minor);
+            }
+        }
+
+        /// <summary>
+        /// Copyright notice
+        /// </summary>
+        public string Copyright
+        {
+            get
+            {
+                return (Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute)?.Copyright;
+            }
+        }
+
+        /// <summary>
+        /// Build timestamp (UTC)
+        /// </summary>
+        public DateTime Build
+        {
+            get
+            {
+                // The Builtin class is implemented in Builtin target in Default.targets.
+                return new DateTime(Builtin.CompileTime);
             }
         }
 
