@@ -15,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Text;
 using System.Web;
 using System.Xml;
@@ -74,13 +75,15 @@ namespace eduVPN.ViewModels.Pages
                 self_update.ReportProgress(0);
                 var random = new Random();
                 var discovery_uri = Properties.Settings.Default.SelfUpdateDescr.Uri;
-                var working_folder = Path.GetTempPath();
-                var installer_filename = Path.GetFullPath(working_folder + Path.GetRandomFileName() + ".exe");
-                var installer_file = File.Open(installer_filename, FileMode.CreateNew, FileAccess.Write, FileShare.Read | FileShare.Inheritable);
+                var temp_folder = Path.GetTempPath();
+                var working_folder = temp_folder + Path.GetRandomFileName() + "\\";
+                Directory.CreateDirectory(working_folder);
                 try
                 {
+                    string installer_filename = null;
+                    FileStream installer_file = null;
+
                     // Download installer.
-                    var installer_ready = false;
                     var repo_hash = ((string)ObjWeb["hash-sha256"]).FromHexToBin();
                     var binary_uris = (List<object>)ObjWeb["uri"];
                     while (binary_uris.Count > 0)
@@ -94,38 +97,67 @@ namespace eduVPN.ViewModels.Pages
                             var request = WebRequest.Create(binary_uri);
                             request.Proxy = null;
                             using (var response = request.GetResponse())
-                            using (var stream = response.GetResponseStream())
                             {
-                                installer_file.Seek(0, SeekOrigin.Begin);
-                                var hash = new eduEd25519.SHA256();
-                                var buffer = new byte[1048576];
-                                long offset = 0, total = response.ContentLength;
-
-                                for (; ; )
-                                {
-                                    // Wait for the data to arrive.
-                                    Window.Abort.Token.ThrowIfCancellationRequested();
-                                    var buffer_length = stream.Read(buffer, 0, buffer.Length);
-                                    if (buffer_length == 0)
-                                        break;
-
-                                    // Append it to the file and hash it.
-                                    Window.Abort.Token.ThrowIfCancellationRequested();
-                                    installer_file.Write(buffer, 0, buffer_length);
-                                    hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
-
-                                    // Report progress.
-                                    offset += buffer_length;
-                                    self_update.ReportProgress((int)(offset * 100 / total));
+                                // 1. Get installer filename from Content-Disposition header.
+                                // 2. Get installer filename from the last segment of URI path.
+                                // 3. Fallback to a predefined installer filename.
+                                try { installer_filename = Path.GetFullPath(working_folder + new ContentDisposition(request.Headers["Content-Disposition"]).FileName); }
+                                catch {
+                                    try   { installer_filename = Path.GetFullPath(working_folder + binary_uri.Segments[binary_uri.Segments.Length-1]); }
+                                    catch { installer_filename = Path.GetFullPath(working_folder + Properties.Settings.Default.ClientTitle + " Client Setup.exe"); }
                                 }
 
-                                hash.TransformFinalBlock(buffer, 0, 0);
-                                if (!hash.Hash.SequenceEqual(repo_hash))
-                                    throw new DownloadedFileCorruptException(String.Format(Resources.Strings.ErrorDownloadedFileCorrupt, binary_uri.AbsoluteUri));
+                                // Save response data to file.
+                                installer_file = File.Open(installer_filename, FileMode.CreateNew, FileAccess.Write, FileShare.Read | FileShare.Inheritable);
+                                try
+                                {
+                                    using (var stream = response.GetResponseStream())
+                                    {
+                                        installer_file.Seek(0, SeekOrigin.Begin);
+                                        var hash = new eduEd25519.SHA256();
+                                        var buffer = new byte[1048576];
+                                        long offset = 0, total = response.ContentLength;
 
-                                installer_file.SetLength(installer_file.Position);
-                                installer_ready = true;
-                                break;
+                                        for (; ; )
+                                        {
+                                            // Wait for the data to arrive.
+                                            Window.Abort.Token.ThrowIfCancellationRequested();
+                                            var buffer_length = stream.Read(buffer, 0, buffer.Length);
+                                            if (buffer_length == 0)
+                                                break;
+
+                                            // Append it to the file and hash it.
+                                            Window.Abort.Token.ThrowIfCancellationRequested();
+                                            installer_file.Write(buffer, 0, buffer_length);
+                                            hash.TransformBlock(buffer, 0, buffer_length, buffer, 0);
+
+                                            // Report progress.
+                                            offset += buffer_length;
+                                            self_update.ReportProgress((int)(offset * 100 / total));
+                                        }
+
+                                        hash.TransformFinalBlock(buffer, 0, 0);
+                                        if (!hash.Hash.SequenceEqual(repo_hash))
+                                            throw new DownloadedFileCorruptException(String.Format(Resources.Strings.ErrorDownloadedFileCorrupt, binary_uri.AbsoluteUri));
+
+                                        installer_file.SetLength(installer_file.Position);
+                                        break;
+                                    }
+                                }
+                                catch
+                                {
+                                    // Close installer file.
+                                    installer_file.Close();
+                                    installer_file = null;
+
+                                    // Delete installer file. If possible.
+                                    Trace.TraceInformation("Deleting file {0}...", installer_filename);
+                                    try { File.Delete(installer_filename); }
+                                    catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
+                                    installer_filename = null;
+
+                                    throw;
+                                }
                             }
                         }
                         catch (OperationCanceledException) { throw; }
@@ -136,98 +168,110 @@ namespace eduVPN.ViewModels.Pages
                         }
                     }
 
-                    if (!installer_ready)
+                    if (installer_filename == null || installer_file == null)
                     {
                         // The installer file is not ready.
                         throw new InstallerFileUnavailableException();
                     }
 
-                    var updater_filename = Path.GetFullPath(working_folder + Path.GetRandomFileName() + ".wsf");
-                    var updater_file = File.Open(updater_filename, FileMode.CreateNew, FileAccess.Write, FileShare.Read | FileShare.Inheritable);
                     try
                     {
-                        // Prepare WSF file.
-                        var writer = new XmlTextWriter(updater_file, null);
-                        writer.WriteStartDocument();
-                        writer.WriteStartElement("package");
-                        writer.WriteStartElement("job");
-
-                        writer.WriteStartElement("reference");
-                        writer.WriteAttributeString("object", "WScript.Shell");
-                        writer.WriteEndElement(); // reference
-
-                        writer.WriteStartElement("reference");
-                        writer.WriteAttributeString("object", "Scripting.FileSystemObject");
-                        writer.WriteEndElement(); // reference
-
-                        writer.WriteStartElement("script");
-                        writer.WriteAttributeString("language", "JScript");
-                        var installer_arguments_esc = eduJSON.Parser.GetValue(ObjWeb, "arguments", out string installer_arguments) ? " " + HttpUtility.JavaScriptStringEncode(installer_arguments) : "";
-                        var argv = Environment.GetCommandLineArgs();
-                        var arguments = new StringBuilder();
-                        for (long i = 1, n = argv.LongLength; i < n; i++)
+                        var updater_filename = Path.GetFullPath(working_folder + Properties.Settings.Default.ClientTitle + " Client Setup and Relaunch.wsf");
+                        var updater_file = File.Open(updater_filename, FileMode.CreateNew, FileAccess.Write, FileShare.Read | FileShare.Inheritable);
+                        try
                         {
-                            if (i > 1) arguments.Append(" ");
-                            arguments.Append("\"");
-                            arguments.Append(argv[i].Replace("\"", "\"\""));
-                            arguments.Append("\"");
+                            // Prepare WSF file.
+                            var writer = new XmlTextWriter(updater_file, null);
+                            writer.WriteStartDocument();
+                            writer.WriteStartElement("package");
+                            writer.WriteStartElement("job");
+
+                            writer.WriteStartElement("reference");
+                            writer.WriteAttributeString("object", "WScript.Shell");
+                            writer.WriteEndElement(); // reference
+
+                            writer.WriteStartElement("reference");
+                            writer.WriteAttributeString("object", "Scripting.FileSystemObject");
+                            writer.WriteEndElement(); // reference
+
+                            writer.WriteStartElement("script");
+                            writer.WriteAttributeString("language", "JScript");
+                            var installer_arguments_esc = eduJSON.Parser.GetValue(ObjWeb, "arguments", out string installer_arguments) ? " " + HttpUtility.JavaScriptStringEncode(installer_arguments) : "";
+                            var argv = Environment.GetCommandLineArgs();
+                            var arguments = new StringBuilder();
+                            for (long i = 1, n = argv.LongLength; i < n; i++)
+                            {
+                                if (i > 1) arguments.Append(" ");
+                                arguments.Append("\"");
+                                arguments.Append(argv[i].Replace("\"", "\"\""));
+                                arguments.Append("\"");
+                            }
+                            var script = new StringBuilder();
+                            script.AppendLine("// This script was auto-generated.");
+                            script.AppendLine("// Launch installer file and wait for the update to finish.");
+                            script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
+                            script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installer_filename.Replace("\"", "\"\"")) + "\\\"" + installer_arguments_esc + "\", 0, true) == 0) {");
+                            script.AppendLine("  // Installer succeeded. Relaunch the application.");
+                            script.AppendLine("  var shl = WScript.CreateObject(\"Shell.Application\");");
+                            script.AppendLine("  shl.ShellExecute(\"" + HttpUtility.JavaScriptStringEncode(argv[0]) + "\", \"" + HttpUtility.JavaScriptStringEncode(arguments.ToString()) + "\", \"" + HttpUtility.JavaScriptStringEncode(Environment.CurrentDirectory) + "\");");
+                            script.AppendLine("}");
+                            script.AppendLine("// Cleanup.");
+                            script.AppendLine("var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");");
+                            script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(installer_filename) + "\", true); } catch (err) {}");
+                            script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(updater_filename) + "\", true); } catch (err) {}");
+                            script.AppendLine("try { fso.DeleteFolder(\"" + HttpUtility.JavaScriptStringEncode(working_folder.TrimEnd(Path.DirectorySeparatorChar)) + "\", true); } catch (err) {}");
+                            writer.WriteCData(script.ToString());
+                            writer.WriteEndElement(); // script
+
+                            writer.WriteEndElement(); // job
+                            writer.WriteEndElement(); // package
+                            writer.WriteEndDocument();
+                            writer.Flush();
+
+                            // Prepare WSF launch parameters.
+                            Trace.TraceInformation("Launching update script file {0}...", updater_filename);
+                            var process = new Process();
+                            process.StartInfo.FileName = "wscript.exe";
+                            process.StartInfo.Arguments = "\"" + updater_filename + "\"";
+                            process.StartInfo.WorkingDirectory = working_folder;
+
+                            // Close WSF and installer files as late as possible to narrow the attack window.
+                            // If Windows supported executing files that are locked for writing, we could leave those files open.
+                            updater_file.Close();
+                            installer_file.Close();
+                            process.Start();
                         }
-                        var script = new StringBuilder();
-                        script.AppendLine("// This script was auto-generated.");
-                        script.AppendLine("// Launch installer file and wait for the update to finish.");
-                        script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
-                        script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installer_filename.Replace("\"", "\"\"")) + "\\\"" + installer_arguments_esc + "\", 0, true) == 0) {");
-                        script.AppendLine("  // Installer succeeded. Relaunch the application.");
-                        script.AppendLine("  var shl = WScript.CreateObject(\"Shell.Application\");");
-                        script.AppendLine("  shl.ShellExecute(\"" + HttpUtility.JavaScriptStringEncode(argv[0]) + "\", \"" + HttpUtility.JavaScriptStringEncode(arguments.ToString()) + "\", \"" + HttpUtility.JavaScriptStringEncode(Environment.CurrentDirectory) + "\");");
-                        script.AppendLine("}");
-                        script.AppendLine("// Cleanup.");
-                        script.AppendLine("var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");");
-                        script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(installer_filename) + "\", true); } catch (err) {}");
-                        script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(updater_filename) + "\", true); } catch (err) {}");
-                        writer.WriteCData(script.ToString());
-                        writer.WriteEndElement(); // script
+                        catch
+                        {
+                            // Close WSF file.
+                            updater_file.Close();
 
-                        writer.WriteEndElement(); // job
-                        writer.WriteEndElement(); // package
-                        writer.WriteEndDocument();
-                        writer.Flush();
+                            // Delete WSF file. If possible.
+                            Trace.TraceInformation("Deleting file {0}...", updater_filename);
+                            try { File.Delete(updater_filename); }
+                            catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", updater_filename, ex2.ToString()); }
 
-                        // Prepare WSF launch parameters.
-                        Trace.TraceInformation("Launching update script file {0}...", updater_filename);
-                        var process = new Process();
-                        process.StartInfo.FileName = "wscript.exe";
-                        process.StartInfo.Arguments = "\"" + updater_filename + "\"";
-                        process.StartInfo.WorkingDirectory = working_folder;
-
-                        // Close WSF and installer files as late as possible to narrow the attack window.
-                        // If Windows supported executing files that are locked for writing, we could leave those files open.
-                        updater_file.Close();
-                        installer_file.Close();
-                        process.Start();
+                            throw;
+                        }
                     }
                     catch
                     {
-                        // Close WSF file.
-                        updater_file.Close();
+                        // Close installer file.
+                        installer_file.Close();
 
-                        // Delete WSF file. If possible.
-                        Trace.TraceInformation("Deleting file {0}...", updater_filename);
-                        try { File.Delete(updater_filename); }
-                        catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", updater_filename, ex2.ToString()); }
+                        // Delete installer file. If possible.
+                        Trace.TraceInformation("Deleting file {0}...", installer_filename);
+                        try { File.Delete(installer_filename); }
+                        catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
 
                         throw;
                     }
                 }
                 catch
                 {
-                    // Close installer file.
-                    installer_file.Close();
-
-                    // Delete installer file. If possible.
-                    Trace.TraceInformation("Deleting file {0}...", installer_filename);
-                    try { File.Delete(installer_filename); }
-                    catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installer_filename, ex2.ToString()); }
+                    // Delete working folder. If possible.
+                    try { Directory.Delete(working_folder); }
+                    catch (Exception ex2) { Trace.TraceWarning("Deleting {0} folder failed: {1}", working_folder, ex2.ToString()); }
 
                     throw;
                 }
