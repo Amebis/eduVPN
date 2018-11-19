@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -119,7 +119,7 @@
   </resheader>
   <data name="AboutPageCopyright2" xml:space="preserve">
     <value>Copyright © 2017-{0}
-The Commons Conservancy eduVPN Programme</value>
+Het Commons Conservancy eduVPN Programma</value>
   </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Versie {0}</value>
@@ -131,11 +131,11 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Instituut</value>
   </data>
   <data name="AuthorizationPopupMessage2" xml:space="preserve">
-    <value>de client heeft {0} toestemming nodig en heeft een pagina in je browser geopend. De applicatie zal verder gaan na het geven van toestemming...</value>
+    <value>De client heeft {0} autorisatie nodig en heeft een pagina in je browser geopend. De client zal verder gaan na voltooien van de autorisatie...</value>
     <comment>{0}=Instance name</comment>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
-    <value>Wachten op toestemming...</value>
+    <value>Wachten op autorisatie...</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">
     <value>Terug</value>
@@ -144,10 +144,10 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Sluiten</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value>_Copy Error Text</value>
+    <value>_Kopieer Foutmelding</value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
-    <value>_Dismiss Error</value>
+    <value>_Foutmelding sluiten</value>
   </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
@@ -174,20 +174,20 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Hostnaam</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>De vereiste OAuth paramter "state" ontbreekt of is onjuist.</value>
+    <value>De vereiste OAuth parameter "state" ontbreekt of is onjuist.</value>
   </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
-    <value>Connect to your _Institution</value>
+    <value>Verbind met je _instituut</value>
   </data>
   <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
-    <value>_Safely use the Internet</value>
+    <value>_Veilig internetten</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
     <value>Geen items</value>
     <comment>Displayed when a list is empty</comment>
   </data>
   <data name="ListBoxNull" xml:space="preserve">
-    <value>Even geduld...</value>
+    <value>Even geduld a.u.b....</value>
     <comment>Displayed when a list is loading</comment>
   </data>
   <data name="MessageMaintenanceBegin" xml:space="preserve">
@@ -197,10 +197,10 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Einde</value>
   </data>
   <data name="MessageMaintenanceTitle" xml:space="preserve">
-    <value>Onderhoudsmededeling</value>
+    <value>Onderhoudsmelding</value>
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
-    <value>Notificatie</value>
+    <value>Melding</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
@@ -226,7 +226,7 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Wat is _nieuw?</value>
   </data>
   <data name="SelfUpdatePopupMessage3" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>Een nieuwere en verbeterde versie is beschikbaar. Blijf up-to-date!</value>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Sla deze _versie over</value>
@@ -253,7 +253,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Via _TCP verbinden</value>
   </data>
   <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
-    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan het TAP-apparaat voor deze client hieronder.</value>
+    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan de TAP-interface voor deze client hieronder.</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Selecteer TAP-_interface</value>
@@ -303,7 +303,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>Niet verbonden</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Het VPN-clientvenster is hier geminimaliseerd.</value>
@@ -344,30 +344,30 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Sleutel als QR-code</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
-    <value>Kies je twee-factorauthenticatiemethode en vul de code in:</value>
+    <value>Kies je twee-factor authenticatiemethode en vul de code in:</value>
     <comment>"securirty token" sounds wrong</comment>
   </data>
   <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
     <value>_Methode</value>
   </data>
   <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
-    <value>Twee-factorauthenticatie</value>
+    <value>Twee-factor authenticatie</value>
   </data>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
-    <value>Vereist twee-factorauthenticatie</value>
+    <value>Vereist twee-factor authenticatie</value>
   </data>
   <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
     <value>Inschrijv_en</value>
   </data>
   <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0} vereist dat je aangemeld bent voor twee-factorauthenticatie bij {1}.</value>
+    <value>{0} vereist dat je aangemeld bent voor twee-factor authenticatie bij {1}.</value>
     <comment>{0}=Profile name, {1}=Authenticating provider</comment>
   </data>
   <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>Twee-factorauthenticatie aanmelding</value>
+    <value>Twee-factor authenticatie aanmelding</value>
   </data>
   <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Waarschuwing! Je account is uitgeschakeld. Neem contact op met de helpdesk.</value>
+    <value>Waarschuwing! Je account is uitgeschakeld. Neem a.u.b. contact op met de helpdesk.</value>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
@@ -387,7 +387,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
     <value>{0}
-Powered by SURFnet</value>
+Mogelijk gemaakt door SURFnet</value>
     <comment>{0}=Client name</comment>
   </data>
   <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
@@ -398,5 +398,8 @@ Powered by SURFnet</value>
   </data>
   <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
     <value>_Kopieer sleutel</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Niet beschikbaar</value>
   </data>
 </root>

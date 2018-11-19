@@ -118,49 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>Verifying signature failed. Integrity of {0} is not valid.</value>
+    <value>Controle van de handtekening is mislukt. Integriteit van {0} is niet geldig.</value>
   </data>
   <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value>API server replied with an error.</value>
+    <value>API-server antwoordde met een fout.</value>
   </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Private key is invalid or of unsupported format.</value>
+    <value>Privésleutel is ongeldig of niet ondersteund formaat.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value>Loading of API endpoints failed.</value>
+    <value>Laden van API endpoints mislukt.</value>
   </data>
   <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Loading of the provider source {0} failed.</value>
+    <value>Laden van de leveranciersbron {0} mislukt.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value>Loading of the profile list failed.</value>
+    <value>Het laden van de profiellijst is mislukt.</value>
   </data>
   <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value>Loading of client certificate failed.</value>
+    <value>Het laden van het clientcertificaat is mislukt.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
-    <value>Loading of profile configuration failed.</value>
+    <value>Laden van de profielconfiguratie is mislukt.</value>
   </data>
   <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Loading of user info failed.</value>
+    <value>Laden van gebruikersinformatie is mislukt.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Saving of profile's OpenVPN configuration to "{0}" failed.</value>
+    <value>Opslaan van de OpenVPN-configuratie van het profiel naar "{0}" mislukt.</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Client authorization failed.</value>
+    <value>Client-autorisatie is mislukt.</value>
   </data>
   <data name="ErrorNullAccessToken" xml:space="preserve">
-    <value>No access token granted.</value>
+    <value>Geen toegangstoken toegekend.</value>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value>Adding routes to system...</value>
+    <value>Routes toevoegen aan het systeem...</value>
   </data>
   <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
-    <value>Assigning IP address to virtual network interface...</value>
+    <value>Toewijzen van IP-adres aan virtuele netwerkinterface...</value>
   </data>
   <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value>Authenticating with server...</value>
+    <value>Authenticeren met server...</value>
   </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
     <value>Verbonden.</value>
@@ -169,28 +169,28 @@
     <value>Verbinden...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>A graceful exit is in progress...</value>
+    <value> Netjes afsluiten in gang...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value>OpenVPN reported fatal error.</value>
+    <value>OpenVPN meldde een fatale fout.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value>Downloading configuration options from server...</value>
+    <value>Configuratieopties downloaden van de server...</value>
   </data>
   <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
-    <value>A restart has occurred...</value>
+    <value>Er heeft een herstart plaatsgevonden...</value>
   </data>
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
-    <value>Waiting for initial response from server...</value>
+    <value>Wachten op initieel antwoord van de server...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>&lt;Automatisch&gt;</value>
+    <value>&lt;Automatic&gt;</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
-    <value>Network interface with {0} ID not found.</value>
+    <value>Netwerk interface met {0} ID niet gevonden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Network interface {0} not found.</value>
+    <value>Netwerk interface {0} niet gevonden.</value>
   </data>
   <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
     <value>Time-based One-Time Password (TOTP)</value>
@@ -199,49 +199,49 @@
     <value>YubiKey</value>
   </data>
   <data name="ErrorInvalidTOTP" xml:space="preserve">
-    <value>Ongeldige TOTP-code: de code moet exact zes (6) decimale cijfers bevatten; geen spaties of streepjes zijn toegestaan.</value>
+    <value>Ongeldig TOTP-antwoord: het moet precies zes (6) decimale getallen bevatten; spaties of verbindingsstreepjes zijn niet toegestaan.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Ongeldige servername: een servernaam bevat letters, nummers, koppeltekens en punten.</value>
+    <value>Ongeldige hostnaam: een hostnaam bevat letters, nummers, koppeltekens en punten.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value>Property name {0} is not valid.</value>
+    <value>Naam van eigenschap {0} is ongeldig.</value>
     <comment>{0}=Property name</comment>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
-    <value>Interactive Service failure.</value>
+    <value>Interactieve Service fout.</value>
   </data>
   <data name="InstanceForget" xml:space="preserve">
     <value>Vergeet {0}</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>Downloaded file {0} is corrupt.</value>
+    <value>Gedownload bestand{0} is corrupt.</value>
     <comment>{0}=URI</comment>
   </data>
   <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
     <value>Aanmelden voor twee-factor authenticatie mislukt.</value>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
-    <value>Downloading from web failed. Please check your internet connection.</value>
+    <value>Downloaden van het web is mislukt. Controleer a.u.b. jouw internetverbinding.</value>
   </data>
   <data name="ErrorUploading" xml:space="preserve">
-    <value>Uploading to web failed. Please check your internet connection.</value>
+    <value>Het uploaden naar het web is mislukt. Controleer a.u.b. jouw internetverbinding.</value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value>Resolving server IP...</value>
+    <value>Oplossen van server IP...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value>Connecting to TCP server...</value>
+    <value>Verbinding maken met de TCP-server...</value>
   </data>
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value>Installer file not available. Updating aborted.</value>
+    <value>Installatiebestand niet beschikbaar. Updaten afgebroken.</value>
   </data>
   <data name="AboutPageTitle" xml:space="preserve">
     <value>Over</value>
   </data>
   <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Select Your Institution's Country</value>
+    <value>Selecteer het land van je instituut</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
     <value>Selecteer je instituut</value>
@@ -250,13 +250,13 @@
     <value>Selecteer je profiel</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Enter URL of your Provider</value>
+    <value>Geef URL in van je provider</value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiseren...</value>
   </data>
   <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>How do you want to use the VPN?</value>
+    <value>Hoe wil je de VPN gebruiken?</value>
   </data>
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
     <value>Update voorbereiden...</value>
@@ -268,15 +268,15 @@
     <value>VPN-verbinding</value>
   </data>
   <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Instituut toegang</value>
   </data>
   <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Veilig internet</value>
   </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
-    <value>The certificate was disabled by an administrator.</value>
+    <value>Het certificaat is uitgeschakeld door een beheerder.</value>
   </data>
   <data name="ErrorUserDisabled" xml:space="preserve">
-    <value>The user account was disabled by an administrator.</value>
+    <value>Het gebruikersaccount is uitgeschakeld door een beheerder.</value>
   </data>
 </root>
