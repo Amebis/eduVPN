@@ -1,6 +1,13 @@
 # Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.24...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.25...HEAD)
+
+
+## [1.0.25](https://github.com/Amebis/eduVPN/compare/1.0.24...1.0.25) (2018-11-19)
+
+- Complete Dutch translation
+- Self-updating revised to use original binary installer filename
+- Copyright notice update
 
 
 ## [1.0.24](https://github.com/Amebis/eduVPN/compare/1.0.23...1.0.24) (2018-11-08)
