@@ -189,6 +189,10 @@ namespace eduVPN.Models
             // Remove all profiles from history.
             ConnectingProfileList.Clear();
 
+            // Remove all instances from history.
+            for (var i = ConnectingInstanceList.Count; i-- > 0;)
+                ForgetInstance(ConnectingInstanceList[i]);
+
             base.Forget();
         }
 

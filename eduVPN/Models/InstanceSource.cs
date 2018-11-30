@@ -192,9 +192,7 @@ namespace eduVPN.Models
         /// </summary>
         public virtual void Forget()
         {
-            // Remove all instances from history.
-            for (var i = ConnectingInstanceList.Count; i-- > 0;)
-                ForgetInstance(ConnectingInstanceList[i]);
+            ConnectingInstance = null;
         }
 
         #endregion
