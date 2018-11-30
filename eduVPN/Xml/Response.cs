@@ -144,7 +144,8 @@ namespace eduVPN.Xml
                         return previous;
                     }
 
-                    throw;
+                    // Create our own version of the exception, which will contain the body of response as text.
+                    throw new WebExceptionEx(ex, ct);
                 }
                 else
                     throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
