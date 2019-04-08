@@ -529,6 +529,11 @@ namespace eduVPN.ViewModels.VPN
                                                         goto default;
                                                     }
 
+                                                case "connection-reset": // Connection was reset. Is client certificate expired?
+                                                    _client_certificate = ConnectingProfile.Instance.GetClientCertificate(AuthenticatingInstance, _quit.Token);
+                                                    _ignore_hold_hint = true;
+                                                    break;
+
                                                 case "tls-error": // Client certificate is not compliant with this eduVPN instance. Was eduVPN instance reinstalled?
                                                     // Refresh client certificate.
                                                     _client_certificate = ConnectingProfile.Instance.RefreshClientCertificate(AuthenticatingInstance, _quit.Token);
