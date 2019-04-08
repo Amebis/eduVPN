@@ -43,7 +43,19 @@ namespace eduVPN.Models.Tests
                     {
                         var uri_builder = new UriBuilder(i.Base);
                         uri_builder.Path += "info.json";
-                        new Models.InstanceEndpoints().LoadJSON(Xml.Response.Get(uri_builder.Uri).Value);
+                        try
+                        {
+                            new Models.InstanceEndpoints().LoadJSON(Xml.Response.Get(uri_builder.Uri).Value);
+                        }
+                        catch (AggregateException ex)
+                        {
+                            if (ex.InnerException is WebException ex_web && ex_web.Status == WebExceptionStatus.ConnectFailure)
+                            {
+                                // Ignore connection failure WebException(s), as some instances are not publicly available.
+                            }
+                            else
+                                throw;
+                        }
                     });
 
                     // Re-load list of instances.
