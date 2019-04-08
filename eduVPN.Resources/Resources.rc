@@ -71,7 +71,7 @@ BEGIN
 			VALUE "CompanyName",      "SURF"
 			VALUE "FileDescription",  "eduVPN Native Resources"
 			VALUE "FileVersion",      "1.0.26"
-			VALUE "LegalCopyright",   "Copyright © 2017-2018 The Commons Conservancy eduVPN Programme"
+			VALUE "LegalCopyright",   "Copyright © 2017-2019 The Commons Conservancy eduVPN Programme"
 			VALUE "OriginalFilename", "eduVPN.Resources.dll"
 			VALUE "ProductName",      "eduVPN"
 			VALUE "ProductVersion",   "1.0.26"

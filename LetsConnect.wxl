@@ -2,7 +2,7 @@
 <!--
     Let's Connect! - The open source VPN
 
-    Copyright: 2017-2018 The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2019 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
 <WixLocalization
@@ -17,7 +17,7 @@
     <String Id="ProductLanguage">1033</String>
     <String Id="SummaryCodepage">1252</String>
     <String Id="Culture">en-US</String>
-    <String Id="LegalCopyright">Copyright: 2017-2018 The Commons Conservancy eduVPN Programme</String>
+    <String Id="LegalCopyright">Copyright: 2017-2019 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>
     <String Id="DotNETFrameworkMissing">This application requires .NET Framework 4.5. Please install the .NET Framework 4.5 then run this installer again.</String>
