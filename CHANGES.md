@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.25...HEAD)
 
+- Update to OpenVPN 2.4.7
+- Fixes
+
 
 ## [1.0.25](https://github.com/Amebis/eduVPN/compare/1.0.24...1.0.25) (2018-11-19)
 
