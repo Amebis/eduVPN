@@ -52,6 +52,11 @@
                 <File Id="$(var.ClientTarget).Client.resources.dll.sl" Source="sl\$(var.ClientTarget).Client.resources.dll"/>
             </Component>
         </DirectoryRef>
+        <DirectoryRef Id="RESDIRUK">
+            <Component Id="$(var.ClientTarget).Client.resources.dll.uk" Guid="{CBA661F3-791C-4639-A1B3-6BAC50807A6D}">
+                <File Id="$(var.ClientTarget).Client.resources.dll.uk" Source="uk\$(var.ClientTarget).Client.resources.dll"/>
+            </Component>
+        </DirectoryRef>
 
 
         <!--
@@ -67,6 +72,7 @@
             <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.nl"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.sl"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.uk"/>
             <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
         </ComponentGroup>
     </Fragment>

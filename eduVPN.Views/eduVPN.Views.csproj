@@ -191,6 +191,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.nl.resx" />
     <EmbeddedResource Include="Resources\Strings.sl.resx" />
+    <EmbeddedResource Include="Resources\Strings.uk.resx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Blank.png" />

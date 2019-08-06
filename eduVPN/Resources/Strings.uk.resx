@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ErrorInvalidSignature" xml:space="preserve">
+    <value>Підтвердження підпису не вдалося. Цілісність {0} недійсна.</value>
+  </data>
+  <data name="ErrorAPIServerReply" xml:space="preserve">
+    <value>Сервер API відповів помилкою.</value>
+  </data>
+  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
+    <value>Приватний ключ недійсний або не підтримується.</value>
+  </data>
+  <data name="ErrorEndpointsLoad" xml:space="preserve">
+    <value>Помилка завантаження API кінцевого обладнання.</value>
+  </data>
+  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
+    <value>Помилка завантаження джерела {0} постачальника.</value>
+  </data>
+  <data name="ErrorProfileListLoad" xml:space="preserve">
+    <value>Помилка завантаження списку профілів.</value>
+  </data>
+  <data name="ErrorClientCertificateLoad" xml:space="preserve">
+    <value>Помилка завантаження сертифіката клієнта.</value>
+  </data>
+  <data name="ErrorProfileConfigLoad" xml:space="preserve">
+    <value>Помилка завантаження конфігурації профілю.</value>
+  </data>
+  <data name="ErrorUserInfoLoad" xml:space="preserve">
+    <value>Помилка завантаження інформації про користувача.</value>
+  </data>
+  <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
+    <value>Не вдалося зберегти конфігурацію OpenVPN профілю в {0}.</value>
+  </data>
+  <data name="ErrorAuthorization" xml:space="preserve">
+    <value>Помилка авторизації клієнта.</value>
+  </data>
+  <data name="ErrorNullAccessToken" xml:space="preserve">
+    <value>Відсутній токен доступу.</value>
+  </data>
+  <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
+    <value>Додавання маршрутів до системи ...</value>
+  </data>
+  <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
+    <value>Призначення IP-адреси інтерфейсу віртуальної мережі ...</value>
+  </data>
+  <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
+    <value>Аутентифікація з сервером ...</value>
+  </data>
+  <data name="OpenVPNStateTypeConnected" xml:space="preserve">
+    <value>Підключено.</value>
+  </data>
+  <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
+    <value>Підключення...</value>
+  </data>
+  <data name="OpenVPNStateTypeExiting" xml:space="preserve">
+    <value>Виконується коректний вихід...</value>
+  </data>
+  <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
+    <value>OpenVPN повідомив про фатальну помилку.</value>
+  </data>
+  <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
+    <value>Завантаження параметрів конфігурації з сервера ...</value>
+  </data>
+  <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
+    <value>Відбулося перезавантаження...</value>
+  </data>
+  <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
+    <value>Очікування на початкову відповідь від сервера...</value>
+  </data>
+  <data name="InterfaceNameAutomatic" xml:space="preserve">
+    <value>&lt;Automatic&gt;</value>
+  </data>
+  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
+    <value>Мережевий інтерфейс з {0} ID не знайдено.</value>
+  </data>
+  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
+    <value>Мережевий інтерфейс {0} не знайдено.</value>
+  </data>
+  <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
+    <value>Одноразовий пароль на базі часу (TOTP)</value>
+  </data>
+  <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
+    <value>YubiKey</value>
+  </data>
+  <data name="ErrorInvalidTOTP" xml:space="preserve">
+    <value>Недійсна відповідь TOTP: пароль повинен містити точно шість (6) цифр; дефіси та пробіли не дозволені.</value>
+  </data>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Недійсне ім'я хоста: імена хостів містять літери, цифри, дефіси та крапки.</value>
+  </data>
+  <data name="ErrorInvalidPropertyName" xml:space="preserve">
+    <value>Властивість {0} помилкова.</value>
+    <comment>{0}=Property name</comment>
+  </data>
+  <data name="ErrorInteractiveService" xml:space="preserve">
+    <value>Помилка інтерактивної служби.</value>
+  </data>
+  <data name="InstanceForget" xml:space="preserve">
+    <value>Забути {0}</value>
+    <comment>{0}=Provider</comment>
+  </data>
+  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
+    <value>Завантажений файл {0} пошкоджено.</value>
+    <comment>{0}=URI</comment>
+  </data>
+  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
+    <value>Не вдалося зареєструвати 2-факторну автентифікацію.</value>
+  </data>
+  <data name="ErrorDownloading" xml:space="preserve">
+    <value>Помилка завантаження з Інтернету. Перевірте підключення до Інтернету.</value>
+  </data>
+  <data name="ErrorUploading" xml:space="preserve">
+    <value>Не вдалося вивантажити в Інтернет. Перевірте підключення до Інтернету.</value>
+  </data>
+  <data name="OpenVPNStateTypeResolving" xml:space="preserve">
+    <value>Визначення IP-адреси сервера...</value>
+  </data>
+  <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
+    <value>Підключення до TCP сервера...</value>
+  </data>
+  <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
+    <value>Файл інсталятора недоступний. Оновлення припинено.</value>
+  </data>
+  <data name="AboutPageTitle" xml:space="preserve">
+    <value>Про програму</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
+    <value>Виберіть країну своєї установи</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
+    <value>Виберіть вашу установу</value>
+  </data>
+  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
+    <value>Виберіть ваш профайл</value>
+  </data>
+  <data name="CustomInstancePageTitle" xml:space="preserve">
+    <value>Введить URL вашого провайдера</value>
+  </data>
+  <data name="InitializingPageTitle" xml:space="preserve">
+    <value>Ініціалізація...</value>
+  </data>
+  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
+    <value>Як ви плануєте використовувати VPN?</value>
+  </data>
+  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+    <value>Підготовка до оновлення...</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Налаштування</value>
+  </data>
+  <data name="StatusPageTitle" xml:space="preserve">
+    <value>VPN з'єднання</value>
+  </data>
+  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
+    <value>Доступ до установи</value>
+  </data>
+  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
+    <value>Захищений Інтернет</value>
+  </data>
+  <data name="ErrorCertificateDisabled" xml:space="preserve">
+    <value>Сертифікат був відключений адміністратором.</value>
+  </data>
+  <data name="ErrorUserDisabled" xml:space="preserve">
+    <value>Обліковий запис користувача було відключено адміністратором.</value>
+  </data>
+</root>

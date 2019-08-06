@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2019 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    xmlns="http://schemas.microsoft.com/wix/2006/localization"
+    Culture="uk"
+    Codepage="1251">
+    <String Id="ApplicationName">eduVPN Client</String>
+    <String Id="ApplicationCoreName">eduVPN Client Core</String>
+    <String Id="ApplicationOpenVPNName">eduVPN Client OpenVPN Components</String>
+    <String Id="ApplicationTAPWinPreName">eduVPN Client TAP-Windows Prerequisites</String>
+    <String Id="ManufacturerName">SURF</String>
+    <String Id="ProductLanguage">1058</String>
+    <String Id="SummaryCodepage">1251</String>
+    <String Id="Culture">uk</String>
+    <String Id="LegalCopyright">Copyright: 2017-2019 The Commons Conservancy eduVPN Programme</String>
+
+    <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>
+    <String Id="DotNETFrameworkMissing">This application requires .NET Framework 4.5. Please install the .NET Framework 4.5 then run this installer again.</String>
+    <String Id="TAPWindowsMissing">This application requires TAP-Windows driver. Please install the TAP-Windows driver then run this installer again.</String>
+</WixLocalization>

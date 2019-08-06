@@ -79,6 +79,7 @@
                     <Directory Id="BINDIR" Name="Core" FileSource="$(var.TargetDir)">
                         <Directory Id="RESDIRNL" Name="nl"/>
                         <Directory Id="RESDIRSL" Name="sl"/>
+                        <Directory Id="RESDIRUK" Name="uk"/>
                     </Directory>
                 </Directory>
             </Directory>

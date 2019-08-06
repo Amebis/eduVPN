@@ -51,6 +51,7 @@ Clean ::
 	"Install\thm.wxl" \
 	"Install\thm.nl.wxl" \
 	"Install\thm.sl.wxl" \
+	"Install\thm.uk.wxl" \
 	"Install\thm.xml" \
 	"Install\$(CLIENT_TARGET)\logo.png" \
 	"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" \

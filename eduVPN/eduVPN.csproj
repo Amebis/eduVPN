@@ -157,6 +157,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.nl.resx" />
     <EmbeddedResource Include="Resources\Strings.sl.resx" />
+    <EmbeddedResource Include="Resources\Strings.uk.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">
