@@ -23,7 +23,7 @@
 
 ## Pre-requisites
 
-1. Install [Visual Studio 2017 Community Edition](https://www.visualstudio.com/vs/community/). A minimum set of required features is:
+1. Install [Visual Studio 2019 Community Edition](https://www.visualstudio.com/vs/community/). A minimum set of required features is:
    - Workloads
       - .NET desktop development
       - Desktop development with C++ (required by eduEd25519 and OpenVPN submodules, eduVPN.Resources and OpenVPN.Resources resource projects)

@@ -36,9 +36,9 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
 !ENDIF
 
 !IF "$(CFG)" == "Debug"
-VC141REDIST_MSM=Microsoft_VC141_DebugCRT_$(PLAT).msm
+VC142REDIST_MSM=Microsoft_VC142_DebugCRT_$(PLAT).msm
 !ELSE
-VC141REDIST_MSM=Microsoft_VC141_CRT_$(PLAT).msm
+VC142REDIST_MSM=Microsoft_VC142_CRT_$(PLAT).msm
 !ENDIF
 
 
@@ -112,11 +112,11 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config"                           rd  /s /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config"
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC141REDIST_MSM)"
+"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC142REDIST_MSM)"
 	copy /y $** $@ > NUL
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC141REDIST_MSM)"
+	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj" : "OpenVPN.Resources\OpenVPN.Resources.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**

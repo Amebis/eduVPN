@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.26...HEAD)
 
+- Update to Visual Studio 2019
+
 
 ## [1.0.26](https://github.com/Amebis/eduVPN/compare/1.0.25...1.0.26) (2019-04-15)
 
@@ -157,7 +159,7 @@ This version has been submitted for code review.
 
 - 2-Factor authentication support
 - Recent configurations can now be cleared using context menu
-- Client configuration display name extended to include computer name (See _VPN User Portal_ » _Configurations_)
+- Client configuration display name extended to include computer name (See _VPN User Portal_ ï¿½ _Configurations_)
 - libsodium updated to 1.0.14
 - TLS renegotiation forced every 5 minutes for Debug versions of the client
 - Client reapplies for certificate when `tls-error` related reconnect occurs
