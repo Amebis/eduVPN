@@ -49,9 +49,9 @@ namespace eduVPN.Models.Tests
                         }
                         catch (AggregateException ex)
                         {
-                            if (ex.InnerException is WebException ex_web && ex_web.Status == WebExceptionStatus.ConnectFailure)
+                            if (ex.InnerException is WebException ex_web && (ex_web.Status == WebExceptionStatus.ConnectFailure || ex_web.Status == WebExceptionStatus.SecureChannelFailure))
                             {
-                                // Ignore connection failure WebException(s), as some instances are not publicly available.
+                                // Ignore connection failure WebException(s), as some instances are not publicly available or have other issues.
                             }
                             else
                                 throw;
