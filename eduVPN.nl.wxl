@@ -11,15 +11,15 @@
     Codepage="1252">
     <String Id="ApplicationName">eduVPN Client</String>
     <String Id="ApplicationCoreName">eduVPN Client Core</String>
-    <String Id="ApplicationOpenVPNName">eduVPN Client OpenVPN Components</String>
-    <String Id="ApplicationTAPWinPreName">eduVPN Client TAP-Windows Prerequisites</String>
+    <String Id="ApplicationOpenVPNName">eduVPN Client OpenVPN Componenten</String>
+    <String Id="ApplicationTAPWinPreName">eduVPN Client TAP-Windows Vereisten</String>
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1043</String>
     <String Id="SummaryCodepage">1252</String>
     <String Id="Culture">nl</String>
     <String Id="LegalCopyright">Copyright: 2017-2019 The Commons Conservancy eduVPN Programme</String>
 
-    <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>
-    <String Id="DotNETFrameworkMissing">This application requires .NET Framework 4.5. Please install the .NET Framework 4.5 then run this installer again.</String>
-    <String Id="TAPWindowsMissing">This application requires TAP-Windows driver. Please install the TAP-Windows driver then run this installer again.</String>
+    <String Id="NewerVersionInstalled">Een nieuwere versie van [SimpleProductName] is al geïnstalleerd. Setup zal nu afsluiten.</String>
+    <String Id="DotNETFrameworkMissing">Deze applicatie vereist .NET Framework 4.5. Installeer .NET Framework 4.5 en voer dan opnieuw deze installatie uit.</String>
+    <String Id="TAPWindowsMissing">Deze applicatie vereist de TAP-Windows driver. Installeer de TAP-Windows driver en voer dan opnieuw deze installatie uit.</String>
 </WixLocalization>

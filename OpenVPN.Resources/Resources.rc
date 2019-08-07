@@ -116,12 +116,12 @@ LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN Client OpenVPN Components"
+	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN Client OpenVPN Componenten"
 	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
 	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
 	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
 
-	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! Client OpenVPN Components"
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! Client OpenVPN Componenten"
 	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
