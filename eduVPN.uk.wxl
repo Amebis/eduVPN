@@ -9,17 +9,17 @@
     xmlns="http://schemas.microsoft.com/wix/2006/localization"
     Culture="uk"
     Codepage="1251">
-    <String Id="ApplicationName">eduVPN Client</String>
-    <String Id="ApplicationCoreName">eduVPN Client Core</String>
-    <String Id="ApplicationOpenVPNName">eduVPN Client OpenVPN Components</String>
-    <String Id="ApplicationTAPWinPreName">eduVPN Client TAP-Windows Prerequisites</String>
+    <String Id="ApplicationName">Клієнт eduVPN</String>
+    <String Id="ApplicationCoreName">Ядро клієнта eduVPN</String>
+    <String Id="ApplicationOpenVPNName">Клієнт eduVPN - компонент OpenVPN</String>
+    <String Id="ApplicationTAPWinPreName">Клієнт eduVPN потребує TAP-Windows</String>
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1058</String>
     <String Id="SummaryCodepage">1251</String>
     <String Id="Culture">uk</String>
     <String Id="LegalCopyright">Copyright: 2017-2019 The Commons Conservancy eduVPN Programme</String>
 
-    <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>
-    <String Id="DotNETFrameworkMissing">This application requires .NET Framework 4.5. Please install the .NET Framework 4.5 then run this installer again.</String>
-    <String Id="TAPWindowsMissing">This application requires TAP-Windows driver. Please install the TAP-Windows driver then run this installer again.</String>
+    <String Id="NewerVersionInstalled">Нова версія [SimpleProductName] вже встановлено. Вихід з програми установки.</String>
+    <String Id="DotNETFrameworkMissing">Це програмне забезбечення потребує .NET Framework 4.5. Будь ласка встановіть .NET Framework 4.5 та запустіть інсталяцію повторно.</String>
+    <String Id="TAPWindowsMissing">Це програмне забезбечення потребує TAP-Windows драйвер. Будь ласка встановіть TAP-Windows драйвер та запустіть інсталяцію повторно.</String>
 </WixLocalization>

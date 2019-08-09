@@ -170,15 +170,15 @@ LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "eduVPN Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN for education and research"
+	IDS_EDUVPN_CLIENT_TITLE            "Клієнт eduVPN"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN для освіти та досліджень"
 	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "eduVPN Client Core"
+	IDS_EDUVPN_CORE_TITLE              "Ядро клієнта eduVPN"
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! Client"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "The open source VPN"
+	IDS_LETSCONNECT_CLIENT_TITLE       "Клієнт Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "VPN з відкритим кодом"
 	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! Client Core"
+	IDS_LETSCONNECT_CORE_TITLE         "Ядро клієнта Let's Connect!"
 END
 
 #endif    // Ukrainian (Ukraine) resources
