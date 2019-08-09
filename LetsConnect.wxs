@@ -36,13 +36,11 @@
                 Name="thm.wxl"
                 SourceFile="Install\thm.wxl"/>
 
-            <!--
             <Payload
                 Id="thm-nl-NL"
                 Compressed="yes"
                 Name="1043\thm.wxl"
                 SourceFile="Install\thm.nl.wxl"/>
-            -->
 
             <Payload
                 Id="thm-sl-SI"
@@ -50,13 +48,11 @@
                 Name="1060\thm.wxl"
                 SourceFile="Install\thm.sl.wxl"/>
 
-            <!--
             <Payload
                 Id="thm-uk-UA"
                 Compressed="yes"
                 Name="1058\thm.wxl"
                 SourceFile="Install\thm.uk.wxl"/>
-            -->
 
             <Payload
                 Id="logo"
