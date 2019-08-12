@@ -6,7 +6,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <Theme xmlns="http://wixtoolset.org/schemas/thmutil/2010">
-    <Window Width="485" Height="421" HexStyle="100a0000" FontId="0">#(loc.Caption)</Window>
+    <Window Width="485" Height="466" HexStyle="100a0000" FontId="0">#(loc.Caption)</Window>
     <Font Id="0" Height="-12" Weight="500" Foreground="000000" Background="FFFFFF">Segoe UI</Font>
     <Font Id="1" Height="-22" Weight="500" Foreground="666666" Background="FFFFFF">Segoe UI</Font>
 
@@ -14,14 +14,13 @@
 
     <Page Name="Help">
         <Text X="11" Y="201" Width="-11" Height="30" FontId="1" DisablePrefix="yes">#(loc.HelpHeader)</Text>
-        <Text X="11" Y="233" Width="-11" Height="-41" FontId="0" DisablePrefix="yes">#(loc.HelpText)</Text>
-
-        <Button Name="HelpCancelButton" X="-11" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0">#(loc.HelpCloseButton)</Button>
+        <Text X="11" Y="242" Width="-11" Height="-11" FontId="0" DisablePrefix="yes">#(loc.HelpText)</Text>
     </Page>
 
     <Page Name="Install">
         <Hypertext Name="EulaHyperlink" X="11" Y="-30" Width="-201" Height="17" TabStop="yes" FontId="0" HideWhenDisabled="yes">#(loc.InstallLicenseLinkText)</Hypertext>
         <Checkbox Name="EulaAcceptCheckbox" X="11" Y="-11" Width="-201" Height="17" TabStop="yes" FontId="0" HideWhenDisabled="yes">#(loc.InstallAcceptCheckbox)</Checkbox>
+
         <Button Name="OptionsButton" X="-106" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0" HideWhenDisabled="yes">#(loc.InstallOptionsButton)</Button>
         <Button Name="InstallButton" X="-11" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0">#(loc.InstallInstallButton)</Button>
     </Page>
@@ -59,9 +58,8 @@
     <Page Name="Modify">
         <Text X="11" Y="201" Width="-11" Height="30" FontId="1" DisablePrefix="yes">#(loc.ModifyHeader)</Text>
 
-        <Button Name="RepairButton" X="-201" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0" HideWhenDisabled="yes">#(loc.ModifyRepairButton)</Button>
-        <Button Name="UninstallButton" X="-106" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0">#(loc.ModifyUninstallButton)</Button>
-        <Button Name="ModifyCancelButton" X="-11" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0">#(loc.ModifyCloseButton)</Button>
+        <Button Name="RepairButton" X="-106" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0" HideWhenDisabled="yes">#(loc.ModifyRepairButton)</Button>
+        <Button Name="UninstallButton" X="-11" Y="-11" Width="90" Height="25" TabStop="yes" FontId="0">#(loc.ModifyUninstallButton)</Button>
     </Page>
 
     <Page Name="Success">

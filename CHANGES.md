@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.26...HEAD)
 
 - "Add other address" resurrected in eduVPN Client
+- Setup UI refinements
 - Add Ukrainian and Complete Dutch translation
 - Update to Visual Studio 2019
 

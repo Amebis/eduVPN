@@ -22,13 +22,9 @@
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
             <bal:WixStandardBootstrapperApplication
                 LicenseUrl=""
-                SuppressOptionsUI="yes"/>
-
-            <Payload
-                Id="thm"
-                Compressed="yes"
-                Name="thm.xml"
-                SourceFile="Install\thm.xml"/>
+                SuppressOptionsUI="yes"
+                ThemeFile="Install\thm.xml"
+                LogoFile="Install\$(var.ClientTarget)\logo.png"/>
 
             <Payload
                 Id="thm-en-US"
@@ -53,12 +49,6 @@
                 Compressed="yes"
                 Name="1058\thm.wxl"
                 SourceFile="Install\thm.uk.wxl"/>
-
-            <Payload
-                Id="logo"
-                Compressed="yes"
-                Name="logo.png"
-                SourceFile="Install\$(var.ClientTarget)\logo.png"/>
         </BootstrapperApplicationRef>
 
         <Chain>

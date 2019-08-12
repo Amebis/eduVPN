@@ -38,7 +38,7 @@
 3. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 4. Install TAP-Windows driver: [official](https://openvpn.net/index.php/open-source/downloads.html) or the one included in the eduVPN source tree in the _bin\Setup_ folder.
 5. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
-6. Install [WiX Toolset 3.11 or later](http://wixtoolset.org/releases/v3.11/stable) (required for MSI and EXE installer packaging).
+6. Install [WiX Toolset 3.14 or later](https://wixtoolset.org/releases/v3-14-0-3205/) (required for MSI and EXE installer packaging).
 
 
 ### Code Signing
