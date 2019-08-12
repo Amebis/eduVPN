@@ -176,6 +176,9 @@ Het Commons Conservancy eduVPN Programma</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>De vereiste OAuth parameter "state" ontbreekt of is onjuist.</value>
   </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>V_oeg ander adres toe</value>
+  </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
     <value>Verbind met je _instituut</value>
   </data>

@@ -252,6 +252,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add _other address.
+        /// </summary>
+        public static string InstanceSourcePageCustomButtonTitle {
+            get {
+                return ResourceManager.GetString("InstanceSourcePageCustomButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect to your _Institution.
         /// </summary>
         public static string InstanceSourcePageInstituteAccessButtonTitle2 {

@@ -176,6 +176,9 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Обов'язковий OAuth параметрт "state" відсутній або хибний.</value>
   </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>Додати _іншу адресу</value>
+  </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
     <value>Під'єднатися до вашої _Установи</value>
   </data>

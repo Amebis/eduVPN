@@ -176,6 +176,9 @@ Program Commons Conservancy eduVPN</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>D_odaj drug naslov</value>
+  </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
     <value>P_oveži se s svojo ustanovo</value>
   </data>
