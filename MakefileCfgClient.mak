@@ -7,7 +7,9 @@
 
 # WiX parameters
 WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
-	-dClientTarget="$(CLIENT_TARGET)"
+	-dClientTarget="$(CLIENT_TARGET)" \
+	-dClientUpgradeCode="$(CLIENT_UPGRADE_CODE)" \
+	-dClientAboutUrl="$(CLIENT_ABOUT_URL)"
 
 
 ######################################################################
@@ -39,7 +41,7 @@ Clean ::
 # Building
 ######################################################################
 
-"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" : "$(CLIENT_TARGET).wxs"
+"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" : "eduVPN.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_CLIENT) -out $@ $**
 
@@ -47,7 +49,7 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" : \
-	"$(CLIENT_TARGET).wxl" \
+	"eduVPN.wxl" \
 	"Install\thm.wxl" \
 	"Install\thm.nl.wxl" \
 	"Install\thm.sl.wxl" \
@@ -62,7 +64,7 @@ Clean ::
 	"$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x64.msi" \
 	"$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_x86.msi" \
 	"$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_x64.msi"
-	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "$(CLIENT_TARGET).wxl" -out $@ "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" "$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj"
+	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "eduVPN.wxl" -out $@ "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" "$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj"
 
 Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_*.exe" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_*.exe"

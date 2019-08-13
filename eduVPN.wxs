@@ -10,11 +10,11 @@
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
     <Bundle
-        UpgradeCode="{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}"
+        UpgradeCode="$(var.ClientUpgradeCode)"
         Version="$(var.Version)"
-        Name="!(loc.ApplicationName) $(var.Version)"
+        Name="!(loc.$(var.ClientTarget).Name) $(var.Version)"
         Manufacturer="!(loc.ManufacturerName)"
-        AboutUrl="https://eduvpn.org/"
+        AboutUrl="$(var.ClientAboutUrl)"
         Copyright="!(loc.LegalCopyright)"
         IconSourceFile="$(var.ClientTarget).Client\Resources\App.ico"
         Compressed="yes">

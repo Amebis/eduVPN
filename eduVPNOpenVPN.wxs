@@ -12,7 +12,7 @@
         UpgradeCode="$(var.OpenVPN.UpgradeGUID)"
         Version="$(var.OpenVPN.Version)"
         Language="!(loc.ProductLanguage)"
-        Name="!(loc.ApplicationOpenVPNName) $(var.OpenVPN.VersionInformational)"
+        Name="!(loc.$(var.ClientTarget).OpenVPNName) $(var.OpenVPN.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
@@ -27,7 +27,7 @@
             Cabinet="OpenVPN.cab"
             EmbedCab="yes"/>
 
-        <Property Id="ARPURLINFOABOUT" Value="https://eduvpn.org/"/>
+        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUrl)"/>
 
 
         <!--
@@ -92,7 +92,7 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
-                <Directory Id="PRODUCTDIR" Name="eduVPN">
+                <Directory Id="PRODUCTDIR" Name="$(var.ClientTitle)">
                     <Directory Id="BINDIR" Name="OpenVPN" FileSource="$(var.TargetDir)">
                         <Directory Id="CONFIGDIR" Name="config"/>
                     </Directory>
@@ -233,7 +233,7 @@
         <!--
             Features
         -->
-        <Feature Id="$(var.ClientTarget).OpenVPN" Title="!(loc.ApplicationOpenVPNName)" Level="1">
+        <Feature Id="$(var.ClientTarget).OpenVPN" Title="!(loc.$(var.ClientTarget).OpenVPNName)" Level="1">
             <ComponentRef Id="libcrypto_1_1.dll"/>
             <ComponentRef Id="libssl_1_1.dll"/>
             <ComponentRef Id="liblzo2_2.dll"/>

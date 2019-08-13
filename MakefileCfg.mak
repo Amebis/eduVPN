@@ -40,10 +40,8 @@ PLAT=x64
 # Client-specific rules
 ######################################################################
 
-CLIENT_TARGET=eduVPN
-CLIENT_TITLE=eduVPN
+!INCLUDE "eduVPN.mak"
 !INCLUDE "MakefileCfgClient.mak"
 
-CLIENT_TARGET=LetsConnect
-CLIENT_TITLE=Let's Connect!
+!INCLUDE "LetsConnect.mak"
 !INCLUDE "MakefileCfgClient.mak"

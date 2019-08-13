@@ -13,7 +13,7 @@
         UpgradeCode="$(var.Core.UpgradeGUID)"
         Version="$(var.Core.Version)"
         Language="!(loc.ProductLanguage)"
-        Name="!(loc.ApplicationCoreName) $(var.Core.VersionInformational)"
+        Name="!(loc.$(var.ClientTarget).CoreName) $(var.Core.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
@@ -33,7 +33,7 @@
             SourceFile="$(var.ClientTarget).Client\Resources\App.ico"/>
 
         <Property Id="ARPPRODUCTICON" Value="App.ico"/>
-        <Property Id="ARPURLINFOABOUT" Value="https://letsconnect-vpn.org/"/>
+        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUrl)"/>
 
 
         <!--
@@ -75,7 +75,7 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
-                <Directory Id="PRODUCTDIR" Name="Let's Connect!">
+                <Directory Id="PRODUCTDIR" Name="$(var.ClientTitle)">
                     <Directory Id="BINDIR" Name="Core" FileSource="$(var.TargetDir)">
                         <Directory Id="RESDIRNL" Name="nl"/>
                         <Directory Id="RESDIRSL" Name="sl"/>
@@ -107,7 +107,7 @@
         <!--
             Features
         -->
-        <Feature Id="$(var.ClientTarget).Client" Title="!(loc.ApplicationCoreName)" Level="1">
+        <Feature Id="$(var.ClientTarget).Client" Title="!(loc.$(var.ClientTarget).CoreName)" Level="1">
             <MergeRef Id="VC150Redist"/>
             <ComponentRef Id="ARP.DisplayName"/>
             <ComponentRef Id="ARP.Publisher"/>

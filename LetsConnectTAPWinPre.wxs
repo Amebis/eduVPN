@@ -13,7 +13,7 @@
         UpgradeCode="$(var.TAPWinPre.UpgradeGUID)"
         Version="$(var.TAPWinPre.Version)"
         Language="!(loc.ProductLanguage)"
-        Name="!(loc.ApplicationTAPWinPreName) $(var.TAPWinPre.VersionInformational)"
+        Name="!(loc.$(var.ClientTarget).TAPWinPreName) $(var.TAPWinPre.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
@@ -28,7 +28,7 @@
             Cabinet="TAPWinPre.cab"
             EmbedCab="yes"/>
 
-        <Property Id="ARPURLINFOABOUT" Value="https://letsconnect-vpn.org/"/>
+        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUrl)"/>
 
         <Binary Id="tap0901.cer" SourceFile="tap0901.cer"/>
 
@@ -61,7 +61,7 @@
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
-                <Directory Id="PRODUCTDIR" Name="Let's Connect!">
+                <Directory Id="PRODUCTDIR" Name="$(var.ClientTitle)">
                     <Directory Id="BINDIR" Name="TAPWinPre" FileSource="$(var.TargetDir)"/>
                 </Directory>
             </Directory>
@@ -88,7 +88,7 @@
         <!--
             Features
         -->
-        <Feature Id="TAPWinPre" Title="!(loc.ApplicationTAPWinPreName)" Level="1">
+        <Feature Id="TAPWinPre" Title="!(loc.$(var.ClientTarget).TAPWinPreName)" Level="1">
             <ComponentRef Id="tap0901.cer"/>
         </Feature>
     </Product>

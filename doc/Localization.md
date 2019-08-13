@@ -8,7 +8,7 @@ eduVPN and Let's Connect! clients are the same client targeted for a different a
 
 2. Setup
 
-   - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.wxl) and [LetsConnect.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/LetsConnect.wxl)
+   - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.wxl)
    - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/thm.wxl)
    - Start menu shortcut and ARP texts [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
    - OpenVPN Interactive Service entries in SCM [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/OpenVPN.Resources/Resources.rc) <sup>[1]</sup>

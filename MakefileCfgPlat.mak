@@ -165,10 +165,8 @@ Clean ::
 # Client-specific rules
 ######################################################################
 
-CLIENT_TARGET=eduVPN
-CLIENT_TITLE=eduVPN
+!INCLUDE "eduVPN.mak"
 !INCLUDE "MakefileCfgPlatClient.mak"
 
-CLIENT_TARGET=LetsConnect
-CLIENT_TITLE=Let's Connect!
+!INCLUDE "LetsConnect.mak"
 !INCLUDE "MakefileCfgPlatClient.mak"
