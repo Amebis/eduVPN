@@ -1,10 +1,13 @@
-# Installation and updating of eduVPN Client for Windows
+# Installation and updating of eduVPN and Let's Connect! Clients for Windows
 
+eduVPN and Let's Connect! clients are the same client targeted for a different audience. While their UI is different, the setup is identical. Therefore, the remainder of this document will reference "eduVPN" only for readability.
 
 ## Setup
+
 Download and run the EXE installer. Binaries are published [here](https://github.com/Amebis/eduVPN/releases).
 
 ## Update
+
 A self-updating feature has been introduced beginning with version 1.0.11. You should be prompted to update when a new version is available on client startup.
 
 To update manually, perform the following steps:

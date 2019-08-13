@@ -1,7 +1,9 @@
-# Deployment of eduVPN Client for Windows
+# Deployment of eduVPN and Let's Connect! Clients for Windows
 
 
-This document describes deploying the eduVPN Client for Windows only. For eduVPN server setup see [eduVPN Documentation](https://github.com/eduvpn/documentation).
+This document describes deploying the eduVPN and Let's Connect! Clients for Windows only. For eduVPN server setup see [eduVPN Documentation](https://github.com/eduvpn/documentation).
+
+eduVPN and Let's Connect! clients are the same client targeted for a different audience. While their UI is different, the setup is identical. Therefore, the remainder of this document will reference "eduVPN" only for readability.
 
 Basic knowledge of GPO or SCCM is required.
 
@@ -31,11 +33,12 @@ Action       | Description
 `/uninstall` | Uninstalls the product.
 `/layout`    | Downloads all web-based content to the current folder for later offline installation.
 
-UI           | Description
--------------|---------------
-_none_       | By default UI and all prompts are displayed.
-`/passive`   | Displays minimal UI with no prompts. The computer is restarted automatically if required.
-`/quiet`     | Displays no UI and no prompts. The computer is restarted automatically if required.
+UI             | Description
+---------------|---------------
+_none_         | By default UI and all prompts are displayed.
+`/passive`     | Displays minimal UI with no prompts. The computer is restarted automatically if required.
+`/quiet`       | Displays no UI and no prompts. The computer is restarted automatically if required.
+`/lang <lcid>` | Displays UI in specified locale if available. The list of LCIDs can be found [here](https://msdn.microsoft.com/en-us/library/cc767443.aspx).
 
 Additional flags:
 - `/norestart` - Suppress any attempts to restart. By default, UI will prompt before a restart.
@@ -53,7 +56,7 @@ After all workstations have the .NET Framework and TAP-Windows driver installed,
 
 Binaries are published [here](https://github.com/Amebis/eduVPN/releases)
 
-Packages can be deployed using a same Group Policy Object. We advise against making `x86` versions available to Win64 machines. Please use the `x64` for Win64 machines.
+Packages can be deployed using the same Group Policy Object. We advise against making `x86` versions available to Win64 machines. Please use the `x64` for Win64 machines.
 
 
 # Keeping eduVPN Client Up-to-date

@@ -3,7 +3,7 @@ The `nmake Setup` prepares distributable binaries in this folder.
 
 # EXE Installers
 
-*Naming convention: `<client brand>Client_<version>_<locale>.exe`*
+*Naming convention: `<client brand>Client_<version>.exe`*
 
 The EXE installers are provided for end-users. They install the VPN client for Windows and all required pre-requisites.
 
