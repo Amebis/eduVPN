@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutPageCopyright2" xml:space="preserve">
+    <value>Copyright © 2017-{0}
+The Commons Conservancy eduVPN Programme</value>
+  </data>
+  <data name="AboutPageVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>_Pays</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>_Institution</value>
+  </data>
+  <data name="AuthorizationPopupMessage2" xml:space="preserve">
+    <value>Le client a besoin {0} d'autorisation, et a par conséquent ouvert votre navigateur. 
+Le client poursuivra une fois l'autorisation terminée...</value>
+    <comment>{0}=Instance name</comment>
+  </data>
+  <data name="AuthorizationPopupTitle" xml:space="preserve">
+    <value>En Attente d'Autorisation</value>
+  </data>
+  <data name="ButtonBackTitle" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="ButtonCloseTitle" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_Copier le Texte d'Erreur</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_Rejeter l'Erreur</value>
+  </data>
+  <data name="ButtonOKTitle" xml:space="preserve">
+    <value>_OK</value>
+  </data>
+  <data name="ButtonSettingsTitle" xml:space="preserve">
+    <value>Réglages</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Fournisseur</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_Fournisseur</value>
+  </data>
+  <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_Profile</value>
+  </data>
+  <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
+    <value>_Nom d'hôte</value>
+  </data>
+  <data name="ErrorOAuthState" xml:space="preserve">
+    <value>Le paramétre OAuth requis "state" est manquant ou incorrect.  </value>
+  </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>Ajouter _d'autres Adresses</value>
+  </data>
+  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+    <value>Connectez-vous à votre _Institution</value>
+  </data>
+  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+    <value>_Utilisez internet en toute sécurité</value>
+  </data>
+  <data name="ListBoxNoItems" xml:space="preserve">
+    <value>Pas d'objets</value>
+    <comment>Displayed when a list is empty</comment>
+  </data>
+  <data name="ListBoxNull" xml:space="preserve">
+    <value>Merci de patienter...</value>
+    <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="MessageMaintenanceBegin" xml:space="preserve">
+    <value>Début</value>
+  </data>
+  <data name="MessageMaintenanceEnd" xml:space="preserve">
+    <value>Fin</value>
+  </data>
+  <data name="MessageMaintenanceTitle" xml:space="preserve">
+    <value>Notification de Maintenance</value>
+  </data>
+  <data name="MessageNotificationTitle" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="NumberToHumanReadable" xml:space="preserve">
+    <value>{0:G}{1}{2}</value>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
+  <data name="PasswordPopupMessage" xml:space="preserve">
+    <value>Entrez votre mot de passe pour "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_Mot de passe</value>
+  </data>
+  <data name="PasswordPopupTitle" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+    <value>Ajouter_un autre</value>
+  </data>
+  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+    <value>Me demander _plus tard</value>
+  </data>
+  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+    <value>Quoi de_Neuf?</value>
+  </data>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>Une version plus récente et améliorée du client est disponible. Restez à jour!</value>
+  </data>
+  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+    <value>Passez cette _version</value>
+  </data>
+  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+    <value>Mise à jour Disponible</value>
+  </data>
+  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+    <value>Télécharger et _mettre à jour maintenant
+(Le client va redémarrer)</value>
+  </data>
+  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
+    <value>{0}a détecté que votre fichier de paramètres utilisateur {1}a été corrompu. Cela peut être dû à un crash.
+
+Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'état par défaut.</value>
+    <comment>{0}=application name, {1}=filename</comment>
+  </data>
+  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
+    <value>Paramètres Utilisateur Corrompus</value>
+  </data>
+  <data name="SettingsPageForceTCPDescription2" xml:space="preserve">
+    <value>Si le client ne peut pas se connecter, ou y arrive mais ne transfère pas de données, la connexion via TCP pourrait résoudre ce problème.</value>
+  </data>
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
+    <value>Se connecter Over _TCP</value>
+  </data>
+  <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
+    <value>Lorsque vous avez besoin de plusieurs connexions OpenVPN simultanées, sélectionnez l'interface TAP du client ci-dessous.</value>
+  </data>
+  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
+    <value>Sélectionnez TAP _Interface</value>
+  </data>
+  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+    <value>Déconnecté</value>
+  </data>
+  <data name="StatusPageInstance" xml:space="preserve">
+    <value>Fournisseur</value>
+  </data>
+  <data name="StatusPageMessagesLabel" xml:space="preserve">
+    <value>_Messages</value>
+  </data>
+  <data name="StatusPageProfile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
+    <value>Bits entrants</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
+    <value>Bits sortants</value>
+  </data>
+  <data name="StatusPageSessionInfoDuration" xml:space="preserve">
+    <value>Durée</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
+    <value>IPv4</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="StatusPageSessionInfoTitle" xml:space="preserve">
+    <value>Info de Connexion</value>
+  </data>
+  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+    <value>Voir _log</value>
+  </data>
+  <data name="StatusPageStatus" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
+    <value>IP={0}, IPv6={1}</value>
+    <comment>{0}=IP address, {1}=IPv6 address</comment>
+  </data>
+  <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
+    <value>{0}Connecté</value>
+    <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
+    <value>Déconnecté</value>
+  </data>
+  <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
+    <value>La fenêtre a été minimisée ici.</value>
+  </data>
+  <data name="SystemTrayMenuAbout" xml:space="preserve">
+    <value>_À propos...</value>
+  </data>
+  <data name="SystemTrayMenuExit" xml:space="preserve">
+    <value>_Quitter</value>
+  </data>
+  <data name="SystemTrayMenuOpen" xml:space="preserve">
+    <value>_Ouvert</value>
+  </data>
+  <data name="SystemTrayMenuSettings" xml:space="preserve">
+    <value>_Réglages... </value>
+  </data>
+  <data name="SystemTrayMenuStatus" xml:space="preserve">
+    <value>Info_connexion...</value>
+  </data>
+  <data name="TimeSpanInSeconds" xml:space="preserve">
+    <value>h\:mm\:ss</value>
+    <comment>Display format of the duration times less then one day</comment>
+  </data>
+  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
+    <value>d\.hh\:mm\:ss</value>
+    <comment>Display format of the duration times one day or longer</comment>
+  </data>
+  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
+    <value>Veuillez ne pas réutiliser le TOTP. Patientez jusqu'à la génération d'un nouveau TOTP. </value>
+  </data>
+  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Réponse</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
+    <value>_Secret</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
+    <value>Secret comme Code QR</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
+    <value>Sélectionnez  votre méthode d'authentification double facteur et renseignez votre code de sécurité: </value>
+    <comment>"securirty token" sounds wrong</comment>
+  </data>
+  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
+    <value>_Méthode</value>
+  </data>
+  <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
+    <value>Authentification double facteur</value>
+  </data>
+  <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
+    <value>Requiert l'authentification double facteurs</value>
+  </data>
+  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
+    <value>_Inscription</value>
+  </data>
+  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
+    <value>{0}requiert votre inscription à l'authentification double facteur {1}.</value>
+    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
+  </data>
+  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
+    <value>Inscription à l'authentification double facteur</value>
+  </data>
+  <data name="UserDisabledMessage" xml:space="preserve">
+    <value>Attention! Votre compte est désactivé. Veuillez contacter votre service de support pour obtenir de l'aide.</value>
+  </data>
+  <data name="UsernamePasswordPopupMessage" xml:space="preserve">
+    <value>Entrez votre nom d'utilisateur et mot de passe pour " {0} ":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_Mot de Passe</value>
+  </data>
+  <data name="UsernamePasswordPopupTitle" xml:space="preserve">
+    <value>Authentification</value>
+  </data>
+  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
+    <value>_Nom d'utilisateur</value>
+  </data>
+  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+    <value>_Réponse</value>
+  </data>
+  <data name="AboutPageAppBannerTitle" xml:space="preserve">
+    <value>{0}
+Powered by SURFnet</value>
+    <comment>{0}=Client name</comment>
+  </data>
+  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
+    <value>Profiles VPN Ajoutés</value>
+  </data>
+  <data name="ButtonConnectTitle" xml:space="preserve">
+    <value>_Se connecter!</value>
+  </data>
+  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
+    <value>_Copier le Secret</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Pas disponible</value>
+  </data>
+</root>

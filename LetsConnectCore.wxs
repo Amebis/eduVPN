@@ -77,6 +77,7 @@
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="PRODUCTDIR" Name="$(var.ClientTitle)">
                     <Directory Id="BINDIR" Name="Core" FileSource="$(var.TargetDir)">
+                        <Directory Id="RESDIRFR" Name="fr"/>
                         <Directory Id="RESDIRNL" Name="nl"/>
                         <Directory Id="RESDIRSL" Name="sl"/>
                         <Directory Id="RESDIRUK" Name="uk"/>

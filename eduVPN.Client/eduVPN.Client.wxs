@@ -42,6 +42,11 @@
             </Component>
             -->
         </DirectoryRef>
+        <DirectoryRef Id="RESDIRFR">
+            <Component Id="$(var.ClientTarget).Client.resources.dll.fr" Guid="{BAB4F56C-5AD7-4AB1-A18F-893E28C8F9AE}">
+                <File Id="$(var.ClientTarget).Client.resources.dll.fr" Source="fr\$(var.ClientTarget).Client.resources.dll"/>
+            </Component>
+        </DirectoryRef>
         <DirectoryRef Id="RESDIRNL">
             <Component Id="$(var.ClientTarget).Client.resources.dll.nl" Guid="{A66DDC19-8153-411F-AFD7-41DF490B1D95}">
                 <File Id="$(var.ClientTarget).Client.resources.dll.nl" Source="nl\$(var.ClientTarget).Client.resources.dll"/>
@@ -70,6 +75,7 @@
 
             <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.fr"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.nl"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.sl"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.uk"/>
