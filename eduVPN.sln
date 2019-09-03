@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGES.md = CHANGES.md
+		eduVPN.fr.wxl = eduVPN.fr.wxl
 		eduVPN.nl.wxl = eduVPN.nl.wxl
 		eduVPN.sl.wxl = eduVPN.sl.wxl
 		eduVPN.uk.wxl = eduVPN.uk.wxl
@@ -61,6 +62,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install", "Install", "{E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}"
 	ProjectSection(SolutionItems) = preProject
 		Install\eduVPN\logo.png = Install\eduVPN\logo.png
+		Install\thm.fr.wxl = Install\thm.fr.wxl
 		Install\thm.nl.wxl = Install\thm.nl.wxl
 		Install\thm.sl.wxl = Install\thm.sl.wxl
 		Install\thm.uk.wxl = Install\thm.uk.wxl

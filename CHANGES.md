@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.27...HEAD)
 
+- French translation
+
+
 ## [1.0.27](https://github.com/Amebis/eduVPN/compare/1.0.26...1.0.27) (2019-08-13)
 
 - "Add other address" resurrected in eduVPN Client
