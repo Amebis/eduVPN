@@ -116,15 +116,15 @@ LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN Client OpenVPN Components"
+	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN Client OpenVPN Composants"
 	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
-	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Service Interactif OpenVPN (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Permet la gestion de la configuration des connexions réseaux OpenVPN. Si arrêté ou désactivé, le client eduVPN ne fonctionnera pas."
 
-	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! Client OpenVPN Components"
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! Client OpenVPN Composants"
 	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
-	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Permet la gestion de la configuration des connexions réseaux OpenVPN. Si arrêté ou désactivé, le client Let's Connect! ne fonctionnera pas."
 END
 
 #endif    // French (France) resources
