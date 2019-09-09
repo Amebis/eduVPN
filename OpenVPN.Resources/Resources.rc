@@ -146,12 +146,12 @@ BEGIN
 	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN Client OpenVPN Componenten"
 	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
 	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Maakt OpenVPN-verbinding netwerkconfiguratiebeheer mogelijk. Indien gestopt of uitgeschakeld, zal de eduVPN-client niet werken."
 
 	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! Client OpenVPN Componenten"
 	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
-	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Maakt OpenVPN-verbinding netwerkconfiguratiebeheer mogelijk. Indien gestopt of uitgeschakeld, zal de Let's Connect!-client niet werken."
 END
 
 #endif    // Dutch (Netherlands) resources

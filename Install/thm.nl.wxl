@@ -15,15 +15,15 @@
     <String Id="InstallVersion">Versie [WixBundleVersion]</String>
     <String Id="ConfirmCancelMessage">Weet je zeker dat je wilt annuleren?</String>
     <String Id="ExecuteUpgradeRelatedBundleMessage">Vorige versie</String>
-    <String Id="HelpHeader">Setup Help</String>
-    <String Id="HelpText">/install | /repair | /uninstall | /layout [directory] - installs, repairs, uninstalls or
-   creates a complete local copy of the bundle in directory. Install is the default.
+    <String Id="HelpHeader">Setup Hulp</String>
+    <String Id="HelpText">/install | /repair | /uninstall | /layout [map] - installeert, repareert, verwijderd of
+   maakt een volledige lokale kopie van de bundel in de map aan. Installatie is de standaard keuze.
 
-/passive | /quiet -  displays minimal UI with no prompts or displays no UI and
-   no prompts. By default UI and all prompts are displayed.
+/passive | /quiet -  toont minimale UI zonder prompts of geeft geen UI weer en
+   geen prompts. Standaard worden de UI en alle prompts weergegeven.
 
-/norestart - suppress any attempts to restart. By default UI will prompt before restart.
-/log log.txt - logs to a specific file. By default a log file is created in %TEMP%.</String>
+/norestart - alle herstartpogingen onderdrukken. Standaard zal de UI vragen om te herstarten.
+/log log.txt - logt naar een specifiek bestand. Standaard wordt er een logbestand aangemaakt in %TEMP%.</String>
     <String Id="HelpCloseButton">&amp;Sluiten</String>
     <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;licentie&lt;/a&gt;.</String>
     <String Id="InstallAcceptCheckbox">Ik ga &amp;akkoord met de licentie</String>
@@ -55,15 +55,15 @@
     <String Id="FailureInstallHeader">Installatie mislukt</String>
     <String Id="FailureUninstallHeader">Verwijderen mislukt</String>
     <String Id="FailureRepairHeader">Reparatie mislukt</String>
-    <String Id="FailureHyperlinkLogText">Een of meer problemen zorgden dat de installatie mislukt is. Probeer de problemen te verhelpen en dan opnieuw deze installatie uit te voeren. Voor meer informatie zie het &lt;a href="#"&gt;log bestand&lt;/a&gt;.</String>
+    <String Id="FailureHyperlinkLogText">Een of meer problemen zorgden ervoor dat de installatie mislukte. Probeer de problemen te verhelpen en dan opnieuw deze installatie uit te voeren. Voor meer informatie zie het &lt;a href="#"&gt;log bestand&lt;/a&gt;.</String>
     <String Id="FailureRestartText">Je moet de computer herstarten om het terugrollen van de software af te ronden.</String>
     <String Id="FailureRestartButton">&amp;Herstarten</String>
     <String Id="FailureCloseButton">&amp;Sluiten</String>
     <String Id="FilesInUseHeader">Bestanden in gebruik</String>
-    <String Id="FilesInUseLabel">De volgende applicaties gebruiken bestanden die geüpdatet moeten worden:</String>
-    <String Id="FilesInUseCloseRadioButton">Sluit de &amp;applicaties en probeer ze opnieuw te starten.</String>
-    <String Id="FilesInUseDontCloseRadioButton">&amp;Sluit de applicaties niet. Een herstart is nodig.</String>
+    <String Id="FilesInUseLabel">De volgende toepassingen maken gebruik van bestanden die moeten worden bijgewerkt:</String>
+    <String Id="FilesInUseCloseRadioButton">Sluit de &amp;toepassingen en probeer ze opnieuw te starten.</String>
+    <String Id="FilesInUseDontCloseRadioButton">&amp;Sluit de toepassingen niet. Een herstart is nodig.</String>
     <String Id="FilesInUseOkButton">&amp;OK</String>
     <String Id="FilesInUseCancelButton">&amp;Annuleren</String>
-    <String Id="ErrorFailNoActionReboot">Er is niks gedaan omdat een herstart van de computer nodig is.</String>
+    <String Id="ErrorFailNoActionReboot">Er is geen actie ondernomen omdat een systeemherstart nodig is.</String>
 </WixLocalization>
