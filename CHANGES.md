@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.27...HEAD)
 
+- OpenVPN updated to 2.4.8
 - French translation
 
 
@@ -15,7 +16,7 @@
 
 ## [1.0.26](https://github.com/Amebis/eduVPN/compare/1.0.25...1.0.26) (2019-04-15)
 
-- Update to OpenVPN 2.4.7
+- OpenVPN updated to 2.4.7
 - Fixes
 
 
@@ -42,7 +43,7 @@
 
 ## [1.0.22](https://github.com/Amebis/eduVPN/compare/1.0.21...1.0.22) (2018-05-03)
 
-- Update to OpenVPN 2.4.6
+- OpenVPN updated to 2.4.6
 - Delay when reconnecting to a rebuilt VPN server fixed
 - "Add other address" depretiated from eduVPN Client in favour of Let's Connect Client
 - GUI refinements
@@ -51,7 +52,7 @@
 
 ## [1.0.21](https://github.com/Amebis/eduVPN/compare/1.0.20...1.0.21) (2018-03-06)
 
-- Update to OpenVPN 2.4.5
+- OpenVPN updated to 2.4.5
 - Fixes and cleanups
 
 
