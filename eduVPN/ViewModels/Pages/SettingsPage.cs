@@ -73,7 +73,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 Guid.TryParse(nic.Id, out var nic_id);
                 var mac = nic.GetPhysicalAddress().GetAddressBytes();
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet &&
+                if (nic.NetworkInterfaceType == (NetworkInterfaceType)53 &&
                     nic.Description.StartsWith("TAP-Windows Adapter V9") &&
                     mac.Length == 6 &&
                     mac[0] == 0x00 &&

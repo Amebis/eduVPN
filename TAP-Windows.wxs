@@ -10,6 +10,13 @@
     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
     <Fragment>
         <util:RegistrySearch
+            Id="Windows10VersionMaj"
+            Root="HKLM"
+            Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+            Value="CurrentMajorVersionNumber"
+            Format="raw"
+            Variable="Windows10VersionMaj"/>
+        <util:RegistrySearch
             Id="TAPWindowsPath"
             Root="HKLM"
             Key="SYSTEM\CurrentControlSet\services\tap0901"
@@ -24,36 +31,33 @@
             Variable="TAPWindowsDriverVersion"/>
 
         <PackageGroup
-            Id="TAPWindows921Web">
+            Id="TAPWindows924Redist">
             <ExePackage
-                Id="TAPWindows921Web"
-                DisplayName="TAP-Windows 9.21.2"
-                Cache="yes"
-                Compressed="no"
-                PerMachine="yes"
-                Permanent="yes"
-                Vital="yes"
-                Name="tap-windows-9.21.2.exe"
-                SourceFile="bin\Setup\tap-windows-9.21.2.exe"
-                DownloadUrl="https://swupdate.openvpn.org/community/releases/tap-windows-9.21.2.exe"
-                InstallCommand="/S"
-                DetectCondition="TAPWindowsDriverVersion &gt;= v9.0.0.21"/>
-        </PackageGroup>
-
-        <PackageGroup
-            Id="TAPWindows921Redist">
-            <ExePackage
-                Id="TAPWindows921Redist"
-                DisplayName="TAP-Windows 9.21.2"
+                Id="TAPWindows924Win7Redist"
+                DisplayName="TAP-Windows 9.24.2 for Windows 7, 8 and 8.1"
                 Cache="yes"
                 Compressed="yes"
                 PerMachine="yes"
                 Permanent="yes"
                 Vital="yes"
-                Name="tap-windows-9.21.2.exe"
-                SourceFile="bin\Setup\tap-windows-9.21.2.exe"
+                Name="tap-windows-9.24.2-I601-Win7.exe"
+                SourceFile="bin\Setup\tap-windows-9.24.2-I601-Win7.exe"
                 InstallCommand="/S"
-                DetectCondition="TAPWindowsDriverVersion &gt;= v9.0.0.21"/>
+                DetectCondition="TAPWindowsDriverVersion &gt;= v9.24.2.601"
+                InstallCondition="NOT Windows10VersionMaj"/>
+            <ExePackage
+                Id="TAPWindows924Win10Redist"
+                DisplayName="TAP-Windows 9.24.2 for Windows 10"
+                Cache="yes"
+                Compressed="yes"
+                PerMachine="yes"
+                Permanent="yes"
+                Vital="yes"
+                Name="tap-windows-9.24.2-I601-Win10.exe"
+                SourceFile="bin\Setup\tap-windows-9.24.2-I601-Win10.exe"
+                InstallCommand="/S"
+                DetectCondition="TAPWindowsDriverVersion &gt;= v9.24.2.601"
+                InstallCondition="Windows10VersionMaj"/>
         </PackageGroup>
     </Fragment>
 </Wix>

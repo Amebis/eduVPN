@@ -76,7 +76,7 @@
                 SourceFile="bin\Setup\$(var.ClientTarget)TAPWinPre_$(var.TAPWinPre.Version)_x64.msi"
                 InstallCondition="VersionNT64"/>
 
-            <PackageGroupRef Id="TAPWindows921Redist"/>
+            <PackageGroupRef Id="TAPWindows924Redist"/>
 
             <!--
                 OpenVPN

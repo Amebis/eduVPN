@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.27...HEAD)
 
 - OpenVPN updated to 2.4.8
+- TAP-Windows updated to 9.24.2
 - French translation
 
 
