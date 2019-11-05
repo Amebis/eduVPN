@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2019 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    xmlns="http://schemas.microsoft.com/wix/2006/localization"
+    Culture="nb-no"
+    Codepage="1252">
+    <String Id="eduVPN.Name">eduVPN Client</String>
+    <String Id="eduVPN.CoreName">eduVPN Client Core</String>
+    <String Id="eduVPN.OpenVPNName">eduVPN Client OpenVPN Components</String>
+    <String Id="eduVPN.TAPWinPreName">eduVPN Client TAP-Windows Prerequisites</String>
+
+    <String Id="LetsConnect.Name">Let's Connect! Client</String>
+    <String Id="LetsConnect.CoreName">Let's Connect! Client Core</String>
+    <String Id="LetsConnect.OpenVPNName">Let's Connect! Client OpenVPN Components</String>
+    <String Id="LetsConnect.TAPWinPreName">Let's Connect! Client TAP-Windows Prerequisites</String>
+
+    <String Id="ManufacturerName">SURF</String>
+    <String Id="ProductLanguage">1033</String>
+    <String Id="SummaryCodepage">1252</String>
+    <String Id="Culture">en-US</String>
+    <String Id="LegalCopyright">Copyright: 2017-2019 The Commons Conservancy eduVPN Programme</String>
+
+    <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>
+    <String Id="DotNETFrameworkMissing">This application requires .NET Framework 4.5. Please install the .NET Framework 4.5 then run this installer again.</String>
+    <String Id="TAPWindowsMissing">This application requires TAP-Windows driver. Please install the TAP-Windows driver then run this installer again.</String>
+</WixLocalization>

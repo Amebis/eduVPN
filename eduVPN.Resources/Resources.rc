@@ -158,6 +158,33 @@ END
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////
+// Norwegian Bokmål (Norway) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NBN)
+LANGUAGE LANG_NORWEGIAN, SUBLANG_NORWEGIAN_BOKMAL
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_CLIENT_TITLE            "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN for education and research"
+	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
+	IDS_EDUVPN_CORE_TITLE              "eduVPN Client Core"
+
+	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "The open source VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
+	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! Client Core"
+END
+
+#endif    // Norwegian Bokmål (Norway) resources
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
 // Slovenian (Slovenia) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_SLV)
