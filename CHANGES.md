@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.27...HEAD)
 
+- User may opt-in to allow local network access while connected
 - OpenVPN updated to 2.4.8
 - TAP-Windows updated to 9.24.2
 - French translation

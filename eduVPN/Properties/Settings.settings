@@ -29,6 +29,9 @@
     <Setting Name="OpenVPNForceTCP" Description="Always connect using TCP." Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="OpenVPNAllowLocal" Description="Allow local traffic." Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="AccessTokenCache" Description="Access token cache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
       <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
     </Setting>
