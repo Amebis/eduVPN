@@ -125,7 +125,7 @@ namespace eduVPN.Xml
                         catch (AggregateException ex) { throw ex.InnerException; }
                     }
                 }
-                catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex); }
+                catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
             }
 
             ct.ThrowIfCancellationRequested();
@@ -144,11 +144,10 @@ namespace eduVPN.Xml
                         return previous;
                     }
 
-                    // Create our own version of the exception, which will contain the body of response as text.
                     throw new WebExceptionEx(ex, ct);
                 }
-                else
-                    throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
+
+                throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
             }
 
             ct.ThrowIfCancellationRequested();
