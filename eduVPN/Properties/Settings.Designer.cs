@@ -12,7 +12,7 @@ namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -169,6 +169,22 @@ namespace eduVPN.Properties {
             }
             set {
                 this["OpenVPNForceTCP"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Allow local traffic.
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Allow local traffic.")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OpenVPNAllowLocal {
+            get {
+                return ((bool)(this["OpenVPNAllowLocal"]));
+            }
+            set {
+                this["OpenVPNAllowLocal"] = value;
             }
         }
         
