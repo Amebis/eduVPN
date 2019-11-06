@@ -5,6 +5,7 @@
 - OpenVPN updated to 2.4.8
 - TAP-Windows updated to 9.24.2
 - French translation
+- GUI refinements
 
 
 ## [1.0.27](https://github.com/Amebis/eduVPN/compare/1.0.26...1.0.27) (2019-08-13)

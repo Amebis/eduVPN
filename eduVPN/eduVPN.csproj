@@ -147,7 +147,6 @@
     <Compile Include="Xml\SerializableStringDictionary.cs" />
     <Compile Include="Xml\VPNConfigurationSettings.cs" />
     <Compile Include="Xml\VPNConfigurationSettingsList.cs" />
-    <Compile Include="Xml\WebExceptionEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx">
