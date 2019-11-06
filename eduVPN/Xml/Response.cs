@@ -196,19 +196,23 @@ namespace eduVPN.Xml
 
                     // Read the signature.
                     byte[] signature = null;
-                    using (var response_sig = request.GetResponse())
-                    using (var stream_sig = response_sig.GetResponseStream())
+                    try
                     {
-                        ct.ThrowIfCancellationRequested();
-
-                        using (var reader_sig = new StreamReader(stream_sig))
+                        using (var response_sig = request.GetResponse())
+                        using (var stream_sig = response_sig.GetResponseStream())
                         {
-                            var task = reader_sig.ReadToEndAsync();
-                            try { task.Wait(ct); }
-                            catch (AggregateException ex) { throw ex.InnerException; }
-                            signature = Convert.FromBase64String(task.Result);
+                            ct.ThrowIfCancellationRequested();
+
+                            using (var reader_sig = new StreamReader(stream_sig))
+                            {
+                                var task = reader_sig.ReadToEndAsync();
+                                try { task.Wait(ct); }
+                                catch (AggregateException ex) { throw ex.InnerException; }
+                                signature = Convert.FromBase64String(task.Result);
+                            }
                         }
                     }
+                    catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
 
                     ct.ThrowIfCancellationRequested();
 
