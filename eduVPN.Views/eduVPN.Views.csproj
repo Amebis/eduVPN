@@ -26,9 +26,6 @@
     <Reference Include="Prism, Version=7.0.0.396, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)\packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
     </Reference>
-    <Reference Include="QRCoder, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\QRCoder.1.3.2\lib\net40\QRCoder.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
@@ -59,11 +56,9 @@
     <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\TOTPAuthenticationNoteVisibilityConverter.cs" />
-    <Compile Include="Converters\TOTPQRConverter.cs" />
     <Compile Include="Converters\TOTPSecretConverter.cs" />
     <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Converters\UnavailableIconVisibilityConverter.cs" />
-    <Compile Include="Converters\UserDisabledVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
@@ -118,9 +113,6 @@
     <Compile Include="Panels\TOTPAuthenticationPanel.xaml.cs">
       <DependentUpon>TOTPAuthenticationPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\TOTPEnrollmentPanel.xaml.cs">
-      <DependentUpon>TOTPEnrollmentPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Panels\YubiKeyAuthenticationPanel.xaml.cs">
       <DependentUpon>YubiKeyAuthenticationPanel.xaml</DependentUpon>
     </Compile>
@@ -130,7 +122,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="QRCoder\XamlQRCode.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -150,9 +141,6 @@
     </Compile>
     <Compile Include="Windows\TwoFactorAuthenticationPopup.xaml.cs">
       <DependentUpon>TwoFactorAuthenticationPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\TwoFactorEnrollmentPopup.xaml.cs">
-      <DependentUpon>TwoFactorEnrollmentPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\UsernamePasswordPopup.xaml.cs">
       <DependentUpon>UsernamePasswordPopup.xaml</DependentUpon>
@@ -189,10 +177,18 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.fr.resx" />
-    <EmbeddedResource Include="Resources\Strings.nl.resx" />
-    <EmbeddedResource Include="Resources\Strings.sl.resx" />
-    <EmbeddedResource Include="Resources\Strings.uk.resx" />
+    <EmbeddedResource Include="Resources\Strings.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.nl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.sl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.uk.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Blank.png" />
@@ -267,10 +263,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\TOTPEnrollmentPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Panels\YubiKeyAuthenticationPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -312,10 +304,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\TwoFactorAuthenticationPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\TwoFactorEnrollmentPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -337,14 +337,8 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Gebruik niet dezelfde TOTP-code. Wacht tot er een nieuwe code is gegenereerd.</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
-    <value>_Sleutel</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Sleutel als QR-code</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Kies je twee-factor authenticatiemethode en vul de code in:</value>
@@ -359,19 +353,6 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Vereist twee-factor authenticatie</value>
   </data>
-  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
-    <value>Inschrijv_en</value>
-  </data>
-  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0} vereist dat je aangemeld bent voor twee-factor authenticatie bij {1}.</value>
-    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
-  </data>
-  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>Twee-factor authenticatie aanmelding</value>
-  </data>
-  <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Waarschuwing! Je account is uitgeschakeld. Neem a.u.b. contact op met de helpdesk.</value>
-  </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
@@ -385,7 +366,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Gebruikersnaam</value>
   </data>
-  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="YubiKeyAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Antwoord</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
@@ -398,9 +379,6 @@ Mogelijk gemaakt door SURFnet</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Verbinden!</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value>_Kopieer sleutel</value>
   </data>
   <data name="Unavailable" xml:space="preserve">
     <value>Niet beschikbaar</value>

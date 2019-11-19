@@ -382,12 +382,6 @@ namespace eduVPN.ViewModels.Windows
         public event EventHandler<RequestInstanceAuthorizationEventArgs> RequestInstanceAuthorization;
 
         /// <summary>
-        /// Occurs when 2-Factor Authentication enrollment is requested.
-        /// </summary>
-        /// <remarks>Sender is the profile select panel <see cref="Panels.ConnectingSelectPanel"/>.</remarks>
-        public event EventHandler<RequestTwoFactorEnrollmentEventArgs> RequestTwoFactorEnrollment;
-
-        /// <summary>
         /// Occurs when OpenVPN requests a password.
         /// </summary>
         /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
@@ -1137,27 +1131,6 @@ namespace eduVPN.ViewModels.Windows
                 // Remove access token from cache.
                 lock (Properties.Settings.Default.AccessTokenCache)
                     Properties.Settings.Default.AccessTokenCache.Remove(authenticating_instance.Base.AbsoluteUri);
-            }
-        }
-
-        /// <summary>
-        /// Invokes <see cref="RequestTwoFactorEnrollment"/> event in GUI thread.
-        /// </summary>
-        /// <param name="sender"><see cref="RequestTwoFactorEnrollment"/> event sender</param>
-        /// <param name="e"><see cref="RequestTwoFactorEnrollment"/> event arguments</param>
-        public void Profile_RequestTwoFactorEnrollment(object sender, RequestTwoFactorEnrollmentEventArgs e)
-        {
-            // Re-raise this event as ConnectWizard event, to simplify view.
-            // This way the view can listen ConnectWizard for profile events only.
-            if (Dispatcher.CurrentDispatcher == Dispatcher)
-            {
-                // We're in the GUI thread.
-                RequestTwoFactorEnrollment?.Invoke(sender, e);
-            }
-            else
-            {
-                // We're in the background thread - raise event via dispatcher.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestTwoFactorEnrollment?.Invoke(sender, e)));
             }
         }
 

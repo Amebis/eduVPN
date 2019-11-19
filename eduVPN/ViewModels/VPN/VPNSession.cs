@@ -82,18 +82,6 @@ namespace eduVPN.ViewModels.VPN
         private EventWaitHandle _finished;
 
         /// <summary>
-        /// User info
-        /// </summary>
-        public UserInfo UserInfo
-        {
-            get { return _user_info; }
-            set { SetProperty(ref _user_info, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private UserInfo _user_info;
-
-        /// <summary>
         /// Merged list of user and system messages
         /// </summary>
         public MessageList MessageList
@@ -301,13 +289,6 @@ namespace eduVPN.ViewModels.VPN
 
             _pre_run_actions = new List<Action>()
             {
-                // Launch user info load in the background.
-                () =>
-                {
-                    var user_info = AuthenticatingInstance.GetUserInfo(AuthenticatingInstance, _quit.Token);
-                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => UserInfo = user_info));
-                },
-
                 // Load messages from multiple sources: connecting instance, user/system list.
                 // Any errors shall be ignored.
                 () =>

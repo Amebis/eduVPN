@@ -339,14 +339,8 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Veuillez ne pas réutiliser le TOTP. Patientez jusqu'à la génération d'un nouveau TOTP. </value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Réponse</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
-    <value>_Secret</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Secret comme Code QR</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Sélectionnez  votre méthode d'authentification double facteur et renseignez votre code de sécurité: </value>
@@ -361,19 +355,6 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Requiert l'authentification double facteurs</value>
   </data>
-  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
-    <value>_Inscription</value>
-  </data>
-  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0}requiert votre inscription à l'authentification double facteur {1}.</value>
-    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
-  </data>
-  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>Inscription à l'authentification double facteur</value>
-  </data>
-  <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Attention! Votre compte est désactivé. Veuillez contacter votre service de support pour obtenir de l'aide.</value>
-  </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Entrez votre nom d'utilisateur et mot de passe pour " {0} ":</value>
     <comment>{0}=Authenticating realm name</comment>
@@ -387,7 +368,7 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Nom d'utilisateur</value>
   </data>
-  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="YubiKeyAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Réponse</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
@@ -400,9 +381,6 @@ Powered by SURFnet</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Se connecter!</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value>_Copier le Secret</value>
   </data>
   <data name="Unavailable" xml:space="preserve">
     <value>Pas disponible</value>

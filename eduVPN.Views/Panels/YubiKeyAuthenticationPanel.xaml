@@ -26,7 +26,7 @@
             HorizontalContentAlignment="Center"
             Style="{StaticResource CodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
-            AutomationProperties.Name="{x:Static res:Strings.YubiKeyEnrollmentPanelResponseLabel}"
+            AutomationProperties.Name="{x:Static res:Strings.YubiKeyAuthenticationPanelResponseLabel}"
             AutomationProperties.IsRequiredForForm="True"/>
     </Grid>
 </UserControl>

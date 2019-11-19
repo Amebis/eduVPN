@@ -7,7 +7,6 @@
 
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
-using System.Net;
 
 namespace eduVPN.ViewModels.Panels
 {
@@ -36,19 +35,6 @@ namespace eduVPN.ViewModels.Panels
         public YubiKeyAuthenticationPanel(ConnectWizard wizard, Instance authenticating_instance) :
             base(wizard, authenticating_instance)
         {
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <inheritdoc/>
-        protected override TwoFactorEnrollmentCredentials GetEnrollmentCredentials()
-        {
-            return new YubiKeyEnrollmentCredentials()
-            {
-                Response = (new NetworkCredential("", Response)).SecurePassword
-            };
         }
 
         #endregion

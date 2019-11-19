@@ -63,12 +63,10 @@ namespace eduVPN.ViewModels.Windows
         {
             var session = sender as VPNSession;
 
-            // Query profile supported & user enrolled 2-Factor authentication methods.
+            // Query profile supported 2-Factor authentication methods.
             var methods = TwoFactorAuthenticationMethods.Any;
             if (Session.ConnectingProfile.IsTwoFactorAuthentication)
                 methods &= Session.ConnectingProfile.TwoFactorMethods;
-            if (Session.UserInfo.IsTwoFactorAuthentication)
-                methods &= Session.UserInfo.TwoFactorMethods;
 
             // Prepare the list of methods.
             var last_method = Properties.Settings.Default.InstanceSettings.TryGetValue(session.AuthenticatingInstance.Base.AbsoluteUri, out var settings) ? settings.LastTwoFactorAuthenticationMethod : null;

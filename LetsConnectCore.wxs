@@ -44,8 +44,6 @@
             Schedule="afterInstallExecute"/>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="Prism.dll" Guid="{9B4F3694-9A5E-41AF-AA24-E2E5F39A48C6}"/>
-            <ComponentSearch Id="QRCoder.dll" Guid="{D9B63915-FA40-457F-8CBB-E7F3863D7F40}"/>
-            <ComponentSearch Id="UnityEngine.dll" Guid="{F22574BF-7ED3-4451-A508-78A0F6AF48AB}"/>
             <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}"/>
             <ComponentSearch Id="$(var.ClientTarget).Client.exe.config" Guid="{03C290E0-70A5-4594-9801-F51D07CCF06B}"/>
         </Property>
@@ -127,32 +125,6 @@
         </DirectoryRef>
         <ComponentGroup Id="Prism.dll">
             <ComponentRef Id="Prism.dll"/>
-        </ComponentGroup>
-
-
-        <!--
-            QRCoder
-        -->
-        <DirectoryRef Id="BINDIR">
-            <Component Id="QRCoder.dll" Guid="{D9B63915-FA40-457F-8CBB-E7F3863D7F40}">
-                <File Source="QRCoder.dll"/>
-            </Component>
-        </DirectoryRef>
-        <ComponentGroup Id="QRCoder.dll">
-            <ComponentRef Id="QRCoder.dll"/>
-        </ComponentGroup>
-
-
-        <!--
-            UnityEngine
-        -->
-        <DirectoryRef Id="BINDIR">
-            <Component Id="UnityEngine.dll" Guid="{F22574BF-7ED3-4451-A508-78A0F6AF48AB}">
-                <File Source="UnityEngine.dll"/>
-            </Component>
-        </DirectoryRef>
-        <ComponentGroup Id="UnityEngine.dll">
-            <ComponentRef Id="UnityEngine.dll"/>
         </ComponentGroup>
     </Product>
 </Wix>

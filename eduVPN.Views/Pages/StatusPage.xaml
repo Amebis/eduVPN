@@ -33,27 +33,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StatusBar
-            Margin="5"
-            Style="{StaticResource InlineInfoBarStyle}"
-            Visibility="{Binding Path=Wizard.ActiveSession.UserInfo.IsEnabled, Converter={StaticResource UserDisabledVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-            <StatusBarItem>
-                <ContentControl Content="{StaticResource UserDisabledIcon}"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <TextBlock
-                    TextWrapping="Wrap"
-                    Text="{x:Static res:Strings.UserDisabledMessage}"/>
-            </StatusBarItem>
-        </StatusBar>
-
         <Grid
-            Grid.Row="1"
             Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
@@ -140,7 +124,7 @@
 
         <ListBox
             x:Name="Messages"
-            Grid.Row="2"
+            Grid.Row="1"
             Margin="5"
             MaxHeight="236"
             ItemsSource="{Binding Source={StaticResource MessageListView}}"
@@ -149,7 +133,7 @@
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.StatusPageMessagesLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
 
         <Grid
-            Grid.Row="3"
+            Grid.Row="2"
             Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -281,7 +265,7 @@
 
         <Button
             x:Name="Disconnect"
-            Grid.Row="4"
+            Grid.Row="3"
             Margin="5"
             Width="170"
             FontSize="15"

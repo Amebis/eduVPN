@@ -48,9 +48,6 @@
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
-    <Compile Include="Models\TOTPEnrollmentCredentials.cs" />
-    <Compile Include="Models\TwoFactorEnrollmentCredentials.cs" />
-    <Compile Include="Models\YubiKeyEnrollmentCredentials.cs" />
     <Compile Include="System\Collections\ObjectModel\Extensions.cs" />
     <Compile Include="ViewModels\Pages\SelfUpdatingPage.cs" />
     <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileSelectPanel.cs" />
@@ -62,10 +59,7 @@
     <Compile Include="ViewModels\Panels\ConnectingSelectPanel.cs" />
     <Compile Include="Models\PromptSelfUpdateActionType.cs" />
     <Compile Include="Models\PromptSelfUpdateEventArgs.cs" />
-    <Compile Include="Models\RequestTwoFactorEnrollmentEventArgs.cs" />
     <Compile Include="ViewModels\Panels\Panel.cs" />
-    <Compile Include="ViewModels\Panels\TOTPEnrollmentPanel.cs" />
-    <Compile Include="ViewModels\Windows\TwoFactorEnrollmentPopup.cs" />
     <Compile Include="ViewModels\Windows\SelfUpdatePopup.cs" />
     <Compile Include="Xml\AccessTokenDictionary.cs" />
     <Compile Include="Xml\Dictionary.cs" />
@@ -104,7 +98,6 @@
     <Compile Include="ViewModels\VPN\OpenVPNSession.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
-    <Compile Include="Models\UserInfo.cs" />
     <Compile Include="ViewModels\Windows\PasswordPopup.cs" />
     <Compile Include="ViewModels\Pages\SettingsPage.cs" />
     <Compile Include="ViewModels\Panels\TOTPAuthenticationPanel.cs" />

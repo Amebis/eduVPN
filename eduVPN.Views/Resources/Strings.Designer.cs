@@ -734,36 +734,9 @@ namespace eduVPN.Views.Resources {
         /// <summary>
         ///   Looks up a localized string similar to _Response.
         /// </summary>
-        public static string TOTPEnrollmentPanelResponseLabel {
+        public static string TOTPAuthenticationPanelResponseLabel {
             get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelResponseLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Copy Secret.
-        /// </summary>
-        public static string TOTPEnrollmentPanelSecretCopyLabel {
-            get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelSecretCopyLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Secret.
-        /// </summary>
-        public static string TOTPEnrollmentPanelSecretLabel {
-            get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelSecretLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Secret as QR Code.
-        /// </summary>
-        public static string TOTPEnrollmentPanelSecretQRLabel {
-            get {
-                return ResourceManager.GetString("TOTPEnrollmentPanelSecretQRLabel", resourceCulture);
+                return ResourceManager.GetString("TOTPAuthenticationPanelResponseLabel", resourceCulture);
             }
         }
         
@@ -804,47 +777,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Enroll.
-        /// </summary>
-        public static string TwoFactorEnrollmentPopupEnrollButtonTitle {
-            get {
-                return ResourceManager.GetString("TwoFactorEnrollmentPopupEnrollButtonTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} requires you to enroll for two-factor authentication at {1}..
-        /// </summary>
-        public static string TwoFactorEnrollmentPopupMessage {
-            get {
-                return ResourceManager.GetString("TwoFactorEnrollmentPopupMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Two-factor Authentication Enrollment.
-        /// </summary>
-        public static string TwoFactorEnrollmentPopupTitle {
-            get {
-                return ResourceManager.GetString("TwoFactorEnrollmentPopupTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Not Available.
         /// </summary>
         public static string Unavailable {
             get {
                 return ResourceManager.GetString("Unavailable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Warning! Your account is disabled. Please, contact your helpdesk for support..
-        /// </summary>
-        public static string UserDisabledMessage {
-            get {
-                return ResourceManager.GetString("UserDisabledMessage", resourceCulture);
             }
         }
         
@@ -887,9 +824,9 @@ namespace eduVPN.Views.Resources {
         /// <summary>
         ///   Looks up a localized string similar to _Response.
         /// </summary>
-        public static string YubiKeyEnrollmentPanelResponseLabel {
+        public static string YubiKeyAuthenticationPanelResponseLabel {
             get {
-                return ResourceManager.GetString("YubiKeyEnrollmentPanelResponseLabel", resourceCulture);
+                return ResourceManager.GetString("YubiKeyAuthenticationPanelResponseLabel", resourceCulture);
             }
         }
     }
