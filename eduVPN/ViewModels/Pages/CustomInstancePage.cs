@@ -175,7 +175,7 @@ namespace eduVPN.ViewModels.Pages
             try
             {
                 // Convert hostname to https://hostname.
-                output = new UriBuilder("https", input).Uri;
+                output = new UriBuilder("https", input.Trim()).Uri;
                 return true;
             }
             catch
