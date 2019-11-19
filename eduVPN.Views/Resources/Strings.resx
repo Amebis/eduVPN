@@ -338,14 +338,8 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Please do not reuse the TOTP. Wait until a fresh TOTP is generated.</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Response</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
-    <value>_Secret</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Secret as QR Code</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Select your two-factor method and enter the security code:</value>
@@ -360,19 +354,6 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Requires two-factor authentication</value>
   </data>
-  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
-    <value>_Enroll</value>
-  </data>
-  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0} requires you to enroll for two-factor authentication at {1}.</value>
-    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
-  </data>
-  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>Two-factor Authentication Enrollment</value>
-  </data>
-  <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Warning! Your account is disabled. Please, contact your helpdesk for support.</value>
-  </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Enter your username and password for "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
@@ -386,7 +367,7 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Username</value>
   </data>
-  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="YubiKeyAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Response</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
@@ -399,9 +380,6 @@ Powered by SURFnet</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Connect!</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value>_Copy Secret</value>
   </data>
   <data name="Unavailable" xml:space="preserve">
     <value>Not Available</value>

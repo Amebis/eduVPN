@@ -99,38 +99,6 @@ namespace eduVPN.Models
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _user_messages;
 
-        /// <summary>
-        /// User info URI
-        /// </summary>
-        public Uri UserInfo { get => _user_info; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Uri _user_info;
-
-        /// <summary>
-        /// TOTP Authentication enroll URI
-        /// </summary>
-        public Uri TOTPAuthenticationEnroll { get => _totp_authentication_enroll; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Uri _totp_authentication_enroll;
-
-        /// <summary>
-        /// YubiKey Authentication enroll URI
-        /// </summary>
-        public Uri YubiKeyAuthenticationEnroll { get => _yubikey_authentication_enroll; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Uri _yubikey_authentication_enroll;
-
-        /// <summary>
-        /// 2-Factor Authentication enroll URI (web based)
-        /// </summary>
-        public Uri TwoFactorAuthenticationEnroll { get => _two_factor_authentication_enroll; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Uri _two_factor_authentication_enroll;
-
         #endregion
 
         #region ILoadableItem Support
@@ -187,30 +155,6 @@ namespace eduVPN.Models
                 _user_messages = eduJSON.Parser.GetValue(api, "user_messages", out string user_messages) ?
                     new Uri(user_messages) :
                     _base_uri != null ? AppendPath(_base_uri, "/user_messages") : null;
-
-                _user_info = eduJSON.Parser.GetValue(api, "user_info", out string user_info) ?
-                    new Uri(user_info) :
-                    _base_uri != null ? AppendPath(_base_uri, "/user_info") : null;
-
-                _totp_authentication_enroll = eduJSON.Parser.GetValue(api, "two_factor_enroll_totp", out string two_factor_enroll_totp) ?
-                    new Uri(two_factor_enroll_totp) :
-                    _base_uri != null ? AppendPath(_base_uri, "/two_factor_enroll_totp") : null;
-
-                _yubikey_authentication_enroll = eduJSON.Parser.GetValue(api, "two_factor_enroll_yubi", out string two_factor_enroll_yubi) ?
-                    new Uri(two_factor_enroll_yubi) :
-                    _base_uri != null ? AppendPath(_base_uri, "/two_factor_enroll_yubi") : null;
-
-                // Get two_factor_authentication object.
-                if (eduJSON.Parser.GetValue(obj2, "two_factor_authentication", out Dictionary<string, object> tfa))
-                {
-                    _two_factor_authentication_enroll = eduJSON.Parser.GetValue(tfa, "enroll_uri", out string two_factor_authentication_enroll) ?
-                        new Uri(two_factor_authentication_enroll) :
-                        null;
-                }
-                else
-                {
-                    _two_factor_authentication_enroll = null;
-                }
             }
             else
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());

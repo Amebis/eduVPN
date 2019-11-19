@@ -219,9 +219,6 @@
     <value>Gedownload bestand{0} is corrupt.</value>
     <comment>{0}=URI</comment>
   </data>
-  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
-    <value>Aanmelden voor twee-factor authenticatie mislukt.</value>
-  </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Downloaden van het web is mislukt. Controleer a.u.b. jouw internetverbinding.</value>
   </data>

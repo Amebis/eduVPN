@@ -219,9 +219,6 @@
     <value>Завантажений файл {0} пошкоджено.</value>
     <comment>{0}=URI</comment>
   </data>
-  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
-    <value>Не вдалося зареєструвати 2-факторну автентифікацію.</value>
-  </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Помилка завантаження з Інтернету. Перевірте підключення до Інтернету.</value>
   </data>

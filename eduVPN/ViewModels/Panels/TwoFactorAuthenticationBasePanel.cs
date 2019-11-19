@@ -111,47 +111,6 @@ namespace eduVPN.ViewModels.Panels
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<UsernamePasswordAuthenticationRequestedEventArgs> _apply_response;
 
-        /// <summary>
-        /// Apply enrollment command
-        /// </summary>
-        public ICommand ApplyEnrollment
-        {
-            get
-            {
-                if (_apply_enrollment == null)
-                {
-                    _apply_enrollment = new DelegateCommand<RequestTwoFactorEnrollmentEventArgs>(
-                        // execute
-                        e =>
-                        {
-                            e.Credentials = GetEnrollmentCredentials();
-
-                            // Update the settings.
-                            var key = AuthenticatingInstance.Base.AbsoluteUri;
-                            if (!Properties.Settings.Default.InstanceSettings.TryGetValue(key, out var settings))
-                                Properties.Settings.Default.InstanceSettings[key] = settings = new Xml.InstanceSettings();
-                            settings.LastTwoFactorAuthenticationMethod = ID;
-                            settings.LastTwoFactorAuthenticationResponse = DateTime.Now;
-                            RaisePropertyChanged(nameof(LastResponseTime));
-                        },
-
-                        // canExecute
-                        e =>
-                            e is RequestTwoFactorEnrollmentEventArgs &&
-                            !String.IsNullOrEmpty(Response) &&
-                            !HasErrors);
-
-                    // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Response) || e.PropertyName == nameof(HasErrors)) _apply_enrollment.RaiseCanExecuteChanged(); };
-                }
-
-                return _apply_enrollment;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand<RequestTwoFactorEnrollmentEventArgs> _apply_enrollment;
-
         #endregion
 
         #region Constructors
@@ -181,15 +140,6 @@ namespace eduVPN.ViewModels.Panels
         public override string ToString()
         {
             return DisplayName;
-        }
-
-        /// <summary>
-        /// Returns 2-Factor Authentication enrollment credentials entered
-        /// </summary>
-        /// <returns>2-Factor Authentication enrollment credentials</returns>
-        protected virtual TwoFactorEnrollmentCredentials GetEnrollmentCredentials()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

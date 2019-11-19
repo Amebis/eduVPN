@@ -338,14 +338,8 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Будь ласка, не використовуйте повторно TOTP. Зачекайте, поки буде згенеровано свіжий TOTP.</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Відповідь</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
-    <value>_Секретний ключ</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Секретний ключ як QR код</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Виберіть двофакторний метод і введіть код захисту:</value>
@@ -360,19 +354,6 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Потрібна двофакторна аутентифікація</value>
   </data>
-  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
-    <value>_Зареєструватися</value>
-  </data>
-  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0} вимагає реєстрації для двофакторної автентифікації на {1}.</value>
-    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
-  </data>
-  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>Двофакторна реєстрація автентифікації</value>
-  </data>
-  <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Увага! Ваш обліковий запис вимкнено. Будь ласка, зверніться за допомогою до служби підтримки.</value>
-  </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Введіть ім'я користувача та пароль для "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
@@ -386,7 +367,7 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Ім'я користувача</value>
   </data>
-  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="YubiKeyAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Відповідь</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
@@ -399,9 +380,6 @@ The Commons Conservancy eduVPN Programme</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Під'єднано!</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value>_Копіювати секретний код</value>
   </data>
   <data name="Unavailable" xml:space="preserve">
     <value>Недоступний</value>

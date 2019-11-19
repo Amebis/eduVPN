@@ -219,9 +219,6 @@
     <value>Prenesena datoteka {0} je pokvarjena.</value>
     <comment>{0}=URI</comment>
   </data>
-  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
-    <value>Včlanitev v 2-stopenjsko overovljanje ni uspela.</value>
-  </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Prenos s spleta ni uspel. Preverite svojo spletno povezavo.</value>
   </data>

@@ -27,7 +27,7 @@
             HorizontalContentAlignment="Center"
             Style="{StaticResource CodeTextBoxStyle}"
             Text="{Binding Path=Response, UpdateSourceTrigger=PropertyChanged}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TOTPEnrollmentPanelResponseLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.TOTPAuthenticationPanelResponseLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"
             AutomationProperties.IsRequiredForForm="True"/>
 
         <Grid

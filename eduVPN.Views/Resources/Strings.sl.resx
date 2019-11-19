@@ -338,14 +338,8 @@ Program Commons Conservancy eduVPN</value>
   <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
     <value>Ne uporabite istega TOTP dvakrat. Počakajte, da bo ustvarjen svež TOTP.</value>
   </data>
-  <data name="TOTPEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="TOTPAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>Odgovo_r</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretLabel" xml:space="preserve">
-    <value>_Skrivnost</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretQRLabel" xml:space="preserve">
-    <value>Skrivnost kot koda QR</value>
   </data>
   <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
     <value>Izberite svojo vpisano metodo overovljanja in vnesite varnostno kodo:</value>
@@ -360,19 +354,6 @@ Program Commons Conservancy eduVPN</value>
   <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
     <value>Zahteva dvojno preverjanje pristnosti</value>
   </data>
-  <data name="TwoFactorEnrollmentPopupEnrollButtonTitle" xml:space="preserve">
-    <value>_Včlani</value>
-  </data>
-  <data name="TwoFactorEnrollmentPopupMessage" xml:space="preserve">
-    <value>{0} zahteva vašo včlanitev v 2-stopenjsko overovljanje pri ponudniku {1}.</value>
-    <comment>{0}=Profile name, {1}=Authenticating provider</comment>
-  </data>
-  <data name="TwoFactorEnrollmentPopupTitle" xml:space="preserve">
-    <value>Včlanitev v 2-stopenjsko overovljanje</value>
-  </data>
-  <data name="UserDisabledMessage" xml:space="preserve">
-    <value>Pozor! Vaš račun je označen kot onemogočen. Mogoče se ne boste mogli povezati. Prosimo, za pomoč se obrnite se na svoj center za pomoč.</value>
-  </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Vnesite svoje uporabniško ime in geslo za "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
@@ -386,7 +367,7 @@ Program Commons Conservancy eduVPN</value>
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Up. ime</value>
   </data>
-  <data name="YubiKeyEnrollmentPanelResponseLabel" xml:space="preserve">
+  <data name="YubiKeyAuthenticationPanelResponseLabel" xml:space="preserve">
     <value>_Odgovor</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
@@ -399,9 +380,6 @@ Omogoča SURFnet</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Poveži!</value>
-  </data>
-  <data name="TOTPEnrollmentPanelSecretCopyLabel" xml:space="preserve">
-    <value>_Kopiraj skrivnost</value>
   </data>
   <data name="Unavailable" xml:space="preserve">
     <value>Ni na voljo</value>

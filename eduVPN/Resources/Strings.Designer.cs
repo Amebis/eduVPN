@@ -304,15 +304,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2-Factor Authentication enrollment failed..
-        /// </summary>
-        internal static string ErrorTwoFactorEnrollment {
-            get {
-                return ResourceManager.GetString("ErrorTwoFactorEnrollment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Uploading to web failed. Please check your internet connection..
         /// </summary>
         internal static string ErrorUploading {

@@ -219,9 +219,6 @@
     <value>le fichier téléchargé {0} est corrompu. </value>
     <comment>{0}=URI</comment>
   </data>
-  <data name="ErrorTwoFactorEnrollment" xml:space="preserve">
-    <value>Échec de l'enrôlement de l'authentification 2 facteurs.</value>
-  </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Échec du téléchargement. Veuillez vérifier votre connexion internet.</value>
   </data>
