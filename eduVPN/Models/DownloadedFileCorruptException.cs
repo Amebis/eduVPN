@@ -21,14 +21,6 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs an exception
         /// </summary>
-        public DownloadedFileCorruptException() :
-            this(Resources.Strings.ErrorNullAccessToken)
-        {
-        }
-
-        /// <summary>
-        /// Constructs an exception
-        /// </summary>
         /// <param name="message">Exception message</param>
         public DownloadedFileCorruptException(string message) :
             this(message, null)
