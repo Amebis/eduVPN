@@ -150,7 +150,7 @@
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Pooblaščanje odjemalca ni uspelo.</value>
   </data>
-  <data name="ErrorNullAccessToken" xml:space="preserve">
+  <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Žeton za dostop ni bil odobren.</value>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
