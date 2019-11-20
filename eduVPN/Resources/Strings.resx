@@ -150,8 +150,9 @@
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Client authorization failed.</value>
   </data>
-  <data name="ErrorNullAccessToken" xml:space="preserve">
-    <value>No access token granted.</value>
+  <data name="ErrorInvalidAccessToken" xml:space="preserve">
+    <value>Authorizing the client to use {0} failed.</value>
+    <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
     <value>Adding routes to system...</value>

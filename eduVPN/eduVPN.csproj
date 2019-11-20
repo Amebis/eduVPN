@@ -39,7 +39,7 @@
     <Compile Include="JSON\APIErrorException.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
-    <Compile Include="Models\AccessTokenNullException.cs" />
+    <Compile Include="Models\InvalidAccessTokenException.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificateCheck.cs" />
     <Compile Include="Models\CertificateCheckException.cs" />

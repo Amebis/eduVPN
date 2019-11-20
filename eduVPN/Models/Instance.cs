@@ -126,6 +126,9 @@ namespace eduVPN.Models
         public void OnRequestAuthorization(Instance authenticating_instance, RequestAuthorizationEventArgs e)
         {
             RequestAuthorization?.Invoke(authenticating_instance, e);
+
+            if (e.AccessToken is eduOAuth.InvalidToken)
+                throw new InvalidAccessTokenException(String.Format(Resources.Strings.ErrorInvalidAccessToken, this));
         }
 
         /// <summary>
@@ -270,8 +273,6 @@ namespace eduVPN.Models
                     retry:
                     // Request authentication token.
                     OnRequestAuthorization(authenticating_instance, e);
-                    if (e.AccessToken == null)
-                        throw new AccessTokenNullException();
 
                     try
                     {
@@ -374,8 +375,6 @@ namespace eduVPN.Models
                     retry:
                     // Request authentication token.
                     OnRequestAuthorization(authenticating_instance, e);
-                    if (e.AccessToken == null)
-                        throw new AccessTokenNullException();
 
                     // Perform an optional certificate check.
                     try
@@ -443,8 +442,6 @@ namespace eduVPN.Models
                     retry:
                     // Request authentication token.
                     OnRequestAuthorization(authenticating_instance, e);
-                    if (e.AccessToken == null)
-                        throw new AccessTokenNullException();
 
                     // Open eduVPN client certificate store.
                     var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);

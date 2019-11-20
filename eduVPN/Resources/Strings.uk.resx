@@ -150,7 +150,7 @@
   <data name="ErrorAuthorization" xml:space="preserve">
     <value>Помилка авторизації клієнта.</value>
   </data>
-  <data name="ErrorNullAccessToken" xml:space="preserve">
+  <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Відсутній токен доступу.</value>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">

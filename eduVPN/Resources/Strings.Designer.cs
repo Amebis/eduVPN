@@ -205,6 +205,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authorizing the client to use {0} failed..
+        /// </summary>
+        internal static string ErrorInvalidAccessToken {
+            get {
+                return ResourceManager.GetString("ErrorInvalidAccessToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid hostname: hostnames contain letters, numbers, hyphens and dots..
         /// </summary>
         internal static string ErrorInvalidHostname {
@@ -264,15 +273,6 @@ namespace eduVPN.Resources {
         internal static string ErrorNetworkInterfaceNameNotFound {
             get {
                 return ResourceManager.GetString("ErrorNetworkInterfaceNameNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No access token granted..
-        /// </summary>
-        internal static string ErrorNullAccessToken {
-            get {
-                return ResourceManager.GetString("ErrorNullAccessToken", resourceCulture);
             }
         }
         

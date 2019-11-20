@@ -160,8 +160,6 @@ namespace eduVPN.Models
             retry:
             // Request authentication token.
             RequestAuthorization?.Invoke(this, e);
-            if (e.AccessToken == null)
-                throw new AccessTokenNullException();
 
             try
             {
@@ -219,8 +217,6 @@ namespace eduVPN.Models
             retry:
             // Request authentication token.
             RequestAuthorization?.Invoke(this, e);
-            if (e.AccessToken == null)
-                throw new AccessTokenNullException();
 
             try
             {

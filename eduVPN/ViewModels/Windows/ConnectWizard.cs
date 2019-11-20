@@ -985,7 +985,7 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         /// <param name="instance">Instance</param>
         /// <returns>Asynchronous operation</returns>
-        /// <exception cref="AccessTokenNullException">Authorization failed</exception>
+        /// <exception cref="InvalidAccessTokenException">Authorization failed</exception>
         public async Task TriggerAuthorizationAsync(Instance instance)
         {
             var e = new RequestAuthorizationEventArgs("config");
@@ -993,8 +993,8 @@ namespace eduVPN.ViewModels.Windows
             authorization_task.Start();
             await authorization_task;
 
-            if (e.AccessToken == null)
-                throw new AccessTokenNullException();
+            if (e.AccessToken is InvalidToken)
+                throw new InvalidAccessTokenException(String.Format(Resources.Strings.ErrorInvalidAccessToken, instance));
         }
 
         /// <summary>
@@ -1019,38 +1019,45 @@ namespace eduVPN.ViewModels.Windows
                             if (e.ForceRefresh || access_token.Expires <= DateTime.Now)
                             {
                                 // Token refresh was explicitly requested or the token expired. Refresh it.
-
-                                // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
-                                var api = authenticating_instance.GetEndpoints(Abort.Token);
-
-                                // Prepare web request.
-                                var request = WebRequest.Create(api.TokenEndpoint);
-                                request.CachePolicy = Xml.Response.CachePolicy;
-                                request.Proxy = null;
-                                if (request is HttpWebRequest request_http)
-                                    request_http.UserAgent = Xml.Response.UserAgent;
-
-                                try
+                                if (access_token is InvalidToken)
                                 {
-                                    access_token = access_token.RefreshToken(request, null, Abort.Token);
-
-                                    // Update access token cache.
-                                    Properties.Settings.Default.AccessTokenCache[key] = access_token;
-
-                                    // If we got here, return the token.
-                                    e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Refreshed;
-                                    e.AccessToken = access_token;
-                                    return;
+                                    // Invalid token is not refreshable.
+                                    Properties.Settings.Default.AccessTokenCache.Remove(key);
                                 }
-                                catch (AccessTokenException ex)
+                                else
                                 {
-                                    if (ex.ErrorCode == AccessTokenException.ErrorCodeType.InvalidGrant)
+                                    // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
+                                    var api = authenticating_instance.GetEndpoints(Abort.Token);
+
+                                    // Prepare web request.
+                                    var request = WebRequest.Create(api.TokenEndpoint);
+                                    request.CachePolicy = Xml.Response.CachePolicy;
+                                    request.Proxy = null;
+                                    if (request is HttpWebRequest request_http)
+                                        request_http.UserAgent = Xml.Response.UserAgent;
+
+                                    try
                                     {
-                                        // The grant has been revoked. Drop the access token.
-                                        Properties.Settings.Default.AccessTokenCache.Remove(key);
+                                        access_token = access_token.RefreshToken(request, null, Abort.Token);
+
+                                        // Update access token cache.
+                                        Properties.Settings.Default.AccessTokenCache[key] = access_token;
+
+                                        // If we got here, return the token.
+                                        e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Refreshed;
+                                        e.AccessToken = access_token;
+                                        return;
                                     }
-                                    else
-                                        throw;
+                                    catch (AccessTokenException ex)
+                                    {
+                                        if (ex.ErrorCode == AccessTokenException.ErrorCodeType.InvalidGrant)
+                                        {
+                                            // The grant has been revoked. Drop the access token.
+                                            Properties.Settings.Default.AccessTokenCache.Remove(key);
+                                        }
+                                        else
+                                            throw;
+                                    }
                                 }
                             }
                             else
@@ -1108,12 +1115,15 @@ namespace eduVPN.ViewModels.Windows
                                 Abort.Token);
                         }
 
-                        if (e.AccessToken != null)
+                        if (e.AccessToken == null)
                         {
-                            // Save access token to the cache.
-                            e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Authorized;
-                            Properties.Settings.Default.AccessTokenCache[authenticating_instance.Base.AbsoluteUri] = e.AccessToken;
+                            // Prevent repetitive prompts by creating a fake access token.
+                            e.AccessToken = new InvalidToken();
                         }
+
+                        // Save access token to the cache.
+                        e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Authorized;
+                        Properties.Settings.Default.AccessTokenCache[authenticating_instance.Base.AbsoluteUri] = e.AccessToken;
                     }
                 }
             }
