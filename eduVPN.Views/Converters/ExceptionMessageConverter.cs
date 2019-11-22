@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 
 namespace eduVPN.Converters
@@ -29,7 +30,9 @@ namespace eduVPN.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is AggregateException ex_agg)
-                return ex_agg.Message + "\r\n" + new ExceptionMessageConverter().Convert(ex_agg.InnerException, targetType, parameter, culture);
+                return
+                    (!String.IsNullOrWhiteSpace(ex_agg.Message) ? ex_agg.Message + "\r\n" : "") +
+                    String.Join("\r\n", ex_agg.InnerExceptions.Select(ex => new ExceptionMessageConverter().Convert(ex, targetType, parameter, culture)).Distinct());
             else if (value is Exception ex)
                 return ex.Message;
             else
