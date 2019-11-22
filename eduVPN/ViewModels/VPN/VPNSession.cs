@@ -375,7 +375,7 @@ namespace eduVPN.ViewModels.VPN
                     if (ex_non_cancelled.Any())
                     {
                         // Some exceptions were issues beyond OperationCanceledException.
-                        throw new AggregateException(ex.Message, ex_non_cancelled.ToArray());
+                        throw new AggregateException("", ex_non_cancelled.ToArray());
                     }
                     else
                     {
