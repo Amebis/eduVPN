@@ -58,7 +58,7 @@ SetupBuild :: \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
 
 SetupBuild ::
-	nuget.exe restore $(NUGET_FLAGS)
+	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 !ENDIF
 
@@ -75,7 +75,7 @@ SetupBuild ::
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll" ::
-	nuget.exe restore $(NUGET_FLAGS)
+	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::

@@ -93,7 +93,7 @@ SetupMSI :: \
 ######################################################################
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" ::
-	nuget.exe restore $(NUGET_FLAGS)
+	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
