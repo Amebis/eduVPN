@@ -1,7 +1,7 @@
 ﻿/*
     Let's Connect! - The open source VPN
 
-    Copyright: 2017-2019 The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 */
 

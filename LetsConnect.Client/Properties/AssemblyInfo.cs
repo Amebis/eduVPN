@@ -1,7 +1,7 @@
 ﻿/*
     Let's Connect! - The open source VPN
 
-    Copyright: 2017-2019 The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Let's Connect client for Windows")]
 [assembly: AssemblyCompany("SURF")]
 [assembly: AssemblyProduct("Let's Connect")]
-[assembly: AssemblyCopyright("Copyright © 2017-2019 The Commons Conservancy eduVPN Programme")]
+[assembly: AssemblyCopyright("Copyright © 2017-2020 The Commons Conservancy eduVPN Programme")]
 [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)]
 
 // Setting ComVisible to false makes the types in this assembly not visible
