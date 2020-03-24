@@ -138,6 +138,7 @@
     <Compile Include="Xml\ResourceRef.cs" />
     <Compile Include="Xml\Response.cs" />
     <Compile Include="Xml\SerializableStringDictionary.cs" />
+    <Compile Include="Xml\StartSessionParams.cs" />
     <Compile Include="Xml\VPNConfigurationSettings.cs" />
     <Compile Include="Xml\VPNConfigurationSettingsList.cs" />
   </ItemGroup>

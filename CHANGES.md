@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.27...HEAD)
 
+- Auto-reconnect on client restart
 - User may opt-in to allow local network access while connected
 - 2FA enrollment discontinued
 - OpenVPN updated to 2.4.8

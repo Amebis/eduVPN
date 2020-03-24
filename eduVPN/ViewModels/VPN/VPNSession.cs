@@ -210,6 +210,9 @@ namespace eduVPN.ViewModels.VPN
                             // Terminate connection.
                             _disconnect.Cancel();
                             Disconnect.RaiseCanExecuteChanged();
+
+                            // Clear profile to auto-start on next launch.
+                            Properties.Settings.Default.AutoStartProfile = null;
                         },
 
                         // canExecute

@@ -225,6 +225,14 @@ namespace eduVPN.ViewModels.Windows
                                                         throw new OperationCanceledException();
                                                 }
 
+                                                // Set profile to auto-start on next launch.
+                                                Properties.Settings.Default.AutoStartProfile = new eduVPN.Xml.StartSessionParams
+                                                {
+                                                    InstanceSourceType = param.InstanceSourceType,
+                                                    Instance = param.ConnectingProfile.Instance.Base,
+                                                    ID = param.ConnectingProfile.ID
+                                                };
+
                                                 // Run our session.
                                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1)));
                                                 try { session.Run(); }
@@ -800,6 +808,28 @@ namespace eduVPN.ViewModels.Windows
                     RaisePropertyChanged(nameof(HasInstanceSources));
                     RaisePropertyChanged(nameof(StartingPage));
                     CurrentPage = StartingPage;
+
+                    var param_settings = Properties.Settings.Default.AutoStartProfile as eduVPN.Xml.StartSessionParams;
+                    if (param_settings != null)
+                    {
+                        // Find the profile to auto-start.
+                        Profile profile = null;
+                        var instance_source = InstanceSources[(int)param_settings.InstanceSourceType];
+                        var instance = instance_source.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == param_settings.Instance.AbsoluteUri);
+                        if (instance != null)
+                            profile = instance?.GetProfileList(instance_source.GetAuthenticatingInstance(instance), Abort.Token).FirstOrDefault(p => p.ID == param_settings.ID);
+
+                        if (profile != null) {
+                            // Set connecting instance.
+                            InstanceSourceType = param_settings.InstanceSourceType;
+                            InstanceSource.ConnectingInstance = instance;
+
+                            // Start VPN session.
+                            var param = new StartSessionParams(param_settings.InstanceSourceType, profile);
+                            if (StartSession.CanExecute(param))
+                                StartSession.Execute(param);
+                        }
+                    }
                 }
                 finally { ChangeTaskCount(-1); }
 

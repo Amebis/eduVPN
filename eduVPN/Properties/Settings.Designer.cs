@@ -263,5 +263,20 @@ namespace eduVPN.Properties {
                 return ((string)(this["OpenVPNAddOptions"]));
             }
         }
+        
+        /// <summary>
+        /// Profile to automatically connect to on startup
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Profile to automatically connect to on startup")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::eduVPN.Xml.StartSessionParams AutoStartProfile {
+            get {
+                return ((global::eduVPN.Xml.StartSessionParams)(this["AutoStartProfile"]));
+            }
+            set {
+                this["AutoStartProfile"] = value;
+            }
+        }
     }
 }
