@@ -2,7 +2,7 @@
 <!--
     eduVPN - VPN for education and research
 
-    Copyright: 2017-2019 The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
 <WixLocalization
@@ -23,7 +23,7 @@
     <String Id="ProductLanguage">1058</String>
     <String Id="SummaryCodepage">1251</String>
     <String Id="Culture">uk</String>
-    <String Id="LegalCopyright">Copyright: 2017-2019 The Commons Conservancy eduVPN Programme</String>
+    <String Id="LegalCopyright">Copyright: 2017-2020 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">Нова версія [SimpleProductName] вже встановлено. Вихід з програми установки.</String>
     <String Id="DotNETFrameworkMissing">Це програмне забезбечення потребує .NET Framework 4.5. Будь ласка встановіть .NET Framework 4.5 та запустіть інсталяцію повторно.</String>
