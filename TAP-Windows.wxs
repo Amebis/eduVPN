@@ -16,17 +16,9 @@
             Value="CurrentMajorVersionNumber"
             Format="raw"
             Variable="Windows10VersionMaj"/>
-        <util:RegistrySearch
-            Id="TAPWindowsPath"
-            Root="HKLM"
-            Key="SYSTEM\CurrentControlSet\services\tap0901"
-            Value="ImagePath"
-            Variable="TAPWindowsPath"
-            ExpandEnvironmentVariables="yes"/>
         <util:FileSearch
             Id="TAPWindowsDriverVersion"
-            After="TAPWindowsPath"
-            Path="[WindowsFolder][TAPWindowsPath]"
+            Path="[WindowsFolder]System32\drivers\tap0901.sys"
             Result="version"
             Variable="TAPWindowsDriverVersion"/>
 
