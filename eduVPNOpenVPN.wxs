@@ -152,7 +152,6 @@
                     Type="ownProcess"
                     Start="auto"
                     ErrorControl="normal">
-                    <ServiceDependency Id="tap0901"/>
                     <ServiceDependency Id="Dhcp"/>
                 </ServiceInstall>
             </Component>
