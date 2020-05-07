@@ -24,6 +24,8 @@
 
         <PackageGroup
             Id="TAPWindows924Redist">
+
+            <!-- Initial TAP-Windows6 installation does not require a reboot. -->
             <ExePackage
                 Id="TAPWindows924Win7Redist"
                 DisplayName="TAP-Windows 9.24.2 for Windows 7, 8 and 8.1"
@@ -36,7 +38,7 @@
                 SourceFile="bin\Setup\tap-windows-9.24.2-I601-Win7.exe"
                 InstallCommand="/S"
                 DetectCondition="TAPWindowsDriverVersion &gt;= v9.24.2.601"
-                InstallCondition="NOT Windows10VersionMaj"/>
+                InstallCondition="NOT Windows10VersionMaj AND NOT TAPWindowsDriverVersion"/>
             <ExePackage
                 Id="TAPWindows924Win10Redist"
                 DisplayName="TAP-Windows 9.24.2 for Windows 10"
@@ -49,7 +51,39 @@
                 SourceFile="bin\Setup\tap-windows-9.24.2-I601-Win10.exe"
                 InstallCommand="/S"
                 DetectCondition="TAPWindowsDriverVersion &gt;= v9.24.2.601"
-                InstallCondition="Windows10VersionMaj"/>
+                InstallCondition="Windows10VersionMaj AND NOT TAPWindowsDriverVersion"/>
+
+            <!-- TAP-Windows6 upgrade does require a reboot. -->
+            <ExePackage
+                Id="TAPWindows924Win7RedistUpdate"
+                DisplayName="TAP-Windows 9.24.2 for Windows 7, 8 and 8.1"
+                Cache="yes"
+                Compressed="yes"
+                PerMachine="yes"
+                Permanent="yes"
+                Vital="yes"
+                Name="tap-windows-9.24.2-I601-Win7.exe"
+                SourceFile="bin\Setup\tap-windows-9.24.2-I601-Win7.exe"
+                InstallCommand="/S"
+                DetectCondition="TAPWindowsDriverVersion &gt;= v9.24.2.601"
+                InstallCondition="NOT Windows10VersionMaj AND TAPWindowsDriverVersion">
+                <ExitCode Behavior="scheduleReboot"/>
+            </ExePackage>
+            <ExePackage
+                Id="TAPWindows924Win10RedistUpdate"
+                DisplayName="TAP-Windows 9.24.2 for Windows 10"
+                Cache="yes"
+                Compressed="yes"
+                PerMachine="yes"
+                Permanent="yes"
+                Vital="yes"
+                Name="tap-windows-9.24.2-I601-Win10.exe"
+                SourceFile="bin\Setup\tap-windows-9.24.2-I601-Win10.exe"
+                InstallCommand="/S"
+                DetectCondition="TAPWindowsDriverVersion &gt;= v9.24.2.601"
+                InstallCondition="Windows10VersionMaj AND TAPWindowsDriverVersion">
+                <ExitCode Behavior="scheduleReboot"/>
+            </ExePackage>
         </PackageGroup>
     </Fragment>
 </Wix>
