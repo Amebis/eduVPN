@@ -402,12 +402,6 @@ namespace eduVPN.ViewModels.Windows
         public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestOpenVPNUsernamePasswordAuthentication;
 
         /// <summary>
-        /// Occurs when 2-Factor Authentication is requested.
-        /// </summary>
-        /// <remarks>Sender is the OpenVPN session <see cref="OpenVPNSession"/>.</remarks>
-        public event EventHandler<eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs> RequestTwoFactorAuthentication;
-
-        /// <summary>
         /// Occurs when product update is available.
         /// </summary>
         /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
@@ -1207,27 +1201,6 @@ namespace eduVPN.ViewModels.Windows
             {
                 // We're in the background thread - raise event via dispatcher.
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestOpenVPNUsernamePasswordAuthentication?.Invoke(sender, e)));
-            }
-        }
-
-        /// <summary>
-        /// Invokes <see cref="RequestTwoFactorAuthentication"/> event in GUI thread.
-        /// </summary>
-        /// <param name="sender"><see cref="RequestTwoFactorAuthentication"/> event sender</param>
-        /// <param name="e"><see cref="RequestTwoFactorAuthentication"/> event arguments</param>
-        public void OpenVPNSession_RequestTwoFactorAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
-        {
-            // Re-raise this event as ConnectWizard event, to simplify view.
-            // This way the view can listen ConnectWizard for authentication events only.
-            if (Dispatcher.CurrentDispatcher == Dispatcher)
-            {
-                // We're in the GUI thread.
-                RequestTwoFactorAuthentication?.Invoke(sender, e);
-            }
-            else
-            {
-                // We're in the background thread - raise event via dispatcher.
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => RequestTwoFactorAuthentication?.Invoke(sender, e)));
             }
         }
 

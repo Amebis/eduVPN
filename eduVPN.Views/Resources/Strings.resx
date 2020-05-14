@@ -335,25 +335,6 @@ If you continue, your user settings will be reset to the default.</value>
     <value>d\.hh\:mm\:ss</value>
     <comment>Display format of the duration times one day or longer</comment>
   </data>
-  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
-    <value>Please do not reuse the TOTP. Wait until a fresh TOTP is generated.</value>
-  </data>
-  <data name="TOTPAuthenticationPanelResponseLabel" xml:space="preserve">
-    <value>_Response</value>
-  </data>
-  <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
-    <value>Select your two-factor method and enter the security code:</value>
-    <comment>"securirty token" sounds wrong</comment>
-  </data>
-  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
-    <value>_Method</value>
-  </data>
-  <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
-    <value>Two-factor Authentication</value>
-  </data>
-  <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
-    <value>Requires two-factor authentication</value>
-  </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Enter your username and password for "{0}":</value>
     <comment>{0}=Authenticating realm name</comment>
@@ -366,9 +347,6 @@ If you continue, your user settings will be reset to the default.</value>
   </data>
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Username</value>
-  </data>
-  <data name="YubiKeyAuthenticationPanelResponseLabel" xml:space="preserve">
-    <value>_Response</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
     <value>{0}

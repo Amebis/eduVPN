@@ -723,60 +723,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please do not reuse the TOTP. Wait until a fresh TOTP is generated..
-        /// </summary>
-        public static string TOTPAuthenticationPanelNote {
-            get {
-                return ResourceManager.GetString("TOTPAuthenticationPanelNote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Response.
-        /// </summary>
-        public static string TOTPAuthenticationPanelResponseLabel {
-            get {
-                return ResourceManager.GetString("TOTPAuthenticationPanelResponseLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select your two-factor method and enter the security code:.
-        /// </summary>
-        public static string TwoFactorAuthenticationPopupMessage {
-            get {
-                return ResourceManager.GetString("TwoFactorAuthenticationPopupMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Method.
-        /// </summary>
-        public static string TwoFactorAuthenticationPopupMethodLabel {
-            get {
-                return ResourceManager.GetString("TwoFactorAuthenticationPopupMethodLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Two-factor Authentication.
-        /// </summary>
-        public static string TwoFactorAuthenticationPopupTitle {
-            get {
-                return ResourceManager.GetString("TwoFactorAuthenticationPopupTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Requires two-factor authentication.
-        /// </summary>
-        public static string TwoFactorAuthenticationRequired {
-            get {
-                return ResourceManager.GetString("TwoFactorAuthenticationRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Not Available.
         /// </summary>
         public static string Unavailable {
@@ -818,15 +764,6 @@ namespace eduVPN.Views.Resources {
         public static string UsernamePasswordPopupUsernameLabel {
             get {
                 return ResourceManager.GetString("UsernamePasswordPopupUsernameLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Response.
-        /// </summary>
-        public static string YubiKeyAuthenticationPanelResponseLabel {
-            get {
-                return ResourceManager.GetString("YubiKeyAuthenticationPanelResponseLabel", resourceCulture);
             }
         }
     }

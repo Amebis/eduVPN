@@ -109,17 +109,6 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="5,5,0,5"
-                ContentTemplate="{StaticResource TwoFactorAuthenticationIcon}"
-                Visibility="{Binding Path=IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
-                AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
-                IsTabStop="False"/>
-
-            <ContentControl
-                Grid.Column="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="5,5,0,5"
                 ContentTemplate="{StaticResource UnavailableIcon}"
                 Visibility="{Binding Path=IsAvailable, Converter={StaticResource UnavailableIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 ToolTip="{x:Static res:Strings.Unavailable}"
@@ -167,16 +156,6 @@
                 VerticalAlignment="Center"
                 TextAlignment="Center"
                 Text="{Binding}"/>
-
-            <ContentControl
-                Grid.Column="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                ContentTemplate="{StaticResource TwoFactorAuthenticationIcon}"
-                Visibility="{Binding Path=IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
-                AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
-                IsTabStop="False"/>
 
             <ContentControl
                 Grid.Column="2"
@@ -250,17 +229,6 @@
                     Text="{Binding Path=Instance}"
                     FontSize="10"/>
             </Grid>
-
-            <ContentControl
-                Grid.Column="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="5,5,0,5"
-                ContentTemplate="{StaticResource TwoFactorAuthenticationIcon}"
-                Visibility="{Binding Path=IsTwoFactorAuthentication, Converter={StaticResource TwoFactorAuthenticationIconVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                ToolTip="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
-                AutomationProperties.Name="{x:Static res:Strings.TwoFactorAuthenticationRequired}"
-                IsTabStop="False"/>
 
             <ContentControl
                 Grid.Column="2"

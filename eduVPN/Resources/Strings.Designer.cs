@@ -277,15 +277,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid TOTP response: it should contain exactly six (6) decimal numbers; no spaces or hyphens are allowed..
-        /// </summary>
-        internal static string ErrorInvalidTOTP {
-            get {
-                return ResourceManager.GetString("ErrorInvalidTOTP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Network interface with {0} ID not found..
         /// </summary>
         internal static string ErrorNetworkInterfaceIDNotFound {
@@ -570,24 +561,6 @@ namespace eduVPN.Resources {
         internal static string StatusPageTitle {
             get {
                 return ResourceManager.GetString("StatusPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Time-based One-Time Password (TOTP).
-        /// </summary>
-        internal static string TwoFactorAuthenticationMethodTOTP {
-            get {
-                return ResourceManager.GetString("TwoFactorAuthenticationMethodTOTP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to YubiKey.
-        /// </summary>
-        internal static string TwoFactorAuthenticationMethodYubiKey {
-            get {
-                return ResourceManager.GetString("TwoFactorAuthenticationMethodYubiKey", resourceCulture);
             }
         }
     }

@@ -72,30 +72,6 @@ namespace eduVPN.Models
         private string _display_name;
 
         /// <summary>
-        /// Is 2-Factor authentication enabled for this profile?
-        /// </summary>
-        public bool IsTwoFactorAuthentication
-        {
-            get { return _is_two_factor_authentication;  }
-            set { SetProperty(ref _is_two_factor_authentication, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool _is_two_factor_authentication;
-
-        /// <summary>
-        /// Supported 2-Factor authentication methods
-        /// </summary>
-        public TwoFactorAuthenticationMethods TwoFactorMethods
-        {
-            get { return _two_factor_methods; }
-            set { SetProperty(ref _two_factor_methods, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private TwoFactorAuthenticationMethods _two_factor_methods;
-
-        /// <summary>
         /// Popularity factor in the [0.0, 1.0] range (default 1.0)
         /// </summary>
         public float Popularity
@@ -279,27 +255,6 @@ namespace eduVPN.Models
 
                 // Set display name.
                 DisplayName = eduJSON.Parser.GetLocalizedValue(obj2, "display_name", out string display_name) ? display_name : ID;
-
-                // Set two-factor authentication.
-                IsTwoFactorAuthentication = eduJSON.Parser.GetValue(obj2, "two_factor", out bool two_factor) ? two_factor : false;
-                if (IsTwoFactorAuthentication)
-                {
-                    if (eduJSON.Parser.GetValue(obj2, "two_factor_method", out List<object> two_factor_method))
-                    {
-                        TwoFactorMethods = TwoFactorAuthenticationMethods.None;
-                        foreach (var method in two_factor_method)
-                            if (method is string method_str)
-                                switch (method_str)
-                                {
-                                    case "totp": TwoFactorMethods |= TwoFactorAuthenticationMethods.TOTP; break;
-                                    case "yubi": TwoFactorMethods |= TwoFactorAuthenticationMethods.YubiKey; break;
-                                }
-                    }
-                    else
-                        TwoFactorMethods = TwoFactorAuthenticationMethods.Any;
-                }
-                else
-                    TwoFactorMethods = TwoFactorAuthenticationMethods.None;
 
                 // Mark profile as available.
                 IsAvailable = true;
