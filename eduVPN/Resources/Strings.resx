@@ -280,4 +280,22 @@
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Downloading web resource signature failed.</value>
   </data>
+  <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key is invalid.</value>
+  </data>
+  <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key with ID {0:X} already exists.</value>
+  </data>
+  <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
+    <value>Minisign signature is not supported.</value>
+  </data>
+  <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
+    <value>Minisign signature is invalid.</value>
+  </data>
+  <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key is not supported.</value>
+  </data>
+  <data name="ErrorUntrustedMinisignSignatureKey" xml:space="preserve">
+    <value>Minisign signature key is not trusted.</value>
+  </data>
 </root>

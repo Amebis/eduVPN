@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -29,14 +28,13 @@ namespace eduVPN.Xml
         /// <summary>
         /// Gets sequenced JSON from the given URI.
         /// </summary>
-        /// <param name="uri">URI</param>
-        /// <param name="pub_key">Public key for signature verification; or <c>null</c> if signature verification is not required</param>
+        /// <param name="res">URI and public key for signature verification</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>JSON content</returns>
-        public Dictionary<string, object> GetSeq(Uri uri, byte[] pub_key = null, CancellationToken ct = default(CancellationToken))
+        public Dictionary<string, object> GetSeq(ResourceRef res, CancellationToken ct = default(CancellationToken))
         {
             // Retrieve response from cache (if available).
-            var key = uri.AbsoluteUri;
+            var key = res.Uri.AbsoluteUri;
             Response response_cache = null;
             lock (_lock)
                 if (!TryGetValue(key, out response_cache))
@@ -44,8 +42,7 @@ namespace eduVPN.Xml
 
             // Get instance source.
             var response_web = Xml.Response.Get(
-                uri: uri,
-                pub_key: pub_key,
+                res: res,
                 ct: ct,
                 previous: response_cache);
 
