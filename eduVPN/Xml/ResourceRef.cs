@@ -37,9 +37,14 @@ namespace eduVPN.Xml
         public Uri Uri { get; set; }
 
         /// <summary>
-        /// Ed25519 Public key
+        /// Ed25519 public key
         /// </summary>
         public byte[] PublicKey { get; set; }
+
+        /// <summary>
+        /// Minisign public keys
+        /// </summary>
+        public MinisignPublicKeyDictionary MinisignPublicKeys { get; set; }
 
         #endregion
 
@@ -63,7 +68,23 @@ namespace eduVPN.Xml
             string v;
 
             Uri = !String.IsNullOrWhiteSpace(v = reader[nameof(Uri)]) ? new Uri(_assembly_uri, v) : null;
-            PublicKey = !String.IsNullOrWhiteSpace(v = reader[nameof(PublicKey)]) ? PublicKey = Convert.FromBase64String(v) : null;
+            PublicKey = !String.IsNullOrWhiteSpace(v = reader[nameof(PublicKey)]) ? Convert.FromBase64String(v) : null;
+
+            if (reader.IsEmptyElement)
+                return;
+
+            while (reader.Read() &&
+                !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
+            {
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(MinisignPublicKeyDictionary))
+                {
+                    if (reader["Key"] == nameof(MinisignPublicKeys))
+                    {
+                        MinisignPublicKeys = new MinisignPublicKeyDictionary();
+                        MinisignPublicKeys.ReadXml(reader);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -73,7 +94,16 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Uri), Uri.AbsoluteUri);
-            writer.WriteAttributeString(nameof(PublicKey), Convert.ToBase64String(PublicKey));
+            if (PublicKey.Length > 0)
+                writer.WriteAttributeString(nameof(PublicKey), Convert.ToBase64String(PublicKey));
+
+            if (MinisignPublicKeys != null)
+            {
+                writer.WriteStartElement(nameof(MinisignPublicKeyDictionary));
+                writer.WriteAttributeString("Key", nameof(MinisignPublicKeys));
+                MinisignPublicKeys.WriteXml(writer);
+                writer.WriteEndElement();
+            }
         }
 
         #endregion

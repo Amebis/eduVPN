@@ -169,6 +169,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minisign public key with ID {0:X} already exists..
+        /// </summary>
+        internal static string ErrorDuplicateMinisignPublicKey {
+            get {
+                return ResourceManager.GetString("ErrorDuplicateMinisignPublicKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading of API endpoints failed..
         /// </summary>
         internal static string ErrorEndpointsLoad {
@@ -219,6 +228,24 @@ namespace eduVPN.Resources {
         internal static string ErrorInvalidHostname {
             get {
                 return ResourceManager.GetString("ErrorInvalidHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minisign public key is invalid..
+        /// </summary>
+        internal static string ErrorInvalidMinisignPublicKey {
+            get {
+                return ResourceManager.GetString("ErrorInvalidMinisignPublicKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minisign signature is invalid..
+        /// </summary>
+        internal static string ErrorInvalidMinisignSignature {
+            get {
+                return ResourceManager.GetString("ErrorInvalidMinisignSignature", resourceCulture);
             }
         }
         
@@ -300,6 +327,33 @@ namespace eduVPN.Resources {
         internal static string ErrorSavingProfileConfiguration {
             get {
                 return ResourceManager.GetString("ErrorSavingProfileConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minisign public key is not supported..
+        /// </summary>
+        internal static string ErrorUnsupportedMinisignPublicKey {
+            get {
+                return ResourceManager.GetString("ErrorUnsupportedMinisignPublicKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minisign signature is not supported..
+        /// </summary>
+        internal static string ErrorUnsupportedMinisignSignature {
+            get {
+                return ResourceManager.GetString("ErrorUnsupportedMinisignSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minisign signature key is not trusted..
+        /// </summary>
+        internal static string ErrorUntrustedMinisignSignatureKey {
+            get {
+                return ResourceManager.GetString("ErrorUntrustedMinisignSignatureKey", resourceCulture);
             }
         }
         

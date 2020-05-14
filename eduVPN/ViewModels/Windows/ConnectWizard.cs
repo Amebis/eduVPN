@@ -713,10 +713,7 @@ namespace eduVPN.ViewModels.Windows
                             var source = Properties.Settings.Default.GetResourceRef(Properties.Settings.InstanceDirectoryId[source_index] + "Discovery");
                             if (source.Uri != null)
                             {
-                                var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
-                                    source.Uri,
-                                    source.PublicKey,
-                                    Abort.Token);
+                                var obj_web = Properties.Settings.Default.ResponseCache.GetSeq(source, Abort.Token);
 
                                 // Add a tick.
                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => InitializingPage.Progress.Value++));
@@ -861,12 +858,9 @@ namespace eduVPN.ViewModels.Windows
                                     () =>
                                     {
                                         // Get self-update.
-                                        var discovery_uri = Properties.Settings.Default.SelfUpdateDescr.Uri;
-                                        Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", discovery_uri.AbsoluteUri);
-                                        obj_web = Properties.Settings.Default.ResponseCache.GetSeq(
-                                            discovery_uri,
-                                            Properties.Settings.Default.SelfUpdateDescr.PublicKey,
-                                            Abort.Token);
+                                        var discovery_res = Properties.Settings.Default.SelfUpdateDescr;
+                                        Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", discovery_res.Uri.AbsoluteUri);
+                                        obj_web = Properties.Settings.Default.ResponseCache.GetSeq(discovery_res, Abort.Token);
 
                                         repo_version = new Version((string)obj_web["version"]);
                                         Trace.TraceInformation("Online version: {0}", repo_version.ToString());
