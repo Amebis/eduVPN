@@ -55,9 +55,6 @@
     <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
     <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
-    <Compile Include="Converters\TOTPAuthenticationNoteVisibilityConverter.cs" />
-    <Compile Include="Converters\TOTPSecretConverter.cs" />
-    <Compile Include="Converters\TwoFactorAuthenticationIconVisibilityConverter.cs" />
     <Compile Include="Converters\UnavailableIconVisibilityConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
@@ -110,12 +107,6 @@
       <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\ConnectingSelectPanel.cs" />
-    <Compile Include="Panels\TOTPAuthenticationPanel.xaml.cs">
-      <DependentUpon>TOTPAuthenticationPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\YubiKeyAuthenticationPanel.xaml.cs">
-      <DependentUpon>YubiKeyAuthenticationPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
@@ -138,9 +129,6 @@
     </Compile>
     <Compile Include="Windows\SelfUpdatePopup.xaml.cs">
       <DependentUpon>SelfUpdatePopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\TwoFactorAuthenticationPopup.xaml.cs">
-      <DependentUpon>TwoFactorAuthenticationPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\UsernamePasswordPopup.xaml.cs">
       <DependentUpon>UsernamePasswordPopup.xaml</DependentUpon>
@@ -259,14 +247,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\TOTPAuthenticationPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\YubiKeyAuthenticationPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\Constants.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -300,10 +280,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\SelfUpdatePopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\TwoFactorAuthenticationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

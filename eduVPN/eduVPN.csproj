@@ -90,7 +90,6 @@
     <Compile Include="Models\MessageMaintenance.cs" />
     <Compile Include="Models\MessageNotification.cs" />
     <Compile Include="Models\MessageOfTheDay.cs" />
-    <Compile Include="Models\TwoFactorAuthenticationMethods.cs" />
     <Compile Include="Models\ValidatableBindableBase.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />
@@ -101,9 +100,6 @@
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
     <Compile Include="ViewModels\Windows\PasswordPopup.cs" />
     <Compile Include="ViewModels\Pages\SettingsPage.cs" />
-    <Compile Include="ViewModels\Panels\TOTPAuthenticationPanel.cs" />
-    <Compile Include="ViewModels\Panels\TwoFactorAuthenticationBasePanel.cs" />
-    <Compile Include="ViewModels\Windows\TwoFactorAuthenticationPopup.cs" />
     <Compile Include="ViewModels\Windows\UsernamePasswordPopup.cs" />
     <Compile Include="ViewModels\VPN\VPNSession.cs" />
     <Compile Include="ViewModels\VPN\VPNSessionStatusType.cs" />
@@ -134,7 +130,6 @@
     <Compile Include="Models\RequestInstanceAuthorizationEventArgs.cs" />
     <Compile Include="ViewModels\Pages\StatusPage.cs" />
     <Compile Include="ViewModels\Windows\Window.cs" />
-    <Compile Include="ViewModels\Panels\YubiKeyAuthenticationPanel.cs" />
     <Compile Include="Xml\LocalVPNConfigurationSettings.cs" />
     <Compile Include="Xml\ResourceRef.cs" />
     <Compile Include="Xml\Response.cs" />

@@ -26,9 +26,6 @@
     <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
     <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
-    <conv:TOTPAuthenticationNoteVisibilityConverter x:Key="TOTPAuthenticationNoteVisibilityConverter"/>
-    <conv:TOTPSecretConverter x:Key="TOTPSecretConverter"/>
-    <conv:TwoFactorAuthenticationIconVisibilityConverter x:Key="TwoFactorAuthenticationIconVisibilityConverter"/>
     <conv:UnavailableIconVisibilityConverter x:Key="UnavailableIconVisibilityConverter"/>
     <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
     <conv:VPNSessionStatusTypeWindowIconConverter x:Key="VPNSessionStatusTypeWindowIconConverter"/>

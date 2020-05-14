@@ -148,7 +148,6 @@ namespace eduVPN.Views.Windows
             view_model.RequestInstanceAuthorization += ConnectWizard_RequestInstanceAuthorization;
             view_model.RequestOpenVPNPasswordAuthentication += ConnectWizard_RequestOpenVPNPasswordAuthentication;
             view_model.RequestOpenVPNUsernamePasswordAuthentication += ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication;
-            view_model.RequestTwoFactorAuthentication += ConnectWizard_RequestTwoFactorAuthentication;
             view_model.PromptSelfUpdate += ConnectWizard_PromptSelfUpdate;
             view_model.QuitApplication += ConnectWizard_QuitApplication;
 
@@ -498,36 +497,6 @@ namespace eduVPN.Views.Windows
                 // Password was not set using MVVP, since <PasswordBox> control does not support binding.
                 e.Password = (new NetworkCredential("", Password.Password)).SecurePassword;
             }
-        }
-
-        /// <summary>
-        /// Pops-up 2-Factor Authentication prompt.
-        /// </summary>
-        /// <param name="sender">OpenVPN session of <see cref="OpenVPNSession"/> type.</param>
-        /// <param name="e">Event arguments. This method fills it with user input.</param>
-        /// <remarks>Occurs when 2-Factor Authentication requested.</remarks>
-        private void ConnectWizard_RequestTwoFactorAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
-        {
-            var view_model = new ViewModels.Windows.TwoFactorAuthenticationPopup(sender, e);
-
-            // Create a new authentication pop-up.
-            var popup = new TwoFactorAuthenticationPopup() { Owner = this, DataContext = view_model };
-            popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
-            {
-                // Set initial focus.
-                if (view_model.SelectedMethod == null && view_model.MethodList.Count > 0)
-                {
-                    view_model.SelectedMethod = view_model.MethodList[0];
-                    if (view_model.MethodList.Count > 1)
-                        (popup.FindName("Method") as Control)?.Focus();
-                }
-            };
-
-            // Set the event args to fill with data to be returned to the event sender.
-            ((Button)popup.FindName("OK")).CommandParameter = e;
-
-            // Run the authentication pop-up.
-            popup.ShowDialog();
         }
 
         /// <summary>

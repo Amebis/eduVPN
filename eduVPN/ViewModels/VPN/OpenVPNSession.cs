@@ -374,9 +374,6 @@ namespace eduVPN.ViewModels.VPN
 
                                         mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Wizard.OpenVPNSession_RequestPasswordAuthentication(this, e);
 
-                                        // OpenVPN username/password prompts are actually 2FA for eduVPN use-case. Relay them as such.
-                                        mgmt_session.UsernamePasswordAuthenticationRequested += (object sender, UsernamePasswordAuthenticationRequestedEventArgs e) => Wizard.OpenVPNSession_RequestTwoFactorAuthentication(this, e);
-
                                         mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
                                         {
                                             if (e.Protocol == ProtoType.UDP && Properties.Settings.Default.OpenVPNForceTCP)
