@@ -42,6 +42,7 @@
         -->
         <ComponentGroup Id="eduVPN.dll">
             <ComponentGroupRef Id="eduEd25519.dll"/>
+            <ComponentGroupRef Id="eduEx.dll"/>
             <ComponentGroupRef Id="eduJSON.dll"/>
             <ComponentGroupRef Id="eduOAuth.dll"/>
             <ComponentGroupRef Id="eduOpenVPN.dll"/>
