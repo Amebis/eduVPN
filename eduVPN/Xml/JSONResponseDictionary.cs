@@ -31,7 +31,7 @@ namespace eduVPN.Xml
         /// <param name="res">URI and public key for signature verification</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>JSON content</returns>
-        public Dictionary<string, object> GetSeq(ResourceRef res, CancellationToken ct = default(CancellationToken))
+        public Dictionary<string, object> GetSeq(ResourceRef res, CancellationToken ct = default)
         {
             // Retrieve response from cache (if available).
             var key = res.Uri.AbsoluteUri;
