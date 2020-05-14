@@ -54,7 +54,7 @@ RegisterOpenVPNInteractiveService :: \
 		DisplayName= "@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-$(IDS_CLIENT_PUBLISHER)" \
 		type= own \
 		start= auto \
-		depend= "tap0901/Dhcp"
+		depend= "Dhcp"
 	sc.exe description "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" "@$(MAKEDIR)\$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-$(IDS_CORE_TITLE)"
 	net.exe start "OpenVPNServiceInteractive$$$(CLIENT_TARGET)"
 
