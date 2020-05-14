@@ -340,11 +340,11 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minisign signature key is not trusted..
+        ///   Looks up a localized string similar to Minisign public key is not trusted..
         /// </summary>
-        internal static string ErrorUntrustedMinisignSignatureKey {
+        internal static string ErrorUntrustedMinisignPublicKey {
             get {
-                return ResourceManager.GetString("ErrorUntrustedMinisignSignatureKey", resourceCulture);
+                return ResourceManager.GetString("ErrorUntrustedMinisignPublicKey", resourceCulture);
             }
         }
         

@@ -310,7 +310,7 @@ namespace eduVPN.Xml
                             }
                             ulong key_id = r.ReadUInt64();
                             if (!res.MinisignPublicKeys.ContainsKey(key_id))
-                                throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignSignatureKey);
+                                throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
                             var sig = new byte[64];
                             if (r.Read(sig, 0, 64) != 64)
                                 throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);

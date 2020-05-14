@@ -286,7 +286,7 @@
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
     <value>Minisign public key is not supported.</value>
   </data>
-  <data name="ErrorUntrustedMinisignSignatureKey" xml:space="preserve">
-    <value>Minisign signature key is not trusted.</value>
+  <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key is not trusted.</value>
   </data>
 </root>
