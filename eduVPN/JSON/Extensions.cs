@@ -21,7 +21,7 @@ namespace eduVPN.JSON
         /// <param name="i">Loadable item</param>
         /// <param name="json">JSON string</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        public static void LoadJSON(this ILoadableItem i, string json, CancellationToken ct = default(CancellationToken))
+        public static void LoadJSON(this ILoadableItem i, string json, CancellationToken ct = default)
         {
             i.Load(eduJSON.Parser.Parse(json, ct));
         }
@@ -33,7 +33,7 @@ namespace eduVPN.JSON
         /// <param name="name">The name of the value holder element</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>JSON response</returns>
-        public static Dictionary<string, object> LoadJSONAPIResponse(string json, string name, CancellationToken ct = default(CancellationToken))
+        public static Dictionary<string, object> LoadJSONAPIResponse(string json, string name, CancellationToken ct = default)
         {
             // Parse JSON string and get inner key/value dictionary.
             var obj = eduJSON.Parser.GetValue<Dictionary<string, object>>(
@@ -54,7 +54,7 @@ namespace eduVPN.JSON
         /// <param name="json">JSON string representing a dictionary of key/values with <paramref name="name"/> element</param>
         /// <param name="name">The name of the value holder element</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        public static void LoadJSONAPIResponse(this ILoadableItem i, string json, string name, CancellationToken ct = default(CancellationToken))
+        public static void LoadJSONAPIResponse(this ILoadableItem i, string json, string name, CancellationToken ct = default)
         {
             // Parse JSON string and get inner key/value dictionary, then load data.
             i.Load(LoadJSONAPIResponse(json, name, ct)["data"]);

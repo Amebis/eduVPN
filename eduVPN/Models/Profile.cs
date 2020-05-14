@@ -151,7 +151,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetOpenVPNConfig(CancellationToken ct = default(CancellationToken))
+        public string GetOpenVPNConfig(CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Instance.GetEndpoints(ct);
@@ -208,7 +208,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetCompleteOpenVPNConfig(CancellationToken ct = default(CancellationToken))
+        public string GetCompleteOpenVPNConfig(CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Instance.GetEndpoints(ct);

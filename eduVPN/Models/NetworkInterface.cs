@@ -100,7 +100,7 @@ namespace eduVPN.Models
             {
                 if (name_lc == nic.Name.ToLower())
                 {
-                    iface = new NetworkInterface(Guid.TryParse(nic.Id, out var nic_id) ? nic_id : default(Guid), nic.Name);
+                    iface = new NetworkInterface(Guid.TryParse(nic.Id, out var nic_id) ? nic_id : default, nic.Name);
                     return true;
                 }
             }

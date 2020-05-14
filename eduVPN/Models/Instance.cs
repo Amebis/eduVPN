@@ -227,7 +227,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Instance endpoints</returns>
-        public InstanceEndpoints GetEndpoints(CancellationToken ct = default(CancellationToken))
+        public InstanceEndpoints GetEndpoints(CancellationToken ct = default)
         {
             lock (_endpoints_lock)
             {
@@ -260,7 +260,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile list</returns>
-        public ObservableCollection<Profile> GetProfileList(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public ObservableCollection<Profile> GetProfileList(Instance authenticating_instance, CancellationToken ct = default)
         {
             lock (_profile_list_lock)
             {
@@ -331,7 +331,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
-        public X509Certificate2 GetClientCertificate(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public X509Certificate2 GetClientCertificate(Instance authenticating_instance, CancellationToken ct = default)
         {
             lock (_client_certificate_lock)
             {
@@ -501,7 +501,7 @@ namespace eduVPN.Models
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
-        public X509Certificate2 RefreshClientCertificate(Instance authenticating_instance, CancellationToken ct = default(CancellationToken))
+        public X509Certificate2 RefreshClientCertificate(Instance authenticating_instance, CancellationToken ct = default)
         {
             lock (_client_certificate_lock)
             {
