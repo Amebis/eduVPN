@@ -31,6 +31,7 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEx.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduJSON.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj" \

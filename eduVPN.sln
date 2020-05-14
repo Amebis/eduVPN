@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}"
 	ProjectSection(SolutionItems) = preProject
@@ -94,6 +94,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LetsConnect", "LetsConnect"
 	ProjectSection(SolutionItems) = preProject
 		Install\LetsConnect\logo.png = Install\LetsConnect\logo.png
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEx", "eduEx\eduEx\eduEx.csproj", "{0E2C74AC-C81C-4CC6-B88D-81192623A66D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -269,6 +271,18 @@ Global
 		{C6003E42-C1B4-4DA1-9E93-D7AD3A9C12E8}.Release|x64.Build.0 = Release|x64
 		{C6003E42-C1B4-4DA1-9E93-D7AD3A9C12E8}.Release|x86.ActiveCfg = Release|x86
 		{C6003E42-C1B4-4DA1-9E93-D7AD3A9C12E8}.Release|x86.Build.0 = Release|x86
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Debug|x64.ActiveCfg = Debug|x64
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Debug|x64.Build.0 = Debug|x64
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Debug|x86.ActiveCfg = Debug|x86
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Debug|x86.Build.0 = Debug|x86
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|x64.ActiveCfg = Release|x64
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|x64.Build.0 = Release|x64
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|x86.ActiveCfg = Release|x86
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -287,6 +301,7 @@ Global
 		{00CAF4A2-A3BA-4012-95E6-9D622EA3C06F} = {DDE68AEB-4646-43DC-8F6D-4FAAF9E8865F}
 		{85E5721B-F4A7-422A-8B54-54E5F36BB752} = {E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}
 		{9A8D4BF5-259A-413C-889A-8AA238B7D2D1} = {E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}
+		{0E2C74AC-C81C-4CC6-B88D-81192623A66D} = {62C4825F-1F58-4BA1-BD10-DABB139FCC47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7FC9EE6-11F6-4153-B5AE-66D3DA7A7A61}

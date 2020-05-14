@@ -19,6 +19,8 @@ artifacts:
   - path: bin\$(configuration)\$(platform)\nl\eduEd25519.resources.dll
   - path: bin\$(configuration)\$(platform)\sl\eduEd25519.resources.dll
   - path: bin\$(configuration)\$(platform)\uk\eduEd25519.resources.dll
+  - path: bin\$(configuration)\$(platform)\eduEx.dll
+  - path: bin\$(configuration)\$(platform)\eduEx.pdb
   - path: bin\$(configuration)\$(platform)\eduJSON.dll
   - path: bin\$(configuration)\$(platform)\eduJSON.pdb
   - path: bin\$(configuration)\$(platform)\nl\eduJSON.resources.dll

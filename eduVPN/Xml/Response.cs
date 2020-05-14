@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx.Async;
 using eduOAuth;
 using System;
 using System.Collections.ObjectModel;
@@ -135,11 +136,7 @@ namespace eduVPN.Xml
                 try
                 {
                     using (var stream_req = request.GetRequestStream())
-                    {
-                        var task = stream_req.WriteAsync(body_binary, 0, body_binary.Length, ct);
-                        try { task.Wait(ct); }
-                        catch (AggregateException ex) { throw ex.InnerException; }
-                }
+                        stream_req.Write(body_binary, 0, body_binary.Length, ct);
                 }
                 catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
             }
@@ -178,16 +175,14 @@ namespace eduVPN.Xml
                     for (; ; )
                     {
                         // Read data chunk.
-                        var task = stream.ReadAsync(buffer, 0, buffer.Length, ct);
-                        try { task.Wait(ct); }
-                        catch (AggregateException ex) { throw ex.InnerException; }
-                        if (task.Result == 0)
+                        var count = stream.Read(buffer, 0, buffer.Length, ct);
+                        if (count == 0)
                             break;
 
                         // Append it to the data.
-                        var data_new = new byte[data.LongLength + task.Result];
+                        var data_new = new byte[data.LongLength + count];
                         Array.Copy(data, data_new, data.LongLength);
-                        Array.Copy(buffer, 0, data_new, data.LongLength, task.Result);
+                        Array.Copy(buffer, 0, data_new, data.LongLength, count);
                         data = data_new;
                     }
                 }
@@ -228,13 +223,8 @@ namespace eduVPN.Xml
                                 ct.ThrowIfCancellationRequested();
 
                                 using (var reader_sig = new StreamReader(stream_sig))
-                                {
-                                    var task = reader_sig.ReadToEndAsync();
-                                    try { task.Wait(ct); }
-                                    catch (AggregateException ex) { throw ex.InnerException; }
-                                    signature = Convert.FromBase64String(task.Result);
+                                    signature = Convert.FromBase64String(reader_sig.ReadToEnd(ct));
                             }
-                        }
                         }
                         catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
 
@@ -282,10 +272,7 @@ namespace eduVPN.Xml
 
                                 using (var reader_sig = new StreamReader(stream_sig))
                                 {
-                                    var task = reader_sig.ReadToEndAsync();
-                                    try { task.Wait(ct); }
-                                    catch (AggregateException ex) { throw ex.InnerException; }
-                                    foreach (var l in task.Result.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                                    foreach (var l in reader_sig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
                                     {
                                         if (l.Trim().StartsWith($"untrusted comment:"))
                                             continue;
