@@ -6,6 +6,7 @@
 */
 
 using eduVPN.JSON;
+using eduVPN.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -25,16 +26,22 @@ namespace eduVPN.Models.Tests
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
             var pub_key = Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=");
-            Parallel.ForEach(new List<KeyValuePair<Uri, byte[]>>()
+            Parallel.ForEach(new List<ResourceRef>()
                 {
-                    new KeyValuePair<Uri, byte[]>(new Uri("https://static.eduvpn.nl/disco/institute_access.json"), pub_key),
-                    new KeyValuePair<Uri, byte[]>(new Uri("https://static.eduvpn.nl/disco/secure_internet.json"), pub_key),
+                    new ResourceRef()
+                    {
+                        Uri = new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
+                        PublicKey = pub_key,
+                    },
+                    new ResourceRef()
+                    {
+                        Uri = new Uri("https://static.eduvpn.nl/disco/secure_internet.json"),
+                        PublicKey = pub_key,
+                    },
                 }, source =>
                 {
                     // Load list of instances.
-                    var instance_source_json = Xml.Response.Get(
-                        uri: source.Key,
-                        pub_key: source.Value);
+                    var instance_source_json = Xml.Response.Get(source);
                     var instance_source_ia = new InstanceSource();
                     instance_source_ia.LoadJSON(instance_source_json.Value);
 
@@ -60,8 +67,7 @@ namespace eduVPN.Models.Tests
 
                     // Re-load list of instances.
                     instance_source_json = Xml.Response.Get(
-                        uri: source.Key,
-                        pub_key: source.Value,
+                        res: source,
                         previous: instance_source_json);
                 });
         }
