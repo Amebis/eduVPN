@@ -20,7 +20,7 @@
     <String Id="LetsConnect.TAPWinPreName">Let's Connect!-Client TAP-Windows-Voraussetzungen</String>
 
     <String Id="ManufacturerName">SURF</String>
-    <String Id="ProductLanguage">1033</String>
+    <String Id="ProductLanguage">1031</String>
     <String Id="SummaryCodepage">1252</String>
     <String Id="Culture">de-DE</String>
     <String Id="LegalCopyright">Copyright: 2017-2020 The Commons Conservancy eduVPN Programme</String>
