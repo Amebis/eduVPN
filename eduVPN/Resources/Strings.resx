@@ -185,7 +185,7 @@
     <value>Waiting for initial response from server...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>&lt;Automatic&gt;</value>
+    <value>(Automatic)</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
     <value>Network interface with {0} ID not found.</value>

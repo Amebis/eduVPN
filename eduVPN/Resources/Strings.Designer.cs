@@ -421,7 +421,7 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;Automatic&gt;.
+        ///   Looks up a localized string similar to (Automatic).
         /// </summary>
         internal static string InterfaceNameAutomatic {
             get {
