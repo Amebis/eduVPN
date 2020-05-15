@@ -210,3 +210,32 @@ END
 
 #endif    // Ukrainian (Ukraine) resources
 /////////////////////////////////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN-Client OpenVPN-Komponenten"
+	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Interaktiver OpenVPN Dienst (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Ermöglicht die Verwaltung der Konfiguration von OpenVPN-Verbindungsnetzwerken. Wenn angehalten oder deaktiviert, funktioniert der eduVPN-Client nicht."
+
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect!-Client OpenVPN-Komponenten"
+	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Interaktiver OpenVPN Dienst (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Ermöglicht die Verwaltung der Konfiguration von OpenVPN-Verbindungsnetzwerken. Wenn angehalten oder deaktiviert, funktioniert Let's Connect! client nicht."
+END
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////

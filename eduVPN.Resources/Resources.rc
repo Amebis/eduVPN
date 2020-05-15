@@ -210,3 +210,30 @@ END
 
 #endif    // Ukrainian (Ukraine) resources
 /////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_CLIENT_TITLE            "eduVPN-Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN für Forschung und Lehre"
+	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
+	IDS_EDUVPN_CORE_TITLE              "eduVPN-Client Core"
+
+	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect!-Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Das Open-Source-VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
+	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect!-Client Core"
+END
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////
