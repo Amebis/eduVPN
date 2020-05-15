@@ -41,6 +41,7 @@
             Component groups
         -->
         <ComponentGroup Id="eduVPN.Views.dll">
+            <ComponentGroupRef Id="eduEx.dll"/>
             <ComponentGroupRef Id="eduOAuth.dll"/>
             <ComponentGroupRef Id="eduOpenVPN.dll"/>
             <ComponentGroupRef Id="eduVPN.dll"/>

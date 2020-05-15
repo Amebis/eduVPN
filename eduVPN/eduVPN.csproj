@@ -53,7 +53,6 @@
     <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileSelectPanel.cs" />
     <Compile Include="Models\DownloadedFileCorruptException.cs" />
     <Compile Include="Models\FederatedInstanceSource.cs" />
-    <Compile Include="System\Extensions.cs" />
     <Compile Include="ViewModels\Panels\ConnectingProfileSelectPanel.cs" />
     <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileListSelectPanel.cs" />
     <Compile Include="ViewModels\Panels\ConnectingSelectPanel.cs" />
@@ -103,7 +102,6 @@
     <Compile Include="ViewModels\Windows\UsernamePasswordPopup.cs" />
     <Compile Include="ViewModels\VPN\VPNSession.cs" />
     <Compile Include="ViewModels\VPN\VPNSessionStatusType.cs" />
-    <Compile Include="System\IO\Extensions.cs" />
     <Compile Include="ViewModels\Pages\AuthenticatingCountrySelectPage.cs" />
     <Compile Include="ViewModels\Pages\AuthenticatingInstanceSelectPage.cs" />
     <Compile Include="ViewModels\Pages\AuthenticatingInstituteSelectPage.cs" />
