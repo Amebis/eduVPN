@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -336,25 +336,6 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
     <value>d\.hh\:mm\:ss</value>
     <comment>Display format of the duration times one day or longer</comment>
   </data>
-  <data name="TOTPAuthenticationPanelNote" xml:space="preserve">
-    <value>Veuillez ne pas réutiliser le TOTP. Patientez jusqu'à la génération d'un nouveau TOTP. </value>
-  </data>
-  <data name="TOTPAuthenticationPanelResponseLabel" xml:space="preserve">
-    <value>_Réponse</value>
-  </data>
-  <data name="TwoFactorAuthenticationPopupMessage" xml:space="preserve">
-    <value>Sélectionnez  votre méthode d'authentification double facteur et renseignez votre code de sécurité: </value>
-    <comment>"securirty token" sounds wrong</comment>
-  </data>
-  <data name="TwoFactorAuthenticationPopupMethodLabel" xml:space="preserve">
-    <value>_Méthode</value>
-  </data>
-  <data name="TwoFactorAuthenticationPopupTitle" xml:space="preserve">
-    <value>Authentification double facteur</value>
-  </data>
-  <data name="TwoFactorAuthenticationRequired" xml:space="preserve">
-    <value>Requiert l'authentification double facteurs</value>
-  </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
     <value>Entrez votre nom d'utilisateur et mot de passe pour " {0} ":</value>
     <comment>{0}=Authenticating realm name</comment>
@@ -367,9 +348,6 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   </data>
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
     <value>_Nom d'utilisateur</value>
-  </data>
-  <data name="YubiKeyAuthenticationPanelResponseLabel" xml:space="preserve">
-    <value>_Réponse</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
     <value>{0}

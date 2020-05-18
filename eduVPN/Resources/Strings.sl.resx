@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -151,7 +151,8 @@
     <value>Pooblaščanje odjemalca ni uspelo.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Žeton za dostop ni bil odobren.</value>
+    <value>Pooblaščanje odjemalca za uporabo {0} ni uspelo.</value>
+    <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
     <value>Dodajam smeri v sistem ...</value>
@@ -184,22 +185,13 @@
     <value>Čakam na uvodni odgovor strežnika ...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>&lt;Samodejno&gt;</value>
+    <value>(samodejno)</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
     <value>Omrežni vmesnik z ID-jem {0} ni najden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Omrežni vmesnik {0} ni najden.</value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
-    <value>Time-based One-Time Password (TOTP)</value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
-    <value>YubiKey</value>
-  </data>
-  <data name="ErrorInvalidTOTP" xml:space="preserve">
-    <value>Neveljaven odgovor TOTP: vsebovati mora točno šest (6) desetiških števk; presledki ali vezaji niso dovoljeni.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Neveljavno ime gostitelja: imena gostiteljev vsebujejo črke, številke, vezaje in pike.</value>
@@ -278,5 +270,23 @@
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Nalaganje podpisa spletnega vira ni uspelo.</value>
+  </data>
+  <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
+    <value>Javni ključ Minisign ni veljaven.</value>
+  </data>
+  <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
+    <value>Javni ključ Minisign z ID-jem {0:X} že obstaja.</value>
+  </data>
+  <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
+    <value>Podpis Minisign ni podprt.</value>
+  </data>
+  <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
+    <value>Podpis Minisign ni veljaven.</value>
+  </data>
+  <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
+    <value>Javni ključ Minisign ni podprt.</value>
+  </data>
+  <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
+    <value>Javnemu ključu Minisign ni zaupati.</value>
   </data>
 </root>

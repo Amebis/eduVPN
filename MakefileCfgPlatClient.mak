@@ -192,6 +192,9 @@ Clean ::
 LANG=en-US
 !INCLUDE "MakefileCfgPlatClientLang.mak"
 
+LANG=de
+!INCLUDE "MakefileCfgPlatClientLang.mak"
+
 LANG=fr
 !INCLUDE "MakefileCfgPlatClientLang.mak"
 

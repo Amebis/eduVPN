@@ -118,175 +118,175 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>Підтвердження підпису не вдалося. Цілісність {0} недійсна.</value>
+    <value>Verifizierung der Signatur fehlgeschlagen. Die Integrität von {0} ist nicht valide.</value>
   </data>
   <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value>Сервер API відповів помилкою.</value>
+    <value>API-Server antwortete mit einem Fehler.</value>
   </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Приватний ключ недійсний або не підтримується.</value>
+    <value>Privater Schlüssel ist ungültig oder hat ein nicht unterstütztes Format.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value>Помилка завантаження API кінцевого обладнання.</value>
+    <value>Das Laden der API-Endpunkte ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Помилка завантаження джерела {0} постачальника.</value>
+    <value>Das Laden der Anbieterquelle {0} ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value>Помилка завантаження списку профілів.</value>
+    <value>Das Laden der Profilliste ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value>Помилка завантаження сертифіката клієнта.</value>
+    <value>Das Laden des Client-Zertifikats ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
-    <value>Помилка завантаження конфігурації профілю.</value>
+    <value>Das Laden der Profilkonfiguration ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Помилка завантаження інформації про користувача.</value>
+    <value>Das Laden der Benutzerinformationen ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Не вдалося зберегти конфігурацію OpenVPN профілю в {0}.</value>
+    <value>Das Speichern der OpenVPN-Konfiguration des Profils auf "{0}" schlug fehl.</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Помилка авторизації клієнта.</value>
+    <value>Client-Autorisierung fehlgeschlagen.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Authorizing the client to use {0} failed.</value>
+    <value>Die Autorisierung des Clients zur Verwendung von {0} ist fehlgeschlagen.</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value>Додавання маршрутів до системи ...</value>
+    <value>Füge Routen dem System hinzu...</value>
   </data>
   <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
-    <value>Призначення IP-адреси інтерфейсу віртуальної мережі ...</value>
+    <value>Weise IP-Adresse der virtuellen Netzwerkschnittstelle zu...</value>
   </data>
   <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value>Аутентифікація з сервером ...</value>
+    <value>Authentifizieren mit Server...</value>
   </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
-    <value>Підключено.</value>
+    <value>Verbunden.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
-    <value>Підключення...</value>
+    <value>Verbinde...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>Виконується коректний вихід...</value>
+    <value>Ein sanfter Exit ist im Gange...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value>OpenVPN повідомив про фатальну помилку.</value>
+    <value>OpenVPN meldete einen fatalen Fehler.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value>Завантаження параметрів конфігурації з сервера ...</value>
+    <value>Lade Konfigurationsoptionen vom Server...</value>
   </data>
   <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
-    <value>Відбулося перезавантаження...</value>
+    <value>Ein Neustart ist erfolgt...</value>
   </data>
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
-    <value>Очікування на початкову відповідь від сервера...</value>
+    <value>Warten auf initiale Antwort vom Server...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatic)</value>
+    <value>(Automatisch)</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
-    <value>Мережевий інтерфейс з {0} ID не знайдено.</value>
+    <value>Netzwerkschnittstelle mit {0} ID nicht gefunden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Мережевий інтерфейс {0} не знайдено.</value>
+    <value>Netzwerkschnittstelle {0} nicht gefunden.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Недійсне ім'я хоста: імена хостів містять літери, цифри, дефіси та крапки.</value>
+    <value>Ungültiger Hostname: Hostnamen bestehen aus Buchstaben, Zahlen, Bindestrichen und Punkten.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value>Властивість {0} помилкова.</value>
+    <value>Eigenschaftsname {0} ist nicht gültig.</value>
     <comment>{0}=Property name</comment>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
-    <value>Помилка інтерактивної служби.</value>
+    <value>Interaktiver Dienst gescheitert.</value>
   </data>
   <data name="InstanceForget" xml:space="preserve">
-    <value>Забути {0}</value>
+    <value>Vergesse {0}</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>Завантажений файл {0} пошкоджено.</value>
+    <value>Heruntergeladene Datei {0} ist beschädigt.</value>
     <comment>{0}=URI</comment>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
-    <value>Помилка завантаження з Інтернету. Перевірте підключення до Інтернету.</value>
+    <value>Der Download ist fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.</value>
   </data>
   <data name="ErrorUploading" xml:space="preserve">
-    <value>Не вдалося вивантажити в Інтернет. Перевірте підключення до Інтернету.</value>
+    <value>Der Upload ist fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung. </value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value>Визначення IP-адреси сервера...</value>
+    <value>Server IP auflösen...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value>Підключення до TCP сервера...</value>
+    <value>Verbindung zum TCP-Server herstellen...</value>
   </data>
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value>Файл інсталятора недоступний. Оновлення припинено.</value>
+    <value>Installationsdatei nicht verfügbar. Aktualisierung abgebrochen.</value>
   </data>
   <data name="AboutPageTitle" xml:space="preserve">
-    <value>Про програму</value>
+    <value>Über</value>
   </data>
   <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Виберіть країну своєї установи</value>
+    <value>Wählen Sie das Land Ihrer Institution</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Виберіть вашу установу</value>
+    <value>Wählen Sie Ihre Institution</value>
   </data>
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Виберіть ваш профайл</value>
+    <value>Wählen Sie Ihr Profil</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Введить URL вашого провайдера</value>
+    <value>Geben Sie die URL Ihres Anbieters ein</value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Ініціалізація...</value>
+    <value>Initialisierung...</value>
   </data>
   <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>Як ви плануєте використовувати VPN?</value>
+    <value>Wie möchten Sie das VPN nutzen?</value>
   </data>
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
-    <value>Підготовка до оновлення...</value>
+    <value>Update vorbereiten...</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Налаштування</value>
+    <value>Einstellungen</value>
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN з'єднання</value>
+    <value>VPN-Verbindung</value>
   </data>
   <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Доступ до установи</value>
+    <value>Zugang zum Institut</value>
   </data>
   <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Захищений Інтернет</value>
+    <value>Sicheres Internet</value>
   </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
-    <value>Сертифікат був відключений адміністратором.</value>
+    <value>Das Zertifikat wurde vom Administrator deaktiviert.</value>
   </data>
   <data name="ErrorUserDisabled" xml:space="preserve">
-    <value>Обліковий запис користувача було відключено адміністратором.</value>
+    <value>Das Benutzerkonto wurde vom Administrator deaktiviert.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
-    <value>Downloading web resource signature failed.</value>
+    <value>Herunterladen der Signatur der Web-Ressource fehlgeschlagen.</value>
   </data>
   <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is invalid.</value>
+    <value>Öffentlicher Minisign-Schlüssel ist ungültig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with ID {0:X} already exists.</value>
+    <value>Der öffentliche Minisign-Schlüssel mit der ID {0:X} ist bereits vorhanden.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is not supported.</value>
+    <value>Minisign-Signatur wird nicht unterstützt.</value>
   </data>
   <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is invalid.</value>
+    <value>Minisign-Signatur ungültig.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not supported.</value>
+    <value>Öffentlicher Minisign-Schlüssel wird nicht unterstützt.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not trusted.</value>
+    <value>Öffentlicher Minisign-Schlüssel nicht vertrauenswürdig.</value>
   </data>
 </root>

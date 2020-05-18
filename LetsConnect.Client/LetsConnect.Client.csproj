@@ -93,6 +93,7 @@
     <Resource Include="Resources\AppBanner.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.de.resx" />
     <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>

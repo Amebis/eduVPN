@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -151,7 +151,8 @@
     <value>Client-autorisatie is mislukt.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Geen toegangstoken toegekend.</value>
+    <value>Authorizing the client to use {0} failed.</value>
+    <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
     <value>Routes toevoegen aan het systeem...</value>
@@ -184,22 +185,13 @@
     <value>Wachten op initieel antwoord van de server...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>&lt;Automatic&gt;</value>
+    <value>(Automatic)</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
     <value>Netwerk interface met {0} ID niet gevonden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Netwerk interface {0} niet gevonden.</value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodTOTP" xml:space="preserve">
-    <value>Time-based One-Time Password (TOTP)</value>
-  </data>
-  <data name="TwoFactorAuthenticationMethodYubiKey" xml:space="preserve">
-    <value>YubiKey</value>
-  </data>
-  <data name="ErrorInvalidTOTP" xml:space="preserve">
-    <value>Ongeldig TOTP-antwoord: het moet precies zes (6) decimale getallen bevatten; spaties of verbindingsstreepjes zijn niet toegestaan.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Ongeldige hostnaam: een hostnaam bevat letters, nummers, koppeltekens en punten.</value>
@@ -278,5 +270,23 @@
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Downloading web resource signature failed.</value>
+  </data>
+  <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key is invalid.</value>
+  </data>
+  <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key with ID {0:X} already exists.</value>
+  </data>
+  <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
+    <value>Minisign signature is not supported.</value>
+  </data>
+  <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
+    <value>Minisign signature is invalid.</value>
+  </data>
+  <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key is not supported.</value>
+  </data>
+  <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
+    <value>Minisign public key is not trusted.</value>
   </data>
 </root>

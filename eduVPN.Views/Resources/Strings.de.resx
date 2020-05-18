@@ -125,163 +125,163 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Version {0}</value>
   </data>
   <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
-    <value>_Country</value>
+    <value>_Land</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
     <value>_Institution</value>
   </data>
   <data name="AuthorizationPopupMessage2" xml:space="preserve">
-    <value>The client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization...</value>
+    <value>Der Client benötigt eine {0} Autorisierung und hat Ihren Webbrowser geöffnet. Der Client fährt fort, nachdem Sie die Autorisierung abgeschlossen haben...</value>
     <comment>{0}=Instance name</comment>
   </data>
   <data name="AuthorizationPopupTitle" xml:space="preserve">
-    <value>Waiting For Authorization</value>
+    <value>Warten auf Autorisierung</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">
-    <value>Back</value>
+    <value>Zurück</value>
   </data>
   <data name="ButtonCloseTitle" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value>_Copy Error Text</value>
+    <value>Fehlertext _kopieren</value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
-    <value>_Dismiss Error</value>
+    <value>_Fehler verwerfen.</value>
   </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="ConnectingInstanceAndProfileSelectPanelInstanceListLabel" xml:space="preserve">
-    <value>_Provider</value>
+    <value>_Anbieter</value>
   </data>
   <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
-    <value>_Profile</value>
+    <value>_Profil</value>
   </data>
   <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
-    <value>_Profile</value>
+    <value>_Profil</value>
   </data>
   <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
-    <value>_Provider</value>
+    <value>_Anbieter</value>
   </data>
   <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
-    <value>_Profile</value>
+    <value>_Profil</value>
   </data>
   <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
     <value>_Hostname</value>
   </data>
   <data name="ErrorOAuthState" xml:space="preserve">
-    <value>The required OAuth parameter "state" is missing or incorrect.</value>
+    <value>Der erforderliche OAuth-Parameter "state" fehlt oder ist falsch.</value>
   </data>
   <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
-    <value>Add _other address</value>
+    <value>Andere Adresse _hinzufügen</value>
   </data>
   <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
-    <value>Connect to your _Institution</value>
+    <value>Verbinden mit Ihrer _Institution</value>
   </data>
   <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
-    <value>_Safely use the Internet</value>
+    <value>Das Internet _sicher nutzen</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
-    <value>No items</value>
+    <value>Keine Einträge</value>
     <comment>Displayed when a list is empty</comment>
   </data>
   <data name="ListBoxNull" xml:space="preserve">
-    <value>Please wait...</value>
+    <value>Bitte warten...</value>
     <comment>Displayed when a list is loading</comment>
   </data>
   <data name="MessageMaintenanceBegin" xml:space="preserve">
-    <value>Begin</value>
+    <value>Beginn</value>
   </data>
   <data name="MessageMaintenanceEnd" xml:space="preserve">
-    <value>End</value>
+    <value>Ende</value>
   </data>
   <data name="MessageMaintenanceTitle" xml:space="preserve">
-    <value>Maintenance Notification</value>
+    <value>Wartungsbenachrichtigung</value>
   </data>
   <data name="MessageNotificationTitle" xml:space="preserve">
-    <value>Notification</value>
+    <value>Mitteilung</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Enter your password for "{0}":</value>
+    <value>Geben Sie Ihr Passwort für "{0}" ein:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="PasswordPopupPasswordLabel" xml:space="preserve">
-    <value>_Password</value>
+    <value>_Passwort</value>
   </data>
   <data name="PasswordPopupTitle" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
-    <value>Add _another</value>
+    <value>Andere _hinzufügen</value>
   </data>
   <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
-    <value>Ask me _later</value>
+    <value>Später _fragen</value>
   </data>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
-    <value>What's _New?</value>
+    <value>Was ist _Neu?</value>
   </data>
   <data name="SelfUpdatePopupMessage3" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>Eine neuere und verbesserte Version des Clients ist verfügbar. Bleiben Sie auf dem Laufenden!</value>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
-    <value>Skip this _version</value>
+    <value>Diese _Version überspringen</value>
   </data>
   <data name="SelfUpdatePopupTitle" xml:space="preserve">
-    <value>Update Available</value>
+    <value>Update verfügbar</value>
   </data>
   <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>Jetzt herunterladen und akt_ualisieren
+(Client wird neu gestartet)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
+    <value>{0} hat festgestellt, dass Ihre Benutzereinstellungsdatei {1} beschädigt ist. Dies kann auf einen Absturz zurückzuführen sein.
 
-If you continue, your user settings will be reset to the default.</value>
+Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellungen zurückgesetzt.</value>
     <comment>{0}=application name, {1}=filename</comment>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Corrupt User Settings</value>
+    <value>Beschädigte Benutzereinstellungen</value>
   </data>
   <data name="SettingsPageForceTCPDescription2" xml:space="preserve">
-    <value>If the client cannot connect, or can connect but doesn't transfer data, connecting over TCP could solve this.</value>
+    <value>Wenn der Client keine Verbindung herstellen kann oder trotz hergestellter Verbindung keine Daten überträgt, könnte dies durch die Verwendung von TCP gelöst werden.</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect Over _TCP</value>
+    <value>Verbindung über _TCP</value>
   </data>
   <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
-    <value>When you need multiple simultaneous OpenVPN connections, select the TAP interface for the client below.</value>
+    <value>Wenn Sie mehrere gleichzeitige OpenVPN-Verbindungen benötigen, wählen Sie unten die TAP-Schnittstelle für den Client aus.</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Select TAP _Interface</value>
+    <value>TAP-_Schnittstelle auswählen</value>
   </data>
   <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
-    <value>_Disconnect</value>
+    <value>_Trennen</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
-    <value>Provider</value>
+    <value>Anbieter</value>
   </data>
   <data name="StatusPageMessagesLabel" xml:space="preserve">
-    <value>_Messages</value>
+    <value>_Nachrichten</value>
   </data>
   <data name="StatusPageProfile" xml:space="preserve">
-    <value>Profile</value>
+    <value>Profil</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
-    <value>Bytes In</value>
+    <value>Bytes eingehend</value>
   </data>
   <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
-    <value>Bytes Out</value>
+    <value>Bytes ausgehend</value>
   </data>
   <data name="StatusPageSessionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Dauer</value>
   </data>
   <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
     <value>IPv4</value>
@@ -290,10 +290,10 @@ If you continue, your user settings will be reset to the default.</value>
     <value>IPv6</value>
   </data>
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
-    <value>Connection Info</value>
+    <value>Verbindungs-Info</value>
   </data>
   <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
-    <value>View _log</value>
+    <value>_Protokoll ansehen</value>
   </data>
   <data name="StatusPageStatus" xml:space="preserve">
     <value>Status</value>
@@ -303,50 +303,50 @@ If you continue, your user settings will be reset to the default.</value>
     <comment>{0}=IP address, {1}=IPv6 address</comment>
   </data>
   <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
-    <value>{0} Connected</value>
+    <value>{0} verbunden</value>
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>Getrennt</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
-    <value>The window has been minimized here.</value>
+    <value>Das Fenster wurde hier minimiert.</value>
   </data>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
-    <value>_About...</value>
+    <value>_Über...</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
-    <value>E_xit</value>
+    <value>_Beenden</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
-    <value>_Open</value>
+    <value>_Öffnen</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
-    <value>_Settings...</value>
+    <value>_Einstellungen</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Connection _info...</value>
+    <value>Verbindungs-_Info</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>h\:mm\:ss</value>
+    <value>hh\:mm\:ss</value>
     <comment>Display format of the duration times less then one day</comment>
   </data>
   <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
+    <value>dd\.hh\:mm\:ss</value>
     <comment>Display format of the duration times one day or longer</comment>
   </data>
   <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Enter your username and password for "{0}":</value>
+    <value>Geben Sie Ihren Benutzernamen und Ihr Passwort für "{0}" ein:</value>
     <comment>{0}=Authenticating realm name</comment>
   </data>
   <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
-    <value>_Password</value>
+    <value>_Passwort</value>
   </data>
   <data name="UsernamePasswordPopupTitle" xml:space="preserve">
-    <value>Authentication</value>
+    <value>Authentifizierung</value>
   </data>
   <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
-    <value>_Username</value>
+    <value>_Benutzername</value>
   </data>
   <data name="AboutPageAppBannerTitle" xml:space="preserve">
     <value>{0}
@@ -354,18 +354,18 @@ Powered by SURFnet</value>
     <comment>{0}=Client name</comment>
   </data>
   <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
-    <value>Added VPN Profiles</value>
+    <value>VPN-Profile hinzugefügt</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
-    <value>_Connect!</value>
+    <value>_Verbinden!</value>
   </data>
   <data name="Unavailable" xml:space="preserve">
-    <value>Not Available</value>
+    <value>Nicht verfügbar</value>
   </data>
   <data name="SettingsPageAllowLocalDescription" xml:space="preserve">
-    <value>Warning: Do not enable this when roaming in public untrusted networks.</value>
+    <value>Warnung: Aktivieren Sie dies nicht beim Roaming in öffentlichen, nicht vertrauenswürdigen Netzwerken.</value>
   </data>
   <data name="SettingsPageAllowLocalLabel" xml:space="preserve">
-    <value>Allow _Local Traffic</value>
+    <value>_Lokaler Verkehr erlauben</value>
   </data>
 </root>

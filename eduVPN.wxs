@@ -33,6 +33,12 @@
                 SourceFile="Install\thm.wxl"/>
 
             <Payload
+                Id="thm-de-DE"
+                Compressed="yes"
+                Name="1031\thm.wxl"
+                SourceFile="Install\thm.de.wxl"/>
+
+            <Payload
                 Id="thm-fr-FR"
                 Compressed="yes"
                 Name="1036\thm.wxl"

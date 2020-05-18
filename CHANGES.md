@@ -8,6 +8,7 @@
 - OpenVPN updated to 2.4.9
 - TAP-Windows updated to 9.24.2
 - French translation
+- German translation
 - GUI refinements
 
 
