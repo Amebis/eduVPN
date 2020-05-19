@@ -25,7 +25,7 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
-        <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
+        <Style x:Key="ProfileListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
         </Style>
@@ -58,8 +58,9 @@
             x:Name="ProfileList"
             Grid.Row="1"
             Margin="5,2,5,5"
+            Style="{StaticResource ProfileListBoxStyle}"
             ItemTemplate="{StaticResource CompactProfileSelectionItemTemplate}"
-            ItemContainerStyle="{StaticResource ProfileListBoxStyle}"
+            ItemContainerStyle="{StaticResource ProfileListBoxItemStyle}"
             ItemsSource="{Binding Path=ProfileList}"
             SelectedItem="{Binding Path=SelectedProfile}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectingInstanceAndProfileSelectPanelProfileListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>

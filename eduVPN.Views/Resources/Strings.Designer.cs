@@ -288,6 +288,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No VPN profiles are available for your account..
+        /// </summary>
+        public static string ListBoxNoProfiles {
+            get {
+                return ResourceManager.GetString("ListBoxNoProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please wait....
         /// </summary>
         public static string ListBoxNull {

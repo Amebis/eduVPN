@@ -411,7 +411,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
+    <Style x:Key="BaseListBoxStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
@@ -432,6 +432,47 @@
                                 VerticalAlignment="Center"
                                 Style="{StaticResource NoteTextBlockStyle}"
                                 Text="{x:Static res:Strings.ListBoxNoItems}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <!-- When the list's item source is null, replace it with "Please wait..." text. -->
+            <DataTrigger
+                Binding="{Binding Path=ItemsSource, RelativeSource={x:Static RelativeSource.Self}}"
+                Value="{x:Null}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource NoteTextBlockStyle}"
+                                Text="{x:Static res:Strings.ListBoxNull}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseListBoxStyle}">
+    </Style>
+
+    <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseListBoxStyle}">
+        <Style.Triggers>
+            <!-- When the list is empty, replace it with "No items." text. -->
+            <DataTrigger
+                Binding="{Binding Path=Items.Count, RelativeSource={x:Static RelativeSource.Self}}"
+                Value="0">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource NoteTextBlockStyle}"
+                                Text="{x:Static res:Strings.ListBoxNoProfiles}"/>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
