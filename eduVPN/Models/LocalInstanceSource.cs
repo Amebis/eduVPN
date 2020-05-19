@@ -170,6 +170,9 @@ namespace eduVPN.Models
                 if (ConnectingProfileList[i].Instance.Equals(instance))
                     ConnectingProfileList.RemoveAt(i);
 
+            // Remove the instance from history.
+            ConnectingInstanceList.Remove(instance);
+
             if (ConnectingInstance != null && ConnectingInstance.Equals(instance))
             {
                 base.ForgetInstance(instance);

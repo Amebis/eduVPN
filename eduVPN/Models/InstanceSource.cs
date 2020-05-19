@@ -179,12 +179,11 @@ namespace eduVPN.Models
         /// <param name="instance">Instance</param>
         public virtual void ForgetInstance(Instance instance)
         {
-            // Remove the instance from history.
-            ConnectingInstanceList.Remove(instance);
-
             // Reset connecting instance.
             if (ConnectingInstance != null && ConnectingInstance.Equals(instance))
                 ConnectingInstance = ConnectingInstanceList.FirstOrDefault();
+
+            instance.Forget();
         }
 
         /// <summary>
@@ -193,6 +192,11 @@ namespace eduVPN.Models
         public virtual void Forget()
         {
             ConnectingInstance = null;
+            if (AuthenticatingInstance != null)
+            {
+                AuthenticatingInstance.Forget();
+                AuthenticatingInstance = null;
+            }
         }
 
         #endregion
