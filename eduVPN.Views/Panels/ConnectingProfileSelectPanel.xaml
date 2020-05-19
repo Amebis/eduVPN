@@ -17,7 +17,7 @@
     d:DesignWidth="300">
 
     <UserControl.Resources>
-        <Style x:Key="ProfileListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
+        <Style x:Key="ProfileListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxClickableItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="ProfileList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="ProfileList_PreviewKeyDown"/>
         </Style>

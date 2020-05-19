@@ -411,6 +411,10 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ListBoxClickableItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
     <Style x:Key="BaseListBoxStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>

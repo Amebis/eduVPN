@@ -19,7 +19,7 @@
     Style="{StaticResource ConnectWizardPageStyle}">
 
     <pages:ConnectWizardPage.Resources>
-        <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
+        <Style x:Key="InstanceListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxClickableItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstanceList_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="InstanceList_PreviewKeyDown"/>
         </Style>
