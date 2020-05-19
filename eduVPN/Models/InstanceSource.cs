@@ -73,18 +73,6 @@ namespace eduVPN.Models
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private uint _sequence;
 
-        /// <summary>
-        /// Signature timestamp
-        /// </summary>
-        public DateTime? SignedAt
-        {
-            get { return _signed_at; }
-            set { SetProperty(ref _signed_at, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime? _signed_at;
-
         #endregion
 
         #region Methods
@@ -224,9 +212,6 @@ namespace eduVPN.Models
 
                 // Parse sequence.
                 Sequence = (uint)eduJSON.Parser.GetValue<int>(obj2, "seq");
-
-                // Parse signed date.
-                SignedAt = eduJSON.Parser.GetValue(obj2, "signed_at", out string signed_at) && DateTime.TryParse(signed_at, out var signed_at_date) ? signed_at_date : (DateTime?)null;
             }
             else
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
