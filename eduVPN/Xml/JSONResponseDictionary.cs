@@ -51,26 +51,6 @@ namespace eduVPN.Xml
 
             if (response_web.IsFresh)
             {
-                if (response_cache != null)
-                {
-                    try
-                    {
-                        // Verify sequence.
-                        var obj_cache = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache.Value, ct);
-
-                        bool rollback = false;
-                        try { rollback = (uint)eduJSON.Parser.GetValue<int>(obj_cache, "seq") > (uint)eduJSON.Parser.GetValue<int>(obj_web, "seq"); }
-                        catch { rollback = true; }
-                        if (rollback)
-                        {
-                            // Sequence rollback detected. Revert to cached version.
-                            obj_web = obj_cache;
-                            response_web = response_cache;
-                        }
-                    }
-                    catch { }
-                }
-
                 // Save response to cache.
                 lock (_lock)
                     this[key] = response_web;

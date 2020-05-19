@@ -61,18 +61,6 @@ namespace eduVPN.Models
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Instance _connecting_instance;
 
-        /// <summary>
-        /// Version sequence
-        /// </summary>
-        public uint Sequence
-        {
-            get { return _sequence; }
-            set { SetProperty(ref _sequence, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private uint _sequence;
-
         #endregion
 
         #region Methods
@@ -209,9 +197,6 @@ namespace eduVPN.Models
                     instance.Load(el);
                     InstanceList.Add(instance);
                 }
-
-                // Parse sequence.
-                Sequence = (uint)eduJSON.Parser.GetValue<int>(obj2, "seq");
             }
             else
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());

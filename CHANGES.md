@@ -5,6 +5,7 @@
 - Auto-reconnect on client restart
 - User may opt-in to allow local network access while connected
 - 2FA discontinued
+- JSON sequence checking discontinued
 - OpenVPN updated to 2.4.9
 - TAP-Windows updated to 9.24.2
 - French translation
