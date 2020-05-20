@@ -59,7 +59,6 @@ namespace eduVPN.Xml
             if (reader.IsEmptyElement)
                 return;
 
-            var buf = new byte[256];
             ulong key_id;
             var key = new byte[32];
             while (reader.Read() &&
@@ -67,18 +66,25 @@ namespace eduVPN.Xml
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "MinisignPublicKey")
                 {
-                    using (var s = new MemoryStream(buf, 0, reader.ReadElementContentAsBase64(buf, 0, 256), false))
-                    using (var r = new BinaryReader(s))
+                    while (reader.Read() &&
+                        !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "MinisignPublicKey"))
                     {
-                        if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
-                            throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
-                        key_id = r.ReadUInt64();
-                        if (r.Read(key, 0, 32) != 32)
-                            throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
+                        if (reader.NodeType == XmlNodeType.Text)
+                        {
+                            using (var s = new MemoryStream(Convert.FromBase64String(reader.Value), false))
+                            using (var r = new BinaryReader(s))
+                            {
+                                if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
+                                    throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
+                                key_id = r.ReadUInt64();
+                                if (r.Read(key, 0, 32) != 32)
+                                    throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
+                            }
+                            if (ContainsKey(key_id))
+                                throw new ArgumentException(String.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, key_id));
+                            Add(key_id, key);
+                        }
                     }
-                    if (ContainsKey(key_id))
-                        throw new ArgumentException(String.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, key_id));
-                    Add(key_id, key);
                 }
             }
         }
