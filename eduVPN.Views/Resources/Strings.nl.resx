@@ -362,9 +362,13 @@ Mogelijk gemaakt door SURFnet</value>
     <value>Niet beschikbaar</value>
   </data>
   <data name="SettingsPageAllowLocalDescription" xml:space="preserve">
-    <value>Warning: Do not enable this when roaming in public untrusted networks.</value>
+    <value>Waarschuwing: Schakel dit niet in bij roaming in openbare, niet-vertrouwde netwerken.</value>
   </data>
   <data name="SettingsPageAllowLocalLabel" xml:space="preserve">
-    <value>Allow _Local Traffic</value>
+    <value>_Lokaal Verkeer Toestaan</value>
+  </data>
+  <data name="ListBoxNoProfiles" xml:space="preserve">
+    <value>Er zijn geen VPN-profielen geconfigureerd, of dit account heeft niet de benodigde rechten voor toegang tot de beschikbare profielen.</value>
+    <comment>Displayed when a profile list is empty</comment>
   </data>
 </root>

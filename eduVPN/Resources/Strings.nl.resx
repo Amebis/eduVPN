@@ -151,7 +151,7 @@
     <value>Client-autorisatie is mislukt.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Authorizing the client to use {0} failed.</value>
+    <value>Autoriseren van de client om {0} te gebruiken mislukt.</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
@@ -185,7 +185,7 @@
     <value>Wachten op initieel antwoord van de server...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatic)</value>
+    <value>(Automatisch)</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
     <value>Netwerk interface met {0} ID niet gevonden.</value>
@@ -269,24 +269,24 @@
     <value>Het gebruikersaccount is uitgeschakeld door een beheerder.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
-    <value>Downloading web resource signature failed.</value>
+    <value>Downloaden web bron handtekening mislukt.</value>
   </data>
   <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is invalid.</value>
+    <value>Minisign publieke sleutel is ongeldig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with ID {0:X} already exists.</value>
+    <value>Minisign publieke sleutel met ID {0:X} bestaat al.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is not supported.</value>
+    <value>Minisign handtekening is niet ondersteund.</value>
   </data>
   <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is invalid.</value>
+    <value>Minisign handtekening is ongeldig.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not supported.</value>
+    <value>Minisign publieke sleutel is niet ondersteund.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not trusted.</value>
+    <value>Minisign publieke sleutel is niet vertrouwd.</value>
   </data>
 </root>

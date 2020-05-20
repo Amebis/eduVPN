@@ -275,10 +275,10 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>Profil</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
-    <value>Bytes eingehend</value>
+    <value>Bytes ein</value>
   </data>
   <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
-    <value>Bytes ausgehend</value>
+    <value>Bytes aus</value>
   </data>
   <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Dauer</value>
@@ -367,5 +367,9 @@ Powered by SURFnet</value>
   </data>
   <data name="SettingsPageAllowLocalLabel" xml:space="preserve">
     <value>_Lokaler Verkehr erlauben</value>
+  </data>
+  <data name="ListBoxNoProfiles" xml:space="preserve">
+    <value>Either, no VPN profiles are defined, or this account does not have the required permissions to access any of the available profiles.</value>
+    <comment>Displayed when a profile list is empty</comment>
   </data>
 </root>

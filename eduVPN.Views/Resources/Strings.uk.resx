@@ -368,4 +368,8 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SettingsPageAllowLocalLabel" xml:space="preserve">
     <value>Allow _Local Traffic</value>
   </data>
+  <data name="ListBoxNoProfiles" xml:space="preserve">
+    <value>Або VPN профайл не визначено або Акаунт не має прав доступу до існуючих профайлів.</value>
+    <comment>Displayed when a profile list is empty</comment>
+  </data>
 </root>
