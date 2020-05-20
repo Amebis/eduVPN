@@ -288,7 +288,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No VPN profiles are available for your account..
+        ///   Looks up a localized string similar to Either, no VPN profiles are defined, or this account does not have the required permissions to access any of the available profiles..
         /// </summary>
         public static string ListBoxNoProfiles {
             get {
