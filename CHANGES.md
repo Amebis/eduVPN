@@ -3,7 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.28...HEAD)
 
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.27...1.0.28) (2020-05-25)
+## [1.0.28](https://github.com/Amebis/eduVPN/compare/1.0.27...1.0.28) (2020-05-25)
 
 - Auto-reconnect on client restart
 - User may opt-in to allow local network access while connected
