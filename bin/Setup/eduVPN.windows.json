@@ -3,6 +3,5 @@
     "hash-sha256": "8B3070A6B23621BE0E6584CDCCB33187C8B8B51275352D78E48C587681C7EBF0",
     "uri": [ "eduVPNClient_1.0.28.exe" ],
     "version": "1.0.28",
-    "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
-    "seq": 10
+    "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md"
 }
