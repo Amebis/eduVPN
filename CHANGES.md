@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.28...HEAD)
 
+- Partial Norwegian Bokmål translation
 - French translation revised
 
 
