@@ -1,9 +1,10 @@
-# Changelog
+﻿# Changelog
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.28...HEAD)
 
 - Partial Norwegian Bokmål translation
 - French translation revised
+- Fixes
 
 
 ## [1.0.28](https://github.com/Amebis/eduVPN/compare/1.0.27...1.0.28) (2020-05-25)

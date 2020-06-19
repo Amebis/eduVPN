@@ -124,6 +124,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto-starting the last connected profile failed..
+        /// </summary>
+        internal static string ErrorAutostartingProfile {
+            get {
+                return ResourceManager.GetString("ErrorAutostartingProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The certificate was disabled by an administrator..
         /// </summary>
         internal static string ErrorCertificateDisabled {

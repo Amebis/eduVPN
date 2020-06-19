@@ -792,8 +792,7 @@ namespace eduVPN.ViewModels.Windows
                 ChangeTaskCount(+1);
                 try
                 {
-                    if (Abort.Token.IsCancellationRequested)
-                        return;
+                    Abort.Token.ThrowIfCancellationRequested();
 
                     // Proceed to the "first" page.
                     RaisePropertyChanged(nameof(HasInstanceSources));
@@ -803,25 +802,33 @@ namespace eduVPN.ViewModels.Windows
                     var param_settings = Properties.Settings.Default.AutoStartProfile as eduVPN.Xml.StartSessionParams;
                     if (param_settings != null)
                     {
-                        // Find the profile to auto-start.
-                        Profile profile = null;
-                        var instance_source = InstanceSources[(int)param_settings.InstanceSourceType];
-                        var instance = instance_source.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == param_settings.Instance.AbsoluteUri);
-                        if (instance != null)
-                            profile = instance?.GetProfileList(instance_source.GetAuthenticatingInstance(instance), Abort.Token).FirstOrDefault(p => p.ID == param_settings.ID);
+                        try
+                        {
+                            // Find the profile to auto-start.
+                            Profile profile = null;
+                            var instance_source = InstanceSources[(int)param_settings.InstanceSourceType];
+                            var instance = instance_source.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == param_settings.Instance.AbsoluteUri);
+                            if (instance != null)
+                                profile = instance?.GetProfileList(instance_source.GetAuthenticatingInstance(instance), Abort.Token).FirstOrDefault(p => p.ID == param_settings.ID);
 
-                        if (profile != null) {
-                            // Set connecting instance.
-                            InstanceSourceType = param_settings.InstanceSourceType;
-                            InstanceSource.ConnectingInstance = instance;
+                            if (profile != null)
+                            {
+                                // Set connecting instance.
+                                InstanceSourceType = param_settings.InstanceSourceType;
+                                InstanceSource.ConnectingInstance = instance;
 
-                            // Start VPN session.
-                            var param = new StartSessionParams(param_settings.InstanceSourceType, profile);
-                            if (StartSession.CanExecute(param))
-                                StartSession.Execute(param);
+                                // Start VPN session.
+                                var param = new StartSessionParams(param_settings.InstanceSourceType, profile);
+                                if (StartSession.CanExecute(param))
+                                    StartSession.Execute(param);
+                            }
                         }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorAutostartingProfile, ex); }
                     }
                 }
+                catch (OperationCanceledException) { }
+                catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
                 finally { ChangeTaskCount(-1); }
 
                 // Self-dispose.
