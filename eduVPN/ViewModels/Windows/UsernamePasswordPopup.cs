@@ -44,14 +44,20 @@ namespace eduVPN.ViewModels.Windows
                         // execute
                         e =>
                         {
-                            base.ApplyResponse.Execute(e);
-                            e.Username = Username;
+                            ChangeTaskCount(+1);
+                            try
+                            {
+                                base.ApplyResponse.Execute(e);
+                                e.Username = Username;
 
-                            // Update settings.
-                            var key = Session.AuthenticatingInstance.Base.AbsoluteUri;
-                            if (!Properties.Settings.Default.InstanceSettings.TryGetValue(key, out var settings))
-                                Properties.Settings.Default.InstanceSettings[key] = settings = new Xml.InstanceSettings();
-                            settings.LastUsername = Username;
+                                // Update settings.
+                                var key = Session.AuthenticatingInstance.Base.AbsoluteUri;
+                                if (!Properties.Settings.Default.InstanceSettings.TryGetValue(key, out var settings))
+                                    Properties.Settings.Default.InstanceSettings[key] = settings = new Xml.InstanceSettings();
+                                settings.LastUsername = Username;
+                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
                         },
 
                         // canExecute

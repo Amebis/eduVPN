@@ -207,12 +207,18 @@ namespace eduVPN.ViewModels.VPN
                         // execute
                         () =>
                         {
-                            // Terminate connection.
-                            _disconnect.Cancel();
-                            Disconnect.RaiseCanExecuteChanged();
+                            Wizard.ChangeTaskCount(+1);
+                            try
+                            {
+                                // Terminate connection.
+                                _disconnect.Cancel();
+                                Disconnect.RaiseCanExecuteChanged();
 
-                            // Clear profile to auto-start on next launch.
-                            Properties.Settings.Default.AutoStartProfile = null;
+                                // Clear profile to auto-start on next launch.
+                                Properties.Settings.Default.AutoStartProfile = null;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                            finally { Wizard.ChangeTaskCount(-1); }
                         },
 
                         // canExecute

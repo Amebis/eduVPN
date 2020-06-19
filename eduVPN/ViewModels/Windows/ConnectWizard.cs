@@ -116,7 +116,13 @@ namespace eduVPN.ViewModels.Windows
                 {
                     _session_info = new DelegateCommand(
                         // execute
-                        () => CurrentPage = StatusPage,
+                        () =>
+                        {
+                            ChangeTaskCount(+1);
+                            try { CurrentPage = StatusPage; }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
+                        },
 
                         // canExecute
                         () => Sessions.Count > 0);
@@ -169,170 +175,176 @@ namespace eduVPN.ViewModels.Windows
                         // execute
                         param =>
                         {
-                            // Switch to the status page, for user to see the progress.
-                            CurrentPage = StatusPage;
-
-                            // Note: Sessions locking is not required, since all queue manipulation is done exclusively in the UI thread.
-
-                            var source_index = (int)param.InstanceSourceType;
-                            var authenticating_instance = InstanceSources[source_index].GetAuthenticatingInstance(param.ConnectingProfile.Instance);
-
-                            if (Sessions.Count > 0)
+                            ChangeTaskCount(+1);
+                            try
                             {
-                                var s = Sessions[Sessions.Count - 1];
-                                if (s.ConnectingProfile.Equals(param.ConnectingProfile))
-                                {
-                                    // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
-                                    return;
-                                }
-                            }
+                                // Switch to the status page, for user to see the progress.
+                                CurrentPage = StatusPage;
 
-                            // Launch the VPN session in the background.
-                            new Thread(new ThreadStart(
-                                () =>
+                                // Note: Sessions locking is not required, since all queue manipulation is done exclusively in the UI thread.
+
+                                var source_index = (int)param.InstanceSourceType;
+                                var authenticating_instance = InstanceSources[source_index].GetAuthenticatingInstance(param.ConnectingProfile.Instance);
+
+                                if (Sessions.Count > 0)
                                 {
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
-                                    try
+                                    var s = Sessions[Sessions.Count - 1];
+                                    if (s.ConnectingProfile.Equals(param.ConnectingProfile))
                                     {
-                                        // Create our new session.
-                                        using (var session = new OpenVPNSession(
-                                            Properties.Settings.Default.OpenVPNInteractiveServiceInstance,
-                                            this,
-                                            authenticating_instance,
-                                            param.ConnectingProfile))
+                                        // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
+                                        return;
+                                    }
+                                }
+
+                                // Launch the VPN session in the background.
+                                new Thread(new ThreadStart(
+                                    () =>
+                                    {
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1)));
+                                        try
                                         {
-                                            VPNSession previous_session = null;
-                                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                                () =>
-                                                {
-                                                    if (Sessions.Count > 0)
-                                                    {
-                                                        // Trigger disconnection of the previous session.
-                                                        previous_session = Sessions[Sessions.Count - 1];
-                                                        if (previous_session.Disconnect.CanExecute())
-                                                            previous_session.Disconnect.Execute();
-                                                    }
-
-                                                    // Add our session to the queue.
-                                                    Sessions.Add(session);
-                                                }));
-                                            try
+                                            // Create our new session.
+                                            using (var session = new OpenVPNSession(
+                                                Properties.Settings.Default.OpenVPNInteractiveServiceInstance,
+                                                this,
+                                                authenticating_instance,
+                                                param.ConnectingProfile))
                                             {
-                                                if (previous_session != null)
-                                                {
-                                                    // Await for the previous session to finish.
-                                                    if (WaitHandle.WaitAny(new WaitHandle[] { Abort.Token.WaitHandle, previous_session.Finished }) == 0)
-                                                        throw new OperationCanceledException();
-                                                }
-
-                                                // Set profile to auto-start on next launch.
-                                                Properties.Settings.Default.AutoStartProfile = new eduVPN.Xml.StartSessionParams
-                                                {
-                                                    InstanceSourceType = param.InstanceSourceType,
-                                                    Instance = param.ConnectingProfile.Instance.Base,
-                                                    ID = param.ConnectingProfile.ID
-                                                };
-
-                                                // Run our session.
-                                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1)));
-                                                try { session.Run(); }
-                                                finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1))); }
-                                            }
-                                            finally
-                                            {
-                                                // Remove our session from the queue.
+                                                VPNSession previous_session = null;
                                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                     () =>
                                                     {
-                                                        Sessions.Remove(session);
-
-                                                        if (Sessions.Count <= 0 && CurrentPage == StatusPage)
+                                                        if (Sessions.Count > 0)
                                                         {
-                                                            // No more sessions and user is still on the status page. Redirect the wizard back.
-                                                            CurrentPage = RecentConfigurationSelectPage;
+                                                            // Trigger disconnection of the previous session.
+                                                            previous_session = Sessions[Sessions.Count - 1];
+                                                            if (previous_session.Disconnect.CanExecute())
+                                                                previous_session.Disconnect.Execute();
                                                         }
+
+                                                        // Add our session to the queue.
+                                                        Sessions.Add(session);
                                                     }));
+                                                try
+                                                {
+                                                    if (previous_session != null)
+                                                    {
+                                                        // Await for the previous session to finish.
+                                                        if (WaitHandle.WaitAny(new WaitHandle[] { Abort.Token.WaitHandle, previous_session.Finished }) == 0)
+                                                            throw new OperationCanceledException();
+                                                    }
+
+                                                    // Set profile to auto-start on next launch.
+                                                    Properties.Settings.Default.AutoStartProfile = new eduVPN.Xml.StartSessionParams
+                                                    {
+                                                        InstanceSourceType = param.InstanceSourceType,
+                                                        Instance = param.ConnectingProfile.Instance.Base,
+                                                        ID = param.ConnectingProfile.ID
+                                                    };
+
+                                                    // Run our session.
+                                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1)));
+                                                    try { session.Run(); }
+                                                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(+1))); }
+                                                }
+                                                finally
+                                                {
+                                                    // Remove our session from the queue.
+                                                    Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                                        () =>
+                                                        {
+                                                            Sessions.Remove(session);
+
+                                                            if (Sessions.Count <= 0 && CurrentPage == StatusPage)
+                                                            {
+                                                                // No more sessions and user is still on the status page. Redirect the wizard back.
+                                                                CurrentPage = RecentConfigurationSelectPage;
+                                                            }
+                                                        }));
+                                                }
                                             }
                                         }
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
-                                    finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
-                                })).Start();
+                                        catch (OperationCanceledException) { }
+                                        catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                                        finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ChangeTaskCount(-1))); }
+                                    })).Start();
 
-                            // Do the instance source book-keeping.
-                            if (InstanceSources[source_index] is LocalInstanceSource instance_source_local)
-                            {
-                                // Local authenticating instance source
-                                var profile_found = false;
-                                foreach (var profile in instance_source_local.ConnectingProfileList)
+                                // Do the instance source book-keeping.
+                                if (InstanceSources[source_index] is LocalInstanceSource instance_source_local)
                                 {
-                                    if (profile.Equals(param.ConnectingProfile))
+                                    // Local authenticating instance source
+                                    var profile_found = false;
+                                    foreach (var profile in instance_source_local.ConnectingProfileList)
                                     {
-                                        // Upvote profile popularity.
-                                        profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
-                                        profile_found = true;
-                                    }
-                                    else
-                                    {
-                                        // Downvote profile popularity.
-                                        profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
-                                    }
-                                }
-                                if (!profile_found)
-                                {
-                                    // Add connecting profile to the list.
-                                    instance_source_local.ConnectingProfileList.Add(param.ConnectingProfile);
-                                }
-                                if (Properties.Settings.Default.ConnectingProfileSelectMode == 2)
-                                {
-                                    // Add all profiles of connecting instance to the list. (Profile list is already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
-                                    foreach (var profile in param.ConnectingProfile.Instance.GetProfileList(authenticating_instance, Abort.Token))
-                                        if (instance_source_local.ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
+                                        if (profile.Equals(param.ConnectingProfile))
+                                        {
+                                            // Upvote profile popularity.
+                                            profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                            profile_found = true;
+                                        }
+                                        else
                                         {
                                             // Downvote profile popularity.
                                             profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
-
-                                            // Add sibling profile to the list.
-                                            instance_source_local.ConnectingProfileList.Add(profile);
                                         }
-                                }
-
-                                var instance_found = false;
-                                foreach (var instance in instance_source_local.ConnectingInstanceList)
-                                {
-                                    if (instance.Equals(param.ConnectingProfile.Instance))
-                                    {
-                                        // Upvote instance popularity.
-                                        instance.Popularity = instance.Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
-                                        instance_found = true;
                                     }
-                                    else
+                                    if (!profile_found)
                                     {
-                                        // Downvote instance popularity.
-                                        instance.Popularity = instance.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                        // Add connecting profile to the list.
+                                        instance_source_local.ConnectingProfileList.Add(param.ConnectingProfile);
+                                    }
+                                    if (Properties.Settings.Default.ConnectingProfileSelectMode == 2)
+                                    {
+                                        // Add all profiles of connecting instance to the list. (Profile list is already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
+                                        foreach (var profile in param.ConnectingProfile.Instance.GetProfileList(authenticating_instance, Abort.Token))
+                                            if (instance_source_local.ConnectingProfileList.FirstOrDefault(prof => prof.Equals(profile)) == null)
+                                            {
+                                                // Downvote profile popularity.
+                                                profile.Popularity = profile.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+
+                                                // Add sibling profile to the list.
+                                                instance_source_local.ConnectingProfileList.Add(profile);
+                                            }
+                                    }
+
+                                    var instance_found = false;
+                                    foreach (var instance in instance_source_local.ConnectingInstanceList)
+                                    {
+                                        if (instance.Equals(param.ConnectingProfile.Instance))
+                                        {
+                                            // Upvote instance popularity.
+                                            instance.Popularity = instance.Popularity * (1.0f - _popularity_alpha) + 1.0f * _popularity_alpha;
+                                            instance_found = true;
+                                        }
+                                        else
+                                        {
+                                            // Downvote instance popularity.
+                                            instance.Popularity = instance.Popularity * (1.0f - _popularity_alpha) /*+ 0.0f * _popularity_alpha*/;
+                                        }
+                                    }
+                                    if (!instance_found)
+                                    {
+                                        // Add connecting instance to the list.
+                                        instance_source_local.ConnectingInstanceList.Add(param.ConnectingProfile.Instance);
                                     }
                                 }
-                                if (!instance_found)
+                                else if (InstanceSources[source_index] is DistributedInstanceSource instance_source_distributed)
                                 {
-                                    // Add connecting instance to the list.
-                                    instance_source_local.ConnectingInstanceList.Add(param.ConnectingProfile.Instance);
+                                    // Distributed authenticating instance source
+                                    instance_source_distributed.AuthenticatingInstance = authenticating_instance;
                                 }
-                            }
-                            else if (InstanceSources[source_index] is DistributedInstanceSource instance_source_distributed)
-                            {
-                                // Distributed authenticating instance source
-                                instance_source_distributed.AuthenticatingInstance = authenticating_instance;
-                            }
-                            else if (InstanceSources[source_index] is FederatedInstanceSource instance_source_federated)
-                            {
-                                // Federated authenticating instance source
-                            }
-                            else
-                                throw new InvalidOperationException();
+                                else if (InstanceSources[source_index] is FederatedInstanceSource instance_source_federated)
+                                {
+                                    // Federated authenticating instance source
+                                }
+                                else
+                                    throw new InvalidOperationException();
 
-                            // Update settings.
-                            Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSources[source_index].ToSettings() };
+                                // Update settings.
+                                Properties.Settings.Default[Properties.Settings.InstanceDirectoryId[source_index] + "InstanceSourceSettings"] = new Xml.InstanceSourceSettings() { InstanceSource = InstanceSources[source_index].ToSettings() };
+                            }
+                            catch (Exception ex) { Error = ex; }
+                            finally { ChangeTaskCount(-1); }
                         },
 
                         // canExecute
