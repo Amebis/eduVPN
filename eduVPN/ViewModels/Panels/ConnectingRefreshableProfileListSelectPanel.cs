@@ -84,13 +84,7 @@ namespace eduVPN.ViewModels.Panels
                                 var profile_list = SelectedInstance.GetProfileList(InstanceSource.GetAuthenticatingInstance(SelectedInstance), Window.Abort.Token);
 
                                 // Send the loaded profile list back to the UI thread.
-                                // We're not navigating to another page and OnActivate() will not be called to auto-reset error message. Therefore, reset it manually.
-                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                () =>
-                                {
-                                    Wizard.Error = null;
-                                    ProfileList = profile_list;
-                                }));
+                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileList = profile_list));
                             }
                             catch (OperationCanceledException) { }
                             catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
