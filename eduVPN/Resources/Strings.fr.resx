@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>La vérification de la signature a échoué. l'intégrité {0} n'est pas valide.</value>
+    <value>La vérification de la signature a échoué. L'intégrité de {0} n'est pas valide.</value>
   </data>
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>Le serveur API a répondu avec une erreur.</value>
@@ -151,7 +151,7 @@
     <value>L'autorisation du client a échoué.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Authorizing the client to use {0} failed.</value>
+    <value>L'autorisation du client à utiliser {0} a échoué. </value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
@@ -185,7 +185,7 @@
     <value>En attente de la réponse initiale du serveur... </value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatic)</value>
+    <value>(Automatique)</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
     <value>Interface réseau avec {0} ID non trouvé.</value>
@@ -269,24 +269,24 @@
     <value>Le compte d'utilisateur a été désactivé par un administrateur.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
-    <value>Downloading web resource signature failed.</value>
+    <value>Echec du téléchargement de la signature du service web.</value>
   </data>
   <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is invalid.</value>
+    <value>La clé publique Minisign n'est pas valide. </value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with ID {0:X} already exists.</value>
+    <value>La clé publique Minisign avec l'ID {0:X} existe déjà.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is not supported.</value>
+    <value>La signature Minisign n'est pas supportée.</value>
   </data>
   <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is invalid.</value>
+    <value>La signature Minisign n'est pas valide.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not supported.</value>
+    <value>La clé publique Minisign n'est pas supportée.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not trusted.</value>
+    <value>La clé publique Minisign n'est pas fiable.</value>
   </data>
 </root>

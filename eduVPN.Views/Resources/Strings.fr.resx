@@ -148,7 +148,7 @@ Le client poursuivra une fois l'autorisation terminée...</value>
     <value>_Copier le Texte d'Erreur</value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
-    <value>_Rejeter l'Erreur</value>
+    <value>_Ignorer l'erreur</value>
   </data>
   <data name="ButtonOKTitle" xml:space="preserve">
     <value>_OK</value>
@@ -160,16 +160,16 @@ Le client poursuivra une fois l'autorisation terminée...</value>
     <value>_Fournisseur</value>
   </data>
   <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
-    <value>_Profile</value>
+    <value>_Profil</value>
   </data>
   <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
-    <value>_Profile</value>
+    <value>_Profil</value>
   </data>
   <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
     <value>_Fournisseur</value>
   </data>
   <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
-    <value>_Profile</value>
+    <value>_Profil</value>
   </data>
   <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
     <value>_Nom d'hôte</value>
@@ -227,10 +227,10 @@ Le client poursuivra une fois l'autorisation terminée...</value>
     <value>Me demander _plus tard</value>
   </data>
   <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
-    <value>Quoi de_Neuf?</value>
+    <value>Quoi de_Neuf ?</value>
   </data>
   <data name="SelfUpdatePopupMessage3" xml:space="preserve">
-    <value>Une version plus récente et améliorée du client est disponible. Restez à jour!</value>
+    <value>Une version plus récente et améliorée du client est disponible. Restez à jour !</value>
   </data>
   <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
     <value>Passez cette _version</value>
@@ -276,10 +276,10 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
     <value>Profile</value>
   </data>
   <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
-    <value>Bits entrants</value>
+    <value>Bytes In</value>
   </data>
   <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
-    <value>Bits sortants</value>
+    <value>Bytes Out</value>
   </data>
   <data name="StatusPageSessionInfoDuration" xml:space="preserve">
     <value>Durée</value>
@@ -355,7 +355,7 @@ Powered by SURFnet</value>
     <comment>{0}=Client name</comment>
   </data>
   <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
-    <value>Profiles VPN Ajoutés</value>
+    <value>Profils VPN Ajoutés</value>
   </data>
   <data name="ButtonConnectTitle" xml:space="preserve">
     <value>_Se connecter!</value>
@@ -364,10 +364,10 @@ Powered by SURFnet</value>
     <value>Pas disponible</value>
   </data>
   <data name="SettingsPageAllowLocalDescription" xml:space="preserve">
-    <value>Warning: Do not enable this when roaming in public untrusted networks.</value>
+    <value>Attention: ne pas activer cette fonction lorsque vous êtes sur des réseaux publics peu fiables.</value>
   </data>
   <data name="SettingsPageAllowLocalLabel" xml:space="preserve">
-    <value>Allow _Local Traffic</value>
+    <value>Autoriser _trafic local</value>
   </data>
   <data name="ListBoxNoProfiles" xml:space="preserve">
     <value>Aucun profil n'a été défini ou ce compte ne dispose pas des permissions requises pour accéder aux profils disponibles.</value>

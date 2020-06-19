@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.28...HEAD)
 
+- French translation revised
+
 
 ## [1.0.28](https://github.com/Amebis/eduVPN/compare/1.0.27...1.0.28) (2020-05-25)
 
