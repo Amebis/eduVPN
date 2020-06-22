@@ -4,6 +4,7 @@
 
 - Partial Norwegian Bokmål translation
 - French translation revised
+- A one-month worth of past OpenVPN logs kept for troubleshooting
 - Fixes
 
 

@@ -156,6 +156,22 @@ namespace eduVPN.ViewModels.VPN
                     {
                         try
                         {
+                            // Purge stale log files.
+                            var timestamp = DateTime.UtcNow.Subtract(new TimeSpan(30, 0, 0, 0));
+                            foreach (var f in Directory.EnumerateFiles(_working_folder, "*.txt", SearchOption.TopDirectoryOnly)) {
+                                _quit.Token.ThrowIfCancellationRequested();
+                                if (File.GetLastWriteTimeUtc(f) <= timestamp)
+                                {
+                                    try { File.Delete(LogPath); }
+                                    catch { }
+                                }
+                            }
+                        }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception) { /* Failure to remove stale log files is not fatal. */ }
+
+                        try
+                        {
                             // Save OpenVPN configuration file.
                             using (var fs = new FileStream(
                                 ConfigurationPath,
@@ -598,10 +614,6 @@ namespace eduVPN.ViewModels.VPN
                     finally
                     {
                         mgmt_server.Stop();
-
-                        // Delete OpenVPN log file. If possible.
-                        try { File.Delete(LogPath); }
-                        catch { }
                     }
                 }
                 finally
