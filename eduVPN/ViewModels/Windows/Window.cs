@@ -111,7 +111,7 @@ namespace eduVPN.ViewModels.Windows
                         () =>
                         {
                             ChangeTaskCount(+1);
-                            try { Clipboard.SetText(Error.ToString()); }
+                            try { Clipboard.SetDataObject(Error.ToString()); }
                             catch (Exception ex) { Error = ex; }
                             finally { ChangeTaskCount(-1); }
                         },
