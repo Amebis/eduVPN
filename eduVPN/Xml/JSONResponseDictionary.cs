@@ -51,6 +51,22 @@ namespace eduVPN.Xml
 
             if (response_web.IsFresh)
             {
+                if (response_cache != null)
+                {
+                    // Verify version.
+                    var obj_cache = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache.Value, ct);
+                    if (eduJSON.Parser.GetValue(obj_cache, "v", out int v_cache))
+                    {
+                        if (!eduJSON.Parser.GetValue(obj_web, "v", out int v_web) ||
+                            v_web <= v_cache)
+                        {
+                            // Version rollback detected. Revert to cached version.
+                            obj_web = obj_cache;
+                            response_web = response_cache;
+                        }
+                    }
+                }
+
                 // Save response to cache.
                 lock (_lock)
                     this[key] = response_web;
