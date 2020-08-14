@@ -163,9 +163,7 @@ namespace Microsoft.Shell
             IntPtr argv = IntPtr.Zero;
             try
             {
-                int numArgs = 0;
-
-                argv = _CommandLineToArgvW(cmdLine, out numArgs);
+                argv = _CommandLineToArgvW(cmdLine, out int numArgs);
                 if (argv == IntPtr.Zero)
                 {
                     throw new Win32Exception();
@@ -182,10 +180,7 @@ namespace Microsoft.Shell
             }
             finally
             {
-
-                IntPtr p = _LocalFree(argv);
-                // Otherwise LocalFree failed.
-                // Assert.AreEqual(IntPtr.Zero, p);
+                _LocalFree(argv);
             }
         }
 
@@ -283,11 +278,10 @@ namespace Microsoft.Shell
             // Build unique application Id and the IPC channel name.
             string applicationIdentifier = uniqueName + Environment.UserName;
 
-            string channelName = String.Concat(applicationIdentifier, Delimiter, ChannelNameSuffix);
+            string channelName = string.Concat(applicationIdentifier, Delimiter, ChannelNameSuffix);
 
             // Create mutex based on unique application Id to check if this is the first instance of the application. 
-            bool firstInstance;
-            singleInstanceMutex = new Mutex(true, applicationIdentifier, out firstInstance);
+            singleInstanceMutex = new Mutex(true, applicationIdentifier, out bool firstInstance);
             if (firstInstance)
             {
                 CreateRemoteService(channelName);
@@ -376,13 +370,16 @@ namespace Microsoft.Shell
         /// <param name="channelName">Application's IPC channel name.</param>
         private static void CreateRemoteService(string channelName)
         {
-            BinaryServerFormatterSinkProvider serverProvider = new BinaryServerFormatterSinkProvider();
-            serverProvider.TypeFilterLevel = TypeFilterLevel.Full;
-            IDictionary props = new Dictionary<string, string>();
-
-            props["name"] = channelName;
-            props["portName"] = channelName;
-            props["exclusiveAddressUse"] = "false";
+            BinaryServerFormatterSinkProvider serverProvider = new BinaryServerFormatterSinkProvider
+            {
+                TypeFilterLevel = TypeFilterLevel.Full
+            };
+            IDictionary props = new Dictionary<string, string>
+            {
+                ["name"] = channelName,
+                ["portName"] = channelName,
+                ["exclusiveAddressUse"] = "false"
+            };
 
             // Create the IPC Server channel with the channel properties
             channel = new IpcServerChannel(props, serverProvider);
@@ -409,10 +406,10 @@ namespace Microsoft.Shell
             IpcClientChannel secondInstanceChannel = new IpcClientChannel();
             ChannelServices.RegisterChannel(secondInstanceChannel, true);
 
-            string remotingServiceUrl = IpcProtocol + channelName + "/" + RemoteServiceName;
+            string remotingServiceUri = IpcProtocol + channelName + "/" + RemoteServiceName;
 
             // Obtain a reference to the remoting service exposed by the server i.e the first instance of the application
-            IPCRemoteService firstInstanceRemoteServiceReference = (IPCRemoteService)RemotingServices.Connect(typeof(IPCRemoteService), remotingServiceUrl);
+            IPCRemoteService firstInstanceRemoteServiceReference = (IPCRemoteService)RemotingServices.Connect(typeof(IPCRemoteService), remotingServiceUri);
 
             // Check that the remote service exists, in some cases the first instance may not yet have created one, in which case
             // the second instance should just exit

@@ -7,27 +7,35 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:conv="clr-namespace:eduVPN.Converters">
+    xmlns:conv="clr-namespace:eduVPN.Converters"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <conv:BooleanInverseVisibilityConverter x:Key="BooleanInverseVisibilityConverter"/>
+    <conv:ActiveProfileEqualSelectedProfileConverter x:Key="ActiveProfileEqualSelectedProfileConverter"/>
+    <conv:ActiveProfileEqualSelectedProfileToggleConverter x:Key="ActiveProfileEqualSelectedProfileToggleConverter"/>
     <conv:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
-    <conv:CommandRowHeightConverter x:Key="CommandRowHeightConverter"/>
-    <conv:CommandVisibilityConverter x:Key="CommandVisibilityConverter"/>
-    <conv:ConnectingProfileEqualVisibilityConverter x:Key="ConnectingProfileEqualVisibilityConverter"/>
-    <conv:ConnectingInstanceEqualVisibilityConverter x:Key="ConnectingInstanceEqualVisibilityConverter"/>
+    <conv:CountRowHeightAutoConverter x:Key="CountRowHeightAutoConverter"/>
+    <conv:CountRowHeightOneStarConverter x:Key="CountRowHeightOneStarConverter"/>
+    <conv:CountryCodeFlagConverter x:Key="CountryCodeFlagConverter"/>
+    <conv:EmptySearchResultRowHeightConverter x:Key="EmptySearchResultRowHeightConverter"/>
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
     <conv:FlowDirectionConverter x:Key="FlowDirectionConverter"/>
-    <conv:InstanceSourceInverseVisibilityConverter x:Key="InstanceSourceInverseVisibilityConverter"/>
-    <conv:InstanceSourceRowHeightConverter x:Key="InstanceSourceRowHeightConverter"/>
-    <conv:InstanceSourceTitleConverter x:Key="InstanceSourceTitleConverter"/>
-    <conv:InstanceSourceVisibilityConverter x:Key="InstanceSourceVisibilityConverter"/>
-    <conv:MessageListVisibilityConverter x:Key="MessageListVisibilityConverter"/>
-    <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B" Base="{StaticResource MetricPrefixBase}"/>
+    <conv:HomePageOwnServerLabelConverter x:Key="HomePageOwnServerLabelConverter"/>
+    <conv:IntegerInverseVisibilityConverter x:Key="IntegerInverseVisibilityConverter"/>
+    <conv:IntegerVisibilityConverter x:Key="IntegerVisibilityConverter"/>
+    <conv:MultipleProfilesVisibilityConverter x:Key="MultipleProfilesVisibilityConverter"/>
+    <conv:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+    <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B">
+        <conv:NumberToHumanReadableConverter.Base>
+            <sys:Int32>1024</sys:Int32>
+        </conv:NumberToHumanReadableConverter.Base>
+    </conv:NumberToHumanReadableConverter>
     <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
-    <conv:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+    <conv:SingleProfileVisibilityConverter x:Key="SingleProfileVisibilityConverter"/>
+    <conv:StringInverseVisibilityConverter x:Key="StringInverseVisibilityConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
-    <conv:UnavailableIconVisibilityConverter x:Key="UnavailableIconVisibilityConverter"/>
+    <conv:UriStripProtocolConverter x:Key="UriStripProtocolConverter"/>
+    <conv:VPNSessionStatusTypeDescriptionConverter x:Key="VPNSessionStatusTypeDescriptionConverter"/>
     <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
     <conv:VPNSessionStatusTypeWindowIconConverter x:Key="VPNSessionStatusTypeWindowIconConverter"/>
 </ResourceDictionary>

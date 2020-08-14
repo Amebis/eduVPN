@@ -176,13 +176,13 @@ Het Commons Conservancy eduVPN Programma</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>De vereiste OAuth parameter "state" ontbreekt of is onjuist.</value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+  <data name="InstanceSourcePageCustomTitle" xml:space="preserve">
     <value>V_oeg ander adres toe</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessTitle2" xml:space="preserve">
     <value>Verbind met je _instituut</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetTitle2" xml:space="preserve">
     <value>_Veilig internetten</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
@@ -219,25 +219,25 @@ Het Commons Conservancy eduVPN Programma</value>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Wachtwoord</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddTitle" xml:space="preserve">
     <value>_Andere toevoegen</value>
   </data>
-  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptAskLaterTitle" xml:space="preserve">
     <value>Vraag _later</value>
   </data>
-  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptChangelogTitle" xml:space="preserve">
     <value>Wat is _nieuw?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePromptMessage3" xml:space="preserve">
     <value>Een nieuwere en verbeterde versie is beschikbaar. Blijf up-to-date!</value>
   </data>
-  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptSkipTitle" xml:space="preserve">
     <value>Sla deze _versie over</value>
   </data>
-  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptTitle" xml:space="preserve">
     <value>Update beschikbaar</value>
   </data>
-  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptUpdateTitle" xml:space="preserve">
     <value>Download en _update nu (client zal herstarten)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
@@ -261,7 +261,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Selecteer TAP-_interface</value>
   </data>
-  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+  <data name="StatusPageDisconnectTitle" xml:space="preserve">
     <value>_Verbreken</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
@@ -291,7 +291,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Verbindingsinformatie</value>
   </data>
-  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogTitle" xml:space="preserve">
     <value>Bekijk _log</value>
   </data>
   <data name="StatusPageStatus" xml:space="preserve">

@@ -13,26 +13,21 @@ using System.Xml.Serialization;
 namespace eduVPN.Xml
 {
     /// <summary>
-    /// Serializable <see cref="eduVPN.ViewModels.Windows.ConnectWizard.StartSession"/> command parameter set
+    /// Serializable <see cref="eduVPN.ViewModels.Pages.ConnectionPage.StartSession"/> command parameter set
     /// </summary>
     public class StartSessionParams : IXmlSerializable
     {
         #region Properties
 
         /// <summary>
-        /// Instance source
+        /// Connecting server base URI
         /// </summary>
-        public Models.InstanceSourceType InstanceSourceType { get; set; }
+        public Uri ConnectingServer { get; set; }
 
         /// <summary>
-        /// Instance base URI
+        /// Profile identifier
         /// </summary>
-        public Uri Instance { get; set; }
-
-        /// <summary>
-        /// Profile ID
-        /// </summary>
-        public string Id { get; set; }
+        public string ProfileId { get; set; }
 
         #endregion
 
@@ -55,9 +50,8 @@ namespace eduVPN.Xml
         {
             string v;
 
-            Instance = (v = reader[nameof(Instance)]) != null ? new Uri(v) : null;
-            Id = reader["ID"];
-            InstanceSourceType = (v = reader[nameof(InstanceSourceType)]) != null ? (Models.InstanceSourceType)Enum.Parse(typeof(Models.InstanceSourceType), v) : Models.InstanceSourceType._unknown;
+            ConnectingServer = (v = reader[nameof(ConnectingServer)]) != null || (v = reader["ConnectingInstance"]) != null || (v = reader["Instance"]) != null ? new Uri(v) : null;
+            ProfileId = (v = reader[nameof(ProfileId)]) != null || (v = reader["Id"]) != null ? v : null;
         }
 
         /// <summary>
@@ -66,9 +60,8 @@ namespace eduVPN.Xml
         /// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString(nameof(Instance), Instance.AbsoluteUri);
-            writer.WriteAttributeString("ID", Id);
-            writer.WriteAttributeString(nameof(InstanceSourceType), Enum.GetName(typeof(Models.InstanceSourceType), InstanceSourceType));
+            writer.WriteAttributeString(nameof(ConnectingServer), ConnectingServer.AbsoluteUri);
+            writer.WriteAttributeString(nameof(ProfileId), ProfileId);
         }
 
         #endregion

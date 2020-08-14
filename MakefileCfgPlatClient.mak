@@ -8,7 +8,7 @@
 WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT=$(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) \
 	-dClientTarget="$(CLIENT_TARGET)" \
 	-dClientTitle="$(CLIENT_TITLE)" \
-	-dClientAboutUrl="$(CLIENT_ABOUT_URL)"
+	-dClientAboutUri="$(CLIENT_ABOUT_URI)"
 
 ######################################################################
 # Registration

@@ -5,13 +5,13 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.JSON;
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -34,25 +34,25 @@ namespace eduVPN.ViewModels.VPN
         public static readonly VPNSession Blank = new VPNSession();
 
         /// <summary>
-        /// Terminate connection token
+        /// Session termination token
         /// </summary>
-        protected CancellationTokenSource _disconnect;
+        private readonly CancellationTokenSource SessionInProgress = new CancellationTokenSource();
 
         /// <summary>
         /// Quit token
         /// </summary>
-        protected CancellationTokenSource _quit;
+        protected CancellationTokenSource SessionAndWindowInProgress;
 
         /// <summary>
         /// List of actions to run prior running the session
         /// </summary>
         /// <remarks>Actions will be run in parallel and session run will wait for all to finish.</remarks>
-        protected List<Action> _pre_run_actions;
+        protected List<Action> PreRun = new List<Action>();
 
         /// <summary>
         /// Connected time update timer
         /// </summary>
-        protected DispatcherTimer _connected_time_updater;
+        protected DispatcherTimer ConnectedTimeUpdater;
 
         #endregion
 
@@ -64,58 +64,43 @@ namespace eduVPN.ViewModels.VPN
         public ConnectWizard Wizard { get; }
 
         /// <summary>
-        /// Authenticating eduVPN instance
+        /// Authenticating eduVPN server
         /// </summary>
-        public Instance AuthenticatingInstance { get; }
+        public Server AuthenticatingServer { get; }
 
         /// <summary>
-        /// Connecting eduVPN instance profile
+        /// Connecting eduVPN server profile
         /// </summary>
         public Profile ConnectingProfile { get; }
 
         /// <summary>
         /// Event to signal VPN session finished
         /// </summary>
-        public EventWaitHandle Finished { get => _finished; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private EventWaitHandle _finished;
-
-        /// <summary>
-        /// Merged list of user and system messages
-        /// </summary>
-        public MessageList MessageList
-        {
-            get { return _message_list; }
-            set { SetProperty(ref _message_list, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MessageList _message_list;
+        public EventWaitHandle Finished { get; }
 
         /// <summary>
         /// Client connection state
         /// </summary>
         public VPNSessionStatusType State
         {
-            get { return _state; }
-            set { SetProperty(ref _state, value); }
+            get { return _State; }
+            set { SetProperty(ref _State, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private VPNSessionStatusType _state;
+        private VPNSessionStatusType _State;
 
         /// <summary>
         /// Descriptive string (used mostly on <see cref="eduOpenVPN.OpenVPNStateType.Reconnecting"/> and <see cref="eduOpenVPN.OpenVPNStateType.Exiting"/> to show the reason for the disconnect)
         /// </summary>
         public string StateDescription
         {
-            get { return _state_description; }
-            set { SetProperty(ref _state_description, value); }
+            get { return _StateDescription; }
+            set { SetProperty(ref _StateDescription, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _state_description;
+        private string _StateDescription = "";
 
         /// <summary>
         /// TUN/TAP local IPv4 address
@@ -123,12 +108,12 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public IPAddress TunnelAddress
         {
-            get { return _tunnel_address; }
-            set { SetProperty(ref _tunnel_address, value); }
+            get { return _TunnelAddress; }
+            set { SetProperty(ref _TunnelAddress, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IPAddress _tunnel_address;
+        private IPAddress _TunnelAddress;
 
         /// <summary>
         /// TUN/TAP local IPv6 address
@@ -136,29 +121,29 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public IPAddress IPv6TunnelAddress
         {
-            get { return _ipv6_tunnel_address; }
-            set { SetProperty(ref _ipv6_tunnel_address, value); }
+            get { return _IPv6TunnelAddress; }
+            set { SetProperty(ref _IPv6TunnelAddress, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IPAddress _ipv6_tunnel_address;
+        private IPAddress _IPv6TunnelAddress;
 
         /// <summary>
         /// Time when connected state recorded
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public DateTimeOffset? ConnectedSince
+        public DateTimeOffset? ConnectedAt
         {
-            get { return _connected_since; }
+            get { return _ConnectedAt; }
             set
             {
-                if (SetProperty(ref _connected_since, value))
+                if (SetProperty(ref _ConnectedAt, value))
                     RaisePropertyChanged(nameof(ConnectedTime));
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTimeOffset? _connected_since;
+        private DateTimeOffset? _ConnectedAt;
 
         /// <summary>
         /// Running time connected
@@ -166,7 +151,7 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public TimeSpan? ConnectedTime
         {
-            get { return _connected_since != null ? DateTimeOffset.UtcNow - _connected_since : null; }
+            get { return ConnectedAt != null ? DateTimeOffset.UtcNow - ConnectedAt : null; }
         }
 
         /// <summary>
@@ -175,12 +160,12 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public ulong? BytesIn
         {
-            get { return _bytes_in; }
-            set { SetProperty(ref _bytes_in, value); }
+            get { return _BytesIn; }
+            set { SetProperty(ref _BytesIn, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ulong? _bytes_in;
+        private ulong? _BytesIn;
 
         /// <summary>
         /// Number of bytes that have been sent to the server
@@ -188,76 +173,49 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public ulong? BytesOut
         {
-            get { return _bytes_out; }
-            set { SetProperty(ref _bytes_out, value); }
+            get { return _BytesOut; }
+            set { SetProperty(ref _BytesOut, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ulong? _bytes_out;
+        private ulong? _BytesOut;
+
+        /// <summary>
+        /// Access token and certificate expiration date
+        /// </summary>
+        /// <remarks><c>null</c> when not expires</remarks>
+        public DateTimeOffset ExpiresAt
+        {
+            get
+            {
+                DateTimeOffset
+                    a = AuthenticatingServer != null ? AuthenticatingServer.AccessTokenExpires : DateTimeOffset.MaxValue,
+                    b = ConnectingProfile?.Server != null ? ConnectingProfile.Server.CertificateExpires : DateTimeOffset.MaxValue;
+                return a.CompareTo(b) <= 0 ? a : b;
+            }
+        }
+
+        /// <summary>
+        /// Remaining time before access token and/or certificate expire; or <see cref="TimeSpan.MaxValue"/> if token does not expire
+        /// </summary>
+        public TimeSpan ExpiresTime
+        {
+            get
+            {
+                var exp = ExpiresAt;
+                return exp != DateTimeOffset.MaxValue ? DateTimeOffset.UtcNow - exp : TimeSpan.MaxValue;
+            }
+        }
 
         /// <summary>
         /// Disconnect command
         /// </summary>
-        public DelegateCommand Disconnect
-        {
-            get
-            {
-                if (_disconnect_command == null)
-                    _disconnect_command = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            Wizard.ChangeTaskCount(+1);
-                            try
-                            {
-                                // Terminate connection.
-                                _disconnect.Cancel();
-                                Disconnect.RaiseCanExecuteChanged();
-
-                                // Clear profile to auto-start on next launch.
-                                Properties.Settings.Default.AutoStartProfile = null;
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                            finally { Wizard.ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        () => !_disconnect.IsCancellationRequested);
-
-                return _disconnect_command;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _disconnect_command;
+        public DelegateCommand Disconnect { get; }
 
         /// <summary>
         /// Show log command
         /// </summary>
-        public DelegateCommand ShowLog
-        {
-            get
-            {
-                if (_show_log_command == null)
-                    _show_log_command = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            Wizard.ChangeTaskCount(+1);
-                            try { DoShowLog(); }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                            finally { Wizard.ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        CanShowLog);
-
-                return _show_log_command;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _show_log_command;
+        public DelegateCommand ShowLog { get; }
 
         #endregion
 
@@ -268,93 +226,74 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public VPNSession()
         {
-            _disconnect = new CancellationTokenSource();
-            _state_description = "";
-            _message_list = new MessageList();
+            Disconnect = new DelegateCommand(
+                () =>
+                {
+                    try
+                    {
+                        // Terminate connection.
+                        SessionInProgress.Cancel();
+                        Disconnect.RaiseCanExecuteChanged();
+
+                        // Clear profile to auto-start on next launch.
+                        Properties.Settings.Default.AutoStartProfile = null;
+                    }
+                    catch (Exception ex) { Wizard.Error = ex; }
+                },
+                () => !SessionInProgress.IsCancellationRequested);
+
+            ShowLog = new DelegateCommand(
+                () =>
+                {
+                    try { DoShowLog(); }
+                    catch (Exception ex) { Wizard.Error = ex; }
+                },
+                CanShowLog);
         }
 
         /// <summary>
         /// Creates a VPN session
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
-        /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
-        /// <param name="connecting_profile">Connecting eduVPN profile</param>
-        public VPNSession(ConnectWizard wizard, Instance authenticating_instance, Profile connecting_profile) :
+        /// <param name="authenticatingServer">Authenticating eduVPN server</param>
+        /// <param name="connectingProfile">Connecting eduVPN profile</param>
+        public VPNSession(ConnectWizard wizard, Server authenticatingServer, Profile connectingProfile) :
             this()
         {
-            _quit = CancellationTokenSource.CreateLinkedTokenSource(_disconnect.Token, Window.Abort.Token);
-            _finished = new EventWaitHandle(false, EventResetMode.ManualReset);
+            SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
+            Finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Wizard = wizard;
+            AuthenticatingServer = authenticatingServer;
+            ConnectingProfile = connectingProfile;
 
-            AuthenticatingInstance = authenticating_instance;
-            ConnectingProfile = connecting_profile;
+            AuthenticatingServer.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                if (e.PropertyName == nameof(AuthenticatingServer.AccessTokenExpires))
+                {
+                    RaisePropertyChanged(nameof(ExpiresAt));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                }
+            };
+            ConnectingProfile.Server.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                if (e.PropertyName == nameof(ConnectingProfile.Server.CertificateExpires))
+                {
+                    RaisePropertyChanged(nameof(ExpiresAt));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                }
+            };
 
             // Create dispatcher timer.
-            _connected_time_updater = new DispatcherTimer(
+            ConnectedTimeUpdater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal, (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
-                Wizard.Dispatcher);
-
-            _pre_run_actions = new List<Action>()
-            {
-                // Load messages from multiple sources: connecting instance, user/system list.
-                // Any errors shall be ignored.
-                () =>
+                DispatcherPriority.Normal, (object sender, EventArgs e) =>
                 {
-                    var api_authenticating = AuthenticatingInstance.GetEndpoints(_quit.Token);
-                    var api_connecting = ConnectingProfile.Instance.GetEndpoints(_quit.Token);
-                    var e = new RequestAuthorizationEventArgs("config");
-                    Wizard.Instance_RequestAuthorization(AuthenticatingInstance, e);
-                    if (e.AccessToken != null)
-                    {
-                        Parallel.ForEach(new List<KeyValuePair<Uri, string>>() {
-                                new KeyValuePair<Uri, string>(api_connecting.UserMessages, "user_messages"),
-                                new KeyValuePair<Uri, string>(api_connecting.SystemMessages, "system_messages"),
-                            }
-                            .Where(list => list.Key != null)
-                            .Distinct(new EqualityComparer<KeyValuePair<Uri, string>>((x, y) => x.Key.AbsoluteUri == y.Key.AbsoluteUri && x.Value == y.Value)),
-                            list =>
-                            {
-                                try
-                                {
-                                    // Get and load messages.
-                                    var message_list = new MessageList();
-                                    message_list.LoadJSONAPIResponse(
-                                        Xml.Response.Get(
-                                            uri: list.Key,
-                                            token: e.AccessToken,
-                                            ct: _quit.Token).Value,
-                                        list.Value,
-                                        _quit.Token);
-
-                                    if (message_list.Count > 0)
-                                    {
-                                        // Add messages.
-                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                        {
-                                            foreach (var msg in message_list)
-                                                MessageList.Add(msg);
-                                        }));
-                                    }
-                                }
-                                catch { }
-                            });
-                    }
-
-                    //// Add test messages.
-                    //Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                    //{
-                    //    MessageList.Add(new MessageMaintenance()
-                    //    {
-                    //        Text = "This is a test maintenance message.",
-                    //        Date = DateTime.Now,
-                    //        Begin = new DateTime(2017, 7, 31, 22, 00, 00),
-                    //        End = new DateTime(2017, 7, 31, 23, 59, 00)
-                    //    });
-                    //}));
+                    RaisePropertyChanged(nameof(ConnectedTime));
+                    RaisePropertyChanged(nameof(ExpiresTime));
                 },
-            };
+                Wizard.Dispatcher);
+            ConnectedTimeUpdater.Start();
         }
 
         #endregion
@@ -370,27 +309,20 @@ namespace eduVPN.ViewModels.VPN
             {
                 try
                 {
-                    Parallel.ForEach(_pre_run_actions,
+                    Parallel.ForEach(PreRun,
                         action =>
                         {
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1)));
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                             try { action(); }
-                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(-1))); }
+                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
                         });
                 }
                 catch (AggregateException ex)
                 {
-                    var ex_non_cancelled = ex.InnerExceptions.Where(ex_inner => !(ex_inner is OperationCanceledException));
-                    if (ex_non_cancelled.Any())
-                    {
-                        // Some exceptions were issues beyond OperationCanceledException.
-                        throw new AggregateException("", ex_non_cancelled.ToArray());
-                    }
-                    else
-                    {
-                        // All exceptions were OperationCanceledException.
-                        throw new OperationCanceledException();
-                    }
+                    var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
+                    if (nonCancelledException.Any())
+                        throw new AggregateException("", nonCancelledException.ToArray());
+                    throw new OperationCanceledException();
                 }
 
                 DoRun();
@@ -408,7 +340,7 @@ namespace eduVPN.ViewModels.VPN
         protected virtual void DoRun()
         {
             // Do nothing but wait.
-            _quit.Token.WaitHandle.WaitOne();
+            SessionAndWindowInProgress.Token.WaitHandle.WaitOne();
         }
 
         /// <summary>
@@ -451,14 +383,14 @@ namespace eduVPN.ViewModels.VPN
             {
                 if (disposing)
                 {
-                    if (_disconnect != null)
-                        _disconnect.Dispose();
+                    if (SessionAndWindowInProgress != null)
+                        SessionAndWindowInProgress.Dispose();
 
-                    if (_quit != null)
-                        _quit.Dispose();
+                    if (SessionInProgress != null)
+                        SessionInProgress.Dispose();
 
-                    if (_finished != null)
-                        _finished.Dispose();
+                    if (Finished != null)
+                        Finished.Dispose();
                 }
 
                 disposedValue = true;

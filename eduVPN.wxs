@@ -14,7 +14,7 @@
         Version="$(var.Version)"
         Name="!(loc.$(var.ClientTarget).Name) $(var.Version)"
         Manufacturer="!(loc.ManufacturerName)"
-        AboutUrl="$(var.ClientAboutUrl)"
+        AboutUrl="$(var.ClientAboutUri)"
         Copyright="!(loc.LegalCopyright)"
         IconSourceFile="$(var.ClientTarget).Client\Resources\App.ico"
         Compressed="yes">

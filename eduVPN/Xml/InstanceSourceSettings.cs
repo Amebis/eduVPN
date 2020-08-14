@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -14,6 +15,7 @@ namespace eduVPN.Xml
     /// <summary>
     /// Wrapper to automate serialization of various InstanceSourceSettingsBase derived classes
     /// </summary>
+    [Obsolete]
     public class InstanceSourceSettings : IXmlSerializable
     {
         #region Properties
@@ -56,8 +58,6 @@ namespace eduVPN.Xml
                         {
                             case nameof(InstanceSourceSettingsBase): InstanceSource = new InstanceSourceSettingsBase(); break;
                             case nameof(LocalInstanceSourceSettings): InstanceSource = new LocalInstanceSourceSettings(); break;
-                            case nameof(FederatedInstanceSourceSettings): InstanceSource = new FederatedInstanceSourceSettings(); break;
-                            case nameof(DistributedInstanceSourceSettings): InstanceSource = new DistributedInstanceSourceSettings(); break;
                         }
 
                         if (InstanceSource != null)

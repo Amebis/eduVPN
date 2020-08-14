@@ -176,13 +176,13 @@ Commons Conservancy eduVPN programmet</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Den påkrevde OAuth-parameter "state" mangler eller er ugyldig.</value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+  <data name="InstanceSourcePageCustomTitle" xml:space="preserve">
     <value>Legg til _annen adresse</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessTitle2" xml:space="preserve">
     <value>Koble til _instituttet ditt</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetTitle2" xml:space="preserve">
     <value>_Sikkert internett</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
@@ -219,25 +219,25 @@ Commons Conservancy eduVPN programmet</value>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Passord</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddTitle" xml:space="preserve">
     <value>Legg til _annet</value>
   </data>
-  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptAskLaterTitle" xml:space="preserve">
     <value>Spør meg _senere</value>
   </data>
-  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptChangelogTitle" xml:space="preserve">
     <value>Hva er _nytt?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePromptMessage3" xml:space="preserve">
     <value>En ny forbedret versjon av klienten er tilgjengelig. Hold deg oppdatert!</value>
   </data>
-  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptSkipTitle" xml:space="preserve">
     <value>Stå over denne _versjonen</value>
   </data>
-  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptTitle" xml:space="preserve">
     <value>Oppdatering tilgjengelig</value>
   </data>
-  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptUpdateTitle" xml:space="preserve">
     <value>Last ned og _oppdater nå
 (Klienten vil starte på nytt)</value>
   </data>
@@ -262,7 +262,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Velg et TAP-_grensesnitt</value>
   </data>
-  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+  <data name="StatusPageDisconnectTitle" xml:space="preserve">
     <value>_Koble fra</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
@@ -292,7 +292,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Tilkoblingsstatus</value>
   </data>
-  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogTitle" xml:space="preserve">
     <value>Vis _logg</value>
   </data>
   <data name="StatusPageStatus" xml:space="preserve">

@@ -37,59 +37,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EqualityComparer.cs" />
+    <Compile Include="Models\INamedEntity.cs" />
+    <Compile Include="Models\InstituteAccessServer.cs" />
+    <Compile Include="Models\SecureInternetServer.cs" />
+    <Compile Include="System\Collections\Generic\Extensions.cs" />
     <Compile Include="JSON\APIErrorException.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\InvalidAccessTokenException.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificateCheck.cs" />
     <Compile Include="Models\CertificateCheckException.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
-    <Compile Include="Models\DistributedInstanceSource.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
-    <Compile Include="System\Collections\ObjectModel\Extensions.cs" />
-    <Compile Include="ViewModels\Pages\SelfUpdatingPage.cs" />
-    <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileSelectPanel.cs" />
+    <Compile Include="Models\ObservableCollectionEx.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\OrganizationDictionary.cs" />
+    <Compile Include="Models\ServerDictionary.cs" />
+    <Compile Include="ViewModels\Pages\AuthorizationPage.cs" />
+    <Compile Include="ViewModels\Pages\HomePage.cs" />
+    <Compile Include="ViewModels\Pages\SearchPage.cs" />
+    <Compile Include="ViewModels\Pages\SelectOwnServerPage.cs" />
+    <Compile Include="ViewModels\Pages\SelectSecureInternetServerPage.cs" />
+    <Compile Include="ViewModels\Pages\SelfUpdatePromptPage.cs" />
+    <Compile Include="ViewModels\Pages\SelfUpdateProgressPage.cs" />
     <Compile Include="Models\DownloadedFileCorruptException.cs" />
-    <Compile Include="Models\FederatedInstanceSource.cs" />
-    <Compile Include="ViewModels\Panels\ConnectingProfileSelectPanel.cs" />
-    <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileListSelectPanel.cs" />
-    <Compile Include="ViewModels\Panels\ConnectingSelectPanel.cs" />
-    <Compile Include="Models\PromptSelfUpdateActionType.cs" />
-    <Compile Include="Models\PromptSelfUpdateEventArgs.cs" />
-    <Compile Include="ViewModels\Panels\Panel.cs" />
-    <Compile Include="ViewModels\Windows\SelfUpdatePopup.cs" />
     <Compile Include="Xml\AccessTokenDictionary.cs" />
     <Compile Include="Xml\Dictionary.cs" />
-    <Compile Include="Xml\DistributedInstanceSourceSettings.cs" />
-    <Compile Include="Xml\FederatedInstanceSourceSettings.cs" />
     <Compile Include="Xml\InstanceRef.cs" />
-    <Compile Include="Xml\InstanceSettings.cs" />
-    <Compile Include="Xml\InstanceSettingsDictionary.cs" />
+    <Compile Include="Xml\InstanceRefList.cs" />
     <Compile Include="Xml\InstanceSourceSettings.cs" />
     <Compile Include="Xml\InstanceSourceSettingsBase.cs" />
     <Compile Include="Xml\JSONResponseDictionary.cs" />
     <Compile Include="Xml\LocalInstanceSourceSettings.cs" />
     <Compile Include="Xml\MinisignPublicKeyDictionary.cs" />
     <Compile Include="Xml\ProfileRefList.cs" />
-    <Compile Include="Xml\InstanceRefList.cs" />
     <Compile Include="Xml\ProfileRef.cs" />
-    <Compile Include="ViewModels\Panels\ConnectingInstanceAndProfileSelectPanel.cs" />
-    <Compile Include="ViewModels\Panels\ConnectingInstanceSelectPanel.cs" />
-    <Compile Include="ViewModels\Pages\ConnectingProfileSelectPage.cs" />
-    <Compile Include="Xml\DistributedVPNConfigurationSettings.cs" />
-    <Compile Include="Xml\FederatedVPNConfigurationSettings.cs" />
-    <Compile Include="Models\InstanceSource.cs" />
-    <Compile Include="Models\InstanceSourceType.cs" />
     <Compile Include="Models\NetworkInterface.cs" />
-    <Compile Include="Models\LocalInstanceSource.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\MessageList.cs" />
-    <Compile Include="Models\MessageMaintenance.cs" />
-    <Compile Include="Models\MessageNotification.cs" />
-    <Compile Include="Models\MessageOfTheDay.cs" />
     <Compile Include="Models\ValidatableBindableBase.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />
@@ -98,22 +85,13 @@
     <Compile Include="ViewModels\VPN\OpenVPNSession.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
-    <Compile Include="ViewModels\Windows\PasswordPopup.cs" />
     <Compile Include="ViewModels\Pages\SettingsPage.cs" />
-    <Compile Include="ViewModels\Windows\UsernamePasswordPopup.cs" />
     <Compile Include="ViewModels\VPN\VPNSession.cs" />
     <Compile Include="ViewModels\VPN\VPNSessionStatusType.cs" />
-    <Compile Include="ViewModels\Pages\AuthenticatingCountrySelectPage.cs" />
-    <Compile Include="ViewModels\Pages\AuthenticatingInstanceSelectPage.cs" />
-    <Compile Include="ViewModels\Pages\AuthenticatingInstituteSelectPage.cs" />
-    <Compile Include="ViewModels\Pages\CustomInstancePage.cs" />
-    <Compile Include="ViewModels\Pages\InitializingPage.cs" />
-    <Compile Include="Models\InstanceEndpoints.cs" />
-    <Compile Include="ViewModels\Windows\AuthorizationPopup.cs" />
+    <Compile Include="Models\ServerEndpoints.cs" />
     <Compile Include="ViewModels\Pages\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\Windows\ConnectWizard.cs" />
-    <Compile Include="Models\Instance.cs" />
-    <Compile Include="ViewModels\Pages\InstanceSourceSelectPage.cs" />
+    <Compile Include="Models\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -125,17 +103,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Pages\RecentConfigurationSelectPage.cs" />
-    <Compile Include="Models\RequestInstanceAuthorizationEventArgs.cs" />
-    <Compile Include="ViewModels\Pages\StatusPage.cs" />
+    <Compile Include="ViewModels\Pages\ConnectionPage.cs" />
     <Compile Include="ViewModels\Windows\Window.cs" />
-    <Compile Include="Xml\LocalVPNConfigurationSettings.cs" />
     <Compile Include="Xml\ResourceRef.cs" />
     <Compile Include="Xml\Response.cs" />
     <Compile Include="Xml\SerializableStringDictionary.cs" />
+    <Compile Include="Xml\UriList.cs" />
     <Compile Include="Xml\StartSessionParams.cs" />
-    <Compile Include="Xml\VPNConfigurationSettings.cs" />
-    <Compile Include="Xml\VPNConfigurationSettingsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.ar.resx" />
@@ -183,7 +157,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="eduVPN.wxs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Default.targets" />

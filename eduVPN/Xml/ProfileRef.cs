@@ -16,12 +16,13 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable profile reference
     /// </summary>
+    [Obsolete]
     public class ProfileRef : IXmlSerializable
     {
         #region Properties
 
         /// <summary>
-        /// Profile ID
+        /// Profile identifier
         /// </summary>
         public string Id { get; set; }
 
@@ -56,8 +57,8 @@ namespace eduVPN.Xml
         {
             string v;
 
-            Id = reader["ID"];
-            DisplayName = !String.IsNullOrWhiteSpace(v = reader[nameof(DisplayName)]) ? v : null;
+            Id = reader[nameof(Id)];
+            DisplayName = !string.IsNullOrWhiteSpace(v = reader[nameof(DisplayName)]) ? v : null;
             Popularity = (v = reader[nameof(Popularity)]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
         }
 
@@ -67,7 +68,7 @@ namespace eduVPN.Xml
         /// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("ID", Id);
+            writer.WriteAttributeString(nameof(Id), Id);
             if (DisplayName != null)
                 writer.WriteAttributeString(nameof(DisplayName), DisplayName);
             writer.WriteAttributeString(nameof(Popularity), Popularity.ToString(CultureInfo.InvariantCulture));

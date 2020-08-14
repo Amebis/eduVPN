@@ -9,7 +9,7 @@
 WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dClientTarget="$(CLIENT_TARGET)" \
 	-dClientUpgradeCode="$(CLIENT_UPGRADE_CODE)" \
-	-dClientAboutUrl="$(CLIENT_ABOUT_URL)"
+	-dClientAboutUri="$(CLIENT_ABOUT_URI)"
 
 
 ######################################################################

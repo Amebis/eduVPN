@@ -6,14 +6,14 @@
 */
 
 using Prism.Mvvm;
-using System.ComponentModel;
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Reflection;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace eduVPN.Models
 {
@@ -27,7 +27,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Error storage container
         /// </summary>
-        private ErrorsContainer<ValidationResult> _errors_container;
+        private readonly ErrorsContainer<ValidationResult> ErrorsContainer;
 
         #endregion
 
@@ -38,9 +38,9 @@ namespace eduVPN.Models
         /// </summary>
         public ValidatableBindableBase()
         {
-            _errors_container = new ErrorsContainer<ValidationResult>(property_name =>
+            ErrorsContainer = new ErrorsContainer<ValidationResult>(propertyName =>
                 {
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(property_name));
+                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
                     RaisePropertyChanged(nameof(HasErrors));
                 });
         }
@@ -53,7 +53,7 @@ namespace eduVPN.Models
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             var result = base.SetProperty(ref storage, value, propertyName);
-            if (result && !String.IsNullOrEmpty(propertyName))
+            if (result && !string.IsNullOrEmpty(propertyName))
                 ValidateProperty(propertyName);
 
             return result;
@@ -63,7 +63,7 @@ namespace eduVPN.Models
         protected override bool SetProperty<T>(ref T storage, T value, Action onChanged, [CallerMemberName] string propertyName = null)
         {
             var result = base.SetProperty(ref storage, value, onChanged, propertyName);
-            if (result && !String.IsNullOrEmpty(propertyName))
+            if (result && !string.IsNullOrEmpty(propertyName))
                 ValidateProperty(propertyName);
 
             return result;
@@ -72,40 +72,40 @@ namespace eduVPN.Models
         /// <summary>
         /// Performs a validation of a property.
         /// </summary>
-        /// <param name="property_name">Property name</param>
+        /// <param name="propertyName">Property name</param>
         /// <returns><c>true</c> if the property is valid; <c>false</c> otherwise</returns>
-        public bool ValidateProperty(string property_name)
+        public bool ValidateProperty(string propertyName)
         {
-            if (String.IsNullOrEmpty(property_name))
-                throw new ArgumentNullException(nameof(property_name));
+            if (string.IsNullOrEmpty(propertyName))
+                throw new ArgumentNullException(nameof(propertyName));
 
-            var property_info = GetType().GetRuntimeProperty(property_name);
-            if (property_info == null)
-                throw new ArgumentException(String.Format(Resources.Strings.ErrorInvalidPropertyName, property_name), nameof(property_name));
+            var propertyInfo = GetType().GetRuntimeProperty(propertyName);
+            if (propertyInfo == null)
+                throw new ArgumentException(string.Format(Resources.Strings.ErrorInvalidPropertyName, propertyName), nameof(propertyName));
 
-            var property_errors = new List<ValidationResult>();
-            bool is_valid = TryValidateProperty(property_info, property_errors);
-            _errors_container.SetErrors(property_info.Name, property_errors);
+            var propertyErrors = new List<ValidationResult>();
+            bool isValid = TryValidateProperty(propertyInfo, propertyErrors);
+            ErrorsContainer.SetErrors(propertyInfo.Name, propertyErrors);
 
-            return is_valid;
+            return isValid;
         }
 
         /// <summary>
-        /// Performs a validation of a property, adding the results in the <paramref name="property_errors"/> list.
+        /// Performs a validation of a property, adding the results in the <paramref name="propertyErrors"/> list.
         /// </summary>
-        /// <param name="property_info">The <see cref="PropertyInfo"/> of the property to validate</param>
-        /// <param name="property_errors">A list containing the current error messages of the property.</param>
+        /// <param name="propertyInfo">The <see cref="PropertyInfo"/> of the property to validate</param>
+        /// <param name="propertyErrors">A list containing the current error messages of the property.</param>
         /// <returns><c>true</c> if the property is valid; <c>false</c> otherwise</returns>
-        private bool TryValidateProperty(PropertyInfo property_info, List<ValidationResult> property_errors)
+        private bool TryValidateProperty(PropertyInfo propertyInfo, List<ValidationResult> propertyErrors)
         {
             var results = new List<ValidationResult>();
-            var context = new ValidationContext(this) { MemberName = property_info.Name };
-            var property_value = property_info.GetValue(this);
-            bool is_valid = Validator.TryValidateProperty(property_value, context, results);
+            var context = new ValidationContext(this) { MemberName = propertyInfo.Name };
+            var propertyValue = propertyInfo.GetValue(this);
+            bool isValid = Validator.TryValidateProperty(propertyValue, context, results);
             if (results.Any())
-                property_errors.AddRange(results);
+                propertyErrors.AddRange(results);
 
-            return is_valid;
+            return isValid;
         }
 
         #endregion
@@ -114,7 +114,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Gets a value that indicates whether the entity has validation errors.
         /// </summary>
-        public bool HasErrors { get => _errors_container.HasErrors; }
+        public bool HasErrors { get => ErrorsContainer.HasErrors; }
 
         /// <summary>
         /// Gets the validation errors for a specified property or for the entire entity.
@@ -123,7 +123,7 @@ namespace eduVPN.Models
         /// <returns>The validation errors for the property or entity.</returns>
         public IEnumerable GetErrors(string propertyName)
         {
-            return _errors_container.GetErrors(propertyName);
+            return ErrorsContainer.GetErrors(propertyName);
         }
 
         /// <summary>

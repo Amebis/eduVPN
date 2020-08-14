@@ -33,7 +33,7 @@
             SourceFile="$(var.ClientTarget).Client\Resources\App.ico"/>
 
         <Property Id="ARPPRODUCTICON" Value="App.ico"/>
-        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUrl)"/>
+        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUri)"/>
 
 
         <!--

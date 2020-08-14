@@ -22,36 +22,36 @@ namespace eduVPN
         /// </summary>
         public T Minimum
         {
-            get { return _minimum; }
-            set { SetProperty(ref _minimum, value); }
+            get { return _Minimum; }
+            set { SetProperty(ref _Minimum, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private T _minimum;
+        private T _Minimum;
 
         /// <summary>
         /// Range maximum value
         /// </summary>
         public T Maximum
         {
-            get { return _maximum; }
-            set { SetProperty(ref _maximum, value); }
+            get { return _Maximum; }
+            set { SetProperty(ref _Maximum, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private T _maximum;
+        private T _Maximum;
 
         /// <summary>
         /// Range current value
         /// </summary>
         public T Value
         {
-            get { return _value; }
-            set { SetProperty(ref _value, value); }
+            get { return _Value; }
+            set { SetProperty(ref _Value, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private T _value;
+        private T _Value;
 
         #endregion
 
@@ -69,8 +69,8 @@ namespace eduVPN
         /// </summary>
         public Range(T min, T max)
         {
-            _minimum = min;
-            _maximum = max;
+            _Minimum = min;
+            _Maximum = max;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace eduVPN
         public Range(T min, T max, T val) :
             this(min, max)
         {
-            _value = val;
+            _Value = val;
         }
 
         #endregion

@@ -41,7 +41,7 @@ namespace eduVPN.JSON
                 name);
 
             // Verify response status.
-            if (eduJSON.Parser.GetValue(obj, "ok", out bool is_ok) && !is_ok)
+            if (eduJSON.Parser.GetValue(obj, "ok", out bool ok) && !ok)
                 throw eduJSON.Parser.GetValue(obj, "error", out string error) ? new APIErrorException(error) : new APIErrorException();
 
             return obj;

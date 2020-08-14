@@ -61,16 +61,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}
-        ///Powered by SURFnet.
-        /// </summary>
-        public static string AboutPageAppBannerTitle {
-            get {
-                return ResourceManager.GetString("AboutPageAppBannerTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Copyright © 2017-{0}
         ///The Commons Conservancy eduVPN Programme.
         /// </summary>
@@ -90,38 +80,29 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Country.
+        ///   Looks up a localized string similar to This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization..
         /// </summary>
-        public static string AuthenticatingCountrySelectPageListLabel {
+        public static string AuthorizationPageText {
             get {
-                return ResourceManager.GetString("AuthenticatingCountrySelectPageListLabel", resourceCulture);
+                return ResourceManager.GetString("AuthorizationPageText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Institution.
+        ///   Looks up a localized string similar to Authorization required.
         /// </summary>
-        public static string AuthenticatingInstituteSelectPageListLabel {
+        public static string AuthorizationPageTitle {
             get {
-                return ResourceManager.GetString("AuthenticatingInstituteSelectPageListLabel", resourceCulture);
+                return ResourceManager.GetString("AuthorizationPageTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The client needs {0} authorization, and has opened your web browser. The client will continue after you complete the authorization....
+        ///   Looks up a localized string similar to A_bout.
         /// </summary>
-        public static string AuthorizationPopupMessage2 {
+        public static string ButtonAboutTitle {
             get {
-                return ResourceManager.GetString("AuthorizationPopupMessage2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Waiting For Authorization.
-        /// </summary>
-        public static string AuthorizationPopupTitle {
-            get {
-                return ResourceManager.GetString("AuthorizationPopupTitle", resourceCulture);
+                return ResourceManager.GetString("ButtonAboutTitle", resourceCulture);
             }
         }
         
@@ -135,20 +116,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string ButtonCloseTitle {
+        public static string ButtonCancelTitle {
             get {
-                return ResourceManager.GetString("ButtonCloseTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Connect!.
-        /// </summary>
-        public static string ButtonConnectTitle {
-            get {
-                return ResourceManager.GetString("ButtonConnectTitle", resourceCulture);
+                return ResourceManager.GetString("ButtonCancelTitle", resourceCulture);
             }
         }
         
@@ -171,16 +143,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _OK.
-        /// </summary>
-        public static string ButtonOKTitle {
-            get {
-                return ResourceManager.GetString("ButtonOKTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to _Settings.
         /// </summary>
         public static string ButtonSettingsTitle {
             get {
@@ -189,65 +152,102 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Provider.
+        ///   Looks up a localized string similar to Downloaded.
         /// </summary>
-        public static string ConnectingInstanceAndProfileSelectPanelInstanceListLabel {
+        public static string ConnectionPageConnectionInfoBytesIn {
             get {
-                return ResourceManager.GetString("ConnectingInstanceAndProfileSelectPanelInstanceListLabel", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfoBytesIn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Profile.
+        ///   Looks up a localized string similar to Uploaded.
         /// </summary>
-        public static string ConnectingInstanceAndProfileSelectPanelProfileListLabel {
+        public static string ConnectionPageConnectionInfoBytesOut {
             get {
-                return ResourceManager.GetString("ConnectingInstanceAndProfileSelectPanelProfileListLabel", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfoBytesOut", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Profile.
+        ///   Looks up a localized string similar to Duration.
         /// </summary>
-        public static string ConnectingInstanceProfileSelectPanelInstanceProfileListLabel {
+        public static string ConnectionPageConnectionInfoDuration {
             get {
-                return ResourceManager.GetString("ConnectingInstanceProfileSelectPanelInstanceProfileListLabel", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfoDuration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Provider.
+        ///   Looks up a localized string similar to IPv4 Address.
         /// </summary>
-        public static string ConnectingInstanceSelectPanelInstanceListLabel {
+        public static string ConnectionPageConnectionInfoIPv4 {
             get {
-                return ResourceManager.GetString("ConnectingInstanceSelectPanelInstanceListLabel", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfoIPv4", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Profile.
+        ///   Looks up a localized string similar to IPv6 Address.
         /// </summary>
-        public static string ConnectingProfileSelectPanelProfileListLabel {
+        public static string ConnectionPageConnectionInfoIPv6 {
             get {
-                return ResourceManager.GetString("ConnectingProfileSelectPanelProfileListLabel", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfoIPv6", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Hostname.
+        ///   Looks up a localized string similar to Connection _info.
         /// </summary>
-        public static string CustomInstancePageHostnameLabel {
+        public static string ConnectionPageConnectionInfoLabel {
             get {
-                return ResourceManager.GetString("CustomInstancePageHostnameLabel", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfoLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The required OAuth parameter &quot;state&quot; is missing or incorrect..
+        ///   Looks up a localized string similar to Valid for.
         /// </summary>
-        public static string ErrorOAuthState {
+        public static string ConnectionPageOAuthValidLabel {
             get {
-                return ResourceManager.GetString("ErrorOAuthState", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageOAuthValidLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Profiles.
+        /// </summary>
+        public static string ConnectionPageProfilesLabel {
+            get {
+                return ResourceManager.GetString("ConnectionPageProfilesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of available profiles is loading.
+        ///Please wait....
+        /// </summary>
+        public static string ConnectionPageProfilesLoadingText {
+            get {
+                return ResourceManager.GetString("ConnectionPageProfilesLoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a profile.
+        /// </summary>
+        public static string ConnectionPageSelectProfile {
+            get {
+                return ResourceManager.GetString("ConnectionPageSelectProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support:.
+        /// </summary>
+        public static string ConnectionPageSupportContactsLabel {
+            get {
+                return ResourceManager.GetString("ConnectionPageSupportContactsLabel", resourceCulture);
             }
         }
         
@@ -261,92 +261,74 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add _other address.
+        ///   Looks up a localized string similar to _Forget.
         /// </summary>
-        public static string InstanceSourcePageCustomButtonTitle {
+        public static string ForgetLabel {
             get {
-                return ResourceManager.GetString("InstanceSourcePageCustomButtonTitle", resourceCulture);
+                return ResourceManager.GetString("ForgetLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect to your _Institution.
+        ///   Looks up a localized string similar to _Add.
         /// </summary>
-        public static string InstanceSourcePageInstituteAccessButtonTitle2 {
+        public static string HomePageAddTitle {
             get {
-                return ResourceManager.GetString("InstanceSourcePageInstituteAccessButtonTitle2", resourceCulture);
+                return ResourceManager.GetString("HomePageAddTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Safely use the Internet.
+        ///   Looks up a localized string similar to _Change Location.
         /// </summary>
-        public static string InstanceSourcePageSecureInternetButtonTitle2 {
+        public static string HomePageChangeSecureInternetServerTitle {
             get {
-                return ResourceManager.GetString("InstanceSourcePageSecureInternetButtonTitle2", resourceCulture);
+                return ResourceManager.GetString("HomePageChangeSecureInternetServerTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No items.
+        ///   Looks up a localized string similar to Institute Access.
         /// </summary>
-        public static string ListBoxNoItems {
+        public static string HomePageInstituteAccessLabel {
             get {
-                return ResourceManager.GetString("ListBoxNoItems", resourceCulture);
+                return ResourceManager.GetString("HomePageInstituteAccessLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Either, no VPN profiles are defined, or this account does not have the required permissions to access any of the available profiles..
+        ///   Looks up a localized string similar to Other Servers.
         /// </summary>
-        public static string ListBoxNoProfiles {
+        public static string HomePageOwnServerLabel1 {
             get {
-                return ResourceManager.GetString("ListBoxNoProfiles", resourceCulture);
+                return ResourceManager.GetString("HomePageOwnServerLabel1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please wait....
+        ///   Looks up a localized string similar to Servers.
         /// </summary>
-        public static string ListBoxNull {
+        public static string HomePageOwnServerLabel2 {
             get {
-                return ResourceManager.GetString("ListBoxNull", resourceCulture);
+                return ResourceManager.GetString("HomePageOwnServerLabel2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Begin.
+        ///   Looks up a localized string similar to Secure Internet.
         /// </summary>
-        public static string MessageMaintenanceBegin {
+        public static string HomePageSecureInternetLabel {
             get {
-                return ResourceManager.GetString("MessageMaintenanceBegin", resourceCulture);
+                return ResourceManager.GetString("HomePageSecureInternetLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to End.
+        ///   Looks up a localized string similar to _Location.
         /// </summary>
-        public static string MessageMaintenanceEnd {
+        public static string HomePageSecureInternetServersLabel {
             get {
-                return ResourceManager.GetString("MessageMaintenanceEnd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maintenance Notification.
-        /// </summary>
-        public static string MessageMaintenanceTitle {
-            get {
-                return ResourceManager.GetString("MessageMaintenanceTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Notification.
-        /// </summary>
-        public static string MessageNotificationTitle {
-            get {
-                return ResourceManager.GetString("MessageNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("HomePageSecureInternetServersLabel", resourceCulture);
             }
         }
         
@@ -360,92 +342,173 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter your password for &quot;{0}&quot;:.
+        ///   Looks up a localized string similar to Institute Access.
         /// </summary>
-        public static string PasswordPopupMessage {
+        public static string SearchPageInstituteAccessLabel {
             get {
-                return ResourceManager.GetString("PasswordPopupMessage", resourceCulture);
+                return ResourceManager.GetString("SearchPageInstituteAccessLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Password.
+        ///   Looks up a localized string similar to _Server.
         /// </summary>
-        public static string PasswordPopupPasswordLabel {
+        public static string SearchPageInstituteAccessServersLabel {
             get {
-                return ResourceManager.GetString("PasswordPopupPasswordLabel", resourceCulture);
+                return ResourceManager.GetString("SearchPageInstituteAccessServersLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to No results, please check your search command or try another institute..
         /// </summary>
-        public static string PasswordPopupTitle {
+        public static string SearchPageNoResultsText {
             get {
-                return ResourceManager.GetString("PasswordPopupTitle", resourceCulture);
+                return ResourceManager.GetString("SearchPageNoResultsText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add _another.
+        ///   Looks up a localized string similar to _Organization.
         /// </summary>
-        public static string RecentConfigurationSelectPageAddButtonTitle {
+        public static string SearchPageOrganizationsLabel {
             get {
-                return ResourceManager.GetString("RecentConfigurationSelectPageAddButtonTitle", resourceCulture);
+                return ResourceManager.GetString("SearchPageOrganizationsLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Added VPN Profiles.
+        ///   Looks up a localized string similar to Add other server.
         /// </summary>
-        public static string RecentConfigurationSelectPageConnectionListTitle {
+        public static string SearchPageOtherServerTitle {
             get {
-                return ResourceManager.GetString("RecentConfigurationSelectPageConnectionListTitle", resourceCulture);
+                return ResourceManager.GetString("SearchPageOtherServerTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ask me _later.
+        ///   Looks up a localized string similar to Connect your own server.
         /// </summary>
-        public static string SelfUpdatePopupAskLaterButtonTitle {
+        public static string SearchPageOwnServerLabel {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupAskLaterButtonTitle", resourceCulture);
+                return ResourceManager.GetString("SearchPageOwnServerLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to What&apos;s _New?.
+        ///   Looks up a localized string similar to Own Se_rver.
         /// </summary>
-        public static string SelfUpdatePopupChangelogButtonTitle {
+        public static string SearchPageOwnServersLabel {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupChangelogButtonTitle", resourceCulture);
+                return ResourceManager.GetString("SearchPageOwnServersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for your institute....
+        /// </summary>
+        public static string SearchPageQueryLabel {
+            get {
+                return ResourceManager.GetString("SearchPageQueryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secure Internet.
+        /// </summary>
+        public static string SearchPageSecureInternetLabel {
+            get {
+                return ResourceManager.GetString("SearchPageSecureInternetLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find your institute.
+        /// </summary>
+        public static string SearchPageTitle {
+            get {
+                return ResourceManager.GetString("SearchPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A_dd server.
+        /// </summary>
+        public static string SelectOwnServerPageAddServerTitle {
+            get {
+                return ResourceManager.GetString("SelectOwnServerPageAddServerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter server address here.
+        /// </summary>
+        public static string SelectOwnServerPageHostnameLabel {
+            get {
+                return ResourceManager.GetString("SelectOwnServerPageHostnameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server address.
+        /// </summary>
+        public static string SelectOwnServerPageTitle {
+            get {
+                return ResourceManager.GetString("SelectOwnServerPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Location.
+        /// </summary>
+        public static string SelectSecureInternetServerPageListLabel {
+            get {
+                return ResourceManager.GetString("SelectSecureInternetServerPageListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a location.
+        /// </summary>
+        public static string SelectSecureInternetServerPageTitle {
+            get {
+                return ResourceManager.GetString("SelectSecureInternetServerPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading update....
+        /// </summary>
+        public static string SelfUpdateProgressPageTitle {
+            get {
+                return ResourceManager.GetString("SelfUpdateProgressPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What&apos;s New?.
+        /// </summary>
+        public static string SelfUpdatePromptPageChangelogTitle {
+            get {
+                return ResourceManager.GetString("SelfUpdatePromptPageChangelogTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to A newer and improved version of the client is available. Stay updated!.
         /// </summary>
-        public static string SelfUpdatePopupMessage3 {
+        public static string SelfUpdatePromptPageText {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupMessage3", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePromptPageText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip this _version.
+        ///   Looks up a localized string similar to Update available.
         /// </summary>
-        public static string SelfUpdatePopupSkipButtonTitle {
+        public static string SelfUpdatePromptPageTitle {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupSkipButtonTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update Available.
-        /// </summary>
-        public static string SelfUpdatePopupTitle {
-            get {
-                return ResourceManager.GetString("SelfUpdatePopupTitle", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePromptPageTitle", resourceCulture);
             }
         }
         
@@ -453,9 +516,9 @@ namespace eduVPN.Views.Resources {
         ///   Looks up a localized string similar to Download and _update now
         ///(Client will restart).
         /// </summary>
-        public static string SelfUpdatePopupUpdateButtonTitle {
+        public static string SelfUpdatePromptPageUpdateTitle {
             get {
-                return ResourceManager.GetString("SelfUpdatePopupUpdateButtonTitle", resourceCulture);
+                return ResourceManager.GetString("SelfUpdatePromptPageUpdateTitle", resourceCulture);
             }
         }
         
@@ -480,16 +543,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
-        /// </summary>
-        public static string SettingsPageForceTCPDescription2 {
-            get {
-                return ResourceManager.GetString("SettingsPageForceTCPDescription2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connect Over _TCP.
+        ///   Looks up a localized string similar to Connect using _TCP only.
         /// </summary>
         public static string SettingsPageForceTCPLabel {
             get {
@@ -498,16 +552,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When you need multiple simultaneous OpenVPN connections, select the TAP interface for the client below..
-        /// </summary>
-        public static string SettingsPageInterfaceDescription2 {
-            get {
-                return ResourceManager.GetString("SettingsPageInterfaceDescription2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select TAP _Interface.
+        ///   Looks up a localized string similar to Use TAP _adapter:.
         /// </summary>
         public static string SettingsPageInterfaceLabel {
             get {
@@ -516,110 +561,29 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Disconnect.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
-        public static string StatusPageDisconnectButtonTitle {
+        public static string SettingsPageTitle {
             get {
-                return ResourceManager.GetString("StatusPageDisconnectButtonTitle", resourceCulture);
+                return ResourceManager.GetString("SettingsPageTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider.
+        ///   Looks up a localized string similar to Connection log.
         /// </summary>
-        public static string StatusPageInstance {
+        public static string SettingsPageViewLogButtonLabel {
             get {
-                return ResourceManager.GetString("StatusPageInstance", resourceCulture);
+                return ResourceManager.GetString("SettingsPageViewLogButtonLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Messages.
+        ///   Looks up a localized string similar to View _log....
         /// </summary>
-        public static string StatusPageMessagesLabel {
+        public static string SettingsPageViewLogTitle {
             get {
-                return ResourceManager.GetString("StatusPageMessagesLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profile.
-        /// </summary>
-        public static string StatusPageProfile {
-            get {
-                return ResourceManager.GetString("StatusPageProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bytes In.
-        /// </summary>
-        public static string StatusPageSessionInfoBytesIn {
-            get {
-                return ResourceManager.GetString("StatusPageSessionInfoBytesIn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bytes Out.
-        /// </summary>
-        public static string StatusPageSessionInfoBytesOut {
-            get {
-                return ResourceManager.GetString("StatusPageSessionInfoBytesOut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Duration.
-        /// </summary>
-        public static string StatusPageSessionInfoDuration {
-            get {
-                return ResourceManager.GetString("StatusPageSessionInfoDuration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IPv4.
-        /// </summary>
-        public static string StatusPageSessionInfoIPv4 {
-            get {
-                return ResourceManager.GetString("StatusPageSessionInfoIPv4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IPv6.
-        /// </summary>
-        public static string StatusPageSessionInfoIPv6 {
-            get {
-                return ResourceManager.GetString("StatusPageSessionInfoIPv6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connection Info.
-        /// </summary>
-        public static string StatusPageSessionInfoTitle {
-            get {
-                return ResourceManager.GetString("StatusPageSessionInfoTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View _log.
-        /// </summary>
-        public static string StatusPageSessionInfoViewLogButtonTitle {
-            get {
-                return ResourceManager.GetString("StatusPageSessionInfoViewLogButtonTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status.
-        /// </summary>
-        public static string StatusPageStatus {
-            get {
-                return ResourceManager.GetString("StatusPageStatus", resourceCulture);
+                return ResourceManager.GetString("SettingsPageViewLogTitle", resourceCulture);
             }
         }
         
@@ -723,47 +687,47 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not Available.
+        ///   Looks up a localized string similar to Connected.
         /// </summary>
-        public static string Unavailable {
+        public static string VPNSessionStatusTypeConnected {
             get {
-                return ResourceManager.GetString("Unavailable", resourceCulture);
+                return ResourceManager.GetString("VPNSessionStatusTypeConnected", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter your username and password for &quot;{0}&quot;:.
+        ///   Looks up a localized string similar to Connecting....
         /// </summary>
-        public static string UsernamePasswordPopupMessage {
+        public static string VPNSessionStatusTypeConnecting {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupMessage", resourceCulture);
+                return ResourceManager.GetString("VPNSessionStatusTypeConnecting", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Password.
+        ///   Looks up a localized string similar to Disconnecting....
         /// </summary>
-        public static string UsernamePasswordPopupPasswordLabel {
+        public static string VPNSessionStatusTypeDisconnecting {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupPasswordLabel", resourceCulture);
+                return ResourceManager.GetString("VPNSessionStatusTypeDisconnecting", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Authentication.
+        ///   Looks up a localized string similar to Connection Error.
         /// </summary>
-        public static string UsernamePasswordPopupTitle {
+        public static string VPNSessionStatusTypeError {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupTitle", resourceCulture);
+                return ResourceManager.GetString("VPNSessionStatusTypeError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Username.
+        ///   Looks up a localized string similar to Not connected.
         /// </summary>
-        public static string UsernamePasswordPopupUsernameLabel {
+        public static string VPNSessionStatusTypeInitializing {
             get {
-                return ResourceManager.GetString("UsernamePasswordPopupUsernameLabel", resourceCulture);
+                return ResourceManager.GetString("VPNSessionStatusTypeInitializing", resourceCulture);
             }
         }
     }

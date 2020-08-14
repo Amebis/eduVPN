@@ -187,7 +187,7 @@
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>(Automatisk)</value>
   </data>
-  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
+  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
     <value>Et nettverksgrensesnitt med {0} ID finnes ikke.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
@@ -239,7 +239,7 @@
     <value>Velg din profil</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Skriv inn URL-en til leverandøren din</value>
+    <value>Skriv inn URI-en til leverandøren din</value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiserer...</value>
@@ -247,7 +247,7 @@
   <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
     <value>Hvordan ønsker du å bruke VPN?</value>
   </data>
-  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
     <value>Forbereder oppdatering…</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

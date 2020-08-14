@@ -19,7 +19,7 @@ namespace eduVPN.Xml
         #region Fields
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private object _lock = new object();
+        private readonly object Lock = new object();
 
         #endregion
 
@@ -35,44 +35,44 @@ namespace eduVPN.Xml
         {
             // Retrieve response from cache (if available).
             var key = res.Uri.AbsoluteUri;
-            Response response_cache = null;
-            lock (_lock)
-                if (!TryGetValue(key, out response_cache))
-                    response_cache = null;
+            Response responseCache = null;
+            lock (Lock)
+                if (!TryGetValue(key, out responseCache))
+                    responseCache = null;
 
-            // Get instance source.
-            var response_web = Xml.Response.Get(
+            // Get JSON.
+            var webResponse = Xml.Response.Get(
                 res: res,
                 ct: ct,
-                previous: response_cache);
+                previous: responseCache);
 
-            // Parse instance source JSON.
-            var obj_web = (Dictionary<string, object>)eduJSON.Parser.Parse(response_web.Value, ct);
+            // Parse JSON.
+            var objWeb = (Dictionary<string, object>)eduJSON.Parser.Parse(webResponse.Value, ct);
 
-            if (response_web.IsFresh)
+            if (webResponse.IsFresh)
             {
-                if (response_cache != null)
+                if (responseCache != null)
                 {
                     // Verify version.
-                    var obj_cache = (Dictionary<string, object>)eduJSON.Parser.Parse(response_cache.Value, ct);
-                    if (eduJSON.Parser.GetValue(obj_cache, "v", out int v_cache))
+                    var objCache = (Dictionary<string, object>)eduJSON.Parser.Parse(responseCache.Value, ct);
+                    if (eduJSON.Parser.GetValue(objCache, "v", out int vCache))
                     {
-                        if (!eduJSON.Parser.GetValue(obj_web, "v", out int v_web) ||
-                            v_web <= v_cache)
+                        if (!eduJSON.Parser.GetValue(objWeb, "v", out int vWeb) ||
+                            vWeb <= vCache)
                         {
                             // Version rollback detected. Revert to cached version.
-                            obj_web = obj_cache;
-                            response_web = response_cache;
+                            objWeb = objCache;
+                            webResponse = responseCache;
                         }
                     }
                 }
 
                 // Save response to cache.
-                lock (_lock)
-                    this[key] = response_web;
+                lock (Lock)
+                    this[key] = webResponse;
             }
 
-            return obj_web;
+            return objWeb;
         }
 
         #endregion

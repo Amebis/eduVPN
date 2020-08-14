@@ -14,12 +14,12 @@ namespace eduVPN.Models
     /// </summary>
     public class ForgetAuthorizationEventArgs : EventArgs
     {
-        #region Properties
+        #region Fields
 
         /// <summary>
         /// Requested access token scope
         /// </summary>
-        public string Scope { get; }
+        public readonly string Scope;
 
         #endregion
 

@@ -29,10 +29,10 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is AggregateException ex_agg)
+            if (value is AggregateException aggregateEx)
                 return
-                    (!String.IsNullOrWhiteSpace(ex_agg.Message) ? ex_agg.Message + "\r\n" : "") +
-                    String.Join("\r\n", ex_agg.InnerExceptions.Select(ex => new ExceptionMessageConverter().Convert(ex, targetType, parameter, culture)).Distinct());
+                    (!string.IsNullOrWhiteSpace(aggregateEx.Message) ? aggregateEx.Message + "\r\n" : "") +
+                    string.Join("\r\n", aggregateEx.InnerExceptions.Select(ex => new ExceptionMessageConverter().Convert(ex, targetType, parameter, culture)).Distinct());
             else if (value is Exception ex)
                 return ex.Message;
             else

@@ -25,28 +25,28 @@ namespace eduBase
         /// </summary>
         public static bool Enable
         {
-            get { return is_enabled; }
+            get { return isEnabled; }
             set
             {
-                lock (is_enabled_lock)
+                lock (isEnabledLock)
                 {
-                    if (is_enabled != value)
+                    if (isEnabled != value)
                     {
                         if (value)
                             AppDomain.CurrentDomain.AssemblyResolve += Resolver;
                         else
                             AppDomain.CurrentDomain.AssemblyResolve -= Resolver;
-                        is_enabled = value;
+                        isEnabled = value;
                     }
                 }
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static bool is_enabled;
+        private static bool isEnabled;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static object is_enabled_lock = new object();
+        private static readonly object isEnabledLock = new object();
 
         /// <summary>
         /// Resolve event handler that will attempt to load a missing assembly from either Win32 or x64 subdir

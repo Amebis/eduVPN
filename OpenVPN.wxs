@@ -72,7 +72,7 @@
             Cabinet="OpenVPN.cab"
             EmbedCab="yes"/>
 
-        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUrl)"/>
+        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUri)"/>
 
 
         <!--

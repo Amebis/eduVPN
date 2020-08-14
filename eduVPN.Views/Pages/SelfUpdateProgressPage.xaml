@@ -1,0 +1,39 @@
+﻿<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Page
+    x:Class="eduVPN.Views.Pages.SelfUpdateProgressPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Style="{StaticResource ConnectWizardPageStyle}">
+
+    <Grid
+        VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="22,100,22,7"
+            TextAlignment="Center"
+            Style="{StaticResource MainHeadingStyle}"
+            Text="{x:Static res:Strings.SelfUpdateProgressPageTitle}"/>
+
+        <ProgressBar
+            Grid.Row="1"
+            Margin="22,7"
+            Minimum="{Binding Progress.Minimum}"
+            Maximum="{Binding Progress.Maximum}"
+            Value="{Binding Progress.Value}"/>
+    </Grid>
+</Page>

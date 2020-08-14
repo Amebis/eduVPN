@@ -1,0 +1,298 @@
+﻿<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Page
+    x:Class="eduVPN.Views.Pages.SearchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Style="{StaticResource ConnectWizardPageStyle}">
+
+    <Page.Resources>
+        <Style x:Key="SearchTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Canvas
+                                    Width="13" Height="13"
+                                    Margin="5,5,0,5"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <Canvas.RenderTransform>
+                                        <TransformGroup>
+                                            <!-- Scale 30×30 to 13×13 -->
+                                            <ScaleTransform ScaleX="0.44" ScaleY="0.44"/>
+                                        </TransformGroup>
+                                    </Canvas.RenderTransform>
+                                    <Path
+                                        Fill="{TemplateBinding Foreground}"
+                                        Data="M29.413671,25.820263l-7.753836-7.815758c1.109921-1.803389,1.762178-3.921696,1.762178-6.195571 c0-6.506771-5.251503-11.800214-11.706723-11.800214S0.008568,5.302163,0.008568,11.808934s5.251504,11.800214,11.706723,11.800214 c2.379403,0,4.592423-0.723389,6.442067-1.957472l7.695936,7.757397c0.793196,0.79953,2.091074,0.79953,2.88427,0l0.676107-0.681507 C30.206867,27.928036,30.206867,26.61973,29.413671,25.820263z M3.029658,11.808934c0-4.827541,3.89634-8.754997,8.685633-8.754997 s8.685634,3.927457,8.685634,8.754997s-3.896341,8.754996-8.685634,8.754996S3.029658,16.636475,3.029658,11.808934z"/>
+                                </Canvas>
+                                <ScrollViewer
+                                    x:Name="PART_ContentHost"
+                                    Grid.Column="1"
+                                    Padding="{TemplateBinding Padding}"
+                                    Focusable="False"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <TextBlock
+                                    x:Name="UserMessage"
+                                    Grid.Column="1"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Text="{TemplateBinding AutomationProperties.Name}"
+                                    IsHitTestVisible="False"
+                                    Visibility="Hidden"
+                                    Style="{StaticResource PlaceholderStyle}"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                    <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter
+                                    TargetName="UserMessage"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="InstituteAccessServersStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstituteAccessServers_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="InstituteAccessServers_PreviewKeyDown"/>
+        </Style>
+
+        <Style x:Key="OrganizationsStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="Organizations_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="Organizations_PreviewKeyDown"/>
+        </Style>
+
+        <Style x:Key="OwnServersStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="OwnServers_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="OwnServers_PreviewKeyDown"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition>
+                <RowDefinition.Height>
+                    <MultiBinding
+                        Converter="{StaticResource EmptySearchResultRowHeightConverter}"
+                        Mode="OneWay">
+                        <Binding Path="Query"/>
+                        <Binding Path="InstituteAccessServers.Count"/>
+                        <Binding Path="Organizations.Count"/>
+                    </MultiBinding>
+                </RowDefinition.Height>
+            </RowDefinition>
+            <RowDefinition Height="{Binding InstituteAccessServers.Count, Converter={StaticResource CountRowHeightOneStarConverter}, FallbackValue=0}"/>
+            <RowDefinition Height="{Binding Organizations.Count, Converter={StaticResource CountRowHeightOneStarConverter}, FallbackValue=0}"/>
+            <RowDefinition Height="{Binding OwnServers.Count, Converter={StaticResource CountRowHeightOneStarConverter}, FallbackValue=0}"/>
+        </Grid.RowDefinitions>
+
+        <Canvas
+            Margin="7,85,7,-22"
+            Width="56" Height="50"
+            Visibility="{Binding Query, Converter={StaticResource StringInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Visible}}">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <!-- Scale 449×397 to 56×50 -->
+                    <ScaleTransform ScaleX="0.125" ScaleY="0.125"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Polygon Fill="#9A2E00" Points="334.64 396.141 448.64 396.141 448.64 186.86 334.64 186.86"/>
+            <Polygon Fill="#FFFFFF" Points="166.32 396.062 224.32 396.062 224.32 288.701 166.32 288.701"/>
+            <Polygon Fill="#000000" Points="219.336 107.712 229.303 107.712 229.303 1.001 219.336 1.001"/>
+            <Polygon Fill="#9A2E00" Points="0 387 113 387 113 177.72 0 177.72"/>
+            <Path Fill="#E24301" Data="M224.32,127.7198 C210.226,127.7198 198.8,139.1458 198.8,153.2398 C198.8,167.3338 210.226,178.7598 224.32,178.7598 C238.414,178.7598 249.84,167.3338 249.84,153.2398 C249.796,139.1638 238.396,127.7638 224.32,127.7198 L224.32,127.7198 Z M282.32,386.9208 L282.32,279.5598 L166.32,279.5598 L166.32,386.9208 L110.32,386.9208 L110.32,149.9598 L224,85.9598 L337.68,149.9598 L337.68,386.9208 L282.32,386.9208 Z"/>
+            <Polygon Fill="#EDEDED" Points="224.32 386.92 282.32 386.92 282.32 279.56 224.32 279.56"/>
+            <Path Fill="#9A2E00" Data="M224.32,126.3199 C239.232422,126.3199 251.32,138.408536 251.32,153.3199 C251.32,168.231264 239.232422,180.3199 224.32,180.3199 C209.408636,180.3199 197.32,168.231264 197.32,153.3199 C197.32,138.408536 209.408636,126.3199 224.32,126.3199"/>
+            <Polygon Fill="#ED1556" Points="228.825 42.04 294.185 42.04 294.185 0.04 228.825 0.04"/>
+            <Polygon Fill="#B10F40" Points="272.0554 15.7301 335.8154 15.7301 321.5584 36.7301 335.8154 57.7301 272.0554 57.7301"/>
+            <Polygon Fill="#FFFFFF" Points="27.6 235.32 43.6 235.32 43.6 203.32 27.6 203.32"/>
+            <Polygon Fill="#FFFFFF" Points="67.04 235.32 83.04 235.32 83.04 203.32 67.04 203.32"/>
+            <Polygon Fill="#FFFFFF" Points="142.64 222.32 174.64 222.32 174.64 206.32 142.64 206.32"/>
+            <Polygon Fill="#FFFFFF" Points="208.32 222.32 240.32 222.32 240.32 206.32 208.32 206.32"/>
+            <Polygon Fill="#FFFFFF" Points="274 222.32 306 222.32 306 206.32 274 206.32"/>
+            <Polygon Fill="#FFFFFF" Points="142.64 250.6 174.64 250.6 174.64 234.6 142.64 234.6"/>
+            <Polygon Fill="#FFFFFF" Points="208.32 250.6 240.32 250.6 240.32 234.6 208.32 234.6"/>
+            <Polygon Fill="#FFFFFF" Points="274 250.6 306 250.6 306 234.6 274 234.6"/>
+            <Polygon Fill="#FFFFFF" Points="27.6 291.28 43.6 291.28 43.6 259.28 27.6 259.28"/>
+            <Polygon Fill="#FFFFFF" Points="67.04 291.28 83.04 291.28 83.04 259.28 67.04 259.28"/>
+            <Polygon Fill="#FFFFFF" Points="27.6 347.32 43.6 347.32 43.6 315.32 27.6 315.32"/>
+            <Polygon Fill="#FFFFFF" Points="67.04 347.32 83.04 347.32 83.04 315.32 67.04 315.32"/>
+            <Polygon Fill="#FFFFFF" Points="365.6 235.32 381.6 235.32 381.6 203.32 365.6 203.32"/>
+            <Polygon Fill="#FFFFFF" Points="405.04 235.32 421.04 235.32 421.04 203.32 405.04 203.32"/>
+            <Polygon Fill="#FFFFFF" Points="365.6 291.28 381.6 291.28 381.6 259.28 365.6 259.28"/>
+            <Polygon Fill="#FFFFFF" Points="405.04 291.28 421.04 291.28 421.04 259.28 405.04 259.28"/>
+            <Polygon Fill="#FFFFFF" Points="365.6 347.32 381.6 347.32 381.6 315.32 365.6 315.32"/>
+            <Polygon Fill="#FFFFFF" Points="405.04 347.32 421.04 347.32 421.04 315.32 405.04 315.32"/>
+        </Canvas>
+
+        <TextBlock
+            Grid.Row="1"
+            Margin="7,30,7,7"
+            HorizontalAlignment="Center"
+            Text="{x:Static res:Strings.SearchPageTitle}"
+            Style="{StaticResource MainHeadingStyle}"
+            Visibility="{Binding OwnServers.Count, Converter={StaticResource IntegerInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Visible}}"/>
+
+        <TextBlock
+            Grid.Row="1"
+            Margin="7,30,7,7"
+            HorizontalAlignment="Center"
+            Text="{x:Static res:Strings.SearchPageOtherServerTitle}"
+            Style="{StaticResource MainHeadingStyle}"
+            Visibility="{Binding OwnServers.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+
+        <TextBox
+            Grid.Row="2"
+            Margin="7"
+            Style="{StaticResource SearchTextBoxStyle}"
+            Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SearchPageQueryLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            AutomationProperties.IsRequiredForForm="True"/>
+
+        <TextBlock
+            Grid.Row="3"
+            Margin="22,7"
+            HorizontalAlignment="Stretch"
+            TextAlignment="Center"
+            VerticalAlignment="Top"
+            Text="{x:Static res:Strings.SearchPageNoResultsText}"
+            Style="{StaticResource NoteStyle}"/>
+
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ContentControl
+                Margin="7"
+                VerticalAlignment="Center"
+                Style="{StaticResource HeadingControlStyle}"
+                ContentTemplate="{StaticResource InstituteAccessIcon}"
+                IsTabStop="False"/>
+
+            <TextBlock
+                Grid.Column="1"
+                Margin="7"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubHeadingStyle}"
+                Text="{x:Static res:Strings.SearchPageInstituteAccessLabel}"/>
+
+            <ListBox
+                Grid.ColumnSpan="2"
+                Grid.Row="1"
+                x:Name="InstituteAccessServers"
+                Margin="7"
+                ItemContainerStyle="{StaticResource InstituteAccessServersStyle}"
+                ItemsSource="{Binding InstituteAccessServers}"
+                SelectedItem="{Binding SelectedInstituteAccessServer}"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.SearchPageInstituteAccessServersLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+        </Grid>
+
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ContentControl
+                Margin="7"
+                VerticalAlignment="Center"
+                Style="{StaticResource HeadingControlStyle}"
+                ContentTemplate="{StaticResource SecureInternetIcon}"
+                IsTabStop="False"/>
+
+            <TextBlock
+                Grid.Column="1"
+                Margin="7"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubHeadingStyle}"
+                Text="{x:Static res:Strings.SearchPageSecureInternetLabel}"/>
+
+            <ListBox
+                Grid.ColumnSpan="2"
+                Grid.Row="1"
+                x:Name="Organizations"
+                Margin="7"
+                ItemContainerStyle="{StaticResource OrganizationsStyle}"
+                ItemsSource="{Binding Organizations}"
+                SelectedItem="{Binding SelectedOrganization}"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.SearchPageOrganizationsLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+        </Grid>
+
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ContentControl
+                Margin="7"
+                VerticalAlignment="Center"
+                Style="{StaticResource HeadingControlStyle}"
+                ContentTemplate="{StaticResource OwnServerIcon}"
+                IsTabStop="False"/>
+
+            <TextBlock
+                Grid.Column="1"
+                Margin="7"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubHeadingStyle}"
+                Text="{x:Static res:Strings.SearchPageOwnServerLabel}"/>
+
+            <ListBox
+                Grid.ColumnSpan="2"
+                Grid.Row="1"
+                x:Name="OwnServers"
+                Margin="7"
+                ItemContainerStyle="{StaticResource OwnServersStyle}"
+                ItemsSource="{Binding OwnServers}"
+                SelectedItem="{Binding SelectedOwnServer}"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.SearchPageOwnServersLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+        </Grid>
+    </Grid>
+</Page>

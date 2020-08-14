@@ -38,7 +38,6 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\Settings.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -48,11 +47,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Colors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Images.xaml">
+    <Page Include="Resources\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -65,17 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="eduVPN.Client.wxs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -94,13 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\App.ico" />
-    <Resource Include="Resources\GenericInstance.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
-    <Resource Include="Resources\AppBanner.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.ar.resx" />

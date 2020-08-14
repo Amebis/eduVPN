@@ -61,74 +61,11 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        internal static string AboutPageTitle {
-            get {
-                return ResourceManager.GetString("AboutPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Your Institution&apos;s Country.
-        /// </summary>
-        internal static string AuthenticatingCountrySelectPageTitle2 {
-            get {
-                return ResourceManager.GetString("AuthenticatingCountrySelectPageTitle2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Your Institution.
-        /// </summary>
-        internal static string AuthenticatingInstituteSelectPageTitle {
-            get {
-                return ResourceManager.GetString("AuthenticatingInstituteSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Your Profile.
-        /// </summary>
-        internal static string ConnectingProfileSelectPageTitle {
-            get {
-                return ResourceManager.GetString("ConnectingProfileSelectPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter URL of your Provider.
-        /// </summary>
-        internal static string CustomInstancePageTitle {
-            get {
-                return ResourceManager.GetString("CustomInstancePageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to API server replied with an error..
         /// </summary>
         internal static string ErrorAPIServerReply {
             get {
                 return ResourceManager.GetString("ErrorAPIServerReply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Client authorization failed..
-        /// </summary>
-        internal static string ErrorAuthorization {
-            get {
-                return ResourceManager.GetString("ErrorAuthorization", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Auto-starting the last connected profile failed..
-        /// </summary>
-        internal static string ErrorAutostartingProfile {
-            get {
-                return ResourceManager.GetString("ErrorAutostartingProfile", resourceCulture);
             }
         }
         
@@ -178,7 +115,7 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minisign public key with ID {0:X} already exists..
+        ///   Looks up a localized string similar to Minisign public key with Id {0:X} already exists..
         /// </summary>
         internal static string ErrorDuplicateMinisignPublicKey {
             get {
@@ -201,15 +138,6 @@ namespace eduVPN.Resources {
         internal static string ErrorInstallerFileUnavailable {
             get {
                 return ResourceManager.GetString("ErrorInstallerFileUnavailable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading of the provider source {0} failed..
-        /// </summary>
-        internal static string ErrorInstanceSourceInfoLoad {
-            get {
-                return ResourceManager.GetString("ErrorInstanceSourceInfoLoad", resourceCulture);
             }
         }
         
@@ -286,11 +214,11 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network interface with {0} ID not found..
+        ///   Looks up a localized string similar to Network interface with {0} Id not found..
         /// </summary>
-        internal static string ErrorNetworkInterfaceIDNotFound {
+        internal static string ErrorNetworkInterfaceIdNotFound {
             get {
-                return ResourceManager.GetString("ErrorNetworkInterfaceIDNotFound", resourceCulture);
+                return ResourceManager.GetString("ErrorNetworkInterfaceIdNotFound", resourceCulture);
             }
         }
         
@@ -372,60 +300,6 @@ namespace eduVPN.Resources {
         internal static string ErrorUserDisabled {
             get {
                 return ResourceManager.GetString("ErrorUserDisabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading of user info failed..
-        /// </summary>
-        internal static string ErrorUserInfoLoad {
-            get {
-                return ResourceManager.GetString("ErrorUserInfoLoad", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Initializing....
-        /// </summary>
-        internal static string InitializingPageTitle {
-            get {
-                return ResourceManager.GetString("InitializingPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forget {0}.
-        /// </summary>
-        internal static string InstanceForget {
-            get {
-                return ResourceManager.GetString("InstanceForget", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to How do you want to use the VPN?.
-        /// </summary>
-        internal static string InstanceSourceSelectPageTitle2 {
-            get {
-                return ResourceManager.GetString("InstanceSourceSelectPageTitle2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Institute Access.
-        /// </summary>
-        internal static string InstanceSourceTypeInstituteAccess {
-            get {
-                return ResourceManager.GetString("InstanceSourceTypeInstituteAccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Secure Internet.
-        /// </summary>
-        internal static string InstanceSourceTypeSecureInternet {
-            get {
-                return ResourceManager.GetString("InstanceSourceTypeSecureInternet", resourceCulture);
             }
         }
         
@@ -543,33 +417,6 @@ namespace eduVPN.Resources {
         internal static string OpenVPNStateTypeWaiting {
             get {
                 return ResourceManager.GetString("OpenVPNStateTypeWaiting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Preparing update....
-        /// </summary>
-        internal static string SelfUpdatingPageTitle {
-            get {
-                return ResourceManager.GetString("SelfUpdatingPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
-        /// </summary>
-        internal static string SettingsPageTitle {
-            get {
-                return ResourceManager.GetString("SettingsPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to VPN Connection.
-        /// </summary>
-        internal static string StatusPageTitle {
-            get {
-                return ResourceManager.GetString("StatusPageTitle", resourceCulture);
             }
         }
     }

@@ -30,7 +30,7 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is string str && String.Equals(str, "RTL", StringComparison.OrdinalIgnoreCase) ?
+            return value is string str && string.Equals(str, "RTL", StringComparison.OrdinalIgnoreCase) ?
                 System.Windows.FlowDirection.RightToLeft :
                 System.Windows.FlowDirection.LeftToRight;
         }

@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Mvvm;
 using System;
 
 namespace eduVPN.Models
@@ -13,12 +12,12 @@ namespace eduVPN.Models
     /// <summary>
     /// Network interface
     /// </summary>
-    public class NetworkInterface : BindableBase
+    public class NetworkInterface
     {
         #region Properties
 
         /// <summary>
-        /// Interface ID
+        /// Interface identifier
         /// </summary>
         public Guid Id { get; }
 
@@ -34,7 +33,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs a network interface
         /// </summary>
-        /// <param name="id">Interface ID</param>
+        /// <param name="id">Interface identifier</param>
         /// <param name="name">Interface name</param>
         public NetworkInterface(Guid id, string name)
         {
@@ -53,16 +52,16 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Returns network interface by ID
+        /// Returns network interface by identifier
         /// </summary>
-        /// <param name="id">Interface ID</param>
+        /// <param name="id">Interface identifier</param>
         /// <param name="iface">Network interface</param>
         /// <returns><c>true</c> if interface found; <c>false</c> otherwise</returns>
-        public static bool TryFromID(Guid id, out NetworkInterface iface)
+        public static bool TryFromId(Guid id, out NetworkInterface iface)
         {
             foreach (var nic in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (Guid.TryParse(nic.Id, out var nic_id) && id == nic_id)
+                if (Guid.TryParse(nic.Id, out var nicId) && id == nicId)
                 {
                     iface = new NetworkInterface(id, nic.Name);
                     return true;
@@ -74,17 +73,17 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Returns network interface by ID
+        /// Returns network interface by identifier
         /// </summary>
-        /// <param name="id">Interface ID</param>
+        /// <param name="id">Interface identifier</param>
         /// <returns>Network interface</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Network interface with given ID not found.</exception>
-        public static NetworkInterface FromID(Guid id)
+        /// <exception cref="ArgumentOutOfRangeException">Network interface with given identifier not found.</exception>
+        public static NetworkInterface FromId(Guid id)
         {
-            if (TryFromID(id, out var iface))
+            if (TryFromId(id, out var iface))
                 return iface;
 
-            throw new ArgumentOutOfRangeException("id", String.Format(Resources.Strings.ErrorNetworkInterfaceIDNotFound, id));
+            throw new ArgumentOutOfRangeException(nameof(id), string.Format(Resources.Strings.ErrorNetworkInterfaceIdNotFound, id));
         }
 
         /// <summary>
@@ -95,12 +94,12 @@ namespace eduVPN.Models
         /// <returns><c>true</c> if interface found; <c>false</c> otherwise</returns>
         public static bool TryFromName(string name, out NetworkInterface iface)
         {
-            var name_lc = name.ToLower();
+            var nameLC = name.ToLower();
             foreach (var nic in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (name_lc == nic.Name.ToLower())
+                if (nameLC == nic.Name.ToLower())
                 {
-                    iface = new NetworkInterface(Guid.TryParse(nic.Id, out var nic_id) ? nic_id : default, nic.Name);
+                    iface = new NetworkInterface(Guid.TryParse(nic.Id, out var nicId) ? nicId : default, nic.Name);
                     return true;
                 }
             }
@@ -120,7 +119,7 @@ namespace eduVPN.Models
             if (TryFromName(name, out var iface))
                 return iface;
 
-            throw new ArgumentOutOfRangeException("name", String.Format(Resources.Strings.ErrorNetworkInterfaceNameNotFound, name));
+            throw new ArgumentOutOfRangeException(nameof(name), string.Format(Resources.Strings.ErrorNetworkInterfaceNameNotFound, name));
         }
 
         #endregion

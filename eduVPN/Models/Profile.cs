@@ -5,11 +5,9 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -19,75 +17,50 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN profile
     /// </summary>
-    public class Profile : BindableBase, JSON.ILoadableItem
+    public class Profile : JSON.ILoadableItem
     {
         #region Properties
 
         /// <summary>
-        /// The instance this profile belongs to
+        /// The server this profile belongs to
         /// </summary>
-        public Instance Instance
-        {
-            get { return _instance; }
-            set { SetProperty(ref _instance, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Instance _instance;
+        public Server Server { get; set; }
 
         /// <summary>
-        /// Profile ID
+        /// Profile identifier
         /// </summary>
-        public string Id
-        {
-            get { return _id; }
-            set { SetProperty(ref _id, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _id;
-
-        /// <summary>
-        /// Is profile available?
-        /// </summary>
-        public bool IsAvailable
-        {
-            get { return _is_available; }
-            set { SetProperty(ref _is_available, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool _is_available;
+        public string Id { get; private set; }
 
         /// <summary>
         /// Profile name to display in GUI
         /// </summary>
-        public string DisplayName
-        {
-            get { return _display_name; }
-            set { SetProperty(ref _display_name, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _display_name;
-
-        /// <summary>
-        /// Popularity factor in the [0.0, 1.0] range (default 1.0)
-        /// </summary>
-        public float Popularity
-        {
-            get { return _popularity; }
-            set { SetProperty(ref _popularity, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private float _popularity = 1.0f;
+        public string DisplayName { get; private set; }
 
         /// <summary>
         /// Request authorization event
         /// </summary>
         /// <remarks>Sender is the profile <see cref="eduVPN.Models.Profile"/>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a profile
+        /// </summary>
+        public Profile() { }
+
+        /// <summary>
+        /// Creates a profile with a given identifier
+        /// </summary>
+        /// <param name="id">Profile identifier</param>
+        /// <param name="displayName">Profile name to display in GUI</param>
+        public Profile(string id, string displayName = null)
+        {
+            Id = id;
+            DisplayName = displayName;
+        }
 
         #endregion
 
@@ -108,7 +81,7 @@ namespace eduVPN.Models
                 return false;
 
             var other = obj as Profile;
-            if (!Instance.Equals(other.Instance) ||
+            if (!Server.Equals(other.Server) ||
                 !Id.Equals(other.Id))
                 return false;
 
@@ -119,7 +92,7 @@ namespace eduVPN.Models
         public override int GetHashCode()
         {
             return
-                Instance.GetHashCode() ^ Id.GetHashCode();
+                Server.GetHashCode() ^ Id.GetHashCode();
         }
 
         /// <summary>
@@ -130,7 +103,7 @@ namespace eduVPN.Models
         public string GetOpenVPNConfig(CancellationToken ct = default)
         {
             // Get API endpoints.
-            var api = Instance.GetEndpoints(ct);
+            var api = Server.GetEndpoints(ct);
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
@@ -140,18 +113,18 @@ namespace eduVPN.Models
             try
             {
                 // Get profile config.
-                var uri_builder = new UriBuilder(api.ProfileConfig);
-                var query = HttpUtility.ParseQueryString(uri_builder.Query);
+                var uriBuilder = new UriBuilder(api.ProfileConfig);
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
                 query["profile_id"] = Id;
-                uri_builder.Query = query.ToString();
-                var openvpn_config = Xml.Response.Get(
-                    uri: uri_builder.Uri,
+                uriBuilder.Query = query.ToString();
+                var openVPNConfig = Xml.Response.Get(
+                    uri: uriBuilder.Uri,
                     token: e.AccessToken,
-                    response_type: "application/x-openvpn-profile",
+                    responseType: "application/x-openvpn-profile",
                     ct: ct).Value;
 
                 // If we got here, return the config.
-                return openvpn_config;
+                return openVPNConfig;
             }
             catch (OperationCanceledException) { throw; }
             catch (WebException ex)
@@ -187,7 +160,7 @@ namespace eduVPN.Models
         public string GetCompleteOpenVPNConfig(CancellationToken ct = default)
         {
             // Get API endpoints.
-            var api = Instance.GetEndpoints(ct);
+            var api = Server.GetEndpoints(ct);
             var e = new RequestAuthorizationEventArgs("config");
 
             retry:
@@ -197,19 +170,19 @@ namespace eduVPN.Models
             try
             {
                 // Get complete profile config.
-                var openvpn_complete_config = Xml.Response.Get(
+                var openVPNCompleteConfig = Xml.Response.Get(
                     uri: api.ProfileCompleteConfig,
                     param: new NameValueCollection
                     {
-                        { "display_name", String.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) }, // Always use English display_name
+                        { "display_name", string.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) }, // Always use English display_name
                         { "profile_id", Id }
                     },
                     token: e.AccessToken,
-                    response_type: "application/x-openvpn-profile",
+                    responseType: "application/x-openvpn-profile",
                     ct: ct).Value;
 
                 // If we got here, return the config.
-                return openvpn_complete_config;
+                return openVPNCompleteConfig;
             }
             catch (OperationCanceledException) { throw; }
             catch (WebException ex)
@@ -244,22 +217,19 @@ namespace eduVPN.Models
         /// <summary>
         /// Loads profile from a dictionary object (provided by JSON)
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>display_name</c>, <c>profile_id</c> and <c>two_factor</c> elements. <c>profile_id</c> is required. <c>display_name</c> and <c>profile_id</c> elements should be strings; <c>two_factor</c> should be boolean.</param>
+        /// <param name="obj">Key/value dictionary with <c>display_name</c> and <c>profile_id</c> elements. <c>profile_id</c> is required. <c>display_name</c> and <c>profile_id</c> elements should be strings.</param>
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
             if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
-            // Set ID.
+            // Set identifier.
             Id = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
 
             // Set display name.
-            var display_name = new Dictionary<string, string>();
-            DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", display_name) ? display_name.GetLocalized(Id) : Id;
-
-            // Mark profile as available.
-            IsAvailable = true;
+            var displayName = new Dictionary<string, string>();
+            DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", displayName) ? displayName.GetLocalized(Id) : Id;
         }
 
         #endregion

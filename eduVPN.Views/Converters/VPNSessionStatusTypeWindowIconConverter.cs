@@ -30,15 +30,15 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is VPNSessionStatusType status_type)
+            if (value is VPNSessionStatusType statusType)
             {
                 try
                 {
                     return new BitmapImage(
                         new Uri(
-                            String.Format(
+                            string.Format(
                                 "pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico",
-                                Enum.GetName(typeof(VPNSessionStatusType), status_type))));
+                                Enum.GetName(typeof(VPNSessionStatusType), statusType))));
                 }
                 catch { }
             }

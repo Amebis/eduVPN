@@ -1,0 +1,54 @@
+﻿<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Page
+    x:Class="eduVPN.Views.Pages.SelectSecureInternetServerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Style="{StaticResource ConnectWizardPageStyle}">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="SecureInternetServersView" Source="{Binding SecureInternetServers}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Country"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
+        <Style x:Key="SecureInternetServersStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SecureInternetServers_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="SecureInternetServers_PreviewKeyDown"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="7,30,7,5"
+            HorizontalAlignment="Center"
+            Style="{StaticResource MainHeadingStyle}"
+            Text="{x:Static res:Strings.SelectSecureInternetServerPageTitle}"/>
+
+        <ListBox
+            x:Name="SecureInternetServers"
+            Grid.Row="1"
+            Margin="7"
+            ItemContainerStyle="{StaticResource SecureInternetServersStyle}"
+            ItemsSource="{Binding Source={StaticResource SecureInternetServersView}}"
+            SelectedItem="{Binding SelectedSecureInternetServer}"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelectSecureInternetServerPageListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+    </Grid>
+</Page>

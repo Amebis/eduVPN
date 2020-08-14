@@ -1,0 +1,259 @@
+﻿/*
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+*/
+
+using eduEx.System;
+using eduVPN.ViewModels.Windows;
+using Microsoft.Win32;
+using Prism.Commands;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+
+namespace eduVPN.ViewModels.Pages
+{
+    /// <summary>
+    /// Prompts user to make the self-update choice.
+    /// </summary>
+    public class SelfUpdatePromptPage : ConnectWizardPopupPage
+    {
+        #region Properties
+
+        /// <summary>
+        /// Installed product version
+        /// </summary>
+        public Version InstalledVersion
+        {
+            get { return _InstalledVersion; }
+            private set { SetProperty(ref _InstalledVersion, value); }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Version _InstalledVersion;
+
+        /// <summary>
+        /// Available product version
+        /// </summary>
+        public Version AvailableVersion
+        {
+            get { return _AvailableVersion; }
+            private set
+            {
+                if (SetProperty(ref _AvailableVersion, value))
+                {
+                    StartUpdate.RaiseCanExecuteChanged();
+                    SkipUpdate.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Version _AvailableVersion;
+
+        /// <summary>
+        /// Product changelog
+        /// </summary>
+        public Uri Changelog
+        {
+            get { return _Changelog; }
+            private set
+            {
+                if (SetProperty(ref _Changelog, value))
+                    ShowChangelog.RaiseCanExecuteChanged();
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Uri _Changelog;
+
+        /// <summary>
+        /// Pass control to the self-update page
+        /// </summary>
+        public DelegateCommand StartUpdate { get; }
+
+        /// <summary>
+        /// Mark not to re-prompt again
+        /// </summary>
+        public DelegateCommand SkipUpdate { get; }
+
+        /// <summary>
+        /// Show changelog command
+        /// </summary>
+        public DelegateCommand ShowChangelog { get; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a view model.
+        /// </summary>
+        /// <param name="wizard">The connecting wizard</param>
+        public SelfUpdatePromptPage(ConnectWizard wizard) :
+            base(wizard)
+        {
+            StartUpdate = new DelegateCommand(
+                () =>
+                {
+                    try
+                    {
+                        if (Wizard.NavigateTo.CanExecute(Wizard.SelfUpdateProgressPage))
+                            Wizard.NavigateTo.Execute(Wizard.SelfUpdateProgressPage);
+                    }
+                    catch (Exception ex) { Wizard.Error = ex; }
+                },
+                () => AvailableVersion != null);
+
+            SkipUpdate = new DelegateCommand(
+                () =>
+                {
+                    try
+                    {
+                        Trace.TraceInformation("User choose to skip this update.");
+                        Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MaxValue;
+                        if (NavigateBack.CanExecute())
+                            NavigateBack.Execute();
+                    }
+                    catch (Exception ex) { Wizard.Error = ex; }
+                },
+                () => AvailableVersion != null);
+
+            ShowChangelog = new DelegateCommand(
+                () =>
+                {
+                    try { Process.Start(Changelog.ToString()); }
+                    catch (Exception ex) { Wizard.Error = ex; }
+                },
+                () => Changelog != null);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Checks for installed product version and published version and offers user to update
+        /// </summary>
+        public void CheckForUpdates()
+        {
+            try
+            {
+                Parallel.ForEach(new List<Action>()
+                    {
+                        () =>
+                        {
+                            // Get self-update.
+                            var res = Properties.Settings.Default.SelfUpdateDiscovery;
+                            Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", res.Uri.AbsoluteUri);
+                            var obj = Properties.Settings.Default.ResponseCache.GetSeq(res, Window.Abort.Token);
+
+                            var repoVersion = new Version((string)obj["version"]);
+                            Trace.TraceInformation("Online version: {0}", repoVersion.ToString());
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => {
+                                AvailableVersion = repoVersion;
+                                Changelog = eduJSON.Parser.GetValue(obj, "changelog_uri", out string changelogUri) ? new Uri(changelogUri) : null;
+                                Wizard.SelfUpdateProgressPage.DownloadUris = new List<Uri>(((List<object>)obj["uri"]).Select(uri => new Uri(res.Uri, (string)uri)));
+                                Wizard.SelfUpdateProgressPage.Hash = ((string)obj["hash-sha256"]).FromHexToBin();
+                                Wizard.SelfUpdateProgressPage.Arguments = eduJSON.Parser.GetValue(obj, "arguments", out string installerArguments) ? installerArguments : null;
+                            }));
+                        },
+
+                        () =>
+                        {
+                            // Evaluate installed products.
+                            Version productVersion = null;
+                            var productId = Properties.Settings.Default.SelfUpdateBundleId.ToUpperInvariant();
+                            Trace.TraceInformation("Evaluating installed products...");
+                            using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                            using (var uninstallKey = hklmKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
+                            {
+                                foreach (var productKeyName in uninstallKey.GetSubKeyNames())
+                                {
+                                    Window.Abort.Token.ThrowIfCancellationRequested();
+                                    using (var productKey = uninstallKey.OpenSubKey(productKeyName))
+                                    {
+                                        var bundleUpgradeCode = productKey.GetValue("BundleUpgradeCode");
+                                        if ((bundleUpgradeCode is string   bundleUpgradeCodeString && bundleUpgradeCodeString.ToUpperInvariant() == productId ||
+                                                bundleUpgradeCode is string[] bundleUpgradeCodeArray  && bundleUpgradeCodeArray.FirstOrDefault(code => code.ToUpperInvariant() == productId) != null) &&
+                                            productKey.GetValue("BundleVersion") is string bundleVersionString)
+                                        {
+                                            // Our product entry found.
+                                            productVersion = new Version(productKey.GetValue("DisplayVersion") is string displayVersionString ? displayVersionString : bundleVersionString);
+                                            Trace.TraceInformation("Installed version: {0}", productVersion.ToString());
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { InstalledVersion = productVersion; }));
+                        },
+                    },
+                    action =>
+                    {
+                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                        try { action(); }
+                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                    });
+            }
+            catch (AggregateException ex)
+            {
+                var nonCancelledException = ex.InnerExceptions.Where(innerException => !(innerException is OperationCanceledException));
+                if (nonCancelledException.Any())
+                    throw new AggregateException("", nonCancelledException.ToArray());
+                throw new OperationCanceledException();
+            }
+
+            //// Mock the values for testing.
+            //InstalledVersion = new Version(1, 0);
+            //Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MinValue;
+
+            try
+            {
+                if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == AvailableVersion &&
+                    (Properties.Settings.Default.SelfUpdateLastReminder == DateTime.MaxValue ||
+                    (DateTime.UtcNow - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
+                {
+                    // We already prompted user for this version.
+                    // Either user opted not to be reminded of this version update again,
+                    // or it has been less than three days since the last prompt.
+                    Trace.TraceInformation("Update deferred by user choice.");
+                    return;
+                }
+            }
+            catch { }
+
+            if (InstalledVersion == null)
+            {
+                // Nothing to update.
+                Trace.TraceInformation("Product not installed or version could not be determined.");
+                return; // Quit self-updating.
+            }
+
+            if (AvailableVersion <= InstalledVersion)
+            {
+                // Product already up-to-date.
+                Trace.TraceInformation("Update not required.");
+                return;
+            }
+
+            // We're in the background thread - raise the prompt event via dispatcher.
+            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            {
+                if (Wizard.NavigateTo.CanExecute(this))
+                {
+                    Properties.Settings.Default.SelfUpdateLastVersion = AvailableVersion.ToString();
+                    Properties.Settings.Default.SelfUpdateLastReminder = DateTime.UtcNow;
+                    Wizard.NavigateTo.Execute(this);
+                }
+            }));
+        }
+
+        #endregion
+    }
+}

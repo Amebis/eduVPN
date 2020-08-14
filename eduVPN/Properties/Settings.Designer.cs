@@ -12,7 +12,7 @@ namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -56,37 +56,18 @@ namespace eduVPN.Properties {
         
         /// <summary>
         /// Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:
-        /// - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client (default).
+        /// - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client.
         /// - &quot;&quot; - Use original OpenVPN installation.
         /// </summary>
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("Which OpenVPN interactive service instance client should use to manipulate openvp" +
-            "n.exe process:\r\n - \"$eduVPN\" - Use OpenVPN installation bundled with the client " +
-            "(default).\r\n - \"\" - Use original OpenVPN installation.")]
+            "n.exe process:\r\n - \"$eduVPN\" - Use OpenVPN installation bundled with the client." +
+            "\r\n - \"\" - Use original OpenVPN installation.")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("$eduVPN")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string OpenVPNInteractiveServiceInstance {
             get {
                 return ((string)(this["OpenVPNInteractiveServiceInstance"]));
-            }
-        }
-        
-        /// <summary>
-        /// The client profile management mode is described in detail here: https://github.com/Amebis/eduVPN/blob/master/doc/ConnectingProfileSelectMode.md
-        ///
-        /// Note: It is recommended to delete client user settings in %LOCALAPPDATA%\SURF
-        /// when the mode is changed.
-        /// </summary>
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("The client profile management mode is described in detail here: https://github.co" +
-            "m/Amebis/eduVPN/blob/master/doc/ConnectingProfileSelectMode.md\r\n\r\n Note: It is r" +
-            "ecommended to delete client user settings in %LOCALAPPDATA%\\SURF\r\n when the mode" +
-            " is changed.")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int ConnectingProfileSelectMode {
-            get {
-                return ((int)(this["ConnectingProfileSelectMode"]));
             }
         }
         
@@ -184,6 +165,106 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
+        /// User&apos;s home organization for secure internet use
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("User\'s home organization for secure internet use")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SecureInternetOrganization {
+            get {
+                return ((string)(this["SecureInternetOrganization"]));
+            }
+            set {
+                this["SecureInternetOrganization"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Last connecting server for secure internet use
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Last connecting server for secure internet use")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Uri SecureInternetConnectingServer {
+            get {
+                return ((global::System.Uri)(this["SecureInternetConnectingServer"]));
+            }
+            set {
+                this["SecureInternetConnectingServer"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// List of institute access servers user connects to
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("List of institute access servers user connects to")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<UriList/>")]
+        public global::eduVPN.Xml.UriList InstituteAccessServers {
+            get {
+                return ((global::eduVPN.Xml.UriList)(this["InstituteAccessServers"]));
+            }
+            set {
+                this["InstituteAccessServers"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// List of own servers user connects to
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("List of own servers user connects to")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<UriList/>")]
+        public global::eduVPN.Xml.UriList OwnServers {
+            get {
+                return ((global::eduVPN.Xml.UriList)(this["OwnServers"]));
+            }
+            set {
+                this["OwnServers"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Server list discovery URI
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Server list discovery URI")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::eduVPN.Xml.ResourceRef ServersDiscovery {
+            get {
+                return ((global::eduVPN.Xml.ResourceRef)(this["ServersDiscovery"]));
+            }
+        }
+        
+        /// <summary>
+        /// Organization list discovery URI
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Organization list discovery URI")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::eduVPN.Xml.ResourceRef OrganizationsDiscovery {
+            get {
+                return ((global::eduVPN.Xml.ResourceRef)(this["OrganizationsDiscovery"]));
+            }
+        }
+        
+        /// <summary>
+        /// Self-updating feature base URI
+        /// Set to empty to disable self-updating.
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Self-updating feature base URI\r\n Set to empty to disable self-updating.")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::eduVPN.Xml.ResourceRef SelfUpdateDiscovery {
+            get {
+                return ((global::eduVPN.Xml.ResourceRef)(this["SelfUpdateDiscovery"]));
+            }
+        }
+        
+        /// <summary>
         /// Cache of sequenced JSON responses
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -200,38 +281,6 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Secure Internet settings
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Secure Internet settings")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
-        public global::eduVPN.Xml.InstanceSourceSettings SecureInternetInstanceSourceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["SecureInternetInstanceSourceSettings"]));
-            }
-            set {
-                this["SecureInternetInstanceSourceSettings"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Secure Internet settings
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Secure Internet settings")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
-        public global::eduVPN.Xml.InstanceSourceSettings InstituteAccessInstanceSourceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["InstituteAccessInstanceSourceSettings"]));
-            }
-            set {
-                this["InstituteAccessInstanceSourceSettings"] = value;
-            }
-        }
-        
-        /// <summary>
         /// Access token cache
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -244,22 +293,6 @@ namespace eduVPN.Properties {
             }
             set {
                 this["AccessTokenCache"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Instance-specific user settings
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Instance-specific user settings")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSettingsDictionary/>")]
-        public global::eduVPN.Xml.InstanceSettingsDictionary InstanceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSettingsDictionary)(this["InstanceSettings"]));
-            }
-            set {
-                this["InstanceSettings"] = value;
             }
         }
     }

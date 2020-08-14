@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -17,6 +18,7 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable Minisign public key list
     /// </summary>
+    [Serializable]
     public class MinisignPublicKeyDictionary : Dictionary<ulong, byte[]>, IXmlSerializable
     {
         #region Constructors
@@ -31,10 +33,35 @@ namespace eduVPN.Xml
         /// <summary>
         /// Constructs a dictionary
         /// </summary>
-        /// <param name="collection">The collection whose elements are copied to the new list</param>
+        /// <param name="collection">The collection whose elements are copied to the new dictionary</param>
         public MinisignPublicKeyDictionary(IDictionary<ulong, byte[]> collection) :
             base(collection)
         {
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Adds a public key
+        /// </summary>
+        /// <param name="public_key">Base64 encoded public key to add</param>
+        public void Add(string public_key)
+        {
+            using (var s = new MemoryStream(Convert.FromBase64String(public_key), false))
+            using (var r = new BinaryReader(s))
+            {
+                if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
+                    throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
+                ulong keyId = r.ReadUInt64();
+                var key = new byte[32];
+                if (r.Read(key, 0, 32) != 32)
+                    throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
+                if (ContainsKey(keyId))
+                    throw new ArgumentException(string.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, keyId));
+                Add(keyId, key);
+            }
         }
 
         #endregion
@@ -59,32 +86,15 @@ namespace eduVPN.Xml
             if (reader.IsEmptyElement)
                 return;
 
-            ulong key_id;
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
-                if (reader.NodeType == XmlNodeType.Element && reader.Name == "MinisignPublicKey")
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "PublicKey")
                 {
                     while (reader.Read() &&
-                        !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "MinisignPublicKey"))
-                    {
+                        !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "PublicKey"))
                         if (reader.NodeType == XmlNodeType.Text)
-                        {
-                            using (var s = new MemoryStream(Convert.FromBase64String(reader.Value), false))
-                            using (var r = new BinaryReader(s))
-                            {
-                                if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
-                                    throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
-                                key_id = r.ReadUInt64();
-                                if (ContainsKey(key_id))
-                                    throw new ArgumentException(String.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, key_id));
-                                var key = new byte[32];
-                                if (r.Read(key, 0, 32) != 32)
-                                    throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
-                                Add(key_id, key);
-                            }
-                        }
-                    }
+                            Add(reader.Value);
                 }
             }
         }
@@ -97,7 +107,7 @@ namespace eduVPN.Xml
         {
             foreach (var el in this)
             {
-                writer.WriteStartElement("MinisignPublicKey");
+                writer.WriteStartElement("PublicKey");
                 using (var s = new MemoryStream(42))
                 {
                     using (var w = new BinaryWriter(s))
@@ -111,6 +121,20 @@ namespace eduVPN.Xml
                 }
                 writer.WriteEndElement();
             }
+        }
+
+        #endregion
+
+        #region ISerializable Support
+
+        /// <summary>
+        /// Deserialize object.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/> populated with data.</param>
+        /// <param name="context">The source of this deserialization.</param>
+        protected MinisignPublicKeyDictionary(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
         }
 
         #endregion

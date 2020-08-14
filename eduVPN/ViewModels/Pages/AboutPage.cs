@@ -18,12 +18,6 @@ namespace eduVPN.ViewModels.Pages
     {
         #region Properties
 
-        /// <inheritdoc/>
-        public override string Title
-        {
-            get { return Resources.Strings.AboutPageTitle; }
-        }
-
         /// <summary>
         /// Program version
         /// </summary>
@@ -34,8 +28,8 @@ namespace eduVPN.ViewModels.Pages
                 var ver = Assembly.GetExecutingAssembly()?.GetName()?.Version;
                 return
                     ver.Revision != 0 ? new Version(ver.Major, ver.Minor, ver.Build, ver.Revision) :
-                    ver.Build    != 0 ? new Version(ver.Major, ver.Minor, ver.Build) :
-                                        new Version(ver.Major, ver.Minor);
+                    ver.Build != 0 ? new Version(ver.Major, ver.Minor, ver.Build) :
+                        new Version(ver.Major, ver.Minor);
             }
         }
 

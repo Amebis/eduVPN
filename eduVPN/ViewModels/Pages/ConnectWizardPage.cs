@@ -8,7 +8,6 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
-using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -20,16 +19,6 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
-        /// The page title
-        /// </summary>
-        public virtual string Title { get; }
-
-        /// <summary>
-        /// The page description
-        /// </summary>
-        public virtual string Description { get => ""; }
-
-        /// <summary>
         /// The connecting wizard
         /// </summary>
         public ConnectWizard Wizard { get; }
@@ -37,24 +26,7 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Navigate back command
         /// </summary>
-        public virtual DelegateCommand NavigateBack
-        {
-            get
-            {
-                if (_navigate_back == null)
-                    _navigate_back = new DelegateCommand(
-                        // execute
-                        () => { },
-
-                        // canExecute
-                        () => false);
-
-                return _navigate_back;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _navigate_back;
+        public virtual DelegateCommand NavigateBack { get; } = new DelegateCommand(() => { }, () => false);
 
         #endregion
 

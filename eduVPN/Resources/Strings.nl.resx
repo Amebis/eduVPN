@@ -187,7 +187,7 @@
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>(Automatisch)</value>
   </data>
-  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
+  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
     <value>Netwerk interface met {0} ID niet gevonden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
@@ -239,7 +239,7 @@
     <value>Selecteer je profiel</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Geef URL in van je provider</value>
+    <value>Geef URI in van je provider</value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
     <value>Initialiseren...</value>
@@ -247,7 +247,7 @@
   <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
     <value>Hoe wil je de VPN gebruiken?</value>
   </data>
-  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
     <value>Update voorbereiden...</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

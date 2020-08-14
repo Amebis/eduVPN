@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Xml;
 
 namespace eduVPN.Xml
@@ -15,6 +16,7 @@ namespace eduVPN.Xml
     /// <remarks>
     /// Access token is specific to each instance and cannot be used by other instances.
     /// </remarks>
+    [Obsolete]
     public class LocalInstanceSourceSettings : InstanceSourceSettingsBase
     {
         #region Properties

@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.36...HEAD)
 
+- New workflow
+- New styling
+- Cleanups
+
 
 ## [1.0.36](https://github.com/Amebis/eduVPN/compare/1.0.35...1.0.36) (2020-12-18)
 

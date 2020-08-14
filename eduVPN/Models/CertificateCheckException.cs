@@ -28,7 +28,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs an exception
         /// </summary>
-        /// <param name="message">Exception message</param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
         public CertificateCheckException(string message) :
             this(message, null)
         {
@@ -37,7 +37,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs an exception
         /// </summary>
-        /// <param name="message">Exception message</param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">Inner exception reference</param>
         public CertificateCheckException(string message, Exception innerException) :
             base(message, innerException)

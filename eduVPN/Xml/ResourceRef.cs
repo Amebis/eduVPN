@@ -8,6 +8,8 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -17,15 +19,16 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable resource reference with public keys for verification
     /// </summary>
-    public class ResourceRef : IXmlSerializable
+    [Serializable]
+    public class ResourceRef : IXmlSerializable, ISerializable
     {
         #region Fields
 
         /// <summary>
-        /// Base URI to be used for reading relative URIs
+        /// Base URI to be used for reading relative URLs
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly Uri _assembly_uri = new Uri(Assembly.GetExecutingAssembly().Location);
+        private static readonly Uri AssemblyUri = new Uri(Assembly.GetExecutingAssembly().Location);
 
         #endregion
 
@@ -40,6 +43,17 @@ namespace eduVPN.Xml
         /// Minisign public keys
         /// </summary>
         public MinisignPublicKeyDictionary PublicKeys { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs an object
+        /// </summary>
+        public ResourceRef()
+        {
+        }
 
         #endregion
 
@@ -62,7 +76,7 @@ namespace eduVPN.Xml
         {
             string v;
 
-            Uri = !String.IsNullOrWhiteSpace(v = reader[nameof(Uri)]) ? new Uri(_assembly_uri, v) : null;
+            Uri = !string.IsNullOrWhiteSpace(v = reader[nameof(Uri)]) ? new Uri(AssemblyUri, v) : null;
 
             if (reader.IsEmptyElement)
                 return;
@@ -96,6 +110,29 @@ namespace eduVPN.Xml
                 PublicKeys.WriteXml(writer);
                 writer.WriteEndElement();
             }
+        }
+
+        #endregion
+
+        #region ISerializable Support
+
+        /// <summary>
+        /// Deserialize object.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/> populated with data.</param>
+        /// <param name="context">The source of this deserialization.</param>
+        protected ResourceRef(SerializationInfo info, StreamingContext context)
+        {
+            Uri = (Uri)info.GetValue(nameof(PublicKeys), typeof(Uri));
+            PublicKeys = (MinisignPublicKeyDictionary)info.GetValue(nameof(PublicKeys), typeof(MinisignPublicKeyDictionary));
+        }
+
+        /// <inheritdoc/>
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(Uri), Uri);
+            info.AddValue(nameof(PublicKeys), PublicKeys);
         }
 
         #endregion

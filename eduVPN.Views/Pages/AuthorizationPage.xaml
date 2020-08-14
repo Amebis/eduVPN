@@ -1,0 +1,49 @@
+﻿<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Page
+    x:Class="eduVPN.Views.Pages.AuthorizationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="298"
+    d:DesignHeight="373"
+    Style="{StaticResource ConnectWizardPageStyle}">
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="22,100,22,7"
+            TextAlignment="Center"
+            Style="{StaticResource SubHeadingStyle}"
+            Text="{x:Static res:Strings.AuthorizationPageTitle}"/>
+
+        <TextBlock
+            Grid.Row="1"
+            Margin="22,7"
+            TextAlignment="Center"
+            Style="{StaticResource FineprintNoteStyle}"
+            Text="{x:Static res:Strings.AuthorizationPageText}"/>
+
+        <Button
+            Grid.Row="2"
+            Margin="22,7"
+            HorizontalAlignment="Center"
+            IsDefault="True"
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCancelTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Cancel}">
+            <AccessText Text="{x:Static res:Strings.ButtonCancelTitle}"/>
+        </Button>
+    </Grid>
+</Page>

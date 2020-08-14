@@ -7,507 +7,479 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:pages="clr-namespace:eduVPN.Views.Pages"
-    xmlns:windows="clr-namespace:eduVPN.Views.Windows"
+    xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
+    xmlns:controls="clr-namespace:eduVPN.Views.Controls"
+    xmlns:models="clr-namespace:eduVPN.Models;assembly=eduVPN"
     xmlns:res="clr-namespace:eduVPN.Views.Resources">
-
 
     <!--
         Generic Styles
     -->
 
-    <SolidColorBrush x:Key="ControlBrush" Color="{StaticResource ControlColor}"/>
-    <SolidColorBrush x:Key="ControlTextBrush" Color="{StaticResource ControlTextColor}"/>
-    <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource ControlBorderColor}"/>
-    <SolidColorBrush x:Key="ControlBorderHoverBrush" Color="{StaticResource ControlBorderHoverColor}"/>
-    <SolidColorBrush x:Key="ControlBorderFocusBrush" Color="{StaticResource ControlBorderFocusColor}"/>
-    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
-    <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource ErrorTextColor}"/>
-    <SolidColorBrush x:Key="WindowBrush" Color="{StaticResource WindowColor}"/>
-    <SolidColorBrush x:Key="WindowTextBrush" Color="{StaticResource WindowTextColor}"/>
-    <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource WindowBorderColor}"/>
-    <SolidColorBrush x:Key="WindowHeaderBrush" Color="{StaticResource WindowHeaderColor}"/>
-    <SolidColorBrush x:Key="WindowHeaderTextBrush" Color="{StaticResource WindowHeaderTextColor}"/>
+    <SolidColorBrush x:Key="WindowBrush" Color="{DynamicResource WindowColor}"/>
+    <SolidColorBrush x:Key="WindowTextBrush" Color="{DynamicResource BodytextAColor}"/>
+    <SolidColorBrush x:Key="PlaceholderTextBrush" Color="{DynamicResource PlaceholderTextColor}"/>
+    <SolidColorBrush x:Key="HeadingBrush" Color="{DynamicResource BodytextCColor}"/>
+    <SolidColorBrush x:Key="ButtonBrush" Color="{DynamicResource BodytextBColor}"/>
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="{DynamicResource BodytextAColor}"/>
+    <SolidColorBrush x:Key="AuxButtonTextBrush" Color="{DynamicResource AuxButtonTextColor}"/>
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{DynamicResource ButtonBorderColor}"/>
+    <SolidColorBrush x:Key="ButtonSelectedBrush" Color="{DynamicResource ClickTapColor}"/>
+    <SolidColorBrush x:Key="ButtonSelectedTextBrush" Color="{DynamicResource BodytextBColor}"/>
+    <SolidColorBrush x:Key="LinkButtonTextBrush" Color="{DynamicResource ClickTapColor}"/>
+    <SolidColorBrush x:Key="CarretBrush" Color="{DynamicResource BodytextCColor}"/>
+    <SolidColorBrush x:Key="ImportantTextBrush" Color="{DynamicResource BodytextCColor}"/>
 
+    <DrawingBrush
+        x:Key="ControlFocusVisualBrush"
+        Stretch="None"
+        TileMode="Tile"
+        Viewport="0,0,4,4"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource ButtonTextBrush}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0,0,2,2"/>
+                            <RectangleGeometry Rect="2,2,2,2"/>
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{StaticResource ButtonBrush}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="2,0,2,2"/>
+                            <RectangleGeometry Rect="0,2,2,2"/>
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
 
-    <Style x:Key="BaseStyle" TargetType="{x:Type Control}">
-        <Setter Property="Validation.ErrorTemplate">
+    <FontFamily x:Key="OpenSansFont">pack://application:,,,/eduVPN.Views;component/Resources/Fonts/#Open Sans</FontFamily>
+
+    <Style x:Key="SeparatorStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,0"/>
+    </Style>
+
+    <Style x:Key="FocusVisualStyle">
+        <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <!-- Display an exclamation mark in a circle above the top right corner of control. -->
-                    <Grid>
-                        <AdornedElementPlaceholder x:Name="ErrorAdorner"/>
-                        <Grid
-                            Margin="-5"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top">
-                            <Ellipse
-                                Width="14"
-                                Height="14"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Fill="{StaticResource ErrorBrush}"
-                                Stroke="{StaticResource ErrorTextBrush}"
-                                StrokeThickness="0.5"
-                                ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
-
-                            <TextBlock
-                                Foreground="{StaticResource ErrorTextBrush}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                TextAlignment="Center"
-                                FontSize="11"
-                                Text="!"
-                                ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
-                        </Grid>
-                    </Grid>
+                    <Rectangle
+                        Stroke="{StaticResource ControlFocusVisualBrush}"
+                        StrokeThickness="1"
+                        RadiusX="3" RadiusY="3"
+                        Opacity="0.75">
+                    </Rectangle>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <!-- When control has errors, override the control tooltip with the error description. -->
-            <Trigger Property="Validation.HasError" Value="True">
-                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                <Setter Property="AutomationProperties.HelpText" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-            </Trigger>
+    </Style>
 
-            <!-- Display disabled controls semi transparent. -->
+    <Style x:Key="ControlStyle" TargetType="{x:Type Control}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualStyle}"/>
+        <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.25"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
-
-    <!--
-        Grids
-    -->
-
-    <Style x:Key="PageContentGridStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Margin" Value="-5"/>
+    <Style x:Key="ActionControlStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="Cursor" Value="Hand"/>
     </Style>
 
-
-    <!--
-        Text Blocks
-    -->
-
-    <Style TargetType="{x:Type TextBlock}">
-        <Setter Property="TextWrapping" Value="Wrap"/>
-    </Style>
-
-    <SolidColorBrush x:Key="HeadingTextBrush" Color="{StaticResource HeadingTextColor}"/>
-
-    <Style x:Key="HeadingTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource HeadingTextBrush}"/>
-        <Setter Property="FontSize" Value="15"/>
-    </Style>
-
-    <Style x:Key="InfoTitleTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-    </Style>
-
-    <Style x:Key="InfoLabelTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="FontSize" Value="11"/>
-    </Style>
-
-    <Style x:Key="InfoDataBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource InfoLabelTextBlockStyle}">
+    <Style x:Key="HeadingControlStyle" TargetType="{x:Type Control}">
         <Setter Property="FontWeight" Value="{x:Static FontWeights.Bold}"/>
-    </Style>
-
-    <Style x:Key="MessageBodyStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="FontSize" Value="11"/>
-    </Style>
-
-    <Style x:Key="NoteTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="FontStyle" Value="Italic"/>
-    </Style>
-
-    <Style x:Key="VersionTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-    </Style>
-
-    <Style x:Key="CopyrightTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontStretch" Value="{x:Static FontStretches.SemiCondensed}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeadingBrush}"/>
     </Style>
 
 
     <!--
-        Access Texts and Labels
+        Scroll bars
     -->
 
-    <Style TargetType="{x:Type AccessText}">
-        <Setter Property="TextWrapping" Value="Wrap"/>
-    </Style>
-
-    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
-        <Style.Resources>
-            <!-- WPF adds 5px margin to all access texts within labels. Set margin to -5px to compensate. -->
-            <Style TargetType="{x:Type AccessText}">
-                <Setter Property="Margin" Value="-5"/>
-            </Style>
-        </Style.Resources>
-    </Style>
-
-    <Style x:Key="SectionLabelStyle" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{StaticResource HeadingTextBrush}"/>
-    </Style>
-
-
-    <!--
-        Separators
-    -->
-
-    <SolidColorBrush x:Key="SeparatorBrush" Color="{StaticResource SeparatorColor}"/>
-
-    <Style x:Key="VisualSeparatorStyle" TargetType="{x:Type Rectangle}">
-        <Setter Property="Height" Value="1"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Fill" Value="{StaticResource SeparatorBrush}"/>
-    </Style>
-
-
-    <!--
-        Menus
-    -->
-
-    <Style x:Key="MenuStyle" TargetType="{x:Type ContextMenu}">
-        <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
-    </Style>
-
-
-    <!--
-        Buttons
-    -->
-
-    <SolidColorBrush x:Key="ButtonBrush" Color="{StaticResource ButtonColor}"/>
-    <SolidColorBrush x:Key="ButtonHoverBrush" Color="{StaticResource ButtonHoverColor}"/>
-    <SolidColorBrush x:Key="ButtonTextBrush" Color="{StaticResource ButtonTextColor}"/>
-    <SolidColorBrush x:Key="ButtonTextHoverBrush" Color="{StaticResource ButtonTextHoverColor}"/>
-    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource ButtonBorderColor}"/>
-    <SolidColorBrush x:Key="ButtonBorderHoverBrush" Color="{StaticResource ButtonBorderHoverColor}"/>
-
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Width" Value="100"/>
-        <Setter Property="Height" Value="32"/>
-        <Setter Property="FontWeight" Value="{x:Static FontWeights.SemiBold}"/>
+    <Style x:Key="ScrollBarLineButtonStyle" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource ControlStyle}">
         <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <!-- Display button as text/content on solid rounded rectangle. -->
-                    <AdornerDecorator>
-                        <Border
-                            x:Name="Border"
-                            Background="{StaticResource ButtonBrush}"
-                            BorderBrush="{StaticResource ButtonBorderBrush}"
-                            BorderThickness="1"
-                            CornerRadius="6">
-                            <ContentPresenter
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </AdornerDecorator>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Change button background and border on mouse over. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="Background"
-                                Value="{StaticResource ButtonHoverBrush}"/>
-                            <Setter
-                                TargetName="Border"
-                                Property="BorderBrush"
-                                Value="{StaticResource ButtonBorderHoverBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="2">
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Fill="{TemplateBinding Foreground}"
+                            Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
 
+    <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="MinHeight" Value="4"/>
+        <Setter Property="MinWidth" Value="4"/>
+        <Setter Property="Background" Value="{StaticResource ButtonTextBrush}"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="3">
+            <Grid Margin="{TemplateBinding Padding}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="9"/>
+                    <RowDefinition Height="0.00001*"/>
+                    <RowDefinition Height="9"/>
+                </Grid.RowDefinitions>
+                <RepeatButton
+                    Grid.Row="0"
+                    Foreground="{TemplateBinding Foreground}"
+                    Background="{TemplateBinding Background}"
+                    Style="{StaticResource ScrollBarLineButtonStyle}"
+                    Height="9"
+                    Command="ScrollBar.LineUpCommand"
+                    Content="M 0 4 L 8 4 L 4 0 Z"/>
+                <Track
+                    x:Name="PART_Track"
+                    Grid.Row="1"
+                    IsDirectionReversed="True">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton
+                            Style="{StaticResource ScrollBarPageButtonStyle}"
+                            Command="ScrollBar.PageUpCommand"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb
+                            Background="{TemplateBinding Foreground}"
+                            Style="{StaticResource ScrollBarThumbStyle}"/>
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton
+                            Style="{StaticResource ScrollBarPageButtonStyle}"
+                            Command="ScrollBar.PageDownCommand"/>
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton
+                    Grid.Row="2"
+                    Foreground="{TemplateBinding Foreground}"
+                    Background="{TemplateBinding Background}"
+                    Style="{StaticResource ScrollBarLineButtonStyle}"
+                    Height="9"
+                    Command="ScrollBar.LineDownCommand"
+                    Content="M 0 0 L 4 4 L 8 0 Z"/>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="3">
+            <Grid Margin="{TemplateBinding Padding}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="9"/>
+                    <ColumnDefinition Width="0.00001*"/>
+                    <ColumnDefinition Width="9"/>
+                </Grid.ColumnDefinitions>
+                <RepeatButton
+                    Grid.Column="0"
+                    Foreground="{TemplateBinding Foreground}"
+                    Background="{TemplateBinding Background}"
+                    Style="{StaticResource ScrollBarLineButtonStyle}"
+                    Width="9"
+                    Command="ScrollBar.LineLeftCommand"
+                    Content="M 4 0 L 4 8 L 0 4 Z"/>
+                <Track
+                    x:Name="PART_Track"
+                    Grid.Column="1">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton
+                            Style="{StaticResource ScrollBarPageButtonStyle}"
+                            Command="ScrollBar.PageLeftCommand"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb
+                            Background="{TemplateBinding Foreground}"
+                            Style="{StaticResource ScrollBarThumbStyle}"/>
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton
+                            Style="{StaticResource ScrollBarPageButtonStyle}"
+                            Command="ScrollBar.PageRightCommand"/>
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton
+                    Grid.Column="2"
+                    Foreground="{TemplateBinding Foreground}"
+                    Background="{TemplateBinding Background}"
+                    Style="{StaticResource ScrollBarLineButtonStyle}"
+                    Width="9"
+                    Command="ScrollBar.LineRightCommand"
+                    Content="M 0 0 L 4 4 L 0 8 Z"/>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="Foreground" Value="{StaticResource AuxButtonTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
         <Style.Triggers>
-            <!-- Change button text color on mouse over or pressed. -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource ButtonTextHoverBrush}"/>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="15"/>
+                <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}"/>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="15"/>
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="Template" Value="{StaticResource VerticalScrollBar}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <SolidColorBrush x:Key="LinkButtonTextBrush" Color="{StaticResource LinkButtonTextColor}"/>
-    <SolidColorBrush x:Key="LinkButtonTextHoverBrush" Color="{StaticResource LinkButtonTextHoverColor}"/>
 
-    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource LinkButtonTextBrush}"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <!--
+        Texts
+    -->
+
+    <Style x:Key="HeadingStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="{x:Static FontWeights.Bold}"/>
+        <Setter Property="FontStretch" Value="{x:Static FontStretches.SemiCondensed}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeadingBrush}"/>
+    </Style>
+
+    <Style x:Key="MainHeadingStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeadingStyle}">
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+
+    <Style x:Key="SubHeadingStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeadingStyle}">
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+
+    <Style x:Key="MicroHeadingStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeadingStyle}">
+        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="controls:TextBlock.CharacterCasing" Value="Upper"/>
+    </Style>
+
+    <Style x:Key="PlaceholderStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource PlaceholderTextBrush}"/>
+    </Style>
+
+    <Style x:Key="TitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+
+    <Style x:Key="NoteStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="FineprintNoteStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource NoteStyle}">
+        <Setter Property="FontSize" Value="10"/>
+    </Style>
+
+    <Style x:Key="LabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="Padding" Value="3,5"/>
+    </Style>
+
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
+    </Style>
+
+    <Style x:Key="HeadingLabelStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
+        <Setter Property="FontWeight" Value="{x:Static FontWeights.Bold}"/>
+        <Setter Property="FontStretch" Value="{x:Static FontStretches.SemiCondensed}"/>
+        <Setter Property="Foreground" Value="{StaticResource HeadingBrush}"/>
+        <Setter Property="controls:Label.CharacterCasing" Value="Upper"/>
+    </Style>
+
+    <Style x:Key="ImportantStyle" TargetType="{x:Type TextElement}">
+        <Setter Property="Foreground" Value="{StaticResource ImportantTextBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+
+    <!--
+        Text boxes
+    -->
+
+    <Style x:Key="TextBoxControlStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Padding" Value="5"/>
+    </Style>
+
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxControlStyle}">
+        <Setter Property="SelectionBrush" Value="{StaticResource ButtonSelectedBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource CarretBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <!-- Display link buttons as flat text/content. -->
-                    <AdornerDecorator>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                        <Grid>
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Focusable="False"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <TextBlock
+                                x:Name="UserMessage"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Text="{TemplateBinding AutomationProperties.Name}"
+                                IsHitTestVisible="False"
+                                Visibility="Hidden"
+                                Style="{StaticResource PlaceholderStyle}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                                <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter
+                                TargetName="UserMessage"
+                                Property="Visibility"
+                                Value="Visible"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}"/>
+
+
+    <!--
+        Lists
+    -->
+
+    <Style x:Key="ListBoxItemBaseStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="Padding" Value="3,5"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="0,1,0,0">
                         <ContentPresenter
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </AdornerDecorator>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
         <Style.Triggers>
-            <!-- Change button text color and mouse cursor on mouse over or pressed. -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource LinkButtonTextHoverBrush}"/>
-                <Setter Property="Cursor" Value="Hand"/>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource ButtonSelectedTextBrush}"/>
+                <Setter Property="Background" Value="{StaticResource ButtonSelectedBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}"/>
 
-    <!--
-        Text Boxes
-    -->
-
-    <SolidColorBrush x:Key="TextBoxSelectionBrush" Color="{StaticResource TextBoxSelectionColor}"/>
-    <SolidColorBrush x:Key="TextBoxCursorBrush" Color="{StaticResource TextBoxCursorColor}"/>
-
-    <Style x:Key="TextBoxBaseStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="Padding" Value="1"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Control}">
-                    <!-- Display text/password boxes underlined. -->
-                    <Border
-                        x:Name="Border"
-                        Background="{StaticResource ControlBrush}"
-                        BorderBrush="{StaticResource ControlBorderBrush}"
-                        BorderThickness="0,0,0,2"
-                        SnapsToDevicePixels="True">
-                        <ScrollViewer
-                            x:Name="PART_ContentHost"
-                            Focusable="False"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Change underline color on mouse over or focused. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="BorderBrush"
-                                Value="{StaticResource ControlBorderHoverBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="BorderBrush"
-                                Value="{StaticResource ControlBorderFocusBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
-        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxSelectionBrush}" />
-        <Setter Property="CaretBrush" Value="{StaticResource TextBoxCursorBrush}"/>
-    </Style>
-
-    <Style x:Key="CodeTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="FontFamily" Value="Lucida Console"/>
-        <Setter Property="FontSize" Value="15"/>
-    </Style>
-
-    <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
-        <Setter Property="SelectionBrush" Value="{StaticResource TextBoxSelectionBrush}" />
-        <Setter Property="CaretBrush" Value="{StaticResource TextBoxCursorBrush}"/>
-    </Style>
-
-
-    <!--
-        List Boxes
-    -->
-
-    <Style x:Key="ListBoxItemBorderStyle" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource SeparatorBrush}"/>
-        <Setter Property="BorderThickness" Value="0,1,0,0"/>
-        <Style.Triggers>
-            <!-- Hide non-first item's separator. -->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                <Setter Property="BorderThickness" Value="0"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
-    <SolidColorBrush x:Key="ListBoxItemHoverBrush" Color="{StaticResource ListBoxItemHoverColor}"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedBrush" Color="{StaticResource ListBoxItemSelectedColor}"/>
-
-    <Style x:Key="PassiveListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <!-- Display list item as text/content. -->
-                    <AdornerDecorator>
-                        <Border
-                            x:Name="Border"
-                            Background="{StaticResource ControlBrush}"
-                            Style="{StaticResource ListBoxItemBorderStyle}">
-                            <ContentPresenter
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </AdornerDecorator>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <!-- Display list item as text/content. -->
-                    <AdornerDecorator>
-                        <Border
-                            x:Name="Border"
-                            Background="{StaticResource ControlBrush}"
-                            Style="{StaticResource ListBoxItemBorderStyle}">
-                            <ContentPresenter
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </AdornerDecorator>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Change item background on mouse over, selected or pressed. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="Background"
-                                Value="{StaticResource ListBoxItemHoverBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="Background"
-                                Value="{StaticResource ListBoxItemSelectedBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ListBoxClickableItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemStyle}">
-        <Setter Property="Cursor" Value="Hand"/>
-    </Style>
-
-    <Style x:Key="BaseListBoxStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+    <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource ControlStyle}">
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemStyle}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
-        <Style.Triggers>
-            <!-- When the list is empty, replace it with "No items." text. -->
-            <DataTrigger
-                Binding="{Binding Path=Items.Count, RelativeSource={x:Static RelativeSource.Self}}"
-                Value="0">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource NoteTextBlockStyle}"
-                                Text="{x:Static res:Strings.ListBoxNoItems}"/>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-
-            <!-- When the list's item source is null, replace it with "Please wait..." text. -->
-            <DataTrigger
-                Binding="{Binding Path=ItemsSource, RelativeSource={x:Static RelativeSource.Self}}"
-                Value="{x:Null}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource NoteTextBlockStyle}"
-                                Text="{x:Static res:Strings.ListBoxNull}"/>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseListBoxStyle}">
-    </Style>
+    <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource ListBoxStyle}"/>
 
-    <Style x:Key="ProfileListBoxStyle" TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseListBoxStyle}">
-        <Style.Triggers>
-            <!-- When the list is empty, replace it with "No items." text. -->
-            <DataTrigger
-                Binding="{Binding Path=Items.Count, RelativeSource={x:Static RelativeSource.Self}}"
-                Value="0">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBlock
-                                HorizontalAlignment="Center"
+    <Style x:Key="ClickableListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="0,1,0,0">
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"/>
+                            <ContentControl
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Style="{StaticResource NoteTextBlockStyle}"
-                                Text="{x:Static res:Strings.ListBoxNoProfiles}"/>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-
-            <!-- When the list's item source is null, replace it with "Please wait..." text. -->
-            <DataTrigger
-                Binding="{Binding Path=ItemsSource, RelativeSource={x:Static RelativeSource.Self}}"
-                Value="{x:Null}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource NoteTextBlockStyle}"
-                                Text="{x:Static res:Strings.ListBoxNull}"/>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
+                                Foreground="{TemplateBinding Foreground}"
+                                ContentTemplate="{StaticResource ChevronRightIcon}"
+                                IsTabStop="False"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 
@@ -515,96 +487,66 @@
         Combo Boxes
     -->
 
-    <SolidColorBrush x:Key="ComboBoxToggleButtonBrush" Color="{StaticResource ComboBoxToggleButtonColor}"/>
-    <SolidColorBrush x:Key="ComboBoxToggleButtonHoverBrush" Color="{StaticResource ComboBoxToggleButtonHoverColor}"/>
-
     <Style x:Key="ComboBoxPopupStyle" TargetType="{x:Type Popup}">
         <Setter Property="Placement" Value="Bottom"/>
         <Setter Property="AllowsTransparency" Value="true"/>
         <Setter Property="PopupAnimation" Value="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"/>
     </Style>
 
-    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
-        <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
+    <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource TextBoxControlStyle}">
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemStyle}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Grid
-                        x:Name="OuterGrid"
-                        SnapsToDevicePixels="True">
-                        <!-- Display combo-box as a toggle button with a drop-down menu. -->
+                    <Grid x:Name="OuterGrid">
                         <ToggleButton
                             x:Name="Button"
                             IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                            Foreground="{StaticResource ControlTextBrush}"
-                            BorderBrush="{StaticResource ControlBorderBrush}"
+                            Foreground="{TemplateBinding Foreground}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             IsTabStop="False"
-                            Focusable="False"
-                            SnapsToDevicePixels="True">
+                            Focusable="False">
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                    <!-- Display button as text/content on hollow rounded rectangle with a triangle on the right. -->
-                                    <AdornerDecorator>
-                                        <Border
-                                            x:Name="Border"
-                                            Background="{StaticResource ControlBrush}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="1"
-                                            CornerRadius="6">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
+                                    <Border
+                                        x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="5">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                                <ContentPresenter
-                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            <ContentPresenter
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                                                <Canvas
-                                                    Grid.Column="1"
-                                                    Width="20" Height="20">
-                                                    <Canvas.RenderTransform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform ScaleX="0.11759" ScaleY="0.11759"/>
-                                                        </TransformGroup>
-                                                    </Canvas.RenderTransform>
-                                                    <Polygon
-                                                        x:Name="Shape"
-                                                        Fill="{StaticResource ComboBoxToggleButtonBrush}"
-                                                        Points="131.41602,44.87598 85.03955,125.20215 38.66309,44.87598"/>
-                                                </Canvas>
-                                            </Grid>
-                                        </Border>
-                                    </AdornerDecorator>
-
+                                            <ContentControl
+                                                x:Name="Chevron"
+                                                Grid.Column="1"
+                                                Margin="5"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                ContentTemplate="{StaticResource ChevronDownIcon}"
+                                                IsTabStop="False"/>
+                                        </Grid>
+                                    </Border>
                                     <ControlTemplate.Triggers>
-                                        <!-- Change border corner radius and button shape on checked. -->
                                         <Trigger Property="IsChecked" Value="True">
-                                            <Setter
-                                                TargetName="Border"
-                                                Property="CornerRadius"
-                                                Value="6,6,0,0"/>
-                                            <Setter
-                                                TargetName="Shape"
-                                                Property="Points"
-                                                Value="38.66309,125.20215 85.03955,44.87598 131.41602,125.20215"/>
-                                        </Trigger>
-
-                                        <!-- Change button fill on mouse over. -->
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter
-                                                TargetName="Shape"
-                                                Property="Fill"
-                                                Value="{StaticResource ComboBoxToggleButtonHoverBrush}"/>
+                                            <Setter TargetName="Border" Property="CornerRadius" Value="5,5,0,0"/>
+                                            <Setter TargetName="Chevron" Property="ContentTemplate" Value="{StaticResource ChevronUpIcon}"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </ToggleButton.Template>
-
                             <ContentPresenter
                                 Margin="{TemplateBinding Padding}"
                                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -621,51 +563,31 @@
                                 MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                 MinWidth="{Binding ActualWidth, ElementName=OuterGrid}"
                                 HorizontalAlignment="Stretch"
-                                Background="{StaticResource ControlBrush}"
-                                BorderBrush="{StaticResource ControlBorderFocusBrush}"
-                                BorderThickness="1">
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
                                 <ScrollViewer>
                                     <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
                                 </ScrollViewer>
                             </Border>
                         </Popup>
                     </Grid>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Change button border on mouse over or keyboard focus. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Button"
-                                Property="BorderBrush"
-                                Value="{StaticResource ControlBorderHoverBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter
-                                TargetName="Button"
-                                Property="BorderBrush"
-                                Value="{StaticResource ControlBorderFocusBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <!-- Replace combo-box with text box when editable. -->
             <Trigger Property="IsEditable" Value="true">
                 <Setter Property="IsTabStop" Value="false"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ComboBox}">
-                            <Grid
-                                x:Name="OuterGrid"
-                                SnapsToDevicePixels="True">
-                                <!-- Display combo-box as an underlined text box and a drop-down menu. -->
+                            <Grid x:Name="OuterGrid">
                                 <Border
                                     x:Name="Border"
-                                    Background="{StaticResource ControlBrush}"
-                                    BorderBrush="{StaticResource ControlBorderBrush}"
-                                    BorderThickness="0,0,0,2"
-                                    SnapsToDevicePixels="True">
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="5">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
@@ -680,7 +602,6 @@
                                             IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}">
                                             <TextBox.Template>
                                                 <ControlTemplate TargetType="{x:Type TextBox}">
-                                                    <!-- Display combo-box text boxes without any decoration. -->
                                                     <ScrollViewer
                                                         x:Name="PART_ContentHost"
                                                         Focusable="False"
@@ -698,40 +619,15 @@
                                             Focusable="False">
                                             <ToggleButton.Template>
                                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                    <!-- Display combo box toogle buttons as flat text/content. -->
-                                                    <AdornerDecorator>
-                                                        <Border
-                                                            Background="{StaticResource ControlBrush}">
-                                                            <Canvas
-                                                                Width="20" Height="20">
-                                                                <Canvas.RenderTransform>
-                                                                    <TransformGroup>
-                                                                        <ScaleTransform ScaleX="0.11759" ScaleY="0.11759"/>
-                                                                    </TransformGroup>
-                                                                </Canvas.RenderTransform>
-                                                                <Polygon
-                                                                    x:Name="Shape"
-                                                                    Fill="{StaticResource ComboBoxToggleButtonBrush}"
-                                                                    Points="131.41602,44.87598 85.03955,125.20215 38.66309,44.87598"/>
-                                                            </Canvas>
-                                                        </Border>
-                                                    </AdornerDecorator>
-
+                                                    <ContentControl
+                                                        x:Name="Chevron"
+                                                        Margin="5"
+                                                        Foreground="{TemplateBinding Foreground}"
+                                                        ContentTemplate="{StaticResource ChevronDownIcon}"
+                                                        IsTabStop="False"/>
                                                     <ControlTemplate.Triggers>
-                                                        <!-- Change button shape on checked. -->
                                                         <Trigger Property="IsChecked" Value="True">
-                                                            <Setter
-                                                                TargetName="Shape"
-                                                                Property="Points"
-                                                                Value="38.66309,125.20215 85.03955,44.87598 131.41602,125.20215"/>
-                                                        </Trigger>
-
-                                                        <!-- Change button color on mouse over. -->
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter
-                                                                TargetName="Shape"
-                                                                Property="Fill"
-                                                                Value="{StaticResource ComboBoxToggleButtonHoverBrush}"/>
+                                                            <Setter TargetName="Chevron" Property="ContentTemplate" Value="{StaticResource ChevronUpIcon}"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
@@ -748,31 +644,15 @@
                                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                         MinWidth="{Binding ActualWidth, ElementName=OuterGrid}"
                                         HorizontalAlignment="Stretch"
-                                        Background="{StaticResource ControlBrush}"
-                                        BorderBrush="{StaticResource ControlBorderFocusBrush}"
-                                        BorderThickness="1">
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
                                         <ScrollViewer>
                                             <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
                                         </ScrollViewer>
                                     </Border>
                                 </Popup>
                             </Grid>
-
-                            <ControlTemplate.Triggers>
-                                <!-- Change underline color on mouse over or focused. -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter
-                                        TargetName="Border"
-                                        Property="BorderBrush"
-                                        Value="{StaticResource ControlBorderHoverBrush}"/>
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                    <Setter
-                                        TargetName="Border"
-                                        Property="BorderBrush"
-                                        Value="{StaticResource ControlBorderFocusBrush}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -782,136 +662,141 @@
 
 
     <!--
-        Check Boxes
+        Buttons
     -->
 
-    <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
+    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ActionControlStyle}">
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <Grid Width="27">
-                        <!-- Checkbox slot is a rounded rectangle. -->
-                        <Border
-                            x:Name="Slot"
-                            Margin="3"
-                            CornerRadius="6">
-                            <Border.Background>
-                                <SolidColorBrush Color="{StaticResource CheckboxSlotUncheckedColor}"/>
-                            </Border.Background>
-                        </Border>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3">
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-                        <!-- Checkbox knob is a bordered circle. -->
-                        <Ellipse
-                            x:Name="Knob"
-                            HorizontalAlignment="Left"
-                            Width="15"
-                            Height="15"
-                            StrokeThickness="1">
-                            <Ellipse.Stroke>
-                                <SolidColorBrush Color="{StaticResource CheckboxKnobUncheckedOutlineColor}"/>
-                            </Ellipse.Stroke>
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="{StaticResource CheckboxKnobUncheckedFillColor}"/>
-                            </Ellipse.Fill>
-                            <Ellipse.RenderTransform>
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Height" Value="18"/>
+    </Style>
+
+    <Style x:Key="NavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+        <Setter Property="Width" Value="26"/>
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Margin" Value="7,0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AuxButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ActionControlStyle}">
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Foreground" Value="{StaticResource AuxButtonTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="3">
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ActionControlStyle}">
+        <Setter Property="Foreground" Value="{StaticResource LinkButtonTextBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type TextBlock}">
+                    <TextBlock
+                        TextDecorations="Underline"
+                        Text="{Binding}"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <!-- No button frame or adornments -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ContentPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ActionControlStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid Margin="{TemplateBinding Padding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentPresenter
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                        <Canvas
+                            Grid.Column="1"
+                            Width="53" Height="23"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Canvas.RenderTransform>
                                 <TransformGroup>
-                                    <TranslateTransform X="0" Y="0"/>
+                                    <!-- Scale 70×30 to 53×23 -->
+                                    <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
                                 </TransformGroup>
-                            </Ellipse.RenderTransform>
-                        </Ellipse>
+                            </Canvas.RenderTransform>
+                            <Rectangle
+                                x:Name="Slot"
+                                Fill="#B2B2B2"
+                                Width="70" Height="30"
+                                RadiusX="15" RadiusY="15"/>
+                            <Rectangle
+                                x:Name="Knob"
+                                Fill="#FFFFFF"
+                                Margin="4,4,0,0"
+                                Width="34" Height="22"
+                                RadiusX="11" RadiusY="11"/>
+                        </Canvas>
                     </Grid>
-
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <!-- When checkbox is checked... -->
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <BeginStoryboard.Storyboard>
-                                        <Storyboard>
-                                            <!-- ...Move the knob to the right. -->
-                                            <DoubleAnimation
-                                                Storyboard.TargetName="Knob"
-                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"
-                                                From="0"
-                                                To="12"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-
-                                            <!-- ...Change slot's color. -->
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Slot"
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                From="{StaticResource CheckboxSlotUncheckedColor}"
-                                                To="{StaticResource CheckboxSlotCheckedColor}"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-
-                                            <!-- ...Change the knob's outline color. -->
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Knob"
-                                                Storyboard.TargetProperty="(Ellipse.Stroke).(SolidColorBrush.Color)"
-                                                From="{StaticResource CheckboxKnobUncheckedOutlineColor}"
-                                                To="{StaticResource CheckboxKnobCheckedOutlineColor}"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-
-                                            <!-- ...Change the knob's fill color. -->
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Knob"
-                                                Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
-                                                From="{StaticResource CheckboxKnobUncheckedFillColor}"
-                                                To="{StaticResource CheckboxKnobCheckedFillColor}"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-                                        </Storyboard>
-                                    </BeginStoryboard.Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-
-                            <!-- When checkbox is unchecked... -->
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <BeginStoryboard.Storyboard>
-                                        <Storyboard>
-                                            <!-- ...Move the knob to the left. -->
-                                            <DoubleAnimation
-                                                Storyboard.TargetName="Knob"
-                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"
-                                                From="12"
-                                                To="0"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-
-                                            <!-- ...Change slot's color. -->
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Slot"
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                From="{StaticResource CheckboxSlotCheckedColor}"
-                                                To="{StaticResource CheckboxSlotUncheckedColor}"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-
-                                            <!-- ...Change the knob's outline color. -->
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Knob"
-                                                Storyboard.TargetProperty="(Ellipse.Stroke).(SolidColorBrush.Color)"
-                                                From="{StaticResource CheckboxKnobCheckedOutlineColor}"
-                                                To="{StaticResource CheckboxKnobUncheckedOutlineColor}"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-
-                                            <!-- ...Change the knob's fill color. -->
-                                            <ColorAnimation
-                                                Storyboard.TargetName="Knob"
-                                                Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
-                                                From="{StaticResource CheckboxKnobCheckedFillColor}"
-                                                To="{StaticResource CheckboxKnobUncheckedFillColor}"
-                                                Duration="0:0:0.1"
-                                                AutoReverse="False"/>
-                                        </Storyboard>
-                                    </BeginStoryboard.Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <Setter TargetName="Slot" Property="Fill" Value="#16A566"/>
+                            <Setter TargetName="Knob" Property="Margin" Value="32,4,0,0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -921,20 +806,117 @@
 
 
     <!--
+        Check-boxes
+    -->
+
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            Width="15" Height="15">
+                            <Canvas
+                                x:Name="Checkmark"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Width="10" Height="10"
+                                Visibility="Hidden">
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="45" CenterX="5" CenterY="5"/>
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
+                                <Polyline
+                                    Stroke="{TemplateBinding Foreground}"
+                                    StrokeThickness="2"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Points="2 9 6 9 6 0"/>
+                            </Canvas>
+                        </Border>
+                        <ContentPresenter
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Checkmark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--
+        Progress bars
+    -->
+
+    <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource ControlStyle}">
+        <Setter Property="Foreground" Value="{StaticResource AuxButtonTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3">
+                        <Grid>
+                            <Rectangle x:Name="PART_Track"/>
+                            <Decorator
+                                x:Name="PART_Indicator"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Margin="{TemplateBinding Padding}">
+                                <Border
+                                    Background="{TemplateBinding Foreground}"
+                                    CornerRadius="2"/>
+                            </Decorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--
+        Menus
+    -->
+
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
+    </Style>
+
+
+    <!--
         Status Bars
     -->
 
-    <Style x:Key="InlineInfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Background" Value="{x:Null}"/>
-        <Setter Property="Foreground" Value="{StaticResource ControlTextBrush}"/>
-        <Style.Resources>
-            <Style TargetType="{x:Type StatusBarItem}">
-                <Setter Property="VerticalContentAlignment" Value="Top"/>
-            </Style>
-        </Style.Resources>
-    </Style>
-
-    <Style x:Key="InfoBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource BaseStyle}">
+    <Style TargetType="{x:Type StatusBar}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"/>
@@ -951,57 +933,17 @@
 
 
     <!--
-        Progress Bars
-    -->
-
-    <SolidColorBrush x:Key="ProgressBarBrush" Color="{StaticResource ProgressBarColor}"/>
-    <SolidColorBrush x:Key="ProgressBarIndicatorBrush" Color="{StaticResource ProgressBarIndicatorColor}"/>
-
-    <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Height" Value="16"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ProgressBar}">
-                    <!-- Display progress bar as double rounded rectangles. -->
-                    <Border
-                        x:Name="Border"
-                        Background="{StaticResource ProgressBarBrush}"
-                        CornerRadius="6">
-                        <Grid>
-                            <Rectangle x:Name="PART_Track"/>
-                            <Decorator
-                                x:Name="PART_Indicator"
-                                HorizontalAlignment="Left"
-                                Margin="0">
-                                <Border
-                                    Background="{StaticResource ProgressBarIndicatorBrush}"
-                                    CornerRadius="6"/>
-                            </Decorator>
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
-    <!--
         Windows
     -->
 
-    <Style x:Key="WindowStyle" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="WindowStyle" Value="None"/>
-        <Setter Property="ResizeMode" Value="NoResize"/>
+    <Style x:Key="ConnectWizardWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="{StaticResource OpenSansFont}"/>
+        <Setter Property="FontSize" Value="11"/>
         <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource WindowBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
         <Style.Triggers>
-            <!-- Change mouse cursor when window is busy. -->
-            <DataTrigger Binding="{Binding Path=IsBusy}" Value="True">
+            <DataTrigger Binding="{Binding IsBusy}" Value="True">
                 <Setter Property="Cursor" Value="AppStarting"/>
             </DataTrigger>
         </Style.Triggers>
@@ -1009,376 +951,84 @@
 
 
     <!--
-        ConnectWizard
+        Pages
     -->
-
-    <Style x:Key="HeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Width" Value="26"/>
-        <Setter Property="Height" Value="26"/>
-        <Setter Property="Foreground" Value="{StaticResource WindowHeaderTextBrush}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <!-- Display button as text/content on solid rounded rectangle. -->
-                    <AdornerDecorator>
-                        <Border
-                            x:Name="Border"
-                            Background="{StaticResource HeadingTextBrush}"
-                            CornerRadius="4">
-                            <ContentPresenter
-                                Margin="3"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </Border>
-                    </AdornerDecorator>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Invert button background color on mouse over. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="Background"
-                                Value="{StaticResource WindowHeaderTextBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <!-- Invert button text/content color and change mouse cursor on mouse over. -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource HeadingTextBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="HeaderTextBlockStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource WindowHeaderTextBrush}"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
-
-
-    <!--
-        ConnectWizard Page Templates
-    -->
-
-    <Style x:Key="NavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Width" Value="22"/>
-        <Setter Property="Height" Value="22"/>
-        <Setter Property="Foreground" Value="{StaticResource HeadingTextBrush}"/>
-        <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="10"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <!-- Draw the button in a hollow circle. -->
-                    <AdornerDecorator>
-                        <Grid>
-                            <Ellipse
-                                x:Name="Border"
-                                Fill="{StaticResource WindowBrush}"
-                                Stroke="{StaticResource HeadingTextBrush}"/>
-
-                            <ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </Grid>
-                    </AdornerDecorator>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Fill the circle when mouse over. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="Fill"
-                                Value="{StaticResource HeadingTextBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <!-- Change button text/content color and mouse cursor when mouse over. -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowBrush}"/>
-            </Trigger>
-
-            <!-- When navigation buttons are disabled, hide them. -->
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Visibility" Value="Collapsed"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="ErrorStatusBarStyle" TargetType="{x:Type Control}">
-        <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="Visibility" Value="{Binding Path=Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <StatusBar
-                        x:Name="StatusBar"
-                        Height="Auto"
-                        Style="{StaticResource InfoBarStyle}"
-                        AutomationProperties.Name="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}">
-                        <StatusBar.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                </Grid>
-                            </ItemsPanelTemplate>
-                        </StatusBar.ItemsPanel>
-
-                        <StatusBarItem>
-                            <Canvas Width="22" Height="22">
-                                <Canvas.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.12935" ScaleY="0.12935"/>
-                                    </TransformGroup>
-                                </Canvas.RenderTransform>
-                                <Path
-                                    Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
-                                    Data="M149.72,154.28H20.36c-5.58,0-9.83-2.04-11.97-5.74c-2.14-3.7-1.78-8.41,1.01-13.24L74.08,23.28c2.79-4.83,6.68-7.49,10.96-7.49c4.28,0,8.17,2.66,10.96,7.49l64.68,112.02c2.79,4.83,3.15,9.53,1.01,13.24C159.55,152.25,155.29,154.28,149.72,154.28z M85.04,21.46c-2.13,0-4.34,1.7-6.05,4.66L14.31,138.14c-1.71,2.96-2.08,5.72-1.01,7.57c1.07,1.85,3.64,2.91,7.06,2.91h129.35c3.42,0,5.99-1.06,7.06-2.91c1.07-1.85,0.7-4.61-1.01-7.57L91.09,26.12C89.38,23.16,87.17,21.46,85.04,21.46z"/>
-                                <Path
-                                    Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
-                                    Data="M85.04,141.77c-2.49,0-4.61-0.8-6.35-2.4c-1.74-1.6-2.62-3.54-2.62-5.82c0-2.37,0.87-4.38,2.62-6.04c1.74-1.66,3.86-2.49,6.35-2.49c2.41,0,4.49,0.83,6.26,2.49c1.76,1.66,2.65,3.67,2.65,6.04c0,2.28-0.88,4.23-2.65,5.82C89.53,140.97,87.45,141.77,85.04,141.77z M91.95,51.21l-1.18,63.03H78.94l-1.62-63.03H91.95z"/>
-                            </Canvas>
-                        </StatusBarItem>
-
-                        <StatusBarItem
-                            Grid.Column="1"
-                            VerticalAlignment="Center">
-                            <TextBlock
-                                TextWrapping="Wrap"
-                                Text="{Binding Path=Error, Converter={StaticResource ExceptionMessageConverter}}"/>
-                        </StatusBarItem>
-
-                        <StatusBarItem
-                            Grid.Column="2">
-                            <Button
-                                Style="{StaticResource NavigationButtonStyle}"
-                                ToolTip="{Binding Source={x:Static res:Strings.ButtonCopyErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopyErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                                Command="{Binding Path=CopyError}">
-                                <Canvas Height="14" Width="14">
-                                    <Canvas.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
-                                        </TransformGroup>
-                                    </Canvas.RenderTransform>
-                                    <Path
-                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                        Data="M156.73584,73.49902l-19.72656-19.72656c-4.37451-4.375-12.33936-7.67383-18.52637-7.67383h-18.40137c-1.20459-4.86816-3.78906-9.87793-6.93896-13.02832L73.41602,13.34277c-4.37451-4.375-12.33936-7.67383-18.52637-7.67383H19.84277c-7.81494,0-14.17334,6.35742-14.17334,14.17285v89.96484c0,7.81543,6.3584,14.17285,14.17334,14.17285H69.2627v26.25684c0,7.81543,6.3584,14.17285,14.17334,14.17285h66.80029c7.81494,0,14.17334-6.35742,14.17334-14.17285V92.02539C164.40967,85.83887,161.11084,77.87402,156.73584,73.49902z M126.9873,60.25391c0.78418,0.48828,1.47607,1.00781,2.00391,1.53613l19.72656,19.72656c0.52832,0.52832,1.04883,1.2207,1.5376,2.00586h-20.43359c-1.53662,0-2.83447-1.29883-2.83447-2.83496V60.25391zM63.39404,19.82422c0.78467,0.48828,1.47607,1.00781,2.00391,1.53613l19.72656,19.72754c0.52881,0.52832,1.04932,1.2207,1.5376,2.00586H66.22852c-1.53662,0-2.83447-1.29883-2.83447-2.83496V19.82422z M19.84277,112.6416c-1.53662,0-2.83447-1.29883-2.83447-2.83496V19.8418c0-1.53613,1.29785-2.83496,2.83447-2.83496h32.2124v23.25195c0,7.81543,6.3584,14.17285,14.17334,14.17285h4.30811c-0.81055,1.7832-1.27393,3.75684-1.27393,5.83984v52.37012H19.84277zM153.0708,150.23633c0,1.53613-1.29785,2.83496-2.83447,2.83496H83.43604c-1.53662,0-2.83447-1.29883-2.83447-2.83496V60.27148c0-1.53613,1.29785-2.83496,2.83447-2.83496h32.2124V80.6875c0,7.81543,6.3584,14.17285,14.17334,14.17285h23.24902V150.23633z"/>
-                                </Canvas>
-                            </Button>
-                        </StatusBarItem>
-
-                        <StatusBarItem
-                            Grid.Column="3">
-                            <Button
-                                Style="{StaticResource NavigationButtonStyle}"
-                                ToolTip="{Binding Source={x:Static res:Strings.ButtonDismissErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonDismissErrorTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                                Command="{Binding Path=DismissError}">
-                                <Canvas Width="14" Height="14">
-                                    <Canvas.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
-                                        </TransformGroup>
-                                    </Canvas.RenderTransform>
-                                    <Polygon
-                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                        Points="147.74561,34.36035 135.71924,22.33301 85.03955,73.0127 34.35986,22.33301 22.3335,34.36035 73.0127,85.03906 22.3335,135.71875 34.35986,147.74609 85.03955,97.06641 135.71924,147.74609 147.74561,135.71875 97.06641,85.03906 "/>
-                                </Canvas>
-                            </Button>
-                        </StatusBarItem>
-                    </StatusBar>
-
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=Error}" Value="{x:Null}">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="StatusBar"
-                                            Storyboard.TargetProperty="MaxHeight"
-                                            From="200"
-                                            To="0"
-                                            Duration="0:0:1"
-                                            AutoReverse="False"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="StatusBar"
-                                            Storyboard.TargetProperty="MaxHeight"
-                                            From="0"
-                                            To="200"
-                                            Duration="0:0:1"
-                                            AutoReverse="False"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <Style x:Key="ConnectWizardPageStyle" TargetType="{x:Type Page}">
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="{StaticResource OpenSansFont}"/>
+        <Setter Property="FontSize" Value="11"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type pages:ConnectWizardPage}">
-                    <AdornerDecorator>
-                        <Grid Margin="10">
+                <ControlTemplate TargetType="{x:Type Page}">
+                    <Grid Margin="17,7,17,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Button
+                            Style="{StaticResource NavigationButtonStyle}"
+                            ToolTip="{Binding Source={x:Static res:Strings.ButtonBackTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                            AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonBackTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                            Command="{Binding NavigateBack}">
+                            <ContentControl
+                                ContentTemplate="{StaticResource ChevronLeftIcon}"
+                                IsTabStop="False"/>
+                        </Button>
+
+                        <ContentControl
+                            Grid.Column="1"
+                            AutomationProperties.Name="{Binding ClientTitle, Source={x:Static prop:Settings.Default}}"
+                            Style="{StaticResource HeadingControlStyle}"
+                            ContentTemplate="{StaticResource ClientLogoIcon}"
+                            IsTabStop="False"/>
+
+                        <Grid
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="-4">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="22"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="22"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
 
                             <Button
-                                Style="{StaticResource NavigationButtonStyle}"
-                                AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                                Command="{Binding Path=NavigateBack}">
-                                <Canvas Height="14" Width="14">
-                                    <Canvas.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
-                                        </TransformGroup>
-                                    </Canvas.RenderTransform>
-                                    <Polygon
-                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                        Points="107.37256,147.74512 44.6665,85.03906 107.37256,22.33301 119.39893,34.36035 68.71924,85.03906 119.39893,135.71973 "/>
-                                </Canvas>
+                                Style="{StaticResource AuxButtonStyle}"
+                                ToolTip="{Binding Source={x:Static res:Strings.ButtonSettingsTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonSettingsTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                                Command="{Binding Wizard.NavigateTo}"
+                                CommandParameter="{Binding Wizard.SettingsPage}">
+                                <ContentControl
+                                    ContentTemplate="{StaticResource SettingsIcon}"
+                                    IsTabStop="False"/>
                             </Button>
 
-                            <TextBlock
+                            <Button
                                 Grid.Column="1"
-                                Margin="10"
-                                VerticalAlignment="Top"
-                                Style="{StaticResource HeadingTextStyle}"
-                                Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                            <TextBlock
-                                Grid.ColumnSpan="3"
-                                Grid.Row="1"
-                                Margin="30,10"
-                                Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                                Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                            <ContentPresenter
-                                Grid.ColumnSpan="3"
-                                Grid.Row="2"
-                                Margin="10"/>
-                        </Grid>
-                    </AdornerDecorator>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ConnectWizardPageWithSettingsStyle" TargetType="{x:Type Page}" BasedOn="{StaticResource ConnectWizardPageStyle}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type pages:ConnectWizardPage}">
-                    <AdornerDecorator>
-                        <Grid Margin="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="22"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="22"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Button
-                                Style="{StaticResource NavigationButtonStyle}"
-                                ToolTip="{x:Static res:Strings.ButtonBackTitle}"
-                                AutomationProperties.Name="{x:Static res:Strings.ButtonBackTitle}"
-                                Command="{Binding Path=NavigateBack}">
-                                <Canvas Height="14" Width="14">
-                                    <Canvas.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
-                                        </TransformGroup>
-                                    </Canvas.RenderTransform>
-                                    <Polygon
-                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                        Points="107.37256,147.74512 44.6665,85.03906 107.37256,22.33301 119.39893,34.36035 68.71924,85.03906 119.39893,135.71973 "/>
-                                </Canvas>
+                                Style="{StaticResource AuxButtonStyle}"
+                                ToolTip="{Binding Source={x:Static res:Strings.ButtonAboutTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonAboutTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                                Command="{Binding Wizard.NavigateTo}"
+                                CommandParameter="{Binding Wizard.AboutPage}">
+                                <ContentControl
+                                    ContentTemplate="{StaticResource AboutIcon}"
+                                    IsTabStop="False"/>
                             </Button>
-
-                            <TextBlock
-                                Grid.Column="1"
-                                Margin="10"
-                                VerticalAlignment="Top"
-                                Style="{StaticResource HeadingTextStyle}"
-                                Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                            <Button
-                                Grid.Column="2"
-                                Style="{StaticResource NavigationButtonStyle}"
-                                ToolTip="{x:Static res:Strings.ButtonSettingsTitle}"
-                                AutomationProperties.Name="{x:Static res:Strings.ButtonSettingsTitle}"
-                                Command="{Binding Path=Wizard.NavigateTo}"
-                                CommandParameter="{Binding Path=Wizard.SettingsPage}">
-                                <Canvas Height="14" Width="14">
-                                    <Canvas.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleX="0.08231" ScaleY="0.08231"/>
-                                        </TransformGroup>
-                                    </Canvas.RenderTransform>
-                                    <Path
-                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                        Data="M64.40479,7.08594c1.01953,0,2.03809,0,3.05664,0c5.95068,4.48242,8.98291,11.87891,13.75635,17.53418c2.44141-0.33301,4.88574-0.57324,7.26074,0c5.354-5.2041,7.98096-13.13086,14.13916-17.53418c0.8916,0,1.7832,0,2.6748,0c3.71729,1.57715,7.67041,3.6875,12.22705,5.71777c3.24951,1.44824,10.19629,3.15527,11.08203,6.86133c0.65771,2.75293-0.82764,6.96387-1.52881,10.29199c-0.67871,3.22754-1.47314,6.20898-2.29248,9.14844c2.01074,2.18945,4.56592,3.83203,6.11475,6.48047c3.05664-0.89648,6.17139-1.53125,9.55225-2.28809c3.29736-0.73438,7.49463-2.24414,10.31738-1.52441c3.78369,0.96484,4.97949,7.31934,6.49658,10.67383c1.9292,4.26758,4.11572,7.93066,5.73145,11.43555c0,1.52539,0,3.04883,0,4.57422c-5.04395,5.00488-11.81934,8.28613-17.1958,12.96094c0,2.41504,0,4.82715,0,7.24219c5.26855,4.90918,12.53857,7.82129,17.1958,13.3418c0,1.39746,0,2.79492,0,4.19336c-2.23291,3.47852-3.271,7.25977-5.34961,11.81641c-1.45068,3.18164-3.73291,9.47949-6.87842,10.29297c-3.96143,1.02246-10.60645-1.81445-14.52002-2.66992c-1.43408-0.3125-3.97705-0.87012-4.58643-0.76172c-3.09814,0.54785-3.66406,4.78027-6.87793,5.71777c0.69727,3.11133,1.61182,6.27344,2.29248,9.53027c0.70166,3.35547,2.17334,7.56055,1.52881,10.29199c-0.91162,3.86621-7.73975,5.34668-11.08203,6.86133c-4.46484,2.02441-8.18799,4.04688-11.84521,5.71777c-1.01953,0-2.03857,0-3.05664,0c-6.13623-4.42578-8.85498-12.25977-14.13916-17.53418c-2.38037,1.20898-4.57617-0.55371-6.49609,0c-2.08789,0.60156-5.89111,6.82813-7.26025,8.76758c-2.54395,3.59863-3.99658,7.20313-7.26074,8.7666c-1.01855,0-2.03711,0-3.05664,0c-3.36426-1.96289-7.53223-3.37891-11.84521-5.33691c-3.01465-1.36914-10.55225-4.00586-11.08203-7.24219c-0.87109-5.32617,3.15283-13.35156,3.82129-19.44043c-2.33447-1.86621-4.12305-4.27441-6.49609-6.09961c-3.20264,0.69336-6.23877,1.18848-9.55371,1.90723c-3.22607,0.69922-7.03955,2.27051-9.93457,1.52441c-3.25488-0.8418-5.50488-7.2832-6.87842-10.29297c-1.99219-4.36426-3.20898-8.52539-5.34912-11.81641c0-1.39844,0-2.7959,0-4.19336c4.71045-5.33887,11.49268-8.6123,17.19531-12.95996c0-2.54199,0-5.08398,0-7.62402c-5.4165-4.63672-12.13037-7.97656-17.19531-12.96094c0-1.52539,0-3.04883,0-4.57422c1.72363-3.34375,3.77588-7.4707,5.73096-11.81641c1.67578-3.72363,3.01123-9.50098,6.87842-10.29297c6.03369-1.23535,11.5332,3.39355,19.10645,3.43164c1.75879-0.91895,4.2959-4.35156,6.49609-6.09961c-0.81982-2.93945-1.61377-5.9209-2.29248-9.14844c-0.70117-3.32813-2.18652-7.53906-1.52881-10.29199c0.71289-2.98535,7.0332-5.40625,10.31689-6.86133C56.9292,10.53027,61.57422,8.94141,64.40479,7.08594z M99.56104,28.05176c-2.00732,2.90332-3.61084,6.97754-7.26074,7.62207c-1.29346,0.23047-3.16455-0.30762-4.58594-0.37988c-3.69629-0.18652-8.1582,0.83594-10.31738,0.37988c-5.60352-1.17871-9.71777-14.07715-13.37402-16.38965c-3.36279,1.85547-7.1626,3.27344-10.69971,4.95508c0.1333,3.13672,1.34375,6.01855,1.91113,8.76758c0.63232,3.06836,2.03613,6.87305,1.52783,9.5293c-0.54443,2.85156-4.7627,4.77441-6.87793,6.86133c-2.09912,2.07227-3.91797,6.50098-7.26025,7.24219c-3.04492,0.67578-6.44385-0.88672-9.55322-1.52441c-3.34912-0.68359-6.39502-0.87891-9.17188-1.90527c-1.1123,4.09863-3.38965,7.03711-4.58447,11.05469c2.30176,1.96387,5.28223,3.86328,8.40625,6.09863c2.41699,1.72949,6.91602,3.73145,7.64258,6.8623c1.07373,4.62012-1.37842,9.71484,0,16.00879c-4.00244,5.66309-11.43262,7.9082-16.04883,12.96094c1.41455,3.6709,3.4043,6.77051,4.58447,10.67285c5.44385,0.04102,13.48291-4.96094,19.10742-3.42969c2.61475,0.71094,4.75342,5.10449,6.11328,6.47949c2.63281,2.66113,7.13574,4.70801,7.64258,8.00488c0.40332,2.61914-0.93066,6.25586-1.52783,9.14844c-0.58691,2.83594-1.62109,5.6123-1.91113,8.76758c3.6123,1.73242,7.31152,3.37891,11.08154,4.95508c1.47705-3.13965,3.8335-5.46777,6.11377-8.76758c2.00049-2.89258,3.61377-6.99512,7.26025-7.62207c2.99316-0.51563,7.79248,0.58301,11.08154,0.37988c1.35547-0.08398,2.91895-0.56934,3.82178-0.37988c3.30859,0.6875,5.09082,5.03516,6.87891,7.62207c2.18213,3.1582,4.72119,5.75879,6.11328,8.76758c3.77002-1.57617,7.46924-3.22266,11.08154-4.95508c-0.28076-3.11426-1.33252-5.9707-1.91113-8.76758c-0.63916-3.09961-2.03027-6.9043-1.52783-9.5293c0.58789-3.08008,5.01123-4.96484,7.64209-7.62402c1.39209-1.40723,3.57715-5.81836,6.49609-6.47949c2.99121-0.68164,6.42773,0.84766,9.55273,1.52441c3.26709,0.70703,6.34424,1.06934,9.17139,1.90527c1.14795-4.06348,3.40137-7.02539,4.58545-11.05469c-2.44385-1.80371-5.26074-3.92969-8.40625-6.09863c-2.48145-1.71094-6.90625-3.69336-7.64258-6.8623c-1.07373-4.62012,1.37842-9.71484,0-16.00879c4.02295-5.64258,11.4917-7.85156,16.04883-12.96094c-1.64795-3.56445-3.1626-7.26465-4.96777-10.67285c-2.63428,0.71094-5.60938,1.63281-8.78906,2.28711c-3.07666,0.63379-7.23926,1.86328-9.93506,1.14258c-3.0542-0.81641-5.10303-5.49023-6.87842-7.24219c-2.44922-2.41699-6.40771-4.10352-6.87744-7.24219c-0.39209-2.61719,0.93506-6.27246,1.52783-9.14844c0.58398-2.82617,1.70068-5.58496,1.91113-8.76758c-3.7002-1.64551-7.35889-3.33203-11.08154-4.95508C104.18799,22.43555,101.8457,24.74414,99.56104,28.05176z"/>
-                                    <Path
-                                        Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                        Data="M81.98242,50.54102c10.0459-1.07031,18.83154,2.83594,24.83789,7.62402c7.55859,6.02539,15.56689,17.31445,12.61035,33.54492c-3.50684,19.25684-25.60254,34.59961-47.3833,25.9209C58.94092,112.4082,46.7832,96.91211,50.64844,77.60547C53.45264,63.59961,65.99805,52.24609,81.98242,50.54102zM67.84375,68.07617c-3.24463,3.23633-6.9375,8.43555-6.87793,17.1543c0.10205,14.87988,12.99756,25.36621,27.5127,23.63281c10.42871-1.24609,20.72852-10.32813,20.63477-24.01563c-0.04199-6.04688-4.02295-13.92285-6.87842-16.77148c-3.95215-3.94238-11.7749-7.7627-20.63428-6.47949C75.20117,62.52246,71.09863,64.82813,67.84375,68.07617z"/>
-                                </Canvas>
-                            </Button>
-
-                            <TextBlock
-                                Grid.ColumnSpan="3"
-                                Grid.Row="1"
-                                Margin="30,10"
-                                Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                                Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                            <ContentPresenter
-                                Grid.ColumnSpan="3"
-                                Grid.Row="2"
-                                Margin="10"/>
                         </Grid>
-                    </AdornerDecorator>
+
+                        <ContentPresenter
+                            Grid.ColumnSpan="3"
+                            Grid.Row="1"
+                            Margin="-7"/>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1386,130 +1036,24 @@
 
 
     <!--
-        Popups
+        Secure internet server
     -->
 
-    <Style x:Key="PopupHeaderButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource HeaderButtonStyle}">
-        <Setter Property="Foreground" Value="{StaticResource HeadingTextBrush}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <!-- Display button as text/content on solid rounded rectangle. -->
-                    <AdornerDecorator>
-                        <Border
-                            x:Name="Border"
-                            Background="{StaticResource WindowHeaderTextBrush}"
-                            CornerRadius="4">
-                            <ContentPresenter
-                                Margin="3"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </Border>
-                    </AdornerDecorator>
-
-                    <ControlTemplate.Triggers>
-                        <!-- Invert button background color on mouse over. -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter
-                                TargetName="Border"
-                                Property="Background"
-                                Value="{StaticResource HeadingTextBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <!-- Invert button text/content color on mouse over. -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource WindowHeaderTextBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="PopupWindowStyle" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource WindowStyle}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type windows:Window}">
-                    <Border
-                        BorderBrush="{StaticResource WindowBorderBrush}"
-                        BorderThickness="1">
-                        <AdornerDecorator>
-                            <Grid Background="{StaticResource WindowBrush}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock
-                                        Margin="5"
-                                        Style="{StaticResource HeadingTextStyle}"
-                                        Text="{Binding Path=Title, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                                    <Control
-                                        Grid.Row="1"
-                                        Style="{StaticResource ErrorStatusBarStyle}"/>
-
-                                    <TextBlock
-                                        Grid.Row="2"
-                                        Margin="30,10"
-                                        Visibility="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource StringVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                                        Text="{Binding Path=Description, RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                                    <ContentPresenter
-                                        Grid.Row="3"
-                                        Margin="10"/>
-                                </Grid>
-
-                                <Button
-                                    Margin="2"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    IsCancel="True"
-                                    Style="{StaticResource PopupHeaderButtonStyle}"
-                                    AutomationProperties.Name="{x:Static res:Strings.ButtonCloseTitle}">
-                                    <Canvas Width="12" Height="12">
-                                        <Canvas.RenderTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform ScaleX="0.07056" ScaleY="0.07056"/>
-                                            </TransformGroup>
-                                        </Canvas.RenderTransform>
-                                        <Polygon
-                                            Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                            Points="147.74561,34.36035 135.71924,22.33301 85.03955,73.0127 34.35986,22.33301 22.3335,34.36035 73.0127,85.03906 22.3335,135.71875 34.35986,147.74609 85.03955,97.06641 135.71924,147.74609 147.74561,135.71875 97.06641,85.03906 "/>
-                                    </Canvas>
-                                </Button>
-                            </Grid>
-                        </AdornerDecorator>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
-    <!--
-        Choice Buttons
-    -->
-
-    <Style x:Key="ChoiceButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Width" Value="Auto"/>
-        <Setter Property="MinHeight" Value="90"/>
-        <Setter Property="Padding" Value="3"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-
-        <Style.Resources>
-            <Style TargetType="{x:Type AccessText}">
-                <Setter Property="FontWeight" Value="{x:Static FontWeights.Normal}"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-            </Style>
-        </Style.Resources>
-    </Style>
-
+    <DataTemplate DataType="{x:Type models:SecureInternetServer}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                MaxWidth="20" MaxHeight="20"
+                Source="{Binding Path=Country.Code, Converter={StaticResource CountryCodeFlagConverter}}"/>
+            <TextBlock
+                Grid.Column="1"
+                Margin="7,0,0,0"
+                Text="{Binding}"/>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

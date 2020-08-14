@@ -50,27 +50,7 @@ namespace eduVPN.Client
             eduVPN.Properties.Settings.Default.SelfUpdateBundleId = "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}";
             eduVPN.Properties.Settings.Default.ClientId = "org.eduvpn.app";
             eduVPN.Properties.Settings.Default.ClientTitle = Client.Resources.Strings.ConnectWizardTitle;
-
-            // Initialize settings.
-            Client.Properties.Settings.Initialize();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
-        {
-            // Save client settings on logout.
-            Client.Properties.Settings.Default.Save();
-
-            base.OnSessionEnding(e);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnExit(ExitEventArgs e)
-        {
-            // Save client settings on exit.
-            Client.Properties.Settings.Default.Save();
-
-            base.OnExit(e);
+            eduVPN.Properties.Settings.Default.ClientAboutUri = new Uri(Client.Resources.Strings.AboutPageUri);
         }
 
         #endregion

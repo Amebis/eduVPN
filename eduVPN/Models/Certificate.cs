@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Security;
 
@@ -23,18 +22,12 @@ namespace eduVPN.Models
         /// <summary>
         /// PEM encoded X509 Certificate
         /// </summary>
-        public string Cert { get => _cert; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _cert;
+        public string Cert { get; private set; }
 
         /// <summary>
         /// PEM encoded X509 private key
         /// </summary>
-        public SecureString PrivateKey { get => _private_key; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SecureString _private_key;
+        public SecureString PrivateKey { get; private set; }
 
         #endregion
 
@@ -50,8 +43,8 @@ namespace eduVPN.Models
             if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
-            _cert = eduJSON.Parser.GetValue<string>(obj2, "certificate");
-            _private_key = (new NetworkCredential("", eduJSON.Parser.GetValue<string>(obj2, "private_key"))).SecurePassword;
+            Cert = eduJSON.Parser.GetValue<string>(obj2, "certificate");
+            PrivateKey = (new NetworkCredential("", eduJSON.Parser.GetValue<string>(obj2, "private_key"))).SecurePassword;
         }
 
         /// <summary>
@@ -65,8 +58,8 @@ namespace eduVPN.Models
         /// </remarks>
         public static byte[] GetBytesFromPEM(string pem, string section)
         {
-            var header = String.Format("-----BEGIN {0}-----", section);
-            var footer = String.Format("-----END {0}-----", section);
+            var header = string.Format("-----BEGIN {0}-----", section);
+            var footer = string.Format("-----END {0}-----", section);
 
             var start = pem.IndexOf(header, StringComparison.Ordinal);
             if (start < 0)

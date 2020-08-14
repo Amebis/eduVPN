@@ -176,13 +176,13 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Der erforderliche OAuth-Parameter "state" fehlt oder ist falsch.</value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+  <data name="InstanceSourcePageCustomTitle" xml:space="preserve">
     <value>Andere Adresse _hinzufügen</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessTitle2" xml:space="preserve">
     <value>Verbinden mit Ihrer _Institution</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetTitle2" xml:space="preserve">
     <value>Das Internet _sicher nutzen</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
@@ -219,25 +219,25 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Passwort</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddTitle" xml:space="preserve">
     <value>Andere _hinzufügen</value>
   </data>
-  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptAskLaterTitle" xml:space="preserve">
     <value>Später _fragen</value>
   </data>
-  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptChangelogTitle" xml:space="preserve">
     <value>Was ist _Neu?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePromptMessage3" xml:space="preserve">
     <value>Eine neuere und verbesserte Version des Clients ist verfügbar. Bleiben Sie auf dem Laufenden!</value>
   </data>
-  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptSkipTitle" xml:space="preserve">
     <value>Diese _Version überspringen</value>
   </data>
-  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptTitle" xml:space="preserve">
     <value>Update verfügbar</value>
   </data>
-  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptUpdateTitle" xml:space="preserve">
     <value>Jetzt herunterladen und akt_ualisieren
 (Client wird neu gestartet)</value>
   </data>
@@ -262,7 +262,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>TAP-_Schnittstelle auswählen</value>
   </data>
-  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+  <data name="StatusPageDisconnectTitle" xml:space="preserve">
     <value>_Trennen</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
@@ -292,7 +292,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Verbindungs-Info</value>
   </data>
-  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogTitle" xml:space="preserve">
     <value>_Protokoll ansehen</value>
   </data>
   <data name="StatusPageStatus" xml:space="preserve">

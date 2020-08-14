@@ -63,9 +63,9 @@ Packages can be deployed using the same Group Policy Object. We advise against m
 
 The eduVPN Client for Windows will self-update on new releases by default.
 
-Should you prefer manual updating, self-updating can be turned off in the `eduVPN.Client.exe.config` XML file installed in the `eduVPN\Core` folder. At the `SelfUpdateDescr` setting, set the `Uri` attribute of `<ResourceRef>` element to an empty string:
+Should you prefer manual updating, self-updating can be turned off in the `eduVPN.Client.exe.config` XML file installed in the `eduVPN\Core` folder. At the `SelfUpdateDiscovery` setting, set the `Uri` attribute of `<ResourceRef>` element to an empty string:
 ```XML
-<setting name="SelfUpdateDescr" serializeAs="Xml">
+<setting name="SelfUpdateDiscovery" serializeAs="Xml">
     <value>
         <ResourceRef Uri=""/>
     </value>

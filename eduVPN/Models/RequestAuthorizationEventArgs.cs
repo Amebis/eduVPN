@@ -68,34 +68,34 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Properties
+        #region Fields
 
         /// <summary>
         /// Requested access token scope
         /// </summary>
-        public string Scope { get; }
+        public readonly string Scope;
 
         /// <summary>
         /// Access token retrieval policy
         /// </summary>
-        public SourcePolicyType SourcePolicy { get; set; }
+        public SourcePolicyType SourcePolicy;
 
         /// <summary>
         /// If the token is to be loaded from the settings, should expiration time be honoured (<c>false</c>) or token refresh be forced (<c>true</c>)
         /// </summary>
-        public bool ForceRefresh { get; set; }
+        public bool ForceRefresh;
 
         /// <summary>
         /// Access token origin
         /// </summary>
         /// <remarks>Should be set appropriately on event end, or <see cref="TokenOriginType.None"/> if no authorization token available.</remarks>
-        public TokenOriginType TokenOrigin { get; set; }
+        public TokenOriginType TokenOrigin;
 
         /// <summary>
         /// Access token
         /// </summary>
         /// <remarks>Should be populated by access token on event end, or <c>null</c> if authorization failed.</remarks>
-        public AccessToken AccessToken { get; set; }
+        public AccessToken AccessToken;
 
         #endregion
 

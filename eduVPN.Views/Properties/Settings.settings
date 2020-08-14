@@ -11,9 +11,6 @@
     <Setting Name="WindowLeft" Description="Client window left coordinate" Type="System.Double" Scope="User">
       <Value Profile="(Default)">NaN</Value>
     </Setting>
-    <Setting Name="CustomInstanceHistory" Type="System.Collections.Specialized.StringCollection" Scope="User" Description="Recently used hostnames for custom instance connections">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="SystemTrayMinimizedWarned" Description="Has user been informed that the client minimizes to the system tray already?" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

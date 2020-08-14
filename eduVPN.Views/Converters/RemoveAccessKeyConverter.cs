@@ -32,26 +32,26 @@ namespace eduVPN.Converters
             if (value is string str)
             {
                 var sb = new StringBuilder();
-                char access_key = '\0';
+                char accessKey = '\0';
                 for (int i = 0, n = str.Length; i < n; i++)
                 {
-                    var i_next = i + 1;
-                    if (i_next < n)
+                    var nextIndex = i + 1;
+                    if (nextIndex < n)
                     {
                         if (str[i] == '_')
                         {
                             // Underscore
-                            if (str[i_next] == '_')
+                            if (str[nextIndex] == '_')
                             {
                                 // Double underscore: Convert to single underscore.
                                 sb.Append('_');
-                                i = i_next;
+                                i = nextIndex;
                                 continue;
                             }
-                            else if (access_key == '\0')
+                            else if (accessKey == '\0')
                             {
                                 // Save the access key.
-                                access_key = str[i_next];
+                                accessKey = str[nextIndex];
                                 continue;
                             }
                         }

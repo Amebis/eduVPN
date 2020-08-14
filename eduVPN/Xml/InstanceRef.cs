@@ -16,6 +16,7 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable instance reference
     /// </summary>
+    [Obsolete]
     public class InstanceRef : IXmlSerializable
     {
         #region Properties
@@ -33,7 +34,7 @@ namespace eduVPN.Xml
         /// <summary>
         /// List of profiles
         /// </summary>
-        public ProfileRefList ProfileList { get; set; }
+        public ProfileRefList Profiles { get; set; }
 
         #endregion
 
@@ -67,10 +68,10 @@ namespace eduVPN.Xml
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(ProfileRefList))
                 {
-                    if (reader["Key"] == nameof(ProfileList))
+                    if (reader["Key"] == nameof(Profiles))
                     {
-                        ProfileList = new ProfileRefList();
-                        ProfileList.ReadXml(reader);
+                        Profiles = new ProfileRefList();
+                        Profiles.ReadXml(reader);
                     }
                 }
             }
@@ -85,11 +86,11 @@ namespace eduVPN.Xml
             writer.WriteAttributeString(nameof(Base), Base.AbsoluteUri);
             writer.WriteAttributeString(nameof(Popularity), Popularity.ToString(CultureInfo.InvariantCulture));
 
-            if (ProfileList != null)
+            if (Profiles != null)
             {
                 writer.WriteStartElement(nameof(ProfileRefList));
-                writer.WriteAttributeString("Key", nameof(ProfileList));
-                ProfileList.WriteXml(writer);
+                writer.WriteAttributeString("Key", nameof(Profiles));
+                Profiles.WriteXml(writer);
                 writer.WriteEndElement();
             }
         }

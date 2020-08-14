@@ -10,7 +10,6 @@ using eduOAuth;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -37,12 +36,12 @@ namespace eduVPN.Xml
         /// Executing assembly
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly Assembly _assembly = Assembly.GetExecutingAssembly();
+        private static readonly Assembly ExecutingAssembly = Assembly.GetExecutingAssembly();
 
         /// <summary>
         /// User agent
         /// </summary>
-        public static readonly string UserAgent = (Attribute.GetCustomAttributes(_assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title + "/" + _assembly?.GetName()?.Version?.ToString();
+        public static readonly string UserAgent = (Attribute.GetCustomAttributes(ExecutingAssembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title + "/" + ExecutingAssembly?.GetName()?.Version?.ToString();
 
         /// <summary>
         /// Caching policy
@@ -83,13 +82,13 @@ namespace eduVPN.Xml
         /// <param name="uri">URI</param>
         /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
         /// <param name="token">OAuth access token</param>
-        /// <param name="response_type">Expected response MIME type</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <param name="responseType">Expected response MIME type</param>
         /// <param name="previous">Previous content, when refresh is required</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Content</returns>
-        public static Response Get(Uri uri, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", CancellationToken ct = default(CancellationToken), Response previous = null)
+        public static Response Get(Uri uri, NameValueCollection param = null, AccessToken token = null, string responseType = "application/json", Response previous = null, CancellationToken ct = default)
         {
-            return Get(new ResourceRef() { Uri = uri }, param, token, response_type, ct, previous);
+            return Get(new ResourceRef() { Uri = uri }, param, token, responseType, previous, ct);
         }
 
         /// <summary>
@@ -98,12 +97,11 @@ namespace eduVPN.Xml
         /// <param name="res">URI and public key for signature verification</param>
         /// <param name="param">Parameters to be sent as <c>application/x-www-form-urlencoded</c> name-value pairs</param>
         /// <param name="token">OAuth access token</param>
-        /// <param name="response_type">Expected response MIME type</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <param name="responseType">Expected response MIME type</param>
         /// <param name="previous">Previous content, when refresh is required</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Content</returns>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "HttpWebResponse, Stream, and StreamReader tolerate multiple disposes.")]
-        public static Response Get(ResourceRef res, NameValueCollection param = null, AccessToken token = null, string response_type = "application/json", CancellationToken ct = default(CancellationToken), Response previous = null)
+        public static Response Get(ResourceRef res, NameValueCollection param = null, AccessToken token = null, string responseType = "application/json", Response previous = null, CancellationToken ct = default)
         {
             // Create request.
             var request = WebRequest.Create(res.Uri);
@@ -111,16 +109,16 @@ namespace eduVPN.Xml
             request.Proxy = null;
             if (token != null)
                 token.AddToRequest(request);
-            if (request is HttpWebRequest request_http)
+            if (request is HttpWebRequest httpRequest)
             {
-                request_http.UserAgent = UserAgent;
-                request_http.Accept = response_type;
+                httpRequest.UserAgent = UserAgent;
+                httpRequest.Accept = responseType;
                 if (previous != null && param != null)
                 {
-                    request_http.IfModifiedSince = previous.Timestamp;
+                    httpRequest.IfModifiedSince = previous.Timestamp;
 
                     if (previous.ETag != null)
-                        request_http.Headers.Add("If-None-Match", previous.ETag);
+                        httpRequest.Headers.Add("If-None-Match", previous.ETag);
                 }
             }
 
@@ -128,14 +126,14 @@ namespace eduVPN.Xml
             {
                 // Send data.
                 UTF8Encoding utf8 = new UTF8Encoding();
-                var body_binary = Encoding.ASCII.GetBytes(String.Join("&", param.Cast<string>().Select(e => String.Format("{0}={1}", HttpUtility.UrlEncode(e, utf8), HttpUtility.UrlEncode(param[e], utf8)))));
+                var binBody = Encoding.ASCII.GetBytes(string.Join("&", param.Cast<string>().Select(e => string.Format("{0}={1}", HttpUtility.UrlEncode(e, utf8), HttpUtility.UrlEncode(param[e], utf8)))));
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = body_binary.Length;
+                request.ContentLength = binBody.Length;
                 try
                 {
-                    using (var stream_req = request.GetRequestStream())
-                        stream_req.Write(body_binary, 0, body_binary.Length, ct);
+                    using (var requestStream = request.GetRequestStream())
+                        requestStream.Write(binBody, 0, binBody.Length, ct);
                 }
                 catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
             }
@@ -148,9 +146,9 @@ namespace eduVPN.Xml
             catch (WebException ex)
             {
                 // When the content was not modified, return the previous one.
-                if (ex.Response is HttpWebResponse response_http)
+                if (ex.Response is HttpWebResponse httpResponse)
                 {
-                    if (response_http.StatusCode == HttpStatusCode.NotModified)
+                    if (httpResponse.StatusCode == HttpStatusCode.NotModified)
                     {
                         previous.IsFresh = false;
                         return previous;
@@ -179,43 +177,43 @@ namespace eduVPN.Xml
                             break;
 
                         // Append it to the data.
-                        var data_new = new byte[data.LongLength + count];
-                        Array.Copy(data, data_new, data.LongLength);
-                        Array.Copy(buffer, 0, data_new, data.LongLength, count);
-                        data = data_new;
+                        var newData = new byte[data.LongLength + count];
+                        Array.Copy(data, newData, data.LongLength);
+                        Array.Copy(buffer, 0, newData, data.LongLength, count);
+                        data = newData;
                     }
                 }
 
                 if (res.PublicKeys != null)
                 {
                     // Generate signature URI.
-                    var builder_sig = new UriBuilder(res.Uri);
-                    builder_sig.Path += ".minisig";
+                    var uriBuilderSig = new UriBuilder(res.Uri);
+                    uriBuilderSig.Path += ".minisig";
 
                     // Create signature request.
-                    request = WebRequest.Create(builder_sig.Uri);
+                    request = WebRequest.Create(uriBuilderSig.Uri);
                     request.CachePolicy = CachePolicy;
                     request.Proxy = null;
                     if (token != null)
                         token.AddToRequest(request);
-                    if (request is HttpWebRequest request_http_sig)
+                    if (request is HttpWebRequest httpRequestSig)
                     {
-                        request_http_sig.UserAgent = UserAgent;
-                        request_http_sig.Accept = "text/plain";
+                        httpRequestSig.UserAgent = UserAgent;
+                        httpRequestSig.Accept = "text/plain";
                     }
 
                     // Read the Minisign signature.
                     byte[] signature = null;
                     try
                     {
-                        using (var response_sig = request.GetResponse())
-                        using (var stream_sig = response_sig.GetResponseStream())
+                        using (var responseSig = request.GetResponse())
+                        using (var streamSig = responseSig.GetResponseStream())
                         {
                             ct.ThrowIfCancellationRequested();
 
-                            using (var reader_sig = new StreamReader(stream_sig))
+                            using (var readerSig = new StreamReader(streamSig))
                             {
-                                foreach (var l in reader_sig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                                foreach (var l in readerSig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
                                 {
                                     if (l.Trim().StartsWith($"untrusted comment:"))
                                         continue;
@@ -223,7 +221,7 @@ namespace eduVPN.Xml
                                     break;
                                 }
                                 if (signature == null)
-                                    throw new SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
+                                    throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
                             }
                         }
                     }
@@ -242,7 +240,7 @@ namespace eduVPN.Xml
                         {
                             case 'd': // PureEdDSA
                                 payload = data;
-                                break; 
+                                break;
 
                             case 'D': // HashedEdDSA
                                 payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
@@ -251,25 +249,25 @@ namespace eduVPN.Xml
                             default:
                                 throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
                         }
-                        ulong key_id = r.ReadUInt64();
-                        if (!res.PublicKeys.ContainsKey(key_id))
+                        ulong keyId = r.ReadUInt64();
+                        if (!res.PublicKeys.ContainsKey(keyId))
                             throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
                         var sig = new byte[64];
                         if (r.Read(sig, 0, 64) != 64)
                             throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);
-                        using (eduEd25519.ED25519 key = new eduEd25519.ED25519(res.PublicKeys[key_id]))
+                        using (eduEd25519.ED25519 key = new eduEd25519.ED25519(res.PublicKeys[keyId]))
                             if (!key.VerifyDetached(payload, sig))
-                                throw new SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
+                                throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
                     }
                 }
 
                 return
-                    response is HttpWebResponse response_web ?
+                    response is HttpWebResponse webResponse ?
                     new Response()
                     {
                         Value = Encoding.UTF8.GetString(data),
-                        Timestamp = DateTime.TryParse(response_web.GetResponseHeader("Last-Modified"), out var _timestamp) ? _timestamp : default(DateTime),
-                        ETag = response_web.GetResponseHeader("ETag"),
+                        Timestamp = DateTime.TryParse(webResponse.GetResponseHeader("Last-Modified"), out var timestamp) ? timestamp : default,
+                        ETag = webResponse.GetResponseHeader("ETag"),
                         IsFresh = true
                     } :
                     new Response()
@@ -302,9 +300,9 @@ namespace eduVPN.Xml
             string v;
 
             Value = reader[nameof(Value)];
-            Timestamp = DateTime.TryParse(reader[nameof(Timestamp)], out var timestamp) ? timestamp : default(DateTime);
+            Timestamp = DateTime.TryParse(reader[nameof(Timestamp)], out var timestamp) ? timestamp : default;
             ETag = reader[nameof(ETag)];
-            IsFresh = (v = reader[nameof(IsFresh)]) != null && bool.TryParse(v, out var v_is_fresh) ? v_is_fresh : false;
+            IsFresh = (v = reader[nameof(IsFresh)]) != null && bool.TryParse(v, out var isFresh) && isFresh;
         }
 
         /// <summary>

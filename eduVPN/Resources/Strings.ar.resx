@@ -187,7 +187,7 @@
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>(تلقائي)</value>
   </data>
-  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
+  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
     <value>لم يتم العثور على واجهة الشبكة ذات المعرف {0}.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
@@ -247,7 +247,7 @@
   <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
     <value>كيف تريد استعمال الشبكة الخاصة الافتراضية ؟</value>
   </data>
-  <data name="SelfUpdatingPageTitle" xml:space="preserve">
+  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
     <value>جارٍ تحضير التحديث ...</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

@@ -176,13 +176,13 @@ Program Commons Conservancy eduVPN</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Zahtevani parameter OAuth "state" manjka ali je napačen.</value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+  <data name="InstanceSourcePageCustomTitle" xml:space="preserve">
     <value>D_odaj drug naslov</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessTitle2" xml:space="preserve">
     <value>P_oveži se s svojo ustanovo</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetTitle2" xml:space="preserve">
     <value>Varno uporabljaj _splet</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
@@ -219,25 +219,25 @@ Program Commons Conservancy eduVPN</value>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Geslo</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddTitle" xml:space="preserve">
     <value>Dodaj drugeg_a</value>
   </data>
-  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptAskLaterTitle" xml:space="preserve">
     <value>_Vprašaj me pozneje</value>
   </data>
-  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptChangelogTitle" xml:space="preserve">
     <value>Kaj je _novega?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePromptMessage3" xml:space="preserve">
     <value>Na voljo je novejša in izboljšana verzija odjemalca. Ostanite posodobljeni!</value>
   </data>
-  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptSkipTitle" xml:space="preserve">
     <value>Preskoči to _verzijo</value>
   </data>
-  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptTitle" xml:space="preserve">
     <value>Posodobitev na voljo</value>
   </data>
-  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptUpdateTitle" xml:space="preserve">
     <value>Prenesi in _posodobi zdaj
 (Odjemalec se bo ponovno zagnal)</value>
   </data>
@@ -262,7 +262,7 @@ Program Commons Conservancy eduVPN</value>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>_Izberite vmesnik TAP</value>
   </data>
-  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+  <data name="StatusPageDisconnectTitle" xml:space="preserve">
     <value>_Prekini</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
@@ -292,7 +292,7 @@ Program Commons Conservancy eduVPN</value>
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Podatki povezave</value>
   </data>
-  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogTitle" xml:space="preserve">
     <value>Ogled _dnevnika</value>
   </data>
   <data name="StatusPageStatus" xml:space="preserve">

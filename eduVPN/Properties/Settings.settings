@@ -8,11 +8,8 @@
     <Setting Name="SelfUpdateLastReminder" Description="The last time user was prompted to update at" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenVPNInteractiveServiceInstance" Description="Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:&#xD;&#xA; - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client (default).&#xD;&#xA; - &quot;&quot; - Use original OpenVPN installation." Type="System.String" Scope="Application">
-      <Value Profile="(Default)">$eduVPN</Value>
-    </Setting>
-    <Setting Name="ConnectingProfileSelectMode" Description="The client profile management mode is described in detail here: https://github.com/Amebis/eduVPN/blob/master/doc/ConnectingProfileSelectMode.md&#xD;&#xA;&#xD;&#xA; Note: It is recommended to delete client user settings in %LOCALAPPDATA%\SURF&#xD;&#xA; when the mode is changed." Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">3</Value>
+    <Setting Name="OpenVPNInteractiveServiceInstance" Description="Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:&#xD;&#xA; - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client.&#xD;&#xA; - &quot;&quot; - Use original OpenVPN installation." Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OpenVPNInterfaceID" Description="Which TAP interface to use when connecting.&#xD;&#xA; Leave &quot;00000000-0000-0000-0000-000000000000&quot; for auto-selection by openvpn.exe." Type="System.Guid" Scope="User">
       <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>
@@ -32,20 +29,32 @@
     <Setting Name="AutoStartProfile" Description="Profile to automatically connect to on startup" Type="eduVPN.Xml.StartSessionParams" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="SecureInternetOrganization" Description="User's home organization for secure internet use" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SecureInternetConnectingServer" Description="Last connecting server for secure internet use" Type="System.Uri" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="InstituteAccessServers" Description="List of institute access servers user connects to" Type="eduVPN.Xml.UriList" Scope="User">
+      <Value Profile="(Default)">&lt;UriList/&gt;</Value>
+    </Setting>
+    <Setting Name="OwnServers" Description="List of own servers user connects to" Type="eduVPN.Xml.UriList" Scope="User">
+      <Value Profile="(Default)">&lt;UriList/&gt;</Value>
+    </Setting>
+    <Setting Name="ServersDiscovery" Description="Server list discovery URI" Type="eduVPN.Xml.ResourceRef" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OrganizationsDiscovery" Description="Organization list discovery URI" Type="eduVPN.Xml.ResourceRef" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SelfUpdateDiscovery" Description="Self-updating feature base URI&#xD;&#xA; Set to empty to disable self-updating." Type="eduVPN.Xml.ResourceRef" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="ResponseCache" Description="Cache of sequenced JSON responses" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User">
       <Value Profile="(Default)">&lt;JSONResponseDictionary/&gt;</Value>
     </Setting>
-    <Setting Name="SecureInternetInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
-    </Setting>
-    <Setting Name="InstituteAccessInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
-    </Setting>
     <Setting Name="AccessTokenCache" Description="Access token cache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
       <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
-    </Setting>
-    <Setting Name="InstanceSettings" Description="Instance-specific user settings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

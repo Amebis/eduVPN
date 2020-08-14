@@ -20,7 +20,7 @@ namespace eduVPN.Converters
         #region Fields
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly TimeSpan _one_day = new TimeSpan(1, 0, 0, 0);
+        private static readonly TimeSpan OneDay = new TimeSpan(1, 0, 0, 0);
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace eduVPN.Converters
         {
             return value is TimeSpan timespan ?
                 timespan.ToString(
-                    timespan < _one_day ?
+                    timespan < OneDay ?
                         Views.Resources.Strings.TimeSpanInSeconds :
                         Views.Resources.Strings.TimeSpanInSecondsWithDays,
                     culture) :

@@ -6,7 +6,6 @@
 */
 
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace eduVPN.Models
 {
@@ -70,10 +69,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Certificate check result
         /// </summary>
-        public ReasonType Result { get => _result; }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ReasonType _result;
+        public ReasonType Result { get; private set; }
 
         #endregion
 
@@ -91,24 +87,24 @@ namespace eduVPN.Models
 
             // Set check result.
             if (eduJSON.Parser.GetValue<bool>(obj2, "is_valid"))
-                _result = ReasonType.Valid;
+                Result = ReasonType.Valid;
             else if (eduJSON.Parser.GetValue(obj2, "reason", out string reason))
             {
                 // Parse reason for check failure.
                 switch (reason)
                 {
-                    case "certificate_missing"      : _result = ReasonType.CertificateMissing    ; break;
-                    case "user_disabled"            : _result = ReasonType.UserDisabled          ; break;
-                    case "certificate_disabled"     : _result = ReasonType.CertificateDisabled   ; break;
-                    case "certificate_not_yet_valid": _result = ReasonType.CertificateNotYetValid; break;
-                    case "certificate_expired"      : _result = ReasonType.CertificateExpired    ; break;
-                    default                         : _result = ReasonType.Invalid               ; break;
+                    case "certificate_missing": Result = ReasonType.CertificateMissing; break;
+                    case "user_disabled": Result = ReasonType.UserDisabled; break;
+                    case "certificate_disabled": Result = ReasonType.CertificateDisabled; break;
+                    case "certificate_not_yet_valid": Result = ReasonType.CertificateNotYetValid; break;
+                    case "certificate_expired": Result = ReasonType.CertificateExpired; break;
+                    default: Result = ReasonType.Invalid; break;
                 }
             }
             else
             {
                 // No reason specified.
-                _result = ReasonType.Invalid;
+                Result = ReasonType.Invalid;
             }
         }
 

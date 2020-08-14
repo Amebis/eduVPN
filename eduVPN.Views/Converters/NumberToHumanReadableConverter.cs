@@ -22,7 +22,7 @@ namespace eduVPN.Converters
         #region Fields
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly string[] _prefixes = new string[] { "", "k", "M", "G", "T", "P", "E" };
+        private static readonly string[] Prefixes = new string[] { "", "k", "M", "G", "T", "P", "E" };
 
         #endregion
 
@@ -33,36 +33,36 @@ namespace eduVPN.Converters
         /// </summary>
         public string Unit
         {
-            get { return _unit; }
-            set { SetProperty(ref _unit, value); }
+            get { return _Unit; }
+            set { SetProperty(ref _Unit, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _unit = "";
+        private string _Unit = "";
 
         /// <summary>
         /// Metric base (Default 1000)
         /// </summary>
         public int Base
         {
-            get { return _base; }
-            set { SetProperty(ref _base, value); }
+            get { return _Base; }
+            set { SetProperty(ref _Base, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _base = 1000;
+        private int _Base = 1000;
 
         /// <summary>
         /// Return empty string when number is 0?
         /// </summary>
         public bool EmptyIfZero
         {
-            get { return _empty_if_zero; }
-            set { SetProperty(ref _empty_if_zero, value); }
+            get { return _EmptyIfZero; }
+            set { SetProperty(ref _EmptyIfZero, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool _empty_if_zero = false;
+        private bool _EmptyIfZero = false;
 
         #endregion
 
@@ -82,20 +82,20 @@ namespace eduVPN.Converters
                 return null;
 
             double number = System.Convert.ToDouble(value);
-            int b = parameter != null ? System.Convert.ToInt32(parameter) : _base;
+            int b = parameter != null ? System.Convert.ToInt32(parameter) : Base;
 
-            if (number <= 0.5 && _empty_if_zero)
+            if (number <= 0.5 && EmptyIfZero)
                 return "";
 
-            int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(b)), _prefixes.Length) : 0;
+            int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(b)), Prefixes.Length) : 0;
             double x = number / Math.Pow(b, n);
-            return String.Format(
+            return string.Format(
                 Views.Resources.Strings.NumberToHumanReadable,
                 n > 0 && Math.Abs(x) < 10 ?
-                    (Math.Truncate(x * 10)/10).ToString("N1") :
-                     Math.Truncate(x     )    .ToString(    ),
-                _prefixes[n],
-                _unit);
+                    (Math.Truncate(x * 10) / 10).ToString("N1") :
+                     Math.Truncate(x).ToString(),
+                Prefixes[n],
+                Unit);
         }
 
         /// <summary>

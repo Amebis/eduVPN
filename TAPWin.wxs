@@ -55,7 +55,7 @@
             Id="libopenvpnmsica.dll"
             SourceFile="bin\OpenVPN\$(var.Platform)\libopenvpnmsica.dll"/>
 
-        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUrl)"/>
+        <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUri)"/>
         <Property Id="ARPNOMODIFY" Value="1"/>
         <Property Id="ARPNOREPAIR" Value="1"/>
         <Property Id="DISABLEROLLBACK" Value="yes"/>
@@ -288,7 +288,7 @@
 
             <Column
                 Id="HardwareId"
-                Description="Device hardware ID."
+                Description="Device hardware Id."
                 Category="Text"
                 Type="string"
                 Width="100"

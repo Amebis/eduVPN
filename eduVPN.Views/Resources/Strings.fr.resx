@@ -177,13 +177,13 @@ Le client poursuivra une fois l'autorisation terminée...</value>
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>Le paramétre OAuth requis "state" est manquant ou incorrect.  </value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+  <data name="InstanceSourcePageCustomTitle" xml:space="preserve">
     <value>Ajouter _d'autres Adresses</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessTitle2" xml:space="preserve">
     <value>Connectez-vous à votre _Institution</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetTitle2" xml:space="preserve">
     <value>_Utilisez internet en toute sécurité</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
@@ -220,25 +220,25 @@ Le client poursuivra une fois l'autorisation terminée...</value>
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddTitle" xml:space="preserve">
     <value>Ajouter_un autre</value>
   </data>
-  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptAskLaterTitle" xml:space="preserve">
     <value>Me demander _plus tard</value>
   </data>
-  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptChangelogTitle" xml:space="preserve">
     <value>Quoi de_Neuf ?</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePromptMessage3" xml:space="preserve">
     <value>Une version plus récente et améliorée du client est disponible. Restez à jour !</value>
   </data>
-  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptSkipTitle" xml:space="preserve">
     <value>Passez cette _version</value>
   </data>
-  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptTitle" xml:space="preserve">
     <value>Mise à jour Disponible</value>
   </data>
-  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptUpdateTitle" xml:space="preserve">
     <value>Télécharger et _mettre à jour maintenant
 (Le client va redémarrer)</value>
   </data>
@@ -263,7 +263,7 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Sélectionnez TAP _Interface</value>
   </data>
-  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+  <data name="StatusPageDisconnectTitle" xml:space="preserve">
     <value>Déconnecté</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
@@ -293,7 +293,7 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>Info de Connexion</value>
   </data>
-  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogTitle" xml:space="preserve">
     <value>Voir _log</value>
   </data>
   <data name="StatusPageStatus" xml:space="preserve">

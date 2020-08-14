@@ -15,6 +15,7 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable instance source base class
     /// </summary>
+    [Obsolete]
     public class InstanceSourceSettingsBase : IXmlSerializable
     {
         #region Properties

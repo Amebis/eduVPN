@@ -13,7 +13,6 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -35,33 +34,33 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)
         /// </summary>
-        private string _instance_name;
+        private readonly string InstanceName;
 
         /// <summary>
-        /// OpenVPN connection ID
+        /// OpenVPN connection identifier
         /// </summary>
-        /// <remarks>Connection ID determines .conf and .log filenames.</remarks>
-        private string _connection_id;
+        /// <remarks>Connection identifier determines .conf and .log filenames.</remarks>
+        private readonly string ConnectionId;
 
         /// <summary>
         /// OpenVPN working folder
         /// </summary>
-        private string _working_folder;
+        private readonly string WorkingFolder;
 
         /// <summary>
         /// Client certificate
         /// </summary>
-        private X509Certificate2 _client_certificate;
+        private X509Certificate2 ClientCertificate;
 
         /// <summary>
         /// Profile configuration
         /// </summary>
-        private string _profile_config;
+        private string ProfileConfig;
 
         /// <summary>
         /// Should HOLD hint on reconnect be ignored?
         /// </summary>
-        private bool _ignore_hold_hint;
+        private bool IgnoreHoldHint;
 
         #endregion
 
@@ -70,12 +69,12 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN profile configuration file path
         /// </summary>
-        string ConfigurationPath { get => _working_folder + _connection_id + ".conf"; }
+        string ConfigurationPath { get => WorkingFolder + ConnectionId + ".conf"; }
 
         /// <summary>
         /// OpenVPN connection log
         /// </summary>
-        string LogPath { get => _working_folder + _connection_id + ".txt"; }
+        string LogPath { get => WorkingFolder + ConnectionId + ".txt"; }
 
         #endregion
 
@@ -84,27 +83,27 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
-        /// <param name="instance_name">OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)</param>
+        /// <param name="instanceName">OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)</param>
         /// <param name="wizard">The connecting wizard</param>
-        /// <param name="authenticating_instance">Authenticating eduVPN instance</param>
-        /// <param name="connecting_profile">Connecting eduVPN profile</param>
-        public OpenVPNSession(string instance_name, ConnectWizard wizard, Instance authenticating_instance, Profile connecting_profile) :
-            base(wizard, authenticating_instance, connecting_profile)
+        /// <param name="authenticatingServer">Authenticating eduVPN server</param>
+        /// <param name="connectingProfile">Connecting eduVPN profile</param>
+        public OpenVPNSession(string instanceName, ConnectWizard wizard, Server authenticatingServer, Profile connectingProfile) :
+            base(wizard, authenticatingServer, connectingProfile)
         {
-            _instance_name = instance_name;
-            _connection_id = Guid.NewGuid().ToString();
+            InstanceName = instanceName;
+            ConnectionId = Guid.NewGuid().ToString();
             try
             {
                 // Use OpenVPN configuration folder.
-                using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                 {
-                    using (var key = hklm_key.OpenSubKey("SOFTWARE\\OpenVPN" + _instance_name, false))
+                    using (var key = hklmKey.OpenSubKey("SOFTWARE\\OpenVPN" + InstanceName, false))
                     {
-                        _working_folder = key.GetValue("config_dir").ToString().TrimEnd();
-                        string path_separator = Path.DirectorySeparatorChar.ToString();
-                        if (!_working_folder.EndsWith(path_separator))
-                            _working_folder += path_separator;
-                        if (!Directory.Exists(_working_folder))
+                        WorkingFolder = key.GetValue("config_dir").ToString().TrimEnd();
+                        string pathSeparator = Path.DirectorySeparatorChar.ToString();
+                        if (!WorkingFolder.EndsWith(pathSeparator))
+                            WorkingFolder += pathSeparator;
+                        if (!Directory.Exists(WorkingFolder))
                             throw new FileNotFoundException();
                     }
                 }
@@ -112,7 +111,7 @@ namespace eduVPN.ViewModels.VPN
             catch
             {
                 // Use temporary folder.
-                _working_folder = Path.GetTempPath();
+                WorkingFolder = Path.GetTempPath();
             }
 
             // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
@@ -121,16 +120,16 @@ namespace eduVPN.ViewModels.VPN
                 DispatcherPriority.Normal, (object sender, EventArgs e) => ShowLog.RaiseCanExecuteChanged(),
                 Wizard.Dispatcher).Start();
 
-            _pre_run_actions.Add(() =>
+            PreRun.Add(() =>
             {
                 // Get profile's OpenVPN configuration.
-                _profile_config = ConnectingProfile.GetOpenVPNConfig(_quit.Token);
+                ProfileConfig = ConnectingProfile.GetOpenVPNConfig(SessionAndWindowInProgress.Token);
             });
 
-            _pre_run_actions.Add(() =>
+            PreRun.Add(() =>
             {
-                // Get instance client certificate.
-                _client_certificate = ConnectingProfile.Instance.GetClientCertificate(AuthenticatingInstance, _quit.Token);
+                // Get client certificate.
+                ClientCertificate = ConnectingProfile.Server.GetClientCertificate(AuthenticatingServer, SessionAndWindowInProgress.Token);
             });
         }
 
@@ -139,25 +138,25 @@ namespace eduVPN.ViewModels.VPN
         #region Methods
 
         /// <inheritdoc/>
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "FileStream tolerates multiple disposes.")]
         protected override void DoRun()
         {
-            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1)));
+            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
             try
             {
                 try
                 {
                     // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
-                    var mgmt_server = new TcpListener(IPAddress.Loopback, 0);
-                    mgmt_server.Start();
+                    var mgmtServer = new TcpListener(IPAddress.Loopback, 0);
+                    mgmtServer.Start();
                     try
                     {
                         try
                         {
                             // Purge stale log files.
                             var timestamp = DateTime.UtcNow.Subtract(new TimeSpan(30, 0, 0, 0));
-                            foreach (var f in Directory.EnumerateFiles(_working_folder, "*.txt", SearchOption.TopDirectoryOnly)) {
-                                _quit.Token.ThrowIfCancellationRequested();
+                            foreach (var f in Directory.EnumerateFiles(WorkingFolder, "*.txt", SearchOption.TopDirectoryOnly))
+                            {
+                                SessionAndWindowInProgress.Token.ThrowIfCancellationRequested();
                                 if (File.GetLastWriteTimeUtc(f) <= timestamp)
                                 {
                                     try { File.Delete(LogPath); }
@@ -185,37 +184,37 @@ namespace eduVPN.ViewModels.VPN
                                 if (Properties.Settings.Default.OpenVPNRemoveOptions is StringCollection)
                                 {
                                     // Remove options on the OpenVPNRemoveOptions list on the fly.
-                                    using (var sr = new StringReader(_profile_config))
+                                    using (var sr = new StringReader(ProfileConfig))
                                     {
-                                        string inline_term = null;
-                                        bool inline_remove = false;
+                                        string inlineTerm = null;
+                                        bool inlineRemove = false;
                                         for (; ; )
                                         {
                                             var line = sr.ReadLine();
                                             if (line == null)
                                                 break;
 
-                                            var line_t = line.Trim();
-                                            if (!String.IsNullOrEmpty(line_t))
+                                            var trimmedLine = line.Trim();
+                                            if (!string.IsNullOrEmpty(trimmedLine))
                                             {
                                                 // Not an empty line.
-                                                if (inline_term == null)
+                                                if (inlineTerm == null)
                                                 {
                                                     // Not inside an inline option block = Regular parsing mode.
-                                                    if (!line_t.StartsWith("#") &&
-                                                        !line_t.StartsWith(";"))
+                                                    if (!trimmedLine.StartsWith("#") &&
+                                                        !trimmedLine.StartsWith(";"))
                                                     {
                                                         // Not a comment.
-                                                        var option = eduOpenVPN.Configuration.ParseParams(line_t);
+                                                        var option = eduOpenVPN.Configuration.ParseParams(trimmedLine);
                                                         if (option.Count > 0)
                                                         {
                                                             if (option[0].StartsWith("<") && !option[0].StartsWith("</") && option[0].EndsWith(">"))
                                                             {
                                                                 // Start of an inline option.
                                                                 var o = option[0].Substring(1, option[0].Length - 2);
-                                                                inline_term = "</" + o + ">";
-                                                                inline_remove = Properties.Settings.Default.OpenVPNRemoveOptions.Contains(o);
-                                                                if (inline_remove)
+                                                                inlineTerm = "</" + o + ">";
+                                                                inlineRemove = Properties.Settings.Default.OpenVPNRemoveOptions.Contains(o);
+                                                                if (inlineRemove)
                                                                 {
                                                                     sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
                                                                     line = "# " + line;
@@ -232,16 +231,16 @@ namespace eduVPN.ViewModels.VPN
                                                 else
                                                 {
                                                     // Inside an inline option block.
-                                                    if (inline_remove)
+                                                    if (inlineRemove)
                                                     {
                                                         // Remove the inline option content.
                                                         line = "# " + line;
                                                     }
 
-                                                    if (line_t == inline_term)
+                                                    if (trimmedLine == inlineTerm)
                                                     {
                                                         // Inline option terminator found. Returning to regular parsing mode.
-                                                        inline_term = null;
+                                                        inlineTerm = null;
                                                     }
                                                 }
                                             }
@@ -251,7 +250,7 @@ namespace eduVPN.ViewModels.VPN
                                     }
                                 }
                                 else
-                                    sw.Write(_profile_config);
+                                    sw.Write(ProfileConfig);
 
                                 // Append eduVPN Client specific configuration directives.
                                 sw.WriteLine();
@@ -260,30 +259,30 @@ namespace eduVPN.ViewModels.VPN
 
                                 // Introduce ourself (to OpenVPN server).
                                 var assembly = Assembly.GetExecutingAssembly();
-                                var assembly_title_attribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
-                                var assembly_version = assembly?.GetName()?.Version;
-                                sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assembly_title_attribute?.Title + " " + assembly_version?.ToString()));
+                                var assemblyTitleAttribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
+                                var assemblyVersion = assembly?.GetName()?.Version;
+                                sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
 
-                                // Configure log file (relative to _working_folder).
-                                sw.WriteLine("log-append " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id + ".txt"));
+                                // Configure log file (relative to WorkingFolder).
+                                sw.WriteLine("log-append " + eduOpenVPN.Configuration.EscapeParamValue(ConnectionId + ".txt"));
 
                                 // Configure interaction between us and openvpn.exe.
-                                sw.WriteLine("management " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Address.ToString()) + " " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmt_server.LocalEndpoint).Port.ToString()) + " stdin");
+                                sw.WriteLine("management " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmtServer.LocalEndpoint).Address.ToString()) + " " + eduOpenVPN.Configuration.EscapeParamValue(((IPEndPoint)mgmtServer.LocalEndpoint).Port.ToString()) + " stdin");
                                 sw.WriteLine("management-client");
                                 sw.WriteLine("management-hold");
                                 sw.WriteLine("management-query-passwords");
                                 sw.WriteLine("management-query-remote");
 
                                 // Configure client certificate.
-                                sw.WriteLine("cert " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Instance.ClientCertificatePath));
-                                sw.WriteLine("key " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Instance.ClientCertificatePath));
+                                sw.WriteLine("cert " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Server.ClientCertificatePath));
+                                sw.WriteLine("key " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Server.ClientCertificatePath));
 
                                 // Ask when username/password is denied.
                                 sw.WriteLine("auth-retry interact");
                                 sw.WriteLine("auth-nocache");
 
                                 // Set TAP interface to be used.
-                                if (NetworkInterface.TryFromID(Properties.Settings.Default.OpenVPNInterfaceID, out var iface))
+                                if (NetworkInterface.TryFromId(Properties.Settings.Default.OpenVPNInterfaceID, out var iface))
                                     sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(iface.Name) + "\n");
 
 #if DEBUG
@@ -299,7 +298,7 @@ namespace eduVPN.ViewModels.VPN
                                     sw.WriteLine("rcvbuf 65536");
                                 }
 
-                                if (!String.IsNullOrWhiteSpace(Properties.Settings.Default.OpenVPNAddOptions))
+                                if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.OpenVPNAddOptions))
                                 {
                                     sw.WriteLine();
                                     sw.WriteLine();
@@ -309,7 +308,7 @@ namespace eduVPN.ViewModels.VPN
                             }
                         }
                         catch (OperationCanceledException) { throw; }
-                        catch (Exception ex) { throw new AggregateException(String.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
+                        catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
 
                         bool retry;
                         do
@@ -317,18 +316,18 @@ namespace eduVPN.ViewModels.VPN
                             retry = false;
 
                             // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
-                            using (var openvpn_interactive_service_connection = new eduOpenVPN.InteractiveService.Session())
+                            using (var openvpnInteractiveServiceConnection = new eduOpenVPN.InteractiveService.Session())
                             {
-                                var mgmt_password = Membership.GeneratePassword(16, 6);
+                                var mgmtPassword = Membership.GeneratePassword(16, 6);
                                 try
                                 {
-                                    openvpn_interactive_service_connection.Connect(
-                                        String.Format("openvpn{0}\\service", _instance_name),
-                                        _working_folder,
-                                        new string[] { "--config", _connection_id + ".conf", },
-                                        mgmt_password + "\n",
+                                    openvpnInteractiveServiceConnection.Connect(
+                                        string.Format("openvpn{0}\\service", InstanceName),
+                                        WorkingFolder,
+                                        new string[] { "--config", ConnectionId + ".conf", },
+                                        mgmtPassword + "\n",
                                         3000,
-                                        _quit.Token);
+                                        SessionAndWindowInProgress.Token);
                                 }
                                 catch (OperationCanceledException) { throw; }
                                 catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorInteractiveService, ex); }
@@ -336,17 +335,17 @@ namespace eduVPN.ViewModels.VPN
                                 try
                                 {
                                     // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
-                                    var mgmt_client_task = mgmt_server.AcceptTcpClientAsync();
-                                    try { mgmt_client_task.Wait(30000, _quit.Token); }
+                                    var mgmtClientTask = mgmtServer.AcceptTcpClientAsync();
+                                    try { mgmtClientTask.Wait(30000, SessionAndWindowInProgress.Token); }
                                     catch (AggregateException ex) { throw ex.InnerException; }
-                                    var mgmt_client = mgmt_client_task.Result;
+                                    var mgmtClient = mgmtClientTask.Result;
                                     try
                                     {
                                         // Start the management session.
-                                        var mgmt_session = new eduOpenVPN.Management.Session();
+                                        var mgmtSession = new eduOpenVPN.Management.Session();
 
                                         // Set event handlers.
-                                        mgmt_session.ByteCountReported += (object sender, ByteCountReportedEventArgs e) =>
+                                        mgmtSession.ByteCountReported += (object sender, ByteCountReportedEventArgs e) =>
                                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                 () =>
                                                 {
@@ -354,7 +353,7 @@ namespace eduVPN.ViewModels.VPN
                                                     BytesOut = e.BytesOut;
                                                 }));
 
-                                        mgmt_session.FatalErrorReported += (object sender, MessageReportedEventArgs e) =>
+                                        mgmtSession.FatalErrorReported += (object sender, MessageReportedEventArgs e) =>
                                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                 () =>
                                                 {
@@ -371,15 +370,13 @@ namespace eduVPN.ViewModels.VPN
                                                     Wizard.Error = new Exception(msg);
                                                 }));
 
-                                        mgmt_session.HoldReported += (object sender, HoldReportedEventArgs e) =>
+                                        mgmtSession.HoldReported += (object sender, HoldReportedEventArgs e) =>
                                         {
-                                            if (!_ignore_hold_hint && e.WaitHint > 0)
-                                                _quit.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
+                                            if (!IgnoreHoldHint && e.WaitHint > 0)
+                                                SessionAndWindowInProgress.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
                                         };
 
-                                        mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Wizard.OpenVPNSession_RequestPasswordAuthentication(this, e);
-
-                                        mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
+                                        mgmtSession.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
                                         {
                                             if (e.Protocol == ProtoType.UDP && Properties.Settings.Default.OpenVPNForceTCP)
                                                 e.Action = new RemoteSkipAction();
@@ -387,7 +384,7 @@ namespace eduVPN.ViewModels.VPN
                                                 e.Action = new RemoteAcceptAction();
                                         };
 
-                                        mgmt_session.StateReported += (object sender, StateReportedEventArgs e) =>
+                                        mgmtSession.StateReported += (object sender, StateReportedEventArgs e) =>
                                         {
                                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                 () =>
@@ -452,7 +449,7 @@ namespace eduVPN.ViewModels.VPN
                                                             break;
                                                     }
 
-                                                    if (!String.IsNullOrEmpty(e.Message))
+                                                    if (!string.IsNullOrEmpty(e.Message))
                                                     {
                                                         if (msg != null)
                                                         {
@@ -473,16 +470,7 @@ namespace eduVPN.ViewModels.VPN
                                                     IPv6TunnelAddress = e.IPv6Tunnel;
 
                                                     // Update connected time.
-                                                    if (e.State == OpenVPNStateType.Connected)
-                                                    {
-                                                        ConnectedSince = e.TimeStamp;
-                                                        _connected_time_updater.Start();
-                                                    }
-                                                    else
-                                                    {
-                                                        _connected_time_updater.Stop();
-                                                        ConnectedSince = null;
-                                                    }
+                                                    ConnectedAt = e.State == OpenVPNStateType.Connected ? (DateTimeOffset?)e.TimeStamp : null;
                                                 }));
 
                                             if (e.State == OpenVPNStateType.Reconnecting)
@@ -490,7 +478,7 @@ namespace eduVPN.ViewModels.VPN
                                                 switch (e.Message)
                                                 {
                                                     case "connection-reset": // Connection was reset.
-                                                        if (_client_certificate.NotAfter <= DateTime.Now)
+                                                        if (ClientCertificate.NotAfter <= DateTime.Now)
                                                         {
                                                             // Client certificate expired. Try with a new client certificate then.
                                                             goto case "tls-error";
@@ -498,44 +486,44 @@ namespace eduVPN.ViewModels.VPN
                                                         goto default;
 
                                                     case "auth-failure": // Client certificate was deleted/revoked on the server side, or the user is disabled.
-                                                    case "tls-error": // Client certificate is not compliant with this eduVPN instance. Was eduVPN instance reinstalled?
+                                                    case "tls-error": // Client certificate is not compliant with this eduVPN server. Was eduVPN server reinstalled?
                                                         // Refresh client certificate.
-                                                        _client_certificate = ConnectingProfile.Instance.RefreshClientCertificate(AuthenticatingInstance, _quit.Token);
-                                                        _ignore_hold_hint = true;
+                                                        ClientCertificate = ConnectingProfile.Server.RefreshClientCertificate(AuthenticatingServer, SessionAndWindowInProgress.Token);
+                                                        IgnoreHoldHint = true;
                                                         break;
 
                                                     default:
-                                                        _ignore_hold_hint = false;
+                                                        IgnoreHoldHint = false;
                                                         break;
                                                 }
 
-                                                mgmt_session.QueueReleaseHold(_quit.Token);
+                                                mgmtSession.QueueReleaseHold(SessionAndWindowInProgress.Token);
                                             }
                                         };
 
-                                        mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, _quit.Token);
+                                        mgmtSession.Start(mgmtClient.GetStream(), mgmtPassword, SessionAndWindowInProgress.Token);
 
                                         // Initialize session and release openvpn.exe to get started.
-                                        mgmt_session.SetVersion(3, _quit.Token);
-                                        mgmt_session.ReplayAndEnableState(_quit.Token);
-                                        mgmt_session.ReplayAndEnableEcho(_quit.Token);
-                                        mgmt_session.SetByteCount(5, _quit.Token);
-                                        mgmt_session.ReleaseHold(_quit.Token);
+                                        mgmtSession.SetVersion(3, SessionAndWindowInProgress.Token);
+                                        mgmtSession.ReplayAndEnableState(SessionAndWindowInProgress.Token);
+                                        mgmtSession.ReplayAndEnableEcho(SessionAndWindowInProgress.Token);
+                                        mgmtSession.SetByteCount(5, SessionAndWindowInProgress.Token);
+                                        mgmtSession.ReleaseHold(SessionAndWindowInProgress.Token);
 
-                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(-1)));
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--));
                                         try
                                         {
                                             // Wait for the session to end gracefully.
-                                            mgmt_session.Monitor.Join();
-                                            if (mgmt_session.Error != null && !(mgmt_session.Error is OperationCanceledException))
+                                            mgmtSession.Monitor.Join();
+                                            if (mgmtSession.Error != null && !(mgmtSession.Error is OperationCanceledException))
                                             {
                                                 // Session reported an error. Retry.
                                                 retry = true;
                                             }
                                         }
-                                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.ChangeTaskCount(+1))); }
+                                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++)); }
                                     }
-                                    finally { mgmt_client.Close(); }
+                                    finally { mgmtClient.Close(); }
                                 }
                                 finally
                                 {
@@ -547,14 +535,13 @@ namespace eduVPN.ViewModels.VPN
                                             StateDescription = Resources.Strings.OpenVPNStateTypeExiting;
                                             TunnelAddress = null;
                                             IPv6TunnelAddress = null;
-                                            _connected_time_updater.Stop();
-                                            ConnectedSince = null;
+                                            ConnectedAt = null;
                                             BytesIn = null;
                                             BytesOut = null;
                                         }));
 
                                     // Wait for openvpn.exe to finish. Maximum 30s.
-                                    try { Process.GetProcessById(openvpn_interactive_service_connection.ProcessId)?.WaitForExit(30000); }
+                                    try { Process.GetProcessById(openvpnInteractiveServiceConnection.ProcessId)?.WaitForExit(30000); }
                                     catch (ArgumentException) { }
                                 }
                             }
@@ -562,7 +549,7 @@ namespace eduVPN.ViewModels.VPN
                     }
                     finally
                     {
-                        mgmt_server.Stop();
+                        mgmtServer.Stop();
                     }
                 }
                 finally
@@ -581,7 +568,7 @@ namespace eduVPN.ViewModels.VPN
                         State = VPNSessionStatusType.Initializing;
                         StateDescription = "";
 
-                        Wizard.ChangeTaskCount(-1);
+                        Wizard.TaskCount--;
                     }));
             }
         }

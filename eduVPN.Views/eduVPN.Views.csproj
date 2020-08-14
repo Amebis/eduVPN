@@ -37,77 +37,62 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Controls\ImageWithFallback.cs" />
-    <Compile Include="Converters\BooleanInverseVisibilityConverter.cs" />
+    <Compile Include="Controls\Label.cs" />
+    <Compile Include="Converters\ActiveProfileEqualSelectedProfileConverter.cs" />
+    <Compile Include="Converters\ActiveProfileEqualSelectedProfileToggleConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
-    <Compile Include="Converters\CommandRowHeightConverter.cs" />
-    <Compile Include="Converters\CommandVisibilityConverter.cs" />
-    <Compile Include="Converters\ConnectingInstanceEqualVisibilityConverter.cs" />
-    <Compile Include="Converters\ConnectingProfileEqualVisibilityConverter.cs" />
+    <Compile Include="Converters\CountRowHeightAutoConverter.cs" />
+    <Compile Include="Converters\CountRowHeightOneStarConverter.cs" />
+    <Compile Include="Converters\CountryCodeFlagConverter.cs" />
+    <Compile Include="Converters\EmptySearchResultRowHeightConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\FlowDirectionConverter.cs" />
-    <Compile Include="Converters\InstanceSourceInverseVisibilityConverter.cs" />
-    <Compile Include="Converters\InstanceSourceRowHeightConverter.cs" />
-    <Compile Include="Converters\InstanceSourceTitleConverter.cs" />
-    <Compile Include="Converters\InstanceSourceVisibilityConverter.cs" />
-    <Compile Include="Converters\MessageListVisibilityConverter.cs" />
+    <Compile Include="Converters\HomePageOwnServerLabelConverter.cs" />
+    <Compile Include="Converters\IntegerInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\IntegerVisibilityConverter.cs" />
+    <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
+    <Compile Include="Converters\MultipleProfilesVisibilityConverter.cs" />
     <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
-    <Compile Include="Converters\StringVisibilityConverter.cs" />
+    <Compile Include="Converters\SingleProfileVisibilityConverter.cs" />
+    <Compile Include="Converters\StringInverseVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
-    <Compile Include="Converters\UnavailableIconVisibilityConverter.cs" />
+    <Compile Include="Converters\UriStripProtocolConverter.cs" />
+    <Compile Include="Converters\VPNSessionStatusTypeDescriptionConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
     <Compile Include="Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AuthenticatingCountrySelectPage.xaml.cs">
-      <DependentUpon>AuthenticatingCountrySelectPage.xaml</DependentUpon>
+    <Compile Include="Pages\SelectOwnServerPage.xaml.cs">
+      <DependentUpon>SelectOwnServerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AuthenticatingInstanceSelectPage.cs" />
-    <Compile Include="Pages\AuthenticatingInstituteSelectPage.xaml.cs">
-      <DependentUpon>AuthenticatingInstituteSelectPage.xaml</DependentUpon>
+    <Compile Include="Pages\SelectSecureInternetServerPage.cs">
+      <DependentUpon>SelectSecureInternetServerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ConnectingProfileSelectPage.xaml.cs">
-      <DependentUpon>ConnectingProfileSelectPage.xaml</DependentUpon>
+    <Compile Include="Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ConnectWizardPage.cs" />
-    <Compile Include="Pages\CustomInstancePage.xaml.cs">
-      <DependentUpon>CustomInstancePage.xaml</DependentUpon>
+    <Compile Include="Pages\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\InitializingPage.xaml.cs">
-      <DependentUpon>InitializingPage.xaml</DependentUpon>
+    <Compile Include="Pages\AuthorizationPage.xaml.cs">
+      <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\InstanceSourceSelectPage.xaml.cs">
-      <DependentUpon>InstanceSourceSelectPage.xaml</DependentUpon>
+    <Compile Include="Pages\SelfUpdatePromptPage.xaml.cs">
+      <DependentUpon>SelfUpdatePromptPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RecentConfigurationSelectPage.xaml.cs">
-      <DependentUpon>RecentConfigurationSelectPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SelfUpdatingPage.xaml.cs">
-      <DependentUpon>SelfUpdatingPage.xaml</DependentUpon>
+    <Compile Include="Pages\SelfUpdateProgressPage.xaml.cs">
+      <DependentUpon>SelfUpdateProgressPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\StatusPage.xaml.cs">
-      <DependentUpon>StatusPage.xaml</DependentUpon>
+    <Compile Include="Pages\ConnectionPage.xaml.cs">
+      <DependentUpon>ConnectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\ConnectingInstanceAndProfileSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingInstanceAndProfileSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingInstanceProfileSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingInstanceProfileSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingInstanceSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingInstanceSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingProfileSelectPanel.xaml.cs">
-      <DependentUpon>ConnectingProfileSelectPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\ConnectingSelectPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
@@ -119,22 +104,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Windows\AuthorizationPopup.xaml.cs">
-      <DependentUpon>AuthorizationPopup.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\TextBlock.cs" />
     <Compile Include="Windows\ConnectWizard.xaml.cs">
       <DependentUpon>ConnectWizard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\PasswordPopup.xaml.cs">
-      <DependentUpon>PasswordPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\SelfUpdatePopup.xaml.cs">
-      <DependentUpon>SelfUpdatePopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\UsernamePasswordPopup.xaml.cs">
-      <DependentUpon>UsernamePasswordPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eduEx\eduEx\eduEx.csproj">
@@ -156,18 +129,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="eduVPN.Views.wxs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="Resources\Fonts\OpenSans-Bold.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-BoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-ExtraBold.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-Italic.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-Light.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-LightItalic.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-Regular.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-Semibold.ttf" />
+    <Resource Include="Resources\Fonts\OpenSans-SemiboldItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.ar.resx" />
-    <EmbeddedResource Include="Resources\Strings.de.resx" />
-    <EmbeddedResource Include="Resources\Strings.nb.resx" />
+    <EmbeddedResource Include="Resources\Strings.ar.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.nb.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
@@ -187,47 +175,35 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Blank.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconError.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnected.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Pages\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\AuthenticatingCountrySelectPage.xaml">
+    <Page Include="Pages\SelectOwnServerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\AuthenticatingInstituteSelectPage.xaml">
+    <Page Include="Pages\SelectSecureInternetServerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\ConnectingProfileSelectPage.xaml">
+    <Page Include="Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\CustomInstancePage.xaml">
+    <Page Include="Pages\SearchPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\InitializingPage.xaml">
+    <Page Include="Pages\AuthorizationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\InstanceSourceSelectPage.xaml">
+    <Page Include="Pages\SelfUpdatePromptPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\RecentConfigurationSelectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\SelfUpdatingPage.xaml">
+    <Page Include="Pages\SelfUpdateProgressPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -235,27 +211,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\StatusPage.xaml">
+    <Page Include="Pages\ConnectionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\ConnectingInstanceAndProfileSelectPanel.xaml">
+    <Page Include="Resources\ColorsDark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\ConnectingInstanceProfileSelectPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\ConnectingInstanceSelectPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\ConnectingProfileSelectPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Constants.xaml">
+    <Page Include="Resources\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -263,7 +227,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\DataTemplates.xaml">
+    <Page Include="Resources\Flags.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -275,23 +239,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\AuthorizationPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Windows\ConnectWizard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\PasswordPopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\SelfUpdatePopup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\UsernamePasswordPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

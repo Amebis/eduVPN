@@ -6,20 +6,18 @@
 */
 
 using eduEx.System;
-using eduVPN.Models;
 using eduVPN.ViewModels.VPN;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Web;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
-
+using System.Windows.Interop;
 
 namespace eduVPN.Views.Windows
 {
@@ -28,37 +26,33 @@ namespace eduVPN.Views.Windows
     /// </summary>
     public partial class ConnectWizard : Window, IDisposable
     {
+        #region Constants
+
+        private const int WM_WININICHANGE = 0x001A;
+
+        #endregion
+
         #region Fields
-
-        /// <summary>
-        /// HTTP listener for OAuth authorization callback and response
-        /// </summary>
-        private eduOAuth.HttpListener _http_listener;
-
-        /// <summary>
-        /// Authorization pop-up windows
-        /// </summary>
-        private Dictionary<string, System.Windows.Window> _authorization_popups = new Dictionary<string, System.Windows.Window>();
 
         /// <summary>
         /// VPN session state
         /// </summary>
-        private VPNSessionStatusType _session_state;
+        private VPNSessionStatusType SessionState;
 
         /// <summary>
-        /// Tray icon
+        /// Icon on the notification tray
         /// </summary>
-        private System.Windows.Forms.NotifyIcon _tray_icon;
+        private System.Windows.Forms.NotifyIcon NotifyIcon;
 
         /// <summary>
-        /// Cached icons to be used by <see cref="_tray_icon"/>
+        /// Cached icons to be used by <see cref="NotifyIcon"/>
         /// </summary>
-        private Dictionary<VPNSessionStatusType, Icon> _icons;
+        private Dictionary<VPNSessionStatusType, Icon> Icons;
 
         /// <summary>
         /// Flag to prevent/force closing
         /// </summary>
-        private bool _do_close = false;
+        private bool DoClose = false;
 
         #endregion
 
@@ -71,13 +65,13 @@ namespace eduVPN.Views.Windows
         {
             get
             {
-                var view_model = (ViewModels.Windows.ConnectWizard)DataContext;
+                var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
                 return
-                    (view_model != null && view_model.ActiveSession.ConnectingProfile != null ?
-                        String.Format("{0} - {1}\r\n{2}",
-                            view_model.ActiveSession.ConnectingProfile?.Instance,
-                            view_model.ActiveSession.ConnectingProfile,
-                            view_model.ActiveSession.StateDescription) :
+                    (viewModel != null && viewModel.ConnectionPage.ActiveSession.ConnectingProfile != null ?
+                        string.Format("{0} - {1}\r\n{2}",
+                            viewModel.ConnectionPage.ActiveSession.ConnectingProfile?.Server,
+                            viewModel.ConnectionPage.ActiveSession.ConnectingProfile,
+                            viewModel.ConnectionPage.ActiveSession.StateDescription) :
                         eduVPN.Properties.Settings.Default.ClientTitle).Left(63);
             }
         }
@@ -89,10 +83,35 @@ namespace eduVPN.Views.Windows
         {
             get
             {
-                var view_model = (ViewModels.Windows.ConnectWizard)DataContext;
-                return view_model != null ? _icons[view_model.ActiveSession.State] : null;
+                var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
+                return viewModel != null ? Icons[viewModel.ConnectionPage.ActiveSession.State] : null;
             }
         }
+
+        /// <summary>
+        /// Use dark theme
+        /// </summary>
+        public bool UseDarkTheme
+        {
+            get { return (bool)GetValue(UseDarkThemeProperty); }
+            set { SetValue(UseDarkThemeProperty, value); }
+        }
+
+        public static readonly DependencyProperty UseDarkThemeProperty =
+            DependencyProperty.Register(
+                nameof(UseDarkTheme),
+                typeof(bool),
+                typeof(ConnectWizard),
+                new FrameworkPropertyMetadata(
+                    false,
+                    FrameworkPropertyMetadataOptions.AffectsRender,
+                    (DependencyObject d, DependencyPropertyChangedEventArgs e) =>
+                    {
+                        var src = new Uri(new Uri("pack://application:,,,/eduVPN.Views;component/Resources/"), (bool)e.NewValue ? "ColorsDark.xaml" : "Colors.xaml");
+                        var mergedDictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(dict => dict.Contains("WindowColor"));
+                        if (mergedDictionary != null)
+                            mergedDictionary.Source = src;
+                    }));
 
         #endregion
 
@@ -103,12 +122,7 @@ namespace eduVPN.Views.Windows
         /// </summary>
         public ConnectWizard()
         {
-            // Launch HTTP listener on the loopback interface.
-            _http_listener = new eduOAuth.HttpListener(IPAddress.Loopback, 0);
-            _http_listener.HttpCallback += HttpListener_HttpCallback;
-            _http_listener.HttpRequest += HttpListener_HttpRequest;
-            _http_listener.Start();
-
+            RefreshUseDarkTheme();
             InitializeComponent();
         }
 
@@ -127,7 +141,7 @@ namespace eduVPN.Views.Windows
             if (!double.IsNaN(Properties.Settings.Default.WindowTop))
                 Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
 
-            Application.Current.SessionEnding += (object sender, SessionEndingCancelEventArgs e_session_end) =>
+            Application.Current.SessionEnding += (object sender, SessionEndingCancelEventArgs e2) =>
             {
                 // Save window position on logout.
                 Properties.Settings.Default.WindowTop = Top;
@@ -135,79 +149,75 @@ namespace eduVPN.Views.Windows
             };
 
             // Preload icons to be used on system tray.
-            var icon_size = System.Windows.Forms.SystemInformation.SmallIconSize;
-            _icons = new Dictionary<VPNSessionStatusType, Icon>();
-            foreach (var status_type in Enum.GetValues(typeof(VPNSessionStatusType)).Cast<VPNSessionStatusType>())
+            var iconSize = System.Windows.Forms.SystemInformation.SmallIconSize;
+            Icons = new Dictionary<VPNSessionStatusType, Icon>();
+            foreach (var statusType in Enum.GetValues(typeof(VPNSessionStatusType)).Cast<VPNSessionStatusType>())
             {
-                var icon_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
-                try { _icons.Add(status_type, new Icon(Application.GetResourceStream(icon_uri).Stream, icon_size)); }
-                catch { _icons.Add(status_type, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico")).Stream, icon_size)); }
+                var iconUri = new Uri(string.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico", Enum.GetName(typeof(VPNSessionStatusType), statusType)));
+                try { Icons.Add(statusType, new Icon(Application.GetResourceStream(iconUri).Stream, iconSize)); }
+                catch { Icons.Add(statusType, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico")).Stream, iconSize)); }
             }
 
             // Attach to view model events.
-            var view_model = (ViewModels.Windows.ConnectWizard)DataContext;
-            view_model.RequestInstanceAuthorization += ConnectWizard_RequestInstanceAuthorization;
-            view_model.RequestOpenVPNPasswordAuthentication += ConnectWizard_RequestOpenVPNPasswordAuthentication;
-            view_model.RequestOpenVPNUsernamePasswordAuthentication += ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication;
-            view_model.PromptSelfUpdate += ConnectWizard_PromptSelfUpdate;
-            view_model.QuitApplication += ConnectWizard_QuitApplication;
+            var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
+            viewModel.QuitApplication += ConnectWizard_QuitApplication;
 
             // Create notify icon, set default icon, and setup events.
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
-            _tray_icon = new System.Windows.Forms.NotifyIcon()
+            NotifyIcon = new System.Windows.Forms.NotifyIcon()
             {
                 Text = TrayIconToolTipText,
                 Icon = TrayIcon
             };
-            _tray_icon.Click += TrayIcon_Click;
+            NotifyIcon.Click += NotifyIcon_Click;
 
-            // Bind to "ActiveSession.StateDescription" and "ActiveSession.State" property to keep tray icon up-to-date.
-            view_model.PropertyChanged += (object sender, PropertyChangedEventArgs e2) =>
+            // Bind to "ConnectionPage.ActiveSession.StateDescription" and "ConnectionPage.ActiveSession.State" property to keep tray icon up-to-date.
+            viewModel.ConnectionPage.PropertyChanged += (object sender, PropertyChangedEventArgs e2) =>
             {
-                if (e2.PropertyName == nameof(view_model.ActiveSession))
+                if (e2.PropertyName == nameof(viewModel.ConnectionPage.ActiveSession))
                 {
                     // Active session changed: sync the tray icon.
-                    _tray_icon.Text = TrayIconToolTipText;
-                    _tray_icon.Icon = TrayIcon;
+                    NotifyIcon.Text = TrayIconToolTipText;
+                    NotifyIcon.Icon = TrayIcon;
 
-                    if (view_model.ActiveSession != VPNSession.Blank)
+                    if (viewModel.ConnectionPage.ActiveSession != VPNSession.Blank)
                     {
                         // Initialize VPN session state.
-                        _session_state = view_model.ActiveSession.State;
+                        SessionState = viewModel.ConnectionPage.ActiveSession.State;
 
                         // Bind to the session for property changes.
-                        view_model.ActiveSession.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
+                        viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object _, PropertyChangedEventArgs e3) =>
                         {
-                            switch (e_Session.PropertyName)
+                            switch (e3.PropertyName)
                             {
-                                case nameof(view_model.ActiveSession.ConnectingProfile):
-                                case nameof(view_model.ActiveSession.StateDescription):
-                                    _tray_icon.Text = TrayIconToolTipText;
+                                case nameof(viewModel.ConnectionPage.ActiveSession.ConnectingProfile):
+                                case nameof(viewModel.ConnectionPage.ActiveSession.StateDescription):
+                                    NotifyIcon.Text = TrayIconToolTipText;
                                     break;
 
-                                case nameof(view_model.ActiveSession.State):
+                                case nameof(viewModel.ConnectionPage.ActiveSession.State):
                                     {
-                                        _tray_icon.Icon = TrayIcon;
+                                        NotifyIcon.Icon = TrayIcon;
 
                                         if (!IsVisible)
                                         {
                                             // Client is minimized.
-                                            switch (view_model.ActiveSession.State)
+                                            switch (viewModel.ConnectionPage.ActiveSession.State)
                                             {
                                                 case VPNSessionStatusType.Connected:
                                                     // Client connected. Popup the balloon message.
-                                                    _tray_icon.ShowBalloonTip(
+                                                    NotifyIcon.ShowBalloonTip(
                                                         5000,
-                                                        String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, view_model.ActiveSession.ConnectingProfile),
-                                                        String.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, view_model.ActiveSession.TunnelAddress, view_model.ActiveSession.IPv6TunnelAddress),
+                                                        string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile),
+                                                        string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
                                                         System.Windows.Forms.ToolTipIcon.Info);
                                                     break;
 
                                                 default:
-                                                    if (_session_state == VPNSessionStatusType.Connected)
+                                                    if (SessionState == VPNSessionStatusType.Connected)
                                                     {
                                                         // Client has been disconnected. Popup the balloon message.
-                                                        _tray_icon.ShowBalloonTip(
+                                                        NotifyIcon.ShowBalloonTip(
                                                             5000,
                                                             eduVPN.Properties.Settings.Default.ClientTitle,
                                                             Views.Resources.Strings.SystemTrayBalloonDisconnectedMessage,
@@ -218,7 +228,7 @@ namespace eduVPN.Views.Windows
                                         }
 
                                         // Save VPN session state.
-                                        _session_state = view_model.ActiveSession.State;
+                                        SessionState = viewModel.ConnectionPage.ActiveSession.State;
                                     }
                                     break;
                             }
@@ -236,51 +246,26 @@ namespace eduVPN.Views.Windows
         }
 
         /// <inheritdoc/>
-        protected override void OnClosed(EventArgs e)
+        protected override void OnSourceInitialized(EventArgs e)
         {
-            // Stop the OAuth listener.
-            _http_listener.Stop();
-
-            base.OnClosed(e);
+            base.OnSourceInitialized(e);
+            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            source.AddHook(WndProc);
+            RefreshUseDarkTheme();
         }
 
-        /// <summary>
-        /// Processes OAuth HTTP callback and reactivates the connecting wizard window.
-        /// </summary>
-        /// <param name="sender">HTTP peer/client of type <see cref="System.Net.Sockets.TcpClient"/></param>
-        /// <param name="e">Event arguments</param>
-        /// <remarks>Occurs when OAuth callback received.</remarks>
-        private void HttpListener_HttpCallback(object sender, eduOAuth.HttpCallbackEventArgs e)
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            // Get popup window out of "state" parameter.
-            var query = HttpUtility.ParseQueryString(e.Uri.Query);
-            if (!_authorization_popups.TryGetValue(query["state"], out var popup))
-                throw new HttpException(400, Views.Resources.Strings.ErrorOAuthState);
-
-            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-            {
-                // Set the callback URI. This will close the pop-up.
-                ((ViewModels.Windows.AuthorizationPopup)popup.DataContext).CallbackUri = e.Uri;
-
-                // (Re)activate main window.
-                Open_Click(sender, new RoutedEventArgs());
-            }));
+            if (msg == WM_WININICHANGE &&
+                lParam != IntPtr.Zero &&
+                string.Equals(Marshal.PtrToStringUni(lParam), "ImmersiveColorSet", StringComparison.OrdinalIgnoreCase))
+                RefreshUseDarkTheme();
+            return IntPtr.Zero;
         }
 
-        /// <summary>
-        /// Returns /favicon.ico.
-        /// </summary>
-        /// <param name="sender">HTTP peer/client of type <see cref="System.Net.Sockets.TcpClient"/></param>
-        /// <param name="e">Event arguments</param>
-        /// <remarks>Occurs when browser requests data.</remarks>
-        private void HttpListener_HttpRequest(object sender, eduOAuth.HttpRequestEventArgs e)
+        private void RefreshUseDarkTheme()
         {
-            if (e.Uri.AbsolutePath.ToLowerInvariant() == "/favicon.ico")
-            {
-                var res = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/App.ico"));
-                e.Type = res.ContentType;
-                e.Content = res.Stream;
-            }
+            UseDarkTheme = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1) is int appsUseLightTheme && appsUseLightTheme == 0;
         }
 
         /// <summary>
@@ -292,7 +277,7 @@ namespace eduVPN.Views.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Show tray icon when Connect Wizard is loaded.
-            _tray_icon.Visible = true;
+            NotifyIcon.Visible = true;
         }
 
         /// <summary>
@@ -303,10 +288,10 @@ namespace eduVPN.Views.Windows
         /// <remarks>Occurs directly after <see cref="Close"/> is called, and can be handled to cancel window closure.</remarks>
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (_do_close)
+            if (DoClose)
             {
                 // Hide tray icon when closed.
-                _tray_icon.Visible = false;
+                NotifyIcon.Visible = false;
 
                 // Dismiss all pop-ups.
                 foreach (Window popup in OwnedWindows)
@@ -318,10 +303,22 @@ namespace eduVPN.Views.Windows
             }
             else
             {
-                // User/system tried to close our window using something else than [x] button.
+                // User/system tried to close our window.
                 // Cancel close and revert to hide.
                 e.Cancel = true;
                 Hide();
+
+                if (!Properties.Settings.Default.SystemTrayMinimizedWarned)
+                {
+                    // Notify user that the eduVPN client did not close, but was "minimized" to system tray.
+                    NotifyIcon.ShowBalloonTip(
+                        10000,
+                        eduVPN.Properties.Settings.Default.ClientTitle,
+                        Views.Resources.Strings.SystemTrayBalloonHiddenMessage,
+                        System.Windows.Forms.ToolTipIcon.Info);
+
+                    Properties.Settings.Default.SystemTrayMinimizedWarned = true;
+                }
             }
         }
 
@@ -331,11 +328,11 @@ namespace eduVPN.Views.Windows
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments of type <see cref="System.Windows.Forms.MouseEventArgs"/></param>
         /// <remarks>Occurs when the user clicks the icon in the notification area.</remarks>
-        private void TrayIcon_Click(object sender, EventArgs e)
+        private void NotifyIcon_Click(object sender, EventArgs e)
         {
-            if (e is System.Windows.Forms.MouseEventArgs e_mouse)
+            if (e is System.Windows.Forms.MouseEventArgs eMouse)
             {
-                switch (e_mouse.Button)
+                switch (eMouse.Button)
                 {
                     case System.Windows.Forms.MouseButtons.Left:
                         Open_Click(sender, new RoutedEventArgs());
@@ -351,35 +348,12 @@ namespace eduVPN.Views.Windows
         }
 
         /// <summary>
-        /// Hides the connecting wizard window to the system tray.
-        /// </summary>
-        /// <param name="sender">Event sender (ignored)</param>
-        /// <param name="e">Event arguments (ignored)</param>
-        /// <remarks>Occurs when a <see cref="Button"/> is clicked.</remarks>
-        protected void Hide_Click(object sender, RoutedEventArgs e)
-        {
-            Hide();
-
-            if (!Properties.Settings.Default.SystemTrayMinimizedWarned)
-            {
-                // Notify user that the eduVPN client did not close, but was "minimized" to system tray.
-                _tray_icon.ShowBalloonTip(
-                    10000,
-                    eduVPN.Properties.Settings.Default.ClientTitle,
-                    Views.Resources.Strings.SystemTrayBalloonHiddenMessage,
-                    System.Windows.Forms.ToolTipIcon.Info);
-
-                Properties.Settings.Default.SystemTrayMinimizedWarned = true;
-            }
-        }
-
-        /// <summary>
         /// Restores the connecting wizard window from the system tray.
         /// </summary>
         /// <param name="sender">Event sender (ignored)</param>
         /// <param name="e">Event arguments (ignored)</param>
         /// <remarks>Occurs when a <see cref="MenuItem"/> is clicked.</remarks>
-        protected void Open_Click(object sender, RoutedEventArgs e)
+        public void Open_Click(object sender, RoutedEventArgs e)
         {
             // (Re)activate window.
             if (!IsActive)
@@ -404,118 +378,8 @@ namespace eduVPN.Views.Windows
         /// <remarks>Occurs when a <see cref="MenuItem"/> is clicked.</remarks>
         protected void Exit_Click(object sender, RoutedEventArgs e)
         {
-            _do_close = true;
+            DoClose = true;
             Close();
-        }
-
-        /// <summary>
-        /// Triggers OAuth authorization request and pops-up user authorization prompt.
-        /// </summary>
-        /// <param name="sender"><see cref="eduVPN.ViewModels.Windows.ConnectWizard"/> requiring instance authorization</param>
-        /// <param name="e">Event arguments. This method fills <see cref="RequestInstanceAuthorizationEventArgs.CallbackUri"/> member with received authorization grant.</param>
-        /// <remarks>Occurs when instance requests authorization.</remarks>
-        private void ConnectWizard_RequestInstanceAuthorization(object sender, RequestInstanceAuthorizationEventArgs e)
-        {
-            var view_model = new ViewModels.Windows.AuthorizationPopup(sender, e);
-
-            // Create a new authorization pop-up.
-            var popup = new AuthorizationPopup() { Owner = this, DataContext = view_model };
-            view_model.PropertyChanged += (object sender2, PropertyChangedEventArgs e2) =>
-            {
-                if (e2.PropertyName == nameof(view_model.CallbackUri) && view_model.CallbackUri != null)
-                {
-                    // Close the authorization pop-up after the callback URI is set.
-                    popup.DialogResult = true;
-                }
-            };
-
-            // Set the redirect URI and make the final authorization URI.
-            view_model.AuthorizationGrant.RedirectEndpoint = new Uri(String.Format("http://{0}:{1}/callback", ((IPEndPoint)_http_listener.LocalEndpoint).Address, ((IPEndPoint)_http_listener.LocalEndpoint).Port));
-            var authorization_uri = view_model.AuthorizationGrant.AuthorizationUri;
-
-            // Extract the state. We use it as a key to support multiple pending authorizations.
-            var query = HttpUtility.ParseQueryString(authorization_uri.Query);
-            _authorization_popups.Add(query["state"], popup);
-
-            // Trigger authorization.
-            System.Diagnostics.Process.Start(authorization_uri.ToString());
-
-            // Run the authorization pop-up and pass the access token to be returned to the event sender.
-            if (popup.ShowDialog() == true)
-                e.CallbackUri = view_model.CallbackUri;
-
-            _authorization_popups.Remove(query["state"]);
-        }
-
-        /// <summary>
-        /// Pops-up password prompt.
-        /// </summary>
-        /// <param name="sender">OpenVPN session of <see cref="OpenVPNSession"/> type.</param>
-        /// <param name="e">Event arguments. This method fills it with user input.</param>
-        /// <remarks>Occurs when OpenVPN requests a password.</remarks>
-        private void ConnectWizard_RequestOpenVPNPasswordAuthentication(object sender, eduOpenVPN.Management.PasswordAuthenticationRequestedEventArgs e)
-        {
-            var view_model = new ViewModels.Windows.PasswordPopup(sender, e);
-
-            // Create a new authentication pop-up.
-            var popup = new PasswordPopup() { Owner = this, DataContext = view_model };
-
-            // Set the event args to fill with data to be returned to the event sender.
-            ((Button)popup.FindName("OK")).CommandParameter = e;
-
-            // Run the authentication pop-up and pass the credentials to be returned to the event sender.
-            if (popup.ShowDialog() == true && popup.FindName("Password") is PasswordBox Password)
-            {
-                // Password was not set using MVVP, since <PasswordBox> control does not support binding.
-                e.Password = (new NetworkCredential("", Password.Password)).SecurePassword;
-            }
-        }
-
-        /// <summary>
-        /// Pops-up username and password prompt.
-        /// </summary>
-        /// <param name="sender">OpenVPN session of <see cref="OpenVPNSession"/> type.</param>
-        /// <param name="e">Event arguments. This method fills it with user input.</param>
-        /// <remarks>Occurs when OpenVPN requests a username and password.</remarks>
-        private void ConnectWizard_RequestOpenVPNUsernamePasswordAuthentication(object sender, eduOpenVPN.Management.UsernamePasswordAuthenticationRequestedEventArgs e)
-        {
-            var view_model = new ViewModels.Windows.UsernamePasswordPopup(sender, e);
-
-            // Create a new authentication pop-up.
-            var popup = new UsernamePasswordPopup() { Owner = this, DataContext = view_model };
-            popup.Loaded += (object sender_popup, RoutedEventArgs e_popup) =>
-            {
-                // Set initial focus.
-                (popup.FindName(String.IsNullOrEmpty(view_model.Username) ? "Username" : "Password") as Control)?.Focus();
-            };
-
-            // Set the event args to fill with data to be returned to the event sender.
-            ((Button)popup.FindName("OK")).CommandParameter = e;
-
-            // Run the authentication pop-up and pass the credentials to be returned to the event sender.
-            if (popup.ShowDialog() == true && popup.FindName("Password") is PasswordBox Password)
-            {
-                // Password was not set using MVVP, since <PasswordBox> control does not support binding.
-                e.Password = (new NetworkCredential("", Password.Password)).SecurePassword;
-            }
-        }
-
-        /// <summary>
-        /// Pops up self-update prompt.
-        /// </summary>
-        /// <param name="sender">Connection wizard view model of <see cref="ViewModels.Windows.ConnectWizard"/> type.</param>
-        /// <param name="e">Event arguments. This method fills it with user input.</param>
-        /// <remarks>Occurs when product update is available.</remarks>
-        private void ConnectWizard_PromptSelfUpdate(object sender, PromptSelfUpdateEventArgs e)
-        {
-            var view_model = new ViewModels.Windows.SelfUpdatePopup(sender, e);
-
-            // Create a new prompt pop-up.
-            var popup = new SelfUpdatePopup() { Owner = this, DataContext = view_model };
-
-            // Run the pop-up and pass the selected action to be returned to the event sender.
-            if (popup.ShowDialog() == true)
-                e.Action = view_model.Action;
         }
 
         /// <summary>
@@ -526,7 +390,7 @@ namespace eduVPN.Views.Windows
         /// <remarks>Occurs when application should quit.</remarks>
         private void ConnectWizard_QuitApplication(object sender, EventArgs e)
         {
-            _do_close = true;
+            DoClose = true;
             Close();
         }
 
@@ -554,11 +418,11 @@ namespace eduVPN.Views.Windows
             {
                 if (disposing)
                 {
-                    if (_tray_icon != null)
-                        _tray_icon.Dispose();
+                    if (NotifyIcon != null)
+                        NotifyIcon.Dispose();
 
-                    if (_icons != null)
-                        foreach (var i in _icons)
+                    if (Icons != null)
+                        foreach (var i in Icons)
                             if (i.Value != null)
                                 i.Value.Dispose();
                 }

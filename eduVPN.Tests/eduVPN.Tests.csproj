@@ -53,9 +53,12 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Models\InstanceSourceInfoTests.cs" />
-    <Compile Include="Models\InstanceTests.cs" />
+    <Compile Include="Models\CountryTests.cs" />
+    <Compile Include="Models\ServerTests.cs" />
     <Compile Include="eduBase\MultiplatformDllLoader.cs" />
+    <Compile Include="Models\OrganizationListTests.cs" />
+    <Compile Include="Models\OrganizationTests.cs" />
+    <Compile Include="Models\ServerListTests.cs" />
     <Compile Include="Xml\MinisignPublicKeyDictionaryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

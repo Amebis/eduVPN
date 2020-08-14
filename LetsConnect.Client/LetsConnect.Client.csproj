@@ -47,11 +47,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Colors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Images.xaml">
+    <Page Include="Resources\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -65,7 +61,6 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="packages.config" />
-    <None Include="LetsConnect.Client.wxs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -84,13 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\App.ico" />
-    <Resource Include="Resources\GenericInstance.png" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
     <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
-    <Resource Include="Resources\AppBanner.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.ar.resx" />

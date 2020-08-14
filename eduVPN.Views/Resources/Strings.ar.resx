@@ -176,13 +176,13 @@
   <data name="ErrorOAuthState" xml:space="preserve">
     <value>الوسيط المطلوب "حالة" من نظام أوث مفقود أو غير صحيح.</value>
   </data>
-  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+  <data name="InstanceSourcePageCustomTitle" xml:space="preserve">
     <value>أضف عنوانا _آخر</value>
   </data>
-  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageInstituteAccessTitle2" xml:space="preserve">
     <value>اتصل ب _مؤسستك</value>
   </data>
-  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+  <data name="InstanceSourcePageSecureInternetTitle2" xml:space="preserve">
     <value>استخدم الشبكة _بأمان</value>
   </data>
   <data name="ListBoxNoItems" xml:space="preserve">
@@ -219,25 +219,25 @@
   <data name="PasswordPopupTitle" xml:space="preserve">
     <value>كلمة المرور</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+  <data name="RecentConfigurationSelectPageAddTitle" xml:space="preserve">
     <value>أضف _آخر</value>
   </data>
-  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptAskLaterTitle" xml:space="preserve">
     <value>اسألني _لاحقا</value>
   </data>
-  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptChangelogTitle" xml:space="preserve">
     <value>ما _الجديد؟</value>
   </data>
-  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+  <data name="SelfUpdatePromptMessage3" xml:space="preserve">
     <value>إصدار أحدث ومحسن من العميل متوفر. ابق على اطلاع!</value>
   </data>
-  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptSkipTitle" xml:space="preserve">
     <value>تخطي هذا _الإصدار</value>
   </data>
-  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptTitle" xml:space="preserve">
     <value>تحديث متوفر</value>
   </data>
-  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+  <data name="SelfUpdatePromptUpdateTitle" xml:space="preserve">
     <value>تحميل و _تحديث الآن
 (سيتم إعادة تشغيل العميل)</value>
   </data>
@@ -262,7 +262,7 @@
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>حدد _واجهة TAP</value>
   </data>
-  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+  <data name="StatusPageDisconnectTitle" xml:space="preserve">
     <value>_قطع الاتصال</value>
   </data>
   <data name="StatusPageInstance" xml:space="preserve">
@@ -292,7 +292,7 @@
   <data name="StatusPageSessionInfoTitle" xml:space="preserve">
     <value>معلومات عن الاتصال</value>
   </data>
-  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+  <data name="StatusPageSessionInfoViewLogTitle" xml:space="preserve">
     <value>عرض _السجل</value>
   </data>
   <data name="StatusPageStatus" xml:space="preserve">

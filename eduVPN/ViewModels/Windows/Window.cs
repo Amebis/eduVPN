@@ -8,7 +8,6 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
@@ -41,19 +40,26 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public Exception Error
         {
-            get { return _error; }
-            set { SetProperty(ref _error, value); }
+            get { return _Error; }
+            set
+            {
+                if (SetProperty(ref _Error, value))
+                {
+                    DismissError.RaiseCanExecuteChanged();
+                    CopyError.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Exception _error;
+        private Exception _Error;
 
         /// <summary>
         /// Is window performing background tasks?
         /// </summary>
         public bool IsBusy
         {
-            get { lock (_task_count_lock) return _task_count > 0; }
+            get { return _TaskCount > 0; }
         }
 
         /// <summary>
@@ -61,74 +67,27 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public int TaskCount
         {
-            get { lock (_task_count_lock) return _task_count; }
+            get { return _TaskCount; }
+            set
+            {
+                var wasBusy = IsBusy;
+                if (SetProperty(ref _TaskCount, value) && wasBusy != IsBusy)
+                    RaisePropertyChanged(nameof(IsBusy));
+            }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _task_count;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private object _task_count_lock = new object();
+        private int _TaskCount;
 
         /// <summary>
         /// Clears current error information
         /// </summary>
-        public DelegateCommand DismissError
-        {
-            get
-            {
-                if (_dismiss_error == null)
-                {
-                    _dismiss_error = new DelegateCommand(
-                        // execute
-                        () => Error = null,
-
-                        // canExecute
-                        () => Error != null);
-
-                    // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Error)) _dismiss_error.RaiseCanExecuteChanged(); };
-                }
-
-                return _dismiss_error;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _dismiss_error;
+        public DelegateCommand DismissError { get; }
 
         /// <summary>
         /// Copies current error information to the clipboard
         /// </summary>
-        public DelegateCommand CopyError
-        {
-            get
-            {
-                if (_copy_error == null)
-                {
-                    _copy_error = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            ChangeTaskCount(+1);
-                            try { Clipboard.SetDataObject(Error.ToString()); }
-                            catch (Exception ex) { Error = ex; }
-                            finally { ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        () => Error != null);
-
-                    // Setup canExecute refreshing.
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(Error)) _copy_error.RaiseCanExecuteChanged(); };
-                }
-
-                return _copy_error;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _copy_error;
+        public DelegateCommand CopyError { get; }
 
         #endregion
 
@@ -139,37 +98,26 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public Window()
         {
+            DismissError = new DelegateCommand(
+                () => Error = null,
+                () => Error != null);
+
+            CopyError = new DelegateCommand(
+                () =>
+                {
+                    try { Clipboard.SetDataObject(Error.ToString()); }
+                    catch (Exception ex) { Error = ex; }
+                },
+                () => Error != null);
+
             // Save UI thread's dispatcher.
             Dispatcher = Dispatcher.CurrentDispatcher;
 
-            Dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
+            Dispatcher.ShutdownStarted += (object sender, EventArgs e) =>
+            {
                 // Raise the abort flag to gracefully shutdown all background threads.
                 Abort.Cancel();
             };
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Increments or decrements number of background tasks the window is performing
-        /// </summary>
-        /// <param name="increment">Positive to increment, negative to decrement</param>
-        public void ChangeTaskCount(int increment)
-        {
-            bool is_busy_changed = false;
-            lock (_task_count_lock)
-            {
-                var previous_value = IsBusy;
-                _task_count += increment;
-                if (previous_value != IsBusy)
-                    is_busy_changed = true;
-            }
-
-            RaisePropertyChanged(nameof(TaskCount));
-            if (is_busy_changed)
-                RaisePropertyChanged(nameof(IsBusy));
         }
 
         #endregion

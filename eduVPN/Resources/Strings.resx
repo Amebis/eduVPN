@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -129,9 +129,6 @@
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Loading of API endpoints failed.</value>
   </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Loading of the provider source {0} failed.</value>
-  </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Loading of the profile list failed.</value>
   </data>
@@ -141,14 +138,8 @@
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Loading of profile configuration failed.</value>
   </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Loading of user info failed.</value>
-  </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>Saving of profile's OpenVPN configuration to "{0}" failed.</value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Client authorization failed.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Authorizing the client to use {0} failed.</value>
@@ -187,14 +178,11 @@
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>(Automatic)</value>
   </data>
-  <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
-    <value>Network interface with {0} ID not found.</value>
+  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
+    <value>Network interface with {0} Id not found.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Network interface {0} not found.</value>
-  </data>
-  <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Invalid hostname: hostnames contain letters, numbers, hyphens and dots.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Property name {0} is not valid.</value>
@@ -202,10 +190,6 @@
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interactive Service failure.</value>
-  </data>
-  <data name="InstanceForget" xml:space="preserve">
-    <value>Forget {0}</value>
-    <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
     <value>Downloaded file {0} is corrupt.</value>
@@ -226,42 +210,6 @@
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>Installer file not available. Updating aborted.</value>
   </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Select Your Institution's Country</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Select Your Institution</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Select Your Profile</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Enter URL of your Provider</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Initializing...</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>How do you want to use the VPN?</value>
-  </data>
-  <data name="SelfUpdatingPageTitle" xml:space="preserve">
-    <value>Preparing update...</value>
-  </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN Connection</value>
-  </data>
-  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Institute Access</value>
-  </data>
-  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Secure Internet</value>
-  </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
     <value>The certificate was disabled by an administrator.</value>
   </data>
@@ -275,7 +223,7 @@
     <value>Minisign public key is invalid.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with ID {0:X} already exists.</value>
+    <value>Minisign public key with Id {0:X} already exists.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign signature is not supported.</value>
@@ -289,7 +237,7 @@
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
     <value>Minisign public key is not trusted.</value>
   </data>
-  <data name="ErrorAutostartingProfile" xml:space="preserve">
-    <value>Auto-starting the last connected profile failed.</value>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Invalid hostname: hostnames contain letters, numbers, hyphens and dots.</value>
   </data>
 </root>

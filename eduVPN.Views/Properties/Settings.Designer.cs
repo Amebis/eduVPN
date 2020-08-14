@@ -12,7 +12,7 @@ namespace eduVPN.Views.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -68,21 +68,6 @@ namespace eduVPN.Views.Properties {
             }
             set {
                 this["WindowLeft"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Recently used hostnames for custom instance connections
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Recently used hostnames for custom instance connections")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection CustomInstanceHistory {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["CustomInstanceHistory"]));
-            }
-            set {
-                this["CustomInstanceHistory"] = value;
             }
         }
         

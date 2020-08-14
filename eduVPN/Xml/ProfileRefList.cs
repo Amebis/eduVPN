@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
@@ -15,6 +16,7 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable profile reference list
     /// </summary>
+    [Obsolete]
     public class ProfileRefList : List<ProfileRef>, IXmlSerializable
     {
         #region Constructors

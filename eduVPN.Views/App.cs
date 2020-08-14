@@ -44,11 +44,11 @@ namespace eduVPN.Views
             //System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             // If app.local.config file is present, read configuration from it.
-            var app_config_file = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
-            var local_config_file = Path.Combine(Path.GetDirectoryName(app_config_file), Path.GetFileNameWithoutExtension(app_config_file) + ".local.config");
-            if (File.Exists(local_config_file))
+            var appConfigFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            var localConfigFile = Path.Combine(Path.GetDirectoryName(appConfigFile), Path.GetFileNameWithoutExtension(appConfigFile) + ".local.config");
+            if (File.Exists(localConfigFile))
             {
-                AppDomain.CurrentDomain.SetData("APP_CONFIG_FILE", local_config_file);
+                AppDomain.CurrentDomain.SetData("APP_CONFIG_FILE", localConfigFile);
 
                 typeof(ConfigurationManager)
                     .GetField("s_initState", BindingFlags.NonPublic | BindingFlags.Static)
@@ -74,10 +74,10 @@ namespace eduVPN.Views
             catch (ConfigurationErrorsException ex)
             {
                 // Ups, something is wrong with the user settings.
-                var assembly_title = (Attribute.GetCustomAttributes(Assembly.GetExecutingAssembly(), typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title;
+                var assemblyTitle = (Attribute.GetCustomAttributes(Assembly.GetExecutingAssembly(), typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title;
                 var filename = ex.Filename;
                 if (MessageBox.Show(
-                    String.Format(Views.Resources.Strings.SettingsCorruptErrorMessage, assembly_title, filename),
+                    string.Format(Views.Resources.Strings.SettingsCorruptErrorMessage, assemblyTitle, filename),
                     Views.Resources.Strings.SettingsCorruptErrorTitle,
                     MessageBoxButton.OKCancel,
                     MessageBoxImage.Error) == MessageBoxResult.OK)
