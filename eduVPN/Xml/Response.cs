@@ -8,7 +8,6 @@
 using eduEx.Async;
 using eduOAuth;
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -187,145 +186,82 @@ namespace eduVPN.Xml
                     }
                 }
 
-                // Try all supported signature schemes.
-                // signature_validation_exceptions will be reset to null on first successful signature validation.
-                var signature_validation_exceptions = new Collection<Exception>();
-                bool must_check_signature = false;
-
-                if (signature_validation_exceptions != null && res.PublicKey != null)
+                if (res.PublicKeys != null)
                 {
-                    must_check_signature = true;
-                    try
+                    // Generate signature URI.
+                    var builder_sig = new UriBuilder(res.Uri);
+                    builder_sig.Path += ".minisig";
+
+                    // Create signature request.
+                    request = WebRequest.Create(builder_sig.Uri);
+                    request.CachePolicy = CachePolicy;
+                    request.Proxy = null;
+                    if (token != null)
+                        token.AddToRequest(request);
+                    if (request is HttpWebRequest request_http_sig)
                     {
-                        // Generate signature URI.
-                        var builder_sig = new UriBuilder(res.Uri);
-                        builder_sig.Path += ".sig";
-
-                        // Create signature request.
-                        request = WebRequest.Create(builder_sig.Uri);
-                        request.CachePolicy = CachePolicy;
-                        request.Proxy = null;
-                        if (token != null)
-                            token.AddToRequest(request);
-                        if (request is HttpWebRequest request_http_sig)
-                        {
-                            request_http_sig.UserAgent = UserAgent;
-                            request_http_sig.Accept = "text/plain";
-                        }
-
-                        // Read the ED25519 signature.
-                        byte[] signature = null;
-                        try
-                        {
-                            using (var response_sig = request.GetResponse())
-                            using (var stream_sig = response_sig.GetResponseStream())
-                            {
-                                ct.ThrowIfCancellationRequested();
-
-                                using (var reader_sig = new StreamReader(stream_sig))
-                                    signature = Convert.FromBase64String(reader_sig.ReadToEnd(ct));
-                            }
-                        }
-                        catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
-
-                        ct.ThrowIfCancellationRequested();
-
-                        // Verify ED25519 signature.
-                        using (eduEd25519.ED25519 key = new eduEd25519.ED25519(res.PublicKey))
-                            if (!key.VerifyDetached(data, signature))
-                                throw new SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
-                        signature_validation_exceptions = null;
+                        request_http_sig.UserAgent = UserAgent;
+                        request_http_sig.Accept = "text/plain";
                     }
-                    catch (OperationCanceledException) { throw; }
-                    catch (Exception ex) { signature_validation_exceptions.Add(ex); }
-                }
 
-                if (signature_validation_exceptions != null && res.MinisignPublicKeys != null)
-                {
-                    must_check_signature = true;
+                    // Read the Minisign signature.
+                    byte[] signature = null;
                     try
                     {
-                        // Generate signature URI.
-                        var builder_sig = new UriBuilder(res.Uri);
-                        builder_sig.Path += ".minisig";
-
-                        // Create signature request.
-                        request = WebRequest.Create(builder_sig.Uri);
-                        request.CachePolicy = CachePolicy;
-                        request.Proxy = null;
-                        if (token != null)
-                            token.AddToRequest(request);
-                        if (request is HttpWebRequest request_http_sig)
+                        using (var response_sig = request.GetResponse())
+                        using (var stream_sig = response_sig.GetResponseStream())
                         {
-                            request_http_sig.UserAgent = UserAgent;
-                            request_http_sig.Accept = "text/plain";
-                        }
+                            ct.ThrowIfCancellationRequested();
 
-                        // Read the Minisign signature.
-                        byte[] signature = null;
-                        try
-                        {
-                            using (var response_sig = request.GetResponse())
-                            using (var stream_sig = response_sig.GetResponseStream())
+                            using (var reader_sig = new StreamReader(stream_sig))
                             {
-                                ct.ThrowIfCancellationRequested();
-
-                                using (var reader_sig = new StreamReader(stream_sig))
+                                foreach (var l in reader_sig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
                                 {
-                                    foreach (var l in reader_sig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
-                                    {
-                                        if (l.Trim().StartsWith($"untrusted comment:"))
-                                            continue;
-                                        signature = Convert.FromBase64String(l);
-                                        break;
-                                    }
-                                    if (signature == null)
-                                        throw new SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
-                                }
-                            }
-                        }
-                        catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
-
-                        ct.ThrowIfCancellationRequested();
-
-                        // Verify Minisign signature.
-                        using (var s = new MemoryStream(signature, false))
-                        using (var r = new BinaryReader(s))
-                        {
-                            if (r.ReadChar() != 'E')
-                                throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                            byte[] payload;
-                            switch (r.ReadChar())
-                            {
-                                case 'd': // PureEdDSA
-                                    payload = data;
-                                    break; 
-
-                                case 'D': // HashedEdDSA
-                                    payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
+                                    if (l.Trim().StartsWith($"untrusted comment:"))
+                                        continue;
+                                    signature = Convert.FromBase64String(l);
                                     break;
-
-                                default:
-                                    throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                            }
-                            ulong key_id = r.ReadUInt64();
-                            if (!res.MinisignPublicKeys.ContainsKey(key_id))
-                                throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
-                            var sig = new byte[64];
-                            if (r.Read(sig, 0, 64) != 64)
-                                throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);
-                            using (eduEd25519.ED25519 key = new eduEd25519.ED25519(res.MinisignPublicKeys[key_id]))
-                                if (!key.VerifyDetached(payload, sig))
+                                }
+                                if (signature == null)
                                     throw new SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
-                            signature_validation_exceptions = null;
+                            }
                         }
                     }
-                    catch (OperationCanceledException) { throw; }
-                    catch (Exception ex) { signature_validation_exceptions.Add(ex); }
-                }
+                    catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
 
-                if (must_check_signature && signature_validation_exceptions != null)
-                    throw new AggregateException(signature_validation_exceptions);
+                    ct.ThrowIfCancellationRequested();
+
+                    // Verify Minisign signature.
+                    using (var s = new MemoryStream(signature, false))
+                    using (var r = new BinaryReader(s))
+                    {
+                        if (r.ReadChar() != 'E')
+                            throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
+                        byte[] payload;
+                        switch (r.ReadChar())
+                        {
+                            case 'd': // PureEdDSA
+                                payload = data;
+                                break; 
+
+                            case 'D': // HashedEdDSA
+                                payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
+                                break;
+
+                            default:
+                                throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
+                        }
+                        ulong key_id = r.ReadUInt64();
+                        if (!res.PublicKeys.ContainsKey(key_id))
+                            throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
+                        var sig = new byte[64];
+                        if (r.Read(sig, 0, 64) != 64)
+                            throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);
+                        using (eduEd25519.ED25519 key = new eduEd25519.ED25519(res.PublicKeys[key_id]))
+                            if (!key.VerifyDetached(payload, sig))
+                                throw new SecurityException(String.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
+                    }
+                }
 
                 return
                     response is HttpWebResponse response_web ?

@@ -25,18 +25,15 @@ namespace eduVPN.Models.Tests
             // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00;
 
-            var pub_key = Convert.FromBase64String("E5On0JTtyUVZmcWd+I/FXRm32nSq8R2ioyW7dcu/U88=");
             Parallel.ForEach(new List<ResourceRef>()
                 {
                     new ResourceRef()
                     {
                         Uri = new Uri("https://static.eduvpn.nl/disco/institute_access.json"),
-                        PublicKey = pub_key,
                     },
                     new ResourceRef()
                     {
                         Uri = new Uri("https://static.eduvpn.nl/disco/secure_internet.json"),
-                        PublicKey = pub_key,
                     },
                 }, source =>
                 {

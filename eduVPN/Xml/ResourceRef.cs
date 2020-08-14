@@ -15,7 +15,7 @@ using System.Xml.Serialization;
 namespace eduVPN.Xml
 {
     /// <summary>
-    /// Serializable resource reference with public key for verification
+    /// Serializable resource reference with public keys for verification
     /// </summary>
     public class ResourceRef : IXmlSerializable
     {
@@ -37,14 +37,9 @@ namespace eduVPN.Xml
         public Uri Uri { get; set; }
 
         /// <summary>
-        /// Ed25519 public key
-        /// </summary>
-        public byte[] PublicKey { get; set; }
-
-        /// <summary>
         /// Minisign public keys
         /// </summary>
-        public MinisignPublicKeyDictionary MinisignPublicKeys { get; set; }
+        public MinisignPublicKeyDictionary PublicKeys { get; set; }
 
         #endregion
 
@@ -68,7 +63,6 @@ namespace eduVPN.Xml
             string v;
 
             Uri = !String.IsNullOrWhiteSpace(v = reader[nameof(Uri)]) ? new Uri(_assembly_uri, v) : null;
-            PublicKey = !String.IsNullOrWhiteSpace(v = reader[nameof(PublicKey)]) ? Convert.FromBase64String(v) : null;
 
             if (reader.IsEmptyElement)
                 return;
@@ -78,10 +72,10 @@ namespace eduVPN.Xml
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == nameof(MinisignPublicKeyDictionary))
                 {
-                    if (reader["Key"] == nameof(MinisignPublicKeys))
+                    if (reader["Key"] == nameof(PublicKeys))
                     {
-                        MinisignPublicKeys = new MinisignPublicKeyDictionary();
-                        MinisignPublicKeys.ReadXml(reader);
+                        PublicKeys = new MinisignPublicKeyDictionary();
+                        PublicKeys.ReadXml(reader);
                     }
                 }
             }
@@ -94,14 +88,12 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Uri), Uri.AbsoluteUri);
-            if (PublicKey.Length > 0)
-                writer.WriteAttributeString(nameof(PublicKey), Convert.ToBase64String(PublicKey));
 
-            if (MinisignPublicKeys != null)
+            if (PublicKeys != null)
             {
                 writer.WriteStartElement(nameof(MinisignPublicKeyDictionary));
-                writer.WriteAttributeString("Key", nameof(MinisignPublicKeys));
-                MinisignPublicKeys.WriteXml(writer);
+                writer.WriteAttributeString("Key", nameof(PublicKeys));
+                PublicKeys.WriteXml(writer);
                 writer.WriteEndElement();
             }
         }

@@ -87,10 +87,10 @@ namespace eduVPN.Properties
         }
 
         /// <summary>
-        /// Returns URI-Public key pair from settings
+        /// Returns URI-Public keys-touple from settings
         /// </summary>
         /// <param name="key">The base name of the setting</param>
-        /// <returns>URI-Public key pair</returns>
+        /// <returns>URI-Public keys-touple</returns>
         /// <remarks>When <paramref name="key"/> + "Descr" is not defined, the value is obtained from <paramref name="key"/> and <paramref name="key"/> + "PubKey", which also provide the default fallback values.</remarks>
         public Xml.ResourceRef GetResourceRef(string key)
         {
@@ -99,12 +99,11 @@ namespace eduVPN.Properties
                 new Xml.ResourceRef()
                 {
                     Uri = new Uri((string)this[key]),
-                    PublicKey = this[key + "PubKey"] is string pub_key && !String.IsNullOrWhiteSpace(pub_key) ? Convert.FromBase64String(pub_key) : null
                 };
         }
 
         /// <summary>
-        /// Secure Internet discovery URL and Ed25519 public key
+        /// Secure Internet discovery URL
         /// </summary>
         /// <remarks>When not defined, the value is obtained from <see cref="SecureInternetDiscovery"/> and <see cref="SecureInternetDiscoveryPubKey"/>, which also provide the default fallback values.</remarks>
         [ApplicationScopedSetting()]
@@ -137,7 +136,7 @@ namespace eduVPN.Properties
         }
 
         /// <summary>
-        /// Institute Access discovery URL and Ed25519 public key
+        /// Institute Access discovery URL
         /// </summary>
         /// <remarks>When not defined, the value is obtained from <see cref="InstituteAccessDiscovery"/> and <see cref="InstituteAccessDiscoveryPubKey"/>, which also provide the default fallback values.</remarks>
         [ApplicationScopedSetting()]
@@ -170,7 +169,7 @@ namespace eduVPN.Properties
         }
 
         /// <summary>
-        /// Self-updating feature base URI and Ed25519 public key
+        /// Self-updating discovery URL
         /// </summary>
         /// <remarks>When not defined, the value is obtained from <see cref="SelfUpdate"/> and <see cref="SelfUpdatePubKey"/>, which also provide the default fallback values.</remarks>
         [ApplicationScopedSetting()]
