@@ -279,7 +279,7 @@ namespace eduVPN.ViewModels.VPN
                                 // Configure client certificate.
                                 sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
                                 //sw.WriteLine("management-external-cert " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id));
-                                //sw.WriteLine("management-external-key");
+                                //sw.WriteLine("management-external-key nopadding pkcs1");
 
                                 // Ask when username/password is denied.
                                 sw.WriteLine("auth-retry interact");
@@ -399,43 +399,55 @@ namespace eduVPN.ViewModels.VPN
                                                 e.Action = new RemoteAcceptAction();
                                         };
 
-                                        mgmt_session.RSASignRequested += (object sender, RSASignRequestedEventArgs e) =>
+                                        mgmt_session.SignRequested += (object sender, SignRequestedEventArgs e) =>
                                         {
-                                            var rsa = (RSACryptoServiceProvider)_client_certificate.PrivateKey;
-                                            var RSAFormatter = new RSAPKCS1SignatureFormatter(rsa);
-
-                                            // Parse message.
-                                            var stream = new MemoryStream(e.Data);
-                                            using (var reader = new BinaryReader(stream))
+                                            switch (e.Algorithm)
                                             {
-                                                // SEQUENCE(DigestInfo)
-                                                if (reader.ReadByte() != 0x30)
-                                                    throw new InvalidDataException();
-                                                long dgi_end = reader.ReadASN1Length() + reader.BaseStream.Position;
+                                                case SignAlgorithmType.RSASignaturePKCS1Padding:
+                                                    {
+                                                        var RSAFormatter = new RSAPKCS1SignatureFormatter((RSACryptoServiceProvider)_client_certificate.PrivateKey);
 
-                                                // SEQUENCE(AlgorithmIdentifier)
-                                                if (reader.ReadByte() != 0x30)
-                                                    throw new InvalidDataException();
-                                                long alg_id_end = reader.ReadASN1Length() + reader.BaseStream.Position;
+                                                        // Parse message.
+                                                        var stream = new MemoryStream(e.Data);
+                                                        using (var reader = new BinaryReader(stream))
+                                                        {
+                                                            // SEQUENCE(DigestInfo)
+                                                            if (reader.ReadByte() != 0x30)
+                                                                throw new InvalidDataException();
+                                                            long dgi_end = reader.ReadASN1Length() + reader.BaseStream.Position;
 
-                                                // OBJECT IDENTIFIER
-                                                switch (reader.ReadASN1ObjectID().Value)
-                                                {
-                                                    case "2.16.840.1.101.3.4.2.1": RSAFormatter.SetHashAlgorithm("SHA256"); break;
-                                                    case "2.16.840.1.101.3.4.2.2": RSAFormatter.SetHashAlgorithm("SHA384"); break;
-                                                    case "2.16.840.1.101.3.4.2.3": RSAFormatter.SetHashAlgorithm("SHA512"); break;
-                                                    case "2.16.840.1.101.3.4.2.4": RSAFormatter.SetHashAlgorithm("SHA224"); break;
-                                                    default: throw new InvalidDataException();
-                                                }
+                                                            // SEQUENCE(AlgorithmIdentifier)
+                                                            if (reader.ReadByte() != 0x30)
+                                                                throw new InvalidDataException();
+                                                            long alg_id_end = reader.ReadASN1Length() + reader.BaseStream.Position;
 
-                                                reader.BaseStream.Seek(alg_id_end, SeekOrigin.Begin);
+                                                            // OBJECT IDENTIFIER
+                                                            switch (reader.ReadASN1ObjectID().Value)
+                                                            {
+                                                                case "2.16.840.1.101.3.4.2.1": RSAFormatter.SetHashAlgorithm("SHA256"); break;
+                                                                case "2.16.840.1.101.3.4.2.2": RSAFormatter.SetHashAlgorithm("SHA384"); break;
+                                                                case "2.16.840.1.101.3.4.2.3": RSAFormatter.SetHashAlgorithm("SHA512"); break;
+                                                                case "2.16.840.1.101.3.4.2.4": RSAFormatter.SetHashAlgorithm("SHA224"); break;
+                                                                default: throw new InvalidDataException();
+                                                            }
 
-                                                // OCTET STRING(Digest)
-                                                if (reader.ReadByte() != 0x04)
-                                                    throw new InvalidDataException();
+                                                            reader.BaseStream.Seek(alg_id_end, SeekOrigin.Begin);
 
-                                                // Read, sign hash, and return.
-                                                e.Signature = RSAFormatter.CreateSignature(reader.ReadBytes(reader.ReadASN1Length()));
+                                                            // OCTET STRING(Digest)
+                                                            if (reader.ReadByte() != 0x04)
+                                                                throw new InvalidDataException();
+
+                                                            // Read, sign hash, and return.
+                                                            e.Signature = RSAFormatter.CreateSignature(reader.ReadBytes(reader.ReadASN1Length()));
+                                                        }
+                                                        break;
+                                                    }
+
+                                                case SignAlgorithmType.RSASignatureNoPadding:
+                                                    // TODO: Implement! As of 2020-09 .NET doesn't appear to offer a low-level RSA encrypt/sign unpadded support.
+
+                                                default:
+                                                    throw new NotSupportedException();
                                             }
                                         };
 
@@ -568,6 +580,7 @@ namespace eduVPN.ViewModels.VPN
                                         mgmt_session.Start(mgmt_client.GetStream(), mgmt_password, _quit.Token);
 
                                         // Initialize session and release openvpn.exe to get started.
+                                        mgmt_session.SetVersion(3, _quit.Token);
                                         mgmt_session.ReplayAndEnableState(_quit.Token);
                                         mgmt_session.ReplayAndEnableEcho(_quit.Token);
                                         mgmt_session.SetByteCount(5, _quit.Token);
