@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduEx.ASN1;
 using eduOpenVPN;
 using eduOpenVPN.Management;
 using eduVPN.Models;
@@ -20,7 +19,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Security;
 using System.Windows.Threading;
@@ -278,8 +276,6 @@ namespace eduVPN.ViewModels.VPN
 
                                 // Configure client certificate.
                                 sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
-                                //sw.WriteLine("management-external-cert " + eduOpenVPN.Configuration.EscapeParamValue(_connection_id));
-                                //sw.WriteLine("management-external-key nopadding pkcs1");
 
                                 // Ask when username/password is denied.
                                 sw.WriteLine("auth-retry interact");
@@ -387,8 +383,6 @@ namespace eduVPN.ViewModels.VPN
                                                 _quit.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
                                         };
 
-                                        mgmt_session.CertificateRequested += (object sender, CertificateRequestedEventArgs e) => e.Certificate = _client_certificate;
-
                                         mgmt_session.PasswordAuthenticationRequested += (object sender, PasswordAuthenticationRequestedEventArgs e) => Wizard.OpenVPNSession_RequestPasswordAuthentication(this, e);
 
                                         mgmt_session.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
@@ -397,58 +391,6 @@ namespace eduVPN.ViewModels.VPN
                                                 e.Action = new RemoteSkipAction();
                                             else
                                                 e.Action = new RemoteAcceptAction();
-                                        };
-
-                                        mgmt_session.SignRequested += (object sender, SignRequestedEventArgs e) =>
-                                        {
-                                            switch (e.Algorithm)
-                                            {
-                                                case SignAlgorithmType.RSASignaturePKCS1Padding:
-                                                    {
-                                                        var RSAFormatter = new RSAPKCS1SignatureFormatter((RSACryptoServiceProvider)_client_certificate.PrivateKey);
-
-                                                        // Parse message.
-                                                        var stream = new MemoryStream(e.Data);
-                                                        using (var reader = new BinaryReader(stream))
-                                                        {
-                                                            // SEQUENCE(DigestInfo)
-                                                            if (reader.ReadByte() != 0x30)
-                                                                throw new InvalidDataException();
-                                                            long dgi_end = reader.ReadASN1Length() + reader.BaseStream.Position;
-
-                                                            // SEQUENCE(AlgorithmIdentifier)
-                                                            if (reader.ReadByte() != 0x30)
-                                                                throw new InvalidDataException();
-                                                            long alg_id_end = reader.ReadASN1Length() + reader.BaseStream.Position;
-
-                                                            // OBJECT IDENTIFIER
-                                                            switch (reader.ReadASN1ObjectID().Value)
-                                                            {
-                                                                case "2.16.840.1.101.3.4.2.1": RSAFormatter.SetHashAlgorithm("SHA256"); break;
-                                                                case "2.16.840.1.101.3.4.2.2": RSAFormatter.SetHashAlgorithm("SHA384"); break;
-                                                                case "2.16.840.1.101.3.4.2.3": RSAFormatter.SetHashAlgorithm("SHA512"); break;
-                                                                case "2.16.840.1.101.3.4.2.4": RSAFormatter.SetHashAlgorithm("SHA224"); break;
-                                                                default: throw new InvalidDataException();
-                                                            }
-
-                                                            reader.BaseStream.Seek(alg_id_end, SeekOrigin.Begin);
-
-                                                            // OCTET STRING(Digest)
-                                                            if (reader.ReadByte() != 0x04)
-                                                                throw new InvalidDataException();
-
-                                                            // Read, sign hash, and return.
-                                                            e.Signature = RSAFormatter.CreateSignature(reader.ReadBytes(reader.ReadASN1Length()));
-                                                        }
-                                                        break;
-                                                    }
-
-                                                case SignAlgorithmType.RSASignatureNoPadding:
-                                                    // TODO: Implement! As of 2020-09 .NET doesn't appear to offer a low-level RSA encrypt/sign unpadded support.
-
-                                                default:
-                                                    throw new NotSupportedException();
-                                            }
                                         };
 
                                         mgmt_session.StateReported += (object sender, StateReportedEventArgs e) =>
