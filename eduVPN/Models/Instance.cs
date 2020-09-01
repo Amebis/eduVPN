@@ -338,7 +338,7 @@ namespace eduVPN.Models
                 if (_client_certificate == null)
                 {
                     // Open eduVPN client certificate store.
-                    var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
+                    var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
                     store.Open(OpenFlags.ReadWrite);
                     try
                     {
@@ -346,20 +346,19 @@ namespace eduVPN.Models
                         var friendly_name = Base.AbsoluteUri;
                         foreach (var cert in store.Certificates)
                         {
-                            var cert_friendly_name = cert.FriendlyName;
-                            if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey && cert_friendly_name.Length > 0)
+                            if (cert.FriendlyName == friendly_name)
                             {
-                                // Not expired && Has the private key.
-                                if (cert_friendly_name == friendly_name)
+                                // Certificate found.
+                                if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
                                 {
-                                    // Certificate found.
+                                    // Not expired && Has the private key.
                                     _client_certificate = cert;
                                 }
-                            }
-                            else
-                            {
-                                // Certificate expired or matching private key not found or without a name == Useless. Clean it from the store.
-                                store.Remove(cert);
+                                else
+                                {
+                                    // Certificate expired or matching private key not found == Useless. Clean it from the store.
+                                    store.Remove(cert);
+                                }
                             }
                         }
                     }
@@ -444,7 +443,7 @@ namespace eduVPN.Models
                     OnRequestAuthorization(authenticating_instance, e);
 
                     // Open eduVPN client certificate store.
-                    var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
+                    var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
                     store.Open(OpenFlags.ReadWrite);
                     try
                     {
@@ -508,7 +507,7 @@ namespace eduVPN.Models
                 var friendly_name = Base.AbsoluteUri;
 
                 // Open eduVPN client certificate store.
-                var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
+                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
                 store.Open(OpenFlags.ReadWrite);
                 try
                 {
@@ -540,7 +539,7 @@ namespace eduVPN.Models
             lock (_client_certificate_lock)
             {
                 // Open eduVPN client certificate store.
-                var store = new X509Store(Properties.Settings.Default.ClientID, StoreLocation.CurrentUser);
+                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
                 store.Open(OpenFlags.ReadWrite);
                 try
                 {
