@@ -99,9 +99,9 @@ Clean ::
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ "TAPWin.wxs"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" : \
-	"$(CLIENT_TARGET)OpenVPN.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "$(CLIENT_TARGET)OpenVPN.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ "$(CLIENT_TARGET)OpenVPN.wxs"
+	"OpenVPN.wxs"
+	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "OpenVPN.wxs"
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ "OpenVPN.wxs"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" : \
 	"$(CLIENT_TARGET)Core.wxs" \
