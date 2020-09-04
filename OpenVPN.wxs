@@ -137,22 +137,22 @@
         -->
         <DirectoryRef Id="BINDIR">
             <Component Id="libcrypto_1_1.dll" Guid="$(var.libcrypto_1_1.dll.ComponentGUID)">
-                <File Source="bin\OpenVPN\$(var.Platform)\libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
+                <File Source="$(var.OpenVPN.Dir)libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="libssl_1_1.dll" Guid="$(var.libssl_1_1.dll.ComponentGUID)">
-                <File Source="bin\OpenVPN\$(var.Platform)\libssl-1_1$(var.OpenSSL.Platform).dll"/>
+                <File Source="$(var.OpenVPN.Dir)libssl-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="liblzo2_2.dll" Guid="$(var.liblzo2_2.dll.ComponentGUID)">
-                <File Source="bin\OpenVPN\$(var.Platform)\liblzo2-2.dll"/>
+                <File Source="$(var.OpenVPN.Dir)liblzo2-2.dll"/>
             </Component>
             <Component Id="libpkcs11_helper_1.dll" Guid="$(var.libpkcs11_helper_1.dll.ComponentGUID)">
-                <File Source="bin\OpenVPN\$(var.Platform)\libpkcs11-helper-1.dll"/>
+                <File Source="$(var.OpenVPN.Dir)libpkcs11-helper-1.dll"/>
             </Component>
             <Component Id="openvpn.exe" Guid="$(var.openvpn.exe.ComponentGUID)">
-                <File Source="bin\OpenVPN\$(var.Platform)\openvpn.exe"/>
+                <File Source="$(var.OpenVPN.Dir)openvpn.exe"/>
             </Component>
             <Component Id="openvpnserv.exe" Guid="$(var.openvpnserv.exe.ComponentGUID)">
-                <File Source="bin\OpenVPN\$(var.Platform)\openvpnserv.exe"/>
+                <File Source="$(var.OpenVPN.Dir)openvpnserv.exe"/>
                 <CreateFolder Directory="CONFIGDIR">
                     <!--
                         SYSTEM (SY): full
