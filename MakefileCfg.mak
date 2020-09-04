@@ -16,14 +16,6 @@ WIX_CANDLE_FLAGS_CFG=$(WIX_CANDLE_FLAGS)
 "$(OUTPUT_DIR)\$(CFG)" :
 	if not exist $@ md $@
 
-"$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj" : "TAP-Windows.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS) -out $@ $**
-
-Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj"     del /f /q "$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\tap-windows-9.21.2.exe" del /f /q "$(OUTPUT_DIR)\$(CFG)\tap-windows-9.21.2.exe"
-
 
 ######################################################################
 # Platform specific rules

@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.29...HEAD)
 
 - OpenVPN updated to 2.5-20200904
+- TAP-Windows setup updated to MSI
 - TLS 1.3 support
 
 

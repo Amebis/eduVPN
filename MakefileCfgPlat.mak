@@ -22,8 +22,9 @@ OPENSSL_PLAT=
 # WiX parameters
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-arch $(PLAT) \
+	-dPlatform="$(PLAT)" \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
-	-dTAPWinPre.VersionInformational="$(TAPWINPRE_VERSION) $(SETUP_TARGET)" \
+	-dTAPWin.VersionInformational="$(TAPWINPRE_VERSION) $(SETUP_TARGET)" \
 	-dOpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
 	-dOpenSSL.Platform="$(OPENSSL_PLAT)" \
 	-dCore.VersionInformational="$(CORE_VERSION) $(SETUP_TARGET)"
@@ -49,7 +50,6 @@ VC142REDIST_MSM=Microsoft_VC142_CRT_$(PLAT).msm
 !IF "$(CFG)" == "Release"
 SetupBuild :: \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll" \
@@ -69,9 +69,6 @@ SetupBuild ::
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)" : "$(OUTPUT_DIR)\$(CFG)"
 	if not exist $@ md $@
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer" : "$(OUTPUT_DIR)\Setup\tap0901.cer"
-	copy /y $** $@ > NUL
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll" ::
@@ -103,7 +100,6 @@ Clean ::
 	if not exist $@ md $@
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"                      del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\tap0901.cer"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"                    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"

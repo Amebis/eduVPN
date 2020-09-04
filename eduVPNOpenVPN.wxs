@@ -56,7 +56,6 @@
             <ComponentSearch Id="libpkcs11_helper_1.dll" Guid="{1D7D0360-15AD-466F-B667-840C8C8827C5}"/>
             <ComponentSearch Id="openvpn.exe" Guid="{101FF3BB-DD5A-41CB-8A8C-0B582F7BF1D7}"/>
             <ComponentSearch Id="openvpnserv.exe" Guid="{1A38AF86-1516-49FA-91AE-D48EAE37468D}"/>
-            <ComponentSearch Id="tapctl.exe" Guid="{C3C09144-8FBE-4EF1-A767-9652A75F7493}"/>
         </Property>
         <SetProperty
             After="AppSearch"
@@ -70,22 +69,6 @@
             Id="BINDIR"
             Value="[INSTALLDIR]"
             Sequence="first"><![CDATA[INSTALLDIR AND NOT Installed]]></SetProperty>
-
-
-        <!--
-            TAP-Windows driver check
-            Note: Exact driver version check would be extremely difficult to invent and probably error prone.
-            Therefore, we're happy if "tap0901" service is registered and has ImagePath value set.
-        -->
-        <Property Id="TAPWINDOWSDRIVER">
-            <RegistrySearch
-                Id="TAPWindowsDriver"
-                Root="HKLM"
-                Key="SYSTEM\CurrentControlSet\services\tap0901"
-                Name="ImagePath"
-                Type="raw"/>
-        </Property>
-        <Condition Message="!(loc.TAPWindowsMissing)"><![CDATA[Installed OR TAPWINDOWSDRIVER]]></Condition>
 
 
         <!--
@@ -219,9 +202,6 @@
                     Type="string"
                     Value="Users"/>
             </Component>
-            <Component Id="tapctl.exe" Guid="{C3C09144-8FBE-4EF1-A767-9652A75F7493}">
-                <File Source="tapctl.exe"/>
-            </Component>
 
             <!-- Add/Remove Programs Localization -->
             <Component Id="ARP.DisplayName" Guid="{DFE94916-719C-4D78-A188-35E8DC1933F5}">
@@ -251,7 +231,6 @@
             <ComponentRef Id="openvpnserv.exe.reg5"/>
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
-            <ComponentRef Id="tapctl.exe"/>
             <ComponentRef Id="ARP.DisplayName"/>
             <ComponentRef Id="ARP.Publisher"/>
             <ComponentGroupRef Id="OpenVPN.Resources.dll"/>

@@ -59,14 +59,13 @@ Clean ::
 	"Install\thm.xml" \
 	"Install\$(CLIENT_TARGET)\logo.png" \
 	"$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj" \
-	"$(SETUP_DIR)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_x86.msi" \
-	"$(SETUP_DIR)\$(CLIENT_TARGET)TAPWinPre_$(TAPWINPRE_VERSION)_x64.msi" \
+	"$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_x86.msi" \
+	"$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_x64.msi" \
 	"$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x86.msi" \
 	"$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x64.msi" \
 	"$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_x86.msi" \
 	"$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_x64.msi"
-	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "eduVPN.wxl" -out $@ "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj" "$(OUTPUT_DIR)\$(CFG)\TAP-Windows.wixobj"
+	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "eduVPN.wxl" -out $@ "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_*.exe" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_*.exe"

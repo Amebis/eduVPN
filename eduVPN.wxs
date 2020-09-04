@@ -73,16 +73,14 @@
                 TAP-Windows
             -->
             <MsiPackage
-                Id="$(var.ClientTarget)TAPWinPre_x86"
-                SourceFile="bin\Setup\$(var.ClientTarget)TAPWinPre_$(var.TAPWinPre.Version)_x86.msi"
+                Id="$(var.ClientTarget)TAPWin_x86"
+                SourceFile="bin\Setup\$(var.ClientTarget)TAPWin_$(var.TAPWin.Version)_x86.msi"
                 InstallCondition="NOT VersionNT64"/>
 
             <MsiPackage
-                Id="$(var.ClientTarget)TAPWinPre_x64"
-                SourceFile="bin\Setup\$(var.ClientTarget)TAPWinPre_$(var.TAPWinPre.Version)_x64.msi"
+                Id="$(var.ClientTarget)TAPWin_x64"
+                SourceFile="bin\Setup\$(var.ClientTarget)TAPWin_$(var.TAPWin.Version)_x64.msi"
                 InstallCondition="VersionNT64"/>
-
-            <PackageGroupRef Id="TAPWindows924Redist"/>
 
             <!--
                 OpenVPN

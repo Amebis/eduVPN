@@ -15,10 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		eduVPN.wxs = eduVPN.wxs
 		eduVPNCore.wxs = eduVPNCore.wxs
 		eduVPNOpenVPN.wxs = eduVPNOpenVPN.wxs
-		eduVPNTAPWinPre.wxs = eduVPNTAPWinPre.wxs
 		LetsConnectCore.wxs = LetsConnectCore.wxs
 		LetsConnectOpenVPN.wxs = LetsConnectOpenVPN.wxs
-		LetsConnectTAPWinPre.wxs = LetsConnectTAPWinPre.wxs
 		LICENSE = LICENSE
 		LICENSE.spdx = LICENSE.spdx
 		Makefile = Makefile
@@ -28,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MakefileCfgPlatClient.mak = MakefileCfgPlatClient.mak
 		MakefileCfgPlatClientLang.mak = MakefileCfgPlatClientLang.mak
 		README.md = README.md
-		TAP-Windows.wxs = TAP-Windows.wxs
+		TAPWin.wxs = TAPWin.wxs
 		wixcop.xml = wixcop.xml
 	EndProjectSection
 EndProject
