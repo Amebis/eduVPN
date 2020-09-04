@@ -48,15 +48,6 @@ VC142REDIST_MSM=Microsoft_VC142_CRT_$(PLAT).msm
 ######################################################################
 
 !IF "$(CFG)" == "Release"
-SetupBuild :: \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
-
 SetupBuild ::
 	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
@@ -78,35 +69,11 @@ SetupBuild ::
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
-	copy /y $** $@ > NUL
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
-	copy /y $** $@ > NUL
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\liblzo2-2.dll"
-	copy /y $** $@ > NUL
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\libpkcs11-helper-1.dll"
-	copy /y $** $@ > NUL
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\openvpn.exe"
-	copy /y $** $@ > NUL
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\openvpnserv.exe"
-	copy /y $** $@ > NUL
-
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config" : "$(OUTPUT_DIR)\$(CFG)\$(PLAT)"
+"$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)"
 	if not exist $@ md $@
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"                    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\liblzo2-2.dll"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"           del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"                      del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpn.exe"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\openvpnserv.exe"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config"                           rd  /s /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\config"
+	-if exist "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config" rd  /s /q "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config"
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC142REDIST_MSM)"
 	copy /y $** $@ > NUL
