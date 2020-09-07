@@ -38,7 +38,7 @@
 
         <Package
             InstallScope="perMachine"
-            InstallerVersion="200"
+            InstallerVersion="400"
             Compressed="yes"
             SummaryCodepage="!(loc.SummaryCodepage)"
             ReadOnly="yes"/>
@@ -93,7 +93,8 @@
         -->
         <MajorUpgrade
             DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
-            Schedule="afterInstallExecute"/>
+            Schedule="afterInstallExecute"
+            AllowSameVersionUpgrades="yes"/>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="license.txt" Guid="$(var.license.txt.ComponentGUID)"/>
             <ComponentSearch Id="tapctl.exe" Guid="$(var.tapctl.exe.ComponentGUID)"/>
@@ -155,59 +156,66 @@
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="PRODUCTDIR" Name="$(var.ClientTitle)">
-                    <Directory Id="BINDIR" Name="TAPWin">
-                        <Component Id="license.txt" Guid="$(var.license.txt.ComponentGUID)">
-                            <File Source="bin\TAP-Windows6\license.txt"/>
-
-                            <!-- Clean-up NSIS installation. -->
-                            <RemoveFile Id="nsis.tapwin.shortcut.utilities.addtap.bat" Directory="TAPWindowsUtilitiesShortcutFolder" Name="Add a new TAP virtual ethernet adapter.lnk" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.shortcut.utilities.deltapall.bat" Directory="TAPWindowsUtilitiesShortcutFolder" Name="Delete ALL TAP virtual ethernet adapters.lnk" On="install"/>
-                            <RemoveFolder Id="nsis.tapwin.shortcut.utilities" Property="TAPWindowsUtilitiesShortcutFolder" On="install"/>
-                            <RemoveFolder Id="nsis.tapwin.shortcut" Property="TAPWindowsShortcutFolder" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.bin.addtap.bat" Property="NSIS.TAPWIN.BIN" Name="addtap.bat" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.bin.deltapall.bat" Property="NSIS.TAPWIN.BIN" Name="deltapall.bat" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.bin.tapinstall.exe" Property="NSIS.TAPWIN.BIN" Name="tapinstall.exe" On="install"/>
-                            <RemoveFolder Id="nsis.tapwin.bin" Property="NSIS.TAPWIN.BIN" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.driver.OemVista.inf" Property="NSIS.TAPWIN.DRIVER" Name="OemVista.inf" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.driver.tap0901.cat" Property="NSIS.TAPWIN.DRIVER" Name="tap0901.cat" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.driver.tap0901.sys" Property="NSIS.TAPWIN.DRIVER" Name="tap0901.sys" On="install"/>
-                            <RemoveFolder Id="nsis.tapwin.driver" Property="NSIS.TAPWIN.DRIVER" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.include.tap_windows.h" Property="NSIS.TAPWIN.INCLUDE" Name="tap-windows.h" On="install"/>
-                            <RemoveFolder Id="nsis.tapwin.include" Property="NSIS.TAPWIN.INCLUDE" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.icon.ico" Property="NSIS.TAPWIN" Name="icon.ico" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.license.txt" Property="NSIS.TAPWIN" Name="license.txt" On="install"/>
-                            <RemoveFile Id="nsis.tapwin.Uninstall.exe" Property="NSIS.TAPWIN" Name="Uninstall.exe" On="install"/>
-                            <RemoveFolder Id="nsis.tapwin" Property="NSIS.TAPWIN" On="install"/>
-                            <RemoveRegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TAP-Windows" Action="removeOnInstall"/>
-                        </Component>
-
-                        <Component Id="tapctl.exe" Guid="$(var.tapctl.exe.ComponentGUID)">
-                            <File Source="$(var.OpenVPN.Dir)tapctl.exe" KeyPath="yes" Checksum="yes"/>
-                        </Component>
-                    </Directory>
+                    <Directory Id="BINDIR" Name="TAPWin"/>
                 </Directory>
             </Directory>
 
             <Directory Id="ProgramMenuFolder">
-                <Directory Id="ProductShortcutFolder" Name="!(loc.$(var.ClientTarget).TAPWinName)">
-                    <Component Id="shortcut.tapctl.exe.create.TAPWindows" Guid="$(var.shortcut.tapctl.exe.create.TAPWindows.ComponentGUID)">
-                        <Shortcut
-                            Id="shortcut.tapctl.exe.create.TAPWindows"
-                            Name="!(loc.TAPWin.AddAdapter)"
-                            Target="[BINDIR]tapctl.exe"
-                            Arguments="create --hwid root\tap0901"
-                            WorkingDirectory="BINDIR"
-                            Icon="tapctl_create.ico"/>
-                        <RemoveFolder Id="shortcut.tapctl.exe.create.TAPWindows" On="uninstall"/>
-                        <RegistryValue Root="HKCU" Key="Software\!(loc.$(var.ClientTarget).TAPWinName)\Shortcuts" Name="tapctl.exe.create.TAPWindows" Type="integer" Value="1"/>
-                    </Component>
-                </Directory>
-
+                <Directory Id="ProductShortcutFolder" Name="!(loc.$(var.ClientTarget).TAPWinName)"/>
                 <Directory Id="TAPWindowsShortcutFolder" Name="TAP-Windows">
                     <Directory Id="TAPWindowsUtilitiesShortcutFolder" Name="Utilities"/>
                 </Directory>
             </Directory>
         </Directory>
+
+
+        <!--
+            Compontents
+        -->
+        <DirectoryRef Id="BINDIR">
+            <Component Id="license.txt" Guid="$(var.license.txt.ComponentGUID)">
+                <File Source="bin\TAP-Windows6\license.txt"/>
+
+                <!-- Clean-up NSIS installation. -->
+                <RemoveFile Id="nsis.tapwin.shortcut.utilities.addtap.bat" Directory="TAPWindowsUtilitiesShortcutFolder" Name="Add a new TAP virtual ethernet adapter.lnk" On="install"/>
+                <RemoveFile Id="nsis.tapwin.shortcut.utilities.deltapall.bat" Directory="TAPWindowsUtilitiesShortcutFolder" Name="Delete ALL TAP virtual ethernet adapters.lnk" On="install"/>
+                <RemoveFolder Id="nsis.tapwin.shortcut.utilities" Property="TAPWindowsUtilitiesShortcutFolder" On="install"/>
+                <RemoveFolder Id="nsis.tapwin.shortcut" Property="TAPWindowsShortcutFolder" On="install"/>
+                <RemoveFile Id="nsis.tapwin.bin.addtap.bat" Property="NSIS.TAPWIN.BIN" Name="addtap.bat" On="install"/>
+                <RemoveFile Id="nsis.tapwin.bin.deltapall.bat" Property="NSIS.TAPWIN.BIN" Name="deltapall.bat" On="install"/>
+                <RemoveFile Id="nsis.tapwin.bin.tapinstall.exe" Property="NSIS.TAPWIN.BIN" Name="tapinstall.exe" On="install"/>
+                <RemoveFolder Id="nsis.tapwin.bin" Property="NSIS.TAPWIN.BIN" On="install"/>
+                <RemoveFile Id="nsis.tapwin.driver.OemVista.inf" Property="NSIS.TAPWIN.DRIVER" Name="OemVista.inf" On="install"/>
+                <RemoveFile Id="nsis.tapwin.driver.tap0901.cat" Property="NSIS.TAPWIN.DRIVER" Name="tap0901.cat" On="install"/>
+                <RemoveFile Id="nsis.tapwin.driver.tap0901.sys" Property="NSIS.TAPWIN.DRIVER" Name="tap0901.sys" On="install"/>
+                <RemoveFolder Id="nsis.tapwin.driver" Property="NSIS.TAPWIN.DRIVER" On="install"/>
+                <RemoveFile Id="nsis.tapwin.include.tap_windows.h" Property="NSIS.TAPWIN.INCLUDE" Name="tap-windows.h" On="install"/>
+                <RemoveFolder Id="nsis.tapwin.include" Property="NSIS.TAPWIN.INCLUDE" On="install"/>
+                <RemoveFile Id="nsis.tapwin.icon.ico" Property="NSIS.TAPWIN" Name="icon.ico" On="install"/>
+                <RemoveFile Id="nsis.tapwin.license.txt" Property="NSIS.TAPWIN" Name="license.txt" On="install"/>
+                <RemoveFile Id="nsis.tapwin.Uninstall.exe" Property="NSIS.TAPWIN" Name="Uninstall.exe" On="install"/>
+                <RemoveFolder Id="nsis.tapwin" Property="NSIS.TAPWIN" On="install"/>
+                <RemoveRegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TAP-Windows" Action="removeOnInstall"/>
+            </Component>
+
+            <Component Id="tapctl.exe" Guid="$(var.tapctl.exe.ComponentGUID)">
+                <File Source="$(var.OpenVPN.Dir)tapctl.exe" KeyPath="yes" Checksum="yes"/>
+            </Component>
+        </DirectoryRef>
+
+        <DirectoryRef Id="ProductShortcutFolder">
+            <Component Id="shortcut.tapctl.exe.create.TAPWindows" Guid="$(var.shortcut.tapctl.exe.create.TAPWindows.ComponentGUID)">
+                <Shortcut
+                    Id="shortcut.tapctl.exe.create.TAPWindows"
+                    Name="!(loc.TAPWin.AddAdapter)"
+                    Target="[BINDIR]tapctl.exe"
+                    Arguments="create --hwid root\tap0901"
+                    WorkingDirectory="BINDIR"
+                    Icon="tapctl_create.ico"/>
+                <RemoveFolder Id="shortcut.tapctl.exe.create.TAPWindows" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\!(loc.$(var.ClientTarget).TAPWinName)\Shortcuts" Name="tapctl.exe.create.TAPWindows" Type="integer" Value="1"/>
+            </Component>
+        </DirectoryRef>
 
 
         <!--
