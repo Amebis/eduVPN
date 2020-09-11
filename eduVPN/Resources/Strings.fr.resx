@@ -289,4 +289,7 @@
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
     <value>La clé publique Minisign n'est pas fiable.</value>
   </data>
+  <data name="ErrorAutostartingProfile" xml:space="preserve">
+    <value>Auto-starting the last connected profile failed.</value>
+  </data>
 </root>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutPageCopyright2" xml:space="preserve">
+    <value>حقوق الطبع والنشر © 2017-{0}
+برنامج حقوق العموم ل eduVPN</value>
+  </data>
+  <data name="AboutPageVersion" xml:space="preserve">
+    <value>الإصدار {0}</value>
+  </data>
+  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
+    <value>_دولة</value>
+  </data>
+  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
+    <value>_مؤسسة</value>
+  </data>
+  <data name="AuthorizationPopupMessage2" xml:space="preserve">
+    <value>يحتاج العميل إلى تفويض {0}، و قد فتح متصفح الشبكة الخاص بك. سيستمر العميل بعد إكمال التفويض...</value>
+    <comment>{0}=Instance name</comment>
+  </data>
+  <data name="AuthorizationPopupTitle" xml:space="preserve">
+    <value>في انتظار التفويض</value>
+  </data>
+  <data name="ButtonBackTitle" xml:space="preserve">
+    <value>رجوع</value>
+  </data>
+  <data name="ButtonCloseTitle" xml:space="preserve">
+    <value>إغلاق</value>
+  </data>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_نسخ نص الخطأ</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_صرف النظر عن الخطأ</value>
+  </data>
+  <data name="ButtonOKTitle" xml:space="preserve">
+    <value>_حسنا</value>
+  </data>
+  <data name="ButtonSettingsTitle" xml:space="preserve">
+    <value>إعدادات</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_مزود</value>
+  </data>
+  <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_مظهر</value>
+  </data>
+  <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
+    <value>_مظهر</value>
+  </data>
+  <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
+    <value>_مزود</value>
+  </data>
+  <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
+    <value>_مظهر</value>
+  </data>
+  <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
+    <value>_اسم المضيف</value>
+  </data>
+  <data name="ErrorOAuthState" xml:space="preserve">
+    <value>الوسيط المطلوب "حالة" من نظام أوث مفقود أو غير صحيح.</value>
+  </data>
+  <data name="InstanceSourcePageCustomButtonTitle" xml:space="preserve">
+    <value>أضف عنوانا _آخر</value>
+  </data>
+  <data name="InstanceSourcePageInstituteAccessButtonTitle2" xml:space="preserve">
+    <value>اتصل ب _مؤسستك</value>
+  </data>
+  <data name="InstanceSourcePageSecureInternetButtonTitle2" xml:space="preserve">
+    <value>استخدم الشبكة _بأمان</value>
+  </data>
+  <data name="ListBoxNoItems" xml:space="preserve">
+    <value>لا عناصر</value>
+    <comment>Displayed when a list is empty</comment>
+  </data>
+  <data name="ListBoxNull" xml:space="preserve">
+    <value>يرجى الانتظار...</value>
+    <comment>Displayed when a list is loading</comment>
+  </data>
+  <data name="MessageMaintenanceBegin" xml:space="preserve">
+    <value>ابدأ</value>
+  </data>
+  <data name="MessageMaintenanceEnd" xml:space="preserve">
+    <value>أنهِ</value>
+  </data>
+  <data name="MessageMaintenanceTitle" xml:space="preserve">
+    <value>إعلام الصيانة</value>
+  </data>
+  <data name="MessageNotificationTitle" xml:space="preserve">
+    <value>إعلام</value>
+  </data>
+  <data name="NumberToHumanReadable" xml:space="preserve">
+    <value>{0:G}{1}{2}</value>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
+  <data name="PasswordPopupMessage" xml:space="preserve">
+    <value>أدخل كلمة المرور لـ "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_كلمة المرور</value>
+  </data>
+  <data name="PasswordPopupTitle" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="RecentConfigurationSelectPageAddButtonTitle" xml:space="preserve">
+    <value>أضف _آخر</value>
+  </data>
+  <data name="SelfUpdatePopupAskLaterButtonTitle" xml:space="preserve">
+    <value>اسألني _لاحقا</value>
+  </data>
+  <data name="SelfUpdatePopupChangelogButtonTitle" xml:space="preserve">
+    <value>ما _الجديد؟</value>
+  </data>
+  <data name="SelfUpdatePopupMessage3" xml:space="preserve">
+    <value>إصدار أحدث ومحسن من العميل متوفر. ابق على اطلاع!</value>
+  </data>
+  <data name="SelfUpdatePopupSkipButtonTitle" xml:space="preserve">
+    <value>تخطي هذا _الإصدار</value>
+  </data>
+  <data name="SelfUpdatePopupTitle" xml:space="preserve">
+    <value>تحديث متوفر</value>
+  </data>
+  <data name="SelfUpdatePopupUpdateButtonTitle" xml:space="preserve">
+    <value>تحميل و _تحديث الآن
+(سيتم إعادة تشغيل العميل)</value>
+  </data>
+  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
+    <value>اكتشف {0} تلف ملف إعدادات المستخدم {1}. قد يكون هذا بسبب حادث.
+
+إذا تابعت ، ستتم إعادة تعيين إعدادات المستخدم إلى الإعدادات الافتراضية.</value>
+    <comment>{0}=application name, {1}=filename</comment>
+  </data>
+  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
+    <value>تلف إعدادات المستخدم</value>
+  </data>
+  <data name="SettingsPageForceTCPDescription2" xml:space="preserve">
+    <value>إذا كان العميل لا يستطيع الاتصال ، أو إذا كان يستطيع الاتصال لكن لا ينقل البيانات ، فإن الاتصال عبر ميفاق التحكم بالنقل قد يحل هذا.</value>
+  </data>
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
+    <value>اتصل عبر _ميفاق التحكم بالنقل</value>
+  </data>
+  <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
+    <value>عندما تحتاج إلى اتصالات OpenVPN متعددة في وقت واحد ، حدد واجهة TAP للعميل أدناه.</value>
+  </data>
+  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
+    <value>حدد _واجهة TAP</value>
+  </data>
+  <data name="StatusPageDisconnectButtonTitle" xml:space="preserve">
+    <value>_قطع الاتصال</value>
+  </data>
+  <data name="StatusPageInstance" xml:space="preserve">
+    <value>مزود</value>
+  </data>
+  <data name="StatusPageMessagesLabel" xml:space="preserve">
+    <value>_رسائل</value>
+  </data>
+  <data name="StatusPageProfile" xml:space="preserve">
+    <value>مظهر</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
+    <value>نحو الداخل</value>
+  </data>
+  <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
+    <value>نحو الخارج</value>
+  </data>
+  <data name="StatusPageSessionInfoDuration" xml:space="preserve">
+    <value>المدة</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
+    <value>عنوان نظام الشبكات جيل 4</value>
+  </data>
+  <data name="StatusPageSessionInfoIPv6" xml:space="preserve">
+    <value>عنوان نظام الشبكات جيل 6</value>
+  </data>
+  <data name="StatusPageSessionInfoTitle" xml:space="preserve">
+    <value>معلومات عن الاتصال</value>
+  </data>
+  <data name="StatusPageSessionInfoViewLogButtonTitle" xml:space="preserve">
+    <value>عرض _السجل</value>
+  </data>
+  <data name="StatusPageStatus" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
+    <value>عنوان نظام الشبكات={0} ، من الجيل 6={1}</value>
+    <comment>{0}=IP address, {1}=IPv6 address</comment>
+  </data>
+  <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
+    <value>{0} متصل</value>
+    <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
+    <value>غير متصل</value>
+  </data>
+  <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
+    <value>تم تصغير النافذة هنا.</value>
+  </data>
+  <data name="SystemTrayMenuAbout" xml:space="preserve">
+    <value>_حول...</value>
+  </data>
+  <data name="SystemTrayMenuExit" xml:space="preserve">
+    <value>خ_روج</value>
+  </data>
+  <data name="SystemTrayMenuOpen" xml:space="preserve">
+    <value>_فتح</value>
+  </data>
+  <data name="SystemTrayMenuSettings" xml:space="preserve">
+    <value>_إعدادات...</value>
+  </data>
+  <data name="SystemTrayMenuStatus" xml:space="preserve">
+    <value>_معلومات عن الاتصال...</value>
+  </data>
+  <data name="TimeSpanInSeconds" xml:space="preserve">
+    <value>h\:mm\:ss</value>
+    <comment>Display format of the duration times less then one day</comment>
+  </data>
+  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
+    <value>d\.hh\:mm\:ss</value>
+    <comment>Display format of the duration times one day or longer</comment>
+  </data>
+  <data name="UsernamePasswordPopupMessage" xml:space="preserve">
+    <value>أدخل اسم المستخدم وكلمة المرور لـ "{0}":</value>
+    <comment>{0}=Authenticating realm name</comment>
+  </data>
+  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
+    <value>_كلمة المرور</value>
+  </data>
+  <data name="UsernamePasswordPopupTitle" xml:space="preserve">
+    <value>المصادقة</value>
+  </data>
+  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
+    <value>_اسم المستخدم</value>
+  </data>
+  <data name="AboutPageAppBannerTitle" xml:space="preserve">
+    <value>{0}
+مدعوم من SURFnet</value>
+    <comment>{0}=Client name</comment>
+  </data>
+  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
+    <value>مظاهر الشبكة الخاصة الافتراضية المضافة</value>
+  </data>
+  <data name="ButtonConnectTitle" xml:space="preserve">
+    <value>_اتصل!</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>غير متاح</value>
+  </data>
+  <data name="SettingsPageAllowLocalDescription" xml:space="preserve">
+    <value>تحذير: لا تقم بتمكين هذا عند التجوال في الشبكات العامة غير الموثوق بها.</value>
+  </data>
+  <data name="SettingsPageAllowLocalLabel" xml:space="preserve">
+    <value>السماح بحركة المرور _المحلية</value>
+  </data>
+  <data name="ListBoxNoProfiles" xml:space="preserve">
+    <value>إما لا مظاهر شبكة خاصة افتراضية محددة ، أو أن هذا الحساب ليس لديه الإذن للوصول إلى أي من المظاهر المتاحة.</value>
+    <comment>Displayed when a profile list is empty</comment>
+  </data>
+</root>

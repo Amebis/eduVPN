@@ -118,178 +118,178 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>Preverjanje podpisa ni uspelo. Celovitost {0} ni veljavna.</value>
+    <value>فشل التحقق من التوقيع. {0} غير سليم.</value>
   </data>
   <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value>Strežnik API je sporočil napako.</value>
+    <value>رد خادم واجهة برمجة التطبيقات بخطأ.</value>
   </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Zasebni ključ ni veljaven ali je nepodprtega zapisa.</value>
+    <value>المفتاح الخاص غير صالح أو شكله غير مدعوم.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value>Nalaganje končnih točk API ni uspelo.</value>
+    <value>فشل تحميل أطراف واجهة برمجة التطبيقات.</value>
   </data>
   <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Nalaganje skupine ponudnikov {0} ni uspelo.</value>
+    <value>فشل تحميل مصدر المزود {0}.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value>Nalaganje spiska profilov ni uspelo.</value>
+    <value>فشل تحميل لائحة المظاهر.</value>
   </data>
   <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value>Nalaganje digitalnega potrdila uporabnika ni uspelo.</value>
+    <value>فشل تحميل شهادة العميل.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
-    <value>Nalaganje nastavitev profila ni uspelo.</value>
+    <value>فشل تحميل إعدادات المظهر.</value>
   </data>
   <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Nalaganje podatkov o uporabniku ni uspelo.</value>
+    <value>فشل تحميل معلومات المستخدم.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Shranjevanje profilovih nastavitev OpenVPN v "{0}" ni uspelo.</value>
+    <value>فشل حفظ إعدادات المظهر ل OpenVPN إلى "{0}".</value>
   </data>
   <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Pooblaščanje odjemalca ni uspelo.</value>
+    <value>فشل التفويض للعميل.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Pooblaščanje odjemalca za uporabo {0} ni uspelo.</value>
+    <value>فشل تفويض العميل لاستخدام {0}.</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value>Dodajam smeri v sistem ...</value>
+    <value>جارٍ إضافة الطرقات إلى النظام ...</value>
   </data>
   <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
-    <value>Dodeljujem naslov IP navideznemu omrežnemu vmesniku ...</value>
+    <value>تعيين عنوان نظام الشبكات لواجهة الشبكة الافتراضية ...</value>
   </data>
   <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value>Overovljanje s strežnikom ...</value>
+    <value>المصادقة مع الخادم ...</value>
   </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
-    <value>Povezan.</value>
+    <value>متصل.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
-    <value>Povezujem ...</value>
+    <value>جارٍ الاتصال ...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>Elegantni izhod je v postopku ...</value>
+    <value>خروج جميل قيد الإتمام ...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value>OpenVPN je javil usodno napako.</value>
+    <value>أبلغ OpenVPN عن خطأ جسيم.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value>Prenašam nastavitvene možnosti s strežnika ...</value>
+    <value>جارٍ تنزيل خيارات التكوين من الخادم ...</value>
   </data>
   <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
-    <value>Prišlo je do ponovnega zagona ...</value>
+    <value>حدث إعادة تشغيل ...</value>
   </data>
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
-    <value>Čakam na uvodni odgovor strežnika ...</value>
+    <value>في انتظار الاستجابة الأولية من الخادم ...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(samodejno)</value>
+    <value>(تلقائي)</value>
   </data>
   <data name="ErrorNetworkInterfaceIDNotFound" xml:space="preserve">
-    <value>Omrežni vmesnik z ID-jem {0} ni najden.</value>
+    <value>لم يتم العثور على واجهة الشبكة ذات المعرف {0}.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Omrežni vmesnik {0} ni najden.</value>
+    <value>لم يتم العثور على واجهة الشبكة {0}.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Neveljavno ime gostitelja: imena gostiteljev vsebujejo črke, številke, vezaje in pike.</value>
+    <value>اسم مضيف غير صالح: تحتوي أسماء المضيف على أحرف وأرقام وواصلات ونقاط.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value>Ime lastnosti {0} ni veljavno.</value>
+    <value>اسم الخاصية {0} غير صالح.</value>
     <comment>{0}=Property name</comment>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
-    <value>Napaka interaktivne storitve.</value>
+    <value>فشل الخدمة التفاعلية.</value>
   </data>
   <data name="InstanceForget" xml:space="preserve">
-    <value>Pozabi {0}</value>
+    <value>نسيان {0}</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>Prenesena datoteka {0} je pokvarjena.</value>
+    <value>الملف {0} الذي تم تنزيله تالف.</value>
     <comment>{0}=URI</comment>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
-    <value>Prenos s spleta ni uspel. Preverite svojo spletno povezavo.</value>
+    <value>فشل التنزيل من الشبكة. الرجاء التحقق من اتصالك بالشبكة.</value>
   </data>
   <data name="ErrorUploading" xml:space="preserve">
-    <value>Prenos na splet ni uspel. Preverite svojo spletno povezavo.</value>
+    <value>فشل التحميل إلى الشبكة. الرجاء التحقق من اتصالك بالشبكة.</value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value>Razrešujem naslov IP strežnika ...</value>
+    <value>جارٍ ترجمة عنوان نظام الشبكات للخادم ...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value>Povezujem se na strežnik TCP ...</value>
+    <value>جارٍ الاتصال عبر خادم ميفاق التحكم بالنقل ...</value>
   </data>
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value>Namestitvena datoteka ni na voljo. Posodabljanje prekinjeno.</value>
+    <value>ملف المثبت غير متوفر. تم إحباط التحديث.</value>
   </data>
   <data name="AboutPageTitle" xml:space="preserve">
-    <value>O programu</value>
+    <value>حول</value>
   </data>
   <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Izberite državo svoje ustanove</value>
+    <value>حدد بلد مؤسستك</value>
   </data>
   <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo ustanovo</value>
+    <value>حدد مؤسستك</value>
   </data>
   <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Izberite svoj profil</value>
+    <value>حدد المظهر</value>
   </data>
   <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Vnesite URL svojega ponudnika</value>
+    <value>أدخل رابط مزودك</value>
   </data>
   <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Vzpostavljam ...</value>
+    <value>جارٍ التهييء ...</value>
   </data>
   <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>Kako želite uporabljati VPN?</value>
+    <value>كيف تريد استعمال الشبكة الخاصة الافتراضية ؟</value>
   </data>
   <data name="SelfUpdatingPageTitle" xml:space="preserve">
-    <value>Pripravljam posodobitev ...</value>
+    <value>جارٍ تحضير التحديث ...</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Nastavitve</value>
+    <value>إعدادات</value>
   </data>
   <data name="StatusPageTitle" xml:space="preserve">
-    <value>Povezava VPN</value>
+    <value>اتصال الشبكة الخاصة الافتراضية</value>
   </data>
   <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Dostop do ustanove</value>
+    <value>ولوج مؤسسة</value>
   </data>
   <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Varni splet</value>
+    <value>تأمين الشبكة</value>
   </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
-    <value>Skrbnik je onemogočil digitalno potrdilo.</value>
+    <value>تم تعطيل الشهادة من قبل مسؤول.</value>
   </data>
   <data name="ErrorUserDisabled" xml:space="preserve">
-    <value>Skrbnik je onemogočil uporabniški račun.</value>
+    <value>تم تعطيل حساب المستخدم من قبل مسؤول.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
-    <value>Nalaganje podpisa spletnega vira ni uspelo.</value>
+    <value>فشل تنزيل توقيع مورد الشبكة.</value>
   </data>
   <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
-    <value>Javni ključ Minisign ni veljaven.</value>
+    <value>المفتاح العمومي المصغر غير صالح.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Javni ključ Minisign z ID-jem {0:X} že obstaja.</value>
+    <value>المفتاح العمومي المصغر ذو المعرف {0:X} موجود مسبقا.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
-    <value>Podpis Minisign ni podprt.</value>
+    <value>التوقيع المصغر غير مدعوم.</value>
   </data>
   <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
-    <value>Podpis Minisign ni veljaven.</value>
+    <value>التوقيع المصغر غير صالح.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
-    <value>Javni ključ Minisign ni podprt.</value>
+    <value>المفتاح العمومي المصغر غير مدعوم.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Javnemu ključu Minisign ni zaupati.</value>
+    <value>المفتاح العمومي المصغر غير موثوق به.</value>
   </data>
   <data name="ErrorAutostartingProfile" xml:space="preserve">
-    <value>Samodejni zagon zadnjega povezanega profila ni uspel.</value>
+    <value>فشل التشغيل التلقائي لآخر مظهر متصل.</value>
   </data>
 </root>
