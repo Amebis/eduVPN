@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.29...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.30...HEAD)
+
+
+## [1.0.30](https://github.com/Amebis/eduVPN/compare/1.0.29...1.0.30) (2020-09-11)
 
 - OpenVPN updated to 2.5-20200904
 - TAP-Windows setup updated to MSI
