@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -43,9 +45,17 @@ namespace eduVPN.Models
         private object _profile_list_lock = new object();
 
         /// <summary>
-        /// Client certificate
+        /// PEM encoded client certificate path
         /// </summary>
-        private X509Certificate2 _client_certificate;
+        public string ClientCertificatePath {
+            get
+            {
+                return Path.Combine(
+                    Path.GetDirectoryName(Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)),
+                    "certs",
+                    Base.Host + ".pem");
+            }
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _client_certificate_lock = new object();
@@ -66,7 +76,6 @@ namespace eduVPN.Models
                     // Setting the base resets internal state (fields).
                     _endpoints = null;
                     _profile_list = null;
-                    _client_certificate = null;
 
                     SetProperty(ref _base, value);
                 }
@@ -330,58 +339,38 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
+        /// <returns>Client certificate</returns>
         public X509Certificate2 GetClientCertificate(Instance authenticating_instance, CancellationToken ct = default)
         {
             lock (_client_certificate_lock)
             {
-                if (_client_certificate == null)
+                var path = ClientCertificatePath;
+
+                // Get API endpoints.
+                var api = GetEndpoints(ct);
+                var e = new RequestAuthorizationEventArgs("config");
+
+                retry:
+                // Request authentication token.
+                OnRequestAuthorization(authenticating_instance, e);
+
+                if (File.Exists(path))
                 {
-                    // Open eduVPN client certificate store.
-                    var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-                    store.Open(OpenFlags.ReadWrite);
-                    try
-                    {
-                        // Try to restore previously issued client certificate from the certificate store first.
-                        var friendly_name = Base.AbsoluteUri;
-                        foreach (var cert in store.Certificates)
-                        {
-                            if (cert.FriendlyName == friendly_name)
-                            {
-                                // Certificate found.
-                                if (DateTime.Now < cert.NotAfter && cert.HasPrivateKey)
-                                {
-                                    // Not expired && Has the private key.
-                                    _client_certificate = cert;
-                                }
-                                else
-                                {
-                                    // Certificate expired or matching private key not found == Useless. Clean it from the store.
-                                    store.Remove(cert);
-                                }
-                            }
-                        }
-                    }
-                    finally { store.Close(); }
-                }
-
-                if (_client_certificate != null)
-                {
-                    // Get API endpoints.
-                    var api = GetEndpoints(ct);
-                    var e = new RequestAuthorizationEventArgs("config");
-
-                    retry:
-                    // Request authentication token.
-                    OnRequestAuthorization(authenticating_instance, e);
-
                     // Perform an optional certificate check.
                     try
                     {
+                        // Load certificate.
+                        var cert = new X509Certificate2(
+                            Certificate.GetBytesFromPEM(
+                                File.ReadAllText(path),
+                                "CERTIFICATE"),
+                            (string)null,
+                            X509KeyStorageFlags.PersistKeySet);
+
                         // Check certificate.
                         var uri_builder = new UriBuilder(api.CheckCertificate);
                         var query = HttpUtility.ParseQueryString(uri_builder.Query);
-                        query["common_name"] = _client_certificate.GetNameInfo(X509NameType.SimpleName, false);
+                        query["common_name"] = cert.GetNameInfo(X509NameType.SimpleName, false);
                         uri_builder.Query = query.ToString();
                         var cert_check = new CertificateCheck();
                         cert_check.LoadJSONAPIResponse(Xml.Response.Get(
@@ -393,7 +382,7 @@ namespace eduVPN.Models
                         {
                             case CertificateCheck.ReasonType.Valid:
                                 // Certificate is valid.
-                                break;
+                                return cert;
 
                             case CertificateCheck.ReasonType.UserDisabled:
                                 throw new CertificateCheckException(Resources.Strings.ErrorUserDisabled);
@@ -403,7 +392,6 @@ namespace eduVPN.Models
 
                             default:
                                 // Server reported it will not accept this certificate.
-                                _client_certificate = null;
                                 break;
                         }
                     }
@@ -432,65 +420,59 @@ namespace eduVPN.Models
                     catch (Exception) { }
                 }
 
-                if (_client_certificate == null)
+                try
                 {
-                    // Get API endpoints.
-                    var api = GetEndpoints(ct);
-                    var e = new RequestAuthorizationEventArgs("config");
-
-                    retry:
-                    // Request authentication token.
-                    OnRequestAuthorization(authenticating_instance, e);
-
-                    // Open eduVPN client certificate store.
-                    var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-                    store.Open(OpenFlags.ReadWrite);
-                    try
-                    {
-                        // Get certificate and import it to Windows user certificate store.
-                        var cert = new Certificate();
-                        cert.LoadJSONAPIResponse(Xml.Response.Get(
-                            uri: api.CreateCertificate,
-                            param: new NameValueCollection
-                            {
-                                { "display_name", String.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) } // Always use English display_name
-                            },
-                            token: e.AccessToken,
-                            ct: ct).Value, "create_keypair", ct);
-                        cert.Value.FriendlyName = Base.AbsoluteUri;
-                        store.Add(cert.Value);
-
-                        // If we got here, save the certificate.
-                        _client_certificate = cert.Value;
-                    }
-                    catch (OperationCanceledException) { throw; }
-                    catch (WebException ex)
-                    {
-                        if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                    // Get certificate and save it.
+                    var cert = new Certificate();
+                    cert.LoadJSONAPIResponse(Xml.Response.Get(
+                        uri: api.CreateCertificate,
+                        param: new NameValueCollection
                         {
-                            // Access token was rejected (401 Unauthorized).
-                            if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
-                            {
-                                // Access token loaded from the settings was rejected.
-                                // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
-                                // Retry with forced access token refresh.
-                                e.ForceRefresh = true;
-                            }
-                            else
-                            {
-                                // Retry with forced authorization, ignoring saved access token completely.
-                                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                            }
-                            goto retry;
+                            { "display_name", String.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) } // Always use English display_name
+                        },
+                        token: e.AccessToken,
+                        ct: ct).Value, "create_keypair", ct);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    using (StreamWriter file = new StreamWriter(path))
+                    {
+                        file.Write(cert.Cert);
+                        file.Write("\n");
+                        file.Write(new NetworkCredential("", cert.PrivateKey).Password);
+                        file.Write("\n");
+                    }
+
+                    return new X509Certificate2(
+                        Certificate.GetBytesFromPEM(
+                            cert.Cert,
+                            "CERTIFICATE"),
+                        (string)null,
+                        X509KeyStorageFlags.PersistKeySet);
+                }
+                catch (OperationCanceledException) { throw; }
+                catch (WebException ex)
+                {
+                    if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        // Access token was rejected (401 Unauthorized).
+                        if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                        {
+                            // Access token loaded from the settings was rejected.
+                            // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                            // Retry with forced access token refresh.
+                            e.ForceRefresh = true;
                         }
                         else
-                            throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
+                        {
+                            // Retry with forced authorization, ignoring saved access token completely.
+                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                        }
+                        goto retry;
                     }
-                    catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
-                    finally { store.Close(); }
+                    else
+                        throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
                 }
-
-                return _client_certificate;
+                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
             }
         }
 
@@ -499,27 +481,13 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="authenticating_instance">Authenticating instance (can be same as this instance)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Client certificate. Certificate (including the private key) is saved to user certificate store.</returns>
+        /// <returns>Client certificate</returns>
         public X509Certificate2 RefreshClientCertificate(Instance authenticating_instance, CancellationToken ct = default)
         {
             lock (_client_certificate_lock)
             {
-                var friendly_name = Base.AbsoluteUri;
-
-                // Open eduVPN client certificate store.
-                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-                store.Open(OpenFlags.ReadWrite);
-                try
-                {
-                    // Delete previously issued client certificate from the certificate store.
-                    foreach (var cert in store.Certificates)
-                        if (cert.FriendlyName == friendly_name)
-                            store.Remove(cert);
-                }
-                finally { store.Close(); }
-
-                // Invalidate memory cache.
-                _client_certificate = null;
+                // Remove previously issued client certificate.
+                try { File.Delete(ClientCertificatePath); } catch { }
 
                 return GetClientCertificate(authenticating_instance, ct);
             }
@@ -538,20 +506,8 @@ namespace eduVPN.Models
 
             lock (_client_certificate_lock)
             {
-                // Open eduVPN client certificate store.
-                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-                store.Open(OpenFlags.ReadWrite);
-                try
-                {
-                    // Remove previously issued client certificate from the certificate store.
-                    var friendly_name = Base.AbsoluteUri;
-                    foreach (var cert in store.Certificates)
-                        if (cert.FriendlyName == friendly_name)
-                            store.Remove(cert);
-                }
-                finally { store.Close(); }
-
-                _client_certificate = null;
+                // Remove previously issued client certificate.
+                try { File.Delete(ClientCertificatePath); } catch { }
             }
 
             // Ask authorization provider to forget our authorization token.

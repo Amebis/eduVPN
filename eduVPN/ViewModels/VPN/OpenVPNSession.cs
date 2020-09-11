@@ -275,7 +275,8 @@ namespace eduVPN.ViewModels.VPN
                                 sw.WriteLine("management-query-remote");
 
                                 // Configure client certificate.
-                                sw.WriteLine("cryptoapicert " + eduOpenVPN.Configuration.EscapeParamValue("THUMB:" + BitConverter.ToString(_client_certificate.GetCertHash()).Replace("-", " ")));
+                                sw.WriteLine("cert " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Instance.ClientCertificatePath));
+                                sw.WriteLine("key " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Instance.ClientCertificatePath));
 
                                 // Ask when username/password is denied.
                                 sw.WriteLine("auth-retry interact");

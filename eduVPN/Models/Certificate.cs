@@ -5,13 +5,11 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduEx.ASN1;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
+using System.Net;
+using System.Security;
 
 namespace eduVPN.Models
 {
@@ -23,12 +21,20 @@ namespace eduVPN.Models
         #region Properties
 
         /// <summary>
-        /// X509 Certificate
+        /// PEM encoded X509 Certificate
         /// </summary>
-        public X509Certificate2 Value { get => _value; }
+        public string Cert { get => _cert; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private X509Certificate2 _value;
+        private string _cert;
+
+        /// <summary>
+        /// PEM encoded X509 private key
+        /// </summary>
+        public SecureString PrivateKey { get => _private_key; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private SecureString _private_key;
 
         #endregion
 
@@ -44,34 +50,8 @@ namespace eduVPN.Models
             if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
-            // Load certificate.
-            _value = new X509Certificate2(
-                GetBytesFromPEM(
-                    eduJSON.Parser.GetValue<string>(obj2, "certificate"),
-                    "CERTIFICATE"),
-                (string)null,
-                X509KeyStorageFlags.PersistKeySet);
-
-            // Load private key parameters.
-            try
-            {
-                var key_pem = eduJSON.Parser.GetValue<string>(obj2, "private_key");
-                var key_der = GetBytesFromPEM(key_pem, "PRIVATE KEY");
-                if (key_der != null)
-                    _value.PrivateKey = DecodePrivateKeyPKCS8(key_der);
-                else
-                {
-                    key_der = GetBytesFromPEM(key_pem, "RSA PRIVATE KEY");
-                    if (key_der != null)
-                        _value.PrivateKey = DecodePrivateKeyPKCS1(key_der);
-                    else
-                        throw new InvalidDataException();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new CertificatePrivateKeyException(Resources.Strings.ErrorInvalidPrivateKey, ex);
-            }
+            _cert = eduJSON.Parser.GetValue<string>(obj2, "certificate");
+            _private_key = (new NetworkCredential("", eduJSON.Parser.GetValue<string>(obj2, "private_key"))).SecurePassword;
         }
 
         /// <summary>
@@ -83,7 +63,7 @@ namespace eduVPN.Models
         /// <remarks>
         /// Based on this <a href="https://stackoverflow.com/a/10498045/2071884">example</a>.
         /// </remarks>
-        private static byte[] GetBytesFromPEM(string pem, string section)
+        public static byte[] GetBytesFromPEM(string pem, string section)
         {
             var header = String.Format("-----BEGIN {0}-----", section);
             var footer = String.Format("-----END {0}-----", section);
@@ -98,82 +78,6 @@ namespace eduVPN.Models
                 return null;
 
             return Convert.FromBase64String(pem.Substring(start, end - start));
-        }
-
-        /// <summary>
-        /// Reads RSA private key from ASN.1 data (PKCS#1)
-        /// </summary>
-        /// <param name="priv_key">ASN.1 data</param>
-        /// <returns>Private key</returns>
-        /// <remarks>
-        /// <a href="https://tools.ietf.org/html/rfc3447#appendix-A.1.2">RFC3447 Appendix A.1.2</a>
-        /// </remarks>
-        private static RSACryptoServiceProvider DecodePrivateKeyPKCS1(byte[] priv_key)
-        {
-            var stream = new MemoryStream(priv_key);
-            using (var reader = new BinaryReader(stream))
-            {
-                // Create the private key.
-                var rsa = new RSACryptoServiceProvider(new CspParameters()
-                {
-                    Flags = CspProviderFlags.UseNonExportableKey,
-                    KeyContainerName = Guid.NewGuid().ToString().ToUpperInvariant(),
-                });
-                rsa.ImportParameters(reader.ReadASN1RSAPrivateKey());
-
-                return rsa;
-            }
-        }
-
-        /// <summary>
-        /// Reads private key from ASN.1 data (PKCS#8)
-        /// </summary>
-        /// <param name="priv_key">ASN.1 data</param>
-        /// <returns>Private key</returns>
-        /// <remarks>
-        /// Currently, only RSA private keys are supported.
-        /// <a href="https://tools.ietf.org/html/rfc5208#section-5">RFC5208 Section 5</a>
-        /// </remarks>
-        private static AsymmetricAlgorithm DecodePrivateKeyPKCS8(byte[] priv_key)
-        {
-            var stream = new MemoryStream(priv_key);
-            using (var reader = new BinaryReader(stream))
-            {
-                // SEQUENCE(PrivateKeyInfo)
-                if (reader.ReadByte() != 0x30)
-                    throw new InvalidDataException();
-                long pki_end = reader.ReadASN1Length() + reader.BaseStream.Position;
-
-                // INTEGER(Version)
-                if (reader.ReadASN1IntegerInt() != 0)
-                    throw new InvalidDataException();
-
-                // SEQUENCE(AlgorithmIdentifier)
-                if (reader.ReadByte() != 0x30)
-                    throw new InvalidDataException();
-                long alg_id_end = reader.ReadASN1Length() + reader.BaseStream.Position;
-
-                // OBJECT IDENTIFIER(1.2.840.113549.1.1.1)
-                if (reader.ReadASN1ObjectID().Value != "1.2.840.113549.1.1.1")
-                    throw new InvalidDataException();
-
-                reader.BaseStream.Seek(alg_id_end, SeekOrigin.Begin);
-
-                // OCTET STRING(PrivateKey)
-                if (reader.ReadByte() != 0x04)
-                    throw new InvalidDataException();
-                long pk_end = reader.ReadASN1Length() + reader.BaseStream.Position;
-
-                // Create the private key.
-                var rsa = new RSACryptoServiceProvider(new CspParameters()
-                {
-                    Flags = CspProviderFlags.UseNonExportableKey,
-                    KeyContainerName = Guid.NewGuid().ToString().ToUpperInvariant(),
-                });
-                rsa.ImportParameters(reader.ReadASN1RSAPrivateKey());
-
-                return rsa;
-            }
         }
 
         #endregion

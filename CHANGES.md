@@ -5,6 +5,7 @@
 - OpenVPN updated to 2.5-20200904
 - TAP-Windows setup updated to MSI
 - TLS 1.3 support
+- Switch to OpenVPN/OpenSSL certificate management
 
 
 ## [1.0.29](https://github.com/Amebis/eduVPN/compare/1.0.28...1.0.29) (2020-06-22)
