@@ -41,39 +41,37 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
-            if (obj is Dictionary<string, object> obj2)
-            {
-                // Load certificate.
-                _value = new X509Certificate2(
-                    GetBytesFromPEM(
-                        eduJSON.Parser.GetValue<string>(obj2, "certificate"),
-                        "CERTIFICATE"),
-                    (string)null,
-                    X509KeyStorageFlags.PersistKeySet);
+            if (!(obj is Dictionary<string, object> obj2))
+                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
-                // Load private key parameters.
-                try
+            // Load certificate.
+            _value = new X509Certificate2(
+                GetBytesFromPEM(
+                    eduJSON.Parser.GetValue<string>(obj2, "certificate"),
+                    "CERTIFICATE"),
+                (string)null,
+                X509KeyStorageFlags.PersistKeySet);
+
+            // Load private key parameters.
+            try
+            {
+                var key_pem = eduJSON.Parser.GetValue<string>(obj2, "private_key");
+                var key_der = GetBytesFromPEM(key_pem, "PRIVATE KEY");
+                if (key_der != null)
+                    _value.PrivateKey = DecodePrivateKeyPKCS8(key_der);
+                else
                 {
-                    var key_pem = eduJSON.Parser.GetValue<string>(obj2, "private_key");
-                    var key_der = GetBytesFromPEM(key_pem, "PRIVATE KEY");
+                    key_der = GetBytesFromPEM(key_pem, "RSA PRIVATE KEY");
                     if (key_der != null)
-                        _value.PrivateKey = DecodePrivateKeyPKCS8(key_der);
+                        _value.PrivateKey = DecodePrivateKeyPKCS1(key_der);
                     else
-                    {
-                        key_der = GetBytesFromPEM(key_pem, "RSA PRIVATE KEY");
-                        if (key_der != null)
-                            _value.PrivateKey = DecodePrivateKeyPKCS1(key_der);
-                        else
-                            throw new InvalidDataException();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new CertificatePrivateKeyException(Resources.Strings.ErrorInvalidPrivateKey, ex);
+                        throw new InvalidDataException();
                 }
             }
-            else
-                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+            catch (Exception ex)
+            {
+                throw new CertificatePrivateKeyException(Resources.Strings.ErrorInvalidPrivateKey, ex);
+            }
         }
 
         /// <summary>

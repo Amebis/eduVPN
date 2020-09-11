@@ -110,54 +110,52 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
-            if (obj is Dictionary<string, object> obj2)
-            {
-                // Get api object.
-                var api = eduJSON.Parser.GetValue<Dictionary<string, object>>(
-                    eduJSON.Parser.GetValue<Dictionary<string, object>>(obj2, "api"),
-                    "http://eduvpn.org/api#2");
-
-                // Set authorization endpoint.
-                _authorization_endpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "authorization_endpoint"));
-
-                // Set token endpoint.
-                _token_endpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "token_endpoint"));
-
-                // Set other URI(s).
-                _base_uri = eduJSON.Parser.GetValue(api, "api_base_uri", out string api_base_uri) ?
-                    new Uri(api_base_uri) :
-                    null;
-
-                _create_certificate = eduJSON.Parser.GetValue(api, "create_certificate", out string create_certificate) ?
-                    new Uri(create_certificate) :
-                    _base_uri != null ? AppendPath(_base_uri, "/create_keypair") : null;
-
-                _check_certificate = eduJSON.Parser.GetValue(api, "check_certificate", out string check_certificate) ?
-                    new Uri(check_certificate) :
-                    _base_uri != null ? AppendPath(_base_uri, "/check_certificate") : null;
-
-                _profile_complete_config = eduJSON.Parser.GetValue(api, "create_config", out string profile_complete_config) ?
-                    new Uri(profile_complete_config) :
-                    _base_uri != null ? AppendPath(_base_uri, "/create_config") : null;
-
-                _profile_config = eduJSON.Parser.GetValue(api, "profile_config", out string profile_config) ?
-                    new Uri(profile_config) :
-                    _base_uri != null ? AppendPath(_base_uri, "/profile_config") : null;
-
-                _profile_list = eduJSON.Parser.GetValue(api, "profile_list", out string profile_list) ?
-                    new Uri(profile_list) :
-                    _base_uri != null ? AppendPath(_base_uri, "/profile_list") : null;
-
-                _system_messages = eduJSON.Parser.GetValue(api, "system_messages", out string system_messages) ?
-                    new Uri(system_messages) :
-                    _base_uri != null ? AppendPath(_base_uri, "/system_messages") : null;
-
-                _user_messages = eduJSON.Parser.GetValue(api, "user_messages", out string user_messages) ?
-                    new Uri(user_messages) :
-                    _base_uri != null ? AppendPath(_base_uri, "/user_messages") : null;
-            }
-            else
+            if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+
+            // Get api object.
+            var api = eduJSON.Parser.GetValue<Dictionary<string, object>>(
+                eduJSON.Parser.GetValue<Dictionary<string, object>>(obj2, "api"),
+                "http://eduvpn.org/api#2");
+
+            // Set authorization endpoint.
+            _authorization_endpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "authorization_endpoint"));
+
+            // Set token endpoint.
+            _token_endpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "token_endpoint"));
+
+            // Set other URI(s).
+            _base_uri = eduJSON.Parser.GetValue(api, "api_base_uri", out string api_base_uri) ?
+                new Uri(api_base_uri) :
+                null;
+
+            _create_certificate = eduJSON.Parser.GetValue(api, "create_certificate", out string create_certificate) ?
+                new Uri(create_certificate) :
+                _base_uri != null ? AppendPath(_base_uri, "/create_keypair") : null;
+
+            _check_certificate = eduJSON.Parser.GetValue(api, "check_certificate", out string check_certificate) ?
+                new Uri(check_certificate) :
+                _base_uri != null ? AppendPath(_base_uri, "/check_certificate") : null;
+
+            _profile_complete_config = eduJSON.Parser.GetValue(api, "create_config", out string profile_complete_config) ?
+                new Uri(profile_complete_config) :
+                _base_uri != null ? AppendPath(_base_uri, "/create_config") : null;
+
+            _profile_config = eduJSON.Parser.GetValue(api, "profile_config", out string profile_config) ?
+                new Uri(profile_config) :
+                _base_uri != null ? AppendPath(_base_uri, "/profile_config") : null;
+
+            _profile_list = eduJSON.Parser.GetValue(api, "profile_list", out string profile_list) ?
+                new Uri(profile_list) :
+                _base_uri != null ? AppendPath(_base_uri, "/profile_list") : null;
+
+            _system_messages = eduJSON.Parser.GetValue(api, "system_messages", out string system_messages) ?
+                new Uri(system_messages) :
+                _base_uri != null ? AppendPath(_base_uri, "/system_messages") : null;
+
+            _user_messages = eduJSON.Parser.GetValue(api, "user_messages", out string user_messages) ?
+                new Uri(user_messages) :
+                _base_uri != null ? AppendPath(_base_uri, "/user_messages") : null;
         }
 
         /// <summary>

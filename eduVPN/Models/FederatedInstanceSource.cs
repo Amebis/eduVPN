@@ -56,14 +56,12 @@ namespace eduVPN.Models
         {
             base.Load(obj);
 
-            if (obj is Dictionary<string, object> obj2)
-            {
-                AuthenticatingInstance = new Instance(
-                    new Uri(eduJSON.Parser.GetValue<string>(obj2, "authorization_endpoint")),
-                    new Uri(eduJSON.Parser.GetValue<string>(obj2, "token_endpoint")));
-            }
-            else
+            if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+
+            AuthenticatingInstance = new Instance(
+                new Uri(eduJSON.Parser.GetValue<string>(obj2, "authorization_endpoint")),
+                new Uri(eduJSON.Parser.GetValue<string>(obj2, "token_endpoint")));
         }
 
         #endregion

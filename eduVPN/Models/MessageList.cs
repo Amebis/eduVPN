@@ -24,36 +24,34 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException">Incorrect parameter <paramref name="obj"/> type</exception>
         public void Load(object obj)
         {
-            if (obj is List<object> obj2)
-            {
-                Clear();
-
-                // Parse all mesages listed. Don't do it in parallel to preserve the sort order.
-                foreach (var el in obj2)
-                {
-                    var el2 = (Dictionary<string, object>)el;
-
-                    // Parse message type.
-                    Message message = null;
-                    if (eduJSON.Parser.GetValue(el2, "type", out string type))
-                    {
-                        switch (type.ToLower())
-                        {
-                            case "motd": message = new MessageOfTheDay(); break;
-                            case "maintenance": message = new MessageMaintenance(); break;
-                            default: message = new MessageNotification(); break; // Assume notification type on all other values.
-                        }
-                    }
-                    else
-                        message = new MessageNotification();
-
-                    // Load and add message.
-                    message.Load(el);
-                    Add(message);
-                }
-            }
-            else
+            if (!(obj is List<object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(List<object>), obj.GetType());
+
+            Clear();
+
+            // Parse all mesages listed. Don't do it in parallel to preserve the sort order.
+            foreach (var el in obj2)
+            {
+                var el2 = (Dictionary<string, object>)el;
+
+                // Parse message type.
+                Message message = null;
+                if (eduJSON.Parser.GetValue(el2, "type", out string type))
+                {
+                    switch (type.ToLower())
+                    {
+                        case "motd": message = new MessageOfTheDay(); break;
+                        case "maintenance": message = new MessageMaintenance(); break;
+                        default: message = new MessageNotification(); break; // Assume notification type on all other values.
+                    }
+                }
+                else
+                    message = new MessageNotification();
+
+                // Load and add message.
+                message.Load(el);
+                Add(message);
+            }
         }
 
         #endregion

@@ -569,19 +569,17 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
-            if (obj is Dictionary<string, object> obj2)
-            {
-                // Set base URI.
-                Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_uri"));
-
-                // Set display name.
-                DisplayName = eduJSON.Parser.GetLocalizedValue(obj2, "display_name", out string display_name) ? display_name : Base.Host;
-
-                // Set logo URI.
-                Logo = eduJSON.Parser.GetLocalizedValue(obj2, "logo", out string logo_uri) ? new Uri(logo_uri) : null;
-            }
-            else
+            if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+
+            // Set base URI.
+            Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_uri"));
+
+            // Set display name.
+            DisplayName = eduJSON.Parser.GetLocalizedValue(obj2, "display_name", out string display_name) ? display_name : Base.Host;
+
+            // Set logo URI.
+            Logo = eduJSON.Parser.GetLocalizedValue(obj2, "logo", out string logo_uri) ? new Uri(logo_uri) : null;
         }
 
         #endregion

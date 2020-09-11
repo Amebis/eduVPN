@@ -186,20 +186,18 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public virtual void Load(object obj)
         {
-            if (obj is Dictionary<string, object> obj2)
-            {
-                InstanceList.Clear();
-
-                // Parse all instances listed. Don't do it in parallel to preserve the sort order.
-                foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "instances"))
-                {
-                    var instance = new Instance();
-                    instance.Load(el);
-                    InstanceList.Add(instance);
-                }
-            }
-            else
+            if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+
+            InstanceList.Clear();
+
+            // Parse all instances listed. Don't do it in parallel to preserve the sort order.
+            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "instances"))
+            {
+                var instance = new Instance();
+                instance.Load(el);
+                InstanceList.Add(instance);
+            }
         }
 
         #endregion

@@ -64,16 +64,14 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public virtual void Load(object obj)
         {
-            if (obj is Dictionary<string, object> obj2)
-            {
-                // Set message text.
-                Text = eduJSON.Parser.GetLocalizedValue<string>(obj2, "message");
-
-                // Set message dates.
-                Date = DateTime.Parse(eduJSON.Parser.GetValue<string>(obj2, "date_time"));
-            }
-            else
+            if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+
+            // Set message text.
+            Text = eduJSON.Parser.GetLocalizedValue<string>(obj2, "message");
+
+            // Set message dates.
+            Date = DateTime.Parse(eduJSON.Parser.GetValue<string>(obj2, "date_time"));
         }
 
         #endregion

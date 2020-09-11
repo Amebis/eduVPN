@@ -86,32 +86,30 @@ namespace eduVPN.Models
         /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
         public void Load(object obj)
         {
-            if (obj is Dictionary<string, object> obj2)
+            if (!(obj is Dictionary<string, object> obj2))
+                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+
+            // Set check result.
+            if (eduJSON.Parser.GetValue<bool>(obj2, "is_valid"))
+                _result = ReasonType.Valid;
+            else if (eduJSON.Parser.GetValue(obj2, "reason", out string reason))
             {
-                // Set check result.
-                if (eduJSON.Parser.GetValue<bool>(obj2, "is_valid"))
-                    _result = ReasonType.Valid;
-                else if (eduJSON.Parser.GetValue(obj2, "reason", out string reason))
+                // Parse reason for check failure.
+                switch (reason)
                 {
-                    // Parse reason for check failure.
-                    switch (reason)
-                    {
-                        case "certificate_missing"      : _result = ReasonType.CertificateMissing    ; break;
-                        case "user_disabled"            : _result = ReasonType.UserDisabled          ; break;
-                        case "certificate_disabled"     : _result = ReasonType.CertificateDisabled   ; break;
-                        case "certificate_not_yet_valid": _result = ReasonType.CertificateNotYetValid; break;
-                        case "certificate_expired"      : _result = ReasonType.CertificateExpired    ; break;
-                        default                         : _result = ReasonType.Invalid               ; break;
-                    }
-                }
-                else
-                {
-                    // No reason specified.
-                    _result = ReasonType.Invalid;
+                    case "certificate_missing"      : _result = ReasonType.CertificateMissing    ; break;
+                    case "user_disabled"            : _result = ReasonType.UserDisabled          ; break;
+                    case "certificate_disabled"     : _result = ReasonType.CertificateDisabled   ; break;
+                    case "certificate_not_yet_valid": _result = ReasonType.CertificateNotYetValid; break;
+                    case "certificate_expired"      : _result = ReasonType.CertificateExpired    ; break;
+                    default                         : _result = ReasonType.Invalid               ; break;
                 }
             }
             else
-                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
+            {
+                // No reason specified.
+                _result = ReasonType.Invalid;
+            }
         }
 
         #endregion
