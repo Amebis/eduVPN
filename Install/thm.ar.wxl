@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - VPN for education and research
+    Copyright: 2017-2020 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    Culture="ar-ma"
+    Language="6145"
+    xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="Caption">[WixBundleName] تثبيت</String>
+    <String Id="Title">[WixBundleName]</String>
+    <String Id="InstallHeader">مرحبا</String>
+    <String Id="InstallVersion">[WixBundleVersion]الإصدار </String>
+    <String Id="ConfirmCancelMessage">هل أنت متأكد أنك تريد الإلغاء؟</String>
+    <String Id="ExecuteUpgradeRelatedBundleMessage">الإصدار السابق</String>
+    <String Id="HelpHeader">تعليمات التثبيت</String>
+    <String Id="HelpText">/install | /repair | /uninstall | /layout [directory] - تثبيت أو إصلاح أو إزالة التثبيت أو
+إنشاء نسخة محلية كاملة من الحزمة في الدليل. التثبيت هو الافتراضي.
+
+/passive | /quiet - يعرض الحد الأدنى من واجهة المستخدم بدون مطالبات أو لا يعرض أي واجهة مستخدم و
+    لا مطالبات. يتم عرض واجهة المستخدم وجميع المطالبات في العادة.
+
+/norestart - قمع أي محاولات لإعادة التشغيل. افتراضيا ، تطلب واجهة المستخدم الموافقة قبل إعادة التشغيل.
+/log log.txt - كتابة السجل إلى ملف معين. يتم إنشاء ملف سجل افتراضيًا في٪ TEMP٪.</String>
+    <String Id="HelpCloseButton">&amp;إغلاق</String>
+    <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;license terms&lt;/a&gt;.</String>
+    <String Id="InstallAcceptCheckbox">&amp;أوافق على شروط الترخيص</String>
+    <String Id="InstallOptionsButton">&amp;خيارات</String>
+    <String Id="InstallInstallButton">&amp;تثبيت</String>
+    <String Id="InstallCloseButton">&amp;إغلاق</String>
+    <String Id="OptionsHeader">خيارات التثبيت</String>
+    <String Id="OptionsLocationLabel">موقع التثبيت:</String>
+    <String Id="OptionsBrowseButton">&amp;تصفح</String>
+    <String Id="OptionsOkButton">&amp;حسنا</String>
+    <String Id="OptionsCancelButton">&amp;إلغاء</String>
+    <String Id="ProgressHeader">تقدم التثبيت</String>
+    <String Id="ProgressLabel">في قيد المعالجة:</String>
+    <String Id="OverallProgressPackageText">في قيد التهيئة...</String>
+    <String Id="ProgressCancelButton">&amp;إلغاء</String>
+    <String Id="ModifyHeader">تعديل التثبيت</String>
+    <String Id="ModifyRepairButton">&amp;إصلاح</String>
+    <String Id="ModifyUninstallButton">&amp;إزالة التثبيت</String>
+    <String Id="ModifyCloseButton">&amp;إغلاق</String>
+    <String Id="SuccessRepairHeader">تم الإصلاح بنجاح</String>
+    <String Id="SuccessUninstallHeader">تمت إزالة التثبيت بنجاح</String>
+    <String Id="SuccessInstallHeader">تم التثبيت بنجاح</String> 
+    <String Id="SuccessHeader">تثبيت ناجح</String>
+    <String Id="SuccessLaunchButton">&amp;إطلاق</String>
+    <String Id="SuccessRestartText">يجب إعادة تشغيل الحاسوب قبل أن تتمكن من استخدام البرنامج.</String>
+    <String Id="SuccessRestartButton">&amp;إعادة التشغيل</String>
+    <String Id="SuccessCloseButton">&amp;إغلاق</String>
+    <String Id="FailureHeader">فشل التثبيت</String>
+    <String Id="FailureInstallHeader">فشل التثبيت</String>
+    <String Id="FailureUninstallHeader">فشل إزالة التثبيت</String>
+    <String Id="FailureRepairHeader">فشل الإصلاح</String>
+    <String Id="FailureHyperlinkLogText">.&lt;a href="#"&gt;السجل&lt;/a&gt; تسببت مشكلة أو أكثر في فشل التثبيت. يرجى حل المشاكل ثم إعادة محاولة التثبيت. لمزيد من المعلومات راجع </String>
+    <String Id="FailureRestartText">يجب إعادة تشغيل حاسوبك لإكمال رجوع البرنامج إلى السلف.</String>
+    <String Id="FailureRestartButton">&amp;إعادة التشغيل</String>
+    <String Id="FailureCloseButton">&amp;إغلاق</String>
+    <String Id="FilesInUseHeader">ملفات قيد الاستخدام</String>
+    <String Id="FilesInUseLabel">تستخدم التطبيقات التالية ملفات تحتاج إلى تحديث:</String>
+    <String Id="FilesInUseCloseRadioButton">التطبيقات ومحاولة إعادة تشغيلها. &amp;إغلاق</String>
+    <String Id="FilesInUseDontCloseRadioButton">&amp;لا تغلق التطبيقات. إعادة التشغيل ضرورية.</String>
+    <String Id="FilesInUseOkButton">&amp;حسنا</String>
+    <String Id="FilesInUseCancelButton">&amp;إلغاء</String>
+    <String Id="ErrorFailNoActionReboot">لم يتم اتخاذ أي إجراء حيث يلزم إعادة تشغيل النظام.</String>
+</WixLocalization>
