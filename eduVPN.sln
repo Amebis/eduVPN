@@ -60,6 +60,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install", "Install", "{E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}"
 	ProjectSection(SolutionItems) = preProject
 		Install\eduVPN\logo.png = Install\eduVPN\logo.png
+		Install\thm.ar.wxl = Install\thm.ar.wxl
 		Install\thm.de.wxl = Install\thm.de.wxl
 		Install\thm.fr.wxl = Install\thm.fr.wxl
 		Install\thm.nl.wxl = Install\thm.nl.wxl

@@ -22,7 +22,7 @@
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1031</String>
     <String Id="SummaryCodepage">1252</String>
-    <String Id="Culture">de-DE</String>
+    <String Id="Culture">de</String>
     <String Id="LegalCopyright">Copyright: 2017-2020 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">Eine neuere Version von [SimpleProductName] ist bereits installiert. Das Setup wird nun beendet.</String>

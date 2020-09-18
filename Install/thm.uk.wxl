@@ -6,7 +6,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <WixLocalization
-    Culture="uk-ua"
+    Culture="uk"
     Language="1058"
     xmlns="http://schemas.microsoft.com/wix/2006/localization">
     <String Id="Caption">[WixBundleName] Встановлення</String>

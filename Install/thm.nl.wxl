@@ -6,7 +6,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <WixLocalization
-    Culture="nl-nl"
+    Culture="nl"
     Language="1043"
     xmlns="http://schemas.microsoft.com/wix/2006/localization">
     <String Id="Caption">[WixBundleName] Setup</String>

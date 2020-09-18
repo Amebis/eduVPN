@@ -5,8 +5,8 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <WixLocalization
-    Culture="ar-ma"
-    Language="6145"
+    Culture="ar"
+    Language="1025"
     xmlns="http://schemas.microsoft.com/wix/2006/localization">
     <String Id="Caption">[WixBundleName] تثبيت</String>
     <String Id="Title">[WixBundleName]</String>

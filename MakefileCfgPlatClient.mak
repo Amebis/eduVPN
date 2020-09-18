@@ -120,12 +120,14 @@ Clean ::
 	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj"
 
 "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET).msi" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_ar.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_fr.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_sl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_uk.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_ar.mst" 1025 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWINPRE_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
@@ -138,12 +140,14 @@ Clean ::
 	move /y "$(@:"=).tmp" $@ > NUL
 
 "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_ar.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_fr.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_uk.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_ar.mst" 1025 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
@@ -156,12 +160,14 @@ Clean ::
 	move /y "$(@:"=).tmp" $@ > NUL
 
 "$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET).msi" : \
+	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_ar.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_fr.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_uk.mst" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_ar.mst" 1025 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
@@ -182,6 +188,9 @@ Clean ::
 ######################################################################
 # Locale-specific rules
 ######################################################################
+
+LANG=ar
+!INCLUDE "MakefileCfgPlatClientLang.mak"
 
 LANG=en-US
 !INCLUDE "MakefileCfgPlatClientLang.mak"
