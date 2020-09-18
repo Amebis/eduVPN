@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.30...HEAD)
 
+- OpenVPN updated to 2.5-20200918
 - TAP-Windows setup upgrade
 
 
