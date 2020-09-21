@@ -237,3 +237,30 @@ END
 
 #endif    // German (Germany) resources
 /////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Arabic (Saudi Arabia) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ARA)
+LANGUAGE LANG_ARABIC, SUBLANG_GERMAN
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_CLIENT_TITLE            "عميل eduVPN"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "الشبكة الخاصة الافتراضية للتعليم والبحث"
+	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
+	IDS_EDUVPN_CORE_TITLE              "أساس عميل eduVPN"
+
+	IDS_LETSCONNECT_CLIENT_TITLE       "عميل التطبيق دعنا نتواصل!"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "الشبكة الخاصة الافتراضية مفتوحة المصدر"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
+	IDS_LETSCONNECT_CORE_TITLE         "أساس عميل التطبيق دعنا نتواصل!"
+END
+
+#endif    // Arabic (Saudi Arabia) resources
+/////////////////////////////////////////////////////////////////////////////

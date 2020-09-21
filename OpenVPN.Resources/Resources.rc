@@ -237,3 +237,30 @@ END
 
 #endif    // German (Germany) resources
 /////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Arabic (Saudi Arabia) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ARA)
+LANGUAGE LANG_ARABIC, SUBLANG_GERMAN
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_OPENVPN_TITLE                "مكونات OpenVPN لعميل eduVPN"
+	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "خدمة OpenVPN التفاعلية (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل eduVPN."
+
+	IDS_LETSCONNECT_OPENVPN_TITLE           "مكونات OpenVPN لعميل التطبيق دعنا نتواصل!"
+	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "خدمة OpenVPN التفاعلية (دعنا نتواصل!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل التطبيق دعنا نتواصل!."
+END
+
+#endif    // Arabic (Saudi Arabia) resources
+/////////////////////////////////////////////////////////////////////////////
