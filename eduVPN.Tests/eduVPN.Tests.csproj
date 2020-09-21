@@ -56,6 +56,7 @@
     <Compile Include="Models\InstanceSourceInfoTests.cs" />
     <Compile Include="Models\InstanceTests.cs" />
     <Compile Include="eduBase\MultiplatformDllLoader.cs" />
+    <Compile Include="Xml\MinisignPublicKeyDictionaryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

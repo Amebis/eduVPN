@@ -60,7 +60,6 @@ namespace eduVPN.Xml
                 return;
 
             ulong key_id;
-            var key = new byte[32];
             while (reader.Read() &&
                 !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == GetType().Name))
             {
@@ -77,12 +76,13 @@ namespace eduVPN.Xml
                                 if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
                                     throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
                                 key_id = r.ReadUInt64();
+                                if (ContainsKey(key_id))
+                                    throw new ArgumentException(String.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, key_id));
+                                var key = new byte[32];
                                 if (r.Read(key, 0, 32) != 32)
                                     throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
+                                Add(key_id, key);
                             }
-                            if (ContainsKey(key_id))
-                                throw new ArgumentException(String.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, key_id));
-                            Add(key_id, key);
                         }
                     }
                 }
