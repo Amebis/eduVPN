@@ -1,9 +1,13 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.30...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.31...HEAD)
 
+
+## [1.0.31](https://github.com/Amebis/eduVPN/compare/1.0.30...1.0.31)
+
+- Right-to-left support
 - OpenVPN updated to 2.5-20200918
-- TAP-Windows setup upgrade
+- TAP-Windows updated to 9.24.4
 
 
 ## [1.0.30](https://github.com/Amebis/eduVPN/compare/1.0.29...1.0.30) (2020-09-11)
