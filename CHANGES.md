@@ -1,12 +1,15 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.31...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.32...HEAD)
+
+
+## [1.0.32](https://github.com/Amebis/eduVPN/compare/1.0.31...1.0.32) (2020-09-21)
 
 - Arab translations updated
 - Fixes
 
 
-## [1.0.31](https://github.com/Amebis/eduVPN/compare/1.0.30...1.0.31)
+## [1.0.31](https://github.com/Amebis/eduVPN/compare/1.0.30...1.0.31) (2020-09-21)
 
 - Right-to-left support
 - OpenVPN updated to 2.5-20200918
