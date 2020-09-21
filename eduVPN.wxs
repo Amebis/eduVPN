@@ -26,11 +26,13 @@
                 ThemeFile="Install\thm.xml"
                 LogoFile="Install\$(var.ClientTarget)\logo.png"/>
 
+            <!-- TODO: Implement RTL support first.
             <Payload
                 Id="thm-ar"
                 Compressed="yes"
                 Name="1025\thm.wxl"
                 SourceFile="Install\thm.ar.wxl"/>
+            -->
 
             <Payload
                 Id="thm-en-US"

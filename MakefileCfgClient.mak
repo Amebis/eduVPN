@@ -51,7 +51,7 @@ Clean ::
 "$(OUTPUT_DIR)\$(CFG)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" : \
 	"eduVPN.wxl" \
 	"Install\thm.wxl" \
-	"Install\thm.ar.wxl" \
+#	"Install\thm.ar.wxl" \
 	"Install\thm.de.wxl" \
 	"Install\thm.fr.wxl" \
 	"Install\thm.nl.wxl" \
