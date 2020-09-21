@@ -14,10 +14,10 @@
     <String Id="eduVPN.OpenVPNName">مكونات OpenVPN لعميل eduVPN</String>
     <String Id="eduVPN.TAPWinName">eduVPN لعميل TAP-Windows</String>
 
-    <String Id="LetsConnect.Name">عميل التطبيق دعنا نتواصل!</String>
-    <String Id="LetsConnect.CoreName">أساس عميل التطبيق دعنا نتواصل!</String>
-    <String Id="LetsConnect.OpenVPNName">مكونات OpenVPN لعميل التطبيق دعنا نتواصل!</String>
-    <String Id="LetsConnect.TAPWinName">لعميل التطبيق دعنا نتواصل! TAP-Windows</String>
+    <String Id="LetsConnect.Name">عميل Let's Connect!</String>
+    <String Id="LetsConnect.CoreName">أساس عميل Let's Connect!</String>
+    <String Id="LetsConnect.OpenVPNName">مكونات OpenVPN لعميل Let's Connect!</String>
+    <String Id="LetsConnect.TAPWinName">TAP-Windows لعميل Let's Connect!</String>
 
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1025</String>
