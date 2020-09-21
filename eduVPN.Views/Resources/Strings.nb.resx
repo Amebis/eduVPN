@@ -371,4 +371,8 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Ingen VPN-profil er definert, eller din konto mangler rettigheten til å konfigurere VPN med en av de tilgjengelige profiler.</value>
     <comment>Displayed when a profile list is empty</comment>
   </data>
+  <data name="FlowDirection" xml:space="preserve">
+    <value>LTR</value>
+    <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
 </root>

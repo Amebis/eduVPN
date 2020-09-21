@@ -127,7 +127,9 @@
             <pages:SelfUpdatingPage/>
         </DataTemplate>
 
-        <ContextMenu x:Key="SystemTrayMenu">
+        <ContextMenu
+            x:Key="SystemTrayMenu"
+            Style="{StaticResource MenuStyle}">
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuOpen}"
                 Click="Open_Click"

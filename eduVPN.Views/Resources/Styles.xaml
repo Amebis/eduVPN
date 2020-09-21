@@ -169,6 +169,15 @@
 
 
     <!--
+        Menus
+    -->
+
+    <Style x:Key="MenuStyle" TargetType="{x:Type ContextMenu}">
+        <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
+    </Style>
+
+
+    <!--
         Buttons
     -->
 
@@ -983,6 +992,7 @@
     <Style x:Key="WindowStyle" TargetType="{x:Type windows:Window}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
@@ -1233,6 +1243,7 @@
 
     <Style x:Key="ConnectWizardPageStyle" TargetType="{x:Type Page}">
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+        <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Template">

@@ -46,6 +46,7 @@
     <Compile Include="Converters\ConnectingProfileEqualVisibilityConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
+    <Compile Include="Converters\FlowDirectionConverter.cs" />
     <Compile Include="Converters\InstanceSourceInverseVisibilityConverter.cs" />
     <Compile Include="Converters\InstanceSourceRowHeightConverter.cs" />
     <Compile Include="Converters\InstanceSourceTitleConverter.cs" />

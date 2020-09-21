@@ -252,6 +252,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LTR.
+        /// </summary>
+        public static string FlowDirection {
+            get {
+                return ResourceManager.GetString("FlowDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add _other address.
         /// </summary>
         public static string InstanceSourcePageCustomButtonTitle {

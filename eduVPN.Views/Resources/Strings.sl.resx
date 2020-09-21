@@ -372,4 +372,8 @@ Omogoča SURFnet</value>
     <value>Definiran ni noben profil VPN, oz. ta uporabniški račun nima potrebnih pravic za dostop do katerega koli razpoložljivega profila.</value>
     <comment>Displayed when a profile list is empty</comment>
   </data>
+  <data name="FlowDirection" xml:space="preserve">
+    <value>LTR</value>
+    <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
 </root>

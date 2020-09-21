@@ -46,7 +46,9 @@
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectingInstanceSelectPanelInstanceListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
 
             <ListBox.ContextMenu>
-                <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+                <ContextMenu
+                    DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}"
+                    Style="{StaticResource MenuStyle}">
                     <MenuItem
                         Header="{Binding Path=DataContext.ForgetSelectedInstanceLabel}"
                         Command="{Binding Path=DataContext.ForgetSelectedInstance}"/>

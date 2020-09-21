@@ -371,4 +371,8 @@ Mogelijk gemaakt door SURFnet</value>
     <value>Er zijn geen VPN-profielen geconfigureerd, of dit account heeft niet de benodigde rechten voor toegang tot de beschikbare profielen.</value>
     <comment>Displayed when a profile list is empty</comment>
   </data>
+  <data name="FlowDirection" xml:space="preserve">
+    <value>LTR</value>
+    <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
 </root>

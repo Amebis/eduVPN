@@ -372,4 +372,8 @@
     <value>إما لا مظاهر شبكة خاصة افتراضية محددة ، أو أن هذا الحساب ليس لديه الإذن للوصول إلى أي من المظاهر المتاحة.</value>
     <comment>Displayed when a profile list is empty</comment>
   </data>
+  <data name="FlowDirection" xml:space="preserve">
+    <value>RTL</value>
+    <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
 </root>

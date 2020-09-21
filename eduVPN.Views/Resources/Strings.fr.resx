@@ -373,4 +373,8 @@ Powered by SURFnet</value>
     <value>Aucun profil n'a été défini ou ce compte ne dispose pas des permissions requises pour accéder aux profils disponibles.</value>
     <comment>Displayed when a profile list is empty</comment>
   </data>
+  <data name="FlowDirection" xml:space="preserve">
+    <value>LTR</value>
+    <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
 </root>

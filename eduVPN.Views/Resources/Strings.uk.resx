@@ -372,4 +372,8 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Або VPN профайл не визначено або Акаунт не має прав доступу до існуючих профайлів.</value>
     <comment>Displayed when a profile list is empty</comment>
   </data>
+  <data name="FlowDirection" xml:space="preserve">
+    <value>LTR</value>
+    <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
 </root>

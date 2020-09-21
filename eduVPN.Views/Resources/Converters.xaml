@@ -17,6 +17,7 @@
     <conv:ConnectingInstanceEqualVisibilityConverter x:Key="ConnectingInstanceEqualVisibilityConverter"/>
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
+    <conv:FlowDirectionConverter x:Key="FlowDirectionConverter"/>
     <conv:InstanceSourceInverseVisibilityConverter x:Key="InstanceSourceInverseVisibilityConverter"/>
     <conv:InstanceSourceRowHeightConverter x:Key="InstanceSourceRowHeightConverter"/>
     <conv:InstanceSourceTitleConverter x:Key="InstanceSourceTitleConverter"/>

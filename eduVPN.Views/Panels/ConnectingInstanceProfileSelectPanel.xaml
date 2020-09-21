@@ -47,7 +47,9 @@
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectingInstanceProfileSelectPanelInstanceProfileListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
 
             <ListBox.ContextMenu>
-                <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+                <ContextMenu
+                    DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}"
+                    Style="{StaticResource MenuStyle}">
                     <MenuItem
                         Header="{Binding Path=DataContext.ForgetSelectedProfileLabel}"
                         Command="{Binding Path=DataContext.ForgetSelectedProfile}"/>
