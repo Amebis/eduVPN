@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.31...HEAD)
 
+- Arab translations updated
 - Fixes
 
 

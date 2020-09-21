@@ -256,10 +256,10 @@ BEGIN
 	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
 	IDS_EDUVPN_CORE_TITLE              "أساس عميل eduVPN"
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "عميل التطبيق دعنا نتواصل!"
+	IDS_LETSCONNECT_CLIENT_TITLE       "عميل Let's Connect!"
 	IDS_LETSCONNECT_CLIENT_DESCRIPTION "الشبكة الخاصة الافتراضية مفتوحة المصدر"
 	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "أساس عميل التطبيق دعنا نتواصل!"
+	IDS_LETSCONNECT_CORE_TITLE         "أساس عميل Let's Connect!"
 END
 
 #endif    // Arabic (Saudi Arabia) resources
