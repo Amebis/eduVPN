@@ -15,6 +15,11 @@
                 <File Source="eduVPN.dll"/>
             </Component>
         </DirectoryRef>
+        <DirectoryRef Id="RESDIRAR">
+            <Component Id="eduVPN.resources.dll.ar" Guid="{81CD6405-03A6-4747-9EB0-ABCDF4847FCA}">
+                <File Id="eduVPN.resources.dll.ar" Source="ar\eduVPN.resources.dll"/>
+            </Component>
+        </DirectoryRef>
         <DirectoryRef Id="RESDIRDE">
             <Component Id="eduVPN.resources.dll.de" Guid="{FE660EBE-ED9A-481D-83DC-B27078D278C1}">
                 <File Id="eduVPN.resources.dll.de" Source="de\eduVPN.resources.dll"/>
@@ -59,6 +64,7 @@
             <ComponentGroupRef Id="Prism.dll"/>
 
             <ComponentRef Id="eduVPN.dll"/>
+            <ComponentRef Id="eduVPN.resources.dll.ar"/>
             <ComponentRef Id="eduVPN.resources.dll.de"/>
             <ComponentRef Id="eduVPN.resources.dll.fr"/>
             <ComponentRef Id="eduVPN.resources.dll.nb"/>

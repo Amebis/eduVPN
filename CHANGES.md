@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.32...HEAD)
 
+- Arab translations included in the setup
+
 
 ## [1.0.32](https://github.com/Amebis/eduVPN/compare/1.0.31...1.0.32) (2020-09-21)
 
