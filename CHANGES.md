@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.32...HEAD)
 
+- OpenVPN updated to 2.5-20200924
 - Arab translations included in the setup
 
 
