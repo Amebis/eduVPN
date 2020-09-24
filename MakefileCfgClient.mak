@@ -33,7 +33,10 @@ SetupExe :: \
 !ENDIF
 
 Clean ::
-	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe"
+	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)Client_*.exe"  del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)Client_*.exe"
+	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_*.msi"  del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_*.msi"
+	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_*.msi" del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_*.msi"
+	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)Core_*.msi"    del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)Core_*.msi"
 !ENDIF
 
 

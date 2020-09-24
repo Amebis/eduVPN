@@ -179,11 +179,6 @@ Clean ::
 	if exist $@ attrib.exe -r $@
 	move /y "$(@:"=).tmp" $@ > NUL
 
-Clean ::
-	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET).msi" del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET).msi"
-	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi"  del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi"
-	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET).msi"        del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET).msi"
-
 
 ######################################################################
 # Locale-specific rules
