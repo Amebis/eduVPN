@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.32...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.33...HEAD)
+
+
+## [1.0.33](https://github.com/Amebis/eduVPN/compare/1.0.32...1.0.33) (2020-09-24)
 
 - OpenVPN updated to 2.5-20200924
 - Arab translations included in the setup
