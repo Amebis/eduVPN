@@ -22,11 +22,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Message text
         /// </summary>
-        public string Text
-        {
-            get { return _text; }
-            set { SetProperty(ref _text, value); }
-        }
+        public string Text { get => _text; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _text;
@@ -34,11 +30,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Message date and time
         /// </summary>
-        public DateTime Date
-        {
-            get { return _date; }
-            set { SetProperty(ref _date, value); }
-        }
+        public DateTime Date { get => _date; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTime _date;
@@ -68,10 +60,16 @@ namespace eduVPN.Models
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
             // Set message text.
-            Text = eduJSON.Parser.GetLocalizedValue<string>(obj2, "message");
+            SetProperty(
+                ref _text,
+                eduJSON.Parser.GetDictionary<string>(obj2, "message").GetLocalized(),
+                nameof(Text));
 
             // Set message dates.
-            Date = DateTime.Parse(eduJSON.Parser.GetValue<string>(obj2, "date_time"));
+            SetProperty(
+                ref _date,
+                DateTime.Parse(eduJSON.Parser.GetValue<string>(obj2, "date_time")),
+                nameof(Date));
         }
 
         #endregion

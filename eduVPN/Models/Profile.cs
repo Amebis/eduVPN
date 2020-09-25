@@ -255,7 +255,8 @@ namespace eduVPN.Models
             ID = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
 
             // Set display name.
-            DisplayName = eduJSON.Parser.GetLocalizedValue(obj2, "display_name", out string display_name) ? display_name : ID;
+            var display_name = new Dictionary<string, string>();
+            DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", ref display_name) ? display_name.GetLocalized(ID) : ID;
 
             // Mark profile as available.
             IsAvailable = true;

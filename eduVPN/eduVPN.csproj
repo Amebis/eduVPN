@@ -49,6 +49,7 @@
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
+    <Compile Include="System\Collections\Generic\Extensions.cs" />
     <Compile Include="System\Collections\ObjectModel\Extensions.cs" />
     <Compile Include="ViewModels\Pages\SelfUpdatingPage.cs" />
     <Compile Include="ViewModels\Panels\ConnectingRefreshableProfileSelectPanel.cs" />
