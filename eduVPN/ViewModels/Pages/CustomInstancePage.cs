@@ -193,7 +193,7 @@ namespace eduVPN.ViewModels.Pages
         /// <returns><see cref="ValidationResult.Success"/> if valid hostname; <see cref="ValidationResult"/> issue descriptor otherwise</returns>
         public static ValidationResult CheckHostname(string value, ValidationContext context)
         {
-            if (!String.IsNullOrEmpty(value) && !TryParseUri(value, out var output))
+            if (!String.IsNullOrEmpty(value) && !TryParseUri(value, out _))
                 return new ValidationResult(Resources.Strings.ErrorInvalidHostname);
 
             return ValidationResult.Success;

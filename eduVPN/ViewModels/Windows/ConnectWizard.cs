@@ -37,7 +37,7 @@ namespace eduVPN.ViewModels.Windows
         /// The alpha factor to increase/decrease popularity
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly float _popularity_alpha = 0.1f;
+        private const float _popularity_alpha = 0.1f;
 
         #endregion
 
@@ -811,8 +811,7 @@ namespace eduVPN.ViewModels.Windows
                     RaisePropertyChanged(nameof(StartingPage));
                     CurrentPage = StartingPage;
 
-                    var param_settings = Properties.Settings.Default.AutoStartProfile as eduVPN.Xml.StartSessionParams;
-                    if (param_settings != null)
+                    if (Properties.Settings.Default.AutoStartProfile is eduVPN.Xml.StartSessionParams param_settings)
                     {
                         try
                         {

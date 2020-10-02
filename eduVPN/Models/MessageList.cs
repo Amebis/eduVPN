@@ -35,7 +35,7 @@ namespace eduVPN.Models
                 var el2 = (Dictionary<string, object>)el;
 
                 // Parse message type.
-                Message message = null;
+                Message message;
                 if (eduJSON.Parser.GetValue(el2, "type", out string type))
                 {
                     switch (type.ToLower())
