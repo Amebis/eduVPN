@@ -98,6 +98,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LetsConnect", "LetsConnect"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEx", "eduEx\eduEx\eduEx.csproj", "{0E2C74AC-C81C-4CC6-B88D-81192623A66D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEx.Tests", "eduEx\eduEx.Tests\eduEx.Tests.csproj", "{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -224,6 +226,12 @@ Global
 		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|x64.Build.0 = Release|x64
 		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|x86.ActiveCfg = Release|x86
 		{0E2C74AC-C81C-4CC6-B88D-81192623A66D}.Release|x86.Build.0 = Release|x86
+		{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}.Debug|x64.ActiveCfg = Debug|x64
+		{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}.Debug|x86.ActiveCfg = Debug|x86
+		{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}.Debug|x86.Build.0 = Debug|x86
+		{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}.Release|x64.ActiveCfg = Release|x64
+		{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}.Release|x86.ActiveCfg = Release|x86
+		{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -243,6 +251,7 @@ Global
 		{85E5721B-F4A7-422A-8B54-54E5F36BB752} = {E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}
 		{9A8D4BF5-259A-413C-889A-8AA238B7D2D1} = {E2BBEBA8-DA57-42E8-BB75-78F13BD05E86}
 		{0E2C74AC-C81C-4CC6-B88D-81192623A66D} = {62C4825F-1F58-4BA1-BD10-DABB139FCC47}
+		{30B8909A-8E1D-4E1F-B78F-2917EA0AF402} = {34019D9B-CB1A-4C13-B6F8-992DE8AB6F39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7FC9EE6-11F6-4153-B5AE-66D3DA7A7A61}
