@@ -1,4 +1,4 @@
-version: 1.0.33.{build}
+version: 1.0.34.{build}
 image: Visual Studio 2019
 before_build:
   - git submodule update -q --init --recursive
