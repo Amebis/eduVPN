@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.33...HEAD)
 
 - OpenVPN updated to 2.5-20201005
+- TAP-Windows updated to 9.24.5
 
 
 ## [1.0.33](https://github.com/Amebis/eduVPN/compare/1.0.32...1.0.33) (2020-09-24)
