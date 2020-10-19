@@ -12,7 +12,7 @@ namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,54 +20,6 @@ namespace eduVPN.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        /// <summary>
-        /// Cache of sequenced JSON responses
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Cache of sequenced JSON responses")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<JSONResponseDictionary/>")]
-        public global::eduVPN.Xml.JSONResponseDictionary ResponseCache {
-            get {
-                return ((global::eduVPN.Xml.JSONResponseDictionary)(this["ResponseCache"]));
-            }
-            set {
-                this["ResponseCache"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Secure Internet settings
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Secure Internet settings")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
-        public global::eduVPN.Xml.InstanceSourceSettings SecureInternetInstanceSourceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["SecureInternetInstanceSourceSettings"]));
-            }
-            set {
-                this["SecureInternetInstanceSourceSettings"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Secure Internet settings
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Secure Internet settings")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
-        public global::eduVPN.Xml.InstanceSourceSettings InstituteAccessInstanceSourceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["InstituteAccessInstanceSourceSettings"]));
-            }
-            set {
-                this["InstituteAccessInstanceSourceSettings"] = value;
             }
         }
         
@@ -189,38 +141,6 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Access token cache
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Access token cache")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<AccessTokenDictionary/>")]
-        public global::eduVPN.Xml.AccessTokenDictionary AccessTokenCache {
-            get {
-                return ((global::eduVPN.Xml.AccessTokenDictionary)(this["AccessTokenCache"]));
-            }
-            set {
-                this["AccessTokenCache"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Instance-specific user settings
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Instance-specific user settings")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSettingsDictionary/>")]
-        public global::eduVPN.Xml.InstanceSettingsDictionary InstanceSettings {
-            get {
-                return ((global::eduVPN.Xml.InstanceSettingsDictionary)(this["InstanceSettings"]));
-            }
-            set {
-                this["InstanceSettings"] = value;
-            }
-        }
-        
-        /// <summary>
         /// A flag to trigger setting upgrade from the previous version
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -276,6 +196,86 @@ namespace eduVPN.Properties {
             }
             set {
                 this["AutoStartProfile"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Cache of sequenced JSON responses
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Cache of sequenced JSON responses")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<JSONResponseDictionary/>")]
+        public global::eduVPN.Xml.JSONResponseDictionary ResponseCache {
+            get {
+                return ((global::eduVPN.Xml.JSONResponseDictionary)(this["ResponseCache"]));
+            }
+            set {
+                this["ResponseCache"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Secure Internet settings
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Secure Internet settings")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
+        public global::eduVPN.Xml.InstanceSourceSettings SecureInternetInstanceSourceSettings {
+            get {
+                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["SecureInternetInstanceSourceSettings"]));
+            }
+            set {
+                this["SecureInternetInstanceSourceSettings"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Secure Internet settings
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Secure Internet settings")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSourceSettings/>")]
+        public global::eduVPN.Xml.InstanceSourceSettings InstituteAccessInstanceSourceSettings {
+            get {
+                return ((global::eduVPN.Xml.InstanceSourceSettings)(this["InstituteAccessInstanceSourceSettings"]));
+            }
+            set {
+                this["InstituteAccessInstanceSourceSettings"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Access token cache
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Access token cache")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<AccessTokenDictionary/>")]
+        public global::eduVPN.Xml.AccessTokenDictionary AccessTokenCache {
+            get {
+                return ((global::eduVPN.Xml.AccessTokenDictionary)(this["AccessTokenCache"]));
+            }
+            set {
+                this["AccessTokenCache"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Instance-specific user settings
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Instance-specific user settings")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<InstanceSettingsDictionary/>")]
+        public global::eduVPN.Xml.InstanceSettingsDictionary InstanceSettings {
+            get {
+                return ((global::eduVPN.Xml.InstanceSettingsDictionary)(this["InstanceSettings"]));
+            }
+            set {
+                this["InstanceSettings"] = value;
             }
         }
     }

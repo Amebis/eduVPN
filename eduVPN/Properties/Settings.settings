@@ -2,15 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eduVPN.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ResponseCache" Description="Cache of sequenced JSON responses" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;JSONResponseDictionary/&gt;</Value>
-    </Setting>
-    <Setting Name="SecureInternetInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
-    </Setting>
-    <Setting Name="InstituteAccessInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
-    </Setting>
     <Setting Name="SelfUpdateLastVersion" Description="The last product version user was prompted to update to" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -32,12 +23,6 @@
     <Setting Name="OpenVPNAllowLocal" Description="Allow local traffic." Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AccessTokenCache" Description="Access token cache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
-    </Setting>
-    <Setting Name="InstanceSettings" Description="Instance-specific user settings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
-    </Setting>
     <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
@@ -49,6 +34,21 @@
     </Setting>
     <Setting Name="AutoStartProfile" Description="Profile to automatically connect to on startup" Type="eduVPN.Xml.StartSessionParams" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ResponseCache" Description="Cache of sequenced JSON responses" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;JSONResponseDictionary/&gt;</Value>
+    </Setting>
+    <Setting Name="SecureInternetInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
+      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
+    </Setting>
+    <Setting Name="InstituteAccessInstanceSourceSettings" Description="Secure Internet settings" Type="eduVPN.Xml.InstanceSourceSettings" Scope="User">
+      <Value Profile="(Default)">&lt;InstanceSourceSettings/&gt;</Value>
+    </Setting>
+    <Setting Name="AccessTokenCache" Description="Access token cache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
+    </Setting>
+    <Setting Name="InstanceSettings" Description="Instance-specific user settings" Type="eduVPN.Xml.InstanceSettingsDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;InstanceSettingsDictionary/&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
