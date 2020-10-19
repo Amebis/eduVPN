@@ -20,9 +20,6 @@
     <Setting Name="OpenVPNForceTCP" Description="Always connect using TCP." Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="OpenVPNAllowLocal" Description="Allow local traffic." Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>

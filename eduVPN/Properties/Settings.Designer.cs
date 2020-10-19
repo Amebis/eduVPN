@@ -125,22 +125,6 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Allow local traffic.
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Allow local traffic.")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OpenVPNAllowLocal {
-            get {
-                return ((bool)(this["OpenVPNAllowLocal"]));
-            }
-            set {
-                this["OpenVPNAllowLocal"] = value;
-            }
-        }
-        
-        /// <summary>
         /// A flag to trigger setting upgrade from the previous version
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]

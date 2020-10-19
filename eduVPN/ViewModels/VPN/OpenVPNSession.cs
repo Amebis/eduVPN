@@ -299,13 +299,6 @@ namespace eduVPN.ViewModels.VPN
                                     sw.WriteLine("rcvbuf 65536");
                                 }
 
-                                if (Properties.Settings.Default.OpenVPNAllowLocal)
-                                {
-                                    // Don't accept block-outside-dns and block-local.
-                                    sw.WriteLine("pull-filter ignore \"block-outside-dns\"");
-                                    sw.WriteLine("pull-filter ignore \"block-local\"");
-                                }
-
                                 if (!String.IsNullOrWhiteSpace(Properties.Settings.Default.OpenVPNAddOptions))
                                 {
                                     sw.WriteLine();

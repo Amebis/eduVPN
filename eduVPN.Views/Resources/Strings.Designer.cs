@@ -480,24 +480,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning: Do not enable this when roaming in public untrusted networks..
-        /// </summary>
-        public static string SettingsPageAllowLocalDescription {
-            get {
-                return ResourceManager.GetString("SettingsPageAllowLocalDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Allow _Local Traffic.
-        /// </summary>
-        public static string SettingsPageAllowLocalLabel {
-            get {
-                return ResourceManager.GetString("SettingsPageAllowLocalLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to If the client cannot connect, or can connect but doesn&apos;t transfer data, connecting over TCP could solve this..
         /// </summary>
         public static string SettingsPageForceTCPDescription2 {
