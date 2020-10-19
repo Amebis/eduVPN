@@ -291,11 +291,6 @@ namespace eduVPN.ViewModels.VPN
                                 sw.WriteLine("reneg-sec 300");
 #endif
 
-                                //// TODO: Remove those, once OpenVPN fixes the dreaded error:
-                                //// OPTIONS ERROR: failed to negotiate cipher with server.  Add the server's cipher ('AES-256-GCM') to --data-ciphers (currently 'AES-256-GCM') if you want to connect to this server.
-                                //sw.WriteLine("cipher AES-128-CBC");
-                                //sw.WriteLine("data-ciphers \"AES-256-GCM:AES-128-GCM:BF-CBC\"");
-
                                 if (Environment.OSVersion.Version < new Version(6, 2))
                                 {
                                     // Windows 7 is using tiny 8kB send/receive socket buffers by default.
