@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.34...HEAD)
 
+- OpenVPN updated to 2.5.0-20201120
+
 
 ## [1.0.34](https://github.com/Amebis/eduVPN/compare/1.0.33...1.0.34) (2020-10-05)
 
