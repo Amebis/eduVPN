@@ -554,7 +554,7 @@ namespace eduVPN.ViewModels.VPN
                                         }));
 
                                     // Wait for openvpn.exe to finish. Maximum 30s.
-                                    try { Process.GetProcessById(openvpn_interactive_service_connection.ProcessID)?.WaitForExit(30000); }
+                                    try { Process.GetProcessById(openvpn_interactive_service_connection.ProcessId)?.WaitForExit(30000); }
                                     catch (ArgumentException) { }
                                 }
                             }

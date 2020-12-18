@@ -1112,13 +1112,12 @@ namespace eduVPN.ViewModels.Windows
                         var api = authenticating_instance.GetEndpoints(Abort.Token);
 
                         // Prepare new authorization grant.
-                        var authorization_grant = new AuthorizationGrant()
-                        {
-                            AuthorizationEndpoint = api.AuthorizationEndpoint,
-                            ClientID = Properties.Settings.Default.ClientID + ".windows",
-                            Scope = new HashSet<string>() { e.Scope },
-                            CodeChallengeAlgorithm = AuthorizationGrant.CodeChallengeAlgorithmType.S256
-                        };
+                        var authorization_grant = new AuthorizationGrant(
+                            api.AuthorizationEndpoint,
+                            default,
+                            Properties.Settings.Default.ClientID + ".windows",
+                            new HashSet<string>() { e.Scope },
+                            AuthorizationGrant.CodeChallengeAlgorithmType.S256);
 
                         // Re-raise this event as ConnectWizard event, to simplify view.
                         // This way the view can listen ConnectWizard for authorization events only.

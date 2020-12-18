@@ -431,7 +431,7 @@ namespace eduVPN.Views.Windows
 
             // Set the redirect URI and make the final authorization URI.
             view_model.AuthorizationGrant.RedirectEndpoint = new Uri(String.Format("http://{0}:{1}/callback", ((IPEndPoint)_http_listener.LocalEndpoint).Address, ((IPEndPoint)_http_listener.LocalEndpoint).Port));
-            var authorization_uri = view_model.AuthorizationGrant.AuthorizationURI;
+            var authorization_uri = view_model.AuthorizationGrant.AuthorizationUri;
 
             // Extract the state. We use it as a key to support multiple pending authorizations.
             var query = HttpUtility.ParseQueryString(authorization_uri.Query);

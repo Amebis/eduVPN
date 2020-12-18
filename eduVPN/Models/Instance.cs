@@ -533,11 +533,11 @@ namespace eduVPN.Models
 
             // Set display name.
             var display_name = new Dictionary<string, string>();
-            DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", ref display_name) ? display_name.GetLocalized(Base.Host) : Base.Host;
+            DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", display_name) ? display_name.GetLocalized(Base.Host) : Base.Host;
 
             // Set logo URI.
             var logo = new Dictionary<string, string>();
-            var logo_str = eduJSON.Parser.GetDictionary(obj2, "logo", ref logo) ? logo.GetLocalized() : null;
+            var logo_str = eduJSON.Parser.GetDictionary(obj2, "logo", logo) ? logo.GetLocalized() : null;
             Logo = logo_str != null ? new Uri(logo_str) : null;
         }
 
