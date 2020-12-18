@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.35...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.36...HEAD)
+
+
+## [1.0.36](https://github.com/Amebis/eduVPN/compare/1.0.35...1.0.36) (2020-12-18)
 
 - OpenVPN updated to 2.5.0-20201217
 
