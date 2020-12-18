@@ -167,7 +167,7 @@ This version has been submitted for code review.
 ## [1.0.14](https://github.com/Amebis/eduVPN/compare/1.0.13...1.0.14) (2017-12-13)
 
 - Client-based 2FA enrollment
-- New OAuth client ID
+- New OAuth client identifier
 - Bug fixes and clean-ups
 
 

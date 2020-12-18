@@ -34,7 +34,7 @@ namespace eduVPN.ViewModels.Windows
         /// Callback URI
         /// </summary>
         /// <remarks>Should be populated by callback URI.</remarks>
-        public Uri CallbackURI
+        public Uri CallbackUri
         {
             get { return _callback_uri; }
             set { SetProperty(ref _callback_uri, value); }

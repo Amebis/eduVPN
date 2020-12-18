@@ -32,7 +32,7 @@ namespace eduVPN.Xml
         /// <summary>
         /// Profile ID
         /// </summary>
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace eduVPN.Xml
             string v;
 
             Instance = (v = reader[nameof(Instance)]) != null ? new Uri(v) : null;
-            ID = reader[nameof(ID)];
+            Id = reader["ID"];
             InstanceSourceType = (v = reader[nameof(InstanceSourceType)]) != null ? (Models.InstanceSourceType)Enum.Parse(typeof(Models.InstanceSourceType), v) : Models.InstanceSourceType._unknown;
         }
 
@@ -67,7 +67,7 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Instance), Instance.AbsoluteUri);
-            writer.WriteAttributeString(nameof(ID), ID);
+            writer.WriteAttributeString("ID", Id);
             writer.WriteAttributeString(nameof(InstanceSourceType), Enum.GetName(typeof(Models.InstanceSourceType), InstanceSourceType));
         }
 

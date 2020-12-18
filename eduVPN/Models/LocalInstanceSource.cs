@@ -80,7 +80,7 @@ namespace eduVPN.Models
                                 // Restore only profiles user connected to before.
                                 foreach (var h_profile in h_instance.ProfileList)
                                 {
-                                    var profile = profile_list.FirstOrDefault(prof => prof.ID == h_profile.ID);
+                                    var profile = profile_list.FirstOrDefault(prof => prof.Id == h_profile.Id);
                                     if (profile != null)
                                     {
                                         // Synchronise profile data.
@@ -93,7 +93,7 @@ namespace eduVPN.Models
                                         profile = new Profile
                                         {
                                             Instance    = connecting_instance,
-                                            ID          = h_profile.ID,
+                                            Id          = h_profile.Id,
                                             DisplayName = h_profile.DisplayName,
                                             Popularity  = h_profile.Popularity
                                         };
@@ -113,7 +113,7 @@ namespace eduVPN.Models
                                 // Restore popularity on the fly (or leave default to promote newly discovered profiles).
                                 foreach (var profile in profile_list)
                                 {
-                                    var h_profile = h_instance.ProfileList.FirstOrDefault(prof => prof.ID == profile.ID);
+                                    var h_profile = h_instance.ProfileList.FirstOrDefault(prof => prof.Id == profile.Id);
                                     if (h_profile != null)
                                         profile.Popularity = h_profile.Popularity;
 
@@ -150,7 +150,7 @@ namespace eduVPN.Models
                                     .Where(prof => prof.Instance.Equals(inst))
                                     .Select(prof => new Xml.ProfileRef()
                                     {
-                                        ID = prof.ID,
+                                        Id = prof.Id,
                                         DisplayName = prof.DisplayName,
                                         Popularity = prof.Popularity
                                     }))

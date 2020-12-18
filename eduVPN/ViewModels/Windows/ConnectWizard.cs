@@ -239,7 +239,7 @@ namespace eduVPN.ViewModels.Windows
                                                     {
                                                         InstanceSourceType = param.InstanceSourceType,
                                                         Instance = param.ConnectingProfile.Instance.Base,
-                                                        ID = param.ConnectingProfile.ID
+                                                        Id = param.ConnectingProfile.Id
                                                     };
 
                                                     // Run our session.
@@ -820,7 +820,7 @@ namespace eduVPN.ViewModels.Windows
                             var instance_source = InstanceSources[(int)param_settings.InstanceSourceType];
                             var instance = instance_source.ConnectingInstanceList.FirstOrDefault(inst => inst.Base.AbsoluteUri == param_settings.Instance.AbsoluteUri);
                             if (instance != null)
-                                profile = instance?.GetProfileList(instance_source.GetAuthenticatingInstance(instance), Abort.Token).FirstOrDefault(p => p.ID == param_settings.ID);
+                                profile = instance?.GetProfileList(instance_source.GetAuthenticatingInstance(instance), Abort.Token).FirstOrDefault(p => p.Id == param_settings.Id);
 
                             if (profile != null)
                             {
@@ -881,7 +881,7 @@ namespace eduVPN.ViewModels.Windows
                                     () =>
                                     {
                                         // Evaluate installed products.
-                                        var product_id = Properties.Settings.Default.SelfUpdateBundleID.ToUpperInvariant();
+                                        var product_id = Properties.Settings.Default.SelfUpdateBundleId.ToUpperInvariant();
                                         Trace.TraceInformation("Evaluating installed products...");
                                         using (var hklm_key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
                                         using (var uninstall_key = hklm_key.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
@@ -1115,7 +1115,7 @@ namespace eduVPN.ViewModels.Windows
                         var authorization_grant = new AuthorizationGrant(
                             api.AuthorizationEndpoint,
                             default,
-                            Properties.Settings.Default.ClientID + ".windows",
+                            Properties.Settings.Default.ClientId + ".windows",
                             new HashSet<string>() { e.Scope },
                             AuthorizationGrant.CodeChallengeAlgorithmType.S256);
 
@@ -1134,7 +1134,7 @@ namespace eduVPN.ViewModels.Windows
                         }
 
                         // Get access token from authorization grant.
-                        if (e_instance.CallbackURI != null)
+                        if (e_instance.CallbackUri != null)
                         {
                             // Prepare web request.
                             var request = WebRequest.Create(api.TokenEndpoint);
@@ -1144,7 +1144,7 @@ namespace eduVPN.ViewModels.Windows
                                 request_http.UserAgent = Xml.Response.UserAgent;
 
                             e.AccessToken = authorization_grant.ProcessResponse(
-                                HttpUtility.ParseQueryString(e_instance.CallbackURI.Query),
+                                HttpUtility.ParseQueryString(e_instance.CallbackUri.Query),
                                 request,
                                 null,
                                 Abort.Token);

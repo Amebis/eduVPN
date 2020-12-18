@@ -23,7 +23,7 @@ namespace eduVPN.Xml
         /// <summary>
         /// Profile ID
         /// </summary>
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Profile name to display in GUI
@@ -56,7 +56,7 @@ namespace eduVPN.Xml
         {
             string v;
 
-            ID = reader[nameof(ID)];
+            Id = reader["ID"];
             DisplayName = !String.IsNullOrWhiteSpace(v = reader[nameof(DisplayName)]) ? v : null;
             Popularity = (v = reader[nameof(Popularity)]) != null && float.TryParse(v, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var v_popularity) ? Popularity = v_popularity : 1.0f;
         }
@@ -67,7 +67,7 @@ namespace eduVPN.Xml
         /// <param name="writer">The <see cref="XmlWriter"/> stream to which the object is serialized.</param>
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString(nameof(ID), ID);
+            writer.WriteAttributeString("ID", Id);
             if (DisplayName != null)
                 writer.WriteAttributeString(nameof(DisplayName), DisplayName);
             writer.WriteAttributeString(nameof(Popularity), Popularity.ToString(CultureInfo.InvariantCulture));

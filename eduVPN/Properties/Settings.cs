@@ -207,14 +207,14 @@ namespace eduVPN.Properties
         /// </summary>
         [ApplicationScopedSetting()]
         [SettingsDescription("GUID of the installer EXE bundle")]
-        public string SelfUpdateBundleID { get; set; }
+        public string SelfUpdateBundleId { get; set; }
 
         /// <summary>
         /// Client ID
         /// </summary>
         [ApplicationScopedSetting()]
         [SettingsDescription("Client ID")]
-        public string ClientID { get; set; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// Client Title
@@ -241,7 +241,7 @@ namespace eduVPN.Properties
                 // Versions before 1.0.4 used interface name, instead of ID.
                 if (Default.GetPreviousVersion("OpenVPNInterface") is string iface_name &&
                     NetworkInterface.TryFromName(iface_name, out var iface))
-                    Default.OpenVPNInterfaceID = iface.ID;
+                    Default.OpenVPNInterfaceID = iface.Id;
 
                 for (int source_index = (int)InstanceSourceType._start; source_index < (int)InstanceSourceType._end; source_index++)
                 {
@@ -273,7 +273,7 @@ namespace eduVPN.Properties
                                             {
                                                 new Xml.ProfileRef()
                                                 {
-                                                    ID = h_cfg_local.Profile,
+                                                    Id = h_cfg_local.Profile,
                                                     Popularity = h_cfg_local.Popularity
                                                 }
                                             }
@@ -283,12 +283,12 @@ namespace eduVPN.Properties
                                     {
                                         // Instance already on the list. Update it.
                                         instance.Popularity = Math.Max(instance.Popularity, h_cfg_local.Popularity);
-                                        if (instance.ProfileList.FirstOrDefault(prof => prof.ID == h_cfg_local.Profile) == null)
+                                        if (instance.ProfileList.FirstOrDefault(prof => prof.Id == h_cfg_local.Profile) == null)
                                         {
                                             // Add profile to the instance.
                                             instance.ProfileList.Add(new Xml.ProfileRef()
                                             {
-                                                ID = h_cfg_local.Profile,
+                                                Id = h_cfg_local.Profile,
                                                 Popularity = h_cfg_local.Popularity
                                             });
                                         }

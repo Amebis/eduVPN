@@ -133,7 +133,7 @@
                     ItemTemplate="{StaticResource SelectionItemTemplate}"
                     ItemsSource="{Binding Source={StaticResource InterfaceListView}}"
                     SelectedValue="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNInterfaceID}"
-                    SelectedValuePath="ID"
+                    SelectedValuePath="Id"
                     AutomationProperties.LabeledBy="{Binding ElementName=OpenVPNInterfaceLabel}"/>
             </Grid>
         </Grid>

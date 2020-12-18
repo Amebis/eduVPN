@@ -38,7 +38,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Profile ID
         /// </summary>
-        public string ID
+        public string Id
         {
             get { return _id; }
             set { SetProperty(ref _id, value); }
@@ -96,7 +96,7 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override string ToString()
         {
-            return DisplayName ?? ID;
+            return DisplayName ?? Id;
         }
 
         /// <inheritdoc/>
@@ -109,7 +109,7 @@ namespace eduVPN.Models
 
             var other = obj as Profile;
             if (!Instance.Equals(other.Instance) ||
-                !ID.Equals(other.ID))
+                !Id.Equals(other.Id))
                 return false;
 
             return true;
@@ -119,7 +119,7 @@ namespace eduVPN.Models
         public override int GetHashCode()
         {
             return
-                Instance.GetHashCode() ^ ID.GetHashCode();
+                Instance.GetHashCode() ^ Id.GetHashCode();
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace eduVPN.Models
                 // Get profile config.
                 var uri_builder = new UriBuilder(api.ProfileConfig);
                 var query = HttpUtility.ParseQueryString(uri_builder.Query);
-                query["profile_id"] = ID;
+                query["profile_id"] = Id;
                 uri_builder.Query = query.ToString();
                 var openvpn_config = Xml.Response.Get(
                     uri: uri_builder.Uri,
@@ -202,7 +202,7 @@ namespace eduVPN.Models
                     param: new NameValueCollection
                     {
                         { "display_name", String.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) }, // Always use English display_name
-                        { "profile_id", ID }
+                        { "profile_id", Id }
                     },
                     token: e.AccessToken,
                     response_type: "application/x-openvpn-profile",
@@ -252,11 +252,11 @@ namespace eduVPN.Models
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
             // Set ID.
-            ID = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
+            Id = eduJSON.Parser.GetValue<string>(obj2, "profile_id");
 
             // Set display name.
             var display_name = new Dictionary<string, string>();
-            DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", display_name) ? display_name.GetLocalized(ID) : ID;
+            DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", display_name) ? display_name.GetLocalized(Id) : Id;
 
             // Mark profile as available.
             IsAvailable = true;

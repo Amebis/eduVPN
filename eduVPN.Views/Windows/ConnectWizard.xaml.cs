@@ -260,7 +260,7 @@ namespace eduVPN.Views.Windows
             Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
             {
                 // Set the callback URI. This will close the pop-up.
-                ((ViewModels.Windows.AuthorizationPopup)popup.DataContext).CallbackURI = e.Uri;
+                ((ViewModels.Windows.AuthorizationPopup)popup.DataContext).CallbackUri = e.Uri;
 
                 // (Re)activate main window.
                 Open_Click(sender, new RoutedEventArgs());
@@ -412,7 +412,7 @@ namespace eduVPN.Views.Windows
         /// Triggers OAuth authorization request and pops-up user authorization prompt.
         /// </summary>
         /// <param name="sender"><see cref="eduVPN.ViewModels.Windows.ConnectWizard"/> requiring instance authorization</param>
-        /// <param name="e">Event arguments. This method fills <see cref="RequestInstanceAuthorizationEventArgs.CallbackURI"/> member with received authorization grant.</param>
+        /// <param name="e">Event arguments. This method fills <see cref="RequestInstanceAuthorizationEventArgs.CallbackUri"/> member with received authorization grant.</param>
         /// <remarks>Occurs when instance requests authorization.</remarks>
         private void ConnectWizard_RequestInstanceAuthorization(object sender, RequestInstanceAuthorizationEventArgs e)
         {
@@ -422,7 +422,7 @@ namespace eduVPN.Views.Windows
             var popup = new AuthorizationPopup() { Owner = this, DataContext = view_model };
             view_model.PropertyChanged += (object sender2, PropertyChangedEventArgs e2) =>
             {
-                if (e2.PropertyName == nameof(view_model.CallbackURI) && view_model.CallbackURI != null)
+                if (e2.PropertyName == nameof(view_model.CallbackUri) && view_model.CallbackUri != null)
                 {
                     // Close the authorization pop-up after the callback URI is set.
                     popup.DialogResult = true;
@@ -442,7 +442,7 @@ namespace eduVPN.Views.Windows
 
             // Run the authorization pop-up and pass the access token to be returned to the event sender.
             if (popup.ShowDialog() == true)
-                e.CallbackURI = view_model.CallbackURI;
+                e.CallbackUri = view_model.CallbackUri;
 
             _authorization_popups.Remove(query["state"]);
         }

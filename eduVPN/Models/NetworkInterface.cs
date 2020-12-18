@@ -20,7 +20,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Interface ID
         /// </summary>
-        public Guid ID { get; }
+        public Guid Id { get; }
 
         /// <summary>
         /// Interface name
@@ -38,7 +38,7 @@ namespace eduVPN.Models
         /// <param name="name">Interface name</param>
         public NetworkInterface(Guid id, string name)
         {
-            ID = id;
+            Id = id;
             Name = name;
         }
 

@@ -31,7 +31,7 @@ namespace eduVPN.Models
         /// Callback URI
         /// </summary>
         /// <remarks>Should be populated by callback URI on event end, or <c>null</c> if cancelled.</remarks>
-        public Uri CallbackURI { get; set; }
+        public Uri CallbackUri { get; set; }
 
         #endregion
 

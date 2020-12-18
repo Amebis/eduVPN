@@ -38,7 +38,7 @@ namespace eduVPN.Models
         /// <summary>
         /// API base URI
         /// </summary>
-        public Uri BaseURI { get => _base_uri; }
+        public Uri BaseUri { get => _base_uri; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Uri _base_uri;

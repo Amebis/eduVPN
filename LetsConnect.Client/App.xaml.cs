@@ -47,8 +47,8 @@ namespace LetsConnect.Client
             base.OnStartup(e);
 
             // Set client-specific settings.
-            eduVPN.Properties.Settings.Default.SelfUpdateBundleID = "{5F7860D5-5563-4492-930B-C8C77A539504}";
-            eduVPN.Properties.Settings.Default.ClientID = "org.letsconnect-vpn.app";
+            eduVPN.Properties.Settings.Default.SelfUpdateBundleId = "{5F7860D5-5563-4492-930B-C8C77A539504}";
+            eduVPN.Properties.Settings.Default.ClientId = "org.letsconnect-vpn.app";
             eduVPN.Properties.Settings.Default.ClientTitle = Client.Resources.Strings.ConnectWizardTitle;
         }
 
