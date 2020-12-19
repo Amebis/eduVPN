@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.36...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.0...HEAD)
+
+
+## [1.255.0](https://github.com/Amebis/eduVPN/compare/1.0.36...1.255.0)
 
 - New workflow
 - New styling
