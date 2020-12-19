@@ -10,6 +10,24 @@ WIX_CANDLE_FLAGS_CFG=$(WIX_CANDLE_FLAGS)
 
 
 ######################################################################
+# Setup
+######################################################################
+
+!IF "$(CFG)" == "Release"
+"$(SETUP_DIR)\eduVPN.windows.json.minisig" \
+"$(SETUP_DIR)\LetsConnect.windows.json.minisig" : \
+	"$(SETUP_DIR)\eduVPN.windows.json" \
+	"$(SETUP_DIR)\LetsConnect.windows.json"
+	echo Signing $**
+	minisign.exe -Sm $**
+
+Clean ::
+	-if exist "$(SETUP_DIR)\eduVPN.windows.json.minisig"       del /f /q "$(SETUP_DIR)\eduVPN.windows.json.minisig"
+	-if exist "$(SETUP_DIR)\LetsConnect.windows.json.minisig"  del /f /q "$(SETUP_DIR)\LetsConnect.windows.json.minisig"
+!ENDIF
+
+
+######################################################################
 # Building
 ######################################################################
 

@@ -18,7 +18,9 @@ WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
 
 !IF "$(CFG)" == "Release"
 SetupExe :: \
-	"$(SETUP_DIR)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe"
+	"$(SETUP_DIR)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" \
+	"$(SETUP_DIR)\$(CLIENT_TARGET).windows.json" \
+	"$(SETUP_DIR)\$(CLIENT_TARGET).windows.json.minisig"
 
 "$(SETUP_DIR)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" : \
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
@@ -32,8 +34,19 @@ SetupExe :: \
 	copy /y $** $@ > NUL
 !ENDIF
 
+"$(SETUP_DIR)\$(CLIENT_TARGET).windows.json" : "$(SETUP_DIR)\$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe"
+	move /y << "$(@:"=).tmp" > NUL
+{"arguments": "/install",
+"uri": [ "$(CLIENT_TARGET)Client_$(BUNDLE_VERSION).exe" ],
+"version": "$(BUNDLE_VERSION)",
+"changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
+<<NOKEEP
+	for /f %%a in ('CertUtil.exe -hashfile $** SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo "hash-sha256": "%%a"}>> "$(@:"=).tmp"
+	move /y "$(@:"=).tmp" $@ > NUL
+
 Clean ::
 	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)Client_*.exe"  del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)Client_*.exe"
+	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET).windows.json" del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET).windows.json"
 	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_*.msi"  del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)TAPWin_*.msi"
 	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_*.msi" del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)OpenVPN_*.msi"
 	-if exist "$(SETUP_DIR)\$(CLIENT_TARGET)Core_*.msi"    del /f /q "$(SETUP_DIR)\$(CLIENT_TARGET)Core_*.msi"
