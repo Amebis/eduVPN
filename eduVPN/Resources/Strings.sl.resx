@@ -129,9 +129,6 @@
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Nalaganje končnih točk API ni uspelo.</value>
   </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Nalaganje skupine ponudnikov {0} ni uspelo.</value>
-  </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Nalaganje spiska profilov ni uspelo.</value>
   </data>
@@ -141,24 +138,18 @@
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Nalaganje nastavitev profila ni uspelo.</value>
   </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Nalaganje podatkov o uporabniku ni uspelo.</value>
-  </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>Shranjevanje profilovih nastavitev OpenVPN v "{0}" ni uspelo.</value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Pooblaščanje odjemalca ni uspelo.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Pooblaščanje odjemalca za uporabo {0} ni uspelo.</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value>Dodajam smeri v sistem ...</value>
+    <value>Dodajanje smeri v sistem ...</value>
   </data>
   <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
-    <value>Dodeljujem naslov IP navideznemu omrežnemu vmesniku ...</value>
+    <value>Dodeljevanje naslova IP navideznemu omrežnemu vmesniku ...</value>
   </data>
   <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
     <value>Overovljanje s strežnikom ...</value>
@@ -167,7 +158,7 @@
     <value>Povezan.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
-    <value>Povezujem ...</value>
+    <value>Povezovanje ...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
     <value>Elegantni izhod je v postopku ...</value>
@@ -176,13 +167,13 @@
     <value>OpenVPN je javil usodno napako.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value>Prenašam nastavitvene možnosti s strežnika ...</value>
+    <value>Prenos nastavitvenih možnosti s strežnika ...</value>
   </data>
   <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
     <value>Prišlo je do ponovnega zagona ...</value>
   </data>
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
-    <value>Čakam na uvodni odgovor strežnika ...</value>
+    <value>Čakanje na uvodni odgovor strežnika ...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
     <value>(samodejno)</value>
@@ -193,19 +184,12 @@
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Omrežni vmesnik {0} ni najden.</value>
   </data>
-  <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Neveljavno ime gostitelja: imena gostiteljev vsebujejo črke, številke, vezaje in pike.</value>
-  </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Ime lastnosti {0} ni veljavno.</value>
     <comment>{0}=Property name</comment>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Napaka interaktivne storitve.</value>
-  </data>
-  <data name="InstanceForget" xml:space="preserve">
-    <value>Pozabi {0}</value>
-    <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
     <value>Prenesena datoteka {0} je pokvarjena.</value>
@@ -218,49 +202,13 @@
     <value>Prenos na splet ni uspel. Preverite svojo spletno povezavo.</value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value>Razrešujem naslov IP strežnika ...</value>
+    <value>Razreševanje naslov IP strežnika ...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value>Povezujem se na strežnik TCP ...</value>
+    <value>Povezovanje na strežnik TCP ...</value>
   </data>
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>Namestitvena datoteka ni na voljo. Posodabljanje prekinjeno.</value>
-  </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>O programu</value>
-  </data>
-  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Izberite državo svoje ustanove</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Izberite svojo ustanovo</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Izberite svoj profil</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Vnesite URI svojega ponudnika</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Vzpostavljam ...</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>Kako želite uporabljati VPN?</value>
-  </data>
-  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Pripravljam posodobitev ...</value>
-  </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Nastavitve</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>Povezava VPN</value>
-  </data>
-  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Dostop do ustanove</value>
-  </data>
-  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Varni splet</value>
   </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
     <value>Skrbnik je onemogočil digitalno potrdilo.</value>
@@ -289,7 +237,7 @@
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
     <value>Javnemu ključu Minisign ni zaupati.</value>
   </data>
-  <data name="ErrorAutostartingProfile" xml:space="preserve">
-    <value>Samodejni zagon zadnjega povezanega profila ni uspel.</value>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Neveljavno ime gostitelja: imena gostiteljev vsebujejo črke, številke, vezaje in pike.</value>
   </data>
 </root>

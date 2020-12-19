@@ -129,9 +129,6 @@
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Innlasting av API-endepunkt feilet.</value>
   </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Kunne ikke hente leverandørkilde {0}.</value>
-  </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Profillista kunne ikke hentes.</value>
   </data>
@@ -141,14 +138,8 @@
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Innlasting av profilkonfigurasjon har feilet.</value>
   </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Kunne ikke hente brukerinformasjon.</value>
-  </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>OpenVPN-konfigurasjon kunne ikke lagres i "{0}".</value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Klientautorisasjon feilet.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Kunne ikke autorisere klienten til å bruke {0}.</value>
@@ -188,13 +179,10 @@
     <value>(Automatisk)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Et nettverksgrensesnitt med {0} ID finnes ikke.</value>
+    <value>Network interface with {0} Id not found.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Nettverksgrensesnitt {0} finnes ikke.</value>
-  </data>
-  <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Ugyldig vertsnavn: vertsnavn kan inneholde bokstav, tall, bindestrek og punktum.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Navn på egenskap {0} er ugyldig.</value>
@@ -202,10 +190,6 @@
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interaktiv Tjeneste feil.</value>
-  </data>
-  <data name="InstanceForget" xml:space="preserve">
-    <value>Glem {0}</value>
-    <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
     <value>Lastet ned fil {0} er korrupt.</value>
@@ -226,42 +210,6 @@
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>Installasjonsfil ikke tilgjengelig. Oppdateringen er avbrudd.</value>
   </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>Om</value>
-  </data>
-  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Velg landet der institutsjonen befinner seg</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Velg din institusjon</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Velg din profil</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Skriv inn URI-en til leverandøren din</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Initialiserer...</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>Hvordan ønsker du å bruke VPN?</value>
-  </data>
-  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Forbereder oppdatering…</value>
-  </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Valg</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN-tilkobling</value>
-  </data>
-  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Instituttilgang</value>
-  </data>
-  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Sikker internett</value>
-  </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
     <value>Sertifikatet er sperret av en administrator.</value>
   </data>
@@ -275,7 +223,7 @@
     <value>Minisign-fellesnøkkelen er ugyldig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign-fellesnøkkelen med ID {0:X} finnes allerede.</value>
+    <value>Minisign public key with Id {0:X} already exists.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign-signaturen støttes ikke.</value>
@@ -289,7 +237,7 @@
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
     <value>Stoler ikke på minisign-fellesnøkkelen.</value>
   </data>
-  <data name="ErrorAutostartingProfile" xml:space="preserve">
-    <value>Auto-starting the last connected profile failed.</value>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Ugyldig vertsnavn: vertsnavn kan inneholde bokstav, tall, bindestrek og punktum.</value>
   </data>
 </root>

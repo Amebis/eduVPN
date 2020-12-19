@@ -117,7 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutPageUri" xml:space="preserve">
+    <value>https://www.letsconnect-vpn.org/</value>
+    <comment>If the product website is available in this language, translate this string to the URL of the localized website. Otherwise copy-translate.</comment>
+  </data>
   <data name="ConnectWizardTitle" xml:space="preserve">
-    <value>دعنا نتواصل!</value>
+    <value>Let's Connect!</value>
   </data>
 </root>

@@ -129,9 +129,6 @@
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Das Laden der API-Endpunkte ist fehlgeschlagen.</value>
   </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Das Laden der Anbieterquelle {0} ist fehlgeschlagen.</value>
-  </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Das Laden der Profilliste ist fehlgeschlagen.</value>
   </data>
@@ -141,14 +138,8 @@
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Das Laden der Profilkonfiguration ist fehlgeschlagen.</value>
   </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Das Laden der Benutzerinformationen ist fehlgeschlagen.</value>
-  </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>Das Speichern der OpenVPN-Konfiguration des Profils auf "{0}" schlug fehl.</value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Client-Autorisierung fehlgeschlagen.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Die Autorisierung des Clients zur Verwendung von {0} ist fehlgeschlagen.</value>
@@ -188,13 +179,10 @@
     <value>(Automatisch)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Netzwerkschnittstelle mit {0} ID nicht gefunden.</value>
+    <value>Network interface with {0} Id not found.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Netzwerkschnittstelle {0} nicht gefunden.</value>
-  </data>
-  <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Ungültiger Hostname: Hostnamen bestehen aus Buchstaben, Zahlen, Bindestrichen und Punkten.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Eigenschaftsname {0} ist nicht gültig.</value>
@@ -202,10 +190,6 @@
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interaktiver Dienst gescheitert.</value>
-  </data>
-  <data name="InstanceForget" xml:space="preserve">
-    <value>Vergesse {0}</value>
-    <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
     <value>Heruntergeladene Datei {0} ist beschädigt.</value>
@@ -226,42 +210,6 @@
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>Installationsdatei nicht verfügbar. Aktualisierung abgebrochen.</value>
   </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>Über</value>
-  </data>
-  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Wählen Sie das Land Ihrer Institution</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Wählen Sie Ihre Institution</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Wählen Sie Ihr Profil</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Geben Sie die URI Ihres Anbieters ein</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Initialisierung...</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>Wie möchten Sie das VPN nutzen?</value>
-  </data>
-  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Update vorbereiten...</value>
-  </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Einstellungen</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN-Verbindung</value>
-  </data>
-  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Zugang zum Institut</value>
-  </data>
-  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Sicheres Internet</value>
-  </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
     <value>Das Zertifikat wurde vom Administrator deaktiviert.</value>
   </data>
@@ -275,7 +223,7 @@
     <value>Öffentlicher Minisign-Schlüssel ist ungültig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Der öffentliche Minisign-Schlüssel mit der ID {0:X} ist bereits vorhanden.</value>
+    <value>Minisign public key with Id {0:X} already exists.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign-Signatur wird nicht unterstützt.</value>
@@ -289,7 +237,7 @@
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
     <value>Öffentlicher Minisign-Schlüssel nicht vertrauenswürdig.</value>
   </data>
-  <data name="ErrorAutostartingProfile" xml:space="preserve">
-    <value>Auto-starting the last connected profile failed.</value>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Ungültiger Hostname: Hostnamen bestehen aus Buchstaben, Zahlen, Bindestrichen und Punkten.</value>
   </data>
 </root>

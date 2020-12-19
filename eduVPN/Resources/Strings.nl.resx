@@ -129,9 +129,6 @@
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Laden van API endpoints mislukt.</value>
   </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>Laden van de leveranciersbron {0} mislukt.</value>
-  </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Het laden van de profiellijst is mislukt.</value>
   </data>
@@ -141,14 +138,8 @@
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Laden van de profielconfiguratie is mislukt.</value>
   </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>Laden van gebruikersinformatie is mislukt.</value>
-  </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>Opslaan van de OpenVPN-configuratie van het profiel naar "{0}" mislukt.</value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value>Client-autorisatie is mislukt.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Autoriseren van de client om {0} te gebruiken mislukt.</value>
@@ -188,13 +179,10 @@
     <value>(Automatisch)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Netwerk interface met {0} ID niet gevonden.</value>
+    <value>Network interface with {0} Id not found.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Netwerk interface {0} niet gevonden.</value>
-  </data>
-  <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Ongeldige hostnaam: een hostnaam bevat letters, nummers, koppeltekens en punten.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Naam van eigenschap {0} is ongeldig.</value>
@@ -202,10 +190,6 @@
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interactieve Service fout.</value>
-  </data>
-  <data name="InstanceForget" xml:space="preserve">
-    <value>Vergeet {0}</value>
-    <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
     <value>Gedownload bestand{0} is corrupt.</value>
@@ -226,42 +210,6 @@
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>Installatiebestand niet beschikbaar. Updaten afgebroken.</value>
   </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>Over</value>
-  </data>
-  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>Selecteer het land van je instituut</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>Selecteer je instituut</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>Selecteer je profiel</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>Geef URI in van je provider</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>Initialiseren...</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>Hoe wil je de VPN gebruiken?</value>
-  </data>
-  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Update voorbereiden...</value>
-  </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Instellingen</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>VPN-verbinding</value>
-  </data>
-  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>Instituut toegang</value>
-  </data>
-  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>Veilig internet</value>
-  </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
     <value>Het certificaat is uitgeschakeld door een beheerder.</value>
   </data>
@@ -275,7 +223,7 @@
     <value>Minisign publieke sleutel is ongeldig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign publieke sleutel met ID {0:X} bestaat al.</value>
+    <value>Minisign public key with Id {0:X} already exists.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign handtekening is niet ondersteund.</value>
@@ -289,7 +237,7 @@
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
     <value>Minisign publieke sleutel is niet vertrouwd.</value>
   </data>
-  <data name="ErrorAutostartingProfile" xml:space="preserve">
-    <value>Auto-starting the last connected profile failed.</value>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>Ongeldige hostnaam: een hostnaam bevat letters, nummers, koppeltekens en punten.</value>
   </data>
 </root>

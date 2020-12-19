@@ -129,9 +129,6 @@
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>فشل تحميل أطراف واجهة برمجة التطبيقات.</value>
   </data>
-  <data name="ErrorInstanceSourceInfoLoad" xml:space="preserve">
-    <value>فشل تحميل مصدر المزود {0}.</value>
-  </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>فشل تحميل لائحة المظاهر.</value>
   </data>
@@ -141,14 +138,8 @@
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>فشل تحميل إعدادات المظهر.</value>
   </data>
-  <data name="ErrorUserInfoLoad" xml:space="preserve">
-    <value>فشل تحميل معلومات المستخدم.</value>
-  </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
     <value>فشل حفظ إعدادات المظهر ل OpenVPN إلى "{0}".</value>
-  </data>
-  <data name="ErrorAuthorization" xml:space="preserve">
-    <value>فشل التفويض للعميل.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>فشل تفويض العميل لاستخدام {0}.</value>
@@ -188,13 +179,10 @@
     <value>(تلقائي)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>لم يتم العثور على واجهة الشبكة ذات المعرف {0}.</value>
+    <value>Network interface with {0} Id not found.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>لم يتم العثور على واجهة الشبكة {0}.</value>
-  </data>
-  <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>اسم مضيف غير صالح: تحتوي أسماء المضيف على أحرف وأرقام وواصلات ونقاط.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>اسم الخاصية {0} غير صالح.</value>
@@ -202,10 +190,6 @@
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>فشل الخدمة التفاعلية.</value>
-  </data>
-  <data name="InstanceForget" xml:space="preserve">
-    <value>نسيان {0}</value>
-    <comment>{0}=Provider</comment>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
     <value>الملف {0} الذي تم تنزيله تالف.</value>
@@ -226,42 +210,6 @@
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>ملف المثبت غير متوفر. تم إحباط التحديث.</value>
   </data>
-  <data name="AboutPageTitle" xml:space="preserve">
-    <value>حول</value>
-  </data>
-  <data name="AuthenticatingCountrySelectPageTitle2" xml:space="preserve">
-    <value>حدد بلد مؤسستك</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageTitle" xml:space="preserve">
-    <value>حدد مؤسستك</value>
-  </data>
-  <data name="ConnectingProfileSelectPageTitle" xml:space="preserve">
-    <value>حدد المظهر</value>
-  </data>
-  <data name="CustomInstancePageTitle" xml:space="preserve">
-    <value>أدخل رابط مزودك</value>
-  </data>
-  <data name="InitializingPageTitle" xml:space="preserve">
-    <value>جارٍ التهييء ...</value>
-  </data>
-  <data name="InstanceSourceSelectPageTitle2" xml:space="preserve">
-    <value>كيف تريد استعمال الشبكة الخاصة الافتراضية ؟</value>
-  </data>
-  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>جارٍ تحضير التحديث ...</value>
-  </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>إعدادات</value>
-  </data>
-  <data name="StatusPageTitle" xml:space="preserve">
-    <value>اتصال الشبكة الخاصة الافتراضية</value>
-  </data>
-  <data name="InstanceSourceTypeInstituteAccess" xml:space="preserve">
-    <value>ولوج مؤسسة</value>
-  </data>
-  <data name="InstanceSourceTypeSecureInternet" xml:space="preserve">
-    <value>تأمين الشبكة</value>
-  </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
     <value>تم تعطيل الشهادة من قبل مسؤول.</value>
   </data>
@@ -275,7 +223,7 @@
     <value>المفتاح العمومي المصغر غير صالح.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>المفتاح العمومي المصغر ذو المعرف {0:X} موجود مسبقا.</value>
+    <value>Minisign public key with Id {0:X} already exists.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>التوقيع المصغر غير مدعوم.</value>
@@ -289,7 +237,7 @@
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
     <value>المفتاح العمومي المصغر غير موثوق به.</value>
   </data>
-  <data name="ErrorAutostartingProfile" xml:space="preserve">
-    <value>فشل التشغيل التلقائي لآخر مظهر متصل.</value>
+  <data name="ErrorInvalidHostname" xml:space="preserve">
+    <value>اسم مضيف غير صالح: تحتوي أسماء المضيف على أحرف وأرقام وواصلات ونقاط.</value>
   </data>
 </root>

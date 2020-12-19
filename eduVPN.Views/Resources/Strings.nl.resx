@@ -124,24 +124,8 @@ Het Commons Conservancy eduVPN Programma</value>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Versie {0}</value>
   </data>
-  <data name="AuthenticatingCountrySelectPageListLabel" xml:space="preserve">
-    <value>_Land</value>
-  </data>
-  <data name="AuthenticatingInstituteSelectPageListLabel" xml:space="preserve">
-    <value>_Instituut</value>
-  </data>
-  <data name="AuthorizationPopupMessage2" xml:space="preserve">
-    <value>De client heeft {0} autorisatie nodig en heeft een pagina in je browser geopend. De client zal verder gaan na voltooien van de autorisatie...</value>
-    <comment>{0}=Instance name</comment>
-  </data>
-  <data name="AuthorizationPopupTitle" xml:space="preserve">
-    <value>Wachten op autorisatie...</value>
-  </data>
   <data name="ButtonBackTitle" xml:space="preserve">
     <value>Terug</value>
-  </data>
-  <data name="ButtonCloseTitle" xml:space="preserve">
-    <value>Sluiten</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
     <value>_Kopieer Foutmelding</value>
@@ -149,96 +133,25 @@ Het Commons Conservancy eduVPN Programma</value>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
     <value>_Foutmelding sluiten</value>
   </data>
-  <data name="ButtonOKTitle" xml:space="preserve">
-    <value>_OK</value>
-  </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>Instellingen</value>
-  </data>
-  <data name="ConnectingInstanceAndProfileSelectPanelInstanceListLabel" xml:space="preserve">
-    <value>_Provider</value>
-  </data>
-  <data name="ConnectingInstanceAndProfileSelectPanelProfileListLabel" xml:space="preserve">
-    <value>_Profiel</value>
-  </data>
-  <data name="ConnectingInstanceProfileSelectPanelInstanceProfileListLabel" xml:space="preserve">
-    <value>_Profiel</value>
-  </data>
-  <data name="ConnectingInstanceSelectPanelInstanceListLabel" xml:space="preserve">
-    <value>_Provider</value>
-  </data>
-  <data name="ConnectingProfileSelectPanelProfileListLabel" xml:space="preserve">
-    <value>_Profiel</value>
-  </data>
-  <data name="CustomInstancePageHostnameLabel" xml:space="preserve">
-    <value>_Hostnaam</value>
-  </data>
-  <data name="ErrorOAuthState" xml:space="preserve">
-    <value>De vereiste OAuth parameter "state" ontbreekt of is onjuist.</value>
-  </data>
-  <data name="InstanceSourcePageCustomTitle" xml:space="preserve">
-    <value>V_oeg ander adres toe</value>
-  </data>
-  <data name="InstanceSourcePageInstituteAccessTitle2" xml:space="preserve">
-    <value>Verbind met je _instituut</value>
-  </data>
-  <data name="InstanceSourcePageSecureInternetTitle2" xml:space="preserve">
-    <value>_Veilig internetten</value>
-  </data>
-  <data name="ListBoxNoItems" xml:space="preserve">
-    <value>Geen items</value>
-    <comment>Displayed when a list is empty</comment>
-  </data>
-  <data name="ListBoxNull" xml:space="preserve">
-    <value>Even geduld a.u.b....</value>
-    <comment>Displayed when a list is loading</comment>
-  </data>
-  <data name="MessageMaintenanceBegin" xml:space="preserve">
-    <value>Begin</value>
-  </data>
-  <data name="MessageMaintenanceEnd" xml:space="preserve">
-    <value>Einde</value>
-  </data>
-  <data name="MessageMaintenanceTitle" xml:space="preserve">
-    <value>Onderhoudsmelding</value>
-  </data>
-  <data name="MessageNotificationTitle" xml:space="preserve">
-    <value>Melding</value>
+    <value>_Settings</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
-  <data name="PasswordPopupMessage" xml:space="preserve">
-    <value>Voer je wachtwoord in voor "{0}":</value>
-    <comment>{0}=Authenticating realm name</comment>
+  <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
+    <value>What's New?</value>
   </data>
-  <data name="PasswordPopupPasswordLabel" xml:space="preserve">
-    <value>_Wachtwoord</value>
+  <data name="SelfUpdatePromptPageText" xml:space="preserve">
+    <value>A newer and improved version of the client is available. Stay updated!</value>
   </data>
-  <data name="PasswordPopupTitle" xml:space="preserve">
-    <value>Wachtwoord</value>
+  <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
+    <value>Update available</value>
   </data>
-  <data name="RecentConfigurationSelectPageAddTitle" xml:space="preserve">
-    <value>_Andere toevoegen</value>
-  </data>
-  <data name="SelfUpdatePromptAskLaterTitle" xml:space="preserve">
-    <value>Vraag _later</value>
-  </data>
-  <data name="SelfUpdatePromptChangelogTitle" xml:space="preserve">
-    <value>Wat is _nieuw?</value>
-  </data>
-  <data name="SelfUpdatePromptMessage3" xml:space="preserve">
-    <value>Een nieuwere en verbeterde versie is beschikbaar. Blijf up-to-date!</value>
-  </data>
-  <data name="SelfUpdatePromptSkipTitle" xml:space="preserve">
-    <value>Sla deze _versie over</value>
-  </data>
-  <data name="SelfUpdatePromptTitle" xml:space="preserve">
-    <value>Update beschikbaar</value>
-  </data>
-  <data name="SelfUpdatePromptUpdateTitle" xml:space="preserve">
-    <value>Download en _update nu (client zal herstarten)</value>
+  <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
+    <value>Download and _update now
+(Client will restart)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} heeft gedetecteerd dat je gebruikersinstellingenbestand {1} beschadigd is geraakt. Dit kan komen door een crash. 
@@ -249,53 +162,26 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
-  <data name="SettingsPageForceTCPDescription2" xml:space="preserve">
-    <value>Als de client niet kan verbinden, of er gaat geen data over de verbinding, dan kan verbinden over TCP helpen.</value>
-  </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Via _TCP verbinden</value>
-  </data>
-  <data name="SettingsPageInterfaceDescription2" xml:space="preserve">
-    <value>Als je meerdere gelijktijdige OpenVPN-verbindingen nodig hebt, selecteer dan de TAP-interface voor deze client hieronder.</value>
+    <value>Connect using _TCP only</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Selecteer TAP-_interface</value>
+    <value>Use TAP _adapter:</value>
   </data>
-  <data name="StatusPageDisconnectTitle" xml:space="preserve">
-    <value>_Verbreken</value>
+  <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
+    <value>Downloaded</value>
   </data>
-  <data name="StatusPageInstance" xml:space="preserve">
-    <value>Provider</value>
+  <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
+    <value>Uploaded</value>
   </data>
-  <data name="StatusPageMessagesLabel" xml:space="preserve">
-    <value>_Berichten</value>
+  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
+    <value>Duration</value>
   </data>
-  <data name="StatusPageProfile" xml:space="preserve">
-    <value>Profiel</value>
+  <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
+    <value>IPv4 Address</value>
   </data>
-  <data name="StatusPageSessionInfoBytesIn" xml:space="preserve">
-    <value>Bytes (in)</value>
-  </data>
-  <data name="StatusPageSessionInfoBytesOut" xml:space="preserve">
-    <value>Bytes (uit)</value>
-  </data>
-  <data name="StatusPageSessionInfoDuration" xml:space="preserve">
-    <value>Duur</value>
-  </data>
-  <data name="StatusPageSessionInfoIPv4" xml:space="preserve">
-    <value>IPv4</value>
-  </data>
-  <data name="StatusPageSessionInfoIPv6" xml:space="preserve">
-    <value>IPv6</value>
-  </data>
-  <data name="StatusPageSessionInfoTitle" xml:space="preserve">
-    <value>Verbindingsinformatie</value>
-  </data>
-  <data name="StatusPageSessionInfoViewLogTitle" xml:space="preserve">
-    <value>Bekijk _log</value>
-  </data>
-  <data name="StatusPageStatus" xml:space="preserve">
-    <value>Status</value>
+  <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
+    <value>IPv6 Address</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -334,45 +220,135 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>d\.hh\:mm\:ss</value>
     <comment>Display format of the duration times one day or longer</comment>
   </data>
-  <data name="UsernamePasswordPopupMessage" xml:space="preserve">
-    <value>Voer je gebruikersnaam en wachtwoord in voor "{0}":</value>
-    <comment>{0}=Authenticating realm name</comment>
-  </data>
-  <data name="UsernamePasswordPopupPasswordLabel" xml:space="preserve">
-    <value>_Wachtwoord</value>
-  </data>
-  <data name="UsernamePasswordPopupTitle" xml:space="preserve">
-    <value>Authenticatie</value>
-  </data>
-  <data name="UsernamePasswordPopupUsernameLabel" xml:space="preserve">
-    <value>_Gebruikersnaam</value>
-  </data>
-  <data name="AboutPageAppBannerTitle" xml:space="preserve">
-    <value>{0}
-Mogelijk gemaakt door SURFnet</value>
-    <comment>{0}=Client name</comment>
-  </data>
-  <data name="RecentConfigurationSelectPageConnectionListTitle" xml:space="preserve">
-    <value>Toegevoegde VPN-profielen</value>
-  </data>
-  <data name="ButtonConnectTitle" xml:space="preserve">
-    <value>_Verbinden!</value>
-  </data>
-  <data name="Unavailable" xml:space="preserve">
-    <value>Niet beschikbaar</value>
-  </data>
-  <data name="SettingsPageAllowLocalDescription" xml:space="preserve">
-    <value>Waarschuwing: Schakel dit niet in bij roaming in openbare, niet-vertrouwde netwerken.</value>
-  </data>
-  <data name="SettingsPageAllowLocalLabel" xml:space="preserve">
-    <value>_Lokaal Verkeer Toestaan</value>
-  </data>
-  <data name="ListBoxNoProfiles" xml:space="preserve">
-    <value>Er zijn geen VPN-profielen geconfigureerd, of dit account heeft niet de benodigde rechten voor toegang tot de beschikbare profielen.</value>
-    <comment>Displayed when a profile list is empty</comment>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
+  <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
+    <value>Institute Access</value>
+  </data>
+  <data name="SearchPageQueryLabel" xml:space="preserve">
+    <value>Search for your institute...</value>
+  </data>
+  <data name="SearchPageSecureInternetLabel" xml:space="preserve">
+    <value>Secure Internet</value>
+  </data>
+  <data name="SearchPageOrganizationsLabel" xml:space="preserve">
+    <value>_Organization</value>
+  </data>
+  <data name="SearchPageOwnServerLabel" xml:space="preserve">
+    <value>Connect your own server</value>
+  </data>
+  <data name="SearchPageOwnServersLabel" xml:space="preserve">
+    <value>Own Se_rver</value>
+  </data>
+  <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
+    <value>_Server</value>
+  </data>
+  <data name="SearchPageTitle" xml:space="preserve">
+    <value>Find your institute</value>
+  </data>
+  <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
+    <value>_Location</value>
+  </data>
+  <data name="AuthorizationPageText" xml:space="preserve">
+    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+  </data>
+  <data name="AuthorizationPageTitle" xml:space="preserve">
+    <value>Authorization required</value>
+  </data>
+  <data name="ButtonCancelTitle" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
+    <value>_Change Location</value>
+  </data>
+  <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
+    <value>_Location</value>
+  </data>
+  <data name="ButtonAboutTitle" xml:space="preserve">
+    <value>A_bout</value>
+  </data>
+  <data name="HomePageAddTitle" xml:space="preserve">
+    <value>_Add</value>
+  </data>
+  <data name="HomePageInstituteAccessLabel" xml:space="preserve">
+    <value>Institute Access</value>
+  </data>
+  <data name="HomePageOwnServerLabel1" xml:space="preserve">
+    <value>Other Servers</value>
+  </data>
+  <data name="HomePageSecureInternetLabel" xml:space="preserve">
+    <value>Secure Internet</value>
+  </data>
+  <data name="SearchPageOtherServerTitle" xml:space="preserve">
+    <value>Add other server</value>
+  </data>
+  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+    <value>Select a location</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
+    <value>Support:</value>
+  </data>
+  <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
+    <value>Connection log</value>
+  </data>
+  <data name="SettingsPageViewLogTitle" xml:space="preserve">
+    <value>View _log...</value>
+  </data>
+  <data name="VPNSessionStatusTypeConnected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="VPNSessionStatusTypeConnecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="VPNSessionStatusTypeDisconnecting" xml:space="preserve">
+    <value>Disconnecting...</value>
+  </data>
+  <data name="VPNSessionStatusTypeError" xml:space="preserve">
+    <value>Connection Error</value>
+  </data>
+  <data name="VPNSessionStatusTypeInitializing" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
+  <data name="ConnectionPageProfilesLabel" xml:space="preserve">
+    <value>_Profiles</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
+    <value>Connection _info</value>
+  </data>
+  <data name="ConnectionPageSelectProfile" xml:space="preserve">
+    <value>Select a profile</value>
+  </data>
+  <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
+    <value>Valid for</value>
+  </data>
+  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
+    <value>Downloading update...</value>
+  </data>
+  <data name="ForgetLabel" xml:space="preserve">
+    <value>_Forget</value>
+  </data>
+  <data name="SelectOwnServerPageTitle" xml:space="preserve">
+    <value>Server address</value>
+  </data>
+  <data name="HomePageOwnServerLabel2" xml:space="preserve">
+    <value>Servers</value>
+  </data>
+  <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
+    <value>A_dd server</value>
+  </data>
+  <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
+    <value>Enter server address here</value>
+  </data>
+  <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
+    <value>List of available profiles is loading.
+Please wait...</value>
+  </data>
+  <data name="SearchPageNoResultsText" xml:space="preserve">
+    <value>No results, please check your search command or try another institute.</value>
   </data>
 </root>
