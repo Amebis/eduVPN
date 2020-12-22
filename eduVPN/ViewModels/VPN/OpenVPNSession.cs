@@ -12,6 +12,7 @@ using eduVPN.ViewModels.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -76,6 +77,25 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         string LogPath { get => WorkingFolder + ConnectionId + ".txt"; }
 
+        /// <summary>
+        /// Client certificate expiration date
+        /// </summary>
+        /// <remarks><c>DateTimeOffset.MaxValue</c> when not expires</remarks>
+        public DateTimeOffset ExpiresAt { get => ConnectingProfile.Server.CertificateExpires; }
+
+        /// <summary>
+        /// Remaining time before client certificate expire; or <see cref="TimeSpan.MaxValue"/> if certificate does not expire
+        /// </summary>
+        public TimeSpan ExpiresTime
+        {
+            get
+            {
+                return ExpiresAt != DateTimeOffset.MaxValue ?
+                    DateTimeOffset.UtcNow - ExpiresAt :
+                    TimeSpan.MaxValue;
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -114,10 +134,24 @@ namespace eduVPN.ViewModels.VPN
                 WorkingFolder = Path.GetTempPath();
             }
 
-            // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
+            ConnectingProfile.Server.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                if (e.PropertyName == nameof(ConnectingProfile.Server.CertificateExpires))
+                {
+                    RaisePropertyChanged(nameof(ExpiresAt));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                }
+            };
+
+            // Create dispatcher timer to refresh ShowLog command "can execute" status every second and session expiration.
             new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal, (object sender, EventArgs e) => ShowLog.RaiseCanExecuteChanged(),
+                DispatcherPriority.Normal,
+                (object sender, EventArgs e) =>
+                {
+                    ShowLog.RaiseCanExecuteChanged();
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                },
                 Wizard.Dispatcher).Start();
 
             PreRun.Add(() =>

@@ -11,7 +11,6 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -181,33 +180,6 @@ namespace eduVPN.ViewModels.VPN
         private ulong? _BytesOut;
 
         /// <summary>
-        /// Access token and certificate expiration date
-        /// </summary>
-        /// <remarks><c>null</c> when not expires</remarks>
-        public DateTimeOffset ExpiresAt
-        {
-            get
-            {
-                DateTimeOffset
-                    a = AuthenticatingServer != null ? AuthenticatingServer.AccessTokenExpires : DateTimeOffset.MaxValue,
-                    b = ConnectingProfile?.Server != null ? ConnectingProfile.Server.CertificateExpires : DateTimeOffset.MaxValue;
-                return a.CompareTo(b) <= 0 ? a : b;
-            }
-        }
-
-        /// <summary>
-        /// Remaining time before access token and/or certificate expire; or <see cref="TimeSpan.MaxValue"/> if token does not expire
-        /// </summary>
-        public TimeSpan ExpiresTime
-        {
-            get
-            {
-                var exp = ExpiresAt;
-                return exp != DateTimeOffset.MaxValue ? DateTimeOffset.UtcNow - exp : TimeSpan.MaxValue;
-            }
-        }
-
-        /// <summary>
         /// Disconnect command
         /// </summary>
         public DelegateCommand Disconnect { get; }
@@ -267,31 +239,11 @@ namespace eduVPN.ViewModels.VPN
             AuthenticatingServer = authenticatingServer;
             ConnectingProfile = connectingProfile;
 
-            AuthenticatingServer.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-            {
-                if (e.PropertyName == nameof(AuthenticatingServer.AccessTokenExpires))
-                {
-                    RaisePropertyChanged(nameof(ExpiresAt));
-                    RaisePropertyChanged(nameof(ExpiresTime));
-                }
-            };
-            ConnectingProfile.Server.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-            {
-                if (e.PropertyName == nameof(ConnectingProfile.Server.CertificateExpires))
-                {
-                    RaisePropertyChanged(nameof(ExpiresAt));
-                    RaisePropertyChanged(nameof(ExpiresTime));
-                }
-            };
-
             // Create dispatcher timer.
             ConnectedTimeUpdater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal, (object sender, EventArgs e) =>
-                {
-                    RaisePropertyChanged(nameof(ConnectedTime));
-                    RaisePropertyChanged(nameof(ExpiresTime));
-                },
+                DispatcherPriority.Normal,
+                (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
                 Wizard.Dispatcher);
             ConnectedTimeUpdater.Start();
         }
