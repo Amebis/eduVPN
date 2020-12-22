@@ -319,5 +319,24 @@ namespace eduVPN.ViewModels.Pages
         }
 
         #endregion
+
+        #region Methods
+
+        /// <inheritdoc/>
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
+            // When there are profiles available from before (connecting to the same server again),
+            // and there is exactly one profile available, auto-connect.
+            if (Profiles != null && Profiles.Count == 1)
+            {
+                SelectedProfile = Profiles[0];
+                if (StartSession.CanExecute(Profiles[0]))
+                    StartSession.Execute(Profiles[0]);
+            }
+        }
+
+        #endregion
     }
 }
