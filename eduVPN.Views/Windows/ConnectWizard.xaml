@@ -210,7 +210,7 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="StatusBar"
                                             Storyboard.TargetProperty="MaxHeight"
-                                            From="200" To="0"
+                                            From="300" To="0"
                                             Duration="0:0:1"/>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -221,7 +221,7 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="StatusBar"
                                             Storyboard.TargetProperty="MaxHeight"
-                                            From="0" To="200"
+                                            From="0" To="300"
                                             Duration="0:0:1"/>
                                     </Storyboard>
                                 </BeginStoryboard>
