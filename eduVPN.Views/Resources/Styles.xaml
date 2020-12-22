@@ -828,6 +828,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="3"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Width="15" Height="15">
                             <Canvas
                                 x:Name="Checkmark"

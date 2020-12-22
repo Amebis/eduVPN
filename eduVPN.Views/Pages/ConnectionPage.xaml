@@ -110,6 +110,16 @@
             </Setter>
         </Style>
 
+        <Style x:Key="ConnectionInfoHeadingStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MicroHeadingStyle}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="ConnectionInfoValueStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FineprintNoteStyle}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
         <!-- eduVPN collection view sources -->
         <CollectionViewSource x:Key="MessageListView" Source="{Binding ActiveSession.MessageList}">
             <CollectionViewSource.SortDescriptions>
@@ -294,7 +304,7 @@
                     Grid.Column="0"
                     Grid.Row="0"
                     Margin="1,0"
-                    Style="{StaticResource MicroHeadingStyle}"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
                     Text="{x:Static res:Strings.ConnectionPageConnectionInfoDuration}"/>
 
                 <TextBlock
@@ -302,35 +312,35 @@
                     Grid.ColumnSpan="3"
                     Grid.Row="0"
                     Margin="1,0"
-                    Style="{StaticResource FineprintNoteStyle}"
+                    Style="{StaticResource ConnectionInfoValueStyle}"
                     Text="{Binding ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
                 <TextBlock
                     Grid.Column="0"
                     Grid.Row="1"
                     Margin="1,0"
-                    Style="{StaticResource MicroHeadingStyle}"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
                     Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesIn}"/>
 
                 <TextBlock
                     Grid.Column="1"
                     Grid.Row="1"
                     Margin="1,0"
-                    Style="{StaticResource FineprintNoteStyle}"
+                    Style="{StaticResource ConnectionInfoValueStyle}"
                     Text="{Binding ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
                 <TextBlock
                     Grid.Column="2"
                     Grid.Row="1"
                     Margin="1,0"
-                    Style="{StaticResource MicroHeadingStyle}"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
                     Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesOut}"/>
 
                 <TextBlock
                     Grid.Column="3"
                     Grid.Row="1"
                     Margin="1,0"
-                    Style="{StaticResource FineprintNoteStyle}"
+                    Style="{StaticResource ConnectionInfoValueStyle}"
                     Text="{Binding ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
                 <TextBlock
@@ -338,7 +348,7 @@
                     Grid.ColumnSpan="2"
                     Grid.Row="2"
                     Margin="1,5,1,0"
-                    Style="{StaticResource MicroHeadingStyle}"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
                     Text="{x:Static res:Strings.ConnectionPageConnectionInfoIPv4}"/>
 
                 <TextBlock
@@ -346,7 +356,7 @@
                     Grid.ColumnSpan="2"
                     Grid.Row="3"
                     Margin="1,0,1,4"
-                    Style="{StaticResource FineprintNoteStyle}"
+                    Style="{StaticResource ConnectionInfoValueStyle}"
                     Text="{Binding ActiveSession.TunnelAddress}"/>
 
                 <TextBlock
@@ -354,7 +364,7 @@
                     Grid.ColumnSpan="2"
                     Grid.Row="2"
                     Margin="1,5,1,0"
-                    Style="{StaticResource MicroHeadingStyle}"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
                     Text="{x:Static res:Strings.ConnectionPageConnectionInfoIPv6}"/>
 
                 <TextBlock
@@ -362,7 +372,7 @@
                     Grid.ColumnSpan="2"
                     Grid.Row="3"
                     Margin="1,0,1,4"
-                    Style="{StaticResource FineprintNoteStyle}"
+                    Style="{StaticResource ConnectionInfoValueStyle}"
                     Text="{Binding ActiveSession.IPv6TunnelAddress}"/>
             </Grid>
         </Grid>

@@ -46,6 +46,7 @@
             Style="{StaticResource SeparatorStyle}">
             <CheckBox
                 Margin="0,7"
+                VerticalContentAlignment="Center"
                 IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNForceTCP}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.SettingsPageForceTCPLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
                 <AccessText Text="{x:Static res:Strings.SettingsPageForceTCPLabel}"/>
