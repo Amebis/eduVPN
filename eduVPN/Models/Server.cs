@@ -85,7 +85,19 @@ namespace eduVPN.Models
         private DateTimeOffset _AccessTokenExpires = DateTimeOffset.MaxValue;
 
         /// <summary>
-        /// Client certificate expiration date; or <see cref="DateTimeOffset.MaxValue"/> if token does not expire
+        /// Client certificate issue date; or <see cref="DateTimeOffset.MinValue"/> if unknown or not available.
+        /// </summary>
+        public DateTimeOffset CertificateIssued
+        {
+            get { return _CertificateIssued; }
+            private set { SetProperty(ref _CertificateIssued, value); }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DateTimeOffset _CertificateIssued = DateTimeOffset.MinValue;
+
+        /// <summary>
+        /// Client certificate expiration date; or <see cref="DateTimeOffset.MaxValue"/> if certificate does not expire
         /// </summary>
         public DateTimeOffset CertificateExpires
         {
@@ -334,6 +346,7 @@ namespace eduVPN.Models
                         {
                             case CertificateCheck.ReasonType.Valid:
                                 // Certificate is valid.
+                                CertificateIssued = cert.NotBefore;
                                 CertificateExpires = cert.NotAfter;
                                 return cert;
 
@@ -401,6 +414,7 @@ namespace eduVPN.Models
                             "CERTIFICATE"),
                         (string)null,
                         X509KeyStorageFlags.PersistKeySet);
+                    CertificateIssued = certX509.NotBefore;
                     CertificateExpires = certX509.NotAfter;
                     return certX509;
                 }
