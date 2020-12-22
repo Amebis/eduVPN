@@ -54,7 +54,8 @@ namespace eduVPN.Converters
             return
                 values[0] is string query && !string.IsNullOrWhiteSpace(query) &&
                 values[1] is int hits1 && hits1 == 0 &&
-                values[2] is int hits2 && hits2 == 0 ? OneStarGridLength : ZeroGridLength;
+                values[2] is int hits2 && hits2 == 0 &&
+                values[3] is int hits3 && hits3 == 0 ? OneStarGridLength : ZeroGridLength;
         }
 
         /// <summary>

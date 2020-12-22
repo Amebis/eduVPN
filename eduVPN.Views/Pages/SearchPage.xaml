@@ -110,6 +110,7 @@
                         <Binding Path="Query"/>
                         <Binding Path="InstituteAccessServers.Count"/>
                         <Binding Path="Organizations.Count"/>
+                        <Binding Path="OwnServers.Count"/>
                     </MultiBinding>
                 </RowDefinition.Height>
             </RowDefinition>
