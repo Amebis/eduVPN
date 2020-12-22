@@ -17,6 +17,7 @@
     <Page.Resources>
         <Style x:Key="StateTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TitleStyle}">
             <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
 
         <Style x:Key="ProfilesStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
@@ -141,7 +142,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock
-                Margin="7,22,7,0"
+                Margin="7,30,7,-2"
                 HorizontalAlignment="Center"
                 Text="{Binding ConnectingServer}"
                 Style="{StaticResource MainHeadingStyle}"/>
@@ -180,7 +181,7 @@
 
             <ContentControl
                 Grid.Row="2"
-                Margin="7,5"
+                Margin="7"
                 HorizontalAlignment="Center"
                 ContentTemplate="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeInitializingIcon}}"
                 ToolTip="{Binding ActiveSession.StateDescription}"
@@ -189,7 +190,8 @@
 
             <Grid
                 Grid.Row="3"
-                Margin="7,5"
+                Margin="7"
+                MinHeight="35"
                 Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -198,6 +200,7 @@
 
                 <TextBlock
                     HorizontalAlignment="Center"
+                    Margin="0,0,0,-2"
                     Text="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeDescriptionConverter}}"
                     Style="{StaticResource StateTitleStyle}"/>
 
@@ -211,7 +214,8 @@
 
             <TextBlock
                 Grid.Row="3"
-                Margin="7,5"
+                Margin="7"
+                MinHeight="35"
                 HorizontalAlignment="Center"
                 Text="{x:Static res:Strings.ConnectionPageSelectProfile}"
                 Style="{StaticResource StateTitleStyle}"
@@ -219,7 +223,7 @@
 
             <TextBlock
                 Grid.Row="4"
-                Margin="22,5"
+                Margin="22,7"
                 HorizontalAlignment="Stretch"
                 TextAlignment="Center"
                 VerticalAlignment="Top"
@@ -229,7 +233,7 @@
 
             <ToggleButton
                 Grid.Row="4"
-                Margin="7,5"
+                Margin="7,7"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Style="{StaticResource ToggleButtonStyle}"
@@ -254,7 +258,7 @@
                 </Grid.RowDefinitions>
 
                 <Label
-                    Margin="7,5,7,0"
+                    Margin="7,7,7,0"
                     Target="{Binding ElementName=Profiles}"
                     Content="{x:Static res:Strings.ConnectionPageProfilesLabel}"
                     Style="{StaticResource HeadingLabelStyle}"/>
@@ -262,7 +266,7 @@
                 <ListBox
                     Grid.Row="1"
                     x:Name="Profiles"
-                    Margin="7,0,7,0"
+                    Margin="7,0,7,7"
                     ItemContainerStyle="{StaticResource ProfilesStyle}"
                     Style="{StaticResource ListBoxStyle}"
                     ItemsSource="{Binding Profiles}"
@@ -273,7 +277,7 @@
             <ToggleButton
                 x:Name="ConnectionInfo"
                 Grid.Row="5"
-                Margin="7,0,7,7"
+                Margin="7"
                 Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 Style="{StaticResource ConnectionInfoButtonStyle}">
                 <AccessText Text="{x:Static res:Strings.ConnectionPageConnectionInfoLabel}"/>
