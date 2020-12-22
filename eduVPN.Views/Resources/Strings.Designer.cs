@@ -687,6 +687,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (Not Available).
+        /// </summary>
+        public static string TimeSpanNotAvailable {
+            get {
+                return ResourceManager.GetString("TimeSpanNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected.
         /// </summary>
         public static string VPNSessionStatusTypeConnected {

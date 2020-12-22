@@ -36,13 +36,15 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is TimeSpan timespan ?
-                timespan.ToString(
+            if (!(value is TimeSpan timespan))
+                return null;
+            if (timespan == TimeSpan.MaxValue)
+                return Views.Resources.Strings.TimeSpanNotAvailable;
+            return timespan.ToString(
                     timespan < OneDay ?
                         Views.Resources.Strings.TimeSpanInSeconds :
                         Views.Resources.Strings.TimeSpanInSecondsWithDays,
-                    culture) :
-                null;
+                    culture);
         }
 
         /// <summary>
