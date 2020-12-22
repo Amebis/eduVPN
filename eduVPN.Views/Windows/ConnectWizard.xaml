@@ -17,8 +17,11 @@
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     mc:Ignorable="d"
     Title="{Binding ClientTitle, Source={x:Static prop:Settings.Default}}"
-    Height="454"
-    Width="332"
+    Left="{Binding WindowLeft, Source={x:Static prop:Settings.Default}}"
+    Top="{Binding WindowTop, Source={x:Static prop:Settings.Default}}"
+    d:DesignHeight="454"
+    d:DesignWidth="332"
+    SizeToContent="WidthAndHeight"
     ResizeMode="NoResize"
     Icon="{Binding ConnectionPage.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIconInitializingImage}}"
     Style="{StaticResource ConnectWizardWindowStyle}">
@@ -111,6 +114,7 @@
         <Control
             Grid.Row="1"
             IsTabStop="False"
+            MaxWidth="319"
             Visibility="{Binding Error, Converter={StaticResource ExceptionMessageVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <Control.Template>
                 <ControlTemplate>

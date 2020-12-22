@@ -135,19 +135,6 @@ namespace eduVPN.Views.Windows
         {
             base.OnInitialized(e);
 
-            // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
-            if (!double.IsNaN(Properties.Settings.Default.WindowLeft))
-                Left = Math.Min(Math.Max(Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
-            if (!double.IsNaN(Properties.Settings.Default.WindowTop))
-                Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
-
-            Application.Current.SessionEnding += (object sender, SessionEndingCancelEventArgs e2) =>
-            {
-                // Save window position on logout.
-                Properties.Settings.Default.WindowTop = Top;
-                Properties.Settings.Default.WindowLeft = Left;
-            };
-
             // Preload icons to be used on system tray.
             var iconSize = System.Windows.Forms.SystemInformation.SmallIconSize;
             Icons = new Dictionary<VPNSessionStatusType, Icon>();
@@ -278,6 +265,12 @@ namespace eduVPN.Views.Windows
         {
             // Show tray icon when Connect Wizard is loaded.
             NotifyIcon.Visible = true;
+
+            // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
+            if (!double.IsNaN(Properties.Settings.Default.WindowLeft))
+                Left = Math.Min(Math.Max(Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
+            if (!double.IsNaN(Properties.Settings.Default.WindowTop))
+                Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
         }
 
         /// <summary>
