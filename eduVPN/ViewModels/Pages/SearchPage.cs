@@ -174,6 +174,7 @@ namespace eduVPN.ViewModels.Pages
                         await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
                         Wizard.HomePage.AddInstituteAccessServer(SelectedInstituteAccessServer);
                         Wizard.CurrentPage = Wizard.HomePage;
+                        Query = "";
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.Error = ex; }
@@ -190,6 +191,7 @@ namespace eduVPN.ViewModels.Pages
                         await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
                         Wizard.HomePage.SetSecureInternetOrganization(SelectedOrganization);
                         Wizard.CurrentPage = Wizard.HomePage;
+                        Query = "";
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.Error = ex; }
@@ -206,6 +208,7 @@ namespace eduVPN.ViewModels.Pages
                         await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
                         Wizard.HomePage.AddOwnServer(SelectedOwnServer);
                         Wizard.CurrentPage = Wizard.HomePage;
+                        Query = "";
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.Error = ex; }
