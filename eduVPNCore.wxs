@@ -9,7 +9,7 @@
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
-        Id="$(var.Core.ProductGUID)"
+        Id="*"
         UpgradeCode="$(var.Core.UpgradeGUID)"
         Version="$(var.Core.Version)"
         Language="!(loc.ProductLanguage)"
@@ -41,7 +41,8 @@
         -->
         <MajorUpgrade
             DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
-            Schedule="afterInstallExecute"/>
+            Schedule="afterInstallExecute"
+            AllowSameVersionUpgrades="yes"/>
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
             <UpgradeVersion

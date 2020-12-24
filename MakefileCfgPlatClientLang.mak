@@ -19,13 +19,13 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin.wixobj"
-	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -sice:ICE61 -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
+	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" \
 	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj"
-	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -sice:ICE61 -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
+	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \

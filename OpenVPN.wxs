@@ -53,7 +53,7 @@
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product
-        Id="$(var.OpenVPN.ProductGUID)"
+        Id="*"
         UpgradeCode="$(var.OpenVPN.UpgradeGUID)"
         Version="$(var.OpenVPN.Version)"
         Language="!(loc.ProductLanguage)"

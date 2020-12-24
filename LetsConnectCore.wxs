@@ -9,7 +9,7 @@
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
-        Id="$(var.Core.ProductGUID)"
+        Id="*"
         UpgradeCode="$(var.Core.UpgradeGUID)"
         Version="$(var.Core.Version)"
         Language="!(loc.ProductLanguage)"
@@ -41,7 +41,8 @@
         -->
         <MajorUpgrade
             DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
-            Schedule="afterInstallExecute"/>
+            Schedule="afterInstallExecute"
+            AllowSameVersionUpgrades="yes"/>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="Prism.dll" Guid="{9B4F3694-9A5E-41AF-AA24-E2E5F39A48C6}"/>
             <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}"/>
