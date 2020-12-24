@@ -162,6 +162,20 @@
                     -->
                     <PermissionEx Id="CONFIGDIR" Sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;;0x100003;;;BU)(A;OIIO;FA;;;CO)"/>
                 </CreateFolder>
+                <RemoveFile
+                    Id="CONFIGDIR.conf"
+                    Directory="CONFIGDIR"
+                    Name="*.conf"
+                    On="uninstall"/>
+                <RemoveFile
+                    Id="CONFIGDIR.txt"
+                    Directory="CONFIGDIR"
+                    Name="*.txt"
+                    On="uninstall"/>
+                <RemoveFolder
+                    Id="CONFIGDIR"
+                    Directory="CONFIGDIR"
+                    On="uninstall"/>
                 <?if $(var.ClientTarget) = "eduVPN"?>
                 <!-- Until 1.0-alpha6, Interactive Service was installed as eduVPNServiceInteractive. -->
                 <ServiceControl
