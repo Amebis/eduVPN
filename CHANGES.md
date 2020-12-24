@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.2...HEAD)
+
+
+## [1.255.2](https://github.com/Amebis/eduVPN/compare/1.255.1...1.255.2)
 
 - Switch to pre-release self-update channel
 - Fix incomplete product updates on x86
