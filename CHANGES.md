@@ -5,19 +5,19 @@
 - GUI refinements
 
 
-## [1.255.2](https://github.com/Amebis/eduVPN/compare/1.255.1...1.255.2)
+## [1.255.2](https://github.com/Amebis/eduVPN/compare/1.255.1...1.255.2) (2020-12-24)
 
 - Switch to pre-release self-update channel
 - Fix incomplete product updates on x86
 
 
-## [1.255.1](https://github.com/Amebis/eduVPN/compare/1.255.0...1.255.1)
+## [1.255.1](https://github.com/Amebis/eduVPN/compare/1.255.0...1.255.1) (2020-12-22)
 
 - GUI refinements
 - Fixes
 
 
-## [1.255.0](https://github.com/Amebis/eduVPN/compare/1.0.36...1.255.0)
+## [1.255.0](https://github.com/Amebis/eduVPN/compare/1.0.36...1.255.0) (2020-12-19)
 
 - New workflow
 - New styling
