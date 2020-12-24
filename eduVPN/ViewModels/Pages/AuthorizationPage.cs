@@ -23,14 +23,14 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Authorization wizard page
     /// </summary>
-    public class AuthorizationPage : ConnectWizardPage
+    public class AuthorizationPage : ConnectWizardStandardPage
     {
         #region Fields
 
         /// <summary>
         /// Page to return to after authorization is complete (or cancelled)
         /// </summary>
-        private ConnectWizardPage ReturnPage;
+        private ConnectWizardStandardPage ReturnPage;
 
         /// <summary>
         /// Authorization cancellation token

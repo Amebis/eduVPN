@@ -17,7 +17,7 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Home wizard page
     /// </summary>
-    public class HomePage : ConnectWizardPage
+    public class HomePage : ConnectWizardStandardPage
     {
         #region Properties
 

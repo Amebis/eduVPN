@@ -21,7 +21,7 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Server/organization selection wizard page
     /// </summary>
-    public class SearchPage : ConnectWizardPage
+    public class SearchPage : ConnectWizardStandardPage
     {
         #region Fields
 

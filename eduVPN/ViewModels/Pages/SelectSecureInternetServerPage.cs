@@ -17,7 +17,7 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Secure internet connecting server selection wizard page
     /// </summary>
-    public class SelectSecureInternetServerPage : ConnectWizardPage
+    public class SelectSecureInternetServerPage : ConnectWizardStandardPage
     {
         #region Properties
 

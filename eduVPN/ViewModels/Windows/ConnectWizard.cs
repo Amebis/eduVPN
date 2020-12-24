@@ -80,25 +80,29 @@ namespace eduVPN.ViewModels.Windows
         #region Pages
 
         /// <summary>
-        /// The page the wizard is currently displaying (if no pop-up page)
+        /// The page the wizard is currently displaying
         /// </summary>
-        public ConnectWizardPage CurrentPage
+        public ConnectWizardPage DisplayPage { get => (ConnectWizardPage)_CurrentPopupPage ?? _CurrentPage; }
+
+        /// <summary>
+        /// The page the wizard should be displaying (if no pop-up page)
+        /// </summary>
+        public ConnectWizardStandardPage CurrentPage
         {
-            get { return _CurrentPopupPage ?? _CurrentPage; }
+            get { return _CurrentPage; }
             set
             {
-                if (value != _CurrentPage)
+                if (SetProperty(ref _CurrentPage, value))
                 {
-                    _CurrentPage = value;
                     _CurrentPage?.OnActivate();
                     if (_CurrentPopupPage == null)
-                        RaisePropertyChanged();
+                        RaisePropertyChanged(nameof(DisplayPage));
                 }
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ConnectWizardPage _CurrentPage;
+        private ConnectWizardStandardPage _CurrentPage;
 
         /// <summary>
         /// The pop-up page the wizard is currently displaying
@@ -111,7 +115,7 @@ namespace eduVPN.ViewModels.Windows
                 if (SetProperty(ref _CurrentPopupPage, value))
                 {
                     _CurrentPopupPage?.OnActivate();
-                    RaisePropertyChanged(nameof(CurrentPage));
+                    RaisePropertyChanged(nameof(DisplayPage));
                 }
             }
         }
@@ -122,12 +126,12 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Page to add another server
         /// </summary>
-        public ConnectWizardPage AddAnotherPage { get => Properties.Settings.Default.ServersDiscovery?.Uri != null ? (ConnectWizardPage)SearchPage : SelectOwnServerPage; }
+        public ConnectWizardStandardPage AddAnotherPage { get => Properties.Settings.Default.ServersDiscovery?.Uri != null ? (ConnectWizardStandardPage)SearchPage : SelectOwnServerPage; }
 
         /// <summary>
         /// The first page of the wizard
         /// </summary>
-        public ConnectWizardPage StartingPage
+        public ConnectWizardStandardPage StartingPage
         {
             get
             {

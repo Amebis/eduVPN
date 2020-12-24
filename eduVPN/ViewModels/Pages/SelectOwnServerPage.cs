@@ -18,7 +18,7 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Own server selection wizard page
     /// </summary>
-    public class SelectOwnServerPage : ConnectWizardPage
+    public class SelectOwnServerPage : ConnectWizardStandardPage
     {
         #region Properties
 

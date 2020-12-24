@@ -20,7 +20,7 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Connection status wizard page
     /// </summary>
-    public class ConnectionPage : ConnectWizardPage
+    public class ConnectionPage : ConnectWizardStandardPage
     {
         #region Fields
 

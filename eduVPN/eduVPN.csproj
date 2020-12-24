@@ -58,6 +58,7 @@
     <Compile Include="Models\OrganizationDictionary.cs" />
     <Compile Include="Models\ServerDictionary.cs" />
     <Compile Include="ViewModels\Pages\AuthorizationPage.cs" />
+    <Compile Include="ViewModels\Pages\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\Pages\HomePage.cs" />
     <Compile Include="ViewModels\Pages\SearchPage.cs" />
     <Compile Include="ViewModels\Pages\SelectOwnServerPage.cs" />
@@ -89,7 +90,7 @@
     <Compile Include="ViewModels\VPN\VPNSession.cs" />
     <Compile Include="ViewModels\VPN\VPNSessionStatusType.cs" />
     <Compile Include="Models\ServerEndpoints.cs" />
-    <Compile Include="ViewModels\Pages\ConnectWizardPage.cs" />
+    <Compile Include="ViewModels\Pages\ConnectWizardStandardPage.cs" />
     <Compile Include="ViewModels\Windows\ConnectWizard.cs" />
     <Compile Include="Models\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -107,7 +107,7 @@
                 NavigationUIVisibility="Hidden"
                 IsTabStop="False"
                 Focusable="False"
-                Content="{Binding CurrentPage}">
+                Content="{Binding DisplayPage}">
             </Frame>
         </DockPanel>
 
