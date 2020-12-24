@@ -29,7 +29,7 @@
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product
-        Id="$(var.TAPWin.ProductGUID)"
+        Id="*"
         UpgradeCode="$(var.TAPWin.UpgradeGUID)"
         Version="$(var.TAPWin.Version)"
         Language="!(loc.ProductLanguage)"

@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.1...HEAD)
 
+- Fix incomplete product updates on x86
+
 
 ## [1.255.1](https://github.com/Amebis/eduVPN/compare/1.255.0...1.255.1)
 
