@@ -99,7 +99,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Chevron" Property="ContentTemplate" Value="{StaticResource ChevronUpIcon}"/>
+                                <Setter TargetName="Chevron" Property="ContentTemplate" Value="{StaticResource CloseIcon}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -110,11 +110,13 @@
         <Style x:Key="ConnectionInfoHeadingStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MicroHeadingStyle}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="3,2,1,2"/>
         </Style>
 
         <Style x:Key="ConnectionInfoValueStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FineprintNoteStyle}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="1,2,3,2"/>
         </Style>
     </Page.Resources>
 
@@ -135,14 +137,14 @@
             </Grid.RowDefinitions>
 
             <TextBlock
-                Margin="7,30,7,-2"
+                Margin="7,30,7,7"
                 HorizontalAlignment="Center"
                 Text="{Binding ConnectingServer}"
                 Style="{StaticResource MainHeadingStyle}"/>
 
             <Grid
                 Grid.Row="1"
-                Margin="7,0,7,7"
+                Margin="7,-9,7,7"
                 HorizontalAlignment="Center"
                 Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Grid.ColumnDefinitions>
@@ -193,12 +195,12 @@
 
                 <TextBlock
                     HorizontalAlignment="Center"
-                    Margin="0,0,0,-2"
                     Text="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeDescriptionConverter}}"
                     Style="{StaticResource StateTitleStyle}"/>
 
                 <TextBlock
                     Grid.Row="1"
+                    Margin="0,-2,0,0"
                     HorizontalAlignment="Center">
                     <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
                     <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanInSecondsConverter}}" Style="{StaticResource ImportantStyle}"/>
@@ -226,7 +228,7 @@
 
             <ToggleButton
                 Grid.Row="4"
-                Margin="7,7"
+                Margin="7"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Style="{StaticResource ToggleButtonStyle}"
@@ -244,6 +246,7 @@
 
             <Grid
                 Grid.Row="4"
+                Margin="7"
                 Visibility="{Binding Profiles.Count, Converter={StaticResource MultipleProfilesVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -251,7 +254,6 @@
                 </Grid.RowDefinitions>
 
                 <Label
-                    Margin="7,7,7,0"
                     Target="{Binding ElementName=Profiles}"
                     Content="{x:Static res:Strings.ConnectionPageProfilesLabel}"
                     Style="{StaticResource HeadingLabelStyle}"/>
@@ -259,7 +261,6 @@
                 <ListBox
                     Grid.Row="1"
                     x:Name="Profiles"
-                    Margin="7,0,7,7"
                     ItemContainerStyle="{StaticResource ProfilesStyle}"
                     Style="{StaticResource ListBoxStyle}"
                     ItemsSource="{Binding Profiles}"
@@ -279,7 +280,7 @@
 
         <Grid
             Grid.Row="1"
-            Margin="2,3"
+            Margin="7,7,7,14"
             Visibility="{Binding IsChecked, ElementName=ConnectionInfo, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -297,7 +298,6 @@
             <TextBlock
                 Grid.Column="0"
                 Grid.Row="0"
-                Margin="1,0"
                 Style="{StaticResource ConnectionInfoHeadingStyle}"
                 Text="{x:Static res:Strings.ConnectionPageConnectionInfoDuration}"/>
 
@@ -305,35 +305,30 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Grid.Row="0"
-                Margin="1,0"
                 Style="{StaticResource ConnectionInfoValueStyle}"
                 Text="{Binding ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
             <TextBlock
                 Grid.Column="0"
                 Grid.Row="1"
-                Margin="1,0"
                 Style="{StaticResource ConnectionInfoHeadingStyle}"
                 Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesIn}"/>
 
             <TextBlock
                 Grid.Column="1"
                 Grid.Row="1"
-                Margin="1,0"
                 Style="{StaticResource ConnectionInfoValueStyle}"
                 Text="{Binding ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
             <TextBlock
                 Grid.Column="2"
                 Grid.Row="1"
-                Margin="1,0"
                 Style="{StaticResource ConnectionInfoHeadingStyle}"
                 Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesOut}"/>
 
             <TextBlock
                 Grid.Column="3"
                 Grid.Row="1"
-                Margin="1,0"
                 Style="{StaticResource ConnectionInfoValueStyle}"
                 Text="{Binding ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
@@ -341,7 +336,7 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Grid.Row="2"
-                Margin="1,5,1,0"
+                Margin="3,5,3,0"
                 Style="{StaticResource ConnectionInfoHeadingStyle}"
                 Text="{x:Static res:Strings.ConnectionPageConnectionInfoIPv4}"/>
 
@@ -349,7 +344,7 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Grid.Row="3"
-                Margin="1,0,1,4"
+                Margin="3,0,3,2"
                 Style="{StaticResource ConnectionInfoValueStyle}"
                 Text="{Binding ActiveSession.TunnelAddress}"/>
 
@@ -357,7 +352,7 @@
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
                 Grid.Row="2"
-                Margin="1,5,1,0"
+                Margin="3,5,3,0"
                 Style="{StaticResource ConnectionInfoHeadingStyle}"
                 Text="{x:Static res:Strings.ConnectionPageConnectionInfoIPv6}"/>
 
@@ -365,7 +360,7 @@
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
                 Grid.Row="3"
-                Margin="1,0,1,4"
+                Margin="3,0,3,2"
                 Style="{StaticResource ConnectionInfoValueStyle}"
                 Text="{Binding ActiveSession.IPv6TunnelAddress}"/>
         </Grid>

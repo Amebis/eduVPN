@@ -8,21 +8,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <DataTemplate x:Key="ChevronLeftIcon">
-        <Canvas Width="9" Height="9">
-            <Canvas.RenderTransform>
-                <TransformGroup>
-                    <!-- Scale 18×18 to 9×9 -->
-                    <RotateTransform Angle="180" CenterX="9" CenterY="9"/>
-                    <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                </TransformGroup>
-            </Canvas.RenderTransform>
-            <Path
-                Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"
-                Data="M4.366.377c.45-.464 1.16-.5 1.65-.107l.118.107 7.5 7.714c.45.463.485 1.193.104 1.697l-.104.121-7.5 7.714c-.488.503-1.28.503-1.768 0-.45-.463-.485-1.192-.104-1.697l.104-.12L10.981 9 4.366 2.195c-.45-.464-.485-1.193-.104-1.697l.104-.121z"/>
-        </Canvas>
-    </DataTemplate>
-
     <DataTemplate x:Key="PlusIcon">
         <Canvas Width="11" Height="11">
             <Canvas.RenderTransform>
@@ -194,6 +179,21 @@
         </Canvas>
     </DataTemplate>
 
+    <DataTemplate x:Key="ChevronLeftIcon">
+        <Canvas Width="9" Height="9">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <!-- Rotate 180° and scale 18×18 to 9×9 -->
+                    <RotateTransform Angle="180" CenterX="9" CenterY="9"/>
+                    <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Path
+                Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"
+                Data="M4.366.377c.45-.464 1.16-.5 1.65-.107l.118.107 7.5 7.714c.45.463.485 1.193.104 1.697l-.104.121-7.5 7.714c-.488.503-1.28.503-1.768 0-.45-.463-.485-1.192-.104-1.697l.104-.12L10.981 9 4.366 2.195c-.45-.464-.485-1.193-.104-1.697l.104-.121z"/>
+        </Canvas>
+    </DataTemplate>
+
     <DataTemplate x:Key="ChevronRightIcon">
         <Canvas Width="9" Height="9">
             <Canvas.RenderTransform>
@@ -234,6 +234,29 @@
             <Path
                 Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"
                 Data="M17.623 4.366c.464.45.5 1.16.107 1.65l-.107.118-7.714 7.5c-.463.45-1.193.485-1.697.104l-.121-.104-7.714-7.5c-.503-.488-.503-1.28 0-1.768.463-.45 1.192-.485 1.697-.104l.12.104L9 10.981l6.805-6.615c.464-.45 1.193-.485 1.697-.104l.121.104z"/>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CloseIcon">
+        <Canvas Width="11" Height="11">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <!-- Scale 15×15 to 11×11 -->
+                    <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Line
+                Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"
+                StrokeThickness="2"
+                StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                StrokeMiterLimit="10"
+                X1="1" Y1="14" X2="14" Y2="1"/>
+            <Line
+                Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"
+                StrokeThickness="2"
+                StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                StrokeMiterLimit="10"
+                X1="14" Y1="14" X2="1" Y2="1"/>
         </Canvas>
     </DataTemplate>
 
