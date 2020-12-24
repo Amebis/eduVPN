@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.1...HEAD)
 
+- Switch to pre-release self-update channel
 - Fix incomplete product updates on x86
 
 
