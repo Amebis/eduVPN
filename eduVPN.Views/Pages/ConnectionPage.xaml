@@ -116,13 +116,6 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
-
-        <!-- eduVPN collection view sources -->
-        <CollectionViewSource x:Key="MessageListView" Source="{Binding ActiveSession.MessageList}">
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Date" Direction="Descending"/>
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
     </Page.Resources>
 
     <Grid>
