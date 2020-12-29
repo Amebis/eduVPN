@@ -202,5 +202,8 @@ LANG=nl
 LANG=sl
 !INCLUDE "MakefileCfgPlatClientLang.mak"
 
+LANG=tr
+!INCLUDE "MakefileCfgPlatClientLang.mak"
+
 LANG=uk
 !INCLUDE "MakefileCfgPlatClientLang.mak"

@@ -351,4 +351,8 @@ Prosimo, počakajte ...</value>
   <data name="SearchPageNoResultsText" xml:space="preserve">
     <value>Ni zadetkov. Preverite iskalni ukaz ali poskusite drugo ustanovo</value>
   </data>
+  <data name="TimeSpanNotAvailable" xml:space="preserve">
+    <value>(Ni na voljo)</value>
+    <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
 </root>

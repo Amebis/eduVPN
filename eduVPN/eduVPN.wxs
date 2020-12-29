@@ -45,6 +45,11 @@
                 <File Id="eduVPN.resources.dll.sl" Source="sl\eduVPN.resources.dll"/>
             </Component>
         </DirectoryRef>
+        <DirectoryRef Id="RESDIRTR">
+            <Component Id="eduVPN.resources.dll.tr" Guid="{992899CA-AED5-47F8-8D7C-F5976C30C7D8}">
+                <File Id="eduVPN.resources.dll.tr" Source="tr\eduVPN.resources.dll"/>
+            </Component>
+        </DirectoryRef>
         <DirectoryRef Id="RESDIRUK">
             <Component Id="eduVPN.resources.dll.uk" Guid="{E53AEB17-768B-4AB5-A37D-E2A918BA9050}">
                 <File Id="eduVPN.resources.dll.uk" Source="uk\eduVPN.resources.dll"/>
@@ -70,6 +75,7 @@
             <ComponentRef Id="eduVPN.resources.dll.nb"/>
             <ComponentRef Id="eduVPN.resources.dll.nl"/>
             <ComponentRef Id="eduVPN.resources.dll.sl"/>
+            <ComponentRef Id="eduVPN.resources.dll.tr"/>
             <ComponentRef Id="eduVPN.resources.dll.uk"/>
         </ComponentGroup>
     </Fragment>

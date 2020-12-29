@@ -65,6 +65,12 @@
                 SourceFile="Install\thm.sl.wxl"/>
 
             <Payload
+                Id="thm-tr"
+                Compressed="yes"
+                Name="1055\thm.wxl"
+                SourceFile="Install\thm.tr.wxl"/>
+
+            <Payload
                 Id="thm-uk"
                 Compressed="yes"
                 Name="1058\thm.wxl"

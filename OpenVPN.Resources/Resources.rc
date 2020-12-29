@@ -204,3 +204,25 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "خدمة OpenVPN التفاعلية (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل Let's Connect!."
 END
+
+/////////////////////////////////////////////////////////////////////////////
+// Turkish (Turkey) resources
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_OPENVPN_TITLE                "eduVPN İstemcisi OpenVPN Bileşenleri"
+	IDS_EDUVPN_OPENVPN_PUBLISHER            "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Etkileşimli Hizmet (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, eduVPN istemcisi çalışmayacaktır."
+
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Haydi Bağlanalım! OpenVPN İstemci Bileşenleri"
+	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Etkileşimli Hizmet (Hadi Bağlanalım!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, Haydi Bağlanalım! çalışmayacak."
+END

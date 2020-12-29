@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - Eğitim ve araştırma için VPN
+    Telif hakkı: 2017-2020 The Commons Conservancy eduVPN Programı
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    Culture="tr"
+    Language="1055"
+    xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="Caption">[WixBundleName] Kurulum</String>
+    <String Id="Title">[WixBundleName]</String>
+    <String Id="InstallHeader">Hoşgeldiniz</String>
+    <String Id="InstallVersion">Sürüm [WixBundleVersion]</String>
+    <String Id="ConfirmCancelMessage">İptal etmek istediğinizden emin misiniz?</String>
+    <String Id="ExecuteUpgradeRelatedBundleMessage">Önceki versiyon</String>
+    <String Id="HelpHeader">Kurulum Yardımı</String>
+    <String Id="HelpText">/install | /repair | /uninstall | /layout [directory] - kurar, onarır, kaldırır veya
+   dizinde paketin tam bir yerel kopyasını oluşturur. Varsayılan kurulumdur.
+
+/passive | /quiet -  hiçbir istem olmadan minimal UI görüntüler veya UI göstermez ve
+   istem yok. Varsayılan olarak kullanıcı arayüzü ve tüm istemler görüntülenir.
+
+/norestart - yeniden başlatma girişimlerini iptal eder. Varsayılan olarak, UI yeniden başlatmadan önce sorar.
+/log log.txt - belirli bir dosyaya günlük oluşturur. Varsayılan olarak %TEMP% içinde bir günlük dosyası oluşturulur.</String>
+    <String Id="HelpCloseButton">&amp;Kapat</String>
+    <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;lisans şartları&lt;/a&gt;.</String>
+    <String Id="InstallAcceptCheckbox">Lisans &amp;şartlarını kabul ediyorum.</String>
+    <String Id="InstallOptionsButton">&amp;Ayarlar</String>
+    <String Id="InstallInstallButton">&amp;Kur</String>
+    <String Id="InstallCloseButton">&amp;Kapat</String>
+    <String Id="OptionsHeader">Kurulum Ayarları</String>
+    <String Id="OptionsLocationLabel">Kurulum Yolu:</String>
+    <String Id="OptionsBrowseButton">&amp;Seç</String>
+    <String Id="OptionsOkButton">&amp;Tamam</String>
+    <String Id="OptionsCancelButton">&amp;İptal</String>
+    <String Id="ProgressHeader">Yükleme ilerlemesi</String>
+    <String Id="ProgressLabel">İşleniyor:</String>
+    <String Id="OverallProgressPackageText">Başlatılıyor...</String>
+    <String Id="ProgressCancelButton">&amp;İptal</String>
+    <String Id="ModifyHeader">Kurulumu Özelleştir</String>
+    <String Id="ModifyRepairButton">&amp;Onarım</String>
+    <String Id="ModifyUninstallButton">&amp;Kaldır</String>
+    <String Id="ModifyCloseButton">&amp;Kapat</String>
+    <String Id="SuccessRepairHeader">Onarım Başarıyla Tamamlandı</String>
+    <String Id="SuccessUninstallHeader">Kaldırma Başarıyla Tamamlandı</String>
+    <String Id="SuccessInstallHeader">Kurulum Başarıyla Tamamlandı</String> 
+    <String Id="SuccessHeader">Kurulum başarılı</String>
+    <String Id="SuccessLaunchButton">&amp;Başlat</String>
+    <String Id="SuccessRestartText">Yazılımı kullanmadan önce bilgisayarınızı yeniden başlatmalısınız.</String>
+    <String Id="SuccessRestartButton">&amp;Yeniden Başlat</String>
+    <String Id="SuccessCloseButton">&amp;Kapat</String>
+    <String Id="FailureHeader">Kurulum Başarısız</String>
+    <String Id="FailureInstallHeader">Kurulum Başarısız</String>
+    <String Id="FailureUninstallHeader">Kaldırma Başarısız Oldu</String>
+    <String Id="FailureRepairHeader">Onarım Başarısız</String>
+    <String Id="FailureHyperlinkLogText">Bir veya daha fazla sorun, kurulumun başarısız olmasına neden oldu. Lütfen sorunları giderin ve ardından kurulumu yeniden deneyin. Daha fazla bilgi için &lt;a href="#"&gt;günlük dosyasına&lt;/a&gt; bakın.</String>
+    <String Id="FailureRestartText">Yazılımın geri alınmasını tamamlamak için bilgisayarınızı yeniden başlatmalısınız.</String>
+    <String Id="FailureRestartButton">&amp;Yeniden Başlat</String>
+    <String Id="FailureCloseButton">&amp;Kapat</String>
+    <String Id="FilesInUseHeader">Kullanımdaki Dosyalar</String>
+    <String Id="FilesInUseLabel">Aşağıdaki uygulamalar güncellenmesi gereken dosyaları kullanıyor:</String>
+    <String Id="FilesInUseCloseRadioButton">&amp;uygulamaları kapatın ve yeniden başlatmayı deneyin.</String>
+    <String Id="FilesInUseDontCloseRadioButton">&amp;Uygulamaları kapatmayın. Yeniden başlatma gerekecek.</String>
+    <String Id="FilesInUseOkButton">&amp;Tamam</String>
+    <String Id="FilesInUseCancelButton">&amp;İptal</String>
+    <String Id="ErrorFailNoActionReboot">Sistemin yeniden başlatılması gerektiğinden herhangi bir işlem yapılmadı.</String>
+</WixLocalization>

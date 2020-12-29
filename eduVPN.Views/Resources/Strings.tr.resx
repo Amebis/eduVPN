@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,99 +118,98 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutPageCopyright2" xml:space="preserve">
-    <value>Copyright © 2017-{0}
-The Commons Conservancy eduVPN Programme</value>
+    <value>Telif hakkı © 2017-{0}
+The Commons Conservancy eduVPN Programı</value>
   </data>
   <data name="AboutPageVersion" xml:space="preserve">
-    <value>Version {0}</value>
+    <value>Sürüm {0}</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">
-    <value>Retour</value>
+    <value>Geri</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value>_Copier le Texte d'Erreur</value>
+    <value>_Hata Metnini Kopyala</value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
-    <value>_Ignorer l'erreur</value>
+    <value>_Hatayı Reddet</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Settings</value>
+    <value>_Ayarlar</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>What's New?</value>
+    <value>Neler Yeni?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>İstemcinin daha yeni ve geliştirilmiş bir sürümü mevcuttur. Güncel kalın!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>Güncelleme mevcut</value>
   </data>
   <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>İndirin ve _güncelleyin
+(İstemci yeniden başlatılacak)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>{0}a détecté que votre fichier de paramètres utilisateur {1}a été corrompu. Cela peut être dû à un crash.
-
-Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'état par défaut.</value>
+    <value>{0}kullanıcı ayarları dosyanızın bozulduğunu algıladı. Bu {1} bir çökmeden kaynaklanıyor olabilir. 
+Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
     <comment>{0}=application name, {1}=filename</comment>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Paramètres Utilisateur Corrompus</value>
+    <value>Bozuk Kullanıcı Ayarları</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect using _TCP only</value>
+    <value>Yalnızca _TCP kullanarak bağlanın</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Use TAP _adapter:</value>
+    <value>TAP _adapter kullanın:</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded</value>
+    <value>İndirildi</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded</value>
+    <value>Yüklendi</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Süre</value>
   </data>
   <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
-    <value>IPv4 Address</value>
+    <value>IPV4 Adres</value>
   </data>
   <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
-    <value>IPv6 Address</value>
+    <value>IPv6 Adres</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
     <comment>{0}=IP address, {1}=IPv6 address</comment>
   </data>
   <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
-    <value>{0}Connecté</value>
+    <value>{0} Bağlandı</value>
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
-    <value>Déconnecté</value>
+    <value>Bağlantı Kesildi</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
-    <value>La fenêtre a été minimisée ici.</value>
+    <value>Burada pencere küçültülmüştür.</value>
   </data>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
-    <value>_À propos...</value>
+    <value>_Hakkında..</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
-    <value>_Quitter</value>
+    <value>Ç_ıkış</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
-    <value>_Ouvert</value>
+    <value>_Aç</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
-    <value>_Réglages... </value>
+    <value>_Ayarlar..</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Info_connexion...</value>
+    <value>Bağlantı _bilgisi..</value>
   </data>
   <data name="TimeSpanInSeconds" xml:space="preserve">
     <value>h\:mm\:ss</value>
@@ -225,134 +224,134 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Enstitü Erişimi</value>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Search for your institute...</value>
+    <value>Enstitünüzü arayın...</value>
   </data>
   <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Güvenli İnternet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_Organization</value>
+    <value>_Organizasyon</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Connect your own server</value>
+    <value>Kendi sunucunuzu bağlayın</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Own Se_rver</value>
+    <value>Kendi Su_nucunuz</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
-    <value>_Server</value>
+    <value>_Sunucu</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Find your institute</value>
+    <value>Enstitünüzü bulun</value>
   </data>
   <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Konum</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+    <value>Bu uygulamanın yetkilendirilmesi gerekiyor ve web tarayıcınızı açtı. Yetkilendirmeyi tamamladığınızda devam edecektir.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Authorization required</value>
+    <value>İzin gerekiyor</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>İptal</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Change Location</value>
+    <value>_Konumu Değiştir</value>
   </data>
   <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Konum</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
-    <value>A_bout</value>
+    <value>H_akkında</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
-    <value>_Add</value>
+    <value>_Ekle</value>
   </data>
   <data name="HomePageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Enstitü Erişimi</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Other Servers</value>
+    <value>Diğer Sunucular</value>
   </data>
   <data name="HomePageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Güvenli İnternet</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Add other server</value>
+    <value>Başka sunucu ekle</value>
   </data>
   <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
-    <value>Select a location</value>
+    <value>Bir konum seçin</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ayarlar</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
-    <value>Support:</value>
+    <value>Destek:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Connection log</value>
+    <value>Bağlantı Kaydı</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>View _log...</value>
+    <value>_kaydı Görüntüle</value>
   </data>
   <data name="VPNSessionStatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Bağlandı</value>
   </data>
   <data name="VPNSessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Bağlanıyor...</value>
   </data>
   <data name="VPNSessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnecting...</value>
+    <value>Bağlantı kesiliyor...</value>
   </data>
   <data name="VPNSessionStatusTypeError" xml:space="preserve">
-    <value>Connection Error</value>
+    <value>Bağlantı Hatası</value>
   </data>
   <data name="VPNSessionStatusTypeInitializing" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Bağlanmadı</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
-    <value>_Profiles</value>
+    <value>_Profiller</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Connection _info</value>
+    <value>Bağlantı _bilgisi</value>
   </data>
   <data name="ConnectionPageSelectProfile" xml:space="preserve">
-    <value>Select a profile</value>
+    <value>Profil Seçin</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Valid for</value>
+    <value>Geçerli</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>Güncelleme indiriliyor...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Forget</value>
+    <value>_Unut</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server address</value>
+    <value>Sunucu adresi</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
-    <value>Servers</value>
+    <value>Sunucular</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_dd server</value>
+    <value>S_unucu Ekle</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Enter server address here</value>
+    <value>Sunucu adresini buraya girin</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>List of available profiles is loading.
-Please wait...</value>
+    <value>Mevcut profillerin listesi yükleniyor.
+Lütfen bekleyin...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>No results, please check your search command or try another institute.</value>
+    <value>Sonuç yok, lütfen arama komutunuzu kontrol edin veya başka bir kurumu deneyin.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(Not Available)</value>
+    <value>(Mevcut değil)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
   </data>
 </root>

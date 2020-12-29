@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.2...HEAD)
 
+- Turkish translation
 - GUI refinements
 
 

@@ -204,3 +204,26 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
 	IDS_LETSCONNECT_CORE_TITLE         "أساس عميل Let's Connect!"
 END
+
+/////////////////////////////////////////////////////////////////////////////
+// Turkish resources
+
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_CLIENT_TITLE            "eduVPN İstemcisi"
+	IDS_EDUVPN_CLIENT_DESCRIPTION      "Eğitim ve araştırma için VPN"
+	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
+	IDS_EDUVPN_CORE_TITLE              "eduVPN İstemci Çekirdeği"
+
+	IDS_LETSCONNECT_CLIENT_TITLE       "Haydi Bağlanalım! İstemci"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Açık kaynak VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
+	IDS_LETSCONNECT_CORE_TITLE         "Haydi Bağlanalım! İstemci Çekirdeği"
+END

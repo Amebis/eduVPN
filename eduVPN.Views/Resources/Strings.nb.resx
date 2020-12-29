@@ -351,4 +351,8 @@ Please wait...</value>
   <data name="SearchPageNoResultsText" xml:space="preserve">
     <value>No results, please check your search command or try another institute.</value>
   </data>
+  <data name="TimeSpanNotAvailable" xml:space="preserve">
+    <value>(Not Available)</value>
+    <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
 </root>

@@ -72,6 +72,11 @@
                 <File Id="$(var.ClientTarget).Client.resources.dll.sl" Source="sl\$(var.ClientTarget).Client.resources.dll"/>
             </Component>
         </DirectoryRef>
+        <DirectoryRef Id="RESDIRTR">
+            <Component Id="$(var.ClientTarget).Client.resources.dll.tr" Guid="{F0C8D52A-AB99-4FBD-8FB9-4C7315B96538}">
+                <File Id="$(var.ClientTarget).Client.resources.dll.tr" Source="tr\$(var.ClientTarget).Client.resources.dll"/>
+            </Component>
+        </DirectoryRef>
         <DirectoryRef Id="RESDIRUK">
             <Component Id="$(var.ClientTarget).Client.resources.dll.uk" Guid="{CBA661F3-791C-4639-A1B3-6BAC50807A6D}">
                 <File Id="$(var.ClientTarget).Client.resources.dll.uk" Source="uk\$(var.ClientTarget).Client.resources.dll"/>
@@ -96,6 +101,7 @@
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.nb"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.nl"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.sl"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.tr"/>
             <ComponentRef Id="$(var.ClientTarget).Client.resources.dll.uk"/>
             <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
         </ComponentGroup>
