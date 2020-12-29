@@ -9,8 +9,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <BitmapImage
-        x:Key="VPNSessionStatusTypeIconInitializingImage"
-        UriSource="pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico"/>
+        x:Key="AppWindowIcon"
+        UriSource="pack://application:,,,/Resources/App.ico"/>
 
     <DataTemplate x:Key="ClientLogoIcon">
         <Canvas Width="95" Height="29">

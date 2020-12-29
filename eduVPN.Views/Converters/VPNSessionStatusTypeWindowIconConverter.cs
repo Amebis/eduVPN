@@ -37,13 +37,13 @@ namespace eduVPN.Converters
                     return new BitmapImage(
                         new Uri(
                             string.Format(
-                                "pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico",
+                                "pack://application:,,,/eduVPN.Views;component/Resources/VPNSessionStatusType{0}Icon.ico",
                                 Enum.GetName(typeof(VPNSessionStatusType), statusType))));
                 }
                 catch { }
             }
 
-            return new BitmapImage(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico"));
+            return new BitmapImage(new Uri("pack://application:,,,/Resources/App.ico"));
         }
 
         /// <summary>

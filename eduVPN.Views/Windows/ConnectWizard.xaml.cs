@@ -140,9 +140,9 @@ namespace eduVPN.Views.Windows
             Icons = new Dictionary<VPNSessionStatusType, Icon>();
             foreach (var statusType in Enum.GetValues(typeof(VPNSessionStatusType)).Cast<VPNSessionStatusType>())
             {
-                var iconUri = new Uri(string.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico", Enum.GetName(typeof(VPNSessionStatusType), statusType)));
+                var iconUri = new Uri(string.Format("pack://application:,,,/eduVPN.Views;component/Resources/VPNSessionStatusType{0}Icon.ico", Enum.GetName(typeof(VPNSessionStatusType), statusType)));
                 try { Icons.Add(statusType, new Icon(Application.GetResourceStream(iconUri).Stream, iconSize)); }
-                catch { Icons.Add(statusType, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico")).Stream, iconSize)); }
+                catch { Icons.Add(statusType, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/App.ico")).Stream, iconSize)); }
             }
 
             // Attach to view model events.

@@ -178,7 +178,7 @@
                 Grid.Row="2"
                 Margin="7"
                 HorizontalAlignment="Center"
-                ContentTemplate="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeInitializingIcon}}"
+                ContentTemplate="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIcon}}"
                 ToolTip="{Binding ActiveSession.StateDescription}"
                 AutomationProperties.Name="{Binding ActiveSession.StateDescription}"
                 IsTabStop="False"/>

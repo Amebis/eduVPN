@@ -300,7 +300,7 @@
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="VPNSessionStatusTypeInitializingIcon">
+    <DataTemplate x:Key="VPNSessionStatusTypeIcon">
         <Canvas Width="100" Height="87">
             <Canvas.RenderTransform>
                 <TransformGroup>

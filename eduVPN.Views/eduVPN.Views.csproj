@@ -145,6 +145,11 @@
     <Resource Include="Resources\Fonts\OpenSans-Regular.ttf" />
     <Resource Include="Resources\Fonts\OpenSans-Semibold.ttf" />
     <Resource Include="Resources\Fonts\OpenSans-SemiboldItalic.ttf" />
+    <Resource Include="Resources\VPNSessionStatusTypeConnectedIcon.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeConnectingIcon.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeDisconnectingIcon.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeErrorIcon.ico" />
+    <Resource Include="Resources\VPNSessionStatusTypeInitializingIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.ar.resx">

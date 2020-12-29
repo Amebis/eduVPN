@@ -23,7 +23,7 @@
     d:DesignWidth="332"
     SizeToContent="WidthAndHeight"
     ResizeMode="NoResize"
-    Icon="{Binding ConnectionPage.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIconInitializingImage}}"
+    Icon="{Binding ConnectionPage.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource AppWindowIcon}}"
     Style="{StaticResource ConnectWizardWindowStyle}">
 
     <Window.DataContext>

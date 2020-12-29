@@ -13,9 +13,14 @@ namespace eduVPN.ViewModels.VPN
     public enum VPNSessionStatusType
     {
         /// <summary>
-        /// Connection is initializing (default).
+        /// Connection state is unknown (default).
         /// </summary>
-        Initializing = 0,
+        Unknown = 0,
+
+        /// <summary>
+        /// Connection is initializing.
+        /// </summary>
+        Initializing,
 
         /// <summary>
         /// Client is connecting.

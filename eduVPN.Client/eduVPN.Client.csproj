@@ -79,11 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\App.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.ar.resx" />

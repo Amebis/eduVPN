@@ -238,6 +238,7 @@ namespace eduVPN.ViewModels.VPN
             Wizard = wizard;
             AuthenticatingServer = authenticatingServer;
             ConnectingProfile = connectingProfile;
+            State = VPNSessionStatusType.Initializing;
 
             // Create dispatcher timer.
             ConnectedTimeUpdater = new DispatcherTimer(
