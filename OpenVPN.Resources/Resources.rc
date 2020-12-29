@@ -4,46 +4,13 @@
 #pragma code_page(65001) // UTF8
 
 #define APSTUDIO_READONLY_SYMBOLS
-/////////////////////////////////////////////////////////////////////////////
-//
-// Generated from the TEXTINCLUDE 2 resource.
-//
 #include <winres.h>
-
-/////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
 // English (United States) resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE 
-BEGIN
-	"resource.h\0"
-	"#pragma code_page(65001) // UTF8\0"
-	"\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-	"#include <winres.h>\r\n"
-	"\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-	"\0"
-END
-
-#endif    // APSTUDIO_INVOKED
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -100,14 +67,10 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
 END
 
-#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
+// French resources
 
-/////////////////////////////////////////////////////////////////////////////
-// French (France) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
-LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+LANGUAGE LANG_FRENCH, SUBLANG_DEFAULT
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -127,14 +90,10 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Permet la gestion de la configuration des connexions réseaux OpenVPN. Si arrêté ou désactivé, le client Let's Connect! ne fonctionnera pas."
 END
 
-#endif    // French (France) resources
 /////////////////////////////////////////////////////////////////////////////
+// Dutch resources
 
-/////////////////////////////////////////////////////////////////////////////
-// Dutch (Netherlands) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLD)
-LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
+LANGUAGE LANG_DUTCH, SUBLANG_DEFAULT
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -154,13 +113,9 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Maakt OpenVPN-verbinding netwerkconfiguratiebeheer mogelijk. Indien gestopt of uitgeschakeld, zal de Let's Connect!-client niet werken."
 END
 
-#endif    // Dutch (Netherlands) resources
 /////////////////////////////////////////////////////////////////////////////
+// Slovenian resources
 
-/////////////////////////////////////////////////////////////////////////////
-// Slovenian (Slovenia) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_SLV)
 LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
 
 /////////////////////////////////////////////////////////////////////////////
@@ -181,13 +136,9 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec Let's Connect! ne bo deloval."
 END
 
-#endif    // Slovenian (Slovenia) resources
 /////////////////////////////////////////////////////////////////////////////
+// Ukrainian resources
 
-/////////////////////////////////////////////////////////////////////////////
-// Ukrainian (Ukraine) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_UKR)
 LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
 
 /////////////////////////////////////////////////////////////////////////////
@@ -208,14 +159,10 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Вмикає керування конфігурацією мережі підключення OpenVPN. Якщо зупинено або відключено, клієнт Let's Connect! не працюватиме."
 END
 
-#endif    // Ukrainian (Ukraine) resources
 /////////////////////////////////////////////////////////////////////////////
+// German resources
 
-/////////////////////////////////////////////////////////////////////////////
-// German (Germany) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
-LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+LANGUAGE LANG_GERMAN, SUBLANG_DEFAULT
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -235,14 +182,10 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Ermöglicht die Verwaltung der Konfiguration von OpenVPN-Verbindungsnetzwerken. Wenn angehalten oder deaktiviert, funktioniert Let's Connect! client nicht."
 END
 
-#endif    // German (Germany) resources
 /////////////////////////////////////////////////////////////////////////////
+// Arabic resources
 
-/////////////////////////////////////////////////////////////////////////////
-// Arabic (Saudi Arabia) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ARA)
-LANGUAGE LANG_ARABIC, SUBLANG_GERMAN
+LANGUAGE LANG_ARABIC, SUBLANG_DEFAULT
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -261,6 +204,3 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "خدمة OpenVPN التفاعلية (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل Let's Connect!."
 END
-
-#endif    // Arabic (Saudi Arabia) resources
-/////////////////////////////////////////////////////////////////////////////
