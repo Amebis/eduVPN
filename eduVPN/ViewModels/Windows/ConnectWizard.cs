@@ -57,7 +57,23 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Navigate to a pop-up page command
         /// </summary>
-        public DelegateCommand<ConnectWizardPopupPage> NavigateTo { get; }
+        public DelegateCommand<ConnectWizardPopupPage> NavigateTo
+        {
+            get
+            {
+                if (_NavigateTo == null)
+                    _NavigateTo = new DelegateCommand<ConnectWizardPopupPage>(
+                        page =>
+                        {
+                            try { CurrentPopupPage = page; }
+                            catch (Exception ex) { Error = ex; }
+                        });
+                return _NavigateTo;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand<ConnectWizardPopupPage> _NavigateTo;
 
         /// <summary>
         /// Occurs when discovered server list is refreshed.
@@ -315,13 +331,6 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public ConnectWizard()
         {
-            NavigateTo = new DelegateCommand<ConnectWizardPopupPage>(
-                page =>
-                {
-                    try { CurrentPopupPage = page; }
-                    catch (Exception ex) { Error = ex; }
-                });
-
             // Show Starting wizard page.
             CurrentPage = StartingPage;
 
@@ -329,92 +338,17 @@ namespace eduVPN.ViewModels.Windows
 
             if (Properties.Settings.Default.ServersDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
-                    () =>
-                    {
-                        // Load and index list of discovered servers.
-                        var dict = new ServerDictionary();
-                        dict.LoadJSON(Xml.Response.Get(
-                            res: Properties.Settings.Default.ServersDiscovery,
-                            ct: Abort.Token).Value,
-                            Abort.Token);
-                        //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-                        //throw new Exception("Server list download failed"); // Mock download failure.
-                        var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
-                        foreach (var el in dict)
-                        {
-                            Abort.Token.ThrowIfCancellationRequested();
-                            el.Value.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
-                            el.Value.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
-                            if (el.Value is InstituteAccessServer srv)
-                                idx.Index(srv);
-                        }
-                        lock (DiscoveredListLock)
-                        {
-                            DiscoveredServers = dict;
-                            DiscoveredInstituteServerIndex = idx;
-                        }
-                        if (Properties.Settings.Default.CleanupInstituteAccessAndOwnServers)
-                        {
-                            // Migrate non-discovered institute access servers to own servers.
-                            // Migrate discovered own servers to institute access servers.
-                            var instituteAccessServers = new Xml.UriList();
-                            var ownServers = new Xml.UriList();
-                            foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
-                                if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
-                                {
-                                    if (!ownServers.Contains(baseUri))
-                                        ownServers.Add(baseUri);
-                                }
-                                else if (!instituteAccessServers.Contains(baseUri))
-                                    instituteAccessServers.Add(baseUri);
-                            foreach (var baseUri in Properties.Settings.Default.OwnServers)
-                                if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
-                                {
-                                    if (!instituteAccessServers.Contains(baseUri))
-                                        instituteAccessServers.Add(baseUri);
-                                }
-                                else if (!ownServers.Contains(baseUri))
-                                    ownServers.Add(baseUri);
-                            Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
-                            Properties.Settings.Default.OwnServers = ownServers;
-                            Properties.Settings.Default.CleanupInstituteAccessAndOwnServers = false;
-                        }
-
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => DiscoveredServersChanged?.Invoke(this, EventArgs.Empty)));
-                        // TODO: Trigger auto-connect.
-                    },
+                    DiscoverServers,
                     6 * 60 * 60 * 1000)); // Repeat every 6 hours
 
             if (Properties.Settings.Default.OrganizationsDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
-                    () =>
-                    {
-                        // Load and index list of discovered organizations.
-                        var dict = new OrganizationDictionary();
-                        dict.LoadJSON(Xml.Response.Get(
-                            res: Properties.Settings.Default.OrganizationsDiscovery,
-                            ct: Abort.Token).Value,
-                            Abort.Token);
-                        //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-                        //throw new Exception("Organization list download failed"); // Mock download failure.
-                        var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
-                        foreach (var el in dict)
-                        {
-                            Abort.Token.ThrowIfCancellationRequested();
-                            idx.Index(el.Value);
-                        }
-                        lock (DiscoveredListLock)
-                        {
-                            DiscoveredOrganizations = dict;
-                            DiscoveredOrganizationIndex = idx;
-                        }
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => DiscoveredOrganizationsChanged?.Invoke(this, EventArgs.Empty)));
-                    },
+                    DiscoverOrganizations,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
             if (Properties.Settings.Default.SelfUpdateDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
-                    () => SelfUpdatePromptPage.CheckForUpdates(),
+                    SelfUpdatePromptPage.CheckForUpdates,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
             foreach (var action in actions)
@@ -445,6 +379,61 @@ namespace eduVPN.ViewModels.Windows
 
         #region Methods
 
+        private void DiscoverServers()
+        {
+            // Load and index list of discovered servers.
+            var dict = new ServerDictionary();
+            dict.LoadJSON(Xml.Response.Get(
+                res: Properties.Settings.Default.ServersDiscovery,
+                ct: Abort.Token).Value,
+                Abort.Token);
+            //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+            //throw new Exception("Server list download failed"); // Mock download failure.
+            var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
+            foreach (var el in dict)
+            {
+                Abort.Token.ThrowIfCancellationRequested();
+                el.Value.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
+                el.Value.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
+                if (el.Value is InstituteAccessServer srv)
+                    idx.Index(srv);
+            }
+            lock (DiscoveredListLock)
+            {
+                DiscoveredServers = dict;
+                DiscoveredInstituteServerIndex = idx;
+            }
+            if (Properties.Settings.Default.CleanupInstituteAccessAndOwnServers)
+            {
+                // Migrate non-discovered institute access servers to own servers.
+                // Migrate discovered own servers to institute access servers.
+                var instituteAccessServers = new Xml.UriList();
+                var ownServers = new Xml.UriList();
+                foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
+                    if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
+                    {
+                        if (!ownServers.Contains(baseUri))
+                            ownServers.Add(baseUri);
+                    }
+                    else if (!instituteAccessServers.Contains(baseUri))
+                        instituteAccessServers.Add(baseUri);
+                foreach (var baseUri in Properties.Settings.Default.OwnServers)
+                    if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
+                    {
+                        if (!instituteAccessServers.Contains(baseUri))
+                            instituteAccessServers.Add(baseUri);
+                    }
+                    else if (!ownServers.Contains(baseUri))
+                        ownServers.Add(baseUri);
+                Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
+                Properties.Settings.Default.OwnServers = ownServers;
+                Properties.Settings.Default.CleanupInstituteAccessAndOwnServers = false;
+            }
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => DiscoveredServersChanged?.Invoke(this, EventArgs.Empty)));
+            // TODO: Trigger auto-connect.
+        }
+
         /// <summary>
         /// Returns available institute access server with given base URI
         /// </summary>
@@ -458,6 +447,30 @@ namespace eduVPN.ViewModels.Windows
                     DiscoveredServers != null &&
                     DiscoveredServers.TryGetValue(baseUri, out var srv) &&
                     srv is T srvT ? srvT : null;
+        }
+
+        private void DiscoverOrganizations()
+        {
+            // Load and index list of discovered organizations.
+            var dict = new OrganizationDictionary();
+            dict.LoadJSON(Xml.Response.Get(
+                res: Properties.Settings.Default.OrganizationsDiscovery,
+                ct: Abort.Token).Value,
+                Abort.Token);
+            //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+            //throw new Exception("Organization list download failed"); // Mock download failure.
+            var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
+            foreach (var el in dict)
+            {
+                Abort.Token.ThrowIfCancellationRequested();
+                idx.Index(el.Value);
+            }
+            lock (DiscoveredListLock)
+            {
+                DiscoveredOrganizations = dict;
+                DiscoveredOrganizationIndex = idx;
+            }
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => DiscoveredOrganizationsChanged?.Invoke(this, EventArgs.Empty)));
         }
 
         /// <summary>

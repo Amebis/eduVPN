@@ -82,12 +82,42 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Clears current error information
         /// </summary>
-        public DelegateCommand DismissError { get; }
+        public DelegateCommand DismissError
+        {
+            get
+            {
+                if (_DismissError == null)
+                    _DismissError = new DelegateCommand(
+                        () => Error = null,
+                        () => Error != null);
+                return _DismissError;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _DismissError;
 
         /// <summary>
         /// Copies current error information to the clipboard
         /// </summary>
-        public DelegateCommand CopyError { get; }
+        public DelegateCommand CopyError
+        {
+            get
+            {
+                if (_CopyError == null)
+                    _CopyError = new DelegateCommand(
+                        () =>
+                        {
+                            try { Clipboard.SetDataObject(Error.ToString()); }
+                            catch (Exception ex) { Error = ex; }
+                        },
+                        () => Error != null);
+                return _CopyError;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _CopyError;
 
         #endregion
 
@@ -98,18 +128,6 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public Window()
         {
-            DismissError = new DelegateCommand(
-                () => Error = null,
-                () => Error != null);
-
-            CopyError = new DelegateCommand(
-                () =>
-                {
-                    try { Clipboard.SetDataObject(Error.ToString()); }
-                    catch (Exception ex) { Error = ex; }
-                },
-                () => Error != null);
-
             // Save UI thread's dispatcher.
             Dispatcher = Dispatcher.CurrentDispatcher;
 

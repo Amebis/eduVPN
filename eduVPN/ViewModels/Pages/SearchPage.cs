@@ -82,7 +82,31 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms institute access server selection
         /// </summary>
-        public DelegateCommand ConfirmInstituteAccessServerSelection { get; }
+        public DelegateCommand ConfirmInstituteAccessServerSelection
+        {
+            get
+            {
+                if (_ConfirmInstituteAccessServerSelection == null)
+                    _ConfirmInstituteAccessServerSelection = new DelegateCommand(
+                        async () =>
+                        {
+                            try
+                            {
+                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
+                                Wizard.HomePage.AddInstituteAccessServer(SelectedInstituteAccessServer);
+                                Wizard.CurrentPage = Wizard.HomePage;
+                                Query = "";
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => SelectedInstituteAccessServer != null);
+                return _ConfirmInstituteAccessServerSelection;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ConfirmInstituteAccessServerSelection;
 
         /// <summary>
         /// Organization search results
@@ -116,7 +140,35 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms organization selection
         /// </summary>
-        public DelegateCommand ConfirmOrganizationSelection { get; }
+        public DelegateCommand ConfirmOrganizationSelection
+        {
+            get
+            {
+                if (_ConfirmOrganizationSelection == null)
+                    _ConfirmOrganizationSelection = new DelegateCommand(
+                        async () =>
+                        {
+                            try
+                            {
+                                var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase);
+                                authenticatingServer.OrganizationId = SelectedOrganization.Id;
+                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
+                                Wizard.HomePage.SetSecureInternetOrganization(SelectedOrganization);
+                                Wizard.CurrentPage = Wizard.HomePage;
+                                Query = "";
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () =>
+                            SelectedOrganization != null &&
+                            Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase) != null);
+                return _ConfirmOrganizationSelection;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ConfirmOrganizationSelection;
 
         /// <summary>
         /// Own server list
@@ -150,10 +202,54 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms own server selection
         /// </summary>
-        public DelegateCommand ConfirmOwnServerSelection { get; }
+        public DelegateCommand ConfirmOwnServerSelection
+        {
+            get
+            {
+                if (_ConfirmOwnServerSelection == null)
+                    _ConfirmOwnServerSelection = new DelegateCommand(
+                        async () =>
+                        {
+                            try
+                            {
+                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
+                                Wizard.HomePage.AddOwnServer(SelectedOwnServer);
+                                Wizard.CurrentPage = Wizard.HomePage;
+                                Query = "";
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => SelectedOwnServer != null);
+                return _ConfirmOwnServerSelection;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ConfirmOwnServerSelection;
 
         /// <inheritdoc/>
-        public override DelegateCommand NavigateBack { get; }
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_NavigateBack == null)
+                    _NavigateBack = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            try { Wizard.CurrentPage = Wizard.HomePage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+
+                        // canExecute
+                        () => Wizard.StartingPage != this);
+                return _NavigateBack;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _NavigateBack;
 
         #endregion
 
@@ -166,66 +262,6 @@ namespace eduVPN.ViewModels.Pages
         public SearchPage(ConnectWizard wizard) :
             base(wizard)
         {
-            ConfirmInstituteAccessServerSelection = new DelegateCommand(
-                async () =>
-                {
-                    try
-                    {
-                        await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
-                        Wizard.HomePage.AddInstituteAccessServer(SelectedInstituteAccessServer);
-                        Wizard.CurrentPage = Wizard.HomePage;
-                        Query = "";
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => SelectedInstituteAccessServer != null);
-
-            ConfirmOrganizationSelection = new DelegateCommand(
-                async () =>
-                {
-                    try
-                    {
-                        var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase);
-                        authenticatingServer.OrganizationId = SelectedOrganization.Id;
-                        await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
-                        Wizard.HomePage.SetSecureInternetOrganization(SelectedOrganization);
-                        Wizard.CurrentPage = Wizard.HomePage;
-                        Query = "";
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () =>
-                    SelectedOrganization != null &&
-                    Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase) != null);
-
-            ConfirmOwnServerSelection = new DelegateCommand(
-                async () =>
-                {
-                    try
-                    {
-                        await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
-                        Wizard.HomePage.AddOwnServer(SelectedOwnServer);
-                        Wizard.CurrentPage = Wizard.HomePage;
-                        Query = "";
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => SelectedOwnServer != null);
-
-            NavigateBack = new DelegateCommand(
-                // execute
-                () =>
-                {
-                    try { Wizard.CurrentPage = Wizard.HomePage; }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-
-                // canExecute
-                () => Wizard.StartingPage != this);
-
             Wizard.DiscoveredServersChanged += (object sender, EventArgs e) =>
             {
                 ConfirmOrganizationSelection.RaiseCanExecuteChanged();

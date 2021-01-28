@@ -8,6 +8,7 @@
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
+using System.Diagnostics;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -19,7 +20,23 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <inheritdoc/>
-        public override DelegateCommand NavigateBack { get; }
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_NavigateBack == null)
+                    _NavigateBack = new DelegateCommand(
+                        () =>
+                        {
+                            try { Wizard.CurrentPopupPage = null; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        });
+                return _NavigateBack;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _NavigateBack;
 
         #endregion
 
@@ -32,12 +49,6 @@ namespace eduVPN.ViewModels.Pages
         public ConnectWizardPopupPage(ConnectWizard wizard) :
             base(wizard)
         {
-            NavigateBack = new DelegateCommand(
-                () =>
-                {
-                    try { Wizard.CurrentPopupPage = null; }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                });
         }
 
         #endregion

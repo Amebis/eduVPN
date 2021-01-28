@@ -53,10 +53,48 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms secure internet server selection
         /// </summary>
-        public DelegateCommand ConfirmSecureInternetServerSelection { get; }
+        public DelegateCommand ConfirmSecureInternetServerSelection
+        {
+            get
+            {
+                if (_ConfirmSecureInternetServerSelection == null)
+                    _ConfirmSecureInternetServerSelection = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                Wizard.HomePage.SetSecureInternetConnectingServer(SelectedSecureInternetServer);
+                                Wizard.CurrentPage = Wizard.HomePage;
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => SelectedSecureInternetServer != null);
+                return _ConfirmSecureInternetServerSelection;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ConfirmSecureInternetServerSelection;
 
         /// <inheritdoc/>
-        public override DelegateCommand NavigateBack { get; }
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_NavigateBack == null)
+                    _NavigateBack = new DelegateCommand(
+                        () =>
+                        {
+                            try { Wizard.CurrentPage = Wizard.HomePage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        });
+                return _NavigateBack;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _NavigateBack;
 
         #endregion
 
@@ -69,26 +107,6 @@ namespace eduVPN.ViewModels.Pages
         public SelectSecureInternetServerPage(ConnectWizard wizard) :
             base(wizard)
         {
-            ConfirmSecureInternetServerSelection = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        Wizard.HomePage.SetSecureInternetConnectingServer(SelectedSecureInternetServer);
-                        Wizard.CurrentPage = Wizard.HomePage;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => SelectedSecureInternetServer != null);
-
-            NavigateBack = new DelegateCommand(
-                () =>
-                {
-                    try { Wizard.CurrentPage = Wizard.HomePage; }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                });
-
             RebuildSecureInternetServers(this, null);
             Wizard.DiscoveredServersChanged += (object sender, EventArgs e) => RebuildSecureInternetServers(sender, e);
         }

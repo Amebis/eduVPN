@@ -42,10 +42,57 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Adds own server
         /// </summary>
-        public DelegateCommand AddServer { get; }
+        public DelegateCommand AddServer
+        {
+            get
+            {
+                if (_AddServer == null)
+                    _AddServer = new DelegateCommand(
+                        async () =>
+                        {
+                            try
+                            {
+                                TryParseUri(Hostname, out var uri);
+                                var srv = new Server(uri);
+                                srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
+                                srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
+                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(srv);
+                                Wizard.HomePage.AddOwnServer(srv);
+                                Wizard.CurrentPage = Wizard.HomePage;
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => !string.IsNullOrEmpty(Hostname) && !HasErrors);
+                return _AddServer;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _AddServer;
 
         /// <inheritdoc/>
-        public override DelegateCommand NavigateBack { get; }
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_NavigateBack == null)
+                    _NavigateBack = new DelegateCommand(
+                        // execute
+                        () =>
+                        {
+                            try { Wizard.CurrentPage = Wizard.HomePage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+
+                        // canExecute
+                        () => Wizard.StartingPage != this);
+                return _NavigateBack;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _NavigateBack;
 
         #endregion
 
@@ -58,40 +105,11 @@ namespace eduVPN.ViewModels.Pages
         public SelectOwnServerPage(ConnectWizard wizard) :
             base(wizard)
         {
-            AddServer = new DelegateCommand(
-                async () =>
-                {
-                    try
-                    {
-                        TryParseUri(Hostname, out var uri);
-                        var srv = new Server(uri);
-                        srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                        srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                        await Wizard.AuthorizationPage.TriggerAuthorizationAsync(srv);
-                        Wizard.HomePage.AddOwnServer(srv);
-                        Wizard.CurrentPage = Wizard.HomePage;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => !string.IsNullOrEmpty(Hostname) && !HasErrors);
-
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
                 if (e.PropertyName == nameof(HasErrors))
                     AddServer.RaiseCanExecuteChanged();
             };
-
-            NavigateBack = new DelegateCommand(
-                // execute
-                () =>
-                {
-                    try { Wizard.CurrentPage = Wizard.HomePage; }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-
-                // canExecute
-                () => Wizard.StartingPage != this);
         }
 
         #endregion

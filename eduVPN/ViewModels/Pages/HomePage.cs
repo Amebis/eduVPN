@@ -49,12 +49,62 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms institute access server selection
         /// </summary>
-        public DelegateCommand ConfirmInstituteAccessServerSelection { get; }
+        public DelegateCommand ConfirmInstituteAccessServerSelection
+        {
+            get
+            {
+                if (_ConfirmInstituteAccessServerSelection == null)
+                    _ConfirmInstituteAccessServerSelection = new DelegateCommand(
+                        async () =>
+                        {
+                            try
+                            {
+                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
+                                Wizard.ConnectionPage.ConnectingServer = Wizard.ConnectionPage.AuthenticatingServer = SelectedInstituteAccessServer;
+                                Wizard.CurrentPage = Wizard.ConnectionPage;
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => SelectedInstituteAccessServer != null);
+                return _ConfirmInstituteAccessServerSelection;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ConfirmInstituteAccessServerSelection;
 
         /// <summary>
         /// Forgets selected institute access server
         /// </summary>
-        public DelegateCommand ForgetInstituteAccessServer { get; }
+        public DelegateCommand ForgetInstituteAccessServer
+        {
+            get
+            {
+                if (_ForgetInstituteAccessServer == null)
+                    _ForgetInstituteAccessServer = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                Properties.Settings.Default.InstituteAccessServers.Remove(SelectedInstituteAccessServer.Base);
+                                SelectedInstituteAccessServer.Forget();
+                                InstituteAccessServers.Remove(SelectedInstituteAccessServer);
+                                SelectedInstituteAccessServer = null;
+
+                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                                if (Wizard.StartingPage != Wizard.CurrentPage)
+                                    Wizard.CurrentPage = Wizard.StartingPage;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => SelectedInstituteAccessServer != null);
+                return _ForgetInstituteAccessServer;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ForgetInstituteAccessServer;
 
         /// <summary>
         /// Secure internet server list
@@ -81,17 +131,95 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms secure internet server selection
         /// </summary>
-        public DelegateCommand ConfirmSecureInternetServerSelection { get; }
+        public DelegateCommand ConfirmSecureInternetServerSelection
+        {
+            get
+            {
+                if (_ConfirmSecureInternetServerSelection == null)
+                    _ConfirmSecureInternetServerSelection = new DelegateCommand(
+                        async () =>
+                        {
+                            try
+                            {
+                                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
+                                var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
+                                authenticatingServer.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
+                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
+                                Wizard.ConnectionPage.AuthenticatingServer = authenticatingServer;
+                                Wizard.ConnectionPage.ConnectingServer = SelectedSecureInternetServer;
+                                Wizard.CurrentPage = Wizard.ConnectionPage;
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) &&
+                            SelectedSecureInternetServer != null);
+                return _ConfirmSecureInternetServerSelection;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ConfirmSecureInternetServerSelection;
 
         /// <summary>
         /// Forgets secure internet
         /// </summary>
-        public DelegateCommand ForgetSecureInternet { get; }
+        public DelegateCommand ForgetSecureInternet
+        {
+            get
+            {
+                if (_ForgetSecureInternet == null)
+                    _ForgetSecureInternet = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
+                                var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
+                                authenticatingServer.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
+                                authenticatingServer.Forget();
+                                Properties.Settings.Default.SecureInternetOrganization = null;
+                                Properties.Settings.Default.SecureInternetConnectingServer = null;
+                                SecureInternetServers.Clear();
+                                SelectedSecureInternetServer = null;
+                                ForgetSecureInternet.RaiseCanExecuteChanged();
+                                ChangeSecureInternetServer.RaiseCanExecuteChanged();
+
+                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                                if (Wizard.StartingPage != Wizard.CurrentPage)
+                                    Wizard.CurrentPage = Wizard.StartingPage;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
+                return _ForgetSecureInternet;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ForgetSecureInternet;
 
         /// <summary>
         /// Changes secure internet server
         /// </summary>
-        public DelegateCommand ChangeSecureInternetServer { get; }
+        public DelegateCommand ChangeSecureInternetServer
+        {
+            get
+            {
+                if (_ChangeSecureInternetServer == null)
+                    _ChangeSecureInternetServer = new DelegateCommand(
+                        () =>
+                        {
+                            try { Wizard.CurrentPage = Wizard.SelectSecureInternetServerPage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
+                return _ChangeSecureInternetServer;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ChangeSecureInternetServer;
 
         /// <summary>
         /// Own server list
@@ -121,17 +249,83 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms own server selection
         /// </summary>
-        public DelegateCommand ConfirmOwnServerSelection { get; }
+        public DelegateCommand ConfirmOwnServerSelection
+        {
+            get
+            {
+                if (_ConfirmOwnServerSelection == null)
+                    _ConfirmOwnServerSelection = new DelegateCommand(
+                        async () =>
+                        {
+                            try
+                            {
+                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
+                                Wizard.ConnectionPage.ConnectingServer = Wizard.ConnectionPage.AuthenticatingServer = SelectedOwnServer;
+                                Wizard.CurrentPage = Wizard.ConnectionPage;
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => SelectedOwnServer != null);
+                return _ConfirmOwnServerSelection;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ConfirmOwnServerSelection;
 
         /// <summary>
         /// Forgets selected own server
         /// </summary>
-        public DelegateCommand ForgetOwnServer { get; }
+        public DelegateCommand ForgetOwnServer
+        {
+            get
+            {
+                if (_ForgetOwnServer == null)
+                    _ForgetOwnServer = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                Properties.Settings.Default.OwnServers.Remove(SelectedOwnServer.Base);
+                                SelectedOwnServer.Forget();
+                                OwnServers.Remove(SelectedOwnServer);
+                                SelectedOwnServer = null;
+
+                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                                if (Wizard.StartingPage != Wizard.CurrentPage)
+                                    Wizard.CurrentPage = Wizard.StartingPage;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => SelectedOwnServer != null);
+                return _ForgetOwnServer;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ForgetOwnServer;
 
         /// <summary>
         /// Adds another server
         /// </summary>
-        public DelegateCommand AddAnother { get; }
+        public DelegateCommand AddAnother
+        {
+            get
+            {
+                if (_AddAnother == null)
+                    _AddAnother = new DelegateCommand(
+                        () =>
+                        {
+                            try { Wizard.CurrentPage = Wizard.AddAnotherPage; }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        });
+                return _AddAnother;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _AddAnother;
 
         #endregion
 
@@ -155,128 +349,6 @@ namespace eduVPN.ViewModels.Pages
                 RebuildOwnServers(sender, e);
             };
             Wizard.DiscoveredOrganizationsChanged += RebuildSecureInternetServers;
-
-            ConfirmInstituteAccessServerSelection = new DelegateCommand(
-                async () =>
-                {
-                    try
-                    {
-                        await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
-                        Wizard.ConnectionPage.ConnectingServer = Wizard.ConnectionPage.AuthenticatingServer = SelectedInstituteAccessServer;
-                        Wizard.CurrentPage = Wizard.ConnectionPage;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => SelectedInstituteAccessServer != null);
-
-            ForgetInstituteAccessServer = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        Properties.Settings.Default.InstituteAccessServers.Remove(SelectedInstituteAccessServer.Base);
-                        SelectedInstituteAccessServer.Forget();
-                        InstituteAccessServers.Remove(SelectedInstituteAccessServer);
-                        SelectedInstituteAccessServer = null;
-
-                        // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                        if (Wizard.StartingPage != Wizard.CurrentPage)
-                            Wizard.CurrentPage = Wizard.StartingPage;
-                    }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => SelectedInstituteAccessServer != null);
-
-            ConfirmSecureInternetServerSelection = new DelegateCommand(
-                async () =>
-                {
-                    try
-                    {
-                        var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                        var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                        authenticatingServer.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
-                        await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
-                        Wizard.ConnectionPage.AuthenticatingServer = authenticatingServer;
-                        Wizard.ConnectionPage.ConnectingServer = SelectedSecureInternetServer;
-                        Wizard.CurrentPage = Wizard.ConnectionPage;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) &&
-                    SelectedSecureInternetServer != null);
-
-            ForgetSecureInternet = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                        var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                        authenticatingServer.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
-                        authenticatingServer.Forget();
-                        Properties.Settings.Default.SecureInternetOrganization = null;
-                        Properties.Settings.Default.SecureInternetConnectingServer = null;
-                        SecureInternetServers.Clear();
-                        SelectedSecureInternetServer = null;
-                        ForgetSecureInternet.RaiseCanExecuteChanged();
-                        ChangeSecureInternetServer.RaiseCanExecuteChanged();
-
-                        // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                        if (Wizard.StartingPage != Wizard.CurrentPage)
-                            Wizard.CurrentPage = Wizard.StartingPage;
-                    }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
-
-            ChangeSecureInternetServer = new DelegateCommand(
-                () =>
-                {
-                    try { Wizard.CurrentPage = Wizard.SelectSecureInternetServerPage; }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
-
-            ConfirmOwnServerSelection = new DelegateCommand(
-                async () =>
-                {
-                    try
-                    {
-                        await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
-                        Wizard.ConnectionPage.ConnectingServer = Wizard.ConnectionPage.AuthenticatingServer = SelectedOwnServer;
-                        Wizard.CurrentPage = Wizard.ConnectionPage;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => SelectedOwnServer != null);
-
-            ForgetOwnServer = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        Properties.Settings.Default.OwnServers.Remove(SelectedOwnServer.Base);
-                        SelectedOwnServer.Forget();
-                        OwnServers.Remove(SelectedOwnServer);
-                        SelectedOwnServer = null;
-
-                        // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                        if (Wizard.StartingPage != Wizard.CurrentPage)
-                            Wizard.CurrentPage = Wizard.StartingPage;
-                    }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => SelectedOwnServer != null);
-
-            AddAnother = new DelegateCommand(
-                () =>
-                {
-                    try { Wizard.CurrentPage = Wizard.AddAnotherPage; }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                });
         }
 
         #endregion

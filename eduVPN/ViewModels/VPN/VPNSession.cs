@@ -182,12 +182,54 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Disconnect command
         /// </summary>
-        public DelegateCommand Disconnect { get; }
+        public DelegateCommand Disconnect
+        {
+            get
+            {
+                if (_Disconnect == null)
+                    _Disconnect = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                // Terminate connection.
+                                SessionInProgress.Cancel();
+                                Disconnect.RaiseCanExecuteChanged();
+
+                                // Clear profile to auto-start on next launch.
+                                Properties.Settings.Default.AutoStartProfile = null;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => !SessionInProgress.IsCancellationRequested);
+                return _Disconnect;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Disconnect;
 
         /// <summary>
         /// Show log command
         /// </summary>
-        public DelegateCommand ShowLog { get; }
+        public DelegateCommand ShowLog
+        {
+            get
+            {
+                if (_ShowLog == null)
+                    _ShowLog = new DelegateCommand(
+                        () =>
+                        {
+                            try { DoShowLog(); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        CanShowLog);
+                return _ShowLog;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ShowLog;
 
         #endregion
 
@@ -198,29 +240,6 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public VPNSession()
         {
-            Disconnect = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        // Terminate connection.
-                        SessionInProgress.Cancel();
-                        Disconnect.RaiseCanExecuteChanged();
-
-                        // Clear profile to auto-start on next launch.
-                        Properties.Settings.Default.AutoStartProfile = null;
-                    }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => !SessionInProgress.IsCancellationRequested);
-
-            ShowLog = new DelegateCommand(
-                () =>
-                {
-                    try { DoShowLog(); }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                CanShowLog);
         }
 
         /// <summary>

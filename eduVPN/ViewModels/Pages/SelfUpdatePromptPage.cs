@@ -75,17 +75,78 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Pass control to the self-update page
         /// </summary>
-        public DelegateCommand StartUpdate { get; }
+        public DelegateCommand StartUpdate
+        {
+            get
+            {
+                if (_StartUpdate == null)
+                    _StartUpdate = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                if (Wizard.NavigateTo.CanExecute(Wizard.SelfUpdateProgressPage))
+                                    Wizard.NavigateTo.Execute(Wizard.SelfUpdateProgressPage);
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => AvailableVersion != null);
+                return _StartUpdate;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _StartUpdate;
 
         /// <summary>
         /// Mark not to re-prompt again
         /// </summary>
-        public DelegateCommand SkipUpdate { get; }
+        public DelegateCommand SkipUpdate
+        {
+            get
+            {
+                if (_SkipUpdate == null)
+                    _SkipUpdate = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                Trace.TraceInformation("User choose to skip this update.");
+                                Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MaxValue;
+                                if (NavigateBack.CanExecute())
+                                    NavigateBack.Execute();
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => AvailableVersion != null);
+                return _SkipUpdate;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _SkipUpdate;
 
         /// <summary>
         /// Show changelog command
         /// </summary>
-        public DelegateCommand ShowChangelog { get; }
+        public DelegateCommand ShowChangelog
+        {
+            get
+            {
+                if (_ShowChangelog == null)
+                    _ShowChangelog = new DelegateCommand(
+                        () =>
+                        {
+                            try { Process.Start(Changelog.ToString()); }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => Changelog != null);
+                return _ShowChangelog;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ShowChangelog;
 
         #endregion
 
@@ -98,39 +159,6 @@ namespace eduVPN.ViewModels.Pages
         public SelfUpdatePromptPage(ConnectWizard wizard) :
             base(wizard)
         {
-            StartUpdate = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        if (Wizard.NavigateTo.CanExecute(Wizard.SelfUpdateProgressPage))
-                            Wizard.NavigateTo.Execute(Wizard.SelfUpdateProgressPage);
-                    }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => AvailableVersion != null);
-
-            SkipUpdate = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        Trace.TraceInformation("User choose to skip this update.");
-                        Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MaxValue;
-                        if (NavigateBack.CanExecute())
-                            NavigateBack.Execute();
-                    }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => AvailableVersion != null);
-
-            ShowChangelog = new DelegateCommand(
-                () =>
-                {
-                    try { Process.Start(Changelog.ToString()); }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => Changelog != null);
         }
 
         #endregion

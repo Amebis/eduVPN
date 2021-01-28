@@ -56,7 +56,28 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Cancel authorization
         /// </summary>
-        public DelegateCommand Cancel { get; }
+        public DelegateCommand Cancel
+        {
+            get
+            {
+                if (_Cancel == null)
+                    _Cancel = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                AuthorizationInProgress?.Cancel();
+                                Wizard.CurrentPage = ReturnPage;
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => ReturnPage != null);
+                return _Cancel;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Cancel;
 
         #endregion
 
@@ -69,17 +90,6 @@ namespace eduVPN.ViewModels.Pages
         public AuthorizationPage(ConnectWizard wizard) :
             base(wizard)
         {
-            Cancel = new DelegateCommand(
-                () =>
-                {
-                    try
-                    {
-                        AuthorizationInProgress?.Cancel();
-                        Wizard.CurrentPage = ReturnPage;
-                    }
-                    catch (Exception ex) { Wizard.Error = ex; }
-                },
-                () => ReturnPage != null);
         }
 
         #endregion
