@@ -4,6 +4,7 @@
 
 - Turkish translation
 - GUI refinements
+- Fixes
 
 
 ## [1.255.2](https://github.com/Amebis/eduVPN/compare/1.255.1...1.255.2) (2020-12-24)

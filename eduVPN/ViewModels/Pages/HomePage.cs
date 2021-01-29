@@ -107,6 +107,27 @@ namespace eduVPN.ViewModels.Pages
         private DelegateCommand _ForgetInstituteAccessServer;
 
         /// <summary>
+        /// Secure internet authenticating server
+        /// </summary>
+        public SecureInternetServer AuthenticatingSecureInternetServer
+        {
+            get
+            {
+                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
+                if (org != null)
+                {
+                    var srv = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
+                    if (srv != null)
+                    {
+                        srv.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
+                        return srv;
+                    }
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Secure internet server list
         /// </summary>
         public ObservableCollectionEx<SecureInternetServer> SecureInternetServers { get; } = new ObservableCollectionEx<SecureInternetServer>();
@@ -141,9 +162,7 @@ namespace eduVPN.ViewModels.Pages
                         {
                             try
                             {
-                                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                                var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                                authenticatingServer.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
+                                var authenticatingServer = AuthenticatingSecureInternetServer;
                                 await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
                                 Wizard.ConnectionPage.AuthenticatingServer = authenticatingServer;
                                 Wizard.ConnectionPage.ConnectingServer = SelectedSecureInternetServer;
@@ -152,8 +171,7 @@ namespace eduVPN.ViewModels.Pages
                             catch (OperationCanceledException) { }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
-                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) &&
-                            SelectedSecureInternetServer != null);
+                        () => AuthenticatingSecureInternetServer != null && SelectedSecureInternetServer != null);
                 return _ConfirmSecureInternetServerSelection;
             }
         }
@@ -174,14 +192,15 @@ namespace eduVPN.ViewModels.Pages
                         {
                             try
                             {
-                                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                                var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                                authenticatingServer.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
-                                authenticatingServer.Forget();
+                                var authenticatingServer = AuthenticatingSecureInternetServer;
+                                if (authenticatingServer != null)
+                                    authenticatingServer.Forget();
                                 Properties.Settings.Default.SecureInternetOrganization = null;
                                 Properties.Settings.Default.SecureInternetConnectingServer = null;
                                 SecureInternetServers.Clear();
                                 SelectedSecureInternetServer = null;
+                                RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
+                                ConfirmSecureInternetServerSelection.RaiseCanExecuteChanged();
                                 ForgetSecureInternet.RaiseCanExecuteChanged();
                                 ChangeSecureInternetServer.RaiseCanExecuteChanged();
 
@@ -406,14 +425,14 @@ namespace eduVPN.ViewModels.Pages
             {
                 list.Clear();
                 SecureInternetServer srv;
-                Organization org;
                 if ((srv = Wizard.GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.SecureInternetConnectingServer)) != null ||
-                    (org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization)) != null &&
-                    (srv = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase)) != null)
+                    (srv = AuthenticatingSecureInternetServer) != null)
                     list.Add(srv);
             }
             finally { SecureInternetServers.EndUpdate(); }
             SelectedSecureInternetServer = Wizard.GetDiscoveredServer<SecureInternetServer>(selected);
+            RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
+            ConfirmSecureInternetServerSelection.RaiseCanExecuteChanged();
         }
 
         /// <summary>
