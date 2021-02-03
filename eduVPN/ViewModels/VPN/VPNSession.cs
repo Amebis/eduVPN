@@ -234,30 +234,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Show log command
         /// </summary>
-        public DelegateCommand ShowLog
-        {
-            get
-            {
-                if (_show_log_command == null)
-                    _show_log_command = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            Wizard.ChangeTaskCount(+1);
-                            try { DoShowLog(); }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                            finally { Wizard.ChangeTaskCount(-1); }
-                        },
-
-                        // canExecute
-                        CanShowLog);
-
-                return _show_log_command;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _show_log_command;
+        public virtual DelegateCommand ShowLog { get; } = new DelegateCommand(() => { }, () => false);
 
         #endregion
 
@@ -409,22 +386,6 @@ namespace eduVPN.ViewModels.VPN
         {
             // Do nothing but wait.
             _quit.Token.WaitHandle.WaitOne();
-        }
-
-        /// <summary>
-        /// Called when ShowLog command is invoked.
-        /// </summary>
-        protected virtual void DoShowLog()
-        {
-        }
-
-        /// <summary>
-        /// Called to test if ShowLog command is enabled.
-        /// </summary>
-        /// <returns><c>true</c> if enabled; <c>false</c> otherwise</returns>
-        protected virtual bool CanShowLog()
-        {
-            return false;
         }
 
         #endregion
