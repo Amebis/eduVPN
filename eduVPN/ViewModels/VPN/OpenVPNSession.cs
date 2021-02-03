@@ -10,6 +10,7 @@ using eduOpenVPN.Management;
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Microsoft.Win32;
+using Prism.Commands;
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -95,6 +96,29 @@ namespace eduVPN.ViewModels.VPN
                     TimeSpan.MaxValue;
             }
         }
+
+        /// <inheritdoc/>
+        override public DelegateCommand ShowLog
+        {
+            get
+            {
+                if (_ShowLog == null)
+                    _ShowLog = new DelegateCommand(
+                        () =>
+                        {
+                            try {
+                                // Open log file in registered application.
+                                Process.Start(LogPath);
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => File.Exists(LogPath));
+                return _ShowLog;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ShowLog;
 
         #endregion
 
@@ -605,19 +629,6 @@ namespace eduVPN.ViewModels.VPN
                         Wizard.TaskCount--;
                     }));
             }
-        }
-
-        /// <inheritdoc/>
-        protected override void DoShowLog()
-        {
-            // Open log file in registered application.
-            Process.Start(LogPath);
-        }
-
-        /// <inheritdoc/>
-        protected override bool CanShowLog()
-        {
-            return File.Exists(LogPath);
         }
 
         #endregion
