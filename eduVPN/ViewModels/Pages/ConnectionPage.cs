@@ -240,6 +240,7 @@ namespace eduVPN.ViewModels.Pages
                                                                 Sessions.Add(session);
                                                                 RaisePropertyChanged(nameof(ActiveSession));
                                                                 SessionInfo.RaiseCanExecuteChanged();
+                                                                NavigateBack.RaiseCanExecuteChanged();
                                                             }));
                                                         try
                                                         {
@@ -271,6 +272,7 @@ namespace eduVPN.ViewModels.Pages
                                                                         Sessions.Remove(session);
                                                                         RaisePropertyChanged(nameof(ActiveSession));
                                                                         SessionInfo.RaiseCanExecuteChanged();
+                                                                        NavigateBack.RaiseCanExecuteChanged();
                                                                         if (Sessions.Count <= 0 && Wizard.CurrentPage == this)
                                                                         {
                                                                         // No more sessions and user is still on the status page. Redirect the wizard back.
@@ -333,7 +335,8 @@ namespace eduVPN.ViewModels.Pages
                                 Wizard.CurrentPage = Wizard.HomePage;
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
-                        });
+                        },
+                        () => Sessions.Count <= 0);
                 return _NavigateBack;
             }
         }
