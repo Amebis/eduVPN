@@ -956,8 +956,6 @@
     -->
 
     <Style x:Key="ConnectWizardPageStyle" TargetType="{x:Type Page}">
-        <Setter Property="Width" Value="319"/>
-        <Setter Property="Height" Value="419"/>
         <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
         <Setter Property="FlowDirection" Value="{Binding Source={x:Static res:Strings.FlowDirection}, Converter={StaticResource FlowDirectionConverter}}"/>
         <Setter Property="FontFamily" Value="{StaticResource OpenSansFont}"/>

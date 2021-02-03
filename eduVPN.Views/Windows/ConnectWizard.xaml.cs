@@ -135,6 +135,23 @@ namespace eduVPN.Views.Windows
         {
             base.OnInitialized(e);
 
+            // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
+            switch (Properties.Settings.Default.WindowState)
+            {
+                case 1: WindowState = WindowState.Minimized; break;
+                case 2: WindowState = WindowState.Maximized; break;
+            }
+            Height = !double.IsNaN(Properties.Settings.Default.WindowHeight) ?
+                Math.Min(Properties.Settings.Default.WindowHeight, SystemParameters.VirtualScreenHeight) :
+                MinHeight;
+            Width = !double.IsNaN(Properties.Settings.Default.WindowWidth) ?
+                Math.Min(Properties.Settings.Default.WindowWidth, SystemParameters.VirtualScreenWidth) :
+                MinWidth;
+            if (!double.IsNaN(Properties.Settings.Default.WindowLeft))
+                Left = Math.Min(Math.Max(Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
+            if (!double.IsNaN(Properties.Settings.Default.WindowTop))
+                Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
+
             // Preload icons to be used on system tray.
             var iconSize = System.Windows.Forms.SystemInformation.SmallIconSize;
             Icons = new Dictionary<VPNSessionStatusType, Icon>();
@@ -265,12 +282,6 @@ namespace eduVPN.Views.Windows
         {
             // Show tray icon when Connect Wizard is loaded.
             NotifyIcon.Visible = true;
-
-            // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
-            if (!double.IsNaN(Properties.Settings.Default.WindowLeft))
-                Left = Math.Min(Math.Max(Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
-            if (!double.IsNaN(Properties.Settings.Default.WindowTop))
-                Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
         }
 
         /// <summary>
@@ -291,8 +302,14 @@ namespace eduVPN.Views.Windows
                     popup.Close();
 
                 // Save window position on closing.
-                Properties.Settings.Default.WindowTop = Top;
-                Properties.Settings.Default.WindowLeft = Left;
+                Properties.Settings.Default.WindowState = (int)WindowState;
+                if (WindowState == WindowState.Normal)
+                {
+                    Properties.Settings.Default.WindowTop = Top;
+                    Properties.Settings.Default.WindowLeft = Left;
+                    Properties.Settings.Default.WindowHeight = Height;
+                    Properties.Settings.Default.WindowWidth = Width;
+                }
             }
             else
             {
