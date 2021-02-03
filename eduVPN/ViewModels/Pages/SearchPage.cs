@@ -235,14 +235,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_NavigateBack == null)
                     _NavigateBack = new DelegateCommand(
-                        // execute
                         () =>
                         {
                             try { Wizard.CurrentPage = Wizard.HomePage; }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
-
-                        // canExecute
                         () => Wizard.StartingPage != this);
                 return _NavigateBack;
             }

@@ -70,8 +70,7 @@ namespace eduVPN.ViewModels.Pages
                                 Wizard.CurrentPage = ReturnPage;
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
-                        },
-                        () => ReturnPage != null);
+                        });
                 return _Cancel;
             }
         }
@@ -192,7 +191,6 @@ namespace eduVPN.ViewModels.Pages
                         Wizard.TaskCount++;
                         AuthenticatingServer = authenticatingServer;
                         ReturnPage = Wizard.CurrentPage;
-                        NavigateBack.RaiseCanExecuteChanged();
                         Wizard.CurrentPage = this;
                         AuthorizationInProgress = new CancellationTokenSource();
                     }));

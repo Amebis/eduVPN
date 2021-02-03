@@ -110,7 +110,7 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (SetProperty(ref _CurrentPage, value))
                 {
-                    _CurrentPage?.OnActivate();
+                    _CurrentPage.OnActivate();
                     if (_CurrentPopupPage == null)
                         RaisePropertyChanged(nameof(DisplayPage));
                 }
