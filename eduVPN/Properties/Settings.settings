@@ -56,5 +56,8 @@
     <Setting Name="AccessTokenCache" Description="Access token cache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
       <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
     </Setting>
+    <Setting Name="LastSelectedProfile" Description="Which profile of the server user selected last" Type="eduVPN.Xml.SerializableStringDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;SerializableStringDictionary/&gt;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

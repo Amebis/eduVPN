@@ -295,5 +295,21 @@ namespace eduVPN.Properties {
                 this["AccessTokenCache"] = value;
             }
         }
+        
+        /// <summary>
+        /// Which profile of the server user selected last
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Which profile of the server user selected last")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
+        public global::eduVPN.Xml.SerializableStringDictionary LastSelectedProfile {
+            get {
+                return ((global::eduVPN.Xml.SerializableStringDictionary)(this["LastSelectedProfile"]));
+            }
+            set {
+                this["LastSelectedProfile"] = value;
+            }
+        }
     }
 }

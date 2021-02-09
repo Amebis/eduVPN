@@ -44,39 +44,6 @@ namespace eduVPN.Views.Pages
                 Process.Start(uri.AbsoluteUri);
         }
 
-        /// <summary>
-        /// Confirms profile selection on the list.
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event arguments</param>
-        protected void Profiles_SelectItem(object sender, InputEventArgs e)
-        {
-            if (DataContext is ViewModels.Pages.ConnectionPage viewModel &&
-                sender is ListBoxItem item &&
-                item.DataContext is Models.Profile profile)
-            {
-                viewModel.SelectedProfile = profile;
-
-                // Toggle selected profile.
-                if (viewModel.ConfirmProfileSelection.CanExecute())
-                    viewModel.ConfirmProfileSelection.Execute();
-
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Confirms profile selection on the list when <see cref="Key.Enter"/> or <see cref="Key.Space"/> is pressed.
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event arguments</param>
-        protected void Profiles_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter ||
-                e.Key == Key.Space)
-                Profiles_SelectItem(sender, e);
-        }
-
         #endregion
     }
 }

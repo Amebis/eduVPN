@@ -31,7 +31,6 @@
         </conv:NumberToHumanReadableConverter.Base>
     </conv:NumberToHumanReadableConverter>
     <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
-    <conv:SingleProfileVisibilityConverter x:Key="SingleProfileVisibilityConverter"/>
     <conv:StringInverseVisibilityConverter x:Key="StringInverseVisibilityConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
     <conv:UriStripProtocolConverter x:Key="UriStripProtocolConverter"/>

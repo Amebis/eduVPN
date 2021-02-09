@@ -55,7 +55,6 @@
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
     <Compile Include="Converters\MultipleProfilesVisibilityConverter.cs" />
     <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
-    <Compile Include="Converters\SingleProfileVisibilityConverter.cs" />
     <Compile Include="Converters\StringInverseVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\UriStripProtocolConverter.cs" />

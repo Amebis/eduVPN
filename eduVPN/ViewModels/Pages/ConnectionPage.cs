@@ -12,6 +12,7 @@ using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -58,9 +59,11 @@ namespace eduVPN.ViewModels.Pages
                 if (SetProperty(ref _ConnectingServer, value))
                 {
                     ProfilesRefreshInProgress?.Cancel();
-                    ProfilesRefreshInProgress = new CancellationTokenSource();
-                    Profiles = null;
                     SelectedProfile = null;
+                    Profiles = null;
+                    if (ConnectingServer == null)
+                        return;
+                    ProfilesRefreshInProgress = new CancellationTokenSource();
                     new Thread(new ParameterizedThreadStart(
                         (object ctObj) =>
                         {
@@ -68,25 +71,26 @@ namespace eduVPN.ViewModels.Pages
                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                             try
                             {
-                                if (ConnectingServer != null)
+                                var list = ConnectingServer.GetProfileList(AuthenticatingServer, ct);
+                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                                 {
-                                    var list = ConnectingServer.GetProfileList(AuthenticatingServer, ct);
-                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                    {
-                                        //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-                                        Profiles = list;
+                                    //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+                                    Profiles = list;
 
-                                        // Auto-connect when there is exactly one profile.
-                                        if (list.Count == 1)
-                                        {
-                                            SelectedProfile = list[0];
-                                            if (StartSession.CanExecute(list[0]))
-                                                StartSession.Execute(list[0]);
-                                        }
-                                    }));
-                                }
-                                else
-                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Profiles = new ObservableCollection<Profile>()));
+                                    Profile profile = null;
+                                    if (Properties.Settings.Default.LastSelectedProfile.TryGetValue(ConnectingServer.Base.AbsoluteUri, out var profileId))
+                                        profile = list.FirstOrDefault(p => p.Id == profileId);
+                                    if (profile == null && list.Count > 0)
+                                        profile = list[0];
+                                    SelectedProfile = profile;
+
+                                    // Auto-connect when there is exactly one profile.
+                                    if (list.Count == 1)
+                                    {
+                                        if (StartSession.CanExecute(list[0]))
+                                            StartSession.Execute(list[0]);
+                                    }
+                                }));
                             }
                             catch (OperationCanceledException) { }
                             catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
@@ -121,7 +125,15 @@ namespace eduVPN.ViewModels.Pages
             set
             {
                 if (SetProperty(ref _SelectedProfile, value))
+                {
+                    if (ConnectingServer != null && SelectedProfile != null)
+                        Properties.Settings.Default.LastSelectedProfile[ConnectingServer.Base.AbsoluteUri] = SelectedProfile.Id;
                     ConfirmProfileSelection.RaiseCanExecuteChanged();
+
+                    if (ActiveSession.ConnectingProfile != null && !ActiveSession.ConnectingProfile.Equals(SelectedProfile) &&
+                        StartSession.CanExecute(SelectedProfile))
+                        StartSession.Execute(SelectedProfile);
+                }
             }
         }
 
@@ -275,8 +287,8 @@ namespace eduVPN.ViewModels.Pages
                                                                         NavigateBack.RaiseCanExecuteChanged();
                                                                         if (Sessions.Count <= 0 && Wizard.CurrentPage == this)
                                                                         {
-                                                                        // No more sessions and user is still on the status page. Redirect the wizard back.
-                                                                        Wizard.CurrentPage = Wizard.HomePage;
+                                                                            // No more sessions and user is still on the status page. Redirect the wizard back.
+                                                                            Wizard.CurrentPage = Wizard.HomePage;
                                                                         }
                                                                     }));
                                                         }

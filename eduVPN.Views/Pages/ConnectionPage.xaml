@@ -23,48 +23,6 @@
             <Setter Property="FontSize" Value="16"/>
         </Style>
 
-        <Style x:Key="ProfilesStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0,1,0,0">
-                            <Grid Margin="{TemplateBinding Padding}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ContentPresenter
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-
-                                <ContentControl
-                                    Grid.Column="1"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    IsTabStop="False">
-                                    <ContentControl.ContentTemplate>
-                                        <MultiBinding
-                                            Converter="{StaticResource ActiveProfileEqualSelectedProfileToggleConverter}"
-                                            Mode="OneWay">
-                                            <Binding
-                                                Path="DataContext.ActiveSession.ConnectingProfile"
-                                                RelativeSource="{RelativeSource AncestorType={x:Type pages:ConnectionPage}}"/>
-                                            <Binding/>
-                                        </MultiBinding>
-                                    </ContentControl.ContentTemplate>
-                                </ContentControl>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="Profiles_SelectItem"/>
-            <EventSetter Event="PreviewKeyDown" Handler="Profiles_PreviewKeyDown"/>
-        </Style>
-
         <Style x:Key="ConnectionInfoButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ActionControlStyle}">
             <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
             <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
@@ -131,6 +89,7 @@
 
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -235,7 +194,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Style="{StaticResource ToggleButtonStyle}"
-                Visibility="{Binding Profiles.Count, Converter={StaticResource SingleProfileVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                Visibility="{Binding Profiles.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 Command="{Binding ConfirmProfileSelection}">
                 <ToggleButton.IsChecked>
                     <MultiBinding
@@ -248,12 +207,12 @@
             </ToggleButton>
 
             <Grid
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="7"
                 Visibility="{Binding Profiles.Count, Converter={StaticResource MultipleProfilesVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Label
@@ -261,19 +220,18 @@
                     Content="{x:Static res:Strings.ConnectionPageProfilesLabel}"
                     Style="{StaticResource HeadingLabelStyle}"/>
 
-                <ListBox
+                <ComboBox
                     Grid.Row="1"
                     x:Name="Profiles"
-                    ItemContainerStyle="{StaticResource ProfilesStyle}"
-                    Style="{StaticResource ListBoxStyle}"
+                    Style="{StaticResource ComboBoxStyle}"
                     ItemsSource="{Binding Profiles}"
-                    SelectedItem="{Binding SelectedProfile}"
+                    SelectedValue="{Binding SelectedProfile}"
                     AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectionPageProfilesLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
             </Grid>
 
             <ToggleButton
                 x:Name="ConnectionInfo"
-                Grid.Row="5"
+                Grid.Row="6"
                 Margin="7"
                 Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 Style="{StaticResource ConnectionInfoButtonStyle}">
