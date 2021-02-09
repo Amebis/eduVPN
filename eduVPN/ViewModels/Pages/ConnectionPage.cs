@@ -30,6 +30,11 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         private CancellationTokenSource ProfilesRefreshInProgress;
 
+        /// <summary>
+        /// Profiles refresh thread
+        /// </summary>
+        private Thread ProfilesRefreshThread;
+
         #endregion
 
         #region Properties
@@ -59,15 +64,16 @@ namespace eduVPN.ViewModels.Pages
                 if (SetProperty(ref _ConnectingServer, value))
                 {
                     ProfilesRefreshInProgress?.Cancel();
+                    ProfilesRefreshThread?.Join();
                     SelectedProfile = null;
                     Profiles = null;
                     if (ConnectingServer == null)
                         return;
                     ProfilesRefreshInProgress = new CancellationTokenSource();
-                    new Thread(new ParameterizedThreadStart(
-                        (object ctObj) =>
+                    ProfilesRefreshThread = new Thread(new ThreadStart(
+                        () =>
                         {
-                            var ct = CancellationTokenSource.CreateLinkedTokenSource((CancellationToken)ctObj, Window.Abort.Token).Token;
+                            var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                             try
                             {
@@ -95,7 +101,8 @@ namespace eduVPN.ViewModels.Pages
                             catch (OperationCanceledException) { }
                             catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
                             finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                        })).Start(ProfilesRefreshInProgress.Token);
+                        }));
+                    ProfilesRefreshThread.Start();
                 }
             }
         }

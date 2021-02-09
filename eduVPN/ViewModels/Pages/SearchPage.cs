@@ -30,6 +30,11 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         private CancellationTokenSource SearchInProgress;
 
+        /// <summary>
+        /// Search thread
+        /// </summary>
+        private Thread SearchThread;
+
         #endregion
 
         #region Properties
@@ -278,11 +283,12 @@ namespace eduVPN.ViewModels.Pages
         private void Search()
         {
             SearchInProgress?.Cancel();
+            SearchThread?.Join();
             SearchInProgress = new CancellationTokenSource();
-            new Thread(new ParameterizedThreadStart(
-                (object ctObj) =>
+            SearchThread = new Thread(new ThreadStart(
+                () =>
                 {
-                    var ct = CancellationTokenSource.CreateLinkedTokenSource((CancellationToken)ctObj, Window.Abort.Token).Token;
+                    var ct = CancellationTokenSource.CreateLinkedTokenSource(SearchInProgress.Token, Window.Abort.Token).Token;
                     Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                     try
                     {
@@ -328,7 +334,8 @@ namespace eduVPN.ViewModels.Pages
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
                     finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                })).Start(SearchInProgress.Token);
+                }));
+            SearchThread.Start();
         }
 
         #endregion
