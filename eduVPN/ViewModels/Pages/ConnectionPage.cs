@@ -135,11 +135,7 @@ namespace eduVPN.ViewModels.Pages
                 {
                     if (ConnectingServer != null && SelectedProfile != null)
                         Properties.Settings.Default.LastSelectedProfile[ConnectingServer.Base.AbsoluteUri] = SelectedProfile.Id;
-                    ConfirmProfileSelection.RaiseCanExecuteChanged();
-
-                    if (ActiveSession.ConnectingProfile != null && !ActiveSession.ConnectingProfile.Equals(SelectedProfile) &&
-                        StartSession.CanExecute(SelectedProfile))
-                        StartSession.Execute(SelectedProfile);
+                    ToggleProfileSession.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -150,12 +146,12 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Confirms profile selection
         /// </summary>
-        public DelegateCommand ConfirmProfileSelection
+        public DelegateCommand ToggleProfileSession
         {
             get
             {
-                if (_ConfirmProfileSelection == null)
-                    _ConfirmProfileSelection = new DelegateCommand(
+                if (_ToggleProfileSession == null)
+                    _ToggleProfileSession = new DelegateCommand(
                         () =>
                         {
                             try
@@ -165,21 +161,20 @@ namespace eduVPN.ViewModels.Pages
                                     if (ActiveSession.Disconnect.CanExecute())
                                         ActiveSession.Disconnect.Execute();
                                 }
-                                else
-                                {
-                                    if (StartSession.CanExecute(SelectedProfile))
-                                        StartSession.Execute(SelectedProfile);
-                                }
+                                else if (StartSession.CanExecute(SelectedProfile))
+                                    StartSession.Execute(SelectedProfile);
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
-                        () => SelectedProfile != null);
-                return _ConfirmProfileSelection;
+                        () =>
+                            ActiveSession.ConnectingProfile != null && ActiveSession.ConnectingProfile.Equals(SelectedProfile) && ActiveSession.Disconnect.CanExecute() ||
+                            StartSession.CanExecute(SelectedProfile));
+                return _ToggleProfileSession;
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _ConfirmProfileSelection;
+        private DelegateCommand _ToggleProfileSession;
 
         /// <summary>
         /// VPN session queue - session 0 is the active session
@@ -258,6 +253,8 @@ namespace eduVPN.ViewModels.Pages
                                                                 // Add our session to the queue.
                                                                 Sessions.Add(session);
                                                                 RaisePropertyChanged(nameof(ActiveSession));
+                                                                ToggleProfileSession.RaiseCanExecuteChanged();
+                                                                session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => ToggleProfileSession.RaiseCanExecuteChanged();
                                                                 SessionInfo.RaiseCanExecuteChanged();
                                                                 NavigateBack.RaiseCanExecuteChanged();
                                                             }));
@@ -286,18 +283,14 @@ namespace eduVPN.ViewModels.Pages
                                                         {
                                                             // Remove our session from the queue.
                                                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                                                    () =>
-                                                                    {
-                                                                        Sessions.Remove(session);
-                                                                        RaisePropertyChanged(nameof(ActiveSession));
-                                                                        SessionInfo.RaiseCanExecuteChanged();
-                                                                        NavigateBack.RaiseCanExecuteChanged();
-                                                                        if (Sessions.Count <= 0 && Wizard.CurrentPage == this)
-                                                                        {
-                                                                            // No more sessions and user is still on the status page. Redirect the wizard back.
-                                                                            Wizard.CurrentPage = Wizard.HomePage;
-                                                                        }
-                                                                    }));
+                                                                () =>
+                                                                {
+                                                                    Sessions.Remove(session);
+                                                                    RaisePropertyChanged(nameof(ActiveSession));
+                                                                    ToggleProfileSession.RaiseCanExecuteChanged();
+                                                                    SessionInfo.RaiseCanExecuteChanged();
+                                                                    NavigateBack.RaiseCanExecuteChanged();
+                                                                }));
                                                         }
                                                     }
                                                 }

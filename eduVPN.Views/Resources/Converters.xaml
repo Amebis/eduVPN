@@ -23,13 +23,13 @@
     <conv:HomePageOwnServerLabelConverter x:Key="HomePageOwnServerLabelConverter"/>
     <conv:IntegerInverseVisibilityConverter x:Key="IntegerInverseVisibilityConverter"/>
     <conv:IntegerVisibilityConverter x:Key="IntegerVisibilityConverter"/>
-    <conv:MultipleProfilesVisibilityConverter x:Key="MultipleProfilesVisibilityConverter"/>
     <conv:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B">
         <conv:NumberToHumanReadableConverter.Base>
             <sys:Int32>1024</sys:Int32>
         </conv:NumberToHumanReadableConverter.Base>
     </conv:NumberToHumanReadableConverter>
+    <conv:ProfileSelectionVisibilityConverter x:Key="ProfileSelectionVisibilityConverter"/>
     <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
     <conv:StringInverseVisibilityConverter x:Key="StringInverseVisibilityConverter"/>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>

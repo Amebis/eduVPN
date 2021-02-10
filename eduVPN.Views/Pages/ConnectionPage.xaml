@@ -10,7 +10,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pages="clr-namespace:eduVPN.Views.Pages"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     mc:Ignorable="d"
     d:DesignWidth="319"
@@ -71,259 +70,269 @@
         <Style x:Key="ConnectionInfoHeadingStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MicroHeadingStyle}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="3,2,1,2"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
         </Style>
 
         <Style x:Key="ConnectionInfoValueStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FineprintNoteStyle}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="1,2,3,2"/>
         </Style>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock
-                Margin="7,30,7,7"
-                HorizontalAlignment="Center"
-                Text="{Binding ConnectingServer}"
-                Style="{StaticResource MainHeadingStyle}"/>
-
-            <Grid
-                Grid.Row="1"
-                Margin="7,-9,7,7"
-                HorizontalAlignment="Center"
-                Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock
-                    Margin="1,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Text="{x:Static res:Strings.ConnectionPageSupportContactsLabel}"/>
-
-                <ItemsControl
-                    Grid.Column="1"
-                    Margin="1,0"
-                    ItemsSource="{Binding ConnectingServer.SupportContacts}"
-                    IsTabStop="False">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button
-                                Style="{StaticResource LinkButtonStyle}"
-                                Click="SupportContact_Click"
-                                Content="{Binding Converter={StaticResource UriStripProtocolConverter}}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
-
-            <ContentControl
-                Grid.Row="2"
-                Margin="7"
-                HorizontalAlignment="Center"
-                ContentTemplate="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIcon}}"
-                ToolTip="{Binding ActiveSession.StateDescription}"
-                AutomationProperties.Name="{Binding ActiveSession.StateDescription}"
-                IsTabStop="False"/>
-
-            <Grid
-                Grid.Row="3"
-                Margin="7"
-                MinHeight="35"
-                Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Text="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeDescriptionConverter}}"
-                    Style="{StaticResource StateTitleStyle}"/>
-
-                <TextBlock
-                    Grid.Row="1"
-                    Margin="0,-2,0,0"
-                    HorizontalAlignment="Center">
-                    <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
-                    <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanInSecondsConverter}}" Style="{StaticResource ImportantStyle}"/>
-                </TextBlock>
-            </Grid>
-
-            <TextBlock
-                Grid.Row="3"
-                Margin="7"
-                MinHeight="35"
-                HorizontalAlignment="Center"
-                Text="{x:Static res:Strings.ConnectionPageSelectProfile}"
-                Style="{StaticResource StateTitleStyle}"
-                Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
-
-            <TextBlock
-                Grid.Row="4"
-                Margin="22,7"
-                HorizontalAlignment="Stretch"
-                TextAlignment="Center"
-                VerticalAlignment="Top"
-                Text="{x:Static res:Strings.ConnectionPageProfilesLoadingText}"
-                Style="{StaticResource NoteStyle}"
-                Visibility="{Binding Profiles, Converter={StaticResource NullVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
-
-            <ToggleButton
-                Grid.Row="4"
-                Margin="7"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Style="{StaticResource ToggleButtonStyle}"
-                Visibility="{Binding Profiles.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                Command="{Binding ConfirmProfileSelection}">
-                <ToggleButton.IsChecked>
-                    <MultiBinding
-                        Converter="{StaticResource ActiveProfileEqualSelectedProfileConverter}"
-                        Mode="OneWay">
-                        <Binding Path="ActiveSession.ConnectingProfile"/>
-                        <Binding Path="SelectedProfile"/>
-                    </MultiBinding>
-                </ToggleButton.IsChecked>
-            </ToggleButton>
-
-            <Grid
-                Grid.Row="5"
-                Margin="7"
-                Visibility="{Binding Profiles.Count, Converter={StaticResource MultipleProfilesVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Label
-                    Target="{Binding ElementName=Profiles}"
-                    Content="{x:Static res:Strings.ConnectionPageProfilesLabel}"
-                    Style="{StaticResource HeadingLabelStyle}"/>
-
-                <ComboBox
-                    Grid.Row="1"
-                    x:Name="Profiles"
-                    Style="{StaticResource ComboBoxStyle}"
-                    ItemsSource="{Binding Profiles}"
-                    SelectedValue="{Binding SelectedProfile}"
-                    AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectionPageProfilesLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
-            </Grid>
-
-            <ToggleButton
-                x:Name="ConnectionInfo"
-                Grid.Row="6"
-                Margin="7"
-                Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-                Style="{StaticResource ConnectionInfoButtonStyle}">
-                <AccessText Text="{x:Static res:Strings.ConnectionPageConnectionInfoLabel}"/>
-            </ToggleButton>
-        </Grid>
+        <TextBlock
+            Margin="7,30,7,7"
+            HorizontalAlignment="Center"
+            Text="{Binding ConnectingServer}"
+            Style="{StaticResource MainHeadingStyle}"/>
 
         <Grid
             Grid.Row="1"
-            Margin="7,7,7,14"
-            Visibility="{Binding IsChecked, ElementName=ConnectionInfo, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            Margin="7,-9,7,7"
+            HorizontalAlignment="Center"
+            Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Margin="1,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Text="{x:Static res:Strings.ConnectionPageSupportContactsLabel}"/>
+
+            <ItemsControl
+                Grid.Column="1"
+                Margin="1,0"
+                ItemsSource="{Binding ConnectingServer.SupportContacts}"
+                IsTabStop="False">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Style="{StaticResource LinkButtonStyle}"
+                            Click="SupportContact_Click"
+                            Content="{Binding Converter={StaticResource UriStripProtocolConverter}}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+        <ContentControl
+            Grid.Row="2"
+            Margin="7"
+            HorizontalAlignment="Center"
+            ContentTemplate="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIcon}}"
+            ToolTip="{Binding ActiveSession.StateDescription}"
+            AutomationProperties.Name="{Binding ActiveSession.StateDescription}"
+            IsTabStop="False"/>
+
+        <Grid
+            Grid.Row="3"
+            Margin="7"
+            MinHeight="35">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock
-                Grid.Column="0"
-                Grid.Row="0"
-                Style="{StaticResource ConnectionInfoHeadingStyle}"
-                Text="{x:Static res:Strings.ConnectionPageConnectionInfoDuration}"/>
+                HorizontalAlignment="Center"
+                Text="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeDescriptionConverter}}"
+                Style="{StaticResource StateTitleStyle}"/>
 
             <TextBlock
-                Grid.Column="1"
-                Grid.ColumnSpan="3"
-                Grid.Row="0"
-                Style="{StaticResource ConnectionInfoValueStyle}"
-                Text="{Binding ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
-
-            <TextBlock
-                Grid.Column="0"
                 Grid.Row="1"
-                Style="{StaticResource ConnectionInfoHeadingStyle}"
-                Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesIn}"/>
+                Margin="0,-2,0,0"
+                HorizontalAlignment="Center"
+                Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
+                <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanInSecondsConverter}}" Style="{StaticResource ImportantStyle}"/>
+            </TextBlock>
+        </Grid>
 
-            <TextBlock
-                Grid.Column="1"
+        <TextBlock
+            Grid.Row="4"
+            Margin="22,7"
+            HorizontalAlignment="Stretch"
+            TextAlignment="Center"
+            VerticalAlignment="Top"
+            Text="{x:Static res:Strings.ConnectionPageProfilesLoadingText}"
+            Style="{StaticResource NoteStyle}"
+            Visibility="{Binding Profiles, Converter={StaticResource NullVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+
+        <ToggleButton
+            Grid.Row="4"
+            Margin="7"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Style="{StaticResource ToggleButtonStyle}"
+            Visibility="{Binding Profiles.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+            Command="{Binding ToggleProfileSession}">
+            <ToggleButton.IsChecked>
+                <MultiBinding
+                    Converter="{StaticResource ActiveProfileEqualSelectedProfileConverter}"
+                    Mode="OneWay">
+                    <Binding Path="ActiveSession.ConnectingProfile"/>
+                    <Binding Path="SelectedProfile"/>
+                </MultiBinding>
+            </ToggleButton.IsChecked>
+        </ToggleButton>
+
+        <Grid
+            Grid.Row="5"
+            Margin="7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.Visibility>
+                <MultiBinding
+                    Converter="{StaticResource ProfileSelectionVisibilityConverter}"
+                    Mode="OneWay"
+                    FallbackValue="{x:Static Visibility.Collapsed}">
+                    <Binding Path="Profiles.Count"/>
+                    <Binding Path="Sessions.Count"/>
+                </MultiBinding>
+            </Grid.Visibility>
+
+            <Label
+                Target="{Binding ElementName=Profiles}"
+                Content="{x:Static res:Strings.ConnectionPageProfilesLabel}"
+                Style="{StaticResource HeadingLabelStyle}"/>
+
+            <ComboBox
                 Grid.Row="1"
-                Style="{StaticResource ConnectionInfoValueStyle}"
-                Text="{Binding ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                x:Name="Profiles"
+                Style="{StaticResource ComboBoxStyle}"
+                ItemsSource="{Binding Profiles}"
+                SelectedValue="{Binding SelectedProfile}"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectionPageProfilesLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+        </Grid>
 
-            <TextBlock
-                Grid.Column="2"
+        <Grid
+            Grid.Row="6"
+            Margin="7"
+            Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ToggleButton
+                x:Name="ConnectionInfo"
+                Style="{StaticResource ConnectionInfoButtonStyle}">
+                <AccessText Text="{x:Static res:Strings.ConnectionPageConnectionInfoLabel}"/>
+            </ToggleButton>
+
+            <Grid
                 Grid.Row="1"
-                Style="{StaticResource ConnectionInfoHeadingStyle}"
-                Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesOut}"/>
+                Margin="3,0,3,7"
+                Visibility="{Binding IsChecked, ElementName=ConnectionInfo, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Column="3"
-                Grid.Row="1"
-                Style="{StaticResource ConnectionInfoValueStyle}"
-                Text="{Binding ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                <TextBlock
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
+                    Text="{x:Static res:Strings.ConnectionPageConnectionInfoDuration}"/>
 
-            <TextBlock
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Grid.Row="2"
-                Margin="3,5,3,0"
-                Style="{StaticResource ConnectionInfoHeadingStyle}"
-                Text="{x:Static res:Strings.ConnectionPageConnectionInfoIPv4}"/>
+                <TextBlock
+                    Grid.Row="1"
+                    Style="{StaticResource ConnectionInfoValueStyle}"
+                    Text="{Binding ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
 
-            <TextBlock
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Grid.Row="3"
-                Margin="3,0,3,2"
-                Style="{StaticResource ConnectionInfoValueStyle}"
-                Text="{Binding ActiveSession.TunnelAddress}"/>
+                <TextBlock
+                    Grid.Row="2"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
+                    Text="{x:Static res:Strings.ConnectionPageConnectionInfoDataTransferred}"/>
 
-            <TextBlock
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
-                Grid.Row="2"
-                Margin="3,5,3,0"
-                Style="{StaticResource ConnectionInfoHeadingStyle}"
-                Text="{x:Static res:Strings.ConnectionPageConnectionInfoIPv6}"/>
+                <Grid
+                    Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
-                Grid.Row="3"
-                Margin="3,0,3,2"
-                Style="{StaticResource ConnectionInfoValueStyle}"
-                Text="{Binding ActiveSession.IPv6TunnelAddress}"/>
+                    <TextBlock
+                        Margin="0,0,3,0"
+                        Style="{StaticResource ConnectionInfoValueStyle}"
+                        Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesIn2}"/>
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Style="{StaticResource ConnectionInfoValueStyle}"
+                        Text="{Binding ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Margin="0,0,3,0"
+                        Style="{StaticResource ConnectionInfoValueStyle}"
+                        Text="{x:Static res:Strings.ConnectionPageConnectionInfoBytesOut2}"/>
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Style="{StaticResource ConnectionInfoValueStyle}"
+                        Text="{Binding ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                </Grid>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
+                    Text="{x:Static res:Strings.ConnectionPageConnectionInfoProfile}"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Style="{StaticResource ConnectionInfoValueStyle}"
+                    Text="{Binding ActiveSession.ConnectingProfile}"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Style="{StaticResource ConnectionInfoHeadingStyle}"
+                    Text="{x:Static res:Strings.ConnectionPageConnectionInfo}"/>
+
+                <Grid
+                    Grid.Column="1"
+                    Grid.Row="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Style="{StaticResource ConnectionInfoValueStyle}"
+                        Text="{Binding ActiveSession.TunnelAddress}"/>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Style="{StaticResource ConnectionInfoValueStyle}"
+                        Text="{Binding ActiveSession.IPv6TunnelAddress}"/>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

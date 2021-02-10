@@ -53,7 +53,7 @@
     <Compile Include="Converters\IntegerVisibilityConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
-    <Compile Include="Converters\MultipleProfilesVisibilityConverter.cs" />
+    <Compile Include="Converters\ProfileSelectionVisibilityConverter.cs" />
     <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
     <Compile Include="Converters\StringInverseVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />

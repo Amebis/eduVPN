@@ -152,20 +152,38 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloaded.
+        ///   Looks up a localized string similar to Address.
         /// </summary>
-        public static string ConnectionPageConnectionInfoBytesIn {
+        public static string ConnectionPageConnectionInfo {
             get {
-                return ResourceManager.GetString("ConnectionPageConnectionInfoBytesIn", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uploaded.
+        ///   Looks up a localized string similar to Downloaded:.
         /// </summary>
-        public static string ConnectionPageConnectionInfoBytesOut {
+        public static string ConnectionPageConnectionInfoBytesIn2 {
             get {
-                return ResourceManager.GetString("ConnectionPageConnectionInfoBytesOut", resourceCulture);
+                return ResourceManager.GetString("ConnectionPageConnectionInfoBytesIn2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded:.
+        /// </summary>
+        public static string ConnectionPageConnectionInfoBytesOut2 {
+            get {
+                return ResourceManager.GetString("ConnectionPageConnectionInfoBytesOut2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Transferred.
+        /// </summary>
+        public static string ConnectionPageConnectionInfoDataTransferred {
+            get {
+                return ResourceManager.GetString("ConnectionPageConnectionInfoDataTransferred", resourceCulture);
             }
         }
         
@@ -179,29 +197,20 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IPv4 Address.
-        /// </summary>
-        public static string ConnectionPageConnectionInfoIPv4 {
-            get {
-                return ResourceManager.GetString("ConnectionPageConnectionInfoIPv4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IPv6 Address.
-        /// </summary>
-        public static string ConnectionPageConnectionInfoIPv6 {
-            get {
-                return ResourceManager.GetString("ConnectionPageConnectionInfoIPv6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connection _info.
         /// </summary>
         public static string ConnectionPageConnectionInfoLabel {
             get {
                 return ResourceManager.GetString("ConnectionPageConnectionInfoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string ConnectionPageConnectionInfoProfile {
+            get {
+                return ResourceManager.GetString("ConnectionPageConnectionInfoProfile", resourceCulture);
             }
         }
         
@@ -230,15 +239,6 @@ namespace eduVPN.Views.Resources {
         public static string ConnectionPageProfilesLoadingText {
             get {
                 return ResourceManager.GetString("ConnectionPageProfilesLoadingText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select a profile.
-        /// </summary>
-        public static string ConnectionPageSelectProfile {
-            get {
-                return ResourceManager.GetString("ConnectionPageSelectProfile", resourceCulture);
             }
         }
         
@@ -714,6 +714,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not connected.
+        /// </summary>
+        public static string VPNSessionStatusTypeDisconnected {
+            get {
+                return ResourceManager.GetString("VPNSessionStatusTypeDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnecting....
         /// </summary>
         public static string VPNSessionStatusTypeDisconnecting {
@@ -732,7 +741,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not connected.
+        ///   Looks up a localized string similar to Configuring....
         /// </summary>
         public static string VPNSessionStatusTypeInitializing {
             get {
