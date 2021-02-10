@@ -67,7 +67,7 @@ namespace eduVPN.Views.Windows
             {
                 var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
                 return
-                    (viewModel != null && viewModel.ConnectionPage.ActiveSession.ConnectingProfile != null ?
+                    (viewModel != null && viewModel.ConnectionPage.ActiveSession != null ?
                         string.Format("{0} - {1}\r\n{2}",
                             viewModel.ConnectionPage.ActiveSession.ConnectingProfile?.Server,
                             viewModel.ConnectionPage.ActiveSession.ConnectingProfile,
@@ -84,7 +84,7 @@ namespace eduVPN.Views.Windows
             get
             {
                 var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
-                return viewModel != null ? Icons[viewModel.ConnectionPage.ActiveSession.State] : null;
+                return Icons[viewModel != null && viewModel.ConnectionPage.ActiveSession != null ? viewModel.ConnectionPage.ActiveSession.State : VPNSessionStatusType.Disconnected];
             }
         }
 
@@ -184,7 +184,7 @@ namespace eduVPN.Views.Windows
                     NotifyIcon.Text = TrayIconToolTipText;
                     NotifyIcon.Icon = TrayIcon;
 
-                    if (viewModel.ConnectionPage.ActiveSession != VPNSession.Blank)
+                    if (viewModel.ConnectionPage.ActiveSession != null)
                     {
                         // Initialize VPN session state.
                         SessionState = viewModel.ConnectionPage.ActiveSession.State;

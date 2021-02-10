@@ -51,6 +51,7 @@
     <Compile Include="Converters\HomePageOwnServerLabelConverter.cs" />
     <Compile Include="Converters\IntegerInverseVisibilityConverter.cs" />
     <Compile Include="Converters\IntegerVisibilityConverter.cs" />
+    <Compile Include="Converters\NullInverseVisibilityConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
     <Compile Include="Converters\ProfileSelectionVisibilityConverter.cs" />

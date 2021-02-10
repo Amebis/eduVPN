@@ -23,6 +23,7 @@
     <conv:HomePageOwnServerLabelConverter x:Key="HomePageOwnServerLabelConverter"/>
     <conv:IntegerInverseVisibilityConverter x:Key="IntegerInverseVisibilityConverter"/>
     <conv:IntegerVisibilityConverter x:Key="IntegerVisibilityConverter"/>
+    <conv:NullInverseVisibilityConverter x:Key="NullInverseVisibilityConverter"/>
     <conv:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B">
         <conv:NumberToHumanReadableConverter.Base>

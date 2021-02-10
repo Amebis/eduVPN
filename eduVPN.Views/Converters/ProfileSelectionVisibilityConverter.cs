@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -36,7 +37,7 @@ namespace eduVPN.Converters
         {
             return
                 values[0] is int profileCount && profileCount > 1 &&
-                !(values[1] is int sessionCount && sessionCount > 0)
+                !(values[1] is VPNSession)
                 ? Visibility.Visible : Visibility.Collapsed;
         }
 

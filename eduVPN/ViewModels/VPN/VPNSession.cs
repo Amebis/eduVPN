@@ -28,11 +28,6 @@ namespace eduVPN.ViewModels.VPN
         #region Fields
 
         /// <summary>
-        /// Blank session
-        /// </summary>
-        public static readonly VPNSession Blank = new VPNSession();
-
-        /// <summary>
         /// Session termination token
         /// </summary>
         private readonly CancellationTokenSource SessionInProgress = new CancellationTokenSource();

@@ -148,14 +148,14 @@
 
             <TextBlock
                 HorizontalAlignment="Center"
-                Text="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeDescriptionConverter}}"
+                Text="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeDescriptionConverter}, FallbackValue={x:Static res:Strings.VPNSessionStatusTypeDisconnected}}"
                 Style="{StaticResource StateTitleStyle}"/>
 
             <TextBlock
                 Grid.Row="1"
                 Margin="0,-2,0,0"
                 HorizontalAlignment="Center"
-                Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                Visibility="{Binding ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
                 <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanInSecondsConverter}}" Style="{StaticResource ImportantStyle}"/>
             </TextBlock>
@@ -178,7 +178,7 @@
             VerticalAlignment="Top"
             Style="{StaticResource ToggleButtonStyle}"
             Visibility="{Binding Profiles.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-            Command="{Binding ToggleProfileSession}">
+            Command="{Binding ToggleSession}">
             <ToggleButton.IsChecked>
                 <MultiBinding
                     Converter="{StaticResource ActiveProfileEqualSelectedProfileConverter}"
@@ -202,7 +202,7 @@
                     Mode="OneWay"
                     FallbackValue="{x:Static Visibility.Collapsed}">
                     <Binding Path="Profiles.Count"/>
-                    <Binding Path="Sessions.Count"/>
+                    <Binding Path="ActiveSession"/>
                 </MultiBinding>
             </Grid.Visibility>
 
@@ -223,7 +223,7 @@
         <Grid
             Grid.Row="6"
             Margin="7"
-            Visibility="{Binding Sessions.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            Visibility="{Binding ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>

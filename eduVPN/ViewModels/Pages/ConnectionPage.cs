@@ -45,12 +45,16 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public Server AuthenticatingServer
         {
-            get { return _AuthenticatingServer; }
-            set { SetProperty(ref _AuthenticatingServer, value); }
+            get
+            {
+                if (ConnectingServer is SecureInternetServer)
+                {
+                    var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
+                    return Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
+                }
+                return ConnectingServer;
+            }
         }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Server _AuthenticatingServer;
 
         /// <summary>
         /// Connecting server
@@ -61,49 +65,50 @@ namespace eduVPN.ViewModels.Pages
             get { return _ConnectingServer; }
             set
             {
-                if (SetProperty(ref _ConnectingServer, value))
-                {
-                    ProfilesRefreshInProgress?.Cancel();
-                    ProfilesRefreshThread?.Join();
-                    SelectedProfile = null;
-                    Profiles = null;
-                    if (ConnectingServer == null)
-                        return;
-                    ProfilesRefreshInProgress = new CancellationTokenSource();
-                    ProfilesRefreshThread = new Thread(new ThreadStart(
-                        () =>
+                if (_ConnectingServer == value)
+                    return;
+
+                ProfilesRefreshInProgress?.Cancel();
+                ProfilesRefreshThread?.Join();
+
+                SetProperty(ref _ConnectingServer, value);
+                RaisePropertyChanged(nameof(AuthenticatingServer));
+                SelectedProfile = null;
+                Profiles = null;
+                if (ConnectingServer == null)
+                    return;
+
+                ProfilesRefreshInProgress = new CancellationTokenSource();
+                ProfilesRefreshThread = new Thread(new ThreadStart(
+                    () =>
+                    {
+                        var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
+                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                        try
                         {
-                            var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
-                            try
+                            var list = ConnectingServer.GetProfileList(AuthenticatingServer, ct);
+                            //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                             {
-                                var list = ConnectingServer.GetProfileList(AuthenticatingServer, ct);
-                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                {
-                                    //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-                                    Profiles = list;
+                                Profiles = list;
 
-                                    Profile profile = null;
-                                    if (Properties.Settings.Default.LastSelectedProfile.TryGetValue(ConnectingServer.Base.AbsoluteUri, out var profileId))
-                                        profile = list.FirstOrDefault(p => p.Id == profileId);
-                                    if (profile == null && list.Count > 0)
-                                        profile = list[0];
-                                    SelectedProfile = profile;
+                                Profile profile = null;
+                                if (Properties.Settings.Default.LastSelectedProfile.TryGetValue(ConnectingServer.Base.AbsoluteUri, out var profileId))
+                                    profile = list.FirstOrDefault(p => p.Id == profileId);
+                                if (profile == null && list.Count > 0)
+                                    profile = list[0];
+                                SelectedProfile = profile;
 
-                                    // Auto-connect when there is exactly one profile.
-                                    if (list.Count == 1)
-                                    {
-                                        if (StartSession.CanExecute(list[0]))
-                                            StartSession.Execute(list[0]);
-                                    }
-                                }));
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
-                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                        }));
-                    ProfilesRefreshThread.Start();
-                }
+                                // Auto-connect when there is exactly one profile.
+                                if (list.Count == 1 && StartSession.CanExecute())
+                                    StartSession.Execute();
+                            }));
+                        }
+                        catch (OperationCanceledException) { }
+                        catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
+                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                    }));
+                ProfilesRefreshThread.Start();
             }
         }
 
@@ -135,7 +140,7 @@ namespace eduVPN.ViewModels.Pages
                 {
                     if (ConnectingServer != null && SelectedProfile != null)
                         Properties.Settings.Default.LastSelectedProfile[ConnectingServer.Base.AbsoluteUri] = SelectedProfile.Id;
-                    ToggleProfileSession.RaiseCanExecuteChanged();
+                    StartSession.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -144,170 +149,123 @@ namespace eduVPN.ViewModels.Pages
         private Profile _SelectedProfile;
 
         /// <summary>
-        /// Confirms profile selection
-        /// </summary>
-        public DelegateCommand ToggleProfileSession
-        {
-            get
-            {
-                if (_ToggleProfileSession == null)
-                    _ToggleProfileSession = new DelegateCommand(
-                        () =>
-                        {
-                            try
-                            {
-                                if (ActiveSession.ConnectingProfile != null && ActiveSession.ConnectingProfile.Equals(SelectedProfile))
-                                {
-                                    if (ActiveSession.Disconnect.CanExecute())
-                                        ActiveSession.Disconnect.Execute();
-                                }
-                                else if (StartSession.CanExecute(SelectedProfile))
-                                    StartSession.Execute(SelectedProfile);
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        },
-                        () =>
-                            ActiveSession.ConnectingProfile != null && ActiveSession.ConnectingProfile.Equals(SelectedProfile) && ActiveSession.Disconnect.CanExecute() ||
-                            StartSession.CanExecute(SelectedProfile));
-                return _ToggleProfileSession;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _ToggleProfileSession;
-
-        /// <summary>
-        /// VPN session queue - session 0 is the active session
-        /// </summary>
-        public ObservableCollection<VPNSession> Sessions { get; } = new ObservableCollection<VPNSession>();
-
-        /// <summary>
         /// Active VPN session
         /// </summary>
         public VPNSession ActiveSession
         {
-            get { return Sessions.Count > 0 ? Sessions[0] : VPNSession.Blank; }
+            get { return _ActiveSession; }
+            private set
+            {
+                if (SetProperty(ref _ActiveSession, value))
+                {
+                    StartSession.RaiseCanExecuteChanged();
+                    ToggleSession.RaiseCanExecuteChanged();
+                    SessionInfo.RaiseCanExecuteChanged();
+                    NavigateBack.RaiseCanExecuteChanged();
+                }
+            }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private VPNSession _ActiveSession;
 
         /// <summary>
         /// Starts VPN session
         /// </summary>
-        public DelegateCommand<Profile> StartSession
+        public DelegateCommand StartSession
         {
             get
             {
                 if (_StartSession == null)
-                    _StartSession = new DelegateCommand<Profile>(
-                        profile =>
+                    _StartSession = new DelegateCommand(
+                        () =>
                         {
                             try
                             {
-                                // Switch to this page, for user to see the progress.
-                                Wizard.CurrentPage = this;
-
-                                // Note: Sessions locking is not required, since all queue manipulation is done exclusively in the UI thread.
-
-                                if (Sessions.Count > 0)
-                                {
-                                    var s = Sessions[Sessions.Count - 1];
-                                    if (s.ConnectingProfile.Equals(profile))
-                                    {
-                                        // Wizard is already running (or scheduled to run) a VPN session of the same configuration as specified.
-                                        return;
-                                    }
-                                }
-
-                                Server authenticatingServer = profile.Server;
-                                if (authenticatingServer is SecureInternetServer)
-                                {
-                                    var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                                    authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                                }
-
                                 // Launch the VPN session in the background.
                                 new Thread(new ThreadStart(
-                                            () =>
+                                    () =>
+                                    {
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                                        try
+                                        {
+                                            // Create our new session.
+                                            using (var session = new OpenVPNSession(
+                                                    Properties.Settings.Default.OpenVPNInteractiveServiceInstance,
+                                                    Wizard,
+                                                    AuthenticatingServer,
+                                                    SelectedProfile))
                                             {
-                                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                                    () =>
+                                                    {
+                                                        session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => ToggleSession.RaiseCanExecuteChanged();
+                                                        ActiveSession = session;
+                                                    }));
                                                 try
                                                 {
-                                                    // Create our new session.
-                                                    using (var session = new OpenVPNSession(
-                                                            Properties.Settings.Default.OpenVPNInteractiveServiceInstance,
-                                                            Wizard,
-                                                            authenticatingServer,
-                                                            profile))
+                                                    // Set profile to auto-start on next launch.
+                                                    Properties.Settings.Default.AutoStartProfile = new eduVPN.Xml.StartSessionParams
                                                     {
-                                                        VPNSession previousSession = null;
-                                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                                            () =>
-                                                            {
-                                                                if (Sessions.Count > 0)
-                                                                {
-                                                                    // Trigger disconnection of the previous session.
-                                                                    previousSession = Sessions[Sessions.Count - 1];
-                                                                    if (previousSession.Disconnect.CanExecute())
-                                                                        previousSession.Disconnect.Execute();
-                                                                }
+                                                        ConnectingServer = SelectedProfile.Server.Base,
+                                                        ProfileId = SelectedProfile.Id
+                                                    };
 
-                                                                // Add our session to the queue.
-                                                                Sessions.Add(session);
-                                                                RaisePropertyChanged(nameof(ActiveSession));
-                                                                ToggleProfileSession.RaiseCanExecuteChanged();
-                                                                session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => ToggleProfileSession.RaiseCanExecuteChanged();
-                                                                SessionInfo.RaiseCanExecuteChanged();
-                                                                NavigateBack.RaiseCanExecuteChanged();
-                                                            }));
-                                                        try
-                                                        {
-                                                            if (previousSession != null)
-                                                            {
-                                                                // Await for the previous session to finish.
-                                                                if (WaitHandle.WaitAny(new WaitHandle[] { Window.Abort.Token.WaitHandle, previousSession.Finished }) == 0)
-                                                                    throw new OperationCanceledException();
-                                                            }
-
-                                                            // Set profile to auto-start on next launch.
-                                                            Properties.Settings.Default.AutoStartProfile = new eduVPN.Xml.StartSessionParams
-                                                            {
-                                                                ConnectingServer = profile.Server.Base,
-                                                                ProfileId = profile.Id
-                                                            };
-
-                                                            // Run our session.
-                                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--));
-                                                            try { session.Run(); }
-                                                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++)); }
-                                                        }
-                                                        finally
-                                                        {
-                                                            // Remove our session from the queue.
-                                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                                                () =>
-                                                                {
-                                                                    Sessions.Remove(session);
-                                                                    RaisePropertyChanged(nameof(ActiveSession));
-                                                                    ToggleProfileSession.RaiseCanExecuteChanged();
-                                                                    SessionInfo.RaiseCanExecuteChanged();
-                                                                    NavigateBack.RaiseCanExecuteChanged();
-                                                                }));
-                                                        }
-                                                    }
+                                                    // Run our session.
+                                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--));
+                                                    try { session.Run(); }
+                                                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++)); }
                                                 }
-                                                catch (OperationCanceledException) { }
-                                                catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
-                                                finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                                            })).Start();
+                                                finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ActiveSession = null)); }
+                                            }
+                                        }
+                                        catch (OperationCanceledException) { }
+                                        catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
+                                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                                    })).Start();
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
-                        profile => profile != null && profile.Server != null);
+                        () => SelectedProfile != null && ActiveSession == null);
                 return _StartSession;
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand<Profile> _StartSession;
+        private DelegateCommand _StartSession;
+
+        /// <summary>
+        /// Activates a VPN session for selected profile or deactivates the active VPN session
+        /// </summary>
+        public DelegateCommand ToggleSession
+        {
+            get
+            {
+                if (_ToggleSession == null)
+                {
+                    _ToggleSession = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                if (ActiveSession != null && ActiveSession.Disconnect.CanExecute())
+                                    ActiveSession.Disconnect.Execute();
+                                else if (ActiveSession == null && StartSession.CanExecute())
+                                    StartSession.Execute();
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () =>
+                            ActiveSession != null && ActiveSession.Disconnect.CanExecute() ||
+                            ActiveSession == null && StartSession.CanExecute());
+                    StartSession.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession.RaiseCanExecuteChanged();
+                }
+                return _ToggleSession;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ToggleSession;
 
         /// <summary>
         /// Connection info command
@@ -323,7 +281,7 @@ namespace eduVPN.ViewModels.Pages
                             try { Wizard.CurrentPage = this; }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
-                        () => Sessions.Count > 0);
+                        () => ActiveSession != null);
                 return _SessionInfo;
             }
         }
@@ -340,15 +298,10 @@ namespace eduVPN.ViewModels.Pages
                     _NavigateBack = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                if (ActiveSession.Disconnect.CanExecute())
-                                    ActiveSession.Disconnect.Execute();
-                                Wizard.CurrentPage = Wizard.HomePage;
-                            }
+                            try { Wizard.CurrentPage = Wizard.HomePage; }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
-                        () => Sessions.Count <= 0);
+                        () => ActiveSession == null);
                 return _NavigateBack;
             }
         }
@@ -383,8 +336,8 @@ namespace eduVPN.ViewModels.Pages
             if (Profiles != null && Profiles.Count == 1)
             {
                 SelectedProfile = Profiles[0];
-                if (StartSession.CanExecute(Profiles[0]))
-                    StartSession.Execute(Profiles[0]);
+                if (StartSession.CanExecute())
+                    StartSession.Execute();
             }
         }
 
