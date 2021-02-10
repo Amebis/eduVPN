@@ -31,9 +31,14 @@ namespace eduVPN.ViewModels.Pages
         private CancellationTokenSource SearchInProgress;
 
         /// <summary>
-        /// Search thread
+        /// Server search thread
         /// </summary>
-        private Thread SearchThread;
+        private Thread ServerSearchThread;
+
+        /// <summary>
+        /// Organization search thread
+        /// </summary>
+        private Thread OrganizationSearchThread;
 
         #endregion
 
@@ -283,59 +288,72 @@ namespace eduVPN.ViewModels.Pages
         private void Search()
         {
             SearchInProgress?.Cancel();
-            SearchThread?.Join();
+            ServerSearchThread?.Join();
+            OrganizationSearchThread?.Join();
             SearchInProgress = new CancellationTokenSource();
-            SearchThread = new Thread(new ThreadStart(
+            var ct = CancellationTokenSource.CreateLinkedTokenSource(SearchInProgress.Token, Window.Abort.Token).Token;
+            var keywords = Query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            ServerSearchThread = new Thread(new ThreadStart(
                 () =>
                 {
-                    var ct = CancellationTokenSource.CreateLinkedTokenSource(SearchInProgress.Token, Window.Abort.Token).Token;
                     Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                     try
                     {
-                        var keywords = Query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         var orderedServerHits = Wizard.GetDiscoveredInstituteAccessServers(keywords, ct);
-                        var orderedOrganizationHits = Wizard.GetDiscoveredOrganizations(keywords, ct);
-                        var ownServers = new ObservableCollection<Server>();
-
-                        if (keywords.Length == 1 && keywords[0].Split('.').Length >= 3)
-                        {
-                            try
-                            {
-                                var srv = new Server(new UriBuilder("https", keywords[0]).Uri);
-                                srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                                srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                                ownServers.Add(srv);
-                            }
-                            catch { }
-                        }
-
                         ct.ThrowIfCancellationRequested();
                         Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                         {
-                            {
-                                var selected = SelectedInstituteAccessServer?.Base;
-                                InstituteAccessServers = orderedServerHits;
-                                SelectedInstituteAccessServer = Wizard.GetDiscoveredServer<InstituteAccessServer>(selected);
-                            }
-
-                            {
-                                var selected = SelectedOrganization?.Id;
-                                Organizations = orderedOrganizationHits;
-                                SelectedOrganization = Wizard.GetDiscoveredOrganization(selected);
-                            }
-
-                            {
-                                var selected = SelectedOwnServer?.Base;
-                                OwnServers = ownServers;
-                                SelectedOwnServer = ownServers.FirstOrDefault(srv => selected == srv.Base);
-                            }
+                            var selected = SelectedInstituteAccessServer?.Base;
+                            InstituteAccessServers = orderedServerHits;
+                            SelectedInstituteAccessServer = Wizard.GetDiscoveredServer<InstituteAccessServer>(selected);
                         }));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
                     finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
                 }));
-            SearchThread.Start();
+            ServerSearchThread.Start();
+            OrganizationSearchThread = new Thread(new ThreadStart(
+                () =>
+                {
+                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                    try
+                    {
+                        var orderedOrganizationHits = Wizard.GetDiscoveredOrganizations(keywords, ct);
+                        ct.ThrowIfCancellationRequested();
+                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        {
+                            var selected = SelectedOrganization?.Id;
+                            Organizations = orderedOrganizationHits;
+                            SelectedOrganization = Wizard.GetDiscoveredOrganization(selected);
+                        }));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
+                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                }));
+            OrganizationSearchThread.Start();
+
+            if (keywords.Length == 1 && keywords[0].Split('.').Length >= 3)
+            {
+                var ownServers = new ObservableCollection<Server>();
+                try
+                {
+                    var srv = new Server(new UriBuilder("https", keywords[0]).Uri);
+                    srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
+                    srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
+                    ownServers.Add(srv);
+                }
+                catch { }
+                var selected = SelectedOwnServer?.Base;
+                OwnServers = ownServers;
+                SelectedOwnServer = ownServers.FirstOrDefault(srv => selected == srv.Base);
+            }
+            else
+            {
+                SelectedOwnServer = null;
+                OwnServers = null;
+            }
         }
 
         #endregion
