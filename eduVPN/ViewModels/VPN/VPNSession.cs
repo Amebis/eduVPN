@@ -384,8 +384,7 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         protected virtual void DoRun()
         {
-            // Do nothing but wait.
-            _quit.Token.WaitHandle.WaitOne();
+            throw new NotImplementedException();
         }
 
         #endregion
