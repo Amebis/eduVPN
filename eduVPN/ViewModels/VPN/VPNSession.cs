@@ -58,11 +58,6 @@ namespace eduVPN.ViewModels.VPN
         public ConnectWizard Wizard { get; }
 
         /// <summary>
-        /// Authenticating eduVPN server
-        /// </summary>
-        public Server AuthenticatingServer { get; }
-
-        /// <summary>
         /// Connecting eduVPN server profile
         /// </summary>
         public Profile ConnectingProfile { get; }
@@ -224,16 +219,14 @@ namespace eduVPN.ViewModels.VPN
         /// Creates a VPN session
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
-        /// <param name="authenticatingServer">Authenticating eduVPN server</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public VPNSession(ConnectWizard wizard, Server authenticatingServer, Profile connectingProfile) :
+        public VPNSession(ConnectWizard wizard, Profile connectingProfile) :
             this()
         {
             SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
             Finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Wizard = wizard;
-            AuthenticatingServer = authenticatingServer;
             ConnectingProfile = connectingProfile;
             State = VPNSessionStatusType.Initializing;
 

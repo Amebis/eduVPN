@@ -42,18 +42,6 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
-        /// Authenticating server
-        /// </summary>
-        public Server AuthenticatingServer
-        {
-            get { return _AuthenticatingServer; }
-            private set { SetProperty(ref _AuthenticatingServer, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Server _AuthenticatingServer;
-
-        /// <summary>
         /// Cancel authorization
         /// </summary>
         public DelegateCommand Cancel
@@ -189,7 +177,6 @@ namespace eduVPN.ViewModels.Pages
                     Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                     {
                         Wizard.TaskCount++;
-                        AuthenticatingServer = authenticatingServer;
                         ReturnPage = Wizard.CurrentPage;
                         Wizard.CurrentPage = this;
                         AuthorizationInProgress = new CancellationTokenSource();

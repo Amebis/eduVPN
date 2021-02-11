@@ -129,10 +129,9 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         /// <param name="instanceName">OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)</param>
         /// <param name="wizard">The connecting wizard</param>
-        /// <param name="authenticatingServer">Authenticating eduVPN server</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public OpenVPNSession(string instanceName, ConnectWizard wizard, Server authenticatingServer, Profile connectingProfile) :
-            base(wizard, authenticatingServer, connectingProfile)
+        public OpenVPNSession(string instanceName, ConnectWizard wizard, Profile connectingProfile) :
+            base(wizard, connectingProfile)
         {
             InstanceName = instanceName;
             ConnectionId = Guid.NewGuid().ToString();
@@ -187,7 +186,9 @@ namespace eduVPN.ViewModels.VPN
             PreRun.Add(() =>
             {
                 // Get client certificate.
-                ClientCertificate = ConnectingProfile.Server.GetClientCertificate(AuthenticatingServer, SessionAndWindowInProgress.Token);
+                ClientCertificate = ConnectingProfile.Server.GetClientCertificate(
+                    Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                    SessionAndWindowInProgress.Token);
             });
         }
 
@@ -546,7 +547,9 @@ namespace eduVPN.ViewModels.VPN
                                                     case "auth-failure": // Client certificate was deleted/revoked on the server side, or the user is disabled.
                                                     case "tls-error": // Client certificate is not compliant with this eduVPN server. Was eduVPN server reinstalled?
                                                         // Refresh client certificate.
-                                                        ClientCertificate = ConnectingProfile.Server.RefreshClientCertificate(AuthenticatingServer, SessionAndWindowInProgress.Token);
+                                                        ClientCertificate = ConnectingProfile.Server.RefreshClientCertificate(
+                                                            Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                                                            SessionAndWindowInProgress.Token);
                                                         IgnoreHoldHint = true;
                                                         break;
 

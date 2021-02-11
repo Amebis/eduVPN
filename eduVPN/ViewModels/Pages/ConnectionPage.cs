@@ -40,23 +40,6 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
-        /// Authenticating server
-        /// </summary>
-        /// <remarks><c>null</c> if none selected.</remarks>
-        public Server AuthenticatingServer
-        {
-            get
-            {
-                if (ConnectingServer is SecureInternetServer)
-                {
-                    var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                    return Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                }
-                return ConnectingServer;
-            }
-        }
-
-        /// <summary>
         /// Connecting server
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
@@ -72,7 +55,6 @@ namespace eduVPN.ViewModels.Pages
                 ProfilesRefreshThread?.Join();
 
                 SetProperty(ref _ConnectingServer, value);
-                RaisePropertyChanged(nameof(AuthenticatingServer));
                 SelectedProfile = null;
                 Profiles = null;
                 if (ConnectingServer == null)
@@ -86,7 +68,7 @@ namespace eduVPN.ViewModels.Pages
                         Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                         try
                         {
-                            var list = ConnectingServer.GetProfileList(AuthenticatingServer, ct);
+                            var list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
                             //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                             {
@@ -193,7 +175,6 @@ namespace eduVPN.ViewModels.Pages
                                             using (var session = new OpenVPNSession(
                                                     Properties.Settings.Default.OpenVPNInteractiveServiceInstance,
                                                     Wizard,
-                                                    AuthenticatingServer,
                                                     SelectedProfile))
                                             {
                                                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(

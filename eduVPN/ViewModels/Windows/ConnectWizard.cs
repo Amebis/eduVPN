@@ -592,6 +592,27 @@ namespace eduVPN.ViewModels.Windows
         }
 
         /// <summary>
+        /// Returns authenticating server for the given connecting server
+        /// </summary>
+        /// <param name="connectingServer">Connecting server</param>
+        /// <returns>Authenticating server</returns>
+        public Server GetAuthenticatingServer(Server connectingServer)
+        {
+            if (connectingServer is SecureInternetServer)
+            {
+                var org = GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
+                if (org != null)
+                {
+                    var srv = GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
+                    if (srv != null)
+                        srv.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
+                    return srv;
+                }
+            }
+            return connectingServer;
+        }
+
+        /// <summary>
         /// Ask view to quit.
         /// </summary>
         /// <param name="sender">Event sender</param>
