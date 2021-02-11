@@ -63,11 +63,6 @@ namespace eduVPN.ViewModels.VPN
         public Profile ConnectingProfile { get; }
 
         /// <summary>
-        /// Event to signal VPN session finished
-        /// </summary>
-        public EventWaitHandle Finished { get; }
-
-        /// <summary>
         /// Client connection state
         /// </summary>
         public VPNSessionStatusType State
@@ -224,7 +219,6 @@ namespace eduVPN.ViewModels.VPN
             this()
         {
             SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
-            Finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
             Wizard = wizard;
             ConnectingProfile = connectingProfile;
@@ -250,31 +244,23 @@ namespace eduVPN.ViewModels.VPN
         {
             try
             {
-                try
-                {
-                    Parallel.ForEach(PreRun,
-                        action =>
-                        {
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
-                            try { action(); }
-                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                        });
-                }
-                catch (AggregateException ex)
-                {
-                    var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
-                    if (nonCancelledException.Any())
-                        throw new AggregateException("", nonCancelledException.ToArray());
-                    throw new OperationCanceledException();
-                }
-
-                DoRun();
+                Parallel.ForEach(PreRun,
+                    action =>
+                    {
+                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                        try { action(); }
+                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                    });
             }
-            finally
+            catch (AggregateException ex)
             {
-                // Signal session finished.
-                Finished.Set();
+                var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
+                if (nonCancelledException.Any())
+                    throw new AggregateException("", nonCancelledException.ToArray());
+                throw new OperationCanceledException();
             }
+
+            DoRun();
         }
 
         /// <summary>
@@ -315,9 +301,6 @@ namespace eduVPN.ViewModels.VPN
 
                     if (SessionInProgress != null)
                         SessionInProgress.Dispose();
-
-                    if (Finished != null)
-                        Finished.Dispose();
                 }
 
                 disposedValue = true;
