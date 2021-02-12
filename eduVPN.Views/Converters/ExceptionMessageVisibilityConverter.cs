@@ -29,7 +29,7 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && value is Exception ? Visibility.Visible : Visibility.Collapsed;
+            return value is Exception ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
