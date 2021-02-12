@@ -40,6 +40,7 @@
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Converters\ActiveProfileEqualSelectedProfileConverter.cs" />
     <Compile Include="Converters\ActiveProfileEqualSelectedProfileToggleConverter.cs" />
+    <Compile Include="Converters\BooleanInverseVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\CountRowHeightAutoConverter.cs" />
     <Compile Include="Converters\CountRowHeightOneStarConverter.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="Converters\EmptySearchResultRowHeightConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
+    <Compile Include="Converters\ExpiredNotificationVisibilityConverter.cs" />
     <Compile Include="Converters\FlowDirectionConverter.cs" />
     <Compile Include="Converters\HomePageOwnServerLabelConverter.cs" />
     <Compile Include="Converters\IntegerInverseVisibilityConverter.cs" />

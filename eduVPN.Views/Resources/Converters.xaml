@@ -12,6 +12,7 @@
 
     <conv:ActiveProfileEqualSelectedProfileConverter x:Key="ActiveProfileEqualSelectedProfileConverter"/>
     <conv:ActiveProfileEqualSelectedProfileToggleConverter x:Key="ActiveProfileEqualSelectedProfileToggleConverter"/>
+    <conv:BooleanInverseVisibilityConverter x:Key="BooleanInverseVisibilityConverter"/>
     <conv:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
     <conv:CountRowHeightAutoConverter x:Key="CountRowHeightAutoConverter"/>
     <conv:CountRowHeightOneStarConverter x:Key="CountRowHeightOneStarConverter"/>
@@ -19,6 +20,7 @@
     <conv:EmptySearchResultRowHeightConverter x:Key="EmptySearchResultRowHeightConverter"/>
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
+    <conv:ExpiredNotificationVisibilityConverter x:Key="ExpiredNotificationVisibilityConverter"/>
     <conv:FlowDirectionConverter x:Key="FlowDirectionConverter"/>
     <conv:HomePageOwnServerLabelConverter x:Key="HomePageOwnServerLabelConverter"/>
     <conv:IntegerInverseVisibilityConverter x:Key="IntegerInverseVisibilityConverter"/>

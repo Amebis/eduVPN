@@ -358,4 +358,7 @@ Please wait...</value>
   <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>This session is expired</value>
+  </data>
 </root>

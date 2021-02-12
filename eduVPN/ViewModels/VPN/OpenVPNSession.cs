@@ -84,6 +84,11 @@ namespace eduVPN.ViewModels.VPN
         string LogPath { get => WorkingFolder + ConnectionId + ".txt"; }
 
         /// <summary>
+        /// Is the session expired?
+        /// </summary>
+        public bool Expired { get => ExpiresAt <= DateTimeOffset.UtcNow; }
+
+        /// <summary>
         /// Client certificate expiration date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MaxValue</c> when not expires</remarks>
@@ -166,19 +171,21 @@ namespace eduVPN.ViewModels.VPN
             {
                 if (e.PropertyName == nameof(ConnectingProfile.Server.CertificateExpires))
                 {
+                    RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ExpiresAt));
                     RaisePropertyChanged(nameof(ExpiresTime));
                 }
             };
 
-            // Create dispatcher timer to refresh ShowLog command "can execute" status every second and session expiration.
+            // Create dispatcher timer to refresh properties and commands periodically.
             new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal,
                 (object sender, EventArgs e) =>
                 {
-                    ShowLog.RaiseCanExecuteChanged();
+                    RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ExpiresTime));
+                    ShowLog.RaiseCanExecuteChanged();
                 },
                 Wizard.Dispatcher).Start();
 

@@ -11,6 +11,7 @@ using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -23,6 +24,31 @@ namespace eduVPN.ViewModels.Pages
     /// </summary>
     public class ConnectionPage : ConnectWizardStandardPage
     {
+        #region Data Types
+
+        /// <summary>
+        /// The state connection page is in
+        /// </summary>
+        public enum StateType
+        {
+            /// <summary>
+            /// Waiting for user to (select profile and) connect
+            /// </summary>
+            Initial = 0,
+
+            /// <summary>
+            /// A session is active
+            /// </summary>
+            SessionActive,
+
+            /// <summary>
+            /// The active session expired
+            /// </summary>
+            SessionExpired,
+        }
+
+        #endregion
+
         #region Fields
 
         /// <summary>
@@ -38,6 +64,18 @@ namespace eduVPN.ViewModels.Pages
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// The state connection page is in
+        /// </summary>
+        public StateType State
+        {
+            get { return _State; }
+            private set { SetProperty(ref _State, value); }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private StateType _State;
 
         /// <summary>
         /// Connecting server
@@ -177,11 +215,24 @@ namespace eduVPN.ViewModels.Pages
                                                     Wizard,
                                                     SelectedProfile))
                                             {
+                                                var finalState = StateType.Initial;
                                                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                     () =>
                                                     {
                                                         session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => ToggleSession.RaiseCanExecuteChanged();
+                                                        session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                                                        {
+                                                            if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
+                                                                (session.State == VPNSessionStatusType.Connected || session.State == VPNSessionStatusType.Disconnecting) &&
+                                                                session.Expired)
+                                                            {
+                                                                finalState = StateType.SessionExpired;
+                                                                if (session.Disconnect.CanExecute())
+                                                                    session.Disconnect.Execute();
+                                                            }
+                                                        };
                                                         ActiveSession = session;
+                                                        State = StateType.SessionActive;
                                                     }));
                                                 try
                                                 {
@@ -197,7 +248,14 @@ namespace eduVPN.ViewModels.Pages
                                                     try { session.Run(); }
                                                     finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++)); }
                                                 }
-                                                finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ActiveSession = null)); }
+                                                finally
+                                                {
+                                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                                                        {
+                                                            ActiveSession = null;
+                                                            State = finalState;
+                                                        }));
+                                                }
                                             }
                                         }
                                         catch (OperationCanceledException) { }

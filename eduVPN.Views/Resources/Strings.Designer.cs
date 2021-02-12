@@ -243,6 +243,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This session is expired.
+        /// </summary>
+        public static string ConnectionPageSessionExpired {
+            get {
+                return ResourceManager.GetString("ConnectionPageSessionExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Support:.
         /// </summary>
         public static string ConnectionPageSupportContactsLabel {

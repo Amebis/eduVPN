@@ -155,9 +155,25 @@
                 Grid.Row="1"
                 Margin="0,-2,0,0"
                 HorizontalAlignment="Center"
-                Visibility="{Binding ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                Visibility="{Binding ActiveSession.Expired, Converter={StaticResource BooleanInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
                 <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanInSecondsConverter}}" Style="{StaticResource ImportantStyle}"/>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="1"
+                Margin="0,-2,0,0"
+                HorizontalAlignment="Center"
+                Text="{x:Static res:Strings.ConnectionPageSessionExpired}">
+                <TextBlock.Visibility>
+                    <MultiBinding
+                        Converter="{StaticResource ExpiredNotificationVisibilityConverter}"
+                        Mode="OneWay"
+                        FallbackValue="{x:Static Visibility.Collapsed}">
+                        <Binding Path="ActiveSession.Expired"/>
+                        <Binding Path="State"/>
+                    </MultiBinding>
+                </TextBlock.Visibility>
             </TextBlock>
         </Grid>
 
