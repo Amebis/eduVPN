@@ -361,4 +361,7 @@ Please wait...</value>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
     <value>This session is expired</value>
   </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Renew Session</value>
+  </data>
 </root>

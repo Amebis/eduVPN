@@ -665,7 +665,7 @@
         Buttons
     -->
 
-    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ActionControlStyle}">
+    <Style x:Key="ButtonBaseStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ActionControlStyle}">
         <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
         <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
@@ -689,12 +689,14 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}">
         <Setter Property="Width" Value="100"/>
         <Setter Property="Height" Value="18"/>
     </Style>
 
-    <Style x:Key="NavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}"/>
+
+    <Style x:Key="NavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}">
         <Setter Property="Width" Value="26"/>
         <Setter Property="Height" Value="26"/>
         <Setter Property="Margin" Value="7,0"/>

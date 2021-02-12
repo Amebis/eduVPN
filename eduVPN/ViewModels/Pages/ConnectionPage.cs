@@ -223,7 +223,7 @@ namespace eduVPN.ViewModels.Pages
                                                         session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
                                                         {
                                                             if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
-                                                                (session.State == VPNSessionStatusType.Connected || session.State == VPNSessionStatusType.Disconnecting) &&
+                                                                (session.State == VPNSessionStatusType.Initializing || session.State == VPNSessionStatusType.Connecting || session.State == VPNSessionStatusType.Connected || session.State == VPNSessionStatusType.Disconnecting) &&
                                                                 session.Expired)
                                                             {
                                                                 finalState = StateType.SessionExpired;

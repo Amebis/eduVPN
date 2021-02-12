@@ -252,6 +252,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Renew Session.
+        /// </summary>
+        public static string ConnectionPageSessionRenew {
+            get {
+                return ResourceManager.GetString("ConnectionPageSessionRenew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Support:.
         /// </summary>
         public static string ConnectionPageSupportContactsLabel {

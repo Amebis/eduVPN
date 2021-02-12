@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using Prism.Commands;
 using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Web.Security;
 using System.Windows.Threading;
 
@@ -49,11 +51,6 @@ namespace eduVPN.ViewModels.VPN
         private readonly string WorkingFolder;
 
         /// <summary>
-        /// Client certificate
-        /// </summary>
-        private X509Certificate2 ClientCertificate;
-
-        /// <summary>
         /// Profile configuration
         /// </summary>
         private string ProfileConfig;
@@ -67,6 +64,11 @@ namespace eduVPN.ViewModels.VPN
         /// Management Session
         /// </summary>
         private eduOpenVPN.Management.Session ManagementSession = new eduOpenVPN.Management.Session();
+
+        /// <summary>
+        /// Session renewal token
+        /// </summary>
+        private volatile bool RenewInProgress;
 
         #endregion
 
@@ -83,15 +85,43 @@ namespace eduVPN.ViewModels.VPN
         string LogPath { get => WorkingFolder + ConnectionId + ".txt"; }
 
         /// <summary>
-        /// Is the session expired?
+        /// Client certificate
         /// </summary>
-        public bool Expired { get => ClientCertificate != null && ClientCertificate.NotAfter <= DateTimeOffset.UtcNow; }
+        private X509Certificate2 ClientCertificate
+        {
+            get { return _ClientCertificate; }
+            set
+            {
+                if (SetProperty(ref _ClientCertificate, value))
+                {
+                    RaisePropertyChanged(nameof(ValidFrom));
+                    RaisePropertyChanged(nameof(ValidTo));
+                    RaisePropertyChanged(nameof(Expired));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(SuggestRenewal));
+                }
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private X509Certificate2 _ClientCertificate;
+
+        /// <summary>
+        /// Client certificate valid from date
+        /// </summary>
+        /// <remarks><c>DateTimeOffset.MinValue</c> when unknown or not available</remarks>
+        public DateTimeOffset ValidFrom { get => ClientCertificate != null ? ClientCertificate.NotBefore : DateTimeOffset.MinValue; }
 
         /// <summary>
         /// Client certificate expiration date
         /// </summary>
-        /// <remarks><c>DateTimeOffset.MaxValue</c> when not expires</remarks>
-        public DateTimeOffset ExpiresAt { get => ClientCertificate != null ? ClientCertificate.NotAfter : DateTimeOffset.MaxValue; }
+        /// <remarks><c>DateTimeOffset.MaxValue</c> when unknown or not available</remarks>
+        public DateTimeOffset ValidTo { get => ClientCertificate != null ? ClientCertificate.NotAfter : DateTimeOffset.MaxValue; }
+
+        /// <summary>
+        /// Is the session expired?
+        /// </summary>
+        public bool Expired { get => ClientCertificate != null && ClientCertificate.NotAfter <= DateTimeOffset.UtcNow; }
 
         /// <summary>
         /// Remaining time before client certificate expire; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
@@ -101,10 +131,69 @@ namespace eduVPN.ViewModels.VPN
             get
             {
                 return ClientCertificate != null ?
-                    DateTimeOffset.UtcNow - ClientCertificate.NotAfter :
+                    ClientCertificate.NotAfter - DateTimeOffset.UtcNow :
                     TimeSpan.MaxValue;
             }
         }
+
+        /// <summary>
+        /// Should UI suggest/offer a certificate renewal?
+        /// </summary>
+        public bool SuggestRenewal
+        {
+            get =>
+                ClientCertificate != null &&
+                (DateTimeOffset.UtcNow - ClientCertificate.NotBefore).Ticks >= 0.75 * (ClientCertificate.NotAfter - ClientCertificate.NotBefore).Ticks;
+        }
+
+        /// <summary>
+        /// Renews the client certificate and restarts the session
+        /// </summary>
+        public DelegateCommand Renew
+        {
+            get
+            {
+                if (_Renew == null)
+                {
+                    _Renew = new DelegateCommand(
+                        () =>
+                        {
+                            try
+                            {
+                                RenewInProgress = true;
+                                _Renew.RaiseCanExecuteChanged();
+                                new Thread(new ThreadStart(
+                                    () =>
+                                    {
+                                        try
+                                        {
+                                            var cert = ConnectingProfile.Server.GetClientCertificate(
+                                                Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                                                true,
+                                                SessionAndWindowInProgress.Token);
+                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ClientCertificate = cert));
+                                            ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
+                                        }
+                                        catch (OperationCanceledException) { }
+                                        catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
+                                        finally
+                                        {
+                                            RenewInProgress = false;
+                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => _Renew.RaiseCanExecuteChanged()));
+                                        }
+                                    })).Start();
+                            }
+                            catch (Exception ex) { Wizard.Error = ex; }
+                        },
+                        () => !RenewInProgress && State == VPNSessionStatusType.Connected);
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
+                }
+                return _Renew;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Renew;
 
         /// <inheritdoc/>
         override public DelegateCommand ShowLog
@@ -175,6 +264,7 @@ namespace eduVPN.ViewModels.VPN
                 {
                     RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(SuggestRenewal));
                     ShowLog.RaiseCanExecuteChanged();
                 },
                 Wizard.Dispatcher).Start();
@@ -188,16 +278,11 @@ namespace eduVPN.ViewModels.VPN
             PreRun.Add(() =>
             {
                 // Get client certificate.
-                ClientCertificate = ConnectingProfile.Server.GetClientCertificate(
+                var cert = ConnectingProfile.Server.GetClientCertificate(
                     Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                    false,
                     SessionAndWindowInProgress.Token);
-                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                    () =>
-                    {
-                        RaisePropertyChanged(nameof(Expired));
-                        RaisePropertyChanged(nameof(ExpiresAt));
-                        RaisePropertyChanged(nameof(ExpiresTime));
-                    }));
+                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ClientCertificate = cert));
             });
 
             // Set management session event handlers.
@@ -344,16 +429,11 @@ namespace eduVPN.ViewModels.VPN
                         case "auth-failure": // Client certificate was deleted/revoked on the server side, or the user is disabled.
                         case "tls-error": // Client certificate is not compliant with this eduVPN server. Was eduVPN server reinstalled?
                             // Refresh client certificate.
-                            ClientCertificate = ConnectingProfile.Server.RefreshClientCertificate(
+                            var cert = ConnectingProfile.Server.GetClientCertificate(
                                 Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                                true,
                                 SessionAndWindowInProgress.Token);
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                () =>
-                                {
-                                    RaisePropertyChanged(nameof(Expired));
-                                    RaisePropertyChanged(nameof(ExpiresAt));
-                                    RaisePropertyChanged(nameof(ExpiresTime));
-                                }));
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ClientCertificate = cert));
                             IgnoreHoldHint = true;
                             break;
 

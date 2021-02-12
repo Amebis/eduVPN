@@ -263,9 +263,10 @@ namespace eduVPN.Models
         /// Gets client certificate
         /// </summary>
         /// <param name="authenticatingServer">Authenticating server (can be same as this server)</param>
+        /// <param name="forceRefresh">Force new certificate creation</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Client certificate</returns>
-        public X509Certificate2 GetClientCertificate(Server authenticatingServer, CancellationToken ct = default)
+        public X509Certificate2 GetClientCertificate(Server authenticatingServer, bool forceRefresh = false, CancellationToken ct = default)
         {
             lock (ClientCertificateLock)
             {
@@ -274,12 +275,14 @@ namespace eduVPN.Models
                 // Get API endpoints.
                 var api = GetEndpoints(ct);
                 var e = new RequestAuthorizationEventArgs("config");
+                if (forceRefresh)
+                    e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
 
                 retry:
                 // Request authentication token.
                 OnRequestAuthorization(authenticatingServer, e);
 
-                if (File.Exists(path))
+                if (!forceRefresh && File.Exists(path))
                 {
                     // Perform an optional certificate check.
                     try
@@ -399,23 +402,6 @@ namespace eduVPN.Models
                         throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
                 }
                 catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
-            }
-        }
-
-        /// <summary>
-        /// Refreshes client certificate
-        /// </summary>
-        /// <param name="authenticatingServer">Authenticating server (can be same as this server)</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Client certificate</returns>
-        public X509Certificate2 RefreshClientCertificate(Server authenticatingServer, CancellationToken ct = default)
-        {
-            lock (ClientCertificateLock)
-            {
-                // Remove previously issued client certificate.
-                try { File.Delete(ClientCertificatePath); } catch { }
-
-                return GetClientCertificate(authenticatingServer, ct);
             }
         }
 

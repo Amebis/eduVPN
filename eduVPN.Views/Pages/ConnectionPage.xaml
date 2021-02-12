@@ -144,6 +144,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock
@@ -175,6 +176,17 @@
                     </MultiBinding>
                 </TextBlock.Visibility>
             </TextBlock>
+
+            <Button
+                x:Name="RenewSession"
+                Grid.Row="2"
+                Margin="0,5,0,0"
+                HorizontalAlignment="Center"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectionPageSessionRenew}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                Visibility="{Binding ActiveSession.SuggestRenewal, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                Command="{Binding ActiveSession.Renew}">
+                <AccessText Text="{x:Static res:Strings.ConnectionPageSessionRenew}"/>
+            </Button>
         </Grid>
 
         <TextBlock

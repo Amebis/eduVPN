@@ -2,8 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.2...HEAD)
 
-- Turkish translation
+- Support session renewal before it expires
 - GUI refinements
+- Turkish translation
 - Fixes
 
 
