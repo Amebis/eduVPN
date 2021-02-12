@@ -12,7 +12,6 @@ using System.Windows.Data;
 
 namespace eduVPN.Converters
 {
-
     /// <summary>
     /// Returns <see cref="Visibility.Visible"/> if the value is <c>true</c>; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
