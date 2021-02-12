@@ -6,7 +6,6 @@
 */
 
 using eduVPN.JSON;
-using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +23,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN server
     /// </summary>
-    public class Server : BindableBase, JSON.ILoadableItem
+    public class Server : JSON.ILoadableItem
     {
         #region Fields
 
@@ -73,42 +72,6 @@ namespace eduVPN.Models
         public List<Uri> SupportContacts { get; } = new List<Uri>();
 
         /// <summary>
-        /// Estimated access token expiration date; or <see cref="DateTimeOffset.MaxValue"/> if token does not expire
-        /// </summary>
-        public DateTimeOffset AccessTokenExpires
-        {
-            get { return _AccessTokenExpires; }
-            private set { SetProperty(ref _AccessTokenExpires, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTimeOffset _AccessTokenExpires = DateTimeOffset.MaxValue;
-
-        /// <summary>
-        /// Client certificate issue date; or <see cref="DateTimeOffset.MinValue"/> if unknown or not available.
-        /// </summary>
-        public DateTimeOffset CertificateIssued
-        {
-            get { return _CertificateIssued; }
-            private set { SetProperty(ref _CertificateIssued, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTimeOffset _CertificateIssued = DateTimeOffset.MinValue;
-
-        /// <summary>
-        /// Client certificate expiration date; or <see cref="DateTimeOffset.MaxValue"/> if certificate does not expire
-        /// </summary>
-        public DateTimeOffset CertificateExpires
-        {
-            get { return _CertificateExpires; }
-            private set { SetProperty(ref _CertificateExpires, value); }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTimeOffset _CertificateExpires = DateTimeOffset.MaxValue;
-
-        /// <summary>
         /// Request authorization event
         /// </summary>
         /// <remarks>Sender is the authenticating server <see cref="eduVPN.Models.Server"/>.</remarks>
@@ -125,8 +88,6 @@ namespace eduVPN.Models
 
             if (e.AccessToken is eduOAuth.InvalidToken)
                 throw new InvalidAccessTokenException(string.Format(Resources.Strings.ErrorInvalidAccessToken, this));
-
-            AccessTokenExpires = e.AccessToken.Expires;
         }
 
         /// <summary>
@@ -346,8 +307,6 @@ namespace eduVPN.Models
                         {
                             case CertificateCheck.ReasonType.Valid:
                                 // Certificate is valid.
-                                CertificateIssued = cert.NotBefore;
-                                CertificateExpires = cert.NotAfter;
                                 return cert;
 
                             case CertificateCheck.ReasonType.UserDisabled:
@@ -414,8 +373,6 @@ namespace eduVPN.Models
                             "CERTIFICATE"),
                         (string)null,
                         X509KeyStorageFlags.PersistKeySet);
-                    CertificateIssued = certX509.NotBefore;
-                    CertificateExpires = certX509.NotAfter;
                     return certX509;
                 }
                 catch (OperationCanceledException) { throw; }

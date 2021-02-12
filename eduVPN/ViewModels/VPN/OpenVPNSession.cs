@@ -13,7 +13,6 @@ using Microsoft.Win32;
 using Prism.Commands;
 using System;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -86,23 +85,23 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Is the session expired?
         /// </summary>
-        public bool Expired { get => ExpiresAt <= DateTimeOffset.UtcNow; }
+        public bool Expired { get => ClientCertificate != null && ClientCertificate.NotAfter <= DateTimeOffset.UtcNow; }
 
         /// <summary>
         /// Client certificate expiration date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MaxValue</c> when not expires</remarks>
-        public DateTimeOffset ExpiresAt { get => ConnectingProfile.Server.CertificateExpires; }
+        public DateTimeOffset ExpiresAt { get => ClientCertificate != null ? ClientCertificate.NotAfter : DateTimeOffset.MaxValue; }
 
         /// <summary>
-        /// Remaining time before client certificate expire; or <see cref="TimeSpan.MaxValue"/> if certificate does not expire
+        /// Remaining time before client certificate expire; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
         /// </summary>
         public TimeSpan ExpiresTime
         {
             get
             {
-                return ExpiresAt != DateTimeOffset.MaxValue ?
-                    DateTimeOffset.UtcNow - ExpiresAt :
+                return ClientCertificate != null ?
+                    DateTimeOffset.UtcNow - ClientCertificate.NotAfter :
                     TimeSpan.MaxValue;
             }
         }
@@ -116,7 +115,8 @@ namespace eduVPN.ViewModels.VPN
                     _ShowLog = new DelegateCommand(
                         () =>
                         {
-                            try {
+                            try
+                            {
                                 // Open log file in registered application.
                                 Process.Start(LogPath);
                             }
@@ -167,16 +167,6 @@ namespace eduVPN.ViewModels.VPN
                 WorkingFolder = Path.GetTempPath();
             }
 
-            ConnectingProfile.Server.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-            {
-                if (e.PropertyName == nameof(ConnectingProfile.Server.CertificateExpires))
-                {
-                    RaisePropertyChanged(nameof(Expired));
-                    RaisePropertyChanged(nameof(ExpiresAt));
-                    RaisePropertyChanged(nameof(ExpiresTime));
-                }
-            };
-
             // Create dispatcher timer to refresh properties and commands periodically.
             new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
@@ -201,6 +191,13 @@ namespace eduVPN.ViewModels.VPN
                 ClientCertificate = ConnectingProfile.Server.GetClientCertificate(
                     Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                     SessionAndWindowInProgress.Token);
+                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                    () =>
+                    {
+                        RaisePropertyChanged(nameof(Expired));
+                        RaisePropertyChanged(nameof(ExpiresAt));
+                        RaisePropertyChanged(nameof(ExpiresTime));
+                    }));
             });
 
             // Set management session event handlers.
@@ -350,6 +347,13 @@ namespace eduVPN.ViewModels.VPN
                             ClientCertificate = ConnectingProfile.Server.RefreshClientCertificate(
                                 Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                                 SessionAndWindowInProgress.Token);
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                () =>
+                                {
+                                    RaisePropertyChanged(nameof(Expired));
+                                    RaisePropertyChanged(nameof(ExpiresAt));
+                                    RaisePropertyChanged(nameof(ExpiresTime));
+                                }));
                             IgnoreHoldHint = true;
                             break;
 
