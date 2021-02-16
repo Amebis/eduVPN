@@ -39,8 +39,6 @@
     <Compile Include="App.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Converters\ActiveProfileEqualSelectedProfileConverter.cs" />
-    <Compile Include="Converters\ActiveProfileEqualSelectedProfileToggleConverter.cs" />
-    <Compile Include="Converters\BooleanInverseVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\CountRowHeightAutoConverter.cs" />
     <Compile Include="Converters\CountRowHeightOneStarConverter.cs" />
@@ -51,14 +49,13 @@
     <Compile Include="Converters\ExpiredNotificationVisibilityConverter.cs" />
     <Compile Include="Converters\FlowDirectionConverter.cs" />
     <Compile Include="Converters\HomePageOwnServerLabelConverter.cs" />
-    <Compile Include="Converters\IntegerInverseVisibilityConverter.cs" />
     <Compile Include="Converters\IntegerVisibilityConverter.cs" />
-    <Compile Include="Converters\NullInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\InvertableConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
     <Compile Include="Converters\ProfileSelectionVisibilityConverter.cs" />
     <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
-    <Compile Include="Converters\StringInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\UriStripProtocolConverter.cs" />
     <Compile Include="Converters\VPNSessionStatusTypeDescriptionConverter.cs" />

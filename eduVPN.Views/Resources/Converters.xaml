@@ -11,8 +11,11 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <conv:ActiveProfileEqualSelectedProfileConverter x:Key="ActiveProfileEqualSelectedProfileConverter"/>
-    <conv:ActiveProfileEqualSelectedProfileToggleConverter x:Key="ActiveProfileEqualSelectedProfileToggleConverter"/>
-    <conv:BooleanInverseVisibilityConverter x:Key="BooleanInverseVisibilityConverter"/>
+    <conv:BooleanVisibilityConverter x:Key="BooleanInverseVisibilityConverter">
+        <conv:BooleanVisibilityConverter.Invert>
+            <sys:Boolean>True</sys:Boolean>
+        </conv:BooleanVisibilityConverter.Invert>
+    </conv:BooleanVisibilityConverter>
     <conv:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
     <conv:CountRowHeightAutoConverter x:Key="CountRowHeightAutoConverter"/>
     <conv:CountRowHeightOneStarConverter x:Key="CountRowHeightOneStarConverter"/>
@@ -23,9 +26,17 @@
     <conv:ExpiredNotificationVisibilityConverter x:Key="ExpiredNotificationVisibilityConverter"/>
     <conv:FlowDirectionConverter x:Key="FlowDirectionConverter"/>
     <conv:HomePageOwnServerLabelConverter x:Key="HomePageOwnServerLabelConverter"/>
-    <conv:IntegerInverseVisibilityConverter x:Key="IntegerInverseVisibilityConverter"/>
+    <conv:IntegerVisibilityConverter x:Key="IntegerInverseVisibilityConverter">
+        <conv:IntegerVisibilityConverter.Invert>
+            <sys:Boolean>True</sys:Boolean>
+        </conv:IntegerVisibilityConverter.Invert>
+    </conv:IntegerVisibilityConverter>
     <conv:IntegerVisibilityConverter x:Key="IntegerVisibilityConverter"/>
-    <conv:NullInverseVisibilityConverter x:Key="NullInverseVisibilityConverter"/>
+    <conv:NullVisibilityConverter x:Key="NullInverseVisibilityConverter">
+        <conv:NullVisibilityConverter.Invert>
+            <sys:Boolean>True</sys:Boolean>
+        </conv:NullVisibilityConverter.Invert>
+    </conv:NullVisibilityConverter>
     <conv:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
     <conv:NumberToHumanReadableConverter x:Key="Byte1024ToHumanReadableConverter" Unit="B">
         <conv:NumberToHumanReadableConverter.Base>
@@ -34,7 +45,11 @@
     </conv:NumberToHumanReadableConverter>
     <conv:ProfileSelectionVisibilityConverter x:Key="ProfileSelectionVisibilityConverter"/>
     <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
-    <conv:StringInverseVisibilityConverter x:Key="StringInverseVisibilityConverter"/>
+    <conv:StringVisibilityConverter x:Key="StringInverseVisibilityConverter">
+        <conv:StringVisibilityConverter.Invert>
+            <sys:Boolean>True</sys:Boolean>
+        </conv:StringVisibilityConverter.Invert>
+    </conv:StringVisibilityConverter>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
     <conv:UriStripProtocolConverter x:Key="UriStripProtocolConverter"/>
     <conv:VPNSessionStatusTypeDescriptionConverter x:Key="VPNSessionStatusTypeDescriptionConverter"/>

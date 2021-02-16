@@ -13,9 +13,9 @@ using System.Windows.Data;
 namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if the value is <c>true</c>; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="Visibility.Visible"/> if the value is <c>true</c> (<c>false</c> when Invert is true); or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
-    public class BooleanVisibilityConverter : IValueConverter
+    public class BooleanVisibilityConverter : InvertableConverter, IValueConverter
     {
         #region Methods
 
@@ -29,7 +29,7 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is bool b && b ? Visibility.Visible : Visibility.Collapsed;
+            return value is bool b && !Invert == b ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
