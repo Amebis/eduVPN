@@ -640,7 +640,7 @@ namespace eduVPN.ViewModels.VPN
                     () =>
                     {
                         // Cleanup status properties.
-                        State = VPNSessionStatusType.Initializing;
+                        State = VPNSessionStatusType.Disconnected;
                         StateDescription = "";
 
                         Wizard.TaskCount--;
