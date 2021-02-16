@@ -43,7 +43,7 @@ namespace eduVPN.ViewModels.Pages
             set
             {
                 if (SetProperty(ref _SelectedSecureInternetServer, value))
-                    ConfirmSecureInternetServerSelection.RaiseCanExecuteChanged();
+                    _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
             }
         }
 

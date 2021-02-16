@@ -37,8 +37,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (SetProperty(ref _SelectedInstituteAccessServer, value))
                 {
-                    ConfirmInstituteAccessServerSelection.RaiseCanExecuteChanged();
-                    ForgetInstituteAccessServer.RaiseCanExecuteChanged();
+                    _ConfirmInstituteAccessServerSelection?.RaiseCanExecuteChanged();
+                    _ForgetInstituteAccessServer?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -142,7 +142,7 @@ namespace eduVPN.ViewModels.Pages
             set
             {
                 if (SetProperty(ref _SelectedSecureInternetServer, value))
-                    ConfirmSecureInternetServerSelection.RaiseCanExecuteChanged();
+                    _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
             }
         }
 
@@ -198,9 +198,9 @@ namespace eduVPN.ViewModels.Pages
                                 SecureInternetServers.Clear();
                                 SelectedSecureInternetServer = null;
                                 RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
-                                ConfirmSecureInternetServerSelection.RaiseCanExecuteChanged();
-                                ForgetSecureInternet.RaiseCanExecuteChanged();
-                                ChangeSecureInternetServer.RaiseCanExecuteChanged();
+                                _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
+                                _ForgetSecureInternet?.RaiseCanExecuteChanged();
+                                _ChangeSecureInternetServer?.RaiseCanExecuteChanged();
 
                                 // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
                                 if (Wizard.StartingPage != Wizard.CurrentPage)
@@ -254,8 +254,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (SetProperty(ref _SelectedOwnServer, value))
                 {
-                    ConfirmOwnServerSelection.RaiseCanExecuteChanged();
-                    ForgetOwnServer.RaiseCanExecuteChanged();
+                    _ConfirmOwnServerSelection?.RaiseCanExecuteChanged();
+                    _ForgetOwnServer?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -430,7 +430,7 @@ namespace eduVPN.ViewModels.Pages
             finally { SecureInternetServers.EndUpdate(); }
             SelectedSecureInternetServer = Wizard.GetDiscoveredServer<SecureInternetServer>(selected);
             RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
-            ConfirmSecureInternetServerSelection.RaiseCanExecuteChanged();
+            _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
         }
 
         /// <summary>
@@ -442,8 +442,8 @@ namespace eduVPN.ViewModels.Pages
             Properties.Settings.Default.SecureInternetOrganization = org.Id;
             Properties.Settings.Default.SecureInternetConnectingServer = org.SecureInternetBase;
             RebuildSecureInternetServers(this, null);
-            ForgetSecureInternet.RaiseCanExecuteChanged();
-            ChangeSecureInternetServer.RaiseCanExecuteChanged();
+            _ForgetSecureInternet?.RaiseCanExecuteChanged();
+            _ChangeSecureInternetServer?.RaiseCanExecuteChanged();
         }
 
         /// <summary>

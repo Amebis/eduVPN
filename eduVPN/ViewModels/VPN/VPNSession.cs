@@ -179,7 +179,7 @@ namespace eduVPN.ViewModels.VPN
                             {
                                 // Terminate connection.
                                 SessionInProgress.Cancel();
-                                Disconnect.RaiseCanExecuteChanged();
+                                _Disconnect.RaiseCanExecuteChanged();
 
                                 // Clear profile to auto-start on next launch.
                                 Properties.Settings.Default.AutoStartProfile = null;

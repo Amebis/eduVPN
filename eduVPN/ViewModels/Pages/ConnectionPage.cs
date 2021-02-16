@@ -160,7 +160,7 @@ namespace eduVPN.ViewModels.Pages
                 {
                     if (ConnectingServer != null && SelectedProfile != null)
                         Properties.Settings.Default.LastSelectedProfile[ConnectingServer.Base.AbsoluteUri] = SelectedProfile.Id;
-                    StartSession.RaiseCanExecuteChanged();
+                    _StartSession?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -178,10 +178,10 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (SetProperty(ref _ActiveSession, value))
                 {
-                    StartSession.RaiseCanExecuteChanged();
-                    ToggleSession.RaiseCanExecuteChanged();
-                    SessionInfo.RaiseCanExecuteChanged();
-                    NavigateBack.RaiseCanExecuteChanged();
+                    _StartSession?.RaiseCanExecuteChanged();
+                    _ToggleSession?.RaiseCanExecuteChanged();
+                    _SessionInfo?.RaiseCanExecuteChanged();
+                    _NavigateBack?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace eduVPN.ViewModels.Pages
                                                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                     () =>
                                                     {
-                                                        session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => ToggleSession.RaiseCanExecuteChanged();
+                                                        session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession?.RaiseCanExecuteChanged();
                                                         session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
                                                         {
                                                             if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&

@@ -47,8 +47,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (SetProperty(ref _AvailableVersion, value))
                 {
-                    StartUpdate.RaiseCanExecuteChanged();
-                    SkipUpdate.RaiseCanExecuteChanged();
+                    _StartUpdate?.RaiseCanExecuteChanged();
+                    _SkipUpdate?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace eduVPN.ViewModels.Pages
             private set
             {
                 if (SetProperty(ref _Changelog, value))
-                    ShowChangelog.RaiseCanExecuteChanged();
+                    _ShowChangelog?.RaiseCanExecuteChanged();
             }
         }
 

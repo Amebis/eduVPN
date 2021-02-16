@@ -82,7 +82,7 @@ namespace eduVPN.ViewModels.Pages
             set
             {
                 if (SetProperty(ref _SelectedInstituteAccessServer, value))
-                    ConfirmInstituteAccessServerSelection.RaiseCanExecuteChanged();
+                    _ConfirmInstituteAccessServerSelection?.RaiseCanExecuteChanged();
             }
         }
 
@@ -140,7 +140,7 @@ namespace eduVPN.ViewModels.Pages
             set
             {
                 if (SetProperty(ref _SelectedOrganization, value))
-                    ConfirmOrganizationSelection.RaiseCanExecuteChanged();
+                    _ConfirmOrganizationSelection?.RaiseCanExecuteChanged();
             }
         }
 
@@ -202,7 +202,7 @@ namespace eduVPN.ViewModels.Pages
             set
             {
                 if (SetProperty(ref _SelectedOwnServer, value))
-                    ConfirmOwnServerSelection.RaiseCanExecuteChanged();
+                    _ConfirmOwnServerSelection?.RaiseCanExecuteChanged();
             }
         }
 
@@ -271,7 +271,7 @@ namespace eduVPN.ViewModels.Pages
         {
             Wizard.DiscoveredServersChanged += (object sender, EventArgs e) =>
             {
-                ConfirmOrganizationSelection.RaiseCanExecuteChanged();
+                _ConfirmOrganizationSelection?.RaiseCanExecuteChanged();
                 Search();
             };
 

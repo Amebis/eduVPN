@@ -265,7 +265,7 @@ namespace eduVPN.ViewModels.VPN
                     RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ExpiresTime));
                     RaisePropertyChanged(nameof(SuggestRenewal));
-                    ShowLog.RaiseCanExecuteChanged();
+                    _ShowLog?.RaiseCanExecuteChanged();
                 },
                 Wizard.Dispatcher).Start();
 

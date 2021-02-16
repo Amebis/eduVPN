@@ -45,8 +45,8 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (SetProperty(ref _Error, value))
                 {
-                    DismissError.RaiseCanExecuteChanged();
-                    CopyError.RaiseCanExecuteChanged();
+                    _DismissError?.RaiseCanExecuteChanged();
+                    _CopyError?.RaiseCanExecuteChanged();
                 }
             }
         }

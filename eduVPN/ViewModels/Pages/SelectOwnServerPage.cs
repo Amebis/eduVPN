@@ -32,7 +32,7 @@ namespace eduVPN.ViewModels.Pages
             set
             {
                 if (SetProperty(ref _Hostname, value))
-                    AddServer.RaiseCanExecuteChanged();
+                    _AddServer?.RaiseCanExecuteChanged();
             }
         }
 
@@ -108,7 +108,7 @@ namespace eduVPN.ViewModels.Pages
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
                 if (e.PropertyName == nameof(HasErrors))
-                    AddServer.RaiseCanExecuteChanged();
+                    _AddServer?.RaiseCanExecuteChanged();
             };
         }
 
