@@ -19,7 +19,7 @@
     Title="{Binding ClientTitle, Source={x:Static prop:Settings.Default}}"
     MinWidth="332" d:DesignWidth="332"
     MinHeight="454" d:DesignHeight="454"
-    Icon="{Binding ConnectionPage.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource AppWindowIcon}}"
+    Icon="{Binding ConnectionPage.ActiveSession.State, Converter={StaticResource SessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource AppWindowIcon}}"
     Style="{StaticResource ConnectWizardWindowStyle}">
 
     <Window.DataContext>

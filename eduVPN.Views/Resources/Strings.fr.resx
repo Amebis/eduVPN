@@ -299,19 +299,19 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
     <value>View _log...</value>
   </data>
-  <data name="VPNSessionStatusTypeConnected" xml:space="preserve">
+  <data name="SessionStatusTypeConnected" xml:space="preserve">
     <value>Connected</value>
   </data>
-  <data name="VPNSessionStatusTypeConnecting" xml:space="preserve">
+  <data name="SessionStatusTypeConnecting" xml:space="preserve">
     <value>Connecting...</value>
   </data>
-  <data name="VPNSessionStatusTypeDisconnecting" xml:space="preserve">
+  <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
     <value>Disconnecting...</value>
   </data>
-  <data name="VPNSessionStatusTypeError" xml:space="preserve">
+  <data name="SessionStatusTypeError" xml:space="preserve">
     <value>Connection Error</value>
   </data>
-  <data name="VPNSessionStatusTypeInitializing" xml:space="preserve">
+  <data name="SessionStatusTypeInitializing" xml:space="preserve">
     <value>Not connected</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">

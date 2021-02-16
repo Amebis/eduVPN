@@ -52,7 +52,7 @@
     </conv:StringVisibilityConverter>
     <conv:TimeSpanInSecondsConverter x:Key="TimeSpanInSecondsConverter"/>
     <conv:UriStripProtocolConverter x:Key="UriStripProtocolConverter"/>
-    <conv:VPNSessionStatusTypeDescriptionConverter x:Key="VPNSessionStatusTypeDescriptionConverter"/>
-    <conv:VPNSessionStatusTypeIconConverter x:Key="VPNSessionStatusTypeIconConverter"/>
-    <conv:VPNSessionStatusTypeWindowIconConverter x:Key="VPNSessionStatusTypeWindowIconConverter"/>
+    <conv:SessionStatusTypeDescriptionConverter x:Key="SessionStatusTypeDescriptionConverter"/>
+    <conv:SessionStatusTypeIconConverter x:Key="SessionStatusTypeIconConverter"/>
+    <conv:SessionStatusTypeWindowIconConverter x:Key="SessionStatusTypeWindowIconConverter"/>
 </ResourceDictionary>

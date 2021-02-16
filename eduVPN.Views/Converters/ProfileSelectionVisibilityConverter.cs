@@ -37,7 +37,7 @@ namespace eduVPN.Converters
         {
             return
                 values[0] is int profileCount && profileCount > 1 &&
-                !(values[1] is VPNSession) ? Visibility.Visible : Visibility.Collapsed;
+                !(values[1] is Session) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

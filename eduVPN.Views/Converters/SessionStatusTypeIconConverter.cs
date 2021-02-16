@@ -8,14 +8,15 @@
 using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns status description according to status state.
+    /// Returns status icon according to status state.
     /// </summary>
-    public class VPNSessionStatusTypeDescriptionConverter : IValueConverter
+    public class SessionStatusTypeIconConverter : IValueConverter
     {
         #region Methods
 
@@ -29,12 +30,13 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is VPNSessionStatusType statusType)
+            if (value is SessionStatusType statusType)
             {
-                var id = string.Format("VPNSessionStatusType{0}", Enum.GetName(typeof(VPNSessionStatusType), statusType));
-                try { return eduVPN.Views.Resources.Strings.ResourceManager.GetString(id, eduVPN.Views.Resources.Strings.Culture); } catch { }
+                var resourceName = string.Format("SessionStatusType{0}Icon", Enum.GetName(typeof(SessionStatusType), statusType));
+                if (Application.Current.Resources.Contains(resourceName))
+                    return Application.Current.Resources[resourceName];
             }
-            return null;
+            return Application.Current.Resources.Contains("SessionStatusTypeIcon") ? Application.Current.Resources["SessionStatusTypeIcon"] : null;
         }
 
         /// <summary>

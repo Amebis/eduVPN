@@ -300,7 +300,7 @@
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="VPNSessionStatusTypeIcon">
+    <DataTemplate x:Key="SessionStatusTypeIcon">
         <Canvas Width="100" Height="87">
             <Canvas.RenderTransform>
                 <TransformGroup>
@@ -329,7 +329,7 @@
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="VPNSessionStatusTypeConnectingIcon">
+    <DataTemplate x:Key="SessionStatusTypeConnectingIcon">
         <Canvas Width="100" Height="87">
             <Canvas.RenderTransform>
                 <TransformGroup>
@@ -364,7 +364,7 @@
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="VPNSessionStatusTypeConnectedIcon">
+    <DataTemplate x:Key="SessionStatusTypeConnectedIcon">
         <Canvas Width="100" Height="87">
             <Canvas.RenderTransform>
                 <TransformGroup>
@@ -400,7 +400,7 @@
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="VPNSessionStatusTypeDisconnectingIcon">
+    <DataTemplate x:Key="SessionStatusTypeDisconnectingIcon">
         <Canvas Width="100" Height="87">
             <Canvas.RenderTransform>
                 <TransformGroup>
@@ -435,7 +435,7 @@
         </Canvas>
     </DataTemplate>
 
-    <DataTemplate x:Key="VPNSessionStatusTypeErrorIcon">
+    <DataTemplate x:Key="SessionStatusTypeErrorIcon">
         <Canvas Width="100" Height="87">
             <Canvas.RenderTransform>
                 <TransformGroup>

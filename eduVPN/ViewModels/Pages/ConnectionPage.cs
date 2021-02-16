@@ -171,7 +171,7 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Active VPN session
         /// </summary>
-        public VPNSession ActiveSession
+        public Session ActiveSession
         {
             get { return _ActiveSession; }
             private set
@@ -187,7 +187,7 @@ namespace eduVPN.ViewModels.Pages
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private VPNSession _ActiveSession;
+        private Session _ActiveSession;
 
         /// <summary>
         /// Starts VPN session
@@ -223,7 +223,7 @@ namespace eduVPN.ViewModels.Pages
                                                         session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
                                                         {
                                                             if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
-                                                                (session.State == VPNSessionStatusType.Initializing || session.State == VPNSessionStatusType.Connecting || session.State == VPNSessionStatusType.Connected || session.State == VPNSessionStatusType.Disconnecting) &&
+                                                                (session.State == SessionStatusType.Initializing || session.State == SessionStatusType.Connecting || session.State == SessionStatusType.Connected || session.State == SessionStatusType.Disconnecting) &&
                                                                 session.Expired)
                                                             {
                                                                 finalState = StateType.SessionExpired;

@@ -30,7 +30,7 @@ namespace eduVPN.ViewModels.VPN
     /// <summary>
     /// OpenVPN session
     /// </summary>
-    public class OpenVPNSession : VPNSession
+    public class OpenVPNSession : Session
     {
         #region Fields
 
@@ -185,7 +185,7 @@ namespace eduVPN.ViewModels.VPN
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
-                        () => !RenewInProgress && State == VPNSessionStatusType.Connected);
+                        () => !RenewInProgress && State == SessionStatusType.Connected);
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
                 }
                 return _Renew;
@@ -298,7 +298,7 @@ namespace eduVPN.ViewModels.VPN
                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                     () =>
                     {
-                        State = VPNSessionStatusType.Error;
+                        State = SessionStatusType.Error;
                         var msg = Resources.Strings.OpenVPNStateTypeFatalError;
                         if (e.Message != null && e.Message.Length > 0)
                         {
@@ -335,57 +335,57 @@ namespace eduVPN.ViewModels.VPN
                         switch (e.State)
                         {
                             case OpenVPNStateType.Connecting:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeConnecting;
                                 break;
 
                             case OpenVPNStateType.Resolving:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeResolving;
                                 break;
 
                             case OpenVPNStateType.TcpConnecting:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeTcpConnecting;
                                 break;
 
                             case OpenVPNStateType.Waiting:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeWaiting;
                                 break;
 
                             case OpenVPNStateType.Authenticating:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeAuthenticating;
                                 break;
 
                             case OpenVPNStateType.GettingConfiguration:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeGettingConfiguration;
                                 break;
 
                             case OpenVPNStateType.AssigningIP:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeAssigningIP;
                                 break;
 
                             case OpenVPNStateType.AddingRoutes:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeAddingRoutes;
                                 break;
 
                             case OpenVPNStateType.Connected:
-                                State = VPNSessionStatusType.Connected;
+                                State = SessionStatusType.Connected;
                                 msg = Resources.Strings.OpenVPNStateTypeConnected;
                                 break;
 
                             case OpenVPNStateType.Reconnecting:
-                                State = VPNSessionStatusType.Connecting;
+                                State = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeReconnecting;
                                 break;
 
                             case OpenVPNStateType.Exiting:
-                                State = VPNSessionStatusType.Disconnecting;
+                                State = SessionStatusType.Disconnecting;
                                 msg = Resources.Strings.OpenVPNStateTypeExiting;
                                 break;
                         }
@@ -686,7 +686,7 @@ namespace eduVPN.ViewModels.VPN
                                         () =>
                                         {
                                             // Cleanup status properties.
-                                            State = VPNSessionStatusType.Disconnecting;
+                                            State = SessionStatusType.Disconnecting;
                                             StateDescription = Resources.Strings.OpenVPNStateTypeExiting;
                                             TunnelAddress = null;
                                             IPv6TunnelAddress = null;
@@ -720,7 +720,7 @@ namespace eduVPN.ViewModels.VPN
                     () =>
                     {
                         // Cleanup status properties.
-                        State = VPNSessionStatusType.Disconnected;
+                        State = SessionStatusType.Disconnected;
                         StateDescription = "";
 
                         Wizard.TaskCount--;

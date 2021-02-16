@@ -87,8 +87,8 @@
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\RequestAuthorizationEventArgs.cs" />
     <Compile Include="ViewModels\Pages\SettingsPage.cs" />
-    <Compile Include="ViewModels\VPN\VPNSession.cs" />
-    <Compile Include="ViewModels\VPN\VPNSessionStatusType.cs" />
+    <Compile Include="ViewModels\VPN\Session.cs" />
+    <Compile Include="ViewModels\VPN\SessionStatusType.cs" />
     <Compile Include="Models\ServerEndpoints.cs" />
     <Compile Include="ViewModels\Pages\ConnectWizardStandardPage.cs" />
     <Compile Include="ViewModels\Windows\ConnectWizard.cs" />

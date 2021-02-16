@@ -58,9 +58,9 @@
     <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\UriStripProtocolConverter.cs" />
-    <Compile Include="Converters\VPNSessionStatusTypeDescriptionConverter.cs" />
-    <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
-    <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
+    <Compile Include="Converters\SessionStatusTypeDescriptionConverter.cs" />
+    <Compile Include="Converters\SessionStatusTypeIconConverter.cs" />
+    <Compile Include="Converters\SessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
     <Compile Include="Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -144,14 +144,16 @@
     <Resource Include="Resources\Fonts\OpenSans-Regular.ttf" />
     <Resource Include="Resources\Fonts\OpenSans-Semibold.ttf" />
     <Resource Include="Resources\Fonts\OpenSans-SemiboldItalic.ttf" />
-    <Resource Include="Resources\VPNSessionStatusTypeConnectedIcon.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeConnectingIcon.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeDisconnectingIcon.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeErrorIcon.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeInitializingIcon.ico" />
+    <Resource Include="Resources\SessionStatusTypeConnectedIcon.ico" />
+    <Resource Include="Resources\SessionStatusTypeConnectingIcon.ico" />
+    <Resource Include="Resources\SessionStatusTypeDisconnectingIcon.ico" />
+    <Resource Include="Resources\SessionStatusTypeErrorIcon.ico" />
+    <Resource Include="Resources\SessionStatusTypeInitializingIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.ar.resx" />
+    <EmbeddedResource Include="Resources\Strings.ar.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.de.resx" />
     <EmbeddedResource Include="Resources\Strings.nb.resx" />
     <EmbeddedResource Include="Resources\Strings.resx">
@@ -159,7 +161,9 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.fr.resx" />
+    <EmbeddedResource Include="Resources\Strings.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.nl.resx" />
     <EmbeddedResource Include="Resources\Strings.sl.resx" />
     <EmbeddedResource Include="Resources\Strings.tr.resx" />

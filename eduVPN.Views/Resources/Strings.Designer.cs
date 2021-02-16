@@ -541,6 +541,60 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        public static string SessionStatusTypeConnected {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        public static string SessionStatusTypeConnecting {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not connected.
+        /// </summary>
+        public static string SessionStatusTypeDisconnected {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnecting....
+        /// </summary>
+        public static string SessionStatusTypeDisconnecting {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeDisconnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection Error.
+        /// </summary>
+        public static string SessionStatusTypeError {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuring....
+        /// </summary>
+        public static string SessionStatusTypeInitializing {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeInitializing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
         ///
         ///If you continue, your user settings will be reset to the default..
@@ -710,60 +764,6 @@ namespace eduVPN.Views.Resources {
         public static string TimeSpanNotAvailable {
             get {
                 return ResourceManager.GetString("TimeSpanNotAvailable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connected.
-        /// </summary>
-        public static string VPNSessionStatusTypeConnected {
-            get {
-                return ResourceManager.GetString("VPNSessionStatusTypeConnected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connecting....
-        /// </summary>
-        public static string VPNSessionStatusTypeConnecting {
-            get {
-                return ResourceManager.GetString("VPNSessionStatusTypeConnecting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not connected.
-        /// </summary>
-        public static string VPNSessionStatusTypeDisconnected {
-            get {
-                return ResourceManager.GetString("VPNSessionStatusTypeDisconnected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disconnecting....
-        /// </summary>
-        public static string VPNSessionStatusTypeDisconnecting {
-            get {
-                return ResourceManager.GetString("VPNSessionStatusTypeDisconnecting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connection Error.
-        /// </summary>
-        public static string VPNSessionStatusTypeError {
-            get {
-                return ResourceManager.GetString("VPNSessionStatusTypeError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Configuring....
-        /// </summary>
-        public static string VPNSessionStatusTypeInitializing {
-            get {
-                return ResourceManager.GetString("VPNSessionStatusTypeInitializing", resourceCulture);
             }
         }
     }

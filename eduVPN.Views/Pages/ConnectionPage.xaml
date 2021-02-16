@@ -132,7 +132,7 @@
             Grid.Row="2"
             Margin="7"
             HorizontalAlignment="Center"
-            ContentTemplate="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, FallbackValue={StaticResource VPNSessionStatusTypeIcon}}"
+            ContentTemplate="{Binding ActiveSession.State, Converter={StaticResource SessionStatusTypeIconConverter}, FallbackValue={StaticResource SessionStatusTypeIcon}}"
             ToolTip="{Binding ActiveSession.StateDescription}"
             AutomationProperties.Name="{Binding ActiveSession.StateDescription}"
             IsTabStop="False"/>
@@ -149,7 +149,7 @@
 
             <TextBlock
                 HorizontalAlignment="Center"
-                Text="{Binding ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeDescriptionConverter}, FallbackValue={x:Static res:Strings.VPNSessionStatusTypeDisconnected}}"
+                Text="{Binding ActiveSession.State, Converter={StaticResource SessionStatusTypeDescriptionConverter}, FallbackValue={x:Static res:Strings.SessionStatusTypeDisconnected}}"
                 Style="{StaticResource StateTitleStyle}"/>
 
             <TextBlock

@@ -299,19 +299,19 @@ Program Commons Conservancy eduVPN</value>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
     <value>Og_led dnevnika ...</value>
   </data>
-  <data name="VPNSessionStatusTypeConnected" xml:space="preserve">
+  <data name="SessionStatusTypeConnected" xml:space="preserve">
     <value>Povezano</value>
   </data>
-  <data name="VPNSessionStatusTypeConnecting" xml:space="preserve">
+  <data name="SessionStatusTypeConnecting" xml:space="preserve">
     <value>Povezovanje ...</value>
   </data>
-  <data name="VPNSessionStatusTypeDisconnecting" xml:space="preserve">
+  <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
     <value>Odklapljanje ...</value>
   </data>
-  <data name="VPNSessionStatusTypeError" xml:space="preserve">
+  <data name="SessionStatusTypeError" xml:space="preserve">
     <value>Napaka povezave</value>
   </data>
-  <data name="VPNSessionStatusTypeInitializing" xml:space="preserve">
+  <data name="SessionStatusTypeInitializing" xml:space="preserve">
     <value>Ni povezano</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">

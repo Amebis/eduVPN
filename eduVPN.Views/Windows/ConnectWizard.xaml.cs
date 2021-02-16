@@ -37,7 +37,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// VPN session state
         /// </summary>
-        private VPNSessionStatusType SessionState;
+        private SessionStatusType SessionState;
 
         /// <summary>
         /// Icon on the notification tray
@@ -47,7 +47,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Cached icons to be used by <see cref="NotifyIcon"/>
         /// </summary>
-        private Dictionary<VPNSessionStatusType, Icon> Icons;
+        private Dictionary<SessionStatusType, Icon> Icons;
 
         /// <summary>
         /// Flag to prevent/force closing
@@ -84,7 +84,7 @@ namespace eduVPN.Views.Windows
             get
             {
                 var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
-                return Icons[viewModel != null && viewModel.ConnectionPage.ActiveSession != null ? viewModel.ConnectionPage.ActiveSession.State : VPNSessionStatusType.Disconnected];
+                return Icons[viewModel != null && viewModel.ConnectionPage.ActiveSession != null ? viewModel.ConnectionPage.ActiveSession.State : SessionStatusType.Disconnected];
             }
         }
 
@@ -154,10 +154,10 @@ namespace eduVPN.Views.Windows
 
             // Preload icons to be used on system tray.
             var iconSize = System.Windows.Forms.SystemInformation.SmallIconSize;
-            Icons = new Dictionary<VPNSessionStatusType, Icon>();
-            foreach (var statusType in Enum.GetValues(typeof(VPNSessionStatusType)).Cast<VPNSessionStatusType>())
+            Icons = new Dictionary<SessionStatusType, Icon>();
+            foreach (var statusType in Enum.GetValues(typeof(SessionStatusType)).Cast<SessionStatusType>())
             {
-                var iconUri = new Uri(string.Format("pack://application:,,,/eduVPN.Views;component/Resources/VPNSessionStatusType{0}Icon.ico", Enum.GetName(typeof(VPNSessionStatusType), statusType)));
+                var iconUri = new Uri(string.Format("pack://application:,,,/eduVPN.Views;component/Resources/SessionStatusType{0}Icon.ico", Enum.GetName(typeof(SessionStatusType), statusType)));
                 try { Icons.Add(statusType, new Icon(Application.GetResourceStream(iconUri).Stream, iconSize)); }
                 catch { Icons.Add(statusType, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/App.ico")).Stream, iconSize)); }
             }
@@ -208,7 +208,7 @@ namespace eduVPN.Views.Windows
                                             // Client is minimized.
                                             switch (viewModel.ConnectionPage.ActiveSession.State)
                                             {
-                                                case VPNSessionStatusType.Connected:
+                                                case SessionStatusType.Connected:
                                                     // Client connected. Popup the balloon message.
                                                     NotifyIcon.ShowBalloonTip(
                                                         5000,
@@ -218,7 +218,7 @@ namespace eduVPN.Views.Windows
                                                     break;
 
                                                 default:
-                                                    if (SessionState == VPNSessionStatusType.Connected)
+                                                    if (SessionState == SessionStatusType.Connected)
                                                     {
                                                         // Client has been disconnected. Popup the balloon message.
                                                         NotifyIcon.ShowBalloonTip(

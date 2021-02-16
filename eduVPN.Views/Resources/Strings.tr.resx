@@ -298,19 +298,19 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
     <value>_kaydı Görüntüle</value>
   </data>
-  <data name="VPNSessionStatusTypeConnected" xml:space="preserve">
+  <data name="SessionStatusTypeConnected" xml:space="preserve">
     <value>Bağlandı</value>
   </data>
-  <data name="VPNSessionStatusTypeConnecting" xml:space="preserve">
+  <data name="SessionStatusTypeConnecting" xml:space="preserve">
     <value>Bağlanıyor...</value>
   </data>
-  <data name="VPNSessionStatusTypeDisconnecting" xml:space="preserve">
+  <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
     <value>Bağlantı kesiliyor...</value>
   </data>
-  <data name="VPNSessionStatusTypeError" xml:space="preserve">
+  <data name="SessionStatusTypeError" xml:space="preserve">
     <value>Bağlantı Hatası</value>
   </data>
-  <data name="VPNSessionStatusTypeInitializing" xml:space="preserve">
+  <data name="SessionStatusTypeInitializing" xml:space="preserve">
     <value>Bağlanmadı</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
