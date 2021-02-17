@@ -179,7 +179,7 @@
     <value>(Automatisch)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Network interface with {0} Id not found.</value>
+    <value>Netzwerkschnittstelle mit Id {0}nicht gefunden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Netzwerkschnittstelle {0} nicht gefunden.</value>
@@ -223,7 +223,7 @@
     <value>Öffentlicher Minisign-Schlüssel ist ungültig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with Id {0:X} already exists.</value>
+    <value>Der Minisign öffentliche Schlüssel mit Id {0:X} existiert bereits.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign-Signatur wird nicht unterstützt.</value>

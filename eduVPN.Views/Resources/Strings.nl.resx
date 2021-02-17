@@ -134,24 +134,24 @@ Het Commons Conservancy eduVPN Programma</value>
     <value>_Foutmelding sluiten</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Settings</value>
+    <value>_Instellingen</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>What's New?</value>
+    <value>Wat is er nieuw?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>Een nieuwe en verbeterde versie van de client is beschikbaar. Update aub!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>Update beschikbaar</value>
   </data>
   <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>Download en _update nu
+(Client zal herstarten)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} heeft gedetecteerd dat je gebruikersinstellingenbestand {1} beschadigd is geraakt. Dit kan komen door een crash. 
@@ -163,25 +163,22 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect using _TCP only</value>
+    <value>Verbind alleen via _TCP</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Use TAP _adapter:</value>
+    <value>Gebruik TAP _adapter:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded</value>
+  <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
+    <value>Gedownload:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded</value>
+  <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
+    <value>Geupload:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Looptijd</value>
   </data>
-  <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
-    <value>IPv4 Address</value>
-  </data>
-  <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
-    <value>IPv6 Address</value>
+  <data name="ConnectionPageConnectionInfo" xml:space="preserve">
+    <value>Adres</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -225,134 +222,146 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Instituut Toegang</value>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Search for your institute...</value>
+    <value>Zoek uw instelling...</value>
   </data>
   <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Veilig Internet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_Organization</value>
+    <value>_Organisatie</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Connect your own server</value>
+    <value>Verbind uw eigen server</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Own Se_rver</value>
+    <value>Eigen Se_rver</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
     <value>_Server</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Find your institute</value>
+    <value>Zoek uw instelling</value>
   </data>
   <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Locatie</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+    <value>Deze app heeft autorisatie nodig en heeft je webbrowser geopend. Het gaat verder als u de autorisatie heeft voltooid. </value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Authorization required</value>
+    <value>Autorisatie vereist</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuleren</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Change Location</value>
+    <value>_Verander locatie</value>
   </data>
   <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Locatie</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
-    <value>A_bout</value>
+    <value>O_ver</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
-    <value>_Add</value>
+    <value>_Toevoegen</value>
   </data>
   <data name="HomePageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Instituut Toegang</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Other Servers</value>
+    <value>Andere Servers</value>
   </data>
   <data name="HomePageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Veilig Internet</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Add other server</value>
+    <value>Andere server toevoegen</value>
   </data>
   <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
-    <value>Select a location</value>
+    <value>Selecteer een locatie</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Instellingen</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
-    <value>Support:</value>
+    <value>Ondersteuning:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Connection log</value>
+    <value>Verbindingslogboek</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>View _log...</value>
+    <value>Bekijk _logboek...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Verbonden</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Verbinden...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnecting...</value>
+    <value>Verbinding verbreken..</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
-    <value>Connection Error</value>
+    <value>Verbindingsfout</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Configureren... </value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
-    <value>_Profiles</value>
+    <value>_Profielen</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Connection _info</value>
-  </data>
-  <data name="ConnectionPageSelectProfile" xml:space="preserve">
-    <value>Select a profile</value>
+    <value>Verbinding _info </value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Valid for</value>
+    <value>Geldig voor</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>Downloaden update...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Forget</value>
+    <value>_Vergeten</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server address</value>
+    <value>Server adres</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
     <value>Servers</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_dd server</value>
+    <value>T_oevoegen server</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Enter server address here</value>
+    <value>Voer hier het serveradres in</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>List of available profiles is loading.
-Please wait...</value>
+    <value>Lijst met beschikbare profielen wordt geladen.
+Even geduld aub... </value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>No results, please check your search command or try another institute.</value>
+    <value>Geen resultaten, controleer uw zoekopdracht of probeer een ander instituut. </value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(Not Available)</value>
+    <value>(Niet beschikbaar) </value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
+  <data name="SessionStatusTypeDisconnected" xml:space="preserve">
+    <value>Niet verbonden</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
+    <value>Gegevens overgedragen</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
+    <value>Profiel</value>
+  </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>This session is expired</value>
+  </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Renew Session</value>
   </data>
 </root>

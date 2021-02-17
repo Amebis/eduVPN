@@ -158,7 +158,7 @@
     <value>Connecté.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
-    <value>Connexion en cours ...</value>
+    <value>Connexion en cours...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
     <value>Sortie en cours...</value>
@@ -179,7 +179,7 @@
     <value>(Automatique)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Network interface with {0} Id not found.</value>
+    <value>Interface réseau avec l'ID {0} non trouvée.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Interface réseau {0} non trouvé.</value>
@@ -192,7 +192,7 @@
     <value>Service Interactif échoué.</value>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>le fichier téléchargé {0} est corrompu. </value>
+    <value>Le fichier téléchargé {0} est corrompu. </value>
     <comment>{0}=URI</comment>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
@@ -223,7 +223,7 @@
     <value>La clé publique Minisign n'est pas valide. </value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with Id {0:X} already exists.</value>
+    <value>La clé publique Minisign avec l'ID {0:X} existe déjà.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>La signature Minisign n'est pas supportée.</value>

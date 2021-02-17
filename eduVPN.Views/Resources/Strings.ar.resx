@@ -134,24 +134,24 @@
     <value>_صرف النظر عن الخطأ</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Settings</value>
+    <value>_إعدادات...</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>What's New?</value>
+    <value>ما الجديد؟</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>إصدار أحدث ومحسن من العميل متوفر. ابق على اطلاع!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>تحديث متوفر</value>
   </data>
   <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>تحميل و _تحديث الآن
+(سيتم إعادة تشغيل العميل)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>اكتشف {0} تلف ملف إعدادات المستخدم {1}. قد يكون هذا بسبب حادث.
@@ -163,25 +163,22 @@
     <value>تلف إعدادات المستخدم</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect using _TCP only</value>
+    <value>اتصل باستخدام _ميفاق التحكم بالنقل فقط</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Use TAP _adapter:</value>
+    <value>حدد _واجهة TAP:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded</value>
+  <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
+    <value>تم تحميل:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded</value>
+  <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
+    <value>تم رفع:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>المدة</value>
   </data>
-  <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
-    <value>IPv4 Address</value>
-  </data>
-  <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
-    <value>IPv6 Address</value>
+  <data name="ConnectionPageConnectionInfo" xml:space="preserve">
+    <value>عنوان</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>عنوان نظام الشبكات={0} ، من الجيل 6={1}</value>
@@ -225,134 +222,146 @@
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>ولوج مؤسسة</value>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Search for your institute...</value>
+    <value>ابحث عن مؤسستك ...</value>
   </data>
   <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>تأمين الشبكة</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_Organization</value>
+    <value>_مؤسسة</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Connect your own server</value>
+    <value>اتصل بخادمك الخاص</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Own Se_rver</value>
+    <value>خادمك الخا_ص</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
-    <value>_Server</value>
+    <value>_خادم</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Find your institute</value>
+    <value>جد مؤسستك</value>
   </data>
   <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_موقع</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+    <value>يحتاج التطبيق إلى تفويض ، و قد فتح المتصفح الخاص بك. سيستمر التطبيق بعد إكمال التفويض.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Authorization required</value>
+    <value>مطلوب التفويض</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>إلغاء</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Change Location</value>
+    <value>_تغيير الموقع</value>
   </data>
   <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_موقع</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
-    <value>A_bout</value>
+    <value>_حول</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
-    <value>_Add</value>
+    <value>_أضف</value>
   </data>
   <data name="HomePageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>ولوج مؤسسة</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Other Servers</value>
+    <value>خوادم أخرى</value>
   </data>
   <data name="HomePageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>تأمين الشبكة</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Add other server</value>
+    <value>إضافة خادم آخر</value>
   </data>
   <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
-    <value>Select a location</value>
+    <value>اختر موقعا</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>إعدادات</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
-    <value>Support:</value>
+    <value>الدعم:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Connection log</value>
+    <value>سجل الاتصال</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>View _log...</value>
+    <value>عرض ال_سجل ...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>متصل</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>جارٍ الاتصال ...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnecting...</value>
+    <value>قطع الاتصال...</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
-    <value>Connection Error</value>
+    <value>خطآ في الاتصال</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Not connected</value>
+    <value>جارٍ الإعداد...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
-    <value>_Profiles</value>
+    <value>_مظاهر</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Connection _info</value>
-  </data>
-  <data name="ConnectionPageSelectProfile" xml:space="preserve">
-    <value>Select a profile</value>
+    <value>_معلومات عن الاتصال</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Valid for</value>
+    <value>صالح الى غاية</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>جارٍ تحميل التحديث ...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Forget</value>
+    <value>_نسيان</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server address</value>
+    <value>عنوان الخادم</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
-    <value>Servers</value>
+    <value>خوادم</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_dd server</value>
+    <value>إ_ضافة خادم</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Enter server address here</value>
+    <value>ادخل عنوان الخادم هنا</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>List of available profiles is loading.
-Please wait...</value>
+    <value>قائمة المظاهر المتاحة في طور التحميل.
+المرجو الإنتظار...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>No results, please check your search command or try another institute.</value>
+    <value>لا نتائج ، يرجى التحقق من أمر البحث أو تجربة مؤسسة اخرى.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(Not Available)</value>
+    <value>(غير متاح)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
+  <data name="SessionStatusTypeDisconnected" xml:space="preserve">
+    <value>غير متصل</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
+    <value>البيانات المنقولة</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
+    <value>مظهر</value>
+  </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>This session is expired</value>
+  </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Renew Session</value>
   </data>
 </root>

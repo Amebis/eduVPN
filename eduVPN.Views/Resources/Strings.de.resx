@@ -134,24 +134,24 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Fehler verwerfen.</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Settings</value>
+    <value>_Einstellungen</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>What's New?</value>
+    <value>Was gibt's Neues?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>Eine neuere und verbesserte Version des Clients ist verfügbar. Updaten Sie jetzt!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>Update verfügbar</value>
   </data>
   <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>Jetzt herunterladen und _updaten
+(Client wird neu gestartet)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} hat festgestellt, dass Ihre Benutzereinstellungsdatei {1} beschädigt ist. Dies kann auf einen Absturz zurückzuführen sein.
@@ -163,25 +163,22 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>Beschädigte Benutzereinstellungen</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect using _TCP only</value>
+    <value>Verbindung nur über _TCP</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Use TAP _adapter:</value>
+    <value>Verwende TAP-_Adapter:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded</value>
+  <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
+    <value>Heruntergeladen:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded</value>
+  <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
+    <value>Hochgeladen:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
     <value>Duration</value>
   </data>
-  <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
-    <value>IPv4 Address</value>
-  </data>
-  <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
-    <value>IPv6 Address</value>
+  <data name="ConnectionPageConnectionInfo" xml:space="preserve">
+    <value>Address</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -300,10 +297,10 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>View _log...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Verbunden</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Verbinde...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
     <value>Disconnecting...</value>
@@ -312,16 +309,13 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>Connection Error</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Configuring...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
     <value>_Profiles</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
     <value>Connection _info</value>
-  </data>
-  <data name="ConnectionPageSelectProfile" xml:space="preserve">
-    <value>Select a profile</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
     <value>Valid for</value>
@@ -354,5 +348,20 @@ Please wait...</value>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
     <value>(Not Available)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
+  <data name="SessionStatusTypeDisconnected" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
+    <value>Data Transferred</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>This session is expired</value>
+  </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Renew Session</value>
   </data>
 </root>

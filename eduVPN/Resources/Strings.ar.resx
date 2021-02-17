@@ -179,7 +179,7 @@
     <value>(تلقائي)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Network interface with {0} Id not found.</value>
+    <value>لم يتم العثور على واجهة الشبكة ذات المعرف {0}.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>لم يتم العثور على واجهة الشبكة {0}.</value>
@@ -223,7 +223,7 @@
     <value>المفتاح العمومي المصغر غير صالح.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with Id {0:X} already exists.</value>
+    <value>المفتاح العمومي المصغر ذو المعرف {0:X} موجود مسبقا.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>التوقيع المصغر غير مدعوم.</value>

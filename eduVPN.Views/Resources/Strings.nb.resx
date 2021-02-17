@@ -134,24 +134,24 @@ Commons Conservancy eduVPN programmet</value>
     <value>_Lukk feilmelding</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Settings</value>
+    <value>_Valg</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1} {2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>What's New?</value>
+    <value>Hva er nytt?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>En ny forbedret versjon av klienten er tilgjengelig. Hold deg oppdatert!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>Oppdatering tilgjengelig</value>
   </data>
   <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>Last ned og _oppdater nå
+(Klienten vil starte på nytt)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} har oppdaget at brukerinnstillingsfila {1} har blitt korrupt. Dette kan skje etter en kræsj.
@@ -168,20 +168,17 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Use TAP _adapter:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded</value>
+  <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
+    <value>Downloaded:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded</value>
+  <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
+    <value>Uploaded:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
     <value>Duration</value>
   </data>
-  <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
-    <value>IPv4 Address</value>
-  </data>
-  <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
-    <value>IPv6 Address</value>
+  <data name="ConnectionPageConnectionInfo" xml:space="preserve">
+    <value>Address</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -288,7 +285,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Select a location</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Valg</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
     <value>Support:</value>
@@ -300,10 +297,10 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>View _log...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Koblet til</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Kobler til…</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
     <value>Disconnecting...</value>
@@ -312,16 +309,13 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Connection Error</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Configuring...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
     <value>_Profiles</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
     <value>Connection _info</value>
-  </data>
-  <data name="ConnectionPageSelectProfile" xml:space="preserve">
-    <value>Select a profile</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
     <value>Valid for</value>
@@ -352,7 +346,22 @@ Please wait...</value>
     <value>No results, please check your search command or try another institute.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(Not Available)</value>
+    <value>(Utilgjengelig)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
+  <data name="SessionStatusTypeDisconnected" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
+    <value>Data Transferred</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>This session is expired</value>
+  </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Renew Session</value>
   </data>
 </root>

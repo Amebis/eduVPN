@@ -179,7 +179,7 @@
     <value>(Automatisch)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Network interface with {0} Id not found.</value>
+    <value>Netwerk interface  {0} niet gevonden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Netwerk interface {0} niet gevonden.</value>
@@ -223,7 +223,7 @@
     <value>Minisign publieke sleutel is ongeldig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with Id {0:X} already exists.</value>
+    <value>Minisign publieke sleutel met Id {0:X} bestaat al.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign handtekening is niet ondersteund.</value>

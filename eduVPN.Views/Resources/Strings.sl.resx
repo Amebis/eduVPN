@@ -168,20 +168,17 @@ Program Commons Conservancy eduVPN</value>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Uporabi _adapter TAP:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
-    <value>Dol</value>
+  <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
+    <value>Dol:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
-    <value>Gor</value>
+  <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
+    <value>Gor:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Trajanje</value>
+    <value>Varighet</value>
   </data>
-  <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
-    <value>Naslov IPv4</value>
-  </data>
-  <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
-    <value>Naslov IPv6</value>
+  <data name="ConnectionPageConnectionInfo" xml:space="preserve">
+    <value>Naslov</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -225,13 +222,13 @@ Program Commons Conservancy eduVPN</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Dostop do ustanove</value>
+    <value>Instituttilgang</value>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Poiščite svojo ustanovo ...</value>
   </data>
   <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Varni splet</value>
+    <value>Sikker internett</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>Ustan_ova</value>
@@ -312,7 +309,7 @@ Program Commons Conservancy eduVPN</value>
     <value>Napaka povezave</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Ni povezano</value>
+    <value>Nastavljanje ...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
     <value>_Profili</value>
@@ -320,14 +317,11 @@ Program Commons Conservancy eduVPN</value>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
     <value>Podatk_i povezave</value>
   </data>
-  <data name="ConnectionPageSelectProfile" xml:space="preserve">
-    <value>Izberite profil</value>
-  </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
     <value>Veljavno za</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Prenos posodobitve ...</value>
+    <value>Prenašanje posodobitve ...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
     <value>_Pozabi</value>
@@ -354,5 +348,20 @@ Prosimo, počakajte ...</value>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
     <value>(Ni na voljo)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
+  <data name="SessionStatusTypeDisconnected" xml:space="preserve">
+    <value>Ni povezano</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
+    <value>Preneseno podatkov</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>Ta seja je potekla</value>
+  </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Podaljšaj sejo</value>
   </data>
 </root>

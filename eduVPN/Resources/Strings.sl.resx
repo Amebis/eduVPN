@@ -161,13 +161,13 @@
     <value>Povezovanje ...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>Elegantni izhod je v postopku ...</value>
+    <value>Usklajeni izhod je v postopku ...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
     <value>OpenVPN je javil usodno napako.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value>Prenos nastavitvenih možnosti s strežnika ...</value>
+    <value>Prenašanje nastavitvenih možnosti s strežnika ...</value>
   </data>
   <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
     <value>Prišlo je do ponovnega zagona ...</value>

@@ -134,24 +134,24 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Відхилити помилку</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Settings</value>
+    <value>_Налаштування</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>What's New?</value>
+    <value>Що нового?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>Доступна нова та покращена версія клієнта. Будьте в курсі!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>Доступне оновлення</value>
   </data>
   <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>Завантажити та _оновити зараз
+(Програму буде перезапущено)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} виявив файл налаштувань користувача {1} який пошкоджено. Це може бути пов'язано зі збоєм.
@@ -168,20 +168,17 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
     <value>Use TAP _adapter:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded</value>
+  <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
+    <value>Downloaded:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded</value>
+  <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
+    <value>Uploaded:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Тривалість</value>
   </data>
-  <data name="ConnectionPageConnectionInfoIPv4" xml:space="preserve">
-    <value>IPv4 Address</value>
-  </data>
-  <data name="ConnectionPageConnectionInfoIPv6" xml:space="preserve">
-    <value>IPv6 Address</value>
+  <data name="ConnectionPageConnectionInfo" xml:space="preserve">
+    <value>Address</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -225,13 +222,13 @@ The Commons Conservancy eduVPN Programme</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Доступ до установи</value>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Search for your institute...</value>
   </data>
   <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Захищений Інтернет</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organization</value>
@@ -273,13 +270,13 @@ The Commons Conservancy eduVPN Programme</value>
     <value>_Add</value>
   </data>
   <data name="HomePageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Доступ до установи</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Other Servers</value>
   </data>
   <data name="HomePageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Захищений Інтернет</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Add other server</value>
@@ -288,7 +285,7 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Select a location</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Налаштування</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
     <value>Support:</value>
@@ -300,10 +297,10 @@ The Commons Conservancy eduVPN Programme</value>
     <value>View _log...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Підключено</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Підключення...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
     <value>Disconnecting...</value>
@@ -312,16 +309,13 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Connection Error</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Configuring...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
     <value>_Profiles</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
     <value>Connection _info</value>
-  </data>
-  <data name="ConnectionPageSelectProfile" xml:space="preserve">
-    <value>Select a profile</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
     <value>Valid for</value>
@@ -352,7 +346,22 @@ Please wait...</value>
     <value>No results, please check your search command or try another institute.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(Not Available)</value>
+    <value>(Недоступний)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
+  <data name="SessionStatusTypeDisconnected" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
+    <value>Data Transferred</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
+    <value>Профайл</value>
+  </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>This session is expired</value>
+  </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Renew Session</value>
   </data>
 </root>
