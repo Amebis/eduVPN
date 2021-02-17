@@ -78,3 +78,43 @@ CFG=Debug
 
 CFG=Release
 !INCLUDE "MakefileCfg.mak"
+
+
+######################################################################
+# Transifex
+######################################################################
+
+TRANSIFEX_ORG=amebis
+TRANSIFEX_PROJ=eduvpn
+
+RESOURCE_DIR=$(MAKEDIR)\eduEd25519\eduEd25519
+TRANSIFEX_RES=edued25519
+!INCLUDE "MakefileTransifex.mak"
+
+RESOURCE_DIR=$(MAKEDIR)\eduJSON\eduJSON\Resources
+TRANSIFEX_RES=edujson
+!INCLUDE "MakefileTransifex.mak"
+
+RESOURCE_DIR=$(MAKEDIR)\eduOAuth\eduOAuth\Resources
+TRANSIFEX_RES=eduoauth
+!INCLUDE "MakefileTransifex.mak"
+
+RESOURCE_DIR=$(MAKEDIR)\eduOpenVPN\eduOpenVPN\Resources
+TRANSIFEX_RES=eduopenvpn
+!INCLUDE "MakefileTransifex.mak"
+
+RESOURCE_DIR=$(MAKEDIR)\eduVPN\Resources
+TRANSIFEX_RES=eduvpn
+!INCLUDE "MakefileTransifex.mak"
+
+RESOURCE_DIR=$(MAKEDIR)\eduVPN.Views\Resources
+TRANSIFEX_RES=eduvpnviews
+!INCLUDE "MakefileTransifex.mak"
+
+RESOURCE_DIR=$(MAKEDIR)\eduVPN.Client\Resources
+TRANSIFEX_RES=eduvpnclient
+!INCLUDE "MakefileTransifex.mak"
+
+RESOURCE_DIR=$(MAKEDIR)\LetsConnect.Client\Resources
+TRANSIFEX_RES=letsconnectclient
+!INCLUDE "MakefileTransifex.mak"
