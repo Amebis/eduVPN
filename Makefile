@@ -29,11 +29,11 @@ CSCRIPT_FLAGS=//Nologo
 WIX_EXTENSIONS=-ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
 WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo \
-    -dTAPWin.Version="$(TAPWIN_VERSION)" \
-    -dOpenVPN.Version="$(OPENVPN_VERSION)" \
-    -dCore.Version="$(CORE_VERSION)" \
-    -dVersion="$(BUNDLE_VERSION)" \
-    $(WIX_EXTENSIONS)
+	-dTAPWin.Version="$(TAPWIN_VERSION)" \
+	-dOpenVPN.Version="$(OPENVPN_VERSION)" \
+	-dCore.Version="$(CORE_VERSION)" \
+	-dVersion="$(BUNDLE_VERSION)" \
+	$(WIX_EXTENSIONS)
 WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 $(WIX_EXTENSIONS)
 WIX_INSIGNIA_FLAGS=-nologo
 
@@ -43,7 +43,7 @@ WIX_INSIGNIA_FLAGS=-nologo
 ######################################################################
 
 All :: \
-    Setup
+	Setup
 
 
 ######################################################################
@@ -51,12 +51,12 @@ All :: \
 ######################################################################
 
 Register :: \
-    RegisterOpenVPNInteractiveService \
-    RegisterShortcuts
+	RegisterOpenVPNInteractiveService \
+	RegisterShortcuts
 
 Unregister :: \
-    UnregisterShortcuts \
-    UnregisterOpenVPNInteractiveService
+	UnregisterShortcuts \
+	UnregisterOpenVPNInteractiveService
 
 
 ######################################################################
@@ -64,9 +64,9 @@ Unregister :: \
 ######################################################################
 
 Setup :: \
-    SetupBuild \
-    SetupMSI \
-    SetupExe
+	SetupBuild \
+	SetupMSI \
+	SetupExe
 
 
 ######################################################################
