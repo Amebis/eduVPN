@@ -30,16 +30,6 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         private CancellationTokenSource SearchInProgress;
 
-        /// <summary>
-        /// Server search thread
-        /// </summary>
-        private Thread ServerSearchThread;
-
-        /// <summary>
-        /// Organization search thread
-        /// </summary>
-        private Thread OrganizationSearchThread;
-
         #endregion
 
         #region Properties
@@ -288,12 +278,10 @@ namespace eduVPN.ViewModels.Pages
         private void Search()
         {
             SearchInProgress?.Cancel();
-            ServerSearchThread?.Join();
-            OrganizationSearchThread?.Join();
             SearchInProgress = new CancellationTokenSource();
             var ct = CancellationTokenSource.CreateLinkedTokenSource(SearchInProgress.Token, Window.Abort.Token).Token;
             var keywords = Query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            ServerSearchThread = new Thread(new ThreadStart(
+            new Thread(new ThreadStart(
                 () =>
                 {
                     Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
@@ -303,6 +291,7 @@ namespace eduVPN.ViewModels.Pages
                         ct.ThrowIfCancellationRequested();
                         Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                         {
+                            if (ct.IsCancellationRequested) return;
                             var selected = SelectedInstituteAccessServer?.Base;
                             InstituteAccessServers = orderedServerHits;
                             SelectedInstituteAccessServer = Wizard.GetDiscoveredServer<InstituteAccessServer>(selected);
@@ -311,9 +300,8 @@ namespace eduVPN.ViewModels.Pages
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
                     finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                }));
-            ServerSearchThread.Start();
-            OrganizationSearchThread = new Thread(new ThreadStart(
+                })).Start();
+            new Thread(new ThreadStart(
                 () =>
                 {
                     Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
@@ -323,6 +311,7 @@ namespace eduVPN.ViewModels.Pages
                         ct.ThrowIfCancellationRequested();
                         Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                         {
+                            if (ct.IsCancellationRequested) return;
                             var selected = SelectedOrganization?.Id;
                             Organizations = orderedOrganizationHits;
                             SelectedOrganization = Wizard.GetDiscoveredOrganization(selected);
@@ -331,8 +320,7 @@ namespace eduVPN.ViewModels.Pages
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
                     finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                }));
-            OrganizationSearchThread.Start();
+                })).Start();
 
             if (keywords.Length == 1 && keywords[0].Split('.').Length >= 3)
             {

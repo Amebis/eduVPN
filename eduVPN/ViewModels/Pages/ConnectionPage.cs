@@ -56,11 +56,6 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         private CancellationTokenSource ProfilesRefreshInProgress;
 
-        /// <summary>
-        /// Profiles refresh thread
-        /// </summary>
-        private Thread ProfilesRefreshThread;
-
         #endregion
 
         #region Properties
@@ -90,7 +85,6 @@ namespace eduVPN.ViewModels.Pages
                     return;
 
                 ProfilesRefreshInProgress?.Cancel();
-                ProfilesRefreshThread?.Join();
 
                 SetProperty(ref _ConnectingServer, value);
                 SelectedProfile = null;
@@ -99,17 +93,19 @@ namespace eduVPN.ViewModels.Pages
                     return;
 
                 ProfilesRefreshInProgress = new CancellationTokenSource();
-                ProfilesRefreshThread = new Thread(new ThreadStart(
+                var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
+                new Thread(new ThreadStart(
                     () =>
                     {
-                        var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
                         Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                         try
                         {
                             var list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
                             //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+                            ct.ThrowIfCancellationRequested();
                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                             {
+                                if (ct.IsCancellationRequested) return;
                                 Profiles = list;
 
                                 Profile profile = null;
@@ -127,8 +123,7 @@ namespace eduVPN.ViewModels.Pages
                         catch (OperationCanceledException) { }
                         catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
                         finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                    }));
-                ProfilesRefreshThread.Start();
+                    })).Start();
             }
         }
 
