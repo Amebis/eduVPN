@@ -5,6 +5,7 @@
 - Support session renewal before it expires
 - GUI refinements
 - OpenVPN updated to 2.5.0-20210217
+- Prism updated to 8.0.0.1909
 - Turkish translation
 - Fixes
 
