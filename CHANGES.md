@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.2...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.3...HEAD)
+
+
+## [1.255.3](https://github.com/Amebis/eduVPN/compare/1.255.2...1.255.3) (2021-02-18)
 
 - Support session renewal before it expires
 - GUI refinements
