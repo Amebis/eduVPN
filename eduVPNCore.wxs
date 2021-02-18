@@ -54,6 +54,7 @@
         </Upgrade>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}"/>
+            <ComponentSearch Id="System.ValueTuple.dll" Guid="{2D4A9678-39A8-4623-8903-DCA55E9C24F4}"/>
             <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}"/>
             <ComponentSearch Id="$(var.ClientTarget).Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}"/>
         </Property>
@@ -129,7 +130,7 @@
 
 
         <!--
-            Prism
+            Prism.dll
         -->
         <DirectoryRef Id="BINDIR">
             <Component Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}">
@@ -138,6 +139,20 @@
         </DirectoryRef>
         <ComponentGroup Id="Prism.dll">
             <ComponentRef Id="Prism.dll"/>
+            <ComponentRef Id="System.ValueTuple.dll"/>
+        </ComponentGroup>
+
+
+        <!--
+            System.ValueTuple.dll
+        -->
+        <DirectoryRef Id="BINDIR">
+            <Component Id="System.ValueTuple.dll" Guid="{2D4A9678-39A8-4623-8903-DCA55E9C24F4}">
+                <File Source="System.ValueTuple.dll"/>
+            </Component>
+        </DirectoryRef>
+        <ComponentGroup Id="System.ValueTuple.dll">
+            <ComponentRef Id="System.ValueTuple.dll"/>
         </ComponentGroup>
     </Product>
 </Wix>
