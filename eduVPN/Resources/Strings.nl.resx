@@ -179,7 +179,7 @@
     <value>(Automatisch)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Netwerk interface  {0} niet gevonden.</value>
+    <value>Netwerk interface {0} niet gevonden.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Netwerk interface {0} niet gevonden.</value>

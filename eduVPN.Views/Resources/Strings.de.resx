@@ -175,10 +175,10 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>Hochgeladen:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Dauer</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
-    <value>Address</value>
+    <value>Adresse</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -222,79 +222,79 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Zugang zum Institut</value>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Search for your institute...</value>
+    <value>Ihr Institut suchen...</value>
   </data>
   <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Sicheres Internet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_Organization</value>
+    <value>_Organisation</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Connect your own server</value>
+    <value>Mit eigenem Server verbinden</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Own Se_rver</value>
+    <value>Eigener Se_rver</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
     <value>_Server</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Find your institute</value>
+    <value>Finden Sie Ihr Institut</value>
   </data>
   <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>S_tandort</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+    <value>Diese App benötigt eine Autorisierung und hat Ihren Webbrowser geöffnet. Der Vorgang wird fortgesetzt, wenn Sie die Autorisierung abgeschlossen haben.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Authorization required</value>
+    <value>Autorisierung erforderlich</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbruch</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Change Location</value>
+    <value>S_tandort ändern</value>
   </data>
   <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>S_tandort</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
-    <value>A_bout</value>
+    <value>Üb_er</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
-    <value>_Add</value>
+    <value>_Hinzufügen</value>
   </data>
   <data name="HomePageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Zugang zum Institut</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Other Servers</value>
+    <value>Andere Server</value>
   </data>
   <data name="HomePageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Sicheres Internet</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Add other server</value>
+    <value>Anderen Server hinzufügen</value>
   </data>
   <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
-    <value>Select a location</value>
+    <value>Standort auswählen</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
     <value>Support:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Connection log</value>
+    <value>Verbindungsprotokoll</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>View _log...</value>
+    <value>Protoko_ll anzeigen...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
     <value>Verbunden</value>
@@ -303,65 +303,65 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>Verbinde...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnecting...</value>
+    <value>Trennen der Verbindung...</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
-    <value>Connection Error</value>
+    <value>Verbindungsfehler</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Configuring...</value>
+    <value>Konfiguriere...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
-    <value>_Profiles</value>
+    <value>_Profile</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Connection _info</value>
+    <value>Verbindungs-_Info</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Valid for</value>
+    <value>Gültig für</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>Update wird heruntergeladen...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Forget</value>
+    <value>_Vergessen</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server address</value>
+    <value>Server-Adresse</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
-    <value>Servers</value>
+    <value>Server</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_dd server</value>
+    <value>Server _hinzufügen</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Enter server address here</value>
+    <value>Server-Adresse hier eingeben</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>List of available profiles is loading.
-Please wait...</value>
+    <value>Liste der verfügbaren Profile wird geladen.
+Bitte warten...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>No results, please check your search command or try another institute.</value>
+    <value>Keine Ergebnisse, bitte überprüfen Sie Ihren Suchbegriff oder versuchen Sie ein anderes Institut.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(Not Available)</value>
+    <value>(Nicht verfügbar)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
   </data>
   <data name="SessionStatusTypeDisconnected" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Nicht verbunden</value>
   </data>
   <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
-    <value>Data Transferred</value>
+    <value>Übertragene Daten</value>
   </data>
   <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
     <value>Profil</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>Diese Sitzung ist abgelaufen</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>Sitzung erneuern</value>
   </data>
 </root>
