@@ -69,12 +69,6 @@ SetupBuild ::
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
-"$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)"
-	if not exist $@ md $@
-
-Clean ::
-	-if exist "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config" rd  /s /q "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config"
-
 "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC142REDIST_MSM)"
 	copy /y $** $@ > NUL
 
