@@ -142,7 +142,15 @@ namespace eduVPN.ViewModels.Windows
             // Save UI thread's dispatcher.
             Dispatcher = Dispatcher.CurrentDispatcher;
 
-            Dispatcher.ShutdownStarted += (object sender, EventArgs e) => {
+            Dispatcher.UnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
+            {
+                if (!(e.Exception is OperationCanceledException))
+                    Error = e.Exception;
+                e.Handled = true;
+            };
+
+            Dispatcher.ShutdownStarted += (object sender, EventArgs e) =>
+            {
                 // Raise the abort flag to gracefully shutdown all background threads.
                 Abort.Cancel();
             };
