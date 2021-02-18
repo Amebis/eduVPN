@@ -5,10 +5,9 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
-BUNDLE_VERSION=1.255.3
+VERSION=1.255.3
 TAPWIN_VERSION=9.24.5.1
 OPENVPN_VERSION=2.5.0.11
-CORE_VERSION=1.255.3
 
 # Default testing configuration and platform
 TEST_CFG=Debug
@@ -28,8 +27,8 @@ WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo \
 	-dTAPWin.Version="$(TAPWIN_VERSION)" \
 	-dOpenVPN.Version="$(OPENVPN_VERSION)" \
-	-dCore.Version="$(CORE_VERSION)" \
-	-dVersion="$(BUNDLE_VERSION)" \
+	-dCore.Version="$(VERSION)" \
+	-dVersion="$(VERSION)" \
 	$(WIX_EXTENSIONS)
 WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 $(WIX_EXTENSIONS)
 WIX_INSIGNIA_FLAGS=-nologo
