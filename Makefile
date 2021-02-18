@@ -73,6 +73,13 @@ Setup :: \
 	SetupMSI \
 	SetupExe
 
+"$(SETUP_DIR)\eduVPN.windows.json.minisig" \
+"$(SETUP_DIR)\LetsConnect.windows.json.minisig" : \
+	"$(SETUP_DIR)\eduVPN.windows.json" \
+	"$(SETUP_DIR)\LetsConnect.windows.json"
+	echo Signing $**
+	minisign.exe -Sm $**
+
 
 ######################################################################
 # Configuration specific rules
