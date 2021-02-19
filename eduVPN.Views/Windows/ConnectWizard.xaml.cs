@@ -40,6 +40,11 @@ namespace eduVPN.Views.Windows
         private SessionStatusType SessionState;
 
         /// <summary>
+        /// Was user notified about imminent session expiration?
+        /// </summary>
+        private bool WasSessionExpirationWarned = false;
+
+        /// <summary>
         /// Icon on the notification tray
         /// </summary>
         private System.Windows.Forms.NotifyIcon NotifyIcon;
@@ -189,6 +194,7 @@ namespace eduVPN.Views.Windows
                     {
                         // Initialize VPN session state.
                         SessionState = viewModel.ConnectionPage.ActiveSession.State;
+                        WasSessionExpirationWarned = false;
 
                         // Bind to the session for property changes.
                         viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object _, PropertyChangedEventArgs e3) =>
@@ -234,6 +240,25 @@ namespace eduVPN.Views.Windows
                                         // Save VPN session state.
                                         SessionState = viewModel.ConnectionPage.ActiveSession.State;
                                     }
+                                    break;
+
+                                case nameof(viewModel.ConnectionPage.ActiveSession.Expired):
+                                case nameof(viewModel.ConnectionPage.ActiveSession.SuggestRenewal):
+                                    if (!viewModel.ConnectionPage.ActiveSession.Expired &&
+                                        viewModel.ConnectionPage.ActiveSession.SuggestRenewal)
+                                    {
+                                        if (!WasSessionExpirationWarned && !IsActive)
+                                        {
+                                            NotifyIcon.ShowBalloonTip(
+                                                5000,
+                                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile.Server),
+                                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo),
+                                                System.Windows.Forms.ToolTipIcon.Info);
+                                            WasSessionExpirationWarned = true;
+                                        }
+                                    }
+                                    else
+                                        WasSessionExpirationWarned = false;
                                     break;
                             }
                         };

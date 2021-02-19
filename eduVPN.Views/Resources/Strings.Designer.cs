@@ -696,6 +696,24 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Renew before {0}.
+        /// </summary>
+        public static string SystemTrayBalloonRenewSessionMessage {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonRenewSessionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is about to expire.
+        /// </summary>
+        public static string SystemTrayBalloonRenewSessionTitle {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonRenewSessionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _About....
         /// </summary>
         public static string SystemTrayMenuAbout {
