@@ -203,9 +203,8 @@ namespace eduVPN.Views.Windows
                                     {
                                         NotifyIcon.Icon = TrayIcon;
 
-                                        if (!IsVisible)
+                                        if (!IsActive)
                                         {
-                                            // Client is minimized.
                                             switch (viewModel.ConnectionPage.ActiveSession.State)
                                             {
                                                 case SessionStatusType.Connected:
