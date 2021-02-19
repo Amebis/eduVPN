@@ -165,6 +165,38 @@ namespace eduVPN.ViewModels.VPN
         private ulong? _BytesOut;
 
         /// <summary>
+        /// Session valid from date
+        /// </summary>
+        /// <remarks><c>DateTimeOffset.MinValue</c> when unknown or not available</remarks>
+        public virtual DateTimeOffset ValidFrom { get; } = DateTimeOffset.MinValue;
+
+        /// <summary>
+        /// Session expiration date
+        /// </summary>
+        /// <remarks><c>DateTimeOffset.MaxValue</c> when unknown or not available</remarks>
+        public virtual DateTimeOffset ValidTo { get; } = DateTimeOffset.MaxValue;
+
+        /// <summary>
+        /// Is the session expired?
+        /// </summary>
+        public virtual bool Expired { get; } = false;
+
+        /// <summary>
+        /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
+        /// </summary>
+        public virtual TimeSpan ExpiresTime { get; } = TimeSpan.MaxValue;
+
+        /// <summary>
+        /// Should UI suggest/offer session renewal?
+        /// </summary>
+        public virtual bool SuggestRenewal { get; } = false;
+
+        /// <summary>
+        /// Renews and restarts the session
+        /// </summary>
+        public virtual DelegateCommand Renew { get; } = new DelegateCommand(() => { }, () => false);
+
+        /// <summary>
         /// Disconnect command
         /// </summary>
         public DelegateCommand Disconnect

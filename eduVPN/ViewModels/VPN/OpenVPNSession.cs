@@ -106,27 +106,17 @@ namespace eduVPN.ViewModels.VPN
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private X509Certificate2 _ClientCertificate;
 
-        /// <summary>
-        /// Client certificate valid from date
-        /// </summary>
-        /// <remarks><c>DateTimeOffset.MinValue</c> when unknown or not available</remarks>
-        public DateTimeOffset ValidFrom { get => ClientCertificate != null ? ClientCertificate.NotBefore : DateTimeOffset.MinValue; }
+        /// <inheritdoc/>
+        public override DateTimeOffset ValidFrom { get => ClientCertificate != null ? ClientCertificate.NotBefore : DateTimeOffset.MinValue; }
 
-        /// <summary>
-        /// Client certificate expiration date
-        /// </summary>
-        /// <remarks><c>DateTimeOffset.MaxValue</c> when unknown or not available</remarks>
-        public DateTimeOffset ValidTo { get => ClientCertificate != null ? ClientCertificate.NotAfter : DateTimeOffset.MaxValue; }
+        /// <inheritdoc/>
+        public override DateTimeOffset ValidTo { get => ClientCertificate != null ? ClientCertificate.NotAfter : DateTimeOffset.MaxValue; }
 
-        /// <summary>
-        /// Is the session expired?
-        /// </summary>
-        public bool Expired { get => ClientCertificate != null && ClientCertificate.NotAfter <= DateTimeOffset.UtcNow; }
+        /// <inheritdoc/>
+        public override bool Expired { get => ClientCertificate != null && ClientCertificate.NotAfter <= DateTimeOffset.UtcNow; }
 
-        /// <summary>
-        /// Remaining time before client certificate expire; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
-        /// </summary>
-        public TimeSpan ExpiresTime
+        /// <inheritdoc/>
+        public override TimeSpan ExpiresTime
         {
             get
             {
@@ -136,20 +126,16 @@ namespace eduVPN.ViewModels.VPN
             }
         }
 
-        /// <summary>
-        /// Should UI suggest/offer a certificate renewal?
-        /// </summary>
-        public bool SuggestRenewal
+        /// <inheritdoc/>
+        public override bool SuggestRenewal
         {
             get =>
                 ClientCertificate != null &&
                 (DateTimeOffset.UtcNow - ClientCertificate.NotBefore).Ticks >= 0.75 * (ClientCertificate.NotAfter - ClientCertificate.NotBefore).Ticks;
         }
 
-        /// <summary>
-        /// Renews the client certificate and restarts the session
-        /// </summary>
-        public DelegateCommand Renew
+        /// <inheritdoc/>
+        public override DelegateCommand Renew
         {
             get
             {
