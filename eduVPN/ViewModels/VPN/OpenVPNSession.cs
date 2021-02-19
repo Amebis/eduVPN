@@ -316,66 +316,65 @@ namespace eduVPN.ViewModels.VPN
                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                     () =>
                     {
+                        var state = SessionStatusType.Error;
                         string msg = null;
-
                         switch (e.State)
                         {
                             case OpenVPNStateType.Connecting:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeConnecting;
                                 break;
 
                             case OpenVPNStateType.Resolving:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeResolving;
                                 break;
 
                             case OpenVPNStateType.TcpConnecting:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeTcpConnecting;
                                 break;
 
                             case OpenVPNStateType.Waiting:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeWaiting;
                                 break;
 
                             case OpenVPNStateType.Authenticating:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeAuthenticating;
                                 break;
 
                             case OpenVPNStateType.GettingConfiguration:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeGettingConfiguration;
                                 break;
 
                             case OpenVPNStateType.AssigningIP:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeAssigningIP;
                                 break;
 
                             case OpenVPNStateType.AddingRoutes:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeAddingRoutes;
                                 break;
 
                             case OpenVPNStateType.Connected:
-                                State = SessionStatusType.Connected;
+                                state = SessionStatusType.Connected;
                                 msg = Resources.Strings.OpenVPNStateTypeConnected;
                                 break;
 
                             case OpenVPNStateType.Reconnecting:
-                                State = SessionStatusType.Connecting;
+                                state = SessionStatusType.Connecting;
                                 msg = Resources.Strings.OpenVPNStateTypeReconnecting;
                                 break;
 
                             case OpenVPNStateType.Exiting:
-                                State = SessionStatusType.Disconnecting;
+                                state = SessionStatusType.Disconnecting;
                                 msg = Resources.Strings.OpenVPNStateTypeExiting;
                                 break;
                         }
-
                         if (!string.IsNullOrEmpty(e.Message))
                         {
                             if (msg != null)
@@ -391,13 +390,14 @@ namespace eduVPN.ViewModels.VPN
                         }
                         else if (msg == null)
                             msg = "";
-
                         StateDescription = msg;
                         TunnelAddress = e.Tunnel;
                         IPv6TunnelAddress = e.IPv6Tunnel;
-
-                        // Update connected time.
                         ConnectedAt = e.State == OpenVPNStateType.Connected ? (DateTimeOffset?)e.TimeStamp : null;
+
+                        // Set State property last, as the whole world is listening on this property to monitor connectivity changes.
+                        // It is important that we have IP addresses and other info already set before rising PropertyChanged event for State.
+                        State = state;
                     }));
 
                 if (e.State == OpenVPNStateType.Reconnecting)
