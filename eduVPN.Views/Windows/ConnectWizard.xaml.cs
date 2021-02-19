@@ -197,8 +197,11 @@ namespace eduVPN.Views.Windows
                         WasSessionExpirationWarned = false;
 
                         // Bind to the session for property changes.
-                        viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object _, PropertyChangedEventArgs e3) =>
+                        viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object sender3, PropertyChangedEventArgs e3) =>
                         {
+                            if (viewModel.ConnectionPage.ActiveSession != sender3)
+                                return;
+
                             switch (e3.PropertyName)
                             {
                                 case nameof(viewModel.ConnectionPage.ActiveSession.ConnectingProfile):
@@ -263,6 +266,8 @@ namespace eduVPN.Views.Windows
                             }
                         };
                     }
+                    else
+                        SessionState = SessionStatusType.Disconnected;
                 }
             };
 
