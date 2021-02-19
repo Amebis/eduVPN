@@ -211,7 +211,7 @@ namespace eduVPN.Views.Windows
                                                             5000,
                                                             eduVPN.Properties.Settings.Default.ClientTitle,
                                                             Views.Resources.Strings.SystemTrayBalloonDisconnectedMessage,
-                                                            System.Windows.Forms.ToolTipIcon.Info);
+                                                            System.Windows.Forms.ToolTipIcon.Warning);
                                                     }
                                                     break;
                                             }
