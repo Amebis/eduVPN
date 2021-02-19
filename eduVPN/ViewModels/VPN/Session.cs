@@ -377,6 +377,7 @@ namespace eduVPN.ViewModels.VPN
                 // Signal session finished.
                 Finished.Set();
             }
+            _connected_time_updater.Stop();
         }
 
         /// <summary>

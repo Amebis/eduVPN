@@ -69,6 +69,11 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         private eduOpenVPN.Management.Session _mgmt_session = new eduOpenVPN.Management.Session();
 
+        /// <summary>
+        /// Property update timer
+        /// </summary>
+        protected DispatcherTimer _property_updater;
+
         #endregion
 
         #region Properties
@@ -146,10 +151,11 @@ namespace eduVPN.ViewModels.VPN
             }
 
             // Create dispatcher timer to refresh ShowLog command "can execute" status every second.
-            new DispatcherTimer(
+            _property_updater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal, (object sender, EventArgs e) => ShowLog.RaiseCanExecuteChanged(),
-                Wizard.Dispatcher).Start();
+                Wizard.Dispatcher);
+            _property_updater.Start();
 
             _pre_run_actions.Add(() =>
             {
@@ -616,6 +622,7 @@ namespace eduVPN.ViewModels.VPN
 
                         Wizard.ChangeTaskCount(-1);
                     }));
+                _property_updater.Stop();
             }
         }
 
