@@ -179,6 +179,9 @@ namespace eduVPN.Views.Windows
                         // Bind to the session for property changes.
                         view_model.ActiveSession.PropertyChanged += (object sender_Session, PropertyChangedEventArgs e_Session) =>
                         {
+                            if (view_model.ActiveSession != sender_Session)
+                                return;
+
                             switch (e_Session.PropertyName)
                             {
                                 case nameof(view_model.ActiveSession.ConnectingProfile):
@@ -225,6 +228,8 @@ namespace eduVPN.Views.Windows
                             }
                         };
                     }
+                    else
+                        _session_state = SessionStatusType.Initializing;
                 }
             };
 
