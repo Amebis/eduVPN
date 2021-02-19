@@ -365,6 +365,8 @@ namespace eduVPN.Views.Windows
         public void Open_Click(object sender, RoutedEventArgs e)
         {
             // (Re)activate window.
+            if (WindowState == WindowState.Minimized)
+                WindowState = WindowState.Normal;
             if (!IsActive)
                 Show();
             Topmost = true;
