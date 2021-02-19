@@ -70,6 +70,11 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         private volatile bool RenewInProgress;
 
+        /// <summary>
+        /// Property update timer
+        /// </summary>
+        protected DispatcherTimer PropertyUpdater;
+
         #endregion
 
         #region Properties
@@ -243,7 +248,7 @@ namespace eduVPN.ViewModels.VPN
             }
 
             // Create dispatcher timer to refresh properties and commands periodically.
-            new DispatcherTimer(
+            PropertyUpdater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal,
                 (object sender, EventArgs e) =>
@@ -253,7 +258,8 @@ namespace eduVPN.ViewModels.VPN
                     RaisePropertyChanged(nameof(SuggestRenewal));
                     _ShowLog?.RaiseCanExecuteChanged();
                 },
-                Wizard.Dispatcher).Start();
+                Wizard.Dispatcher);
+            PropertyUpdater.Start();
 
             PreRun.Add(() =>
             {
@@ -711,6 +717,7 @@ namespace eduVPN.ViewModels.VPN
 
                         Wizard.TaskCount--;
                     }));
+                PropertyUpdater.Stop();
             }
         }
 

@@ -293,6 +293,7 @@ namespace eduVPN.ViewModels.VPN
             }
 
             DoRun();
+            ConnectedTimeUpdater.Stop();
         }
 
         /// <summary>
