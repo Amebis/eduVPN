@@ -160,6 +160,7 @@ namespace eduVPN.Views.Windows
                 Icon = TrayIcon
             };
             _tray_icon.Click += TrayIcon_Click;
+            _tray_icon.BalloonTipClicked += NotifyIcon_BalloonTipClicked;
 
             // Bind to "ActiveSession.StateDescription" and "ActiveSession.State" property to keep tray icon up-to-date.
             view_model.PropertyChanged += (object sender, PropertyChangedEventArgs e2) =>
@@ -371,6 +372,16 @@ namespace eduVPN.Views.Windows
 
                 Properties.Settings.Default.SystemTrayMinimizedWarned = true;
             }
+        }
+
+        /// <summary>
+        /// Performs operations when user clicked the baloon notification in the systray.
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
+        private void NotifyIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            Open_Click(this, new RoutedEventArgs());
         }
 
         /// <summary>
