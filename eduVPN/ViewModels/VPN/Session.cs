@@ -99,7 +99,7 @@ namespace eduVPN.ViewModels.VPN
         public SessionStatusType State
         {
             get { return _state; }
-            set { SetProperty(ref _state, value); }
+            protected set { SetProperty(ref _state, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -111,7 +111,7 @@ namespace eduVPN.ViewModels.VPN
         public string StateDescription
         {
             get { return _state_description; }
-            set { SetProperty(ref _state_description, value); }
+            protected set { SetProperty(ref _state_description, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -124,7 +124,7 @@ namespace eduVPN.ViewModels.VPN
         public IPAddress TunnelAddress
         {
             get { return _tunnel_address; }
-            set { SetProperty(ref _tunnel_address, value); }
+            protected set { SetProperty(ref _tunnel_address, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -137,7 +137,7 @@ namespace eduVPN.ViewModels.VPN
         public IPAddress IPv6TunnelAddress
         {
             get { return _ipv6_tunnel_address; }
-            set { SetProperty(ref _ipv6_tunnel_address, value); }
+            protected set { SetProperty(ref _ipv6_tunnel_address, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -150,7 +150,7 @@ namespace eduVPN.ViewModels.VPN
         public DateTimeOffset? ConnectedSince
         {
             get { return _connected_since; }
-            set
+            protected set
             {
                 if (SetProperty(ref _connected_since, value))
                     RaisePropertyChanged(nameof(ConnectedTime));
@@ -176,7 +176,7 @@ namespace eduVPN.ViewModels.VPN
         public ulong? BytesIn
         {
             get { return _bytes_in; }
-            set { SetProperty(ref _bytes_in, value); }
+            protected set { SetProperty(ref _bytes_in, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -189,7 +189,7 @@ namespace eduVPN.ViewModels.VPN
         public ulong? BytesOut
         {
             get { return _bytes_out; }
-            set { SetProperty(ref _bytes_out, value); }
+            protected set { SetProperty(ref _bytes_out, value); }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
