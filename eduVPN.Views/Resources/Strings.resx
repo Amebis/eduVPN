@@ -370,6 +370,6 @@ Please wait...</value>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
     <value>{0} is about to expire</value>
-    <comment>{0}=Profile name</comment>
+    <comment>{0}=Server name</comment>
   </data>
 </root>
