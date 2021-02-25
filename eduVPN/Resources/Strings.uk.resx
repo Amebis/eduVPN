@@ -142,7 +142,7 @@
     <value>Не вдалося зберегти конфігурацію OpenVPN профілю в {0}.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Authorizing the client to use {0} failed.</value>
+    <value>Не вдалося авторизувати клієнта за допомогою {0}.</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
@@ -176,10 +176,10 @@
     <value>Очікування на початкову відповідь від сервера...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatic)</value>
+    <value>(Автоматично)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Network interface with {0} Id not found.</value>
+    <value>Мережевий інтерфейс з ідентифікатором {0} не знайдено.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
     <value>Мережевий інтерфейс {0} не знайдено.</value>
@@ -217,25 +217,25 @@
     <value>Обліковий запис користувача було відключено адміністратором.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
-    <value>Downloading web resource signature failed.</value>
+    <value>Не вдалося завантаження підпису web-ресурсу. </value>
   </data>
   <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is invalid.</value>
+    <value>Публічний ключ Minisign не є дійсним</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with Id {0:X} already exists.</value>
+    <value>Публічний ключ Minisign з ідентифікатором  {0:X} вже існує.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is not supported.</value>
+    <value>Підпис Minisign не підтримується</value>
   </data>
   <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is invalid.</value>
+    <value>Підпис Minisign не є дійсний.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not supported.</value>
+    <value>Публічний ключ Minisign не підтримується.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not trusted.</value>
+    <value>Публічний ключ Minisign не є довіреним.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Недійсне ім'я хоста: імена хостів містять літери, цифри, дефіси та крапки.</value>

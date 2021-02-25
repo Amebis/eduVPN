@@ -163,22 +163,22 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Пошкоджено налаштування користувача</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect using _TCP only</value>
+    <value>З'єднання тільки за допомогою _TCP.</value>
   </data>
   <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Use TAP _adapter:</value>
+    <value>Використано TAP _адаптер:  </value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
-    <value>Downloaded:</value>
+    <value>Завантажено:</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
-    <value>Uploaded:</value>
+    <value>Вивантажено:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
     <value>Тривалість</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
-    <value>Address</value>
+    <value>Адреса</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -225,76 +225,76 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Доступ до установи</value>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Search for your institute...</value>
+    <value>Пошук вашого закладу...</value>
   </data>
   <data name="SearchPageSecureInternetLabel" xml:space="preserve">
     <value>Захищений Інтернет</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_Organization</value>
+    <value>_Заклад</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Connect your own server</value>
+    <value>З'єднання з вашим сервером</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Own Se_rver</value>
+    <value>Ваш Се_рвер</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
-    <value>_Server</value>
+    <value>_Сервер</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Find your institute</value>
+    <value>Знайдіть ваш заклад </value>
   </data>
   <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Місцезнаходження</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+    <value>Цей програмний засіб потребує авторизації і має відкрити ваш браузер. Процес буде продовжено після виповнення вашої авторизації.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Authorization required</value>
+    <value>Потрібна авторизація</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Скасувати</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Change Location</value>
+    <value>_Зміна Місцезнаходження</value>
   </data>
   <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Місцезнаходження</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
-    <value>A_bout</value>
+    <value>П_ро</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
-    <value>_Add</value>
+    <value>_Додати</value>
   </data>
   <data name="HomePageInstituteAccessLabel" xml:space="preserve">
     <value>Доступ до установи</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Other Servers</value>
+    <value>Інші сервери</value>
   </data>
   <data name="HomePageSecureInternetLabel" xml:space="preserve">
     <value>Захищений Інтернет</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Add other server</value>
+    <value>Додати інший сервер</value>
   </data>
   <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
-    <value>Select a location</value>
+    <value>Вибрати місцезнаходження</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Налаштування</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
-    <value>Support:</value>
+    <value>Підтримка:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Connection log</value>
+    <value>Журнал з'єднання</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>View _log...</value>
+    <value>Подивитися _журнал...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
     <value>Підключено</value>
@@ -303,65 +303,72 @@ The Commons Conservancy eduVPN Programme</value>
     <value>Підключення...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnecting...</value>
+    <value>Роз'єднання...</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
-    <value>Connection Error</value>
+    <value>Помилка З'єднання</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Configuring...</value>
+    <value>Налаштування...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
-    <value>_Profiles</value>
+    <value>_Профілі</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Connection _info</value>
+    <value>Інформація щодо з'єднання</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Valid for</value>
+    <value>Дійсний до</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>Завантаження оновлення...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Forget</value>
+    <value>_Забути</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server address</value>
+    <value>Адреса сервера</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
-    <value>Servers</value>
+    <value>Сервери</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_dd server</value>
+    <value>Д_одати сервер</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Enter server address here</value>
+    <value>Напишіть адресу сервера тут</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>List of available profiles is loading.
-Please wait...</value>
+    <value>Завантажується список доступних профілів. Будь ласка почекайте...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>No results, please check your search command or try another institute.</value>
+    <value>Не знайдено, будь ласка перевірте команду пошуку чи спробуйте знайти інший заклад.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
     <value>(Недоступний)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
   </data>
   <data name="SessionStatusTypeDisconnected" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Не з'єднано</value>
   </data>
   <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
-    <value>Data Transferred</value>
+    <value>Дані передано</value>
   </data>
   <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
     <value>Профайл</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>Сеанс закінчився.</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>Поновлення сеансу</value>
+  </data>
+  <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
+    <value>Поновлення до {0}</value>
+    <comment>{0}=date and time</comment>
+  </data>
+  <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
+    <value>{0} скоро закінчиться</value>
+    <comment>{0}=Server name</comment>
   </data>
 </root>

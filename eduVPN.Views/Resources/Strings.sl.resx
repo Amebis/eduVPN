@@ -364,4 +364,12 @@ Prosimo, počakajte ...</value>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
     <value>Podaljšaj sejo</value>
   </data>
+  <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
+    <value>Podaljšati pred {0}</value>
+    <comment>{0}=date and time</comment>
+  </data>
+  <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
+    <value>{0} bo kmalu potekel</value>
+    <comment>{0}=Server name</comment>
+  </data>
 </root>

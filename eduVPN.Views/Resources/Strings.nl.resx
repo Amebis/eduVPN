@@ -364,4 +364,12 @@ Even geduld aub... </value>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
     <value>Renew Session</value>
   </data>
+  <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
+    <value>Renew before {0}</value>
+    <comment>{0}=date and time</comment>
+  </data>
+  <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
+    <value>{0} is about to expire</value>
+    <comment>{0}=Server name</comment>
+  </data>
 </root>
