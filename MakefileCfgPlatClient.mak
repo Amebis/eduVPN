@@ -126,6 +126,7 @@ Clean ::
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_fr.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_sl.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_tr.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_uk.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
@@ -134,6 +135,7 @@ Clean ::
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_tr.mst" 1055 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_uk.mst" 1058 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client TAP-Windows Driver" /q "$(@:"=).tmp"
@@ -148,6 +150,7 @@ Clean ::
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_fr.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_tr.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_uk.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
@@ -156,6 +159,7 @@ Clean ::
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_tr.mst" 1055 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_uk.mst" 1058 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client OpenVPN Components" /q "$(@:"=).tmp"
@@ -170,6 +174,7 @@ Clean ::
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_fr.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_nl.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_sl.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_tr.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_uk.mst" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_en-US.msi"
 	copy /y "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
@@ -178,6 +183,7 @@ Clean ::
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_tr.mst" 1055 /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_uk.mst" 1058 /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client Core" /q "$(@:"=).tmp"
