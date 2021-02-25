@@ -3,7 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.36...HEAD)
 
 - Fix incomplete product updates on x86
-- OpenVPN updated to 2.5.0-20210217
+- OpenVPN updated to 2.5.1-20210225
 - Prism updated to 8.0.0.1909
 
 
