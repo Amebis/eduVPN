@@ -28,7 +28,7 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" \
 	"bin\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" \
 	"bin\$(CFG)\$(PLAT)\eduEx.dll.wixobj" \
@@ -61,9 +61,9 @@ Clean ::
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_en-US.msi" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 
 Clean ::
