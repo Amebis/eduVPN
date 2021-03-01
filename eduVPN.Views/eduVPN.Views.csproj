@@ -57,8 +57,8 @@
     <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
     <Compile Include="Converters\UnavailableIconVisibilityConverter.cs" />
-    <Compile Include="Converters\VPNSessionStatusTypeIconConverter.cs" />
-    <Compile Include="Converters\VPNSessionStatusTypeWindowIconConverter.cs" />
+    <Compile Include="Converters\SessionStatusTypeIconConverter.cs" />
+    <Compile Include="Converters\SessionStatusTypeWindowIconConverter.cs" />
     <Compile Include="Microsoft\Shell\SingleInstance.cs" />
     <Compile Include="Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -188,11 +188,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Blank.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconError.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnected.png" />
+    <Resource Include="Resources\SessionStatusTypeIconInitializing.png" />
+    <Resource Include="Resources\SessionStatusTypeIconError.png" />
+    <Resource Include="Resources\SessionStatusTypeIconDisconnecting.png" />
+    <Resource Include="Resources\SessionStatusTypeIconConnecting.png" />
+    <Resource Include="Resources\SessionStatusTypeIconConnected.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Pages\AboutPage.xaml">

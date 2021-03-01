@@ -101,8 +101,8 @@
     <Compile Include="ViewModels\Windows\PasswordPopup.cs" />
     <Compile Include="ViewModels\Pages\SettingsPage.cs" />
     <Compile Include="ViewModels\Windows\UsernamePasswordPopup.cs" />
-    <Compile Include="ViewModels\VPN\VPNSession.cs" />
-    <Compile Include="ViewModels\VPN\VPNSessionStatusType.cs" />
+    <Compile Include="ViewModels\VPN\Session.cs" />
+    <Compile Include="ViewModels\VPN\SessionStatusType.cs" />
     <Compile Include="ViewModels\Pages\AuthenticatingCountrySelectPage.cs" />
     <Compile Include="ViewModels\Pages\AuthenticatingInstanceSelectPage.cs" />
     <Compile Include="ViewModels\Pages\AuthenticatingInstituteSelectPage.cs" />

@@ -95,14 +95,14 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// VPN session queue - session 0 is the active session
         /// </summary>
-        public ObservableCollection<VPNSession> Sessions { get; }
+        public ObservableCollection<Session> Sessions { get; }
 
         /// <summary>
         /// Active VPN session
         /// </summary>
-        public VPNSession ActiveSession
+        public Session ActiveSession
         {
-            get { return Sessions.Count > 0 ? Sessions[0] : VPNSession.Blank; }
+            get { return Sessions.Count > 0 ? Sessions[0] : Session.Blank; }
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace eduVPN.ViewModels.Windows
                                                 authenticating_instance,
                                                 param.ConnectingProfile))
                                             {
-                                                VPNSession previous_session = null;
+                                                Session previous_session = null;
                                                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                     () =>
                                                     {
@@ -686,7 +686,7 @@ namespace eduVPN.ViewModels.Windows
         public ConnectWizard()
         {
             // Create session queue.
-            Sessions = new ObservableCollection<VPNSession>();
+            Sessions = new ObservableCollection<Session>();
             Sessions.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => RaisePropertyChanged(nameof(ActiveSession));
 
             // Show initializing wizard page.

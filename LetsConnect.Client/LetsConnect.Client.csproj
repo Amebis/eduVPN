@@ -85,11 +85,11 @@
   <ItemGroup>
     <Resource Include="Resources\App.ico" />
     <Resource Include="Resources\GenericInstance.png" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnected.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconConnecting.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconDisconnecting.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconError.ico" />
-    <Resource Include="Resources\VPNSessionStatusTypeIconInitializing.ico" />
+    <Resource Include="Resources\SessionStatusTypeIconConnected.ico" />
+    <Resource Include="Resources\SessionStatusTypeIconConnecting.ico" />
+    <Resource Include="Resources\SessionStatusTypeIconDisconnecting.ico" />
+    <Resource Include="Resources\SessionStatusTypeIconError.ico" />
+    <Resource Include="Resources\SessionStatusTypeIconInitializing.ico" />
     <Resource Include="Resources\AppBanner.png" />
   </ItemGroup>
   <ItemGroup>

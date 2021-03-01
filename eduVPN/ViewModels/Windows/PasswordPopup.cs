@@ -6,7 +6,6 @@
 */
 
 using eduOpenVPN.Management;
-using eduVPN.ViewModels.VPN;
 using Prism.Commands;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -23,7 +22,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// VPN session
         /// </summary>
-        public VPNSession Session { get; }
+        public VPN.Session Session { get; }
 
         /// <summary>
         /// Authenticating realm
@@ -75,7 +74,7 @@ namespace eduVPN.ViewModels.Windows
         /// <param name="e">Event arguments</param>
         public PasswordPopup(object sender, PasswordAuthenticationRequestedEventArgs e)
         {
-            Session = sender as VPNSession;
+            Session = sender as VPN.Session;
             _realm = e.Realm;
         }
 

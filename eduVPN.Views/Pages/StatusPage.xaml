@@ -65,7 +65,7 @@
                     MaxHeight="22"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Source="{Binding Path=Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}}"
+                    Source="{Binding Path=Wizard.ActiveSession.State, Converter={StaticResource SessionStatusTypeIconConverter}}"
                     ToolTip="{Binding Path=Wizard.ActiveSession.StateDescription}"
                     AutomationProperties.Name="{Binding Path=Wizard.ActiveSession.StateDescription}"
                     RenderOptions.BitmapScalingMode="Fant"/>

@@ -1,0 +1,40 @@
+﻿/*
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+*/
+
+namespace eduVPN.ViewModels.VPN
+{
+    /// <summary>
+    /// VPN session status type
+    /// </summary>
+    public enum SessionStatusType
+    {
+        /// <summary>
+        /// Connection is initializing (default).
+        /// </summary>
+        Initializing = 0,
+
+        /// <summary>
+        /// Client is connecting.
+        /// </summary>
+        Connecting,
+
+        /// <summary>
+        /// Client is connected.
+        /// </summary>
+        Connected,
+
+        /// <summary>
+        /// Client is disconnecting.
+        /// </summary>
+        Disconnecting,
+
+        /// <summary>
+        /// Connecting failed.
+        /// </summary>
+        Error
+    }
+}

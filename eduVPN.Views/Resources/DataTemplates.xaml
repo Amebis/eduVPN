@@ -38,7 +38,7 @@
                 MaxHeight="12"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource SessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 ToolTip="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 AutomationProperties.Name="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
@@ -80,7 +80,7 @@
                 MaxHeight="18"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource SessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 ToolTip="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 AutomationProperties.Name="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
@@ -133,7 +133,7 @@
                 MaxHeight="18"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource SessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 ToolTip="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 AutomationProperties.Name="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">
@@ -195,7 +195,7 @@
                 MaxHeight="12"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource VPNSessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
+                Source="{Binding Path=DataContext.Wizard.ActiveSession.State, Converter={StaticResource SessionStatusTypeIconConverter}, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 ToolTip="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 AutomationProperties.Name="{Binding Path=DataContext.Wizard.ActiveSession.StateDescription, RelativeSource={RelativeSource AncestorType={x:Type panels:ConnectingSelectPanel}}}"
                 RenderOptions.BitmapScalingMode="Fant">

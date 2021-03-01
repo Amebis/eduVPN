@@ -43,7 +43,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// VPN session state
         /// </summary>
-        private VPNSessionStatusType _session_state;
+        private SessionStatusType _session_state;
 
         /// <summary>
         /// Tray icon
@@ -53,7 +53,7 @@ namespace eduVPN.Views.Windows
         /// <summary>
         /// Cached icons to be used by <see cref="_tray_icon"/>
         /// </summary>
-        private Dictionary<VPNSessionStatusType, Icon> _icons;
+        private Dictionary<SessionStatusType, Icon> _icons;
 
         /// <summary>
         /// Flag to prevent/force closing
@@ -136,12 +136,12 @@ namespace eduVPN.Views.Windows
 
             // Preload icons to be used on system tray.
             var icon_size = System.Windows.Forms.SystemInformation.SmallIconSize;
-            _icons = new Dictionary<VPNSessionStatusType, Icon>();
-            foreach (var status_type in Enum.GetValues(typeof(VPNSessionStatusType)).Cast<VPNSessionStatusType>())
+            _icons = new Dictionary<SessionStatusType, Icon>();
+            foreach (var status_type in Enum.GetValues(typeof(SessionStatusType)).Cast<SessionStatusType>())
             {
-                var icon_uri = new Uri(String.Format("pack://application:,,,/Resources/VPNSessionStatusTypeIcon{0}.ico", Enum.GetName(typeof(VPNSessionStatusType), status_type)));
+                var icon_uri = new Uri(String.Format("pack://application:,,,/Resources/SessionStatusTypeIcon{0}.ico", Enum.GetName(typeof(SessionStatusType), status_type)));
                 try { _icons.Add(status_type, new Icon(Application.GetResourceStream(icon_uri).Stream, icon_size)); }
-                catch { _icons.Add(status_type, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/VPNSessionStatusTypeIconInitializing.ico")).Stream, icon_size)); }
+                catch { _icons.Add(status_type, new Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/SessionStatusTypeIconInitializing.ico")).Stream, icon_size)); }
             }
 
             // Attach to view model events.
@@ -170,7 +170,7 @@ namespace eduVPN.Views.Windows
                     _tray_icon.Text = TrayIconToolTipText;
                     _tray_icon.Icon = TrayIcon;
 
-                    if (view_model.ActiveSession != VPNSession.Blank)
+                    if (view_model.ActiveSession != Session.Blank)
                     {
                         // Initialize VPN session state.
                         _session_state = view_model.ActiveSession.State;
@@ -194,7 +194,7 @@ namespace eduVPN.Views.Windows
                                             // Client is minimized.
                                             switch (view_model.ActiveSession.State)
                                             {
-                                                case VPNSessionStatusType.Connected:
+                                                case SessionStatusType.Connected:
                                                     // Client connected. Popup the balloon message.
                                                     _tray_icon.ShowBalloonTip(
                                                         5000,
@@ -204,7 +204,7 @@ namespace eduVPN.Views.Windows
                                                     break;
 
                                                 default:
-                                                    if (_session_state == VPNSessionStatusType.Connected)
+                                                    if (_session_state == SessionStatusType.Connected)
                                                     {
                                                         // Client has been disconnected. Popup the balloon message.
                                                         _tray_icon.ShowBalloonTip(
