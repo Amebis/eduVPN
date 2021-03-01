@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.3...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.4...HEAD)
+
+
+## [1.255.4](https://github.com/Amebis/eduVPN/compare/1.255.3...1.255.4) (2021-03-01)
 
 - GUI refinements
 - OpenVPN updated to 2.5.1-20210225
