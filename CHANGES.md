@@ -1,10 +1,14 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.36...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.37...HEAD)
+
+
+## [1.0.37](https://github.com/Amebis/eduVPN/compare/1.0.36...1.0.37) (2021-03-01)
 
 - Fix incomplete product updates on x86
 - OpenVPN updated to 2.5.1-20210225
 - Prism updated to 8.0.0.1909
+- Fixes
 
 
 ## [1.0.36](https://github.com/Amebis/eduVPN/compare/1.0.35...1.0.36) (2020-12-18)
