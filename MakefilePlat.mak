@@ -9,8 +9,8 @@
 # Building
 ######################################################################
 
-"$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config" : "$(OUTPUT_DIR)\OpenVPN\$(PLAT)"
+"bin\OpenVPN\$(PLAT)\config" : "bin\OpenVPN\$(PLAT)"
 	if not exist $@ md $@
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config" rd  /s /q "$(OUTPUT_DIR)\OpenVPN\$(PLAT)\config"
+	-if exist "bin\OpenVPN\$(PLAT)\config" rd  /s /q "bin\OpenVPN\$(PLAT)\config"

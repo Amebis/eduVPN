@@ -13,7 +13,7 @@ WIX_CANDLE_FLAGS_CFG=$(WIX_CANDLE_FLAGS)
 # Building
 ######################################################################
 
-"$(OUTPUT_DIR)\$(CFG)" :
+"bin\$(CFG)" :
 	if not exist $@ md $@
 
 

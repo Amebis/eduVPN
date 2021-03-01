@@ -17,58 +17,58 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 # Building
 ######################################################################
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin.wixobj"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" \
+	"bin\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduEx.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduJSON.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduEx.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduJSON.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).msi"  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).msi"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).msi" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).msi"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).msi"    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).msi"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).msi"  del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).msi"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).msi" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).msi"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).msi"    del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).msi"
 
 !IF "$(LANG)" == "en-US"
 # The en-US localization serves as the base. Therefore, it does not produce a diff MST.
 !ELSE
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_en-US.msi" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_en-US.msi" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 
-"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" \
-	"$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_en-US.msi" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(CORE_VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 
 Clean ::
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).mst"  del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).mst"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).mst" del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).mst"
-	-if exist "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).mst"    del /f /q "$(OUTPUT_DIR)\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).mst"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).mst"  del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_*_$(SETUP_TARGET)_$(LANG).mst"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).mst" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_*_$(SETUP_TARGET)_$(LANG).mst"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).mst"    del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_*_$(SETUP_TARGET)_$(LANG).mst"
 
 !ENDIF

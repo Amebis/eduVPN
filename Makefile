@@ -10,9 +10,6 @@ TAPWIN_VERSION=9.24.5.1
 OPENVPN_VERSION=2.5.0.11
 CORE_VERSION=1.0.36
 
-OUTPUT_DIR=bin
-SETUP_DIR=$(OUTPUT_DIR)\Setup
-
 # Default testing configuration and platform
 TEST_CFG=Debug
 !IF "$(PROCESSOR_ARCHITECTURE)" == "AMD64"
@@ -73,10 +70,10 @@ Setup :: \
 	SetupMSI \
 	SetupExe
 
-"$(SETUP_DIR)\eduVPN.windows.json.minisig" \
-"$(SETUP_DIR)\LetsConnect.windows.json.minisig" : \
-	"$(SETUP_DIR)\eduVPN.windows.json" \
-	"$(SETUP_DIR)\LetsConnect.windows.json"
+"bin\Setup\eduVPN.windows.json.minisig" \
+"bin\Setup\LetsConnect.windows.json.minisig" : \
+	"bin\Setup\eduVPN.windows.json" \
+	"bin\Setup\LetsConnect.windows.json"
 	echo Signing $**
 	minisign.exe -Sm $**
 
