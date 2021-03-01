@@ -5,6 +5,8 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Properties;
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -20,7 +22,7 @@ namespace eduVPN.Xml
     /// Serializable resource reference with public keys for verification
     /// </summary>
     [Serializable]
-    public class ResourceRef : IXmlSerializable, ISerializable
+    public class ResourceRef : IXmlSerializable, IRegistrySerializable, ISerializable
     {
         #region Fields
 
@@ -110,6 +112,25 @@ namespace eduVPN.Xml
                 PublicKeys.WriteXml(writer);
                 writer.WriteEndElement();
             }
+        }
+
+        #endregion
+
+        #region IRegistrySerializable Support
+
+        public bool ReadRegistry(RegistryKey key, string name)
+        {
+            if (key.GetValue(name) is string v)
+            {
+                Uri = !string.IsNullOrEmpty(v) ? new Uri(AssemblyUri, v) : null;
+
+                var pk = new MinisignPublicKeyDictionary();
+                if (pk.ReadRegistry(key, name + "PublicKeys"))
+                    PublicKeys = pk;
+
+                return true;
+            }
+            return false;
         }
 
         #endregion

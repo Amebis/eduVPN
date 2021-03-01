@@ -177,7 +177,7 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             // Get self-update.
-                            var res = Properties.Settings.Default.SelfUpdateDiscovery;
+                            var res = Properties.SettingsEx.Default.SelfUpdateDiscovery;
                             Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", res.Uri.AbsoluteUri);
                             var obj = Properties.Settings.Default.ResponseCache.GetSeq(res, Window.Abort.Token);
 

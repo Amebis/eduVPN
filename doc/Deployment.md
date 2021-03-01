@@ -3,9 +3,10 @@
 
 This document describes deploying the eduVPN and Let's Connect! Clients for Windows only. For eduVPN server setup see [eduVPN Documentation](https://github.com/eduvpn/documentation).
 
-eduVPN and Let's Connect! clients are the same client targeted for a different audience. While their UI is different, the setup is identical. Therefore, the remainder of this document will reference "eduVPN" only for readability.
+eduVPN and Let's Connect! clients are the same client targeted for a different audience. While their UI is different, the setup is identical. Therefore, the remainder of this document will reference "eduVPN" only for readability. For Let's Connect! use case, the "eduVPN" in paths and filenames translates to "LetsConnect".
 
 Basic knowledge of GPO or SCCM is required.
+
 
 ## Overview
 
@@ -16,6 +17,7 @@ eduVPN Client for Windows requires:
 - [TAP-Windows driver](https://openvpn.net/index.php/open-source/downloads.html)
 - OpenVPN Components: `eduVPNOpenVPN_<ver>_<plat>.msi`
 - eduVPN Client: `eduVPNCore_<ver>_<plat>.msi`
+
 
 ## Option A: EXE Installer
 
@@ -44,6 +46,7 @@ Additional flags:
 - `/norestart` - Suppress any attempts to restart. By default, UI will prompt before a restart.
 - `/log <logfile.txt>` - Logs to a specific file. By default, a log file is created in `%TEMP%`.
 
+
 ## Option B: MSI Packages
 
 This option is recommended for Group Policy deployments. However, it automates the deployment only partially.
@@ -63,15 +66,6 @@ Packages can be deployed using the same Group Policy Object. We advise against m
 
 The eduVPN Client for Windows will self-update on new releases by default.
 
-Should you prefer manual updating, self-updating can be turned off in the `eduVPN.Client.exe.config` XML file installed in the `eduVPN\Core` folder. At the `SelfUpdateDiscovery` setting, set the `Uri` attribute of `<ResourceRef>` element to an empty string:
-```XML
-<setting name="SelfUpdateDiscovery" serializeAs="Xml">
-    <value>
-        <ResourceRef Uri=""/>
-    </value>
-</setting>
-```
+Should you prefer manual updating, self-updating can be turned off in the `HKEY_LOCAL_MACHINE\SOFTWARE\SURF\eduVPN` registry key by adding a blank `REG_SZ` value named `SelfUpdateDiscovery`.
 
 Updating eduVPN Client for Windows manually is installing a newer version over the previous one using the same deployment option again.
-
-Updating will overwrite the `eduVPN.Client.exe.config` file with a default one. All modifications are lost. If you want to keep self-updating disabled make sure to re-deploy your version of `eduVPN.Client.exe.config` again.

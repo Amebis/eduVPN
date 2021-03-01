@@ -42,7 +42,9 @@
     <Compile Include="EqualityComparer.cs" />
     <Compile Include="Models\INamedEntity.cs" />
     <Compile Include="Models\InstituteAccessServer.cs" />
+    <Compile Include="Properties\IRegistrySerializable.cs" />
     <Compile Include="Models\SecureInternetServer.cs" />
+    <Compile Include="Properties\SettingsEx.cs" />
     <Compile Include="System\Collections\Generic\Extensions.cs" />
     <Compile Include="JSON\APIErrorException.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />

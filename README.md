@@ -14,6 +14,8 @@ _Start_ » _All Programs_ » _eduVPN Client_
 
 Please read the [Deployment of eduVPN Client for Windows](doc/Deployment.md) for SCCM and GPO deployment recommendations.
 
+Customizing client behaviour is described in [Customization of eduVPN and Let's Connect! Clients for Windows](doc/Customization.md).
+
 
 # Developers
 

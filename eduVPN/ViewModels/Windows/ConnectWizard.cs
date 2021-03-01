@@ -142,7 +142,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Page to add another server
         /// </summary>
-        public ConnectWizardStandardPage AddAnotherPage { get => Properties.Settings.Default.ServersDiscovery?.Uri != null ? (ConnectWizardStandardPage)SearchPage : SelectOwnServerPage; }
+        public ConnectWizardStandardPage AddAnotherPage { get => Properties.SettingsEx.Default.ServersDiscovery?.Uri != null ? (ConnectWizardStandardPage)SearchPage : SelectOwnServerPage; }
 
         /// <summary>
         /// The first page of the wizard
@@ -336,17 +336,17 @@ namespace eduVPN.ViewModels.Windows
 
             var actions = new List<KeyValuePair<Action, int>>();
 
-            if (Properties.Settings.Default.ServersDiscovery?.Uri != null)
+            if (Properties.SettingsEx.Default.ServersDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     DiscoverServers,
                     6 * 60 * 60 * 1000)); // Repeat every 6 hours
 
-            if (Properties.Settings.Default.OrganizationsDiscovery?.Uri != null)
+            if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     DiscoverOrganizations,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
-            if (Properties.Settings.Default.SelfUpdateDiscovery?.Uri != null)
+            if (Properties.SettingsEx.Default.SelfUpdateDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     SelfUpdatePromptPage.CheckForUpdates,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
@@ -384,7 +384,7 @@ namespace eduVPN.ViewModels.Windows
             // Load and index list of discovered servers.
             var dict = new ServerDictionary();
             dict.LoadJSON(Xml.Response.Get(
-                res: Properties.Settings.Default.ServersDiscovery,
+                res: Properties.SettingsEx.Default.ServersDiscovery,
                 ct: Abort.Token).Value,
                 Abort.Token);
             //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
@@ -454,7 +454,7 @@ namespace eduVPN.ViewModels.Windows
             // Load and index list of discovered organizations.
             var dict = new OrganizationDictionary();
             dict.LoadJSON(Xml.Response.Get(
-                res: Properties.Settings.Default.OrganizationsDiscovery,
+                res: Properties.SettingsEx.Default.OrganizationsDiscovery,
                 ct: Abort.Token).Value,
                 Abort.Token);
             //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.

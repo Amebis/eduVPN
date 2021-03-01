@@ -206,7 +206,7 @@ namespace eduVPN.ViewModels.Pages
                                         {
                                             // Create our new session.
                                             using (var session = new OpenVPNSession(
-                                                    Properties.Settings.Default.OpenVPNInteractiveServiceInstance,
+                                                    Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance,
                                                     Wizard,
                                                     SelectedProfile))
                                             {

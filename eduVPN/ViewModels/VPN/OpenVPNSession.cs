@@ -487,7 +487,7 @@ namespace eduVPN.ViewModels.VPN
                             {
                                 // Save profile's configuration to file.
 
-                                if (Properties.Settings.Default.OpenVPNRemoveOptions is StringCollection)
+                                if (Properties.SettingsEx.Default.OpenVPNRemoveOptions is StringCollection openVPNRemoveOptions)
                                 {
                                     // Remove options on the OpenVPNRemoveOptions list on the fly.
                                     using (var sr = new StringReader(ProfileConfig))
@@ -519,14 +519,14 @@ namespace eduVPN.ViewModels.VPN
                                                                 // Start of an inline option.
                                                                 var o = option[0].Substring(1, option[0].Length - 2);
                                                                 inlineTerm = "</" + o + ">";
-                                                                inlineRemove = Properties.Settings.Default.OpenVPNRemoveOptions.Contains(o);
+                                                                inlineRemove = openVPNRemoveOptions.Contains(o);
                                                                 if (inlineRemove)
                                                                 {
                                                                     sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
                                                                     line = "# " + line;
                                                                 }
                                                             }
-                                                            else if (Properties.Settings.Default.OpenVPNRemoveOptions.Contains(option[0]))
+                                                            else if (openVPNRemoveOptions.Contains(option[0]))
                                                             {
                                                                 sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
                                                                 line = "# " + line;
@@ -604,12 +604,13 @@ namespace eduVPN.ViewModels.VPN
                                     sw.WriteLine("rcvbuf 65536");
                                 }
 
-                                if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.OpenVPNAddOptions))
+                                var openVPNAddOptions = Properties.SettingsEx.Default.OpenVPNAddOptions;
+                                if (!string.IsNullOrWhiteSpace(openVPNAddOptions))
                                 {
                                     sw.WriteLine();
                                     sw.WriteLine();
                                     sw.WriteLine("# Added by OpenVPNAddOptions setting:");
-                                    sw.WriteLine(Properties.Settings.Default.OpenVPNAddOptions);
+                                    sw.WriteLine(openVPNAddOptions);
                                 }
                             }
                         }
