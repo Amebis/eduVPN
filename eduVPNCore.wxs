@@ -92,6 +92,7 @@
                         <Directory Id="RESDIRNB" Name="nb"/>
                         <Directory Id="RESDIRNL" Name="nl"/>
                         <Directory Id="RESDIRSL" Name="sl"/>
+                        <Directory Id="RESDIRTR" Name="tr"/>
                         <Directory Id="RESDIRUK" Name="uk"/>
                     </Directory>
                 </Directory>
