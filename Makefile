@@ -83,3 +83,14 @@ CFG=Debug
 
 CFG=Release
 !INCLUDE "MakefileCfg.mak"
+
+
+######################################################################
+# Platform specific rules
+######################################################################
+
+PLAT=x86
+!INCLUDE "MakefilePlat.mak"
+
+PLAT=x64
+!INCLUDE "MakefilePlat.mak"
