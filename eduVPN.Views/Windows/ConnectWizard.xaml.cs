@@ -255,7 +255,7 @@ namespace eduVPN.Views.Windows
                                             NotifyIcon.ShowBalloonTip(
                                                 5000,
                                                 string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile.Server),
-                                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo),
+                                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
                                                 System.Windows.Forms.ToolTipIcon.Info);
                                             WasSessionExpirationWarned = true;
                                         }
