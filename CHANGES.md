@@ -3,7 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.38...HEAD)
 
 
-## [1.0.38](https://github.com/Amebis/eduVPN/compare/1.0.37...1.0.38)
+## [1.0.38](https://github.com/Amebis/eduVPN/compare/1.0.37...1.0.38) (2021-03-02)
 
 - Fix updates from 1.0.36
 
