@@ -7,7 +7,7 @@
 
 VERSION=1.0.37
 TAPWIN_VERSION=9.24.5.1
-OPENVPN_VERSION=2.5.0.11
+OPENVPN_VERSION=2.5.1.12
 
 # Default testing configuration and platform
 TEST_CFG=Debug
