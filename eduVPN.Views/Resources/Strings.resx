@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -208,14 +208,6 @@ If you continue, your user settings will be reset to the default.</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Connection _info...</value>
-  </data>
-  <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>h\:mm\:ss</value>
-    <comment>Display format of the duration times less then one day</comment>
-  </data>
-  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
-    <comment>Display format of the duration times one day or longer</comment>
   </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
@@ -371,5 +363,21 @@ Please wait...</value>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
     <value>{0} is about to expire</value>
     <comment>{0}=Server name</comment>
+  </data>
+  <data name="TimeSpanDaysAndHours" xml:space="preserve">
+    <value>{0:day|days} and {1:hour|hours}</value>
+    <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
+  </data>
+  <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
+    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
+  </data>
+  <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
+    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
+  </data>
+  <data name="TimeSpanSeconds" xml:space="preserve">
+    <value>{0:second|seconds}</value>
+    <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>

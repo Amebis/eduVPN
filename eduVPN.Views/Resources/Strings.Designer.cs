@@ -759,20 +759,29 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to h\:mm\:ss.
+        ///   Looks up a localized string similar to {0:day|days} and {1:hour|hours}.
         /// </summary>
-        public static string TimeSpanInSeconds {
+        public static string TimeSpanDaysAndHours {
             get {
-                return ResourceManager.GetString("TimeSpanInSeconds", resourceCulture);
+                return ResourceManager.GetString("TimeSpanDaysAndHours", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to d\.hh\:mm\:ss.
+        ///   Looks up a localized string similar to {0:hour|hours} and {1:minute|minutes}.
         /// </summary>
-        public static string TimeSpanInSecondsWithDays {
+        public static string TimeSpanHoursAndMinutes {
             get {
-                return ResourceManager.GetString("TimeSpanInSecondsWithDays", resourceCulture);
+                return ResourceManager.GetString("TimeSpanHoursAndMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0:minute|minutes} and {1:second|seconds}.
+        /// </summary>
+        public static string TimeSpanMinutesAndSeconds {
+            get {
+                return ResourceManager.GetString("TimeSpanMinutesAndSeconds", resourceCulture);
             }
         }
         
@@ -782,6 +791,15 @@ namespace eduVPN.Views.Resources {
         public static string TimeSpanNotAvailable {
             get {
                 return ResourceManager.GetString("TimeSpanNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0:second|seconds}.
+        /// </summary>
+        public static string TimeSpanSeconds {
+            get {
+                return ResourceManager.GetString("TimeSpanSeconds", resourceCulture);
             }
         }
     }

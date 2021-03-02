@@ -158,7 +158,7 @@
                 HorizontalAlignment="Center"
                 Visibility="{Binding ActiveSession.Expired, Converter={StaticResource BooleanInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
-                <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanInSecondsConverter}}" Style="{StaticResource ImportantStyle}"/>
+                <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanToHumanReadableConverter}}" Style="{StaticResource ImportantStyle}"/>
             </TextBlock>
 
             <TextBlock
@@ -285,7 +285,7 @@
                 <TextBlock
                     Grid.Row="1"
                     Style="{StaticResource ConnectionInfoValueStyle}"
-                    Text="{Binding ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanInSecondsConverter}}"/>
+                    Text="{Binding ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanToHumanReadableConverter}}"/>
 
                 <TextBlock
                     Grid.Row="2"

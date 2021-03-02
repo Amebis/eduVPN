@@ -56,10 +56,11 @@
     <Compile Include="Converters\InvertableConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
+    <Compile Include="Localization\CardinalPluralFormatProvider.cs" />
     <Compile Include="Converters\ProfileSelectionVisibilityConverter.cs" />
     <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
     <Compile Include="Converters\StringVisibilityConverter.cs" />
-    <Compile Include="Converters\TimeSpanInSecondsConverter.cs" />
+    <Compile Include="Converters\TimeSpanToHumanReadableConverter.cs" />
     <Compile Include="Converters\UriStripProtocolConverter.cs" />
     <Compile Include="Converters\SessionStatusTypeDescriptionConverter.cs" />
     <Compile Include="Converters\SessionStatusTypeIconConverter.cs" />
