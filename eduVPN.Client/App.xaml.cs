@@ -50,8 +50,8 @@ namespace eduVPN.Client
             eduVPN.Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\eduVPN";
             eduVPN.Properties.Settings.Default.SelfUpdateBundleId = "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}";
             eduVPN.Properties.Settings.Default.ClientId = "org.eduvpn.app";
-            eduVPN.Properties.Settings.Default.ClientTitle = Client.Resources.Strings.ConnectWizardTitle;
-            eduVPN.Properties.Settings.Default.ClientAboutUri = new Uri(Client.Resources.Strings.AboutPageUri);
+            eduVPN.Properties.Settings.Default.ClientTitle = "eduVPN";
+            eduVPN.Properties.Settings.Default.ClientAboutUri = new Uri(@"https://www.eduvpn.org/");
         }
 
         #endregion

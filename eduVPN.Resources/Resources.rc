@@ -222,8 +222,8 @@ BEGIN
 	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
 	IDS_EDUVPN_CORE_TITLE              "eduVPN İstemci Çekirdeği"
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Haydi Bağlanalım! İstemci"
+	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! İstemci"
 	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Açık kaynak VPN"
 	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Haydi Bağlanalım! İstemci Çekirdeği"
+	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! İstemci Çekirdeği"
 END

@@ -221,8 +221,8 @@ BEGIN
 	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Etkileşimli Hizmet (eduVPN)"
 	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, eduVPN istemcisi çalışmayacaktır."
 
-	IDS_LETSCONNECT_OPENVPN_TITLE           "Haydi Bağlanalım! OpenVPN İstemci Bileşenleri"
+	IDS_LETSCONNECT_OPENVPN_TITLE           "Let's Connect! OpenVPN İstemci Bileşenleri"
 	IDS_LETSCONNECT_OPENVPN_PUBLISHER       "SURF"
-	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Etkileşimli Hizmet (Hadi Bağlanalım!)"
-	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, Haydi Bağlanalım! çalışmayacak."
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Etkileşimli Hizmet (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, Let's Connect! çalışmayacak."
 END

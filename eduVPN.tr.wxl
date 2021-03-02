@@ -14,10 +14,10 @@
     <String Id="eduVPN.OpenVPNName">eduVPN İstemcisi OpenVPN Bileşenleri</String>
     <String Id="eduVPN.TAPWinName">eduVPN İstemcisi TAP-Windows</String>
 
-    <String Id="LetsConnect.Name">Haydi Bağlanalım! İstemci</String>
-    <String Id="LetsConnect.CoreName">Haydi Bağlanalım! İstemci Çekirdeği</String>
-    <String Id="LetsConnect.OpenVPNName">Haydi Bağlanalım! İstemci OpenVPN Bileşenleri</String>
-    <String Id="LetsConnect.TAPWinName">Haydi Bağlanalım! İstemci TAP-Windows</String>
+    <String Id="LetsConnect.Name">Let's Connect! İstemci</String>
+    <String Id="LetsConnect.CoreName">Let's Connect! İstemci Çekirdeği</String>
+    <String Id="LetsConnect.OpenVPNName">Let's Connect! İstemci OpenVPN Bileşenleri</String>
+    <String Id="LetsConnect.TAPWinName">Let's Connect! İstemci TAP-Windows</String>
 
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1055</String>

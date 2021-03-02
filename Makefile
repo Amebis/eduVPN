@@ -129,11 +129,3 @@ TRANSIFEX_RES=eduvpn
 RESOURCE_DIR=$(MAKEDIR)\eduVPN.Views\Resources
 TRANSIFEX_RES=eduvpnviews
 !INCLUDE "MakefileTransifex.mak"
-
-RESOURCE_DIR=$(MAKEDIR)\eduVPN.Client\Resources
-TRANSIFEX_RES=eduvpnclient
-!INCLUDE "MakefileTransifex.mak"
-
-RESOURCE_DIR=$(MAKEDIR)\LetsConnect.Client\Resources
-TRANSIFEX_RES=letsconnectclient
-!INCLUDE "MakefileTransifex.mak"
