@@ -169,6 +169,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.nl.resx" />
+    <EmbeddedResource Include="Resources\Strings.pt-PT.resx" />
     <EmbeddedResource Include="Resources\Strings.sl.resx" />
     <EmbeddedResource Include="Resources\Strings.tr.resx" />
     <EmbeddedResource Include="Resources\Strings.uk.resx" />

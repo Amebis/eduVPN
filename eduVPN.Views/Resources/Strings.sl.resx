@@ -209,14 +209,6 @@ Program Commons Conservancy eduVPN</value>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Podatk_i povezave ...</value>
   </data>
-  <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>h\:mm\:ss</value>
-    <comment>Display format of the duration times less then one day</comment>
-  </data>
-  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
-    <comment>Display format of the duration times one day or longer</comment>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
@@ -371,5 +363,21 @@ Prosimo, počakajte ...</value>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
     <value>{0} bo kmalu potekel</value>
     <comment>{0}=Server name</comment>
+  </data>
+  <data name="TimeSpanDaysAndHours" xml:space="preserve">
+    <value>{0:dan|dneva|dnevi|dni} in {1:ura|uri|ure|ur}</value>
+    <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
+  </data>
+  <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
+    <value>{0:ura|uri|ure|ur} in {1:minuta|minuti|minute|minut}</value>
+    <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
+  </data>
+  <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
+    <value>{0:minuta|minuti|minute|minut} in {1:sekunda|sekundi|sekunde|sekund}</value>
+    <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
+  </data>
+  <data name="TimeSpanSeconds" xml:space="preserve">
+    <value>{0:sekunda|sekundi|sekunde|sekund}</value>
+    <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>

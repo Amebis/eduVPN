@@ -209,14 +209,6 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Info_connexion...</value>
   </data>
-  <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>h\:mm\:ss</value>
-    <comment>Display format of the duration times less then one day</comment>
-  </data>
-  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
-    <comment>Display format of the duration times one day or longer</comment>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
@@ -359,17 +351,33 @@ Veuillez patienter...</value>
     <value>Profil</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>La session a expiré</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>Renouveler la session</value>
   </data>
   <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
-    <value>Renew before {0}</value>
+    <value>Renouvelez avant{0}</value>
     <comment>{0}=date and time</comment>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
-    <value>{0} is about to expire</value>
+    <value>{0}est sur le point d'expirer</value>
     <comment>{0}=Server name</comment>
+  </data>
+  <data name="TimeSpanDaysAndHours" xml:space="preserve">
+    <value>{0:day|days} and {1:hour|hours}</value>
+    <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
+  </data>
+  <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
+    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
+  </data>
+  <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
+    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
+  </data>
+  <data name="TimeSpanSeconds" xml:space="preserve">
+    <value>{0:second|seconds}</value>
+    <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>

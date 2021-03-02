@@ -209,14 +209,6 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>Tilkoblings_status...</value>
   </data>
-  <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>hh\:mm\:ss</value>
-    <comment>Display format of the duration times less then one day</comment>
-  </data>
-  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
-    <comment>Display format of the duration times one day or longer</comment>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
@@ -371,5 +363,21 @@ Please wait...</value>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
     <value>{0} is about to expire</value>
     <comment>{0}=Server name</comment>
+  </data>
+  <data name="TimeSpanDaysAndHours" xml:space="preserve">
+    <value>{0:day|days} and {1:hour|hours}</value>
+    <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
+  </data>
+  <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
+    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
+  </data>
+  <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
+    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
+  </data>
+  <data name="TimeSpanSeconds" xml:space="preserve">
+    <value>{0:second|seconds}</value>
+    <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>

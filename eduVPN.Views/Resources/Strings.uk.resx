@@ -209,14 +209,6 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
     <value>_Інформація про з'єднання...</value>
   </data>
-  <data name="TimeSpanInSeconds" xml:space="preserve">
-    <value>h\:mm\:ss</value>
-    <comment>Display format of the duration times less then one day</comment>
-  </data>
-  <data name="TimeSpanInSecondsWithDays" xml:space="preserve">
-    <value>d\.hh\:mm\:ss</value>
-    <comment>Display format of the duration times one day or longer</comment>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
@@ -370,5 +362,21 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
     <value>{0} скоро закінчиться</value>
     <comment>{0}=Server name</comment>
+  </data>
+  <data name="TimeSpanDaysAndHours" xml:space="preserve">
+    <value>{0:день|дня|днів} та {1:година|години|годин}</value>
+    <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
+  </data>
+  <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
+    <value>{0:година|години|годин} та {1:хвилина|хвилини|хвилин}</value>
+    <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
+  </data>
+  <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
+    <value>{0:хвилина|хвилини|хвилин} та {1:секунда|секунди|секунд}</value>
+    <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
+  </data>
+  <data name="TimeSpanSeconds" xml:space="preserve">
+    <value>{0:секунда|секунди|секунд}</value>
+    <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>
