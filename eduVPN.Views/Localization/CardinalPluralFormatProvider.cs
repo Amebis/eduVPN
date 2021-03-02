@@ -65,7 +65,7 @@ namespace eduVPN.Localization
                     CardinalPluralizers.TryGetValue(System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName, out pluralizer) ||
                     CardinalPluralizers.TryGetValue("", out pluralizer))
                 {
-                    int form = pluralizer(n);
+                    int form = pluralizer(n >= 0 ? n : -n);
                     if (form >= forms.Length)
                         throw new ArgumentException(string.Format("Numeral {0} should use {1}. plural form, but \"{2}\" provides only {3} plural form(s).", n, form + 1, format, forms.Length));
                     return
