@@ -213,14 +213,8 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
-  <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
-  </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Search for your institute...</value>
-  </data>
-  <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organization</value>
@@ -237,7 +231,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="SearchPageTitle" xml:space="preserve">
     <value>Find your institute</value>
   </data>
-  <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
+  <data name="LocationLabel" xml:space="preserve">
     <value>_Location</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
@@ -252,23 +246,20 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
     <value>_Change Location</value>
   </data>
-  <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Location</value>
-  </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
     <value>A_bout</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
     <value>_Add</value>
   </data>
-  <data name="HomePageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+  <data name="InstituteAccessLabel" xml:space="preserve">
+    <value>Instituttilgang</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Other Servers</value>
   </data>
-  <data name="HomePageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+  <data name="SecureInternetLabel" xml:space="preserve">
+    <value>Sikker internett</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Add other server</value>

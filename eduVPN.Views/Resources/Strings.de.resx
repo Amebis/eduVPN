@@ -213,14 +213,8 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
-  <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Zugang zum Institut</value>
-  </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Ihr Institut suchen...</value>
-  </data>
-  <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Sicheres Internet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organisation</value>
@@ -237,7 +231,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="SearchPageTitle" xml:space="preserve">
     <value>Finden Sie Ihr Institut</value>
   </data>
-  <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
+  <data name="LocationLabel" xml:space="preserve">
     <value>S_tandort</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
@@ -252,22 +246,19 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
     <value>S_tandort ändern</value>
   </data>
-  <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>S_tandort</value>
-  </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
     <value>Üb_er</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
     <value>_Hinzufügen</value>
   </data>
-  <data name="HomePageInstituteAccessLabel" xml:space="preserve">
+  <data name="InstituteAccessLabel" xml:space="preserve">
     <value>Zugang zum Institut</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Andere Server</value>
   </data>
-  <data name="HomePageSecureInternetLabel" xml:space="preserve">
+  <data name="SecureInternetLabel" xml:space="preserve">
     <value>Sicheres Internet</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">

@@ -213,14 +213,8 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
-  <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Accès Établissement</value>
-  </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Cherchez votre _établissement...</value>
-  </data>
-  <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Internet Sécurisé</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organisation</value>
@@ -237,7 +231,7 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SearchPageTitle" xml:space="preserve">
     <value>Chercher votre établissement</value>
   </data>
-  <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
+  <data name="LocationLabel" xml:space="preserve">
     <value>_Lieu</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
@@ -252,22 +246,19 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
     <value>_Changer de lieu</value>
   </data>
-  <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Lieu</value>
-  </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
     <value>A_propos</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
     <value>_Ajouter</value>
   </data>
-  <data name="HomePageInstituteAccessLabel" xml:space="preserve">
+  <data name="InstituteAccessLabel" xml:space="preserve">
     <value>Accès Établissement</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Autres Serveurs</value>
   </data>
-  <data name="HomePageSecureInternetLabel" xml:space="preserve">
+  <data name="SecureInternetLabel" xml:space="preserve">
     <value>Internet Sécurisé</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
@@ -365,19 +356,19 @@ Veuillez patienter...</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="TimeSpanDaysAndHours" xml:space="preserve">
-    <value>{0:day|days} and {1:hour|hours}</value>
+    <value>{0:jour|jours} and {1:heure|heures}</value>
     <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
   </data>
   <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
-    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <value>{0:heure|heures} and {1:minute|minutes}</value>
     <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
   </data>
   <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
-    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <value>{0:minute|minutes} and {1:seconde|secondes}</value>
     <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
   </data>
   <data name="TimeSpanSeconds" xml:space="preserve">
-    <value>{0:second|seconds}</value>
+    <value>{0:seconde|secondes}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>

@@ -212,14 +212,8 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
-  <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Enstitü Erişimi</value>
-  </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Enstitünüzü arayın...</value>
-  </data>
-  <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Güvenli İnternet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organizasyon</value>
@@ -236,7 +230,7 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
   <data name="SearchPageTitle" xml:space="preserve">
     <value>Enstitünüzü bulun</value>
   </data>
-  <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
+  <data name="LocationLabel" xml:space="preserve">
     <value>_Konum</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
@@ -251,23 +245,20 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
     <value>_Konumu Değiştir</value>
   </data>
-  <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Konum</value>
-  </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
     <value>H_akkında</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
     <value>_Ekle</value>
   </data>
-  <data name="HomePageInstituteAccessLabel" xml:space="preserve">
-    <value>Instituttilgang</value>
+  <data name="InstituteAccessLabel" xml:space="preserve">
+    <value>Enstitü Erişimi</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Diğer Sunucular</value>
   </data>
-  <data name="HomePageSecureInternetLabel" xml:space="preserve">
-    <value>Sikker internett</value>
+  <data name="SecureInternetLabel" xml:space="preserve">
+    <value>Güvenli İnternet</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Başka sunucu ekle</value>

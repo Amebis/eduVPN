@@ -213,14 +213,8 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
-  <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Instituut Toegang</value>
-  </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Zoek uw instelling...</value>
-  </data>
-  <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Veilig Internet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organisatie</value>
@@ -237,7 +231,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SearchPageTitle" xml:space="preserve">
     <value>Zoek uw instelling</value>
   </data>
-  <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
+  <data name="LocationLabel" xml:space="preserve">
     <value>_Locatie</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
@@ -252,22 +246,19 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
     <value>_Verander locatie</value>
   </data>
-  <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Locatie</value>
-  </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
     <value>O_ver</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
     <value>_Toevoegen</value>
   </data>
-  <data name="HomePageInstituteAccessLabel" xml:space="preserve">
+  <data name="InstituteAccessLabel" xml:space="preserve">
     <value>Instituut Toegang</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Andere Servers</value>
   </data>
-  <data name="HomePageSecureInternetLabel" xml:space="preserve">
+  <data name="SecureInternetLabel" xml:space="preserve">
     <value>Veilig Internet</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
@@ -351,33 +342,33 @@ Even geduld aub... </value>
     <value>Profiel</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>De sessie is verlopen</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>Vernieuw sessie</value>
   </data>
   <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
-    <value>Renew before {0}</value>
+    <value>Re-login voor {0}</value>
     <comment>{0}=date and time</comment>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
-    <value>{0} is about to expire</value>
+    <value>{0} verloopt snel</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="TimeSpanDaysAndHours" xml:space="preserve">
-    <value>{0:day|days} and {1:hour|hours}</value>
+    <value>{0:dag|dagen} and {1:uur|uren}</value>
     <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
   </data>
   <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
-    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <value>{0:uur|uren} and {1:minuut|minuten}</value>
     <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
   </data>
   <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
-    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <value>{0:minuut|minuten} and {1:seconde|seconden}</value>
     <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
   </data>
   <data name="TimeSpanSeconds" xml:space="preserve">
-    <value>{0:second|seconds}</value>
+    <value>{0:seconde|seconden}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>
