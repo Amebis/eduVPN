@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -213,14 +213,8 @@ If you continue, your user settings will be reset to the default.</value>
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
-  <data name="SearchPageInstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
-  </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
     <value>Search for your institute...</value>
-  </data>
-  <data name="SearchPageSecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organization</value>
@@ -237,7 +231,7 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SearchPageTitle" xml:space="preserve">
     <value>Find your institute</value>
   </data>
-  <data name="HomePageSecureInternetServersLabel" xml:space="preserve">
+  <data name="LocationLabel" xml:space="preserve">
     <value>_Location</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
@@ -252,22 +246,19 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
     <value>_Change Location</value>
   </data>
-  <data name="SelectSecureInternetServerPageListLabel" xml:space="preserve">
-    <value>_Location</value>
-  </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
     <value>A_bout</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
     <value>_Add</value>
   </data>
-  <data name="HomePageInstituteAccessLabel" xml:space="preserve">
+  <data name="InstituteAccessLabel" xml:space="preserve">
     <value>Institute Access</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Other Servers</value>
   </data>
-  <data name="HomePageSecureInternetLabel" xml:space="preserve">
+  <data name="SecureInternetLabel" xml:space="preserve">
     <value>Secure Internet</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">

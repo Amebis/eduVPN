@@ -49,6 +49,6 @@
             ItemContainerStyle="{StaticResource SecureInternetServersStyle}"
             ItemsSource="{Binding Source={StaticResource SecureInternetServersView}}"
             SelectedItem="{Binding SelectedSecureInternetServer}"
-            AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelectSecureInternetServerPageListLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+            AutomationProperties.Name="{Binding Source={x:Static res:Strings.LocationLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
     </Grid>
 </Page>

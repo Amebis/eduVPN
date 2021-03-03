@@ -306,15 +306,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Institute Access.
-        /// </summary>
-        public static string HomePageInstituteAccessLabel {
-            get {
-                return ResourceManager.GetString("HomePageInstituteAccessLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Other Servers.
         /// </summary>
         public static string HomePageOwnServerLabel1 {
@@ -333,20 +324,20 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Secure Internet.
+        ///   Looks up a localized string similar to Institute Access.
         /// </summary>
-        public static string HomePageSecureInternetLabel {
+        public static string InstituteAccessLabel {
             get {
-                return ResourceManager.GetString("HomePageSecureInternetLabel", resourceCulture);
+                return ResourceManager.GetString("InstituteAccessLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to _Location.
         /// </summary>
-        public static string HomePageSecureInternetServersLabel {
+        public static string LocationLabel {
             get {
-                return ResourceManager.GetString("HomePageSecureInternetServersLabel", resourceCulture);
+                return ResourceManager.GetString("LocationLabel", resourceCulture);
             }
         }
         
@@ -356,15 +347,6 @@ namespace eduVPN.Views.Resources {
         public static string NumberToHumanReadable {
             get {
                 return ResourceManager.GetString("NumberToHumanReadable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Institute Access.
-        /// </summary>
-        public static string SearchPageInstituteAccessLabel {
-            get {
-                return ResourceManager.GetString("SearchPageInstituteAccessLabel", resourceCulture);
             }
         }
         
@@ -432,20 +414,20 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Secure Internet.
-        /// </summary>
-        public static string SearchPageSecureInternetLabel {
-            get {
-                return ResourceManager.GetString("SearchPageSecureInternetLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Find your institute.
         /// </summary>
         public static string SearchPageTitle {
             get {
                 return ResourceManager.GetString("SearchPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secure Internet.
+        /// </summary>
+        public static string SecureInternetLabel {
+            get {
+                return ResourceManager.GetString("SecureInternetLabel", resourceCulture);
             }
         }
         
@@ -473,15 +455,6 @@ namespace eduVPN.Views.Resources {
         public static string SelectOwnServerPageTitle {
             get {
                 return ResourceManager.GetString("SelectOwnServerPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Location.
-        /// </summary>
-        public static string SelectSecureInternetServerPageListLabel {
-            get {
-                return ResourceManager.GetString("SelectSecureInternetServerPageListLabel", resourceCulture);
             }
         }
         

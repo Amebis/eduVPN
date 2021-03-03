@@ -133,7 +133,7 @@
                 Margin="7,30,7,7"
                 VerticalAlignment="Center"
                 Style="{StaticResource SubHeadingStyle}"
-                Text="{x:Static res:Strings.HomePageInstituteAccessLabel}"/>
+                Text="{x:Static res:Strings.InstituteAccessLabel}"/>
 
             <ListBox
                 Grid.ColumnSpan="2"
@@ -178,7 +178,7 @@
                 Margin="7,30,7,7"
                 VerticalAlignment="Center"
                 Style="{StaticResource SubHeadingStyle}"
-                Text="{x:Static res:Strings.HomePageSecureInternetLabel}"/>
+                Text="{x:Static res:Strings.SecureInternetLabel}"/>
 
             <Button
                 Grid.Column="2"
@@ -205,7 +205,7 @@
                 ItemContainerStyle="{StaticResource SecureInternetServersStyle}"
                 ItemsSource="{Binding SecureInternetServers}"
                 SelectedItem="{Binding SelectedSecureInternetServer}"
-                AutomationProperties.Name="{Binding Source={x:Static res:Strings.HomePageSecureInternetServersLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.LocationLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
         </Grid>
 
         <Grid Grid.Row="2">

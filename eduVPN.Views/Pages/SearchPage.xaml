@@ -213,7 +213,7 @@
                 Margin="7"
                 VerticalAlignment="Center"
                 Style="{StaticResource SubHeadingStyle}"
-                Text="{x:Static res:Strings.SearchPageInstituteAccessLabel}"/>
+                Text="{x:Static res:Strings.InstituteAccessLabel}"/>
 
             <ListBox
                 Grid.ColumnSpan="2"
@@ -248,7 +248,7 @@
                 Margin="7"
                 VerticalAlignment="Center"
                 Style="{StaticResource SubHeadingStyle}"
-                Text="{x:Static res:Strings.SearchPageSecureInternetLabel}"/>
+                Text="{x:Static res:Strings.SecureInternetLabel}"/>
 
             <ListBox
                 Grid.ColumnSpan="2"
