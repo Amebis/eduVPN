@@ -24,7 +24,7 @@
   <PropertyGroup>
     <StartupObject>LetsConnect.Client.App</StartupObject>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\Default.props" />
+  <Import Project="$(SolutionDir)\Default.CSharp.props" />
   <ItemGroup>
     <Reference Include="PresentationFramework" />
     <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">

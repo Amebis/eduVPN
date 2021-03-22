@@ -19,7 +19,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\Default.props" />
+  <Import Project="$(SolutionDir)\Default.CSharp.props" />
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

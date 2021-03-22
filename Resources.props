@@ -9,16 +9,14 @@
   <!--
     Global settings - applied to all configurations and platforms
   -->
-  <ImportGroup Label="PropertySheets" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="Default.Cpp.props" />
+  </ImportGroup>
   <PropertyGroup>
-    <OutDir>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(ProjectDir)obj\$(Configuration)\$(Platform)\</IntDir>
-    <LinkIncremental>false</LinkIncremental>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <NoEntryPoint>true</NoEntryPoint>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
@@ -30,32 +28,10 @@
   <!--
     Configuration specific settings
   -->
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
-    <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <Link>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <SetChecksum>true</SetChecksum>
     </Link>
-    <ResourceCompile>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-
-  <!--
-    Platform specific settings
-  -->
-  <PropertyGroup Condition="'$(Platform)'=='Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)\x86\</OutDir> <!-- C# uses x86 for Win32 platform designation! -->
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
   </ItemDefinitionGroup>
 </Project>
