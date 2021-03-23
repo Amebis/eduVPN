@@ -35,9 +35,8 @@
       - SDKs, libraries, and frameworks
          - Windows 8.1 SDK (required by eduEd25519 submodule)
 2. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
-3. Install TAP-Windows driver: [official](https://openvpn.net/index.php/open-source/downloads.html) or the one included in the eduVPN source tree in the _bin\Setup_ folder.
-4. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
-5. Install [WiX Toolset 3.14 or later](https://wixtoolset.org/releases/v3-14-0-3205/) (required for MSI and EXE installer packaging).
+3. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
+4. Install [WiX Toolset 3.14 or later](https://wixtoolset.org/releases/v3-14-0-3205/) (required for MSI and EXE installer packaging).
 
 
 ### Code Signing

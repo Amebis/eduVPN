@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.6...HEAD)
 
+- OpenVPN updated to 2.5.1-20210322
+- Network adapter switched to Wintun
+
 
 ## [1.255.6](https://github.com/Amebis/eduVPN/compare/1.255.5...1.255.6) (2021-03-03)
 

@@ -597,15 +597,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use TAP _adapter:.
-        /// </summary>
-        public static string SettingsPageInterfaceLabel {
-            get {
-                return ResourceManager.GetString("SettingsPageInterfaceLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SettingsPageTitle {

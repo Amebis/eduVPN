@@ -82,7 +82,6 @@
     <Compile Include="Xml\MinisignPublicKeyDictionary.cs" />
     <Compile Include="Xml\ProfileRefList.cs" />
     <Compile Include="Xml\ProfileRef.cs" />
-    <Compile Include="Models\NetworkInterface.cs" />
     <Compile Include="Models\ValidatableBindableBase.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Range.cs" />

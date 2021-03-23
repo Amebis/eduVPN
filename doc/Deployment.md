@@ -14,7 +14,6 @@ Basic knowledge of GPO or SCCM is required.
 
 eduVPN Client for Windows requires:
 - .NET Framework 4.5
-- [TAP-Windows driver](https://openvpn.net/index.php/open-source/downloads.html)
 - OpenVPN Components: `eduVPNOpenVPN_<ver>_<plat>.msi`
 - eduVPN Client: `eduVPNCore_<ver>_<plat>.msi`
 
@@ -51,9 +50,9 @@ Additional flags:
 
 This option is recommended for Group Policy deployments. However, it automates the deployment only partially.
 
-You need to deploy .NET Framework 4.5 and [TAP-Windows driver](https://openvpn.net/index.php/open-source/downloads.html) manually or by other automatization means first. They are available as an EXE installer only rendering them inappropriate for Group Policy deployment.
+You need to deploy .NET Framework 4.5 manually or by other automatization means first. It is available as an EXE installer only rendering it inappropriate for Group Policy deployment.
 
-After all workstations have the .NET Framework and TAP-Windows driver installed, deploy both MSI packages:
+After all workstations have the .NET Framework installed, deploy both MSI packages:
 - `eduVPNOpenVPN_<ver>_<plat>.msi`
 - `eduVPNCore_<ver>_<plat>.msi`
 

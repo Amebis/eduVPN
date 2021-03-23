@@ -1,0 +1,11 @@
+;
+;   OpenVPN.MSICA - MSI Custom Actions for OpenVPN
+;
+;   Copyright: 2021 The Commons Conservancy eduVPN Programme
+;   SPDX-License-Identifier: GPL-3.0+
+;
+
+LIBRARY OpenVPN.MSICA.dll
+EXPORTS
+	EvaluateWintunPool
+	RemoveWintunPool

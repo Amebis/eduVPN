@@ -72,24 +72,6 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Which TAP interface to use when connecting.
-        /// Leave &quot;00000000-0000-0000-0000-000000000000&quot; for auto-selection by openvpn.exe.
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Which TAP interface to use when connecting.\r\n Leave \"00000000-0000-0000-0000-0000" +
-            "00000000\" for auto-selection by openvpn.exe.")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00000000-0000-0000-0000-000000000000")]
-        public global::System.Guid OpenVPNInterfaceID {
-            get {
-                return ((global::System.Guid)(this["OpenVPNInterfaceID"]));
-            }
-            set {
-                this["OpenVPNInterfaceID"] = value;
-            }
-        }
-        
-        /// <summary>
         /// Always connect using TCP.
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]

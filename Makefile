@@ -6,8 +6,7 @@
 #
 
 VERSION=1.255.6
-TAPWIN_VERSION=9.24.5.1
-OPENVPN_VERSION=2.5.1.13
+OPENVPN_VERSION=2.5.1.15
 
 # Default testing configuration and platform
 TEST_CFG=Debug
@@ -25,7 +24,6 @@ CSCRIPT_FLAGS=//Nologo
 WIX_EXTENSIONS=-ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
 WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo \
-	-dTAPWin.Version="$(TAPWIN_VERSION)" \
 	-dOpenVPN.Version="$(OPENVPN_VERSION)" \
 	-dCore.Version="$(VERSION)" \
 	-dVersion="$(VERSION)" \

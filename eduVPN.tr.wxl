@@ -12,12 +12,10 @@
     <String Id="eduVPN.Name">eduVPN İstemcisi</String>
     <String Id="eduVPN.CoreName">eduVPN İstemci Çekirdeği</String>
     <String Id="eduVPN.OpenVPNName">eduVPN İstemcisi OpenVPN Bileşenleri</String>
-    <String Id="eduVPN.TAPWinName">eduVPN İstemcisi TAP-Windows</String>
 
     <String Id="LetsConnect.Name">Let's Connect! İstemci</String>
     <String Id="LetsConnect.CoreName">Let's Connect! İstemci Çekirdeği</String>
     <String Id="LetsConnect.OpenVPNName">Let's Connect! İstemci OpenVPN Bileşenleri</String>
-    <String Id="LetsConnect.TAPWinName">Let's Connect! İstemci TAP-Windows</String>
 
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1055</String>
@@ -28,12 +26,5 @@
     <String Id="NewerVersionInstalled">[SimpleProductName] ürününün daha yeni bir sürümü zaten yüklü. Kurulumdan çıkılıyor.</String>
     <String Id="DotNETFrameworkMissing">Bu uygulama .NET Framework 4.5 gerektirir. Lütfen .NET Framework 4.5'i yükleyin ve ardından bu yükleyiciyi yeniden çalıştırın.</String>
 
-    <String Id="TAPWin.Win7Req">TAP-Windows, Windows 7 veya sonraki Windows sürümünü gerektirir.</String>
-    <String Id="TAPWin.NoWoW64">64 bit işletim sistemine 32 bit TAP-Windows varyantını yüklemeye çalışıyorsunuz. 32 bit varyant, işletim sisteminizle çalışmayacaktır. 64 bitlik bir varyantın yüklenmesi önerilir.</String>
-    <String Id="TAPWin.AddAdapter">Yeni bir TAP-Windows sanal ağ bağdaştırıcısı ekleyin</String>
-    <String Id="TAPWin.EvaluatingDriver">TAP-Windows sürücüsünün değerlendiriliyor</String>
-    <String Id="TAPWin.ProcessingDriver">TAP-Windows sürücüsü işleniyor</String>
-    <String Id="TAPWin.EvaluatingAdapters">TUN/TAP adaptörlerini değerlendiriliyor</String>
-    <String Id="TAPWin.DeletingAdapters">TUN/TAP adaptörlerini siliniyor</String>
-    <String Id="TAPWin.CreatingAdapters">TUN/TAP adaptörleri oluşturuluyor</String>
+    <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Hata [4]: [5]</String>
 </WixLocalization>

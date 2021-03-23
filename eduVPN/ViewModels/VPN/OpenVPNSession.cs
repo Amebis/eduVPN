@@ -587,9 +587,9 @@ namespace eduVPN.ViewModels.VPN
                                 sw.WriteLine("auth-retry interact");
                                 sw.WriteLine("auth-nocache");
 
-                                // Set TAP interface to be used.
-                                if (NetworkInterface.TryFromId(Properties.Settings.Default.OpenVPNInterfaceID, out var iface))
-                                    sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(iface.Name) + "\n");
+                                // Set Wintun interface to be used.
+                                sw.Write("windows-driver wintun\n");
+                                sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(Properties.Settings.Default.ClientTitle) + "\n");
 
 #if DEBUG
                                 // Renegotiate data channel every 5 minutes in debug versions.

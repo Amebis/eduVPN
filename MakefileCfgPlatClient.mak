@@ -77,7 +77,6 @@ UnregisterOpenVPNInteractiveServiceSCM ::
 
 !IF "$(CFG)" == "Release"
 SetupMSI :: \
-	"bin\Setup\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET).msi" \
 	"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" \
 	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET).msi"
 !ENDIF
@@ -93,11 +92,6 @@ SetupMSI :: \
 
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
-
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin.wixobj" : \
-	"TAPWin.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "TAPWin.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ "TAPWin.wxs"
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" : \
 	"OpenVPN.wxs"
@@ -115,34 +109,9 @@ Clean ::
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ $**
 
 Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin.wixobj"      del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin.wixobj"
 	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"     del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
 	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"        del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"
 	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj"
-
-"bin\Setup\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET).msi" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_ar.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_de.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_fr.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_nl.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_sl.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_tr.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_uk.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_en-US.msi"
-	copy /y "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_ar.mst" 1025 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_de.mst" 1031 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_tr.mst" 1055 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_$(SETUP_TARGET)_uk.mst" 1058 /L
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client TAP-Windows Driver" /q "$(@:"=).tmp"
-!ENDIF
-	attrib.exe +r "$(@:"=).tmp"
-	if exist $@ attrib.exe -r $@
-	move /y "$(@:"=).tmp" $@ > NUL
 
 "bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" : \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_ar.mst" \

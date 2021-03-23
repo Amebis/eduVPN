@@ -84,19 +84,6 @@
             <PackageGroupRef Id="NetFx45Redist"/>
 
             <!--
-                TAP-Windows
-            -->
-            <MsiPackage
-                Id="$(var.ClientTarget)TAPWin_x86"
-                SourceFile="bin\Setup\$(var.ClientTarget)TAPWin_$(var.TAPWin.Version)_x86.msi"
-                InstallCondition="NOT VersionNT64"/>
-
-            <MsiPackage
-                Id="$(var.ClientTarget)TAPWin_x64"
-                SourceFile="bin\Setup\$(var.ClientTarget)TAPWin_$(var.TAPWin.Version)_x64.msi"
-                InstallCondition="VersionNT64"/>
-
-            <!--
                 OpenVPN
             -->
             <MsiPackage

@@ -13,6 +13,7 @@
     <?define libssl_1_1.dll.ComponentGUID = "{55E6958F-DF31-4742-91A3-904FB0102150}"?>
     <?define liblzo2_2.dll.ComponentGUID = "{4C072186-6C47-49B3-B945-D09503A20FB3}"?>
     <?define libpkcs11_helper_1.dll.ComponentGUID = "{1D7D0360-15AD-466F-B667-840C8C8827C5}"?>
+    <?define wintun.dll.ComponentGUID = "{C4BA4E85-EE9C-48E3-A12F-3A64EA1E78B9}"?>
     <?define openvpn.exe.ComponentGUID = "{101FF3BB-DD5A-41CB-8A8C-0B582F7BF1D7}"?>
     <?define openvpnserv.exe.ComponentGUID = "{1A38AF86-1516-49FA-91AE-D48EAE37468D}"?>
     <?define openvpnserv.exe.reg0.ComponentGUID = "{95745DBA-88C1-4FD6-AF79-2D34B2E9D4F4}"?>
@@ -33,6 +34,7 @@
     <?define libssl_1_1.dll.ComponentGUID = "{D58368FD-3678-4762-9E5E-2F19A8E7613E}"?>
     <?define liblzo2_2.dll.ComponentGUID = "{D073932D-4ECF-480C-B54A-4FEBCE3FB015}"?>
     <?define libpkcs11_helper_1.dll.ComponentGUID = "{8EFE985A-9800-440D-8517-DAEFB50ECA74}"?>
+    <?define wintun.dll.ComponentGUID = "{308E987C-2508-4BEF-B1D7-44B6DBA9862A}"?>
     <?define openvpn.exe.ComponentGUID = "{46C7AD2F-6AA7-408A-BD02-9E8C59DD8C76}"?>
     <?define openvpnserv.exe.ComponentGUID = "{D54DD0B1-8C81-42F8-BD3F-BB988B786782}"?>
     <?define openvpnserv.exe.reg0.ComponentGUID = "{CD0E5551-72D5-487C-ADB6-3FF86EA83CC1}"?>
@@ -47,7 +49,7 @@
     <?define ARP.Publisher.ComponentGUID = "{6FF63400-4447-43F6-A905-30B1855B9453}"?>
     <?define RegistryIDPrefix = "10"?>
 <?else?>
-	<?error Unknown client ?>
+    <?error Unknown client ?>
 <?endif?>
 
 <Wix
@@ -73,7 +75,11 @@
             EmbedCab="yes"/>
 
         <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUri)"/>
+        <Property Id="WINTUNPOOL" Value="OpenVPN$$$(var.ClientTarget)"/>
 
+        <Binary
+            Id="OpenVPN.MSICA.dll"
+            SourceFile="OpenVPN.MSICA.dll"/>
 
         <!--
             Upgrading functionality
@@ -94,6 +100,15 @@
                 MigrateFeatures="yes"/>
         </Upgrade>
         <?endif?>
+        <Property Id="TAPWININSTALLED" Secure="yes"/>
+        <Upgrade Id="$(var.TAPWin.UpgradeGUID)">
+            <UpgradeVersion
+                Minimum="0.0.0.0"
+                Property="TAPWININSTALLED"
+                IncludeMinimum="yes"
+                MigrateFeatures="no"
+                IgnoreRemoveFailure="yes"/>
+        </Upgrade>
         <Property Id="BINDIRPREV">
             <ComponentSearch Id="libeay32.dll" Guid="$(var.libeay32.dll.ComponentGUID)"/>
             <ComponentSearch Id="ssleay32.dll" Guid="$(var.ssleay32.dll.ComponentGUID)"/>
@@ -101,6 +116,7 @@
             <ComponentSearch Id="libssl_1_1.dll" Guid="$(var.libssl_1_1.dll.ComponentGUID)"/>
             <ComponentSearch Id="liblzo2_2.dll" Guid="$(var.liblzo2_2.dll.ComponentGUID)"/>
             <ComponentSearch Id="libpkcs11_helper_1.dll" Guid="$(var.libpkcs11_helper_1.dll.ComponentGUID)"/>
+            <ComponentSearch Id="wintun.dll" Guid="$(var.wintun.dll.ComponentGUID)"/>
             <ComponentSearch Id="openvpn.exe" Guid="$(var.openvpn.exe.ComponentGUID)"/>
             <ComponentSearch Id="openvpnserv.exe" Guid="$(var.openvpnserv.exe.ComponentGUID)"/>
         </Property>
@@ -147,6 +163,9 @@
             </Component>
             <Component Id="libpkcs11_helper_1.dll" Guid="$(var.libpkcs11_helper_1.dll.ComponentGUID)">
                 <File Source="$(var.OpenVPN.Dir)libpkcs11-helper-1.dll"/>
+            </Component>
+            <Component Id="wintun.dll" Guid="$(var.wintun.dll.ComponentGUID)">
+                <File Source="$(var.OpenVPN.Dir)wintun.dll"/>
             </Component>
             <Component Id="openvpn.exe" Guid="$(var.openvpn.exe.ComponentGUID)">
                 <File Source="$(var.OpenVPN.Dir)openvpn.exe"/>
@@ -284,6 +303,7 @@
             <ComponentRef Id="libssl_1_1.dll"/>
             <ComponentRef Id="liblzo2_2.dll"/>
             <ComponentRef Id="libpkcs11_helper_1.dll"/>
+            <ComponentRef Id="wintun.dll"/>
             <ComponentRef Id="openvpn.exe"/>
             <ComponentRef Id="openvpnserv.exe"/>
             <ComponentRef Id="openvpnserv.exe.reg0"/>
@@ -298,5 +318,35 @@
             <ComponentRef Id="ARP.Publisher"/>
             <ComponentGroupRef Id="OpenVPN.Resources.dll"/>
         </Feature>
+
+
+        <!--
+            Custom Actions
+        -->
+        <CustomAction
+            Id="EvaluateWintunPool"
+            BinaryKey="OpenVPN.MSICA.dll"
+            DllEntry="EvaluateWintunPool"/>
+
+        <CustomAction
+            Id="RemoveWintunPool"
+            BinaryKey="OpenVPN.MSICA.dll"
+            DllEntry="RemoveWintunPool"
+            Execute="deferred"
+            Impersonate="no"/>
+
+        <InstallExecuteSequence>
+            <Custom
+                Action="EvaluateWintunPool"
+                After="ProcessComponents"/>
+
+            <Custom
+                Action="RemoveWintunPool"
+                Before="RemoveFiles"/>
+        </InstallExecuteSequence>
+
+        <UI>
+            <Error Id="2550">!(OpenVPN.MSICA [2]: [3]: Error [4]: [5])</Error>
+        </UI>
     </Product>
 </Wix>

@@ -12,12 +12,10 @@
     <String Id="eduVPN.Name">Odjemalec eduVPN</String>
     <String Id="eduVPN.CoreName">Odjemalec eduVPN - jedro</String>
     <String Id="eduVPN.OpenVPNName">Odjemalec eduVPN - komponente OpenVPN</String>
-    <String Id="eduVPN.TAPWinName">Odjemalec eduVPN - TAP-Windows</String>
 
     <String Id="LetsConnect.Name">Odjemalec Let's Connect!</String>
     <String Id="LetsConnect.CoreName">Odjemalec Let's Connect! - jedro</String>
     <String Id="LetsConnect.OpenVPNName">Odjemalec Let's Connect! - komponente OpenVPN</String>
-    <String Id="LetsConnect.TAPWinName">Odjemalec Let's Connect! - TAP-Windows</String>
 
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1060</String>
@@ -28,12 +26,5 @@
     <String Id="NewerVersionInstalled">Novejša verzija aplikacije [SimpleProductName] je že nameščena. Namestitev se bo zdaj zaključila.</String>
     <String Id="DotNETFrameworkMissing">Aplikacija potrebuje .NET Framework 4.5. Namestite .NET Framework 4.5 in ponovno poženite to namestitev.</String>
 
-    <String Id="TAPWin.Win7Req">TAP-Windows zahteva Windows 7 ali novejšo verzijo Windowsov.</String>
-    <String Id="TAPWin.NoWoW64">Namestiti želite 32 bitno različico TAP-Windows na 64 bitni operacijski sistem. 32 bitna različica ne bo delovala z vašim operacijskim sistemom. Priporočamo namestitev 64 bitne različice.</String>
-    <String Id="TAPWin.AddAdapter">Dodaj nov navidezni omrežni adapter TAP-Windows</String>
-    <String Id="TAPWin.EvaluatingDriver">Določanje gonilnika TAP-Windows</String>
-    <String Id="TAPWin.ProcessingDriver">Upravljanje gonilnika TAP-Windows</String>
-    <String Id="TAPWin.EvaluatingAdapters">Določanje adapterjev TUN/TAP</String>
-    <String Id="TAPWin.DeletingAdapters">Brisanje adapterjev TUN/TAP</String>
-    <String Id="TAPWin.CreatingAdapters">Ustvarjanje adapterjev TUN/TAP</String>
+    <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Napaka [4]: [5]</String>
 </WixLocalization>

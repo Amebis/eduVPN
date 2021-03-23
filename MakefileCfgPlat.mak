@@ -24,7 +24,6 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-arch $(PLAT) \
 	-dPlatform="$(PLAT)" \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
-	-dTAPWin.VersionInformational="$(TAPWIN_VERSION) $(SETUP_TARGET)" \
 	-dOpenVPN.Dir="bin\OpenVPN\$(PLAT)\\" \
 	-dOpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
 	-dOpenSSL.Platform="$(OPENSSL_PLAT)" \

@@ -11,9 +11,6 @@
     <Setting Name="OpenVPNInteractiveServiceInstance" Description="Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:&#xD;&#xA; - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client.&#xD;&#xA; - &quot;&quot; - Use original OpenVPN installation." Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenVPNInterfaceID" Description="Which TAP interface to use when connecting.&#xD;&#xA; Leave &quot;00000000-0000-0000-0000-000000000000&quot; for auto-selection by openvpn.exe." Type="System.Guid" Scope="User">
-      <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>
-    </Setting>
     <Setting Name="OpenVPNForceTCP" Description="Always connect using TCP." Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

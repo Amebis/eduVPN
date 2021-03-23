@@ -42,9 +42,6 @@ The language used at run-time is selected automatically by Windows. Whenever pos
 
 *Naming convention: `<client brand>OpenVPN_<version>_<platform>.msi`*
 
-Pre-requisites:
-- Tap-windows drivers 9.21+
-
 
 ## VPN Client Core
 

@@ -46,7 +46,6 @@ SetupExe :: \
 
 Clean ::
 	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*.exe"  del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*.exe"
-	-if exist "bin\Setup\$(CLIENT_TARGET)TAPWin_*.msi"  del /f /q "bin\Setup\$(CLIENT_TARGET)TAPWin_*.msi"
 	-if exist "bin\Setup\$(CLIENT_TARGET)OpenVPN_*.msi" del /f /q "bin\Setup\$(CLIENT_TARGET)OpenVPN_*.msi"
 	-if exist "bin\Setup\$(CLIENT_TARGET)Core_*.msi"    del /f /q "bin\Setup\$(CLIENT_TARGET)Core_*.msi"
 !ENDIF
@@ -75,8 +74,6 @@ Clean ::
 	"Install\thm.xml" \
 	"Install\$(CLIENT_TARGET)\logo.png" \
 	"bin\$(CFG)\$(CLIENT_TARGET).wixobj" \
-	"bin\Setup\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_x86.msi" \
-	"bin\Setup\$(CLIENT_TARGET)TAPWin_$(TAPWIN_VERSION)_x64.msi" \
 	"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x86.msi" \
 	"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x64.msi" \
 	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_x86.msi" \

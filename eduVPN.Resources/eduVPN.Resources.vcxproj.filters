@@ -20,7 +20,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="eduVPN.Resources.wxs" />
-  </ItemGroup>
 </Project>
