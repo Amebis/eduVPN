@@ -5,7 +5,7 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
-VERSION=1.255.6
+VERSION=1.255.7
 PRODUCT_GUID_TEMPLATE={108E00C1-12D1-4AF9-AF__-64BD034D1708}
 
 # Default testing configuration and platform
