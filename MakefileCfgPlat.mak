@@ -74,48 +74,6 @@ Clean ::
 Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" del /f /q "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
 
-"bin\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" : "eduEd25519\eduEd25519\eduEd25519.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-"bin\$(CFG)\$(PLAT)\eduEx.dll.wixobj" : "eduEx\eduEx\eduEx.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-"bin\$(CFG)\$(PLAT)\eduJSON.dll.wixobj" : "eduJSON\eduJSON\eduJSON.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-"bin\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj" : "eduOAuth\eduOAuth\eduOAuth.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-"bin\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj" : "eduOpenVPN\eduOpenVPN\eduOpenVPN.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-"bin\$(CFG)\$(PLAT)\eduVPN.dll.wixobj" : "eduVPN\eduVPN.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-"bin\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj" : "eduVPN.Views\eduVPN.Views.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj" : "eduVPN.Resources\eduVPN.Resources.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT) -out $@ $**
-
-Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj"       del /f /q "bin\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\eduEx.dll.wixobj"            del /f /q "bin\$(CFG)\$(PLAT)\eduEx.dll.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\eduJSON.dll.wixobj"          del /f /q "bin\$(CFG)\$(PLAT)\eduJSON.dll.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj"         del /f /q "bin\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj"       del /f /q "bin\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.dll.wixobj"           del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.dll.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj"     del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj"
-
 
 ######################################################################
 # Client-specific rules

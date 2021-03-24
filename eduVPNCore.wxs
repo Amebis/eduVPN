@@ -11,6 +11,7 @@
     <?define System.ValueTuple.dll.ComponentGUID = "{2D4A9678-39A8-4623-8903-DCA55E9C24F4}"?>
     <?define Client.exe.ComponentGUID = "{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}"?>
     <?define Client.exe.config.ComponentGUID = "{8382A373-0C73-4D16-8F33-CA9FF91C24D0}"?>
+    <?define Client.exe.DesktopShortcut.ComponentGUID = "{9DE24D79-5251-4D41-B151-737E372975FA}"?>
     <?define ARP.DisplayName.ComponentGUID = "{724B49D3-30BE-419B-9041-EA85BF971A58}"?>
     <?define ARP.Publisher.ComponentGUID = "{17532E47-CB46-4A70-8AFA-B25A829B9E1A}"?>
 <?elseif $(var.ClientTarget) = "LetsConnect"?>
@@ -18,6 +19,7 @@
     <?define System.ValueTuple.dll.ComponentGUID = "{F53A7176-4E78-4EB1-BE22-24296A5925EF}"?>
     <?define Client.exe.ComponentGUID = "{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}"?>
     <?define Client.exe.config.ComponentGUID = "{03C290E0-70A5-4594-9801-F51D07CCF06B}"?>
+    <?define Client.exe.DesktopShortcut.ComponentGUID = "{B7186C84-2C86-45A5-B346-4CAC2C878DC0}"?>
     <?define ARP.DisplayName.ComponentGUID = "{F21C1412-AC8F-465B-B70A-89789A82964F}"?>
     <?define ARP.Publisher.ComponentGUID = "{667D4687-F06C-4A85-A053-DCCFE3766D55}"?>
 <?else?>
@@ -130,6 +132,67 @@
             Compontents
         -->
         <DirectoryRef Id="BINDIR">
+            <Component Id="System.ValueTuple.dll" Guid="$(var.System.ValueTuple.dll.ComponentGUID)">
+                <File Source="System.ValueTuple.dll"/>
+            </Component>
+            <Component Id="Prism.dll" Guid="$(var.Prism.dll.ComponentGUID)">
+                <File Source="Prism.dll"/>
+            </Component>
+            <Component Id="eduEd25519.dll" Guid="{4D1F1278-9044-4AFD-98E1-71BB39FCB0F1}">
+                <File Source="eduEd25519.dll"/>
+            </Component>
+            <Component Id="eduEx.dll" Guid="{153A001F-0206-4F9F-957E-43E00FB31B2B}">
+                <File Source="eduEx.dll"/>
+            </Component>
+            <Component Id="eduJSON.dll" Guid="{BC7AF3B7-872E-405C-A319-391CA0FB40D4}">
+                <File Source="eduJSON.dll"/>
+            </Component>
+            <Component Id="eduOAuth.dll" Guid="{8B85976D-4CFC-4543-B583-06C75E92A6FD}">
+                <File Source="eduOAuth.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.dll" Guid="{809A5107-82D9-4271-BE32-37427C14BCA7}">
+                <File Source="eduOpenVPN.dll"/>
+            </Component>
+            <Component Id="eduVPN.dll" Guid="{363C4CCB-B18B-4BA8-AB89-797564B388C2}">
+                <File Source="eduVPN.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.dll" Guid="{34C9B131-FFE8-4A07-9393-9683C6FDB3F7}">
+                <File Source="eduVPN.Views.dll"/>
+            </Component>
+            <Component Id="eduVPN.Resources.dll" Guid="{39778E20-4F27-40B2-90C3-FC16A28E70B5}">
+                <File Source="eduVPN.Resources.dll"/>
+            </Component>
+            <Component Id="$(var.ClientTarget).Client.exe" Guid="$(var.Client.exe.ComponentGUID)">
+                <File Source="$(var.ClientTarget).Client.exe" KeyPath="yes"/>
+
+                <!-- Note: "$(var.ClientTarget).Client" feature and "App.ico" icon are defined elsewhere. -->
+                <Shortcut
+                    Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"
+                    Directory="ProgramMenuFolder"
+                    Name="$(var.ClientTitle) Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="$(var.IDS_CLIENT_TITLE)"
+                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="$(var.IDS_CLIENT_DESCRIPTION)"
+                    Target="$(var.ClientTarget).Client"
+                    WorkingDirectory="BINDIR"
+                    Icon="App.ico"/>
+            </Component>
+            <Component Id="$(var.ClientTarget).Client.exe.config" Guid="$(var.Client.exe.config.ComponentGUID)">
+                <File Source="$(var.ClientTarget).Client.exe.config"/>
+            </Component>
+            <!--
+            <Component Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Guid="$(var.Client.exe.DesktopShortcut.ComponentGUID)">
+                <Shortcut
+                    Id="$(var.ClientTarget).Client.exe.DesktopShortcut"
+                    Directory="DesktopFolder"
+                    Name="$(var.ClientTitle) Client" DisplayResourceDll="[BINDIR]eduVPN.Resources.dll" DisplayResourceId="$(var.IDS_CLIENT_TITLE)"
+                    DescriptionResourceDll="[BINDIR]eduVPN.Resources.dll" DescriptionResourceId="$(var.IDS_CLIENT_DESCRIPTION)"
+                    Target="[BINDIR]$(var.ClientTarget).Client.exe"
+                    WorkingDirectory="BINDIR"
+                    Icon="App.ico"/>
+                <RemoveFolder Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+            </Component>
+            -->
+
             <!-- Add/Remove Programs Localization -->
             <!-- TODO: Shouldn't component GUIDs change with every [ProductCode] change as the component key path changes? -->
             <Component Id="ARP.DisplayName" Guid="$(var.ARP.DisplayName.ComponentGUID)">
@@ -139,6 +202,299 @@
                 <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-3"/>
             </Component>
         </DirectoryRef>
+        <DirectoryRef Id="RESDIRAR">
+            <Component Id="eduEd25519.resources.dll.ar" Guid="{D84FFABE-233E-441C-9560-0F901C9507DE}">
+                <File Id="eduEd25519.resources.dll.ar" Source="ar\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.ar" Guid="{408AD451-499A-4F17-B2BC-EB7F2D67B817}">
+                <File Id="eduJSON.resources.dll.ar" Source="ar\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.ar" Guid="{88CAD188-11C2-4CF6-9C74-97DE4B0D6B3C}">
+                <File Id="eduOAuth.resources.dll.ar" Source="ar\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.ar" Guid="{D1F7A8CC-44B3-4006-B83A-A2F4EDD75460}">
+                <File Id="eduOpenVPN.resources.dll.ar" Source="ar\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.ar" Guid="{81CD6405-03A6-4747-9EB0-ABCDF4847FCA}">
+                <File Id="eduVPN.resources.dll.ar" Source="ar\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.ar" Guid="{B53E05A4-9ACE-4324-9235-AB2E44291456}">
+                <File Id="eduVPN.Views.resources.dll.ar" Source="ar\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRDE">
+            <Component Id="eduEd25519.resources.dll.de" Guid="{58969319-8ED1-4679-A8AB-DF1BE42BB8E9}">
+                <File Id="eduEd25519.resources.dll.de" Source="de\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.de" Guid="{7789176C-322A-4288-82F5-9B9B95B5D058}">
+                <File Id="eduJSON.resources.dll.de" Source="de\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.de" Guid="{F91D8B02-145A-458A-AE30-EB3541F42654}">
+                <File Id="eduOAuth.resources.dll.de" Source="de\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.de" Guid="{F236606C-399B-4625-B1A7-87C1ABECA759}">
+                <File Id="eduOpenVPN.resources.dll.de" Source="de\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.de" Guid="{FE660EBE-ED9A-481D-83DC-B27078D278C1}">
+                <File Id="eduVPN.resources.dll.de" Source="de\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.de" Guid="{8C603322-3A2A-4C5F-8582-159E9D83217C}">
+                <File Id="eduVPN.Views.resources.dll.de" Source="de\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRFR">
+            <Component Id="eduEd25519.resources.dll.fr" Guid="{2C3F94E2-CB24-4B3A-9ADB-64A486E88FA3}">
+                <File Id="eduEd25519.resources.dll.fr" Source="fr\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.fr" Guid="{06610044-8628-4BCC-B02C-ADA56CE75A05}">
+                <File Id="eduJSON.resources.dll.fr" Source="fr\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.fr" Guid="{F73E9210-7A24-486B-B416-64E053E15193}">
+                <File Id="eduOAuth.resources.dll.fr" Source="fr\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.fr" Guid="{76D96CC4-2D6E-4CFA-AE52-CAA25B129F2E}">
+                <File Id="eduOpenVPN.resources.dll.fr" Source="fr\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.fr" Guid="{4531E914-038A-43F6-9E04-421C475F16A6}">
+                <File Id="eduVPN.resources.dll.fr" Source="fr\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.fr" Guid="{7DBDEF6D-BA5E-4842-AB2F-E3146811D76C}">
+                <File Id="eduVPN.Views.resources.dll.fr" Source="fr\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRNB">
+            <Component Id="eduEd25519.resources.dll.nb" Guid="{F973CE10-AB07-4EFE-AF54-EC9732D363E1}">
+                <File Id="eduEd25519.resources.dll.nb" Source="nb\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.nb" Guid="{0955AC13-BF2E-4C7A-83AC-D6AC3380BD2D}">
+                <File Id="eduJSON.resources.dll.nb" Source="nb\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.nb" Guid="{2843C4DB-FD4E-466A-94C2-70518332E173}">
+                <File Id="eduOAuth.resources.dll.nb" Source="nb\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.nb" Guid="{B88395D7-BC64-4254-8835-8493ABB21F58}">
+                <File Id="eduOpenVPN.resources.dll.nb" Source="nb\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.nb" Guid="{D254EB02-8237-49DA-B661-608C5459BEEB}">
+                <File Id="eduVPN.resources.dll.nb" Source="nb\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.nb" Guid="{17C0FA9C-B499-49DE-84E9-BFF5D0DF0203}">
+                <File Id="eduVPN.Views.resources.dll.nb" Source="nb\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRNL">
+            <Component Id="eduEd25519.resources.dll.nl" Guid="{3F782C2D-425F-462A-AA2F-B78193EF59D0}">
+                <File Id="eduEd25519.resources.dll.nl" Source="nl\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.nl" Guid="{18F47CF2-2AB5-48DC-B8F7-BF6AEBB76A04}">
+                <File Id="eduJSON.resources.dll.nl" Source="nl\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.nl" Guid="{ED2AF7CA-BDA0-40B0-AE7E-55302E22D878}">
+                <File Id="eduOAuth.resources.dll.nl" Source="nl\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.nl" Guid="{78BDE0E1-16D7-445F-93A5-BDD239E6E021}">
+                <File Id="eduOpenVPN.resources.dll.nl" Source="nl\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.nl" Guid="{F26F3804-3BA7-4098-ADD3-F4EDC8F5CC5D}">
+                <File Id="eduVPN.resources.dll.nl" Source="nl\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.nl" Guid="{0FA52766-C1A8-447D-8C1B-D706F6C9F9B2}">
+                <File Id="eduVPN.Views.resources.dll.nl" Source="nl\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRPTPT">
+            <Component Id="eduEd25519.resources.dll.pt_PT" Guid="{A19BF50E-B201-4B7A-8DD0-E8BAEC777007}">
+                <File Id="eduEd25519.resources.dll.pt_PT" Source="pt-PT\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.pt_PT" Guid="{20BF0C4B-FA4E-4D64-84C1-B756FF5731EE}">
+                <File Id="eduJSON.resources.dll.pt_PT" Source="pt-PT\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.pt_PT" Guid="{5FB82626-3B95-4E9B-B481-6FCCF55563A0}">
+                <File Id="eduOAuth.resources.dll.pt_PT" Source="pt-PT\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.pt_PT" Guid="{15BE98D2-F9A1-430E-B91A-061E6C116F34}">
+                <File Id="eduOpenVPN.resources.dll.pt_PT" Source="pt-PT\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.pt_PT" Guid="{03BAADB3-7F4F-4093-A51A-4DD181AD22DB}">
+                <File Id="eduVPN.resources.dll.pt_PT" Source="pt-PT\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.pt_PT" Guid="{5CC520AF-5653-41C7-8BBB-D79864F5ABD9}">
+                <File Id="eduVPN.Views.resources.dll.pt_PT" Source="pt-PT\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRSL">
+            <Component Id="eduEd25519.resources.dll.sl" Guid="{BB1384C5-E197-4E7D-B8DE-FF2466E87FDE}">
+                <File Id="eduEd25519.resources.dll.sl" Source="sl\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.sl" Guid="{209B274A-EEE5-44BA-B4B6-CDD9B907F779}">
+                <File Id="eduJSON.resources.dll.sl" Source="sl\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.sl" Guid="{DB53F78C-785A-4006-B0D0-F43EDC33654E}">
+                <File Id="eduOAuth.resources.dll.sl" Source="sl\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.sl" Guid="{DC81E7C2-B26E-4C25-9526-062C94D8494E}">
+                <File Id="eduOpenVPN.resources.dll.sl" Source="sl\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.sl" Guid="{6A4987F0-47C6-48FE-AF14-1AB6CC2A070E}">
+                <File Id="eduVPN.resources.dll.sl" Source="sl\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.sl" Guid="{427ECC36-EB2D-4326-8417-6983A1B62FC5}">
+                <File Id="eduVPN.Views.resources.dll.sl" Source="sl\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRTR">
+            <Component Id="eduEd25519.resources.dll.tr" Guid="{061AD0ED-6639-436E-A19F-592407848272}">
+                <File Id="eduEd25519.resources.dll.tr" Source="tr\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.tr" Guid="{00C2F7DF-3610-47C8-B39D-4F563A80696E}">
+                <File Id="eduJSON.resources.dll.tr" Source="tr\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.tr" Guid="{220B2612-9319-453A-BE4C-F0C067FB807D}">
+                <File Id="eduOAuth.resources.dll.tr" Source="tr\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.tr" Guid="{6DF6F113-B8E9-4D19-80CF-73B6971E0F6C}">
+                <File Id="eduOpenVPN.resources.dll.tr" Source="tr\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.tr" Guid="{992899CA-AED5-47F8-8D7C-F5976C30C7D8}">
+                <File Id="eduVPN.resources.dll.tr" Source="tr\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.tr" Guid="{7D8DE306-B3C3-4261-B63B-2936DE3FE238}">
+                <File Id="eduVPN.Views.resources.dll.tr" Source="tr\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="RESDIRUK">
+            <Component Id="eduEd25519.resources.dll.uk" Guid="{5EA78AD2-C483-44FE-A877-82EB8B70CE9C}">
+                <File Id="eduEd25519.resources.dll.uk" Source="uk\eduEd25519.resources.dll"/>
+            </Component>
+            <Component Id="eduJSON.resources.dll.uk" Guid="{A5B58AD2-6272-4563-99B6-895EDD2476F9}">
+                <File Id="eduJSON.resources.dll.uk" Source="uk\eduJSON.resources.dll"/>
+            </Component>
+            <Component Id="eduOAuth.resources.dll.uk" Guid="{26E08429-AB68-47D7-87CF-2DE0BBD0C4D0}">
+                <File Id="eduOAuth.resources.dll.uk" Source="uk\eduOAuth.resources.dll"/>
+            </Component>
+            <Component Id="eduOpenVPN.resources.dll.uk" Guid="{26E43EB5-279B-4CB5-87F8-D3E54E9606CB}">
+                <File Id="eduOpenVPN.resources.dll.uk" Source="uk\eduOpenVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.resources.dll.uk" Guid="{E53AEB17-768B-4AB5-A37D-E2A918BA9050}">
+                <File Id="eduVPN.resources.dll.uk" Source="uk\eduVPN.resources.dll"/>
+            </Component>
+            <Component Id="eduVPN.Views.resources.dll.uk" Guid="{D60E0669-CB2C-4B25-B782-7F3A79602A95}">
+                <File Id="eduVPN.Views.resources.dll.uk" Source="uk\eduVPN.Views.resources.dll"/>
+            </Component>
+        </DirectoryRef>
+
+
+        <!--
+            Component groups
+        -->
+        <ComponentGroup Id="System.ValueTuple.dll">
+            <ComponentRef Id="System.ValueTuple.dll"/>
+        </ComponentGroup>
+        <ComponentGroup Id="Prism.dll">
+            <ComponentGroupRef Id="System.ValueTuple.dll"/>
+            <ComponentRef Id="Prism.dll"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduEd25519.dll">
+            <ComponentRef Id="eduEd25519.dll"/>
+            <ComponentRef Id="eduEd25519.resources.dll.ar"/>
+            <ComponentRef Id="eduEd25519.resources.dll.de"/>
+            <ComponentRef Id="eduEd25519.resources.dll.fr"/>
+            <ComponentRef Id="eduEd25519.resources.dll.nb"/>
+            <ComponentRef Id="eduEd25519.resources.dll.nl"/>
+            <ComponentRef Id="eduEd25519.resources.dll.pt_PT"/>
+            <ComponentRef Id="eduEd25519.resources.dll.sl"/>
+            <ComponentRef Id="eduEd25519.resources.dll.tr"/>
+            <ComponentRef Id="eduEd25519.resources.dll.uk"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduEx.dll">
+            <ComponentRef Id="eduEx.dll"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduJSON.dll">
+            <ComponentRef Id="eduJSON.dll"/>
+            <ComponentRef Id="eduJSON.resources.dll.ar"/>
+            <ComponentRef Id="eduJSON.resources.dll.de"/>
+            <ComponentRef Id="eduJSON.resources.dll.fr"/>
+            <ComponentRef Id="eduJSON.resources.dll.nb"/>
+            <ComponentRef Id="eduJSON.resources.dll.nl"/>
+            <ComponentRef Id="eduJSON.resources.dll.pt_PT"/>
+            <ComponentRef Id="eduJSON.resources.dll.sl"/>
+            <ComponentRef Id="eduJSON.resources.dll.tr"/>
+            <ComponentRef Id="eduJSON.resources.dll.uk"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduOAuth.dll">
+            <ComponentGroupRef Id="eduEx.dll"/>
+            <ComponentGroupRef Id="eduJSON.dll"/>
+            <ComponentRef Id="eduOAuth.dll"/>
+            <ComponentRef Id="eduOAuth.resources.dll.ar"/>
+            <ComponentRef Id="eduOAuth.resources.dll.de"/>
+            <ComponentRef Id="eduOAuth.resources.dll.fr"/>
+            <ComponentRef Id="eduOAuth.resources.dll.nb"/>
+            <ComponentRef Id="eduOAuth.resources.dll.nl"/>
+            <ComponentRef Id="eduOAuth.resources.dll.pt_PT"/>
+            <ComponentRef Id="eduOAuth.resources.dll.sl"/>
+            <ComponentRef Id="eduOAuth.resources.dll.tr"/>
+            <ComponentRef Id="eduOAuth.resources.dll.uk"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduOpenVPN.dll">
+            <ComponentGroupRef Id="eduEx.dll"/>
+            <ComponentRef Id="eduOpenVPN.dll"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.ar"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.de"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.fr"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.nb"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.nl"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.pt_PT"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.sl"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.tr"/>
+            <ComponentRef Id="eduOpenVPN.resources.dll.uk"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduVPN.dll">
+            <ComponentGroupRef Id="eduEd25519.dll"/>
+            <ComponentGroupRef Id="eduEx.dll"/>
+            <ComponentGroupRef Id="eduJSON.dll"/>
+            <ComponentGroupRef Id="eduOAuth.dll"/>
+            <ComponentGroupRef Id="eduOpenVPN.dll"/>
+            <ComponentGroupRef Id="Prism.dll"/>
+            <ComponentRef Id="eduVPN.dll"/>
+            <ComponentRef Id="eduVPN.resources.dll.ar"/>
+            <ComponentRef Id="eduVPN.resources.dll.de"/>
+            <ComponentRef Id="eduVPN.resources.dll.fr"/>
+            <ComponentRef Id="eduVPN.resources.dll.nb"/>
+            <ComponentRef Id="eduVPN.resources.dll.nl"/>
+            <ComponentRef Id="eduVPN.resources.dll.pt_PT"/>
+            <ComponentRef Id="eduVPN.resources.dll.sl"/>
+            <ComponentRef Id="eduVPN.resources.dll.tr"/>
+            <ComponentRef Id="eduVPN.resources.dll.uk"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduVPN.Views.dll">
+            <ComponentGroupRef Id="eduEx.dll"/>
+            <ComponentGroupRef Id="eduOAuth.dll"/>
+            <ComponentGroupRef Id="eduOpenVPN.dll"/>
+            <ComponentGroupRef Id="eduVPN.dll"/>
+            <ComponentGroupRef Id="Prism.dll"/>
+            <ComponentRef Id="eduVPN.Views.dll"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.ar"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.de"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.fr"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.nb"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.nl"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.pt_PT"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.sl"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.tr"/>
+            <ComponentRef Id="eduVPN.Views.resources.dll.uk"/>
+        </ComponentGroup>
+        <ComponentGroup Id="eduVPN.Resources.dll">
+            <ComponentRef Id="eduVPN.Resources.dll"/>
+        </ComponentGroup>
+        <ComponentGroup Id="$(var.ClientTarget).Client.exe">
+            <ComponentGroupRef Id="eduVPN.dll"/>
+            <ComponentGroupRef Id="eduVPN.Views.dll"/>
+            <ComponentGroupRef Id="eduVPN.Resources.dll"/>
+            <ComponentGroupRef Id="Prism.dll"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
+            <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
+        </ComponentGroup>
 
 
         <!--
@@ -148,35 +504,7 @@
             <MergeRef Id="VC150Redist"/>
             <ComponentRef Id="ARP.DisplayName"/>
             <ComponentRef Id="ARP.Publisher"/>
-
             <ComponentGroupRef Id="$(var.ClientTarget).Client.exe"/>
         </Feature>
-
-
-        <!--
-            Prism.dll
-        -->
-        <DirectoryRef Id="BINDIR">
-            <Component Id="Prism.dll" Guid="$(var.Prism.dll.ComponentGUID)">
-                <File Source="Prism.dll"/>
-            </Component>
-        </DirectoryRef>
-        <ComponentGroup Id="Prism.dll">
-            <ComponentRef Id="Prism.dll"/>
-            <ComponentRef Id="System.ValueTuple.dll"/>
-        </ComponentGroup>
-
-
-        <!--
-            System.ValueTuple.dll
-        -->
-        <DirectoryRef Id="BINDIR">
-            <Component Id="System.ValueTuple.dll" Guid="$(var.System.ValueTuple.dll.ComponentGUID)">
-                <File Source="System.ValueTuple.dll"/>
-            </Component>
-        </DirectoryRef>
-        <ComponentGroup Id="System.ValueTuple.dll">
-            <ComponentRef Id="System.ValueTuple.dll"/>
-        </ComponentGroup>
     </Product>
 </Wix>

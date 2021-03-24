@@ -17,22 +17,11 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 # Building
 ######################################################################
 
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduEd25519.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduEx.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduJSON.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduOAuth.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduOpenVPN.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Views.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll.wixobj" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj"
+"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_$(LANG).msi" : "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 

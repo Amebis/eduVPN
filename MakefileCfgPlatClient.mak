@@ -8,7 +8,8 @@
 WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT=$(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) \
 	-dClientTarget="$(CLIENT_TARGET)" \
 	-dClientTitle="$(CLIENT_TITLE)" \
-	-dClientAboutUri="$(CLIENT_ABOUT_URI)"
+	-dClientAboutUri="$(CLIENT_ABOUT_URI)" \
+	-dClientUrn="$(CLIENT_URN)"
 
 
 ######################################################################
@@ -104,14 +105,9 @@ Clean ::
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNCore.wxs"
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVC150RedistMSM="$(VC142REDIST_MSM)" -out $@ "eduVPNCore.wxs"
 
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj" : "$(CLIENT_TARGET).Client\$(CLIENT_TARGET).Client.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ $**
-
 Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"     del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"        del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"    del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"
 
 "bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" : \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_ar.mst" \
