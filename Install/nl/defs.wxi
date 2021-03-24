@@ -2,4 +2,11 @@
 <Include>
     <?define LanguageLcid = "0413"?>
     <?define LanguageId = "NL"?>
+
+    <?define eduEd25519.resources.dll.ComponentGUID = "{3F782C2D-425F-462A-AA2F-B78193EF59D0}"?>
+    <?define eduJSON.resources.dll.ComponentGUID = "{18F47CF2-2AB5-48DC-B8F7-BF6AEBB76A04}"?>
+    <?define eduOAuth.resources.dll.ComponentGUID = "{ED2AF7CA-BDA0-40B0-AE7E-55302E22D878}"?>
+    <?define eduOpenVPN.resources.dll.ComponentGUID = "{78BDE0E1-16D7-445F-93A5-BDD239E6E021}"?>
+    <?define eduVPN.resources.dll.ComponentGUID = "{F26F3804-3BA7-4098-ADD3-F4EDC8F5CC5D}"?>
+    <?define eduVPN.Views.resources.dll.ComponentGUID = "{0FA52766-C1A8-447D-8C1B-D706F6C9F9B2}"?>
 </Include>
