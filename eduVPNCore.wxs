@@ -5,6 +5,25 @@
     Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
+
+<?if $(var.ClientTarget) = "eduVPN"?>
+    <?define Prism.dll.ComponentGUID = "{7F1F7FAC-3959-40D5-A379-AE70762D6335}"?>
+    <?define System.ValueTuple.dll.ComponentGUID = "{2D4A9678-39A8-4623-8903-DCA55E9C24F4}"?>
+    <?define Client.exe.ComponentGUID = "{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}"?>
+    <?define Client.exe.config.ComponentGUID = "{8382A373-0C73-4D16-8F33-CA9FF91C24D0}"?>
+    <?define ARP.DisplayName.ComponentGUID = "{724B49D3-30BE-419B-9041-EA85BF971A58}"?>
+    <?define ARP.Publisher.ComponentGUID = "{17532E47-CB46-4A70-8AFA-B25A829B9E1A}"?>
+<?elseif $(var.ClientTarget) = "LetsConnect"?>
+    <?define Prism.dll.ComponentGUID = "{9B4F3694-9A5E-41AF-AA24-E2E5F39A48C6}"?>
+    <?define System.ValueTuple.dll.ComponentGUID = "{F53A7176-4E78-4EB1-BE22-24296A5925EF}"?>
+    <?define Client.exe.ComponentGUID = "{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}"?>
+    <?define Client.exe.config.ComponentGUID = "{03C290E0-70A5-4594-9801-F51D07CCF06B}"?>
+    <?define ARP.DisplayName.ComponentGUID = "{F21C1412-AC8F-465B-B70A-89789A82964F}"?>
+    <?define ARP.Publisher.ComponentGUID = "{667D4687-F06C-4A85-A053-DCCFE3766D55}"?>
+<?else?>
+    <?error Unknown client ?>
+<?endif?>
+
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
@@ -43,6 +62,7 @@
             DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
             Schedule="afterInstallExecute"
             AllowSameVersionUpgrades="yes"/>
+        <?if $(var.ClientTarget) = "eduVPN"?>
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
             <UpgradeVersion
@@ -52,11 +72,12 @@
                 IncludeMinimum="yes"
                 MigrateFeatures="yes"/>
         </Upgrade>
+        <?endif?>
         <Property Id="BINDIRPREV">
-            <ComponentSearch Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}"/>
-            <ComponentSearch Id="System.ValueTuple.dll" Guid="{2D4A9678-39A8-4623-8903-DCA55E9C24F4}"/>
-            <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}"/>
-            <ComponentSearch Id="$(var.ClientTarget).Client.exe.config" Guid="{8382A373-0C73-4D16-8F33-CA9FF91C24D0}"/>
+            <ComponentSearch Id="Prism.dll" Guid="$(var.Prism.dll.ComponentGUID)"/>
+            <ComponentSearch Id="System.ValueTuple.dll" Guid="$(var.System.ValueTuple.dll.ComponentGUID)"/>
+            <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="$(var.Client.exe.ComponentGUID)"/>
+            <ComponentSearch Id="$(var.ClientTarget).Client.exe.config" Guid="$(var.Client.exe.config.ComponentGUID)"/>
         </Property>
         <SetProperty
             After="AppSearch"
@@ -110,10 +131,11 @@
         -->
         <DirectoryRef Id="BINDIR">
             <!-- Add/Remove Programs Localization -->
-            <Component Id="ARP.DisplayName" Guid="{724B49D3-30BE-419B-9041-EA85BF971A58}">
+            <!-- TODO: Shouldn't component GUIDs change with every [ProductCode] change as the component key path changes? -->
+            <Component Id="ARP.DisplayName" Guid="$(var.ARP.DisplayName.ComponentGUID)">
                 <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-4"/>
             </Component>
-            <Component Id="ARP.Publisher" Guid="{17532E47-CB46-4A70-8AFA-B25A829B9E1A}">
+            <Component Id="ARP.Publisher" Guid="$(var.ARP.Publisher.ComponentGUID)">
                 <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-3"/>
             </Component>
         </DirectoryRef>
@@ -135,7 +157,7 @@
             Prism.dll
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="Prism.dll" Guid="{7F1F7FAC-3959-40D5-A379-AE70762D6335}">
+            <Component Id="Prism.dll" Guid="$(var.Prism.dll.ComponentGUID)">
                 <File Source="Prism.dll"/>
             </Component>
         </DirectoryRef>
@@ -149,7 +171,7 @@
             System.ValueTuple.dll
         -->
         <DirectoryRef Id="BINDIR">
-            <Component Id="System.ValueTuple.dll" Guid="{2D4A9678-39A8-4623-8903-DCA55E9C24F4}">
+            <Component Id="System.ValueTuple.dll" Guid="$(var.System.ValueTuple.dll.ComponentGUID)">
                 <File Source="System.ValueTuple.dll"/>
             </Component>
         </DirectoryRef>

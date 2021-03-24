@@ -99,10 +99,10 @@ Clean ::
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ "OpenVPN.wxs"
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" : \
-	"$(CLIENT_TARGET)Core.wxs" \
+	"eduVPNCore.wxs" \
 	"bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "$(CLIENT_TARGET)Core.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVC150RedistMSM="$(VC142REDIST_MSM)" -out $@ "$(CLIENT_TARGET)Core.wxs"
+	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNCore.wxs"
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVC150RedistMSM="$(VC142REDIST_MSM)" -out $@ "eduVPNCore.wxs"
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe.wixobj" : "$(CLIENT_TARGET).Client\$(CLIENT_TARGET).Client.wxs"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
