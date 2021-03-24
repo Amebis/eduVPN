@@ -284,6 +284,9 @@
                     Type="string"
                     Value="Users"/>
             </Component>
+            <Component Id="OpenVPN.Resources.dll" Guid="{B1F28A18-CDC3-4D0D-B0E9-4BC79E876E4E}">
+                <File Source="OpenVPN.Resources.dll"/>
+            </Component>
 
             <!-- Add/Remove Programs Localization -->
             <Component Id="ARP.DisplayName" Guid="$(var.ARP.DisplayName.ComponentGUID)">
@@ -314,9 +317,9 @@
             <ComponentRef Id="openvpnserv.exe.reg5"/>
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
+            <ComponentRef Id="OpenVPN.Resources.dll"/>
             <ComponentRef Id="ARP.DisplayName"/>
             <ComponentRef Id="ARP.Publisher"/>
-            <ComponentGroupRef Id="OpenVPN.Resources.dll"/>
         </Feature>
 
 

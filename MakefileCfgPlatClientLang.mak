@@ -18,8 +18,7 @@ WIX_LOC_FILE=eduVPN.$(LANG).wxl
 ######################################################################
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_$(LANG).msi" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" \
-	"bin\$(CFG)\$(PLAT)\OpenVPN.Resources.dll.wixobj"
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:$(LANG) -loc "$(WIX_LOC_FILE)" -out "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 
