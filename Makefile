@@ -27,7 +27,8 @@ WIX_CANDLE_FLAGS=-nologo \
 	-dOpenVPN.Version="$(OPENVPN_VERSION)" \
 	-dCore.Version="$(VERSION)" \
 	-dVersion="$(VERSION)" \
-	$(WIX_EXTENSIONS)
+	$(WIX_EXTENSIONS) \
+	-sw1118
 WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 $(WIX_EXTENSIONS)
 WIX_INSIGNIA_FLAGS=-nologo
 

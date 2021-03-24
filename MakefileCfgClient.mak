@@ -8,8 +8,10 @@
 # WiX parameters
 WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dClientTarget="$(CLIENT_TARGET)" \
+	-dClientTitle="$(CLIENT_TITLE)" \
 	-dClientUpgradeCode="$(CLIENT_UPGRADE_CODE)" \
 	-dClientAboutUri="$(CLIENT_ABOUT_URI)" \
+	-dClientId="$(CLIENT_ID)" \
 	-dIDS_CLIENT_TITLE="$(IDS_CLIENT_TITLE)" \
 	-dIDS_CLIENT_DESCRIPTION="$(IDS_CLIENT_DESCRIPTION)"
 
