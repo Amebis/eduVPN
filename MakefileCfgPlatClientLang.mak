@@ -7,9 +7,9 @@
 
 # WiX parameters
 !IF "$(LANG)" == "en-US"
-WIX_LOC_FILE=eduVPN.wxl
+WIX_LOC_FILE=Install\eduVPN.wxl
 !ELSE
-WIX_LOC_FILE=eduVPN.$(LANG).wxl
+WIX_LOC_FILE=Install\$(LANG)\eduVPN.wxl
 !ENDIF
 
 

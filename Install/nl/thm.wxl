@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    Culture="nl"
+    Language="1043"
+    xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="Caption">[WixBundleName] Setup</String>
+    <String Id="Title">[WixBundleName]</String>
+    <String Id="InstallHeader">Welkom</String>
+    <String Id="InstallVersion">Versie [WixBundleVersion]</String>
+    <String Id="ConfirmCancelMessage">Weet je zeker dat je wilt annuleren?</String>
+    <String Id="ExecuteUpgradeRelatedBundleMessage">Vorige versie</String>
+    <String Id="HelpHeader">Setup Hulp</String>
+    <String Id="HelpText">/install | /repair | /uninstall | /layout [map] - installeert, repareert, verwijderd of
+   maakt een volledige lokale kopie van de bundel in de map aan. Installatie is de standaard keuze.
+
+/passive | /quiet -  toont minimale UI zonder prompts of geeft geen UI weer en
+   geen prompts. Standaard worden de UI en alle prompts weergegeven.
+
+/norestart - alle herstartpogingen onderdrukken. Standaard zal de UI vragen om te herstarten.
+/log log.txt - logt naar een specifiek bestand. Standaard wordt er een logbestand aangemaakt in %TEMP%.</String>
+    <String Id="HelpCloseButton">&amp;Sluiten</String>
+    <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;licentie&lt;/a&gt;.</String>
+    <String Id="InstallAcceptCheckbox">Ik ga &amp;akkoord met de licentie</String>
+    <String Id="InstallOptionsButton">&amp;Opties</String>
+    <String Id="InstallInstallButton">&amp;Installeren</String>
+    <String Id="InstallCloseButton">&amp;Sluiten</String>
+    <String Id="OptionsHeader">Setup Opties</String>
+    <String Id="OptionsLocationLabel">Installatielocatie:</String>
+    <String Id="OptionsBrowseButton">&amp;Bladeren</String>
+    <String Id="OptionsOkButton">&amp;OK</String>
+    <String Id="OptionsCancelButton">&amp;Annuleren</String>
+    <String Id="ProgressHeader">Voortgang van de installatie</String>
+    <String Id="ProgressLabel">Verwerken:</String>
+    <String Id="OverallProgressPackageText">Initialiseren...</String>
+    <String Id="ProgressCancelButton">&amp;Annuleren</String>
+    <String Id="ModifyHeader">Aanpassen installatie</String>
+    <String Id="ModifyRepairButton">&amp;Repareren</String>
+    <String Id="ModifyUninstallButton">&amp;Verwijderen</String>
+    <String Id="ModifyCloseButton">&amp;Sluiten</String>
+    <String Id="SuccessRepairHeader">Succesvol gerepareerd</String>
+    <String Id="SuccessUninstallHeader">Succesvol verwijderd</String>
+    <String Id="SuccessInstallHeader">Succesvol geïnstalleerd</String> 
+    <String Id="SuccessHeader">Installatie succesvol</String>
+    <String Id="SuccessLaunchButton">&amp;Start</String>
+    <String Id="SuccessRestartText">Je moet de computer herstarten voordat je deze software kunt gebruiken.</String>
+    <String Id="SuccessRestartButton">&amp;Herstarten</String>
+    <String Id="SuccessCloseButton">&amp;Sluiten</String>
+    <String Id="FailureHeader">Installatie mislukt</String>
+    <String Id="FailureInstallHeader">Installatie mislukt</String>
+    <String Id="FailureUninstallHeader">Verwijderen mislukt</String>
+    <String Id="FailureRepairHeader">Reparatie mislukt</String>
+    <String Id="FailureHyperlinkLogText">Een of meer problemen zorgden ervoor dat de installatie mislukte. Probeer de problemen te verhelpen en dan opnieuw deze installatie uit te voeren. Voor meer informatie zie het &lt;a href="#"&gt;log bestand&lt;/a&gt;.</String>
+    <String Id="FailureRestartText">Je moet de computer herstarten om het terugrollen van de software af te ronden.</String>
+    <String Id="FailureRestartButton">&amp;Herstarten</String>
+    <String Id="FailureCloseButton">&amp;Sluiten</String>
+    <String Id="FilesInUseHeader">Bestanden in gebruik</String>
+    <String Id="FilesInUseLabel">De volgende toepassingen maken gebruik van bestanden die moeten worden bijgewerkt:</String>
+    <String Id="FilesInUseCloseRadioButton">Sluit de &amp;toepassingen en probeer ze opnieuw te starten.</String>
+    <String Id="FilesInUseDontCloseRadioButton">&amp;Sluit de toepassingen niet. Een herstart is nodig.</String>
+    <String Id="FilesInUseOkButton">&amp;OK</String>
+    <String Id="FilesInUseCancelButton">&amp;Annuleren</String>
+    <String Id="ErrorFailNoActionReboot">Er is geen actie ondernomen omdat een systeemherstart nodig is.</String>
+</WixLocalization>

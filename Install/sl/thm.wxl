@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    Culture="sl"
+    Language="1060"
+    xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="Caption">Namestitev [WixBundleName]</String>
+    <String Id="Title">[WixBundleName]</String>
+    <String Id="InstallHeader">Dobrodošli</String>
+    <String Id="InstallVersion">Verzija [WixBundleVersion]</String>
+    <String Id="ConfirmCancelMessage">Ali ste prepričani, da želite prekiniti?</String>
+    <String Id="ExecuteUpgradeRelatedBundleMessage">Prejšnja verzija</String>
+    <String Id="HelpHeader">Pomoč namestitve</String>
+    <String Id="HelpText">/install | /repair | /uninstall | /layout [mapa] - namesti, popravi, odstrani ali pripravi popolno
+   lokalno kopijo svežnja v mapi. Privzeto namesti.
+
+/passive | /quiet -  prikaže minimalni up. vmesnik brez pozivov ali brez up. vmesnika
+   in brez pozivov. Up. vmesnik in vsi pozivi so privzeto prikazani.
+
+/norestart - zatre vse poskuse ponovnega zagona. Privzeto pozove.
+/log dnevnik.txt - beleženje v datoteko. Privzeto je dnevnik ustvarjen v %TEMP%.</String>
+    <String Id="HelpCloseButton">&amp;Zapri</String>
+    <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;licenčni pogoji&lt;/a&gt;.</String>
+    <String Id="InstallAcceptCheckbox">Strinj&amp;am se z licenčnimi pogoji</String>
+    <String Id="InstallOptionsButton">M&amp;ožnosti</String>
+    <String Id="InstallInstallButton">Namest&amp;i</String>
+    <String Id="InstallCloseButton">&amp;Zapri</String>
+    <String Id="OptionsHeader">Možnosti namestitve</String>
+    <String Id="OptionsLocationLabel">Mesto namestitve:</String>
+    <String Id="OptionsBrowseButton">Pre&amp;brskaj</String>
+    <String Id="OptionsOkButton">&amp;V redu</String>
+    <String Id="OptionsCancelButton">&amp;Prekliči</String>
+    <String Id="ProgressHeader">Napredek namestitve</String>
+    <String Id="ProgressLabel">Obdelava:</String>
+    <String Id="OverallProgressPackageText">Vzpostavljam ...</String>
+    <String Id="ProgressCancelButton">&amp;Prekliči</String>
+    <String Id="ModifyHeader">Sprememba namestitve</String>
+    <String Id="ModifyRepairButton">O&amp;bnovi</String>
+    <String Id="ModifyUninstallButton">&amp;Odstrani</String>
+    <String Id="ModifyCloseButton">&amp;Zapri</String>
+    <String Id="SuccessRepairHeader">Obnovitev uspešno končana</String>
+    <String Id="SuccessUninstallHeader">Odstranitev uspešno končana</String>
+    <String Id="SuccessInstallHeader">Namestitev uspešno končana</String> 
+    <String Id="SuccessHeader">Namestitev je uspela</String>
+    <String Id="SuccessLaunchButton">&amp;Zagon</String>
+    <String Id="SuccessRestartText">Pred uporabo programa morate ponovno zagnati svoj računalnik.</String>
+    <String Id="SuccessRestartButton">&amp;Ponovni zag.</String>
+    <String Id="SuccessCloseButton">&amp;Zapri</String>
+    <String Id="FailureHeader">Namestitev ni uspela</String>
+    <String Id="FailureInstallHeader">Namestitev ni uspela</String>
+    <String Id="FailureUninstallHeader">Odstranitev ni uspela</String>
+    <String Id="FailureRepairHeader">Popravljanje ni uspelo</String>
+    <String Id="FailureHyperlinkLogText">Ena ali več težav je povzročila, da namestitev ni uspela. Prosimo, odpravite težave in ponovite namestitev. Za več informacij si oglejte &lt;a href="#"&gt;dnevnik&lt;/a&gt;.</String>
+    <String Id="FailureRestartText">Za dokončanje povrnitve programa morate ponovno zagnati svoj računalnik.</String>
+    <String Id="FailureRestartButton">&amp;Ponovni zag.</String>
+    <String Id="FailureCloseButton">&amp;Zapri</String>
+    <String Id="FilesInUseHeader">Datoteke v uporabi</String>
+    <String Id="FilesInUseLabel">Spodnji programi uporabljajo datoteke, ki jih je treba posodobiti:</String>
+    <String Id="FilesInUseCloseRadioButton">Z&amp;apri programe in jih poskusi ponovno zagnati.</String>
+    <String Id="FilesInUseDontCloseRadioButton">&amp;Ne zapiraj programov. Potreben bo ponovni zagon.</String>
+    <String Id="FilesInUseOkButton">&amp;V redu</String>
+    <String Id="FilesInUseCancelButton">&amp;Prekliči</String>
+    <String Id="ErrorFailNoActionReboot">Opravljeno ni bilo ničesar, ker je zahtevan ponovni zagon.</String>
+</WixLocalization>

@@ -67,14 +67,14 @@ Clean ::
 	-if exist "bin\$(CFG)\$(CLIENT_TARGET).wixobj" del /f /q "bin\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 "bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION).exe" : \
-	"eduVPN.wxl" \
+	"Install\eduVPN.wxl" \
 	"Install\thm.wxl" \
-	"Install\thm.de.wxl" \
-	"Install\thm.fr.wxl" \
-	"Install\thm.nl.wxl" \
-	"Install\thm.sl.wxl" \
-	"Install\thm.tr.wxl" \
-	"Install\thm.uk.wxl" \
+	"Install\de\thm.wxl" \
+	"Install\fr\thm.wxl" \
+	"Install\nl\thm.wxl" \
+	"Install\sl\thm.wxl" \
+	"Install\tr\thm.wxl" \
+	"Install\uk\thm.wxl" \
 	"Install\thm.xml" \
 	"Install\$(CLIENT_TARGET)\logo.png" \
 	"bin\$(CFG)\$(CLIENT_TARGET).wixobj" \
@@ -82,7 +82,7 @@ Clean ::
 	"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x64.msi" \
 	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_x86.msi" \
 	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_x64.msi"
-	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "eduVPN.wxl" -out $@ "bin\$(CFG)\$(CLIENT_TARGET).wixobj"
+	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "Install\eduVPN.wxl" -out $@ "bin\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 Clean ::
 	-if exist "bin\$(CFG)\$(CLIENT_TARGET)Client_*.exe" del /f /q "bin\$(CFG)\$(CLIENT_TARGET)Client_*.exe"

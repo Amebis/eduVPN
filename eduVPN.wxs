@@ -31,7 +31,7 @@
                 Id="thm-ar"
                 Compressed="yes"
                 Name="1025\thm.wxl"
-                SourceFile="Install\thm.ar.wxl"/>
+                SourceFile="Install\ar\thm.wxl"/>
             -->
 
             <Payload
@@ -44,37 +44,37 @@
                 Id="thm-de"
                 Compressed="yes"
                 Name="1031\thm.wxl"
-                SourceFile="Install\thm.de.wxl"/>
+                SourceFile="Install\de\thm.wxl"/>
 
             <Payload
                 Id="thm-fr"
                 Compressed="yes"
                 Name="1036\thm.wxl"
-                SourceFile="Install\thm.fr.wxl"/>
+                SourceFile="Install\fr\thm.wxl"/>
 
             <Payload
                 Id="thm-nl"
                 Compressed="yes"
                 Name="1043\thm.wxl"
-                SourceFile="Install\thm.nl.wxl"/>
+                SourceFile="Install\nl\thm.wxl"/>
 
             <Payload
                 Id="thm-sl"
                 Compressed="yes"
                 Name="1060\thm.wxl"
-                SourceFile="Install\thm.sl.wxl"/>
+                SourceFile="Install\sl\thm.wxl"/>
 
             <Payload
                 Id="thm-tr"
                 Compressed="yes"
                 Name="1055\thm.wxl"
-                SourceFile="Install\thm.tr.wxl"/>
+                SourceFile="Install\tr\thm.wxl"/>
 
             <Payload
                 Id="thm-uk"
                 Compressed="yes"
                 Name="1058\thm.wxl"
-                SourceFile="Install\thm.uk.wxl"/>
+                SourceFile="Install\uk\thm.wxl"/>
         </BootstrapperApplicationRef>
 
         <Chain>

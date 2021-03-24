@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    xmlns="http://schemas.microsoft.com/wix/2006/localization"
+    Culture="sl"
+    Codepage="1250">
+    <String Id="eduVPN.Name">Odjemalec eduVPN</String>
+    <String Id="eduVPN.CoreName">Odjemalec eduVPN - jedro</String>
+    <String Id="eduVPN.OpenVPNName">Odjemalec eduVPN - komponente OpenVPN</String>
+
+    <String Id="LetsConnect.Name">Odjemalec Let's Connect!</String>
+    <String Id="LetsConnect.CoreName">Odjemalec Let's Connect! - jedro</String>
+    <String Id="LetsConnect.OpenVPNName">Odjemalec Let's Connect! - komponente OpenVPN</String>
+
+    <String Id="ManufacturerName">SURF</String>
+    <String Id="ProductLanguage">1060</String>
+    <String Id="SummaryCodepage">1250</String>
+    <String Id="Culture">sl</String>
+    <String Id="LegalCopyright">Copyright: 2017-2021 The Commons Conservancy eduVPN Programme</String>
+
+    <String Id="NewerVersionInstalled">Novejša verzija aplikacije [SimpleProductName] je že nameščena. Namestitev se bo zdaj zaključila.</String>
+    <String Id="DotNETFrameworkMissing">Aplikacija potrebuje .NET Framework 4.5. Namestite .NET Framework 4.5 in ponovno poženite to namestitev.</String>
+
+    <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Napaka [4]: [5]</String>
+</WixLocalization>
