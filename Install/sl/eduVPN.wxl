@@ -10,11 +10,9 @@
     Culture="sl"
     Codepage="1250">
     <String Id="eduVPN.Name">Odjemalec eduVPN</String>
-    <String Id="eduVPN.CoreName">Odjemalec eduVPN - jedro</String>
     <String Id="eduVPN.OpenVPNName">Odjemalec eduVPN - komponente OpenVPN</String>
 
     <String Id="LetsConnect.Name">Odjemalec Let's Connect!</String>
-    <String Id="LetsConnect.CoreName">Odjemalec Let's Connect! - jedro</String>
     <String Id="LetsConnect.OpenVPNName">Odjemalec Let's Connect! - komponente OpenVPN</String>
 
     <String Id="ManufacturerName">SURF</String>

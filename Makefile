@@ -24,7 +24,6 @@ CSCRIPT_FLAGS=//Nologo
 WIX_EXTENSIONS=-ext WixNetFxExtension -ext WixUtilExtension -ext WixBalExtension
 WIX_WIXCOP_FLAGS=-nologo "-set1$(MAKEDIR)\wixcop.xml"
 WIX_CANDLE_FLAGS=-nologo \
-	-dCore.Version="$(VERSION)" \
 	-dVersion="$(VERSION)" \
 	$(WIX_EXTENSIONS) \
 	-sw1118

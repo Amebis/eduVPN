@@ -84,16 +84,16 @@
             <PackageGroupRef Id="NetFx45Redist"/>
 
             <!--
-                Core
+                Client
             -->
             <MsiPackage
-                Id="$(var.ClientTarget)Core_x86"
-                SourceFile="bin\Setup\$(var.ClientTarget)Core_$(var.Core.Version)_x86.msi"
+                Id="$(var.ClientTarget)Client_x86"
+                SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)_x86.msi"
                 InstallCondition="NOT VersionNT64"/>
 
             <MsiPackage
-                Id="$(var.ClientTarget)Core_x64"
-                SourceFile="bin\Setup\$(var.ClientTarget)Core_$(var.Core.Version)_x64.msi"
+                Id="$(var.ClientTarget)Client_x64"
+                SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)_x64.msi"
                 InstallCondition="VersionNT64"/>
         </Chain>
     </Bundle>

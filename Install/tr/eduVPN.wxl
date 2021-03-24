@@ -10,11 +10,9 @@
     Culture="tr"
     Codepage="1254">
     <String Id="eduVPN.Name">eduVPN İstemcisi</String>
-    <String Id="eduVPN.CoreName">eduVPN İstemci Çekirdeği</String>
     <String Id="eduVPN.OpenVPNName">eduVPN İstemcisi OpenVPN Bileşenleri</String>
 
     <String Id="LetsConnect.Name">Let's Connect! İstemci</String>
-    <String Id="LetsConnect.CoreName">Let's Connect! İstemci Çekirdeği</String>
     <String Id="LetsConnect.OpenVPNName">Let's Connect! İstemci OpenVPN Bileşenleri</String>
 
     <String Id="ManufacturerName">SURF</String>

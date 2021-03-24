@@ -36,11 +36,11 @@
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
-        Id="$(var.Core.ProductGUID)"
-        UpgradeCode="$(var.Core.UpgradeGUID)"
-        Version="$(var.Core.Version)"
+        Id="$(var.ProductGUID)"
+        UpgradeCode="$(var.UpgradeGUID)"
+        Version="$(var.Version)"
         Language="!(loc.ProductLanguage)"
-        Name="!(loc.$(var.ClientTarget).CoreName) $(var.Core.VersionInformational)"
+        Name="!(loc.$(var.ClientTarget).Name) $(var.VersionInformational)"
         Manufacturer="!(loc.ManufacturerName)">
 
         <Package
@@ -52,7 +52,7 @@
 
         <Media
             Id="1"
-            Cabinet="Core.cab"
+            Cabinet="Client.cab"
             EmbedCab="yes"/>
 
         <Icon
@@ -361,7 +361,7 @@
 
             <!-- Add/Remove Programs Localization -->
             <Component Id="ARP.DisplayName">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.Core.ProductGUID)" Name="DisplayName_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)1"/>
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.ProductGUID)" Name="DisplayName_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)1"/>
 
                 <!-- Remove stale registry entries of old installations. -->
                 <?foreach OldProductGUID in $(var.OldProductGUIDs)?>
@@ -369,7 +369,7 @@
                 <?endforeach?>
             </Component>
             <Component Id="ARP.Publisher">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.Core.ProductGUID)" Name="Publisher_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)3"/>
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.ProductGUID)" Name="Publisher_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)3"/>
             </Component>
         </DirectoryRef>
         <?foreach Language in $(var.LanguageList)?>
@@ -400,7 +400,7 @@
         <!--
             Features
         -->
-        <Feature Id="$(var.ClientTarget).Client" Title="!(loc.$(var.ClientTarget).CoreName)" Level="1">
+        <Feature Id="$(var.ClientTarget).Client" Title="!(loc.$(var.ClientTarget).Name)" Level="1">
             <ComponentRef Id="libcrypto_1_1.dll"/>
             <ComponentRef Id="libssl_1_1.dll"/>
             <ComponentRef Id="liblzo2_2.dll"/>

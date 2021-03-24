@@ -49,7 +49,7 @@ SetupExe :: \
 
 Clean ::
 	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*.exe" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*.exe"
-	-if exist "bin\Setup\$(CLIENT_TARGET)Core_*.msi"   del /f /q "bin\Setup\$(CLIENT_TARGET)Core_*.msi"
+	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*.msi" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*.msi"
 !ENDIF
 
 
@@ -76,8 +76,8 @@ Clean ::
 	"Install\thm.xml" \
 	"Install\$(CLIENT_TARGET)\logo.png" \
 	"bin\$(CFG)\$(CLIENT_TARGET).wixobj" \
-	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_x86.msi" \
-	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_x64.msi"
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_x86.msi" \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_x64.msi"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "Install\eduVPN.wxl" -out $@ "bin\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 Clean ::

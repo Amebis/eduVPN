@@ -10,11 +10,9 @@
     Culture="ar"
     Codepage="1256">
     <String Id="eduVPN.Name">عميل eduVPN</String>
-    <String Id="eduVPN.CoreName">أساس عميل eduVPN</String>
     <String Id="eduVPN.OpenVPNName">مكونات OpenVPN لعميل eduVPN</String>
 
     <String Id="LetsConnect.Name">عميل Let's Connect!</String>
-    <String Id="LetsConnect.CoreName">أساس عميل Let's Connect!</String>
     <String Id="LetsConnect.OpenVPNName">مكونات OpenVPN لعميل Let's Connect!</String>
 
     <String Id="ManufacturerName">SURF</String>

@@ -26,7 +26,7 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
 	-dOpenVPN.Dir="bin\OpenVPN\$(PLAT)\\" \
 	-dOpenSSL.Platform="$(OPENSSL_PLAT)" \
-	-dCore.VersionInformational="$(VERSION) $(SETUP_TARGET)"
+	-dVersionInformational="$(VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
 	-dProgramFilesFolder="ProgramFiles64Folder"
