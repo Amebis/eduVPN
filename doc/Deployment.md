@@ -14,7 +14,6 @@ Basic knowledge of GPO or SCCM is required.
 
 eduVPN Client for Windows requires:
 - .NET Framework 4.5
-- OpenVPN Components: `eduVPNOpenVPN_<ver>_<plat>.msi`
 - eduVPN Client: `eduVPNCore_<ver>_<plat>.msi`
 
 
@@ -52,9 +51,7 @@ This option is recommended for Group Policy deployments. However, it automates t
 
 You need to deploy .NET Framework 4.5 manually or by other automatization means first. It is available as an EXE installer only rendering it inappropriate for Group Policy deployment.
 
-After all workstations have the .NET Framework installed, deploy both MSI packages:
-- `eduVPNOpenVPN_<ver>_<plat>.msi`
-- `eduVPNCore_<ver>_<plat>.msi`
+After all workstations have the .NET Framework installed, deploy `eduVPNCore_<ver>_<plat>.msi` MSI package.
 
 Binaries are published [here](https://github.com/Amebis/eduVPN/releases)
 

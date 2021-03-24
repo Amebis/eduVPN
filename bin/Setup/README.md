@@ -38,11 +38,6 @@ The `1060` represents Microsoft's LCID for Slovenian (Slovenia) locale. The list
 The language used at run-time is selected automatically by Windows. Whenever possible, Windows tries to match the language of application with the language of operating system itself providing seamless experience of OS and applications. When matching localisation is not available, U.S. English is used as default.
 
 
-## VPN Client OpenVPN Components
-
-*Naming convention: `<client brand>OpenVPN_<version>_<platform>.msi`*
-
-
 ## VPN Client Core
 
 *Naming convention: `<client brand>Core_<version>_<platform>.msi`*

@@ -56,15 +56,17 @@ END
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "eduVPN Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN for education and research"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "eduVPN Client Core"
+	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN for education and research"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! Client"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "The open source VPN"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! Client Core"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "The open source VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,15 +81,17 @@ LANGUAGE LANG_FRENCH, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "eduVPN Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN pour l'éducation et la recherche"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "eduVPN Client Core"
+	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN pour l'éducation et la recherche"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Service Interactif OpenVPN (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Permet la gestion de la configuration des connexions réseaux OpenVPN. Si arrêté ou désactivé, le client eduVPN ne fonctionnera pas."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! Client"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Le VPN open source"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! Client Core"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "Le VPN open source"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Permet la gestion de la configuration des connexions réseaux OpenVPN. Si arrêté ou désactivé, le client Let's Connect! ne fonctionnera pas."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -102,15 +106,17 @@ LANGUAGE LANG_DUTCH, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "eduVPN Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN voor onderwijs en onderzoek"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "eduVPN Client Core"
+	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN voor onderwijs en onderzoek"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Maakt OpenVPN-verbinding netwerkconfiguratiebeheer mogelijk. Indien gestopt of uitgeschakeld, zal de eduVPN-client niet werken."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! Client"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Open source VPN"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! Client Core"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "Open source VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Maakt OpenVPN-verbinding netwerkconfiguratiebeheer mogelijk. Indien gestopt of uitgeschakeld, zal de Let's Connect!-client niet werken."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -125,15 +131,17 @@ LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "Odjemalec eduVPN"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN za izobraževanje in raziskave"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "Odjemalec eduVPN - jedro"
+	IDS_EDUVPN_CLIENT_TITLE                 "Odjemalec eduVPN"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN za izobraževanje in raziskave"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Interaktivna storitev OpenVPN (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec eduVPN ne bo deloval."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Odjemalec Let's Connect!"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Odprtokodni VPN"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Odjemalec Let's Connect! - jedro"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Odjemalec Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "Odprtokodni VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Interaktivna storitev OpenVPN (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec Let's Connect! ne bo deloval."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -148,15 +156,17 @@ LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "Клієнт eduVPN"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN для освіти та досліджень"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "Ядро клієнта eduVPN"
+	IDS_EDUVPN_CLIENT_TITLE                 "Клієнт eduVPN"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN для освіти та досліджень"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Інтерактивна служба (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Вмикає керування конфігурацією мережі підключення OpenVPN. Якщо зупинено або відключено, клієнт eduVPN не працюватиме."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Клієнт Let's Connect!"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "VPN з відкритим кодом"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Ядро клієнта Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Клієнт Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "VPN з відкритим кодом"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Інтерактивна служба (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Вмикає керування конфігурацією мережі підключення OpenVPN. Якщо зупинено або відключено, клієнт Let's Connect! не працюватиме."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,15 +181,17 @@ LANGUAGE LANG_GERMAN, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "eduVPN-Client"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "VPN für Forschung und Lehre"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "eduVPN-Client Core"
+	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN-Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN für Forschung und Lehre"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Interaktiver OpenVPN Dienst (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Ermöglicht die Verwaltung der Konfiguration von OpenVPN-Verbindungsnetzwerken. Wenn angehalten oder deaktiviert, funktioniert der eduVPN-Client nicht."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect!-Client"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Das Open-Source-VPN"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect!-Client Core"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Let's Connect!-Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "Das Open-Source-VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Interaktiver OpenVPN Dienst (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Ermöglicht die Verwaltung der Konfiguration von OpenVPN-Verbindungsnetzwerken. Wenn angehalten oder deaktiviert, funktioniert Let's Connect! client nicht."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -194,15 +206,17 @@ LANGUAGE LANG_ARABIC, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "عميل eduVPN"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "الشبكة الخاصة الافتراضية للتعليم والبحث"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "أساس عميل eduVPN"
+	IDS_EDUVPN_CLIENT_TITLE                 "عميل eduVPN"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "الشبكة الخاصة الافتراضية للتعليم والبحث"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "خدمة OpenVPN التفاعلية (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل eduVPN."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "عميل Let's Connect!"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "الشبكة الخاصة الافتراضية مفتوحة المصدر"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "أساس عميل Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_TITLE            "عميل Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "الشبكة الخاصة الافتراضية مفتوحة المصدر"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "خدمة OpenVPN التفاعلية (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل Let's Connect!."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -217,13 +231,15 @@ LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE            "eduVPN İstemcisi"
-	IDS_EDUVPN_CLIENT_DESCRIPTION      "Eğitim ve araştırma için VPN"
-	IDS_EDUVPN_CLIENT_PUBLISHER        "SURF"
-	IDS_EDUVPN_CORE_TITLE              "eduVPN İstemci Çekirdeği"
+	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN İstemcisi"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "Eğitim ve araştırma için VPN"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Etkileşimli Hizmet (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, eduVPN istemcisi çalışmayacaktır."
 
-	IDS_LETSCONNECT_CLIENT_TITLE       "Let's Connect! İstemci"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION "Açık kaynak VPN"
-	IDS_LETSCONNECT_CLIENT_PUBLISHER   "SURF"
-	IDS_LETSCONNECT_CORE_TITLE         "Let's Connect! İstemci Çekirdeği"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Let's Connect! İstemci"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "Açık kaynak VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Etkileşimli Hizmet (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, Let's Connect! çalışmayacak."
 END

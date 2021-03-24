@@ -19,7 +19,7 @@ using namespace std;
 
 #define WINTUN_COMPONENT           TEXT("wintun.dll")
 #define WINTUN_FILE_NAME           TEXT("wintun.dll")
-#define WINTUN_DIRECTORY           TEXT("BINDIR")
+#define WINTUN_DIRECTORY           TEXT("PRODUCTDIR")
 #define WINTUN_POOL_PROPERTY_NAME  TEXT("WINTUNPOOL")
 #define WUNTUN_REMOVE_POOL_CA_NAME TEXT("RemoveWintunPool")
 #define ERROR_MSICA_ERRNO          2550L

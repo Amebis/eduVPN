@@ -2,15 +2,17 @@
 // Microsoft Visual C++ generated include file.
 // Used by Resources.rc
 //
-#define IDS_EDUVPN_CLIENT_TITLE              1
-#define IDS_EDUVPN_CLIENT_DESCRIPTION        2
-#define IDS_EDUVPN_CLIENT_PUBLISHER          3
-#define IDS_EDUVPN_CORE_TITLE                4
+#define IDS_EDUVPN_CLIENT_TITLE                   1
+#define IDS_EDUVPN_CLIENT_DESCRIPTION             2
+#define IDS_EDUVPN_CLIENT_PUBLISHER               3
+#define IDS_EDUVPN_INTERACTIVE_TITLE              5
+#define IDS_EDUVPN_INTERACTIVE_DESCRIPTION        6
 
-#define IDS_LETSCONNECT_CLIENT_TITLE       101
-#define IDS_LETSCONNECT_CLIENT_DESCRIPTION 102
-#define IDS_LETSCONNECT_CLIENT_PUBLISHER   103
-#define IDS_LETSCONNECT_CORE_TITLE         104
+#define IDS_LETSCONNECT_CLIENT_TITLE            101
+#define IDS_LETSCONNECT_CLIENT_DESCRIPTION      102
+#define IDS_LETSCONNECT_CLIENT_PUBLISHER        103
+#define IDS_LETSCONNECT_INTERACTIVE_TITLE       105
+#define IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION 106
 
 // Next default values for new objects
 // 

@@ -16,9 +16,8 @@
 - _eduVPN.Client_: eduVPN client application (Shell)
 - _eduVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for Start Menu shortcuts
 - _eduVPN.Views_: Client UI (View)
-- _Install_: Theme files for WiX Standard Bootstrapper Application
+- _Install_: WiX installer additional files
 - _LetsConnect.Client_: Let's Connect! client application (Shell)
-- _OpenVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for system services names
 
 
 ## Pre-requisites
@@ -26,7 +25,7 @@
 1. Install [Visual Studio 2019 Community Edition](https://www.visualstudio.com/vs/community/). A minimum set of required features is:
    - Workloads
       - .NET desktop development
-      - Desktop development with C++ (required by eduEd25519 and OpenVPN submodules, eduVPN.Resources and OpenVPN.Resources resource projects)
+      - Desktop development with C++ (required by eduEd25519 and OpenVPN submodules and eduVPN.Resources resource projects)
    - Individual components
       - Code tools
          - Git for Windows (if not installed by other means)

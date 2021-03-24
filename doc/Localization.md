@@ -10,8 +10,7 @@ eduVPN and Let's Connect! clients are the same client targeted for a different a
 
    - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/eduVPN.wxl)
    - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/thm.wxl)
-   - Start menu shortcut and ARP texts [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
-   - OpenVPN Interactive Service entries in SCM [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/OpenVPN.Resources/Resources.rc) <sup>[1]</sup>
+   - Start menu shortcut and ARP texts, OpenVPN Interactive Service entries in SCM [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
 
 
 ## General Guidelines
@@ -24,4 +23,4 @@ Should you need any assistance to get started, please do not hesitate to contact
 ## Notes
 
 [1]: #footnote1
-<a name="footnote1">[1]</a> The Resource.rc files have only a few terms, therefore we kindly invite you to translate both Resource.rc files. You can find the texts inside the file by following the "LANGUAGE" markers. Just [e-mail us](mailto:simon.rozman@amebis.si) the translations – we can handle the rest.
+<a name="footnote1">[1]</a> The Resource.rc file has only a few terms, therefore we kindly invite you to translate it. You can find the texts inside the file by following the "LANGUAGE" markers. Just [e-mail us](mailto:simon.rozman@amebis.si) the translations – we can handle the rest.

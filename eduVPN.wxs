@@ -84,19 +84,6 @@
             <PackageGroupRef Id="NetFx45Redist"/>
 
             <!--
-                OpenVPN
-            -->
-            <MsiPackage
-                Id="$(var.ClientTarget)OpenVPN_x86"
-                SourceFile="bin\Setup\$(var.ClientTarget)OpenVPN_$(var.OpenVPN.Version)_x86.msi"
-                InstallCondition="NOT VersionNT64"/>
-
-            <MsiPackage
-                Id="$(var.ClientTarget)OpenVPN_x64"
-                SourceFile="bin\Setup\$(var.ClientTarget)OpenVPN_$(var.OpenVPN.Version)_x64.msi"
-                InstallCondition="VersionNT64"/>
-
-            <!--
                 Core
             -->
             <MsiPackage

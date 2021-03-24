@@ -11,8 +11,7 @@ WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT=$(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) \
 	-dClientUpgradeCode="$(CLIENT_UPGRADE_CODE)" \
 	-dClientAboutUri="$(CLIENT_ABOUT_URI)" \
 	-dClientId="$(CLIENT_ID)" \
-	-dIDS_CLIENT_TITLE="$(IDS_CLIENT_TITLE)" \
-	-dIDS_CLIENT_DESCRIPTION="$(IDS_CLIENT_DESCRIPTION)"
+	-dIDS_CLIENT_PREFIX="$(IDS_CLIENT_PREFIX)"
 
 
 ######################################################################
@@ -32,13 +31,13 @@ UnregisterShortcuts ::
 	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
 	cscript.exe "bin\MkLnk.wsf" //Nologo $@ "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
 		/F:"$(MAKEDIR)\bin\$(CFG)\$(PLAT)" \
-		/LN:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_TITLE)" \
-		/C:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_DESCRIPTION)"
+		/LN:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)1" \
+		/C:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)2"
 
 RegisterOpenVPNInteractiveService :: \
 	UnregisterOpenVPNInteractiveServiceSCM \
 	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\OpenVPN.Resources.dll" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
 	"bin\OpenVPN\$(PLAT)\config"
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)"             $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)\openvpn.exe" $(REG_FLAGS)
@@ -50,11 +49,11 @@ RegisterOpenVPNInteractiveService :: \
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "ovpn_admin_group" /t REG_SZ /d "Users"                                      $(REG_FLAGS)
 	sc.exe create "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" \
 		binpath= "\"$(MAKEDIR)\bin\OpenVPN\$(PLAT)\openvpnserv.exe\" -instance interactive $$$(CLIENT_TARGET)" \
-		DisplayName= "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-$(IDS_CLIENT_PUBLISHER)" \
+		DisplayName= "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)5" \
 		type= own \
 		start= auto \
 		depend= "Dhcp"
-	sc.exe description "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\OpenVPN.Resources.dll,-$(IDS_CORE_TITLE)"
+	sc.exe description "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)6"
 	net.exe start "OpenVPNServiceInteractive$$$(CLIENT_TARGET)"
 
 UnregisterOpenVPNInteractiveService :: \
@@ -81,7 +80,6 @@ UnregisterOpenVPNInteractiveServiceSCM ::
 
 !IF "$(CFG)" == "Release"
 SetupMSI :: \
-	"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" \
 	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET).msi"
 !ENDIF
 
@@ -97,11 +95,6 @@ SetupMSI :: \
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" : \
-	"OpenVPN.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "OpenVPN.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ "OpenVPN.wxs"
-
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" : \
 	"eduVPNCore.wxs" \
 	"bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
@@ -109,32 +102,7 @@ Clean ::
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVC150RedistMSM="$(VC142REDIST_MSM)" -out $@ "eduVPNCore.wxs"
 
 Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN.wixobj"
-	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"    del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"
-
-"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET).msi" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_ar.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_de.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_fr.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_tr.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_uk.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi"
-	copy /y "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_en-US.msi" "$(@:"=).tmp" > NUL
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_ar.mst" 1025 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_de.mst" 1031 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_fr.mst" 1036 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_nl.mst" 1043 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_sl.mst" 1060 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_tr.mst" 1055 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_$(SETUP_TARGET)_uk.mst" 1058 /L
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client OpenVPN Components" /q "$(@:"=).tmp"
-!ENDIF
-	attrib.exe +r "$(@:"=).tmp"
-	if exist $@ attrib.exe -r $@
-	move /y "$(@:"=).tmp" $@ > NUL
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core.wixobj"
 
 "bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET).msi" : \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Core_$(VERSION)_$(SETUP_TARGET)_ar.mst" \

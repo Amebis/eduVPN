@@ -12,8 +12,7 @@ WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dClientUpgradeCode="$(CLIENT_UPGRADE_CODE)" \
 	-dClientAboutUri="$(CLIENT_ABOUT_URI)" \
 	-dClientId="$(CLIENT_ID)" \
-	-dIDS_CLIENT_TITLE="$(IDS_CLIENT_TITLE)" \
-	-dIDS_CLIENT_DESCRIPTION="$(IDS_CLIENT_DESCRIPTION)"
+	-dIDS_CLIENT_PREFIX="$(IDS_CLIENT_PREFIX)"
 
 
 ######################################################################
@@ -49,9 +48,8 @@ SetupExe :: \
 	move /y "$(@:"=).tmp" $@ > NUL
 
 Clean ::
-	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*.exe"  del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*.exe"
-	-if exist "bin\Setup\$(CLIENT_TARGET)OpenVPN_*.msi" del /f /q "bin\Setup\$(CLIENT_TARGET)OpenVPN_*.msi"
-	-if exist "bin\Setup\$(CLIENT_TARGET)Core_*.msi"    del /f /q "bin\Setup\$(CLIENT_TARGET)Core_*.msi"
+	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*.exe" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*.exe"
+	-if exist "bin\Setup\$(CLIENT_TARGET)Core_*.msi"   del /f /q "bin\Setup\$(CLIENT_TARGET)Core_*.msi"
 !ENDIF
 
 
@@ -78,8 +76,6 @@ Clean ::
 	"Install\thm.xml" \
 	"Install\$(CLIENT_TARGET)\logo.png" \
 	"bin\$(CFG)\$(CLIENT_TARGET).wixobj" \
-	"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x86.msi" \
-	"bin\Setup\$(CLIENT_TARGET)OpenVPN_$(OPENVPN_VERSION)_x64.msi" \
 	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_x86.msi" \
 	"bin\Setup\$(CLIENT_TARGET)Core_$(VERSION)_x64.msi"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en-US -loc "Install\eduVPN.wxl" -out $@ "bin\$(CFG)\$(CLIENT_TARGET).wixobj"

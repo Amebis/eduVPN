@@ -8,6 +8,28 @@
 
 <?define LanguageList=ar;de;fr;nb;nl;pt-PT;sl;tr;uk?>
 
+<?if $(var.ClientTarget) = "eduVPN"?>
+    <?define openvpnserv.exe.reg0.ComponentGUID = "{95745DBA-88C1-4FD6-AF79-2D34B2E9D4F4}"?>
+    <?define openvpnserv.exe.reg1.ComponentGUID = "{457AD4F6-7330-409B-8AA9-11C5AA17B2AD}"?>
+    <?define openvpnserv.exe.reg2.ComponentGUID = "{5A36E0F2-D707-4A43-A039-2D6B4231BF23}"?>
+    <?define openvpnserv.exe.reg3.ComponentGUID = "{3D89AA2C-04E3-49C2-A2BC-19B957ED4F74}"?>
+    <?define openvpnserv.exe.reg4.ComponentGUID = "{E551E92B-B79A-41E7-909C-656AEDDFAE1C}"?>
+    <?define openvpnserv.exe.reg5.ComponentGUID = "{9C350B91-873A-4F0F-BBDD-D422071AE78C}"?>
+    <?define openvpnserv.exe.reg6.ComponentGUID = "{D59FD7FA-E687-4A43-B8A2-077ECDD02B6D}"?>
+    <?define openvpnserv.exe.reg7.ComponentGUID = "{2140688F-04A2-42C9-B9C8-1314B721C82D}"?>
+<?elseif $(var.ClientTarget) = "LetsConnect"?>
+    <?define openvpnserv.exe.reg0.ComponentGUID = "{CD0E5551-72D5-487C-ADB6-3FF86EA83CC1}"?>
+    <?define openvpnserv.exe.reg1.ComponentGUID = "{7EF617D1-1B9E-4B96-A4C7-9A4597370AA2}"?>
+    <?define openvpnserv.exe.reg2.ComponentGUID = "{5E0F8717-1CCF-40B3-A3FE-AFE367973C73}"?>
+    <?define openvpnserv.exe.reg3.ComponentGUID = "{CF896642-99B2-4BD1-9FD2-89E73F3C38B2}"?>
+    <?define openvpnserv.exe.reg4.ComponentGUID = "{F9F27191-D01C-4DF2-8112-288B9D086628}"?>
+    <?define openvpnserv.exe.reg5.ComponentGUID = "{2D450249-CCD0-4C4C-AD9A-793C864FE1B7}"?>
+    <?define openvpnserv.exe.reg6.ComponentGUID = "{EB68C746-5E50-4F66-9A21-2E6BB07EEA38}"?>
+    <?define openvpnserv.exe.reg7.ComponentGUID = "{A40AFCF3-E0DE-4844-91CE-64D55C3FA8B5}"?>
+<?else?>
+    <?error Unknown client?>
+<?endif?>
+
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
@@ -35,8 +57,13 @@
             Id="App.ico"
             SourceFile="$(var.ClientTarget).Client\Resources\App.ico"/>
 
+        <Binary
+            Id="OpenVPN.MSICA.dll"
+            SourceFile="OpenVPN.MSICA.dll"/>
+
         <Property Id="ARPPRODUCTICON" Value="App.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUri)"/>
+        <Property Id="WINTUNPOOL" Value="OpenVPN$$$(var.ClientTarget)"/>
 
 
         <!--
@@ -55,6 +82,37 @@
                 Property="OLDVERSIONSINSTALLED"
                 IncludeMinimum="yes"
                 MigrateFeatures="yes"/>
+        </Upgrade>
+        <?endif?>
+        <Property Id="TAPWININSTALLED" Secure="yes"/>
+        <Upgrade Id="$(var.TAPWin.UpgradeGUID)">
+            <UpgradeVersion
+                Minimum="0.0.0.0"
+                Property="TAPWININSTALLED"
+                IncludeMinimum="yes"
+                MigrateFeatures="no"
+                IgnoreRemoveFailure="yes"/>
+        </Upgrade>
+        <Property Id="OPENVPNINSTALLED" Secure="yes"/>
+        <Upgrade Id="$(var.OpenVPN.UpgradeGUID)">
+            <UpgradeVersion
+                Minimum="0.0.0.0"
+                Property="OPENVPNINSTALLED"
+                IncludeMinimum="yes"
+                MigrateFeatures="no"
+                IgnoreRemoveFailure="yes"/>
+        </Upgrade>
+        <?if $(var.ClientTarget) = "eduVPN"?>
+        <Property Id="OLDOPENVPNINSTALLED" Secure="yes"/>
+        <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
+            <UpgradeVersion
+                Minimum="0.0.0.0"
+                Maximum="2.4.4.1"
+                Property="OLDOPENVPNINSTALLED"
+                IncludeMinimum="yes"
+                IncludeMaximum="yes"
+                MigrateFeatures="no"
+                IgnoreRemoveFailure="yes"/>
         </Upgrade>
         <?endif?>
         <Property Id="PRODUCTDIRPREV">
@@ -87,6 +145,7 @@
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="PRODUCTDIR" Name="$(var.ClientTitle)" FileSource="$(var.TargetDir)">
+                    <Directory Id="OPENVPNCONFIGDIR" Name="config"/>
                     <?foreach Language in $(var.LanguageList)?>
                     <?include Install\$(var.Language)\defs.wxi?>
                     <Directory Id="RESOURCEDIR$(var.LanguageId)" Name="$(var.Language)"/>
@@ -104,6 +163,139 @@
             Compontents
         -->
         <DirectoryRef Id="PRODUCTDIR">
+            <Component Id="libcrypto_1_1.dll" Guid="{AD510CA3-3A66-4244-93$(var.ClientId)-75FEF678EDE4}">
+                <File Source="$(var.OpenVPN.Dir)libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
+            </Component>
+            <Component Id="libssl_1_1.dll" Guid="{DBDCEEED-C4C1-407C-9D$(var.ClientId)-DF47CBABD967}">
+                <File Source="$(var.OpenVPN.Dir)libssl-1_1$(var.OpenSSL.Platform).dll"/>
+            </Component>
+            <Component Id="liblzo2_2.dll" Guid="{3F09667C-7437-469A-BF$(var.ClientId)-DAF0FBB59975}">
+                <File Source="$(var.OpenVPN.Dir)liblzo2-2.dll"/>
+            </Component>
+            <Component Id="libpkcs11_helper_1.dll" Guid="{DF6FA2C5-EA65-488A-B9$(var.ClientId)-4BA3A26CB7A1}">
+                <File Source="$(var.OpenVPN.Dir)libpkcs11-helper-1.dll"/>
+            </Component>
+            <Component Id="wintun.dll" Guid="{BCD1B70D-A1D3-4DC1-98$(var.ClientId)-8E90D8EF9FE0}">
+                <File Source="$(var.OpenVPN.Dir)wintun.dll"/>
+            </Component>
+            <Component Id="openvpn.exe" Guid="{564451A2-D708-4B65-A9$(var.ClientId)-7B0767044A09}">
+                <File Source="$(var.OpenVPN.Dir)openvpn.exe"/>
+            </Component>
+            <Component Id="openvpnserv.exe" Guid="{B67B7CC6-FC70-485A-9D$(var.ClientId)-AC0BC814D02D}">
+                <File Source="$(var.OpenVPN.Dir)openvpnserv.exe"/>
+                <CreateFolder Directory="OPENVPNCONFIGDIR">
+                    <!--
+                        SYSTEM (SY): full
+                        Administrators (BA): full
+                        Users (BU): create files
+                        CREATOR OWNER (CO): full
+                    -->
+                    <PermissionEx Id="OPENVPNCONFIGDIR" Sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;;0x100003;;;BU)(A;OIIO;FA;;;CO)"/>
+                </CreateFolder>
+                <RemoveFile
+                    Id="OPENVPNCONFIGDIR.conf"
+                    Directory="OPENVPNCONFIGDIR"
+                    Name="*.conf"
+                    On="uninstall"/>
+                <RemoveFile
+                    Id="OPENVPNCONFIGDIR.txt"
+                    Directory="OPENVPNCONFIGDIR"
+                    Name="*.txt"
+                    On="uninstall"/>
+                <RemoveFolder
+                    Id="OPENVPNCONFIGDIR"
+                    Directory="OPENVPNCONFIGDIR"
+                    On="uninstall"/>
+                <?if $(var.ClientTarget) = "eduVPN"?>
+                <!-- Until 1.0-alpha6, Interactive Service was installed as eduVPNServiceInteractive. -->
+                <ServiceControl
+                    Id="eduVPNServiceInteractive"
+                    Name="eduVPNServiceInteractive"
+                    Stop="install"
+                    Remove="install"/>
+                <?endif?>
+                <ServiceControl
+                    Id="OpenVPNServiceInteractive.$(var.ClientTarget)"
+                    Name="OpenVPNServiceInteractive$$$(var.ClientTarget)"
+                    Start="install"
+                    Stop="both"
+                    Remove="uninstall"/>
+                <ServiceInstall
+                    Id="OpenVPNServiceInteractive.$(var.ClientTarget)"
+                    Name="OpenVPNServiceInteractive$$$(var.ClientTarget)"
+                    DisplayName="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)5"
+                    Description="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)6"
+                    Arguments="-instance interactive $$$(var.ClientTarget)"
+                    Type="ownProcess"
+                    Start="auto"
+                    ErrorControl="normal">
+                    <ServiceDependency Id="Dhcp"/>
+                </ServiceInstall>
+            </Component>
+            <Component Id="openvpnserv.exe.reg0" Guid="$(var.openvpnserv.exe.reg0.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Type="string"
+                    Value="[PRODUCTDIR]"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg1" Guid="$(var.openvpnserv.exe.reg1.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Name="exe_path"
+                    Type="string"
+                    Value="[PRODUCTDIR]openvpn.exe"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg2" Guid="$(var.openvpnserv.exe.reg2.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Name="config_dir"
+                    Type="string"
+                    Value="[OPENVPNCONFIGDIR]"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg3" Guid="$(var.openvpnserv.exe.reg3.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Name="config_ext"
+                    Type="string"
+                    Value="conf"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg4" Guid="$(var.openvpnserv.exe.reg4.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Name="log_dir"
+                    Type="string"
+                    Value="[PRODUCTDIR]"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg5" Guid="$(var.openvpnserv.exe.reg5.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Name="log_append"
+                    Type="string"
+                    Value="0"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg6" Guid="$(var.openvpnserv.exe.reg6.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Name="priority"
+                    Type="string"
+                    Value="NORMAL_PRIORITY_CLASS"/>
+            </Component>
+            <Component Id="openvpnserv.exe.reg7" Guid="$(var.openvpnserv.exe.reg7.ComponentGUID)">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="Software\OpenVPN$$$(var.ClientTarget)"
+                    Name="ovpn_admin_group"
+                    Type="string"
+                    Value="Users"/>
+            </Component>
+
             <Component Id="System.ValueTuple.dll" Guid="{C8FC5755-2F1E-4967-BF$(var.ClientId)-ACDA10877D32}">
                 <File Source="System.ValueTuple.dll"/>
             </Component>
@@ -141,8 +333,8 @@
                 <Shortcut
                     Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
-                    Name="$(var.ClientTitle) Client" DisplayResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DisplayResourceId="$(var.IDS_CLIENT_TITLE)"
-                    DescriptionResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DescriptionResourceId="$(var.IDS_CLIENT_DESCRIPTION)"
+                    Name="$(var.ClientTitle) Client" DisplayResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DisplayResourceId="$(var.IDS_CLIENT_PREFIX)1"
+                    DescriptionResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DescriptionResourceId="$(var.IDS_CLIENT_PREFIX)2"
                     Target="$(var.ClientTarget).Client"
                     WorkingDirectory="PRODUCTDIR"
                     Icon="App.ico"/>
@@ -155,8 +347,8 @@
                 <Shortcut
                     Id="$(var.ClientTarget).Client.exe.DesktopShortcut"
                     Directory="DesktopFolder"
-                    Name="$(var.ClientTitle) Client" DisplayResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DisplayResourceId="$(var.IDS_CLIENT_TITLE)"
-                    DescriptionResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DescriptionResourceId="$(var.IDS_CLIENT_DESCRIPTION)"
+                    Name="$(var.ClientTitle) Client" DisplayResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DisplayResourceId="$(var.IDS_CLIENT_PREFIX)1"
+                    DescriptionResourceDll="[PRODUCTDIR]eduVPN.Resources.dll" DescriptionResourceId="$(var.IDS_CLIENT_PREFIX)2"
                     Target="[PRODUCTDIR]$(var.ClientTarget).Client.exe"
                     WorkingDirectory="PRODUCTDIR"
                     Icon="App.ico"/>
@@ -168,10 +360,10 @@
             <!-- Add/Remove Programs Localization -->
             <!-- TODO: Shouldn't component GUIDs change with every [ProductCode] change as the component key path changes? -->
             <Component Id="ARP.DisplayName" Guid="{9B193EA7-D92A-4B21-B5$(var.ClientId)-83696C1DA3F0}">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-4"/>
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)1"/>
             </Component>
             <Component Id="ARP.Publisher" Guid="{B1843E16-2328-46C3-82$(var.ClientId)-4D37C14609BB}">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-3"/>
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[PRODUCTDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)3"/>
             </Component>
         </DirectoryRef>
         <?foreach Language in $(var.LanguageList)?>
@@ -203,8 +395,23 @@
             Features
         -->
         <Feature Id="$(var.ClientTarget).Client" Title="!(loc.$(var.ClientTarget).CoreName)" Level="1">
-            <MergeRef Id="VC150Redist"/>
+            <ComponentRef Id="libcrypto_1_1.dll"/>
+            <ComponentRef Id="libssl_1_1.dll"/>
+            <ComponentRef Id="liblzo2_2.dll"/>
+            <ComponentRef Id="libpkcs11_helper_1.dll"/>
+            <ComponentRef Id="wintun.dll"/>
+            <ComponentRef Id="openvpn.exe"/>
+            <ComponentRef Id="openvpnserv.exe"/>
+            <ComponentRef Id="openvpnserv.exe.reg0"/>
+            <ComponentRef Id="openvpnserv.exe.reg1"/>
+            <ComponentRef Id="openvpnserv.exe.reg2"/>
+            <ComponentRef Id="openvpnserv.exe.reg3"/>
+            <ComponentRef Id="openvpnserv.exe.reg4"/>
+            <ComponentRef Id="openvpnserv.exe.reg5"/>
+            <ComponentRef Id="openvpnserv.exe.reg6"/>
+            <ComponentRef Id="openvpnserv.exe.reg7"/>
 
+            <MergeRef Id="VC150Redist"/>
             <ComponentRef Id="System.ValueTuple.dll"/>
             <ComponentRef Id="Prism.dll"/>
             <ComponentRef Id="eduEd25519.dll"/>
@@ -231,5 +438,35 @@
             <ComponentRef Id="eduVPN.Views.resources.dll.$(var.LanguageId)"/>
             <?endforeach?>
         </Feature>
+
+
+        <!--
+            Custom Actions
+        -->
+        <CustomAction
+            Id="EvaluateWintunPool"
+            BinaryKey="OpenVPN.MSICA.dll"
+            DllEntry="EvaluateWintunPool"/>
+
+        <CustomAction
+            Id="RemoveWintunPool"
+            BinaryKey="OpenVPN.MSICA.dll"
+            DllEntry="RemoveWintunPool"
+            Execute="deferred"
+            Impersonate="no"/>
+
+        <InstallExecuteSequence>
+            <Custom
+                Action="EvaluateWintunPool"
+                After="ProcessComponents"/>
+
+            <Custom
+                Action="RemoveWintunPool"
+                Before="RemoveFiles"/>
+        </InstallExecuteSequence>
+
+        <UI>
+            <Error Id="2550">!(OpenVPN.MSICA [2]: [3]: Error [4]: [5])</Error>
+        </UI>
     </Product>
 </Wix>

@@ -25,7 +25,6 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dPlatform="$(PLAT)" \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
 	-dOpenVPN.Dir="bin\OpenVPN\$(PLAT)\\" \
-	-dOpenVPN.VersionInformational="$(OPENVPN_VERSION) $(SETUP_TARGET)" \
 	-dOpenSSL.Platform="$(OPENSSL_PLAT)" \
 	-dCore.VersionInformational="$(VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
@@ -60,8 +59,7 @@ SetupBuild ::
 "bin\$(CFG)\$(PLAT)" : "bin\$(CFG)"
 	if not exist $@ md $@
 
-"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
-"bin\$(CFG)\$(PLAT)\OpenVPN.Resources.dll" ::
+"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" ::
 	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 

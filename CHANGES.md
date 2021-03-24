@@ -4,6 +4,7 @@
 
 - OpenVPN updated to 2.5.1-20210322
 - Network adapter switched to Wintun
+- Individual MSI packages merged into one (per platform)
 - .wxl setup localization files moved to Install\<language ID>
 
 
