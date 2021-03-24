@@ -271,7 +271,7 @@
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
                     Name="log_dir"
                     Type="string"
-                    Value="[PRODUCTDIR]"/>
+                    Value="[OPENVPNCONFIGDIR]"/>
             </Component>
             <Component Id="openvpnserv.exe.reg5" Guid="$(var.openvpnserv.exe.reg5.ComponentGUID)">
                 <RegistryValue
