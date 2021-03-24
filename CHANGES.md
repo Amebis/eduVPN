@@ -6,6 +6,7 @@
 - Network adapter switched to Wintun
 - Individual MSI packages merged into one (per platform)
 - .wxl setup localization files moved to Install\<language ID>
+- Phantom leftover packages in Setup -> Apps list and incomplete package uninstalls fixed
 
 
 ## [1.255.6](https://github.com/Amebis/eduVPN/compare/1.255.5...1.255.6) (2021-03-03)
