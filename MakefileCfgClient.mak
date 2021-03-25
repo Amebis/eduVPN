@@ -21,6 +21,9 @@ WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
 
 !IF "$(CFG)" == "Release"
 SetupExe :: \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION).exe"
+
+Publish :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION).exe" \
 	"bin\Setup\$(CLIENT_TARGET).windows.json" \
 	"bin\Setup\$(CLIENT_TARGET).windows.json.minisig"
