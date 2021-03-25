@@ -165,9 +165,6 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Se connecter en utilisant uniquement _TCP</value>
   </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Utiliser _l'adaptateur TAP</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Téléchargé (descendant) :</value>
   </data>

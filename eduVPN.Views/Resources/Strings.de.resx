@@ -165,9 +165,6 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Verbindung nur über _TCP</value>
   </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Verwende TAP-_Adapter:</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Heruntergeladen:</value>
   </data>

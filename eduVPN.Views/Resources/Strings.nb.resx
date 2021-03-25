@@ -165,9 +165,6 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Connect using _TCP only</value>
   </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Use TAP _adapter:</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Downloaded:</value>
   </data>

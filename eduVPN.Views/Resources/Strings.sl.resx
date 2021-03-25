@@ -165,9 +165,6 @@ Program Commons Conservancy eduVPN</value>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Poveži samo s _TCP</value>
   </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Uporabi _adapter TAP:</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Dol:</value>
   </data>

@@ -118,257 +118,254 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutPageCopyright2" xml:space="preserve">
-    <value>Copyright © 2017-{0}
-The Commons Conservancy eduVPN Programme</value>
+    <value>Direitos de Cópia © 2017-{0}
+The Commons Conservancy - Programa eduVPN</value>
   </data>
   <data name="AboutPageVersion" xml:space="preserve">
-    <value>Version {0}</value>
+    <value>Versão {0}</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">
-    <value>Back</value>
+    <value>Retroceder</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value>_Copy Error Text</value>
+    <value>_Texto de Erro de Cópia</value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
-    <value>_Dismiss Error</value>
+    <value>_Erro de Descarte</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Settings</value>
+    <value>_Configurações</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G}{1}{2}</value>
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>What's New?</value>
+    <value>O que há de novo?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>A newer and improved version of the client is available. Stay updated!</value>
+    <value>Uma nova e melhorada versão do cliente está disponível. Fique actualizado!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>Actualização disponível</value>
   </data>
   <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
-    <value>Download and _update now
-(Client will restart)</value>
+    <value>A descarregar e a  _actualizar agora
+(O cliente reiniciará)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>{0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
+    <value>{0} detectou que o seu ficheiro de configurações de utilizador {1} ficou corrompido. Isto pode ter acontecido devido a um crash.
 
-If you continue, your user settings will be reset to the default.</value>
+Se continuar, as suas configurações de utilizador serão reiniciadas para os valores originais.</value>
     <comment>{0}=application name, {1}=filename</comment>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Corrupt User Settings</value>
+    <value>Configurações de Utilizador Corrompidas</value>
   </data>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Connect using _TCP only</value>
-  </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Use TAP _adapter:</value>
+    <value>A ligar usando apenas _TCP</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
-    <value>Downloaded:</value>
+    <value>Descarregado:</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
-    <value>Uploaded:</value>
+    <value>Carregado:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Duração</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
-    <value>Address</value>
+    <value>Endereço</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
     <comment>{0}=IP address, {1}=IPv6 address</comment>
   </data>
   <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
-    <value>{0} Connected</value>
+    <value>{0} Ligado</value>
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>Desligado</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
-    <value>The window has been minimized here.</value>
+    <value>A janela foi minimizada aqui.</value>
   </data>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
-    <value>_About...</value>
+    <value>_Sobre...</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
-    <value>E_xit</value>
+    <value>S_air</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
-    <value>_Open</value>
+    <value>_Aberto</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
-    <value>_Settings...</value>
+    <value>_Configurações...</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Connection _info...</value>
+    <value>_informações de Ligação...</value>
   </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Search for your institute...</value>
+    <value>Procure o seu instituto...</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_Organization</value>
+    <value>_Organização</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Connect your own server</value>
+    <value>Ligue ao seu próprio servidor</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Own Se_rver</value>
+    <value>Se_rvidor próprio</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
-    <value>_Server</value>
+    <value>_Servidor</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Find your institute</value>
+    <value>Encontre o seu instituto</value>
   </data>
   <data name="LocationLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Localização</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+    <value>Esta app necessita autorização e abriu o seu navegador web. Ela continuará quando tiver completado a autorização.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Authorization required</value>
+    <value>Autorização necessária</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Change Location</value>
+    <value>_Mudar Localização</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
-    <value>A_bout</value>
+    <value>S_obre</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
-    <value>_Add</value>
+    <value>_Adicionar</value>
   </data>
   <data name="InstituteAccessLabel" xml:space="preserve">
-    <value>Institute Access</value>
+    <value>Acesso do Instituto</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Other Servers</value>
+    <value>Outros Servidores</value>
   </data>
   <data name="SecureInternetLabel" xml:space="preserve">
-    <value>Secure Internet</value>
+    <value>Internet Segura</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Add other server</value>
+    <value>Adicionar outro servidor</value>
   </data>
   <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
-    <value>Select a location</value>
+    <value>Seleccione uma localização</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Configurações</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
-    <value>Support:</value>
+    <value>Suporte:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Connection log</value>
+    <value>Log de Ligações</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>View _log...</value>
+    <value>Visualizar _log...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Ligado</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>A ligar...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnecting...</value>
+    <value>A desligar...</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
-    <value>Connection Error</value>
+    <value>Erro de ligação</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Configuring...</value>
+    <value>A configurar...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
-    <value>_Profiles</value>
+    <value>_Perfis</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Connection _info</value>
+    <value>_Informação de Ligação</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Valid for</value>
+    <value>Válido para</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>A descarregar actualização...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Forget</value>
+    <value>_Esquecer</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server address</value>
+    <value>Endereço do servidor</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
-    <value>Servers</value>
+    <value>Servidores</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_dd server</value>
+    <value>A_dicionar servidor</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Enter server address here</value>
+    <value>Introduza o endereço do servidor aqui</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>List of available profiles is loading.
-Please wait...</value>
+    <value>A lista dos perfis disponíveis está a carregar.
+Por favor aguarde...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>No results, please check your search command or try another institute.</value>
+    <value>Sem resultados, por favor verifique o seu comando de pesquisa ou tente outro instituto.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(Not Available)</value>
+    <value>(Não Disponível)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
   </data>
   <data name="SessionStatusTypeDisconnected" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Não ligado</value>
   </data>
   <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
-    <value>Data Transferred</value>
+    <value>Dados Transferidos</value>
   </data>
   <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
-    <value>Profile</value>
+    <value>Perfil</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>Esta sessão expirou</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>Renove a Sessão</value>
   </data>
   <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
-    <value>Renew before {0}</value>
+    <value>Renove antes de {0}</value>
     <comment>{0}=date and time</comment>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
-    <value>{0} is about to expire</value>
+    <value>{0} está quase a expirar</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="TimeSpanDaysAndHours" xml:space="preserve">
-    <value>{0:day|days} and {1:hour|hours}</value>
+    <value>{0:dia|dias} and {1:hora|horas}</value>
     <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
   </data>
   <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
-    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <value>{0:hora|horas} and {1:minuto|minutos}</value>
     <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
   </data>
   <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
-    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <value>{0:minuto|minutos} and {1:segundo|segundos}</value>
     <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
   </data>
   <data name="TimeSpanSeconds" xml:space="preserve">
-    <value>{0:second|seconds}</value>
+    <value>{0:segundo|segundos}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
 </root>

@@ -164,9 +164,6 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>Yalnızca _TCP kullanarak bağlanın</value>
   </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>TAP _adapter kullanın:</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>İndirildi:</value>
   </data>

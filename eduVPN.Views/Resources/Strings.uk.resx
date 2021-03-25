@@ -165,9 +165,6 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>З'єднання тільки за допомогою _TCP.</value>
   </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>Використано TAP _адаптер:  </value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Завантажено:</value>
   </data>

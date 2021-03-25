@@ -118,126 +118,126 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>Verifying signature failed. Integrity of {0} is not valid.</value>
+    <value>A verificação da assinatura falhou. A integridade de {0} não é válida.</value>
   </data>
   <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value>API server replied with an error.</value>
+    <value>O servidor da API respondeu com um erro.</value>
   </data>
   <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Private key is invalid or of unsupported format.</value>
+    <value>A chave privada é inválida ou está num formato não suportado.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value>Loading of API endpoints failed.</value>
+    <value>O carregamento de extremos da API falhou.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value>Loading of the profile list failed.</value>
+    <value>O carregamento da lista de perfis falhou.</value>
   </data>
   <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value>Loading of client certificate failed.</value>
+    <value>O carregamento do certificado do cliente falhou.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
-    <value>Loading of profile configuration failed.</value>
+    <value>O carregamento do perfil de configuração falhou.</value>
   </data>
   <data name="ErrorSavingProfileConfiguration" xml:space="preserve">
-    <value>Saving of profile's OpenVPN configuration to "{0}" failed.</value>
+    <value>A gravação do perfil de configuração do OpenVPN para "{0}" falhou.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
-    <value>Authorizing the client to use {0} failed.</value>
+    <value>A autorização de uso de {0} pelo cliente falhou.</value>
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value>Adding routes to system...</value>
+    <value>A adicionar rotas ao sistema...</value>
   </data>
   <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
-    <value>Assigning IP address to virtual network interface...</value>
+    <value>A atribuir endereços IP ao interface virtual de rede...</value>
   </data>
   <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value>Authenticating with server...</value>
+    <value>Autenticação em curso com o servidor...</value>
   </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
-    <value>Connected.</value>
+    <value>Ligado.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>A ligar...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>A graceful exit is in progress...</value>
+    <value>Uma saída graciosa está em curso...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value>OpenVPN reported fatal error.</value>
+    <value>O OpenVPN reportou um erro fatal.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value>Downloading configuration options from server...</value>
+    <value>A descarregar opções de configuração do servidor...</value>
   </data>
   <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
-    <value>A restart has occurred...</value>
+    <value>Ocorreu um reinício...</value>
   </data>
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
-    <value>Waiting for initial response from server...</value>
+    <value>À espera de uma resposta inicial do servidor...</value>
   </data>
   <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatic)</value>
+    <value>(Automático)</value>
   </data>
   <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Network interface with {0} Id not found.</value>
+    <value>Interface de rede com o Id {0} não encontrado.</value>
   </data>
   <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Network interface {0} not found.</value>
+    <value>Interface de rede {0} não encontrado.</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value>Property name {0} is not valid.</value>
+    <value>O nome da propriedade {0} não é válido.</value>
     <comment>{0}=Property name</comment>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
-    <value>Interactive Service failure.</value>
+    <value>Falha do Serviço Interactivo.</value>
   </data>
   <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>Downloaded file {0} is corrupt.</value>
+    <value>O ficheiro descarregado {0} está corrompido.</value>
     <comment>{0}=URI</comment>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
-    <value>Downloading from web failed. Please check your internet connection.</value>
+    <value>O descarregamento da web falhou. Por favor verifique a sua ligação à Internet.</value>
   </data>
   <data name="ErrorUploading" xml:space="preserve">
-    <value>Uploading to web failed. Please check your internet connection.</value>
+    <value>O carregamento para a web falhou. Por favor verifique a sua ligação à Internet.</value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value>Resolving server IP...</value>
+    <value>A resolver o IP do servidor...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value>Connecting to TCP server...</value>
+    <value>A ligar ao servidor TCP...</value>
   </data>
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value>Installer file not available. Updating aborted.</value>
+    <value>O ficheiro de instalação não está disponível. Actualização abortada.</value>
   </data>
   <data name="ErrorCertificateDisabled" xml:space="preserve">
-    <value>The certificate was disabled by an administrator.</value>
+    <value>O certificado foi desabilitado por um administrador.</value>
   </data>
   <data name="ErrorUserDisabled" xml:space="preserve">
-    <value>The user account was disabled by an administrator.</value>
+    <value>A conta do utilizador foi desactivada por um administrador.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
-    <value>Downloading web resource signature failed.</value>
+    <value>O descarregamento da assinatura do recurso web falhou.</value>
   </data>
   <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is invalid.</value>
+    <value>A chave pública Minisign é inválida.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with Id {0:X} already exists.</value>
+    <value>A chave pública da Minisign com o Id {0:X} já existe.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is not supported.</value>
+    <value>A assinatura Minisign não é suportada.</value>
   </data>
   <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
-    <value>Minisign signature is invalid.</value>
+    <value>A assinatura Minisign é inválida.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not supported.</value>
+    <value>A chave pública Minisign não é suportada.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key is not trusted.</value>
+    <value>A chave pública Minisign não é confiável.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Invalid hostname: hostnames contain letters, numbers, hyphens and dots.</value>
+    <value>Hostname inválido: Os hostnames contêm letras, números, hífens e pontos.</value>
   </data>
 </root>

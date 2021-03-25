@@ -165,9 +165,6 @@
   <data name="SettingsPageForceTCPLabel" xml:space="preserve">
     <value>اتصل باستخدام _ميفاق التحكم بالنقل فقط</value>
   </data>
-  <data name="SettingsPageInterfaceLabel" xml:space="preserve">
-    <value>حدد _واجهة TAP:</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>تم تحميل:</value>
   </data>
