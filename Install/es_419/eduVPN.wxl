@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<WixLocalization
+    xmlns="http://schemas.microsoft.com/wix/2006/localization"
+    Culture="es-419"
+    Codepage="1252">
+    <String Id="eduVPN.Name">Cliente eduVPN</String>
+    <String Id="eduVPN.OpenVPNName">Cliente eduVPN, Componentes OpenVPN</String>
+
+    <String Id="LetsConnect.Name">Cliente Let's Connect!</String>
+    <String Id="LetsConnect.OpenVPNName">Cliente Let's Connect!, Componentes OpenVPN</String>
+
+    <String Id="ManufacturerName">SURF</String>
+    <String Id="ProductLanguage">1033</String>
+    <String Id="SummaryCodepage">1252</String>
+    <String Id="Culture">es-la</String>
+    <String Id="LegalCopyright">Derechos reservados: 2017-2021 The Commons Conservancy Programa eduVPN</String>
+
+    <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>
+    <String Id="DotNETFrameworkMissing">Esta aplicación requiere .NET Framework 4.5. Por favor instale .NET Framework 4.5 y ejecute nuevamente este instalador.</String>
+
+    <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Error [4]: [5]</String>
+</WixLocalization>
