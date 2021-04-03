@@ -243,3 +243,28 @@ BEGIN
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Etkileşimli Hizmet (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, Let's Connect! çalışmayacak."
 END
+
+/////////////////////////////////////////////////////////////////////////////
+// Spanish (Latinamerica) resources
+
+LANGUAGE LANG_SPANISH, SUBLANG_DEFAULT // SUBLANG_SPANISH_LA
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_CLIENT_TITLE                 "Cliente eduVPN"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN para educación e investigación"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Servicio Interactivo OpenVPN (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente eduVPN no funcionará."
+
+	IDS_LETSCONNECT_CLIENT_TITLE            "Cliente Let's Connect!"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "La VPN de código abierto"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Servicio Interactivo OpenVPN (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente Let's Connect! no funcionará."
+END
