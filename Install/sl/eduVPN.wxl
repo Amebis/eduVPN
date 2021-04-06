@@ -18,7 +18,6 @@
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1060</String>
     <String Id="SummaryCodepage">1250</String>
-    <String Id="Culture">sl</String>
     <String Id="LegalCopyright">Copyright: 2017-2021 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">Novejša verzija aplikacije [SimpleProductName] je že nameščena. Namestitev se bo zdaj zaključila.</String>

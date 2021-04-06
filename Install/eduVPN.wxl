@@ -7,7 +7,7 @@
 -->
 <WixLocalization
     xmlns="http://schemas.microsoft.com/wix/2006/localization"
-    Culture="en-us"
+    Culture="en"
     Codepage="1252">
     <String Id="eduVPN.Name">eduVPN Client</String>
     <String Id="eduVPN.OpenVPNName">eduVPN Client OpenVPN Components</String>
@@ -18,7 +18,6 @@
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1033</String>
     <String Id="SummaryCodepage">1252</String>
-    <String Id="Culture">en-US</String>
     <String Id="LegalCopyright">Copyright: 2017-2021 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>

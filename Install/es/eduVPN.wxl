@@ -7,7 +7,7 @@
 -->
 <WixLocalization
     xmlns="http://schemas.microsoft.com/wix/2006/localization"
-    Culture="es-419"
+    Culture="es"
     Codepage="1252">
     <String Id="eduVPN.Name">Cliente eduVPN</String>
     <String Id="eduVPN.OpenVPNName">Cliente eduVPN, Componentes OpenVPN</String>
@@ -16,9 +16,8 @@
     <String Id="LetsConnect.OpenVPNName">Cliente Let's Connect!, Componentes OpenVPN</String>
 
     <String Id="ManufacturerName">SURF</String>
-    <String Id="ProductLanguage">3082</String>
+    <String Id="ProductLanguage">10</String>
     <String Id="SummaryCodepage">1252</String>
-    <String Id="Culture">es-419</String>
     <String Id="LegalCopyright">Derechos reservados: 2017-2021 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">Ya está instalada una versión más reciente de [SimpleProductName]. La instalación saldrá ahora.</String>

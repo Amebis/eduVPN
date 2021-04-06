@@ -6,7 +6,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 
-<?define LanguageList=ar;de;fr;nb;nl;pt-PT;sl;tr;uk?>
+<?define LanguageList=ar;de;es;es-ES;fr;nb;nl;pt-PT;sl;tr;uk?>
 
 <?if $(var.ClientTarget) = "eduVPN"?>
     <?define libcrypto_1_1.dll.ComponentGUID = "{BF2C61B2-2970-49F3-812A-6DEB4A15870C}"?>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutPageCopyright2" xml:space="preserve">
+    <value>Derechos reservados © 2017-{0}
+The Commons Conservancy eduVPN Programme</value>
+  </data>
+  <data name="AboutPageVersion" xml:space="preserve">
+    <value>Versión {0}</value>
+  </data>
+  <data name="ButtonBackTitle" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="ButtonCopyErrorTitle" xml:space="preserve">
+    <value>_Copiar Texto de Error</value>
+  </data>
+  <data name="ButtonDismissErrorTitle" xml:space="preserve">
+    <value>_Descartar Error</value>
+  </data>
+  <data name="ButtonSettingsTitle" xml:space="preserve">
+    <value>_Configuraciones</value>
+  </data>
+  <data name="NumberToHumanReadable" xml:space="preserve">
+    <value>{0:G}{1}{2}</value>
+    <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
+  </data>
+  <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
+    <value>¿Qué hay de nuevo?</value>
+  </data>
+  <data name="SelfUpdatePromptPageText" xml:space="preserve">
+    <value>Hay disponible una versión más nueva y mejorada del cliente. ¡Manténgase actualizado!</value>
+  </data>
+  <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
+    <value>Actualización disponible</value>
+  </data>
+  <data name="SelfUpdatePromptPageUpdateTitle" xml:space="preserve">
+    <value>Descarga y _actualiza ahora
+(El cliente se reiniciará)</value>
+  </data>
+  <data name="SettingsCorruptErrorMessage" xml:space="preserve">
+    <value>{0} ha detectado que su archivo de configuración de usuario {1} se ha dañado. Esto puede deberse a un accidente.
+
+Si continúa, su configuración de usuario se restablecerá a la predeterminada.</value>
+    <comment>{0}=application name, {1}=filename</comment>
+  </data>
+  <data name="SettingsCorruptErrorTitle" xml:space="preserve">
+    <value>Configuraciones de Usuario Corruptas</value>
+  </data>
+  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
+    <value>Conectar solo usando _TCP</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
+    <value>Descargado:</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
+    <value>Subido:</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
+    <value>Duración</value>
+  </data>
+  <data name="ConnectionPageConnectionInfo" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
+    <value>IP={0}, IPv6={1}</value>
+    <comment>{0}=IP address, {1}=IPv6 address</comment>
+  </data>
+  <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
+    <value>{0} Conectado</value>
+    <comment>{0}=Profile name</comment>
+  </data>
+  <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
+    <value>Desconectado</value>
+  </data>
+  <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
+    <value>La ventana se ha minimizado aquí.</value>
+  </data>
+  <data name="SystemTrayMenuAbout" xml:space="preserve">
+    <value>_Acerca de...</value>
+  </data>
+  <data name="SystemTrayMenuExit" xml:space="preserve">
+    <value>_Salir</value>
+  </data>
+  <data name="SystemTrayMenuOpen" xml:space="preserve">
+    <value>_Abrir</value>
+  </data>
+  <data name="SystemTrayMenuSettings" xml:space="preserve">
+    <value>_Configuraciones...</value>
+  </data>
+  <data name="SystemTrayMenuStatus" xml:space="preserve">
+    <value>_Información de conexión...</value>
+  </data>
+  <data name="FlowDirection" xml:space="preserve">
+    <value>LTR</value>
+    <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
+  </data>
+  <data name="SearchPageQueryLabel" xml:space="preserve">
+    <value>Busque su institución...</value>
+  </data>
+  <data name="SearchPageOrganizationsLabel" xml:space="preserve">
+    <value>_Organización</value>
+  </data>
+  <data name="SearchPageOwnServerLabel" xml:space="preserve">
+    <value>Conéctese a su propio servidor</value>
+  </data>
+  <data name="SearchPageOwnServersLabel" xml:space="preserve">
+    <value>Se_rvidor Propio</value>
+  </data>
+  <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
+    <value>_Servidor</value>
+  </data>
+  <data name="SearchPageTitle" xml:space="preserve">
+    <value>Encuentre su institución</value>
+  </data>
+  <data name="LocationLabel" xml:space="preserve">
+    <value>_Ubicación</value>
+  </data>
+  <data name="AuthorizationPageText" xml:space="preserve">
+    <value>Esta aplicación necesita autorización y ha abierto su navegador web. Continuará cuando haya completado la autorización.</value>
+  </data>
+  <data name="AuthorizationPageTitle" xml:space="preserve">
+    <value>Autorización requerida</value>
+  </data>
+  <data name="ButtonCancelTitle" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
+    <value>_Cambiar Ubicación</value>
+  </data>
+  <data name="ButtonAboutTitle" xml:space="preserve">
+    <value>A_cerca de</value>
+  </data>
+  <data name="HomePageAddTitle" xml:space="preserve">
+    <value>_Agregar</value>
+  </data>
+  <data name="InstituteAccessLabel" xml:space="preserve">
+    <value>Acceso Institucional</value>
+  </data>
+  <data name="HomePageOwnServerLabel1" xml:space="preserve">
+    <value>Otros Servidores</value>
+  </data>
+  <data name="SecureInternetLabel" xml:space="preserve">
+    <value>Internet Seguro</value>
+  </data>
+  <data name="SearchPageOtherServerTitle" xml:space="preserve">
+    <value>Agregar otro servidor</value>
+  </data>
+  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+    <value>Selecciones una ubicación</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Configuraciones</value>
+  </data>
+  <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
+    <value>Soporte:</value>
+  </data>
+  <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
+    <value>Registro de conexión</value>
+  </data>
+  <data name="SettingsPageViewLogTitle" xml:space="preserve">
+    <value>Ver _registro...</value>
+  </data>
+  <data name="SessionStatusTypeConnected" xml:space="preserve">
+    <value>Conectado</value>
+  </data>
+  <data name="SessionStatusTypeConnecting" xml:space="preserve">
+    <value>Conectando...</value>
+  </data>
+  <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
+    <value>Desconectando...</value>
+  </data>
+  <data name="SessionStatusTypeError" xml:space="preserve">
+    <value>Error de Conexión</value>
+  </data>
+  <data name="SessionStatusTypeInitializing" xml:space="preserve">
+    <value>Configurando...</value>
+  </data>
+  <data name="ConnectionPageProfilesLabel" xml:space="preserve">
+    <value>_Perfiles</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
+    <value>_Información de conexión</value>
+  </data>
+  <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
+    <value>Válido por</value>
+  </data>
+  <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
+    <value>Descargando actualización...</value>
+  </data>
+  <data name="ForgetLabel" xml:space="preserve">
+    <value>_Olvidar</value>
+  </data>
+  <data name="SelectOwnServerPageTitle" xml:space="preserve">
+    <value>Dirección del servidor</value>
+  </data>
+  <data name="HomePageOwnServerLabel2" xml:space="preserve">
+    <value>Servidores</value>
+  </data>
+  <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
+    <value>A_gregar servidor</value>
+  </data>
+  <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
+    <value>Ingrese dirección del servidor aquí</value>
+  </data>
+  <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
+    <value>Se está cargando la lista de perfiles disponibles.
+Espere por favor...</value>
+  </data>
+  <data name="SearchPageNoResultsText" xml:space="preserve">
+    <value>No hay resultados, verifique su comando de búsqueda o pruebe con otra institución.</value>
+  </data>
+  <data name="TimeSpanNotAvailable" xml:space="preserve">
+    <value>(No disponible)</value>
+    <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
+  </data>
+  <data name="SessionStatusTypeDisconnected" xml:space="preserve">
+    <value>No conectado</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
+    <value>Datos Transferidos</value>
+  </data>
+  <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="ConnectionPageSessionExpired" xml:space="preserve">
+    <value>Esta sesión esta expirada</value>
+  </data>
+  <data name="ConnectionPageSessionRenew" xml:space="preserve">
+    <value>Renovar Sesión</value>
+  </data>
+  <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
+    <value>Renovar antes del {0}</value>
+    <comment>{0}=date and time</comment>
+  </data>
+  <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
+    <value>{0} está por expirar</value>
+    <comment>{0}=Server name</comment>
+  </data>
+  <data name="TimeSpanDaysAndHours" xml:space="preserve">
+    <value>{0:día|días} y {1:hora|horas}</value>
+    <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
+  </data>
+  <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
+    <value>{0:hora|horas} y {1:minuto|minutos}</value>
+    <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
+  </data>
+  <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
+    <value>{0:minuto|minutos} y {1:segundo|segundos}</value>
+    <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
+  </data>
+  <data name="TimeSpanSeconds" xml:space="preserve">
+    <value>{0:segundo|segundos}</value>
+    <comment>{0}=pluralizable number of seconds</comment>
+  </data>
+</root>

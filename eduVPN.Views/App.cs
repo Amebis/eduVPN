@@ -39,6 +39,7 @@ namespace eduVPN.Views
             //var culture = new System.Globalization.CultureInfo("sl-SI");
             //var culture = new System.Globalization.CultureInfo("ar-MA");
             //var culture = new System.Globalization.CultureInfo("tr-TR");
+            //var culture = new System.Globalization.CultureInfo("es-CL");
             //System.Globalization.CultureInfo.DefaultThreadCurrentCulture = culture;
             //System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = culture;
             //System.Threading.Thread.CurrentThread.CurrentCulture = culture;

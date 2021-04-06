@@ -18,7 +18,6 @@
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1025</String>
     <String Id="SummaryCodepage">1256</String>
-    <String Id="Culture">ar</String>
     <String Id="LegalCopyright">حقوق الطبع والنشر © 2017-2021 برنامج حقوق العموم ل eduVPN</String>
 
     <String Id="NewerVersionInstalled">تم تثبيت إصدار أحدث من [SimpleProductName] مسبقا. سيتم إنهاء التثبيت الآن.</String>

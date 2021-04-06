@@ -35,7 +35,7 @@
             -->
 
             <Payload
-                Id="thm-en-US"
+                Id="thm-en"
                 Compressed="yes"
                 Name="thm.wxl"
                 SourceFile="Install\thm.wxl"/>
@@ -45,6 +45,29 @@
                 Compressed="yes"
                 Name="1031\thm.wxl"
                 SourceFile="Install\de\thm.wxl"/>
+
+            <!-- Spanish (Latin America) -->
+            <Payload Id="thm-es-419" Compressed="yes" Name="22538\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-AR" Compressed="yes" Name="11274\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-BO" Compressed="yes" Name="16394\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-CL" Compressed="yes" Name="13322\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-CO" Compressed="yes" Name="9226\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-CR" Compressed="yes" Name="5130\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-CU" Compressed="yes" Name="23562\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-DO" Compressed="yes" Name="7178\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-EC" Compressed="yes" Name="12298\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-GT" Compressed="yes" Name="4106\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-HN" Compressed="yes" Name="18442\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-MX" Compressed="yes" Name="2058\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-NI" Compressed="yes" Name="19466\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-PA" Compressed="yes" Name="6154\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-PE" Compressed="yes" Name="10250\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-PR" Compressed="yes" Name="20490\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-PY" Compressed="yes" Name="15370\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-SV" Compressed="yes" Name="17418\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-US" Compressed="yes" Name="21514\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-UY" Compressed="yes" Name="14346\thm.wxl" SourceFile="Install\es\thm.wxl"/>
+            <Payload Id="thm-es-VE" Compressed="yes" Name="8202\thm.wxl"  SourceFile="Install\es\thm.wxl"/>
 
             <Payload
                 Id="thm-fr"

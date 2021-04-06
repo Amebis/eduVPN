@@ -12,11 +12,6 @@
 
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
-
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 1,255,7,0
 	PRODUCTVERSION 1,255,7,0
@@ -49,11 +44,6 @@ BEGIN
 	END
 END
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
 STRINGTABLE
 BEGIN
 	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN Client"
@@ -73,11 +63,6 @@ END
 // French resources
 
 LANGUAGE LANG_FRENCH, SUBLANG_DEFAULT
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
 
 STRINGTABLE
 BEGIN
@@ -99,11 +84,6 @@ END
 
 LANGUAGE LANG_DUTCH, SUBLANG_DEFAULT
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
 STRINGTABLE
 BEGIN
 	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN Client"
@@ -123,11 +103,6 @@ END
 // Slovenian resources
 
 LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
 
 STRINGTABLE
 BEGIN
@@ -149,11 +124,6 @@ END
 
 LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
 STRINGTABLE
 BEGIN
 	IDS_EDUVPN_CLIENT_TITLE                 "Клієнт eduVPN"
@@ -173,11 +143,6 @@ END
 // German resources
 
 LANGUAGE LANG_GERMAN, SUBLANG_DEFAULT
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
 
 STRINGTABLE
 BEGIN
@@ -199,11 +164,6 @@ END
 
 LANGUAGE LANG_ARABIC, SUBLANG_DEFAULT
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
 STRINGTABLE
 BEGIN
 	IDS_EDUVPN_CLIENT_TITLE                 "عميل eduVPN"
@@ -224,11 +184,6 @@ END
 
 LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
 STRINGTABLE
 BEGIN
 	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN İstemcisi"
@@ -245,26 +200,66 @@ BEGIN
 END
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Latinamerica) resources
+// Spanish (Latin America) resources
 
-LANGUAGE LANG_SPANISH, SUBLANG_DEFAULT // SUBLANG_SPANISH_LA
+#define X(l, s) \
+LANGUAGE l, s \
+\
+STRINGTABLE \
+BEGIN \
+	IDS_EDUVPN_CLIENT_TITLE                 "Cliente eduVPN" \
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN para educación e investigación" \
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF" \
+	IDS_EDUVPN_INTERACTIVE_TITLE            "Servicio Interactivo OpenVPN (eduVPN)" \
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente eduVPN no funcionará." \
+\
+	IDS_LETSCONNECT_CLIENT_TITLE            "Cliente Let's Connect!" \
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "La VPN de código abierto" \
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF" \
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Servicio Interactivo OpenVPN (Let's Connect!)" \
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente Let's Connect! no funcionará." \
+END
+
+X(LANG_SPANISH, SUBLANG_SPANISH_MEXICAN)
+X(LANG_SPANISH, SUBLANG_SPANISH_GUATEMALA)
+X(LANG_SPANISH, SUBLANG_SPANISH_COSTA_RICA)
+X(LANG_SPANISH, SUBLANG_SPANISH_PANAMA)
+X(LANG_SPANISH, SUBLANG_SPANISH_DOMINICAN_REPUBLIC)
+X(LANG_SPANISH, SUBLANG_SPANISH_VENEZUELA)
+X(LANG_SPANISH, SUBLANG_SPANISH_COLOMBIA)
+X(LANG_SPANISH, SUBLANG_SPANISH_PERU)
+X(LANG_SPANISH, SUBLANG_SPANISH_ARGENTINA)
+X(LANG_SPANISH, SUBLANG_SPANISH_ECUADOR)
+X(LANG_SPANISH, SUBLANG_SPANISH_CHILE)
+X(LANG_SPANISH, SUBLANG_SPANISH_URUGUAY)
+X(LANG_SPANISH, SUBLANG_SPANISH_PARAGUAY)
+X(LANG_SPANISH, SUBLANG_SPANISH_BOLIVIA)
+X(LANG_SPANISH, SUBLANG_SPANISH_EL_SALVADOR)
+X(LANG_SPANISH, SUBLANG_SPANISH_HONDURAS)
+X(LANG_SPANISH, SUBLANG_SPANISH_NICARAGUA)
+X(LANG_SPANISH, SUBLANG_SPANISH_PUERTO_RICO)
+X(LANG_SPANISH, SUBLANG_SPANISH_US)
+X(LANG_SPANISH, 0x16) // Latin America
+X(LANG_SPANISH, 0x17) // Cuba
+
+#undef X
 
 /////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
+// Spanish (Spain) resources
+
+LANGUAGE LANG_SPANISH, SUBLANG_DEFAULT
 
 STRINGTABLE
 BEGIN
-	IDS_EDUVPN_CLIENT_TITLE                 "Cliente eduVPN"
-	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN para educación e investigación"
+	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN for education and research"
 	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
-	IDS_EDUVPN_INTERACTIVE_TITLE            "Servicio Interactivo OpenVPN (eduVPN)"
-	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente eduVPN no funcionará."
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
 
-	IDS_LETSCONNECT_CLIENT_TITLE            "Cliente Let's Connect!"
-	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "La VPN de código abierto"
+	IDS_LETSCONNECT_CLIENT_TITLE            "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "The open source VPN"
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
-	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Servicio Interactivo OpenVPN (Let's Connect!)"
-	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente Let's Connect! no funcionará."
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
 END

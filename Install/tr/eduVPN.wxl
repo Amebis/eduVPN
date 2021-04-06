@@ -18,7 +18,6 @@
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1055</String>
     <String Id="SummaryCodepage">1254</String>
-    <String Id="Culture">tr</String>
     <String Id="LegalCopyright">Telif hakkı: 2017-2021 The Commons Conservancy eduVPN Programı</String>
 
     <String Id="NewerVersionInstalled">[SimpleProductName] ürününün daha yeni bir sürümü zaten yüklü. Kurulumdan çıkılıyor.</String>

@@ -6,7 +6,7 @@
 #
 
 # WiX parameters
-!IF "$(LANG)" == "en-US"
+!IF "$(LANG)" == "en"
 WIX_LOC_FILE=Install\eduVPN.wxl
 !ELSE
 WIX_LOC_FILE=Install\$(LANG)\eduVPN.wxl
@@ -24,12 +24,12 @@ WIX_LOC_FILE=Install\$(LANG)\eduVPN.wxl
 Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_*_$(SETUP_TARGET)_$(LANG).msi" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_*_$(SETUP_TARGET)_$(LANG).msi"
 
-!IF "$(LANG)" == "en-US"
-# The en-US localization serves as the base. Therefore, it does not produce a diff MST.
+!IF "$(LANG)" == "en"
+# The English localization serves as the base. Therefore, it does not produce a diff MST.
 !ELSE
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_$(LANG).mst" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_en-US.msi" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_en.msi" \
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_$(LANG).msi"
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:MakeMST $** $@
 

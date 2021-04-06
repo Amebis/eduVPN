@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-    <?define LanguageLcid = "0413"?>
     <?define LanguageId = "NL"?>
 
     <?define eduEd25519.resources.dll.ComponentGUID = "{3F782C2D-425F-462A-AA2F-B78193EF59D0}"?>

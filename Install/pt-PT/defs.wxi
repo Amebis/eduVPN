@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-    <?define LanguageLcid = "0816"?>
     <?define LanguageId = "PTPT"?>
 
     <?define eduEd25519.resources.dll.ComponentGUID = "{A19BF50E-B201-4B7A-8DD0-E8BAEC777007}"?>

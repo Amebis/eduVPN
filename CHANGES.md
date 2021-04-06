@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.7...HEAD)
 
+- Spanish (Latin America) translations
 - Translations updated
 
 
