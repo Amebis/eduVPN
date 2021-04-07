@@ -156,25 +156,6 @@
 
 
         <!--
-            .NET Framework 4.8 check
-        -->
-        <Property Id="NETFX48">
-            <RegistrySearch
-                Id="NETFX4InstallPath"
-                Root="HKLM"
-                Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full"
-                Name="InstallPath"
-                Type="directory">
-                <FileSearch
-                    Id="NETFX4InstallPath.fusion.dll"
-                    Name="fusion.dll"
-                    MinVersion="4.8"/>
-            </RegistrySearch>
-        </Property>
-        <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFX48]]></Condition>
-
-
-        <!--
             Folders
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">

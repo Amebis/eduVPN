@@ -21,7 +21,6 @@
     <String Id="LegalCopyright">Telif hakkı: 2017-2021 The Commons Conservancy eduVPN Programı</String>
 
     <String Id="NewerVersionInstalled">[SimpleProductName] ürününün daha yeni bir sürümü zaten yüklü. Kurulumdan çıkılıyor.</String>
-    <String Id="DotNETFrameworkMissing">Bu uygulama .NET Framework 4.8 gerektirir. Lütfen .NET Framework 4.8'i yükleyin ve ardından bu yükleyiciyi yeniden çalıştırın.</String>
 
     <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Hata [4]: [5]</String>
 </WixLocalization>

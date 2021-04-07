@@ -21,7 +21,6 @@
     <String Id="LegalCopyright">Copyright: 2017-2021 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">Eine neuere Version von [SimpleProductName] ist bereits installiert. Das Setup wird nun beendet.</String>
-    <String Id="DotNETFrameworkMissing">Diese Anwendung erfordert .NET Framework 4.8. Bitte installieren Sie das .NET Framework 4.8 und führen Sie dieses Installationsprogramm erneut aus.</String>
 
     <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Fehler [4]: [5]</String>
 </WixLocalization>
