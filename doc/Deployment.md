@@ -15,6 +15,7 @@ Basic knowledge of GPO or SCCM is required.
 eduVPN Client for Windows requires:
 - .NET Framework 4.8 or later
 - eduVPN Client: `eduVPNClient_<ver>_<plat>.msi`
+- Windows 7: KB2921916
 
 
 ## Option A: EXE Installer
