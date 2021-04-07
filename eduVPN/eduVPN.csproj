@@ -39,7 +39,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EqualityComparer.cs" />
     <Compile Include="Models\INamedEntity.cs" />
     <Compile Include="Models\InstituteAccessServer.cs" />
     <Compile Include="Properties\IRegistrySerializable.cs" />
