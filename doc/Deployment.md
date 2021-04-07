@@ -13,7 +13,7 @@ Basic knowledge of GPO or SCCM is required.
 ![eduVPN Client for Windows Overview](Deployment/overview.svg "eduVPN Client for Windows Overview")
 
 eduVPN Client for Windows requires:
-- .NET Framework 4.5
+- .NET Framework 4.6.2 or later
 - eduVPN Client: `eduVPNClient_<ver>_<plat>.msi`
 
 
@@ -49,7 +49,7 @@ Additional flags:
 
 This option is recommended for Group Policy deployments. However, it automates the deployment only partially.
 
-You need to deploy .NET Framework 4.5 manually or by other automatization means first. It is available as an EXE installer only rendering it inappropriate for Group Policy deployment.
+You need to deploy .NET Framework 4.6.2 or later manually or by other automatization means first. It is available as an EXE installer only rendering it inappropriate for Group Policy deployment.
 
 After all workstations have the .NET Framework installed, deploy `eduVPNClient_<ver>_<plat>.msi` MSI package.
 

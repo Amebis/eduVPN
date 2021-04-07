@@ -104,7 +104,7 @@
             <!--
                 .NET Framework
             -->
-            <PackageGroupRef Id="NetFx45Redist"/>
+            <PackageGroupRef Id="NetFx462Redist"/>
 
             <!--
                 Client

@@ -29,7 +29,7 @@ namespace eduVPN.Views
         {
             // .NET 3.5 allows Schannel to use SSL 3 and TLS 1.0 by default. Instead of hacking user computer's registry, extend it in runtime.
             // System.Net.SecurityProtocolType lacks appropriate constants prior to .NET 4.5.
-            ServicePointManager.SecurityProtocol = (SecurityProtocolType)0x0C00 | (SecurityProtocolType)0x3000;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | (SecurityProtocolType)0x3000;
 
             // Client is using parallelism in web data retrieval.
             // The default maximum concurrent connections set to 2 is a bottleneck.
