@@ -43,4 +43,4 @@ The language used at run-time is selected automatically by Windows. Whenever pos
 *Naming convention: `<client brand>Client_<version>_<platform>.msi`*
 
 Pre-requisites:
-- .NET Framework 4.6.2 or later
+- .NET Framework 4.8 or later

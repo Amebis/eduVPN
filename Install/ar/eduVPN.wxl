@@ -21,7 +21,7 @@
     <String Id="LegalCopyright">حقوق الطبع والنشر © 2017-2021 برنامج حقوق العموم ل eduVPN</String>
 
     <String Id="NewerVersionInstalled">تم تثبيت إصدار أحدث من [SimpleProductName] مسبقا. سيتم إنهاء التثبيت الآن.</String>
-    <String Id="DotNETFrameworkMissing">يحتاج هذا التطبيق إلى ".NET Framework 4.5". الرجاء تثبيت ".NET Framework 4.5" ثم تشغيل هذا المثبت مرة أخرى.</String>
+    <String Id="DotNETFrameworkMissing">يحتاج هذا التطبيق إلى ".NET Framework 4.8". الرجاء تثبيت ".NET Framework 4.8" ثم تشغيل هذا المثبت مرة أخرى.</String>
 
     <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: خطأ [4]: [5]</String>
 </WixLocalization>

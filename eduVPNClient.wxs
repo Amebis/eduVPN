@@ -52,9 +52,7 @@
     <?error Unknown client?>
 <?endif?>
 
-<Wix
-    xmlns="http://schemas.microsoft.com/wix/2006/wi"
-    xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product
         Id="$(var.ProductGUID)"
         UpgradeCode="$(var.UpgradeGUID)"
@@ -158,10 +156,22 @@
 
 
         <!--
-            .NET Framework check
+            .NET Framework 4.8 check
         -->
-        <PropertyRef Id="NETFRAMEWORK45"/>
-        <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
+        <Property Id="NETFX48">
+            <RegistrySearch
+                Id="NETFX4InstallPath"
+                Root="HKLM"
+                Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full"
+                Name="InstallPath"
+                Type="directory">
+                <FileSearch
+                    Id="NETFX4InstallPath.fusion.dll"
+                    Name="fusion.dll"
+                    MinVersion="4.8"/>
+            </RegistrySearch>
+        </Property>
+        <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFX48]]></Condition>
 
 
         <!--

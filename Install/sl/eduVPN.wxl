@@ -21,7 +21,7 @@
     <String Id="LegalCopyright">Copyright: 2017-2021 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">Novejša verzija aplikacije [SimpleProductName] je že nameščena. Namestitev se bo zdaj zaključila.</String>
-    <String Id="DotNETFrameworkMissing">Aplikacija potrebuje .NET Framework 4.5. Namestite .NET Framework 4.5 in ponovno poženite to namestitev.</String>
+    <String Id="DotNETFrameworkMissing">Aplikacija potrebuje .NET Framework 4.8. Namestite .NET Framework 4.8 in ponovno poženite to namestitev.</String>
 
     <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Napaka [4]: [5]</String>
 </WixLocalization>

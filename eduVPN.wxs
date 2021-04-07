@@ -8,7 +8,8 @@
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
-    xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+    xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
+    xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
     <Bundle
         UpgradeCode="$(var.ClientUpgradeCode)"
         Version="$(var.Version)"
@@ -100,11 +101,34 @@
                 SourceFile="Install\uk\thm.wxl"/>
         </BootstrapperApplicationRef>
 
+        <util:RegistrySearchRef Id="NETFRAMEWORK45"/>
+
         <Chain>
             <!--
                 .NET Framework
             -->
-            <PackageGroupRef Id="NetFx462Redist"/>
+            <ExePackage
+                Id="NetFx48Redist"
+                InstallCommand="/q /norestart /ChainingPackage &quot;[WixBundleName]&quot; /log &quot;[NetFx48FullLog].html&quot;"
+                RepairCommand="/q /norestart /repair /ChainingPackage &quot;[WixBundleName]&quot; /log &quot;[NetFx48FullLog].html&quot;"
+                UninstallCommand="/uninstall /q /norestart /ChainingPackage &quot;[WixBundleName]&quot; /log &quot;[NetFx48FullLog].html&quot;"
+                PerMachine="yes"
+                DetectCondition="NETFRAMEWORK45 &gt;= 528040"
+                Vital="yes"
+                Permanent="yes"
+                Protocol="netfx4"
+                DownloadUrl="https://go.microsoft.com/fwlink/?linkid=2088631"
+                Compressed="no"
+                Name="ndp48-x86-x64-allos-enu.exe">
+                <RemotePayload
+                    CertificatePublicKey="D17AFCE951979605250FAEBAFA7AE974899AED22"
+                    CertificateThumbprint="C82273A065EC470FB1EBDE846A91E6FFB29E9C12"
+                    Description="Microsoft .NET Framework 4.8 Setup"
+                    Hash="8DD233698D5EB4609B86C2AC917279FE39E0EF4C"
+                    ProductName="Microsoft .NET Framework 4.8"
+                    Size="117380440"
+                    Version="4.8.3928.0"/>
+            </ExePackage>
 
             <!--
                 Client
