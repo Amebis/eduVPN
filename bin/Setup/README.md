@@ -33,7 +33,7 @@ MSI Installer selects the locale according to the current user's Regional Settin
 msiexec /i <client brand>Client_<version>_<platform>.msi TRANSFORMS=:1060
 ```
 
-The `1060` represents Microsoft's LCID for Slovenian (Slovenia) locale. The list of LCIDs can be found [here](https://msdn.microsoft.com/en-us/library/cc767443.aspx).
+The `1060` represents Microsoft's LCID for Slovenian (Slovenia) locale. The list of LCIDs can be found [here](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c).
 
 The language used at run-time is selected automatically by Windows. Whenever possible, Windows tries to match the language of application with the language of operating system itself providing seamless experience of OS and applications. When matching localisation is not available, U.S. English is used as default.
 
@@ -44,4 +44,3 @@ The language used at run-time is selected automatically by Windows. Whenever pos
 
 Pre-requisites:
 - .NET Framework 4.5
-- VPN Client OpenVPN Components
