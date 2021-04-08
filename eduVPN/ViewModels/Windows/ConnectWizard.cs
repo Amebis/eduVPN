@@ -430,8 +430,11 @@ namespace eduVPN.ViewModels.Windows
                 Properties.Settings.Default.CleanupInstituteAccessAndOwnServers = false;
             }
 
-            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => DiscoveredServersChanged?.Invoke(this, EventArgs.Empty)));
-            // TODO: Trigger auto-connect.
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            {
+                DiscoveredServersChanged?.Invoke(this, EventArgs.Empty);
+                AutoReconnect();
+            }));
         }
 
         /// <summary>
@@ -470,7 +473,11 @@ namespace eduVPN.ViewModels.Windows
                 DiscoveredOrganizations = dict;
                 DiscoveredOrganizationIndex = idx;
             }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => DiscoveredOrganizationsChanged?.Invoke(this, EventArgs.Empty)));
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            {
+                DiscoveredOrganizationsChanged?.Invoke(this, EventArgs.Empty);
+                AutoReconnect();
+            }));
         }
 
         /// <summary>
@@ -610,6 +617,44 @@ namespace eduVPN.ViewModels.Windows
                 }
             }
             return connectingServer;
+        }
+
+        /// <summary>
+        /// Auto-reconnects last connected server/profile.
+        /// </summary>
+        private async void AutoReconnect()
+        {
+            // Requires DiscoveredServers and DiscoveredOrganizations to be available.
+            // Also, don't auto-reconnect if already connected.
+            if (DiscoveredServers == null || DiscoveredOrganizations == null ||
+                ConnectionPage.ActiveSession != null || Properties.Settings.Default.LastSelectedServer == null)
+                return;
+
+            try
+            {
+                var connectingServer = GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.LastSelectedServer);
+                if (connectingServer != null)
+                {
+                    var authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
+                    if (authenticatingServer != null)
+                    {
+                        await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
+                        ConnectionPage.ConnectingServer = connectingServer;
+                        CurrentPage = ConnectionPage;
+                    }
+                }
+                else
+                {
+                    var srv = new Server(Properties.Settings.Default.LastSelectedServer);
+                    srv.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
+                    srv.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
+                    await AuthorizationPage.TriggerAuthorizationAsync(srv);
+                    ConnectionPage.ConnectingServer = srv;
+                    CurrentPage = ConnectionPage;
+                }
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex) { Error = ex; }
         }
 
         /// <summary>

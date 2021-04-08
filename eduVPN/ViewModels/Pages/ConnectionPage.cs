@@ -115,8 +115,8 @@ namespace eduVPN.ViewModels.Pages
                                     profile = list[0];
                                 SelectedProfile = profile;
 
-                                // Auto-connect when there is exactly one profile.
-                                if (list.Count == 1 && StartSession.CanExecute())
+                                // Auto-connect when connected previously or there is exactly one profile.
+                                if ((Properties.Settings.Default.LastSelectedServer == ConnectingServer.Base || list.Count == 1) && StartSession.CanExecute())
                                     StartSession.Execute();
                             }));
                         }
@@ -231,12 +231,8 @@ namespace eduVPN.ViewModels.Pages
                                                     }));
                                                 try
                                                 {
-                                                    // Set profile to auto-start on next launch.
-                                                    Properties.Settings.Default.AutoStartProfile = new eduVPN.Xml.StartSessionParams
-                                                    {
-                                                        ConnectingServer = SelectedProfile.Server.Base,
-                                                        ProfileId = SelectedProfile.Id
-                                                    };
+                                                    // Set server/profile to auto-start on next launch.
+                                                    Properties.Settings.Default.LastSelectedServer = SelectedProfile.Server.Base;
 
                                                     // Run our session.
                                                     Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--));

@@ -132,21 +132,6 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Profile to automatically connect to on startup
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Profile to automatically connect to on startup")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.Xml.StartSessionParams AutoStartProfile {
-            get {
-                return ((global::eduVPN.Xml.StartSessionParams)(this["AutoStartProfile"]));
-            }
-            set {
-                this["AutoStartProfile"] = value;
-            }
-        }
-        
-        /// <summary>
         /// User&apos;s home organization for secure internet use
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -291,6 +276,21 @@ namespace eduVPN.Properties {
             }
             set {
                 this["LastSelectedProfile"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Which server user selected last
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Which server user selected last")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Uri LastSelectedServer {
+            get {
+                return ((global::System.Uri)(this["LastSelectedServer"]));
+            }
+            set {
+                this["LastSelectedServer"] = value;
             }
         }
     }

@@ -213,8 +213,8 @@ namespace eduVPN.ViewModels.VPN
                                 SessionInProgress.Cancel();
                                 _Disconnect.RaiseCanExecuteChanged();
 
-                                // Clear profile to auto-start on next launch.
-                                Properties.Settings.Default.AutoStartProfile = null;
+                                // Clear server/profile to auto-start on next launch.
+                                Properties.Settings.Default.LastSelectedServer = null;
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },

@@ -63,6 +63,18 @@ namespace eduVPN.Properties
         [SettingsDescription("Perform institute access and own server list cleanup")]
         public bool CleanupInstituteAccessAndOwnServers { get; set; }
 
+        /// <summary>
+        /// Profile to automatically connect to on startup
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public Xml.StartSessionParams AutoStartProfile
+        {
+            get { throw new NotSupportedException("AutoStartProfile is obsolete"); }
+            set { throw new NotSupportedException("AutoStartProfile is obsolete"); }
+        }
+
         #endregion
 
         #region Methods
@@ -93,6 +105,11 @@ namespace eduVPN.Properties
                             Default.OwnServers.Add(srv.Base);
                     }
                 }
+
+                // Migrate auto-reconnect settings.
+                if (Default.GetPreviousVersion(nameof(AutoStartProfile)) is Xml.StartSessionParams autoStartProfile &&
+                    autoStartProfile.ConnectingServer is Uri connectingServerBase)
+                    Default.LastSelectedServer = connectingServerBase;
 
 #pragma warning restore 0612
             }

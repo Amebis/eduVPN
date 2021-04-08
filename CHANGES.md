@@ -6,6 +6,7 @@
 - OpenVPN updated to 2.5.1-20210406
 - Spanish (Latin America) translations
 - Translations updated
+- Auto-reconnect on client restart
 - GUI refinements
 
 
