@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media;
 
 namespace eduVPN.Views
 {
@@ -70,13 +71,9 @@ namespace eduVPN.Views
             }
 
             eduVPN.Properties.Settings.Initialize();
+            Views.Properties.Settings.Initialize();
 
-            if (Views.Properties.Settings.Default.SettingsVersion == 0)
-            {
-                // Migrate settings from previous version.
-                Views.Properties.Settings.Default.Upgrade();
-                Views.Properties.Settings.Default.SettingsVersion = 1;
-            }
+            RenderOptions.ProcessRenderMode = Views.Properties.SettingsEx.Default.ProcessRenderMode;
 
             base.OnStartup(e);
         }

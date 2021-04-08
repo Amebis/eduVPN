@@ -44,10 +44,11 @@ namespace eduVPN.Client
         /// <inheritdoc/>
         protected override void OnStartup(StartupEventArgs e)
         {
+            eduVPN.Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\eduVPN";
+            eduVPN.Views.Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\eduVPN\Views";
+
             base.OnStartup(e);
 
-            // Set client-specific settings.
-            eduVPN.Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\eduVPN";
             eduVPN.Properties.Settings.Default.SelfUpdateBundleId = "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}";
             eduVPN.Properties.Settings.Default.ClientId = "org.eduvpn.app";
             eduVPN.Properties.Settings.Default.ClientTitle = "eduVPN";

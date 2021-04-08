@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Models\INamedEntity.cs" />
     <Compile Include="Models\InstituteAccessServer.cs" />
+    <Compile Include="Properties\ApplicationSettingsBaseEx.cs" />
     <Compile Include="Properties\IRegistrySerializable.cs" />
     <Compile Include="Models\SecureInternetServer.cs" />
     <Compile Include="Properties\SettingsEx.cs" />

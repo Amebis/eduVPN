@@ -7,6 +7,7 @@
 - Spanish (Latin America) translations
 - Translations updated
 - Auto-reconnect on client restart
+- Customizable hardware acceleration
 - GUI refinements
 
 

@@ -122,5 +122,18 @@ namespace eduVPN.Views.Properties {
                 this["SystemTrayMinimizedWarned"] = value;
             }
         }
+        
+        /// <summary>
+        /// Specifies the render mode preference
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Specifies the render mode preference")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
+        public global::System.Windows.Interop.RenderMode ProcessRenderMode {
+            get {
+                return ((global::System.Windows.Interop.RenderMode)(this["ProcessRenderMode"]));
+            }
+        }
     }
 }

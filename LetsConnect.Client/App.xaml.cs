@@ -44,10 +44,11 @@ namespace LetsConnect.Client
         /// <inheritdoc/>
         protected override void OnStartup(StartupEventArgs e)
         {
+            eduVPN.Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\LetsConnect";
+            eduVPN.Views.Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\LetsConnect\Views";
+
             base.OnStartup(e);
 
-            // Set client-specific settings.
-            eduVPN.Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\LetsConnect";
             eduVPN.Properties.Settings.Default.SelfUpdateBundleId = "{5F7860D5-5563-4492-930B-C8C77A539504}";
             eduVPN.Properties.Settings.Default.ClientId = "org.letsconnect-vpn.app";
             eduVPN.Properties.Settings.Default.ClientTitle = "Let's Connect!";
