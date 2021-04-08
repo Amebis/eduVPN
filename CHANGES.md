@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.7...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.8...HEAD)
+
+
+## [1.255.8](https://github.com/Amebis/eduVPN/compare/1.255.7...1.255.8) (2021-04-08)
 
 - Upgrade to .NET Framework 4.8
 - OpenVPN updated to 2.5.1-20210408
