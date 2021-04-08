@@ -8,9 +8,7 @@ eduVPN and Let's Connect! clients are the same client targeted for a different a
 Basic knowledge of GPO or SCCM is required.
 
 
-## Overview
-
-![eduVPN Client for Windows Overview](Deployment/overview.svg "eduVPN Client for Windows Overview")
+## Requirements
 
 eduVPN Client for Windows requires:
 - .NET Framework 4.8 or later
