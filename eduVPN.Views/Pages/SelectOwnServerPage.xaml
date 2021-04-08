@@ -71,6 +71,7 @@
             Style="{StaticResource MainHeadingStyle}"/>
 
         <TextBox
+            x:Name="Hostname"
             Grid.Row="2"
             Margin="7"
             Text="{Binding Hostname, UpdateSourceTrigger=PropertyChanged}"

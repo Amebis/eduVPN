@@ -23,6 +23,9 @@ namespace eduVPN.Views.Pages
         public SearchPage()
         {
             InitializeComponent();
+
+            // Set initial focus.
+            Loaded += (object sender, System.Windows.RoutedEventArgs e) => Query.Focus();
         }
 
         #endregion

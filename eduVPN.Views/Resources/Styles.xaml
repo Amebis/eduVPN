@@ -374,7 +374,8 @@
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             <TextBlock
                                 x:Name="UserMessage"
-                                Padding="{TemplateBinding Padding}"
+                                Margin="{TemplateBinding Padding}"
+                                Padding="2,0"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Text="{TemplateBinding AutomationProperties.Name}"
@@ -384,16 +385,12 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Text" Value=""/>
-                                <Condition Property="IsKeyboardFocusWithin" Value="False"/>
-                            </MultiTrigger.Conditions>
+                        <Trigger Property="Text" Value="">
                             <Setter
                                 TargetName="UserMessage"
                                 Property="Visibility"
                                 Value="Visible"/>
-                        </MultiTrigger>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

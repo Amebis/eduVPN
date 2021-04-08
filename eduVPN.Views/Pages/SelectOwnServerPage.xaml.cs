@@ -22,6 +22,9 @@ namespace eduVPN.Views.Pages
         public SelectOwnServerPage()
         {
             InitializeComponent();
+
+            // Set initial focus.
+            Loaded += (object sender, System.Windows.RoutedEventArgs e) => Hostname.Focus();
         }
 
         #endregion
