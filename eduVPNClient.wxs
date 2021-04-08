@@ -23,7 +23,6 @@
     <?define openvpnserv.exe.reg5.ComponentGUID = "{9C350B91-873A-4F0F-BBDD-D422071AE78C}"?>
     <?define openvpnserv.exe.reg6.ComponentGUID = "{D59FD7FA-E687-4A43-B8A2-077ECDD02B6D}"?>
     <?define openvpnserv.exe.reg7.ComponentGUID = "{2140688F-04A2-42C9-B9C8-1314B721C82D}"?>
-    <?define System.ValueTuple.dll.ComponentGUID = "{2D4A9678-39A8-4623-8903-DCA55E9C24F4}"?>
     <?define Prism.dll.ComponentGUID = "{7F1F7FAC-3959-40D5-A379-AE70762D6335}"?>
     <?define Client.exe.ComponentGUID = "{ED87A5F5-CCED-46EA-8D4E-443CA747E4D8}"?>
     <?define Client.exe.config.ComponentGUID = "{8382A373-0C73-4D16-8F33-CA9FF91C24D0}"?>
@@ -43,7 +42,6 @@
     <?define openvpnserv.exe.reg5.ComponentGUID = "{2D450249-CCD0-4C4C-AD9A-793C864FE1B7}"?>
     <?define openvpnserv.exe.reg6.ComponentGUID = "{EB68C746-5E50-4F66-9A21-2E6BB07EEA38}"?>
     <?define openvpnserv.exe.reg7.ComponentGUID = "{A40AFCF3-E0DE-4844-91CE-64D55C3FA8B5}"?>
-    <?define System.ValueTuple.dll.ComponentGUID = "{F53A7176-4E78-4EB1-BE22-24296A5925EF}"?>
     <?define Prism.dll.ComponentGUID = "{9B4F3694-9A5E-41AF-AA24-E2E5F39A48C6}"?>
     <?define Client.exe.ComponentGUID = "{0405C4A5-06F1-4B2A-8F7B-7BE66F7DD8E4}"?>
     <?define Client.exe.config.ComponentGUID = "{03C290E0-70A5-4594-9801-F51D07CCF06B}"?>
@@ -325,9 +323,6 @@
         </DirectoryRef>
 
         <DirectoryRef Id="COREDIR">
-            <Component Id="System.ValueTuple.dll" Guid="$(var.System.ValueTuple.dll.ComponentGUID)">
-                <File Source="System.ValueTuple.dll"/>
-            </Component>
             <Component Id="Prism.dll" Guid="$(var.Prism.dll.ComponentGUID)">
                 <File Source="Prism.dll"/>
             </Component>
@@ -444,7 +439,6 @@
             <ComponentRef Id="openvpnserv.exe.reg7"/>
 
             <MergeRef Id="VC150Redist"/>
-            <ComponentRef Id="System.ValueTuple.dll"/>
             <ComponentRef Id="Prism.dll"/>
             <ComponentRef Id="eduEd25519.dll"/>
             <ComponentRef Id="eduEx.dll"/>
