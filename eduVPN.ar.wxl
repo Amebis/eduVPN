@@ -26,7 +26,6 @@
     <String Id="LegalCopyright">حقوق الطبع والنشر © 2017-2021 برنامج حقوق العموم ل eduVPN</String>
 
     <String Id="NewerVersionInstalled">تم تثبيت إصدار أحدث من [SimpleProductName] مسبقا. سيتم إنهاء التثبيت الآن.</String>
-    <String Id="DotNETFrameworkMissing">يحتاج هذا التطبيق إلى ".NET Framework 4.5". الرجاء تثبيت ".NET Framework 4.5" ثم تشغيل هذا المثبت مرة أخرى.</String>
 
     <String Id="TAPWin.Win7Req">يتطلب TAP-Windows ويندوز 7 أو إصدار أحدث من ويندوز.</String>
     <String Id="TAPWin.NoWoW64">أنت تحاول تثبيت متغير 32 بت من TAP-Windows على نظام تشغيل 64 بت. لن يعمل متغير 32 بت مع نظام التشغيل الخاص بك. يوصى بتثبيت متغير 64 بت.</String>

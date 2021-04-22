@@ -26,7 +26,6 @@
     <String Id="LegalCopyright">Copyright: 2017-2021 The Commons Conservancy eduVPN Programme</String>
 
     <String Id="NewerVersionInstalled">Eine neuere Version von [SimpleProductName] ist bereits installiert. Das Setup wird nun beendet.</String>
-    <String Id="DotNETFrameworkMissing">Diese Anwendung erfordert .NET Framework 4.5. Bitte installieren Sie das .NET Framework 4.5 und führen Sie dieses Installationsprogramm erneut aus.</String>
 
     <String Id="TAPWin.Win7Req">TAP-Windows requires Windows 7 or later version of Windows.</String>
     <String Id="TAPWin.NoWoW64">You are attempting to install a 32-bit variant of TAP-Windows on a 64-bit operating system. The 32-bit variant will not work with your operating system. An installation of a 64-bit variant is recommended.</String>

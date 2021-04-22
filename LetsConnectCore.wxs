@@ -73,13 +73,6 @@
 
 
         <!--
-            .NET Framework check
-        -->
-        <PropertyRef Id="NETFRAMEWORK45"/>
-        <Condition Message="!(loc.DotNETFrameworkMissing)"><![CDATA[Installed OR NETFRAMEWORK45]]></Condition>
-
-
-        <!--
             Folders
         -->
         <Directory Id="TARGETDIR" Name="SourceDir">
