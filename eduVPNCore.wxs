@@ -5,11 +5,20 @@
     Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
+
+<?if $(var.Platform) = "x64"?>
+    <?define OldProductGUIDs={03CB2E09-0CAD-469B-AB45-655D66FE3B65};{0B43FFC8-2FCD-461E-A2AE-16F9DC6A183D};{0ECF4980-96D5-47B5-B1E0-FDDBEF02BF54};{16D1732B-40C4-497E-A4B9-F71E809F954D};{2ABA1066-30E5-43CE-921A-913A51A7ACB9};{37F3A6BD-34BA-4495-B6D2-906BB7AE7F90};{3B2B4912-3847-4D91-A326-B96094959E8B};{41FE8D9A-4F4E-4C9D-8FA0-2C084D8AA2D2};{42667D99-70EE-4550-96CA-D65E5C43309E};{476E2607-8BA4-42B0-8B30-B6AC07158419};{5232255B-AEFF-48EB-B7D2-D9DDE5EB9239};{5461A901-8935-4D30-A1E2-78EF195D4EC2};{5CCC8478-91E6-49B0-9C30-6518E5CC4EBE};{74A83B8A-B4A7-4E3E-B19E-2D63AB86BC70};{78448237-611C-4132-8696-C4A202605618};{78738805-E2DC-407B-89E7-A26D789BAF9E};{7B1FBFE6-92B3-4B6D-A808-A26DF770606A};{803E3649-24C4-4F8B-AB5E-59EE7B3736BF};{815F3BBF-56B0-4AA1-B3A4-EAD2D68FCDE7};{8AA8BC85-09C9-47D0-8284-3E79D64D88F1};{8C3E9E9C-CC76-4F8D-A6EB-B2355451F938};{8C8D0D69-B3BB-444C-BD32-2941AA86A3BF};{A2BC5B6A-7DF3-4BC4-AB30-A8492DAD41D2};{CD8D16F9-340D-4865-9164-9D0EE4B6F77C};{CDFB4BCC-FAB4-4DED-85DB-853B921E6050};{CFEF527D-232C-49D5-9A86-BEF160F048BE};{E5D753A3-D50A-4484-B07F-307CFEA5DA49};{F018B421-F402-43E6-A0BE-2B9143C24CAD}?>
+<?elseif $(var.Platform) = "x86"?>
+    <?define OldProductGUIDs={03CB2E09-0CAD-469B-AB45-655D66FE3B65};{0B43FFC8-2FCD-461E-A2AE-16F9DC6A183D};{0ECF4980-96D5-47B5-B1E0-FDDBEF02BF54};{16D1732B-40C4-497E-A4B9-F71E809F954D};{2ABA1066-30E5-43CE-921A-913A51A7ACB9};{37F3A6BD-34BA-4495-B6D2-906BB7AE7F90};{38416F1D-6D51-41DB-9144-6660747695DE};{3B2B4912-3847-4D91-A326-B96094959E8B};{3D4EDD0B-AAB5-4B20-90A1-363C0FD39F21};{41FE8D9A-4F4E-4C9D-8FA0-2C084D8AA2D2};{476E2607-8BA4-42B0-8B30-B6AC07158419};{5232255B-AEFF-48EB-B7D2-D9DDE5EB9239};{5461A901-8935-4D30-A1E2-78EF195D4EC2};{5CCC8478-91E6-49B0-9C30-6518E5CC4EBE};{74A83B8A-B4A7-4E3E-B19E-2D63AB86BC70};{78738805-E2DC-407B-89E7-A26D789BAF9E};{7B1FBFE6-92B3-4B6D-A808-A26DF770606A};{803E3649-24C4-4F8B-AB5E-59EE7B3736BF};{815F3BBF-56B0-4AA1-B3A4-EAD2D68FCDE7};{8AA8BC85-09C9-47D0-8284-3E79D64D88F1};{8C3E9E9C-CC76-4F8D-A6EB-B2355451F938};{8C8D0D69-B3BB-444C-BD32-2941AA86A3BF};{A2BC5B6A-7DF3-4BC4-AB30-A8492DAD41D2};{CD8D16F9-340D-4865-9164-9D0EE4B6F77C};{CDFB4BCC-FAB4-4DED-85DB-853B921E6050};{CFEF527D-232C-49D5-9A86-BEF160F048BE};{E5D753A3-D50A-4484-B07F-307CFEA5DA49};{F018B421-F402-43E6-A0BE-2B9143C24CAD}?>
+<?else?>
+    <?error Unknown platform ?>
+<?endif?>
+
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi"
     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
     <Product
-        Id="*"
+        Id="$(var.Core.ProductGUID)"
         UpgradeCode="$(var.Core.UpgradeGUID)"
         Version="$(var.Core.Version)"
         Language="!(loc.ProductLanguage)"
@@ -110,11 +119,16 @@
         -->
         <DirectoryRef Id="BINDIR">
             <!-- Add/Remove Programs Localization -->
-            <Component Id="ARP.DisplayName" Guid="{724B49D3-30BE-419B-9041-EA85BF971A58}">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-4"/>
+            <Component Id="ARP.DisplayName">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.Core.ProductGUID)" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-4"/>
+
+                <!-- Remove stale registry entries of old installations. -->
+                <?foreach OldProductGUID in $(var.OldProductGUIDs)?>
+                <RemoveRegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.OldProductGUID)" Action="removeOnInstall"/>
+                <?endforeach?>
             </Component>
-            <Component Id="ARP.Publisher" Guid="{17532E47-CB46-4A70-8AFA-B25A829B9E1A}">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-3"/>
+            <Component Id="ARP.Publisher">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.Core.ProductGUID)" Name="Publisher_Localized" Type="string" Value="@[BINDIR]eduVPN.Resources.dll,-3"/>
             </Component>
         </DirectoryRef>
 

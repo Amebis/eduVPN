@@ -23,9 +23,14 @@
     <?define openvpnserv.exe.reg5.ComponentGUID = "{9C350B91-873A-4F0F-BBDD-D422071AE78C}"?>
     <?define openvpnserv.exe.reg6.ComponentGUID = "{D59FD7FA-E687-4A43-B8A2-077ECDD02B6D}"?>
     <?define openvpnserv.exe.reg7.ComponentGUID = "{2140688F-04A2-42C9-B9C8-1314B721C82D}"?>
-    <?define ARP.DisplayName.ComponentGUID = "{DFE94916-719C-4D78-A188-35E8DC1933F5}"?>
-    <?define ARP.Publisher.ComponentGUID = "{E374F094-604D-4E75-BA7D-8D21FA6AE50F}"?>
     <?define RegistryIDPrefix = ""?>
+    <?if $(var.Platform) = "x64"?>
+        <?define OldProductGUIDs={0E142612-80B6-41DA-B018-CDB5AD4755AD};{20C03B25-2908-4B88-A9B4-43BACEE9F0D1};{2BBA222F-8D7B-4753-B3D8-98C67A9600CF};{4F954789-ECE3-4E82-B084-93F2A32D9130};{5CDB1F77-0AC9-41DD-8B5D-6B3E2A97C898};{723B8EBF-346D-4D57-8CF2-775CE54C6E17};{82AD5A76-89BA-466B-8EAF-339FC95125CC};{852699DE-2476-4B5F-88E7-FF6E4F8857B8};{88A64758-C09D-4CFF-ADD8-2D02BF9262B7};{9FC10C3C-C5C8-4830-B0C4-DF18DA1A1394};{AB1D03B3-5BB7-463E-9987-EF5B87CB060C};{B142EC9C-D49D-45D8-A6F6-23B635F55BF5};{B65805A9-29FD-4295-BF40-A93DC8E8E256};{C28834F3-EE73-4BE1-AEE3-82E77D4DC722};{C2C12548-4F1B-4E20-B376-39A54C5F371F};{D73B4DFB-57DC-47E6-ACA9-30E8959F3EA0};{EAA1D8B1-192B-4CF9-A94F-3565F33E0F7F}?>
+    <?elseif $(var.Platform) = "x86"?>
+        <?define OldProductGUIDs={0E142612-80B6-41DA-B018-CDB5AD4755AD};{20C03B25-2908-4B88-A9B4-43BACEE9F0D1};{2BBA222F-8D7B-4753-B3D8-98C67A9600CF};{5CDB1F77-0AC9-41DD-8B5D-6B3E2A97C898};{6F39CD84-C31E-464F-BD71-8E2AA1AC214B};{723B8EBF-346D-4D57-8CF2-775CE54C6E17};{82AD5A76-89BA-466B-8EAF-339FC95125CC};{852699DE-2476-4B5F-88E7-FF6E4F8857B8};{88A64758-C09D-4CFF-ADD8-2D02BF9262B7};{90DD9F5A-2505-4987-B35B-826C70C0AC83};{9FC10C3C-C5C8-4830-B0C4-DF18DA1A1394};{AB1D03B3-5BB7-463E-9987-EF5B87CB060C};{B142EC9C-D49D-45D8-A6F6-23B635F55BF5};{C28834F3-EE73-4BE1-AEE3-82E77D4DC722};{C2C12548-4F1B-4E20-B376-39A54C5F371F};{D73B4DFB-57DC-47E6-ACA9-30E8959F3EA0};{EAA1D8B1-192B-4CF9-A94F-3565F33E0F7F}?>
+    <?else?>
+        <?error Unknown platform ?>
+    <?endif?>
 <?elseif $(var.ClientTarget) = "LetsConnect"?>
     <?define libeay32.dll.ComponentGUID = "{0B2BF74E-5C4A-448A-8B2C-1FC076B5B824}"?>
     <?define ssleay32.dll.ComponentGUID = "{6EA3DD9A-2C47-4AB3-B413-CD9A6A6B3477}"?>
@@ -43,9 +48,14 @@
     <?define openvpnserv.exe.reg5.ComponentGUID = "{2D450249-CCD0-4C4C-AD9A-793C864FE1B7}"?>
     <?define openvpnserv.exe.reg6.ComponentGUID = "{EB68C746-5E50-4F66-9A21-2E6BB07EEA38}"?>
     <?define openvpnserv.exe.reg7.ComponentGUID = "{A40AFCF3-E0DE-4844-91CE-64D55C3FA8B5}"?>
-    <?define ARP.DisplayName.ComponentGUID = "{D5F701F1-640F-434A-94F4-6150E63E340B}"?>
-    <?define ARP.Publisher.ComponentGUID = "{6FF63400-4447-43F6-A905-30B1855B9453}"?>
     <?define RegistryIDPrefix = "10"?>
+    <?if $(var.Platform) = "x64"?>
+        <?define OldProductGUIDs={1E0B0573-624D-4B43-A2F7-ABB3A9E5BEE4};{20ADFCD2-3CBB-4911-8644-5EFD6FD947FF};{47DF50B7-5F60-4BF8-A93B-A84AB10860DB};{526F6F8D-CB02-4DF6-A9C7-2510EFF0DA1A};{5DBA7ECE-7A76-4660-92D0-E73ADC3A8B1F};{60D4CEB2-F29B-470A-A0E3-E90FC0F0E7A1};{6DFD6EFC-33CB-4596-9484-BBC90CC325E8};{728E4E25-14BA-446C-A5FE-C7079953225E};{8D75C336-E926-4DC8-9BA8-213405254704};{A7431B7A-23F3-4D10-829B-92D5A229265E};{B8EAB40E-6B80-4E12-B0CF-106A30D1827F};{C524F93F-60A7-44B3-963F-EF50FA376BEC};{DAB10C94-809C-4FB3-9FBB-56039D0003C1};{FA39751B-0E5A-434B-A667-F459BC0FF31C};{FD840DF5-1E0A-47FC-8A4B-79736CA30573}?>
+    <?elseif $(var.Platform) = "x86"?>
+        <?define OldProductGUIDs={1E0B0573-624D-4B43-A2F7-ABB3A9E5BEE4};{47DF50B7-5F60-4BF8-A93B-A84AB10860DB};{5141F4AE-5710-4ECE-8EA2-7D5C328B8FFD};{526F6F8D-CB02-4DF6-A9C7-2510EFF0DA1A};{5DBA7ECE-7A76-4660-92D0-E73ADC3A8B1F};{60D4CEB2-F29B-470A-A0E3-E90FC0F0E7A1};{6DFD6EFC-33CB-4596-9484-BBC90CC325E8};{8D75C336-E926-4DC8-9BA8-213405254704};{A3208522-A7E6-4BD3-A116-9F3626EC3BEE};{A7431B7A-23F3-4D10-829B-92D5A229265E};{B8EAB40E-6B80-4E12-B0CF-106A30D1827F};{C524F93F-60A7-44B3-963F-EF50FA376BEC};{DAB10C94-809C-4FB3-9FBB-56039D0003C1};{FA39751B-0E5A-434B-A667-F459BC0FF31C};{FD840DF5-1E0A-47FC-8A4B-79736CA30573}?>
+    <?else?>
+        <?error Unknown platform ?>
+    <?endif?>
 <?else?>
 	<?error Unknown client ?>
 <?endif?>
@@ -53,7 +63,7 @@
 <Wix
     xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product
-        Id="*"
+        Id="$(var.OpenVPN.ProductGUID)"
         UpgradeCode="$(var.OpenVPN.UpgradeGUID)"
         Version="$(var.OpenVPN.Version)"
         Language="!(loc.ProductLanguage)"
@@ -267,11 +277,16 @@
             </Component>
 
             <!-- Add/Remove Programs Localization -->
-            <Component Id="ARP.DisplayName" Guid="$(var.ARP.DisplayName.ComponentGUID)">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-1"/>
+            <Component Id="ARP.DisplayName">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.OpenVPN.ProductGUID)" Name="DisplayName_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-$(var.RegistryIDPrefix)1"/>
+
+                <!-- Remove stale registry entries of old installations. -->
+                <?foreach OldProductGUID in $(var.OldProductGUIDs)?>
+                <RemoveRegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.OldProductGUID)" Action="removeOnInstall"/>
+                <?endforeach?>
             </Component>
-            <Component Id="ARP.Publisher" Guid="$(var.ARP.Publisher.ComponentGUID)">
-                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\[ProductCode]" Name="Publisher_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-2"/>
+            <Component Id="ARP.Publisher">
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.OpenVPN.ProductGUID)" Name="Publisher_Localized" Type="string" Value="@[BINDIR]OpenVPN.Resources.dll,-$(var.RegistryIDPrefix)2"/>
             </Component>
         </DirectoryRef>
 
