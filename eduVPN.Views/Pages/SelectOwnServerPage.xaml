@@ -24,7 +24,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- TODO: Replace with image from https://scene.zeplin.io/project/5eabe9bd6abcde191eba1a14/screen/5ed8b9f9c02111b98c3fca62 -->
         <Canvas
             Margin="7,85,7,-22"
             Width="64" Height="49">
