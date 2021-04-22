@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.38...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.0.39...HEAD)
+
+
+## [1.0.39](https://github.com/Amebis/eduVPN/compare/1.0.38...1.0.39) (2021-04-22)
 
 - OpenVPN updated to 2.5.2-20210422
 - Phantom leftover packages in Setup -> Apps list and incomplete package uninstalls fixed
