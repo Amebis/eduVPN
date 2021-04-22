@@ -1,6 +1,6 @@
 {
     "arguments": "/install",
-    "hash-sha256": "A7CA355EDECADFE4156E7DB6ACC6EEA5FFAA241C9C5F58F3F62B0FF5370D848C",
+    "hash-sha256": "F86F737C03C64E906E5C4857EDB95DECFEC54C86E69319E1CC54DBC06EC95FBA",
     "uri": [ "eduVPNClient_1.0.39.exe" ],
     "version": "1.0.39",
     "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md"
