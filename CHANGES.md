@@ -1,6 +1,11 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.10...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.11...HEAD)
+
+
+## [1.255.11](https://github.com/Amebis/eduVPN/compare/1.255.9...1.255.11) (2021-06-15)
+
+None. Testing self-update.
 
 
 ## [1.255.10](https://github.com/Amebis/eduVPN/compare/1.255.9...1.255.10) (2021-06-15)
