@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.9...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/1.255.10...HEAD)
+
+
+## [1.255.10](https://github.com/Amebis/eduVPN/compare/1.255.9...1.255.10) (2021-06-15)
 
 - Switch back to official self-update channel
 - OpenVPN updated to 2.5.2-20210615
