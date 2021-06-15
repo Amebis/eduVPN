@@ -240,4 +240,7 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Hostname inválido: Os hostnames contêm letras, números, hífens e pontos.</value>
   </data>
+  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
+    <value>Detecting self-update failed.</value>
+  </data>
 </root>

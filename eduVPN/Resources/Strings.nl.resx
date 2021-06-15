@@ -240,4 +240,7 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Ongeldige hostnaam: een hostnaam bevat letters, nummers, koppeltekens en punten.</value>
   </data>
+  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
+    <value>Detecting self-update failed.</value>
+  </data>
 </root>

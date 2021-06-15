@@ -240,4 +240,7 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>اسم مضيف غير صالح: تحتوي أسماء المضيف على أحرف وأرقام وواصلات ونقاط.</value>
   </data>
+  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
+    <value>Detecting self-update failed.</value>
+  </data>
 </root>

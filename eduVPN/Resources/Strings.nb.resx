@@ -240,4 +240,7 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Ugyldig vertsnavn: vertsnavn kan inneholde bokstav, tall, bindestrek og punktum.</value>
   </data>
+  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
+    <value>Detecting self-update failed.</value>
+  </data>
 </root>

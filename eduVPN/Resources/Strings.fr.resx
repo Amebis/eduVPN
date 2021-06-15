@@ -240,4 +240,7 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Nom d'hôte invalide: les noms d'hôte contiennent des lettres, des chiffres, des tirets et des points.  </value>
   </data>
+  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
+    <value>Detecting self-update failed.</value>
+  </data>
 </root>

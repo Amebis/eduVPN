@@ -233,7 +233,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 var nonCancelledException = ex.InnerExceptions.Where(innerException => !(innerException is OperationCanceledException));
                 if (nonCancelledException.Any())
-                    throw new AggregateException("", nonCancelledException.ToArray());
+                    throw new AggregateException(Resources.Strings.ErrorSelfUpdateDetection, nonCancelledException.ToArray());
                 throw new OperationCanceledException();
             }
 

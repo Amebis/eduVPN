@@ -240,4 +240,7 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Neveljavno ime gostitelja: imena gostiteljev vsebujejo črke, številke, vezaje in pike.</value>
   </data>
+  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
+    <value>Ugotavljanje samo-posodobitve ni uspelo.</value>
+  </data>
 </root>

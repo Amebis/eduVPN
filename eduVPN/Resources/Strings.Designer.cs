@@ -259,6 +259,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detecting self-update failed..
+        /// </summary>
+        internal static string ErrorSelfUpdateDetection {
+            get {
+                return ResourceManager.GetString("ErrorSelfUpdateDetection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minisign public key is not supported..
         /// </summary>
         internal static string ErrorUnsupportedMinisignPublicKey {
