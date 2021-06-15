@@ -32,13 +32,4 @@
   <Target Name="CleanSign">
     <Delete Files="$(OutDir)$(TargetName).sign"/>
   </Target>
-
-  <!--
-      Fixes "ALINK : warning AL1073: Referenced assembly 'mscorlib.dll' targets a different processor" warning.
-      https://stackoverflow.com/a/41945190/2071884
-  -->
-  <PropertyGroup Condition="'$(Platform)' == 'x64'">
-    <TargetFrameworkSDKToolsDirectory>$(TargetFrameworkSDKToolsDirectory)$(PlatformTarget)\</TargetFrameworkSDKToolsDirectory>
-  </PropertyGroup>
-
 </Project>
