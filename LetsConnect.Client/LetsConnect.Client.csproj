@@ -29,8 +29,8 @@
   <Import Project="$(SolutionDir)Default.CSharp.props" />
   <ItemGroup>
     <Reference Include="PresentationFramework" />
-    <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\Prism.Core.8.0.0.1909\lib\net47\Prism.dll</HintPath>
+    <Reference Include="Prism, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\Prism.Core.8.1.97\lib\net47\Prism.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xaml">
