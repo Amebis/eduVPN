@@ -20,10 +20,12 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
     <ApplicationIcon>Resources\App.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
     <StartupObject>eduVPN.Client.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" />
   <Import Project="$(SolutionDir)Default.CSharp.props" />
   <ItemGroup>
     <Reference Include="PresentationFramework" />

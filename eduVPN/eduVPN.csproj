@@ -19,6 +19,10 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" />
   <Import Project="$(SolutionDir)Default.CSharp.props" />
   <ItemGroup>
     <Reference Include="PresentationCore" />
