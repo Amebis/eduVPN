@@ -331,25 +331,36 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public ConnectWizard()
         {
-            // Show Starting wizard page.
-            CurrentPage = StartingPage;
-
             var actions = new List<KeyValuePair<Action, int>>();
 
             if (Properties.SettingsEx.Default.ServersDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     DiscoverServers,
                     6 * 60 * 60 * 1000)); // Repeat every 6 hours
+            else
+            {
+                Properties.Settings.Default.InstituteAccessServers.Clear();
+                Properties.Settings.Default.SecureInternetConnectingServer = null;
+                Properties.Settings.Default.SecureInternetOrganization = null;
+            }
 
             if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     DiscoverOrganizations,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
+            else
+            {
+                Properties.Settings.Default.SecureInternetConnectingServer = null;
+                Properties.Settings.Default.SecureInternetOrganization = null;
+            }
 
             if (Properties.SettingsEx.Default.SelfUpdateDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     SelfUpdatePromptPage.CheckForUpdates,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
+
+            // Show Starting wizard page.
+            CurrentPage = StartingPage;
 
             foreach (var action in actions)
             {
