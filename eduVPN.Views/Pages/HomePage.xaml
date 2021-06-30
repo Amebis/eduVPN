@@ -205,7 +205,16 @@
                 ItemContainerStyle="{StaticResource SecureInternetServersStyle}"
                 ItemsSource="{Binding SecureInternetServers}"
                 SelectedItem="{Binding SelectedSecureInternetServer}"
-                AutomationProperties.Name="{Binding Source={x:Static res:Strings.LocationLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.LocationLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
+                <ListBox.ContextMenu>
+                    <ContextMenu
+                        DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+                        <MenuItem
+                            Header="{x:Static res:Strings.ForgetLabel}"
+                            Command="{Binding Path=DataContext.ForgetSecureInternet}"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
         </Grid>
 
         <Grid Grid.Row="2">
