@@ -213,15 +213,8 @@ namespace eduVPN.ViewModels.Pages
                                 arguments.Append("\"");
                             }
                             var script = new StringBuilder();
-                            script.AppendLine("// This script was auto-generated.");
-                            script.AppendLine("// Launch installer file and wait for the update to finish.");
                             script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
-                            script.AppendLine("if (wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installerFilename.Replace("\"", "\"\"")) + "\\\"" + installerArgumentsEsc + "\", 0, true) == 0) {");
-                            script.AppendLine("  // Installer succeeded. Relaunch the application.");
-                            script.AppendLine("  var shl = WScript.CreateObject(\"Shell.Application\");");
-                            script.AppendLine("  shl.ShellExecute(\"" + HttpUtility.JavaScriptStringEncode(argv[0]) + "\", \"" + HttpUtility.JavaScriptStringEncode(arguments.ToString()) + "\", \"" + HttpUtility.JavaScriptStringEncode(Environment.CurrentDirectory) + "\");");
-                            script.AppendLine("}");
-                            script.AppendLine("// Cleanup.");
+                            script.AppendLine("wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installerFilename.Replace("\"", "\"\"")) + "\\\"" + installerArgumentsEsc + "\", 0, true);");
                             script.AppendLine("var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");");
                             script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(installerFilename) + "\", true); } catch (err) {}");
                             script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(updaterFilename) + "\", true); } catch (err) {}");

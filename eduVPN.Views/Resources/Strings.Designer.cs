@@ -597,6 +597,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Start on sign-on.
+        /// </summary>
+        public static string SettingsPageStartOnSignon {
+            get {
+                return ResourceManager.GetString("SettingsPageStartOnSignon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SettingsPageTitle {

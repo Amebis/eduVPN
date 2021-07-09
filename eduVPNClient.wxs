@@ -377,6 +377,14 @@
                 <RegistryValue Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
             -->
+            <Component Id="$(var.ClientTarget).Client.exe.StartOnSignon" Guid="{C99D8F40-09E1-4D08-8717-4263AE24064C}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+                    Name="$(var.ClientTarget)"
+                    Type="string"
+                    Value="&quot;[COREDIR]$(var.ClientTarget).Client.exe&quot; /signon"/>
+            </Component>
 
             <!-- Add/Remove Programs Localization -->
             <Component Id="ARP.DisplayName">
@@ -450,6 +458,7 @@
             <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
             <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
+            <ComponentRef Id="$(var.ClientTarget).Client.exe.StartOnSignon"/>
             <ComponentRef Id="ARP.DisplayName"/>
             <ComponentRef Id="ARP.Publisher"/>
 
@@ -480,6 +489,15 @@
             Execute="deferred"
             Impersonate="no"/>
 
+        <CustomAction
+            Id="LaunchApplication"
+            HideTarget="yes"
+            Impersonate="no"
+            Execute="deferred"
+            FileKey="$(var.ClientTarget).Client.exe"
+            ExeCommand="/setup"
+            Return="asyncNoWait" />
+
         <InstallExecuteSequence>
             <Custom
                 Action="EvaluateWintunPool"
@@ -488,6 +506,10 @@
             <Custom
                 Action="RemoveWintunPool"
                 Before="RemoveFiles"/>
+
+            <Custom
+                Action="LaunchApplication"
+                Before="InstallFinalize"><![CDATA[(&$(var.ClientTarget).Client = 3) AND NOT DO_NOT_LAUNCH]]></Custom>
         </InstallExecuteSequence>
 
         <UI>

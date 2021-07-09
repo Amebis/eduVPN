@@ -141,6 +141,12 @@ namespace eduVPN.Views.Windows
             base.OnInitialized(e);
 
             // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
+            var app = Application.Current as App;
+            if (app != null && app.IsSignon)
+            {
+                Visibility = Visibility.Hidden;
+                ShowInTaskbar = false;
+            }
             switch (Properties.Settings.Default.WindowState)
             {
                 case 1: WindowState = WindowState.Minimized; break;
@@ -277,6 +283,12 @@ namespace eduVPN.Views.Windows
             // Set context menu data context to allow bindings to work.
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
+
+            if (app != null && app.IsSignon)
+            {
+                // Window_Loaded() will not be called as we are creating hidden window. Show the tray icon now.
+                NotifyIcon.Visible = true;
+            }
         }
 
         /// <inheritdoc/>

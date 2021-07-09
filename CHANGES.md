@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0...HEAD)
 
+- Launch client on sign-on and install
 - OpenVPN updated to 2.5.3-20210709
 - GUI refinements
 

@@ -12,7 +12,7 @@ namespace eduVPN.Views.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -133,6 +133,18 @@ namespace eduVPN.Views.Properties {
         public global::System.Windows.Interop.RenderMode ProcessRenderMode {
             get {
                 return ((global::System.Windows.Interop.RenderMode)(this["ProcessRenderMode"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool StartOnSignon {
+            get {
+                return ((bool)(this["StartOnSignon"]));
+            }
+            set {
+                this["StartOnSignon"] = value;
             }
         }
     }

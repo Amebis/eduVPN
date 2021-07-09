@@ -26,5 +26,8 @@
     <Setting Name="ProcessRenderMode" Description="Specifies the render mode preference" Type="System.Windows.Interop.RenderMode" Scope="Application">
       <Value Profile="(Default)">Default</Value>
     </Setting>
+    <Setting Name="StartOnSignon" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

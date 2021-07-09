@@ -11,6 +11,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
+    xmlns:propView="clr-namespace:eduVPN.Views.Properties;assembly=eduVPN.Views"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     mc:Ignorable="d"
@@ -42,6 +43,19 @@
 
         <Border
             Grid.Row="1"
+            Margin="7"
+            Style="{StaticResource SeparatorStyle}">
+            <CheckBox
+                Margin="0,7"
+                VerticalContentAlignment="Center"
+                IsChecked="{Binding Source={x:Static propView:Settings.Default}, Path=StartOnSignon}"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.SettingsPageStartOnSignon}, Converter={StaticResource RemoveAccessKeyConverter}}">
+                <AccessText Text="{x:Static res:Strings.SettingsPageStartOnSignon}"/>
+            </CheckBox>
+        </Border>
+
+        <Border
+            Grid.Row="2"
             Margin="7"
             Style="{StaticResource SeparatorStyle}">
             <CheckBox
