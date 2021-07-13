@@ -368,4 +368,7 @@ Veuillez patienter...</value>
     <value>{0:seconde|secondes}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
+  <data name="SettingsPageStartOnSignon" xml:space="preserve">
+    <value>_Start on sign-on</value>
+  </data>
 </root>

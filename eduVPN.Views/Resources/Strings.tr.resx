@@ -367,4 +367,7 @@ Lütfen bekleyin...</value>
     <value>{0:second|seconds}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
+  <data name="SettingsPageStartOnSignon" xml:space="preserve">
+    <value>_Start on sign-on</value>
+  </data>
 </root>

@@ -367,4 +367,7 @@ The Commons Conservancy eduVPN Programme</value>
     <value>{0:секунда|секунди|секунд}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
+  <data name="SettingsPageStartOnSignon" xml:space="preserve">
+    <value>_Start on sign-on</value>
+  </data>
 </root>
