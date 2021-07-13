@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.1...HEAD)
+
+
+## [2.0.1](https://github.com/Amebis/eduVPN/compare/2.0...2.0.1) (2021-07-13)
 
 - Launch client on sign-on and install
 - OpenVPN updated to 2.5.3-20210709
