@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.1...HEAD)
 
+- .NET Framework 4.8 setup issue fixed
+
 
 ## [2.0.1](https://github.com/Amebis/eduVPN/compare/2.0...2.0.1) (2021-07-13)
 
