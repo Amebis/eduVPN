@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.1...HEAD)
 
+- Launching client on sign-on is an opt-in now
 - .NET Framework 4.8 setup issue fixed
 
 

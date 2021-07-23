@@ -136,9 +136,12 @@ namespace eduVPN.Views.Properties {
             }
         }
         
+        /// <summary>
+        /// Start application on user sign-on
+        /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool StartOnSignon {
             get {
                 return ((bool)(this["StartOnSignon"]));
