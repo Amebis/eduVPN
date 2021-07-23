@@ -17,6 +17,11 @@ namespace eduVPN.Properties
     {
         #region Properties
 
+        /// <summary>
+        /// Was client started at user sign-on?
+        /// </summary>
+        public bool IsSignon { get; set; }
+
         /// GUID of the installer EXE bundle
         /// </summary>
         [ApplicationScopedSetting()]

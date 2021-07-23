@@ -6,6 +6,7 @@
 */
 
 using eduEx.System;
+using eduVPN.Models;
 using eduVPN.ViewModels.VPN;
 using Microsoft.Win32;
 using System;
@@ -141,8 +142,7 @@ namespace eduVPN.Views.Windows
             base.OnInitialized(e);
 
             // Restore window position. Please mind that screen's real-estate might have changed since the previous launch.
-            var app = Application.Current as App;
-            if (app != null && app.IsSignon)
+            if (eduVPN.Properties.Settings.Default.IsSignon)
             {
                 Visibility = Visibility.Hidden;
                 ShowInTaskbar = false;
@@ -277,6 +277,16 @@ namespace eduVPN.Views.Windows
                 }
             };
 
+            viewModel.AutoReconnectFailed += (object sender, AutoReconnectFailedEventArgs e2) =>
+            {
+                // Auto-reconnecting failed. Popup the balloon message.
+                NotifyIcon.ShowBalloonTip(
+                    10000,
+                    string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedTitle, e2.ConnectingServer),
+                    string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedMessage, e2.AuthenticatingServer),
+                    System.Windows.Forms.ToolTipIcon.Warning);
+            };
+
             Loaded += Window_Loaded;
             Closing += Window_Closing;
 
@@ -284,7 +294,7 @@ namespace eduVPN.Views.Windows
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
 
-            if (app != null && app.IsSignon)
+            if (eduVPN.Properties.Settings.Default.IsSignon)
             {
                 // Window_Loaded() will not be called as we are creating hidden window. Show the tray icon now.
                 NotifyIcon.Visible = true;

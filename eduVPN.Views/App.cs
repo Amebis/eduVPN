@@ -23,15 +23,6 @@ namespace eduVPN.Views
     /// </summary>
     public class App : Application, ISingleInstanceApp
     {
-        #region Properties
-
-        /// <summary>
-        /// Was client started at user sign-on?
-        /// </summary>
-        public bool IsSignon { get; private set; }
-
-        #endregion
-
         #region Methods
 
         /// <inheritdoc/>
@@ -82,8 +73,8 @@ namespace eduVPN.Views
             eduVPN.Properties.Settings.Initialize();
             Views.Properties.Settings.Initialize();
 
-            IsSignon = e.Args.Any(param => param.Equals("/signon", StringComparison.OrdinalIgnoreCase));
-            if (IsSignon && !Views.Properties.Settings.Default.StartOnSignon)
+            eduVPN.Properties.Settings.Default.IsSignon = e.Args.Any(param => param.Equals("/signon", StringComparison.OrdinalIgnoreCase));
+            if (eduVPN.Properties.Settings.Default.IsSignon && !Views.Properties.Settings.Default.StartOnSignon)
                 Shutdown(0);
 
             RenderOptions.ProcessRenderMode = Views.Properties.SettingsEx.Default.ProcessRenderMode;

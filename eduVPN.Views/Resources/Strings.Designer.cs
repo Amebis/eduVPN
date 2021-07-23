@@ -633,6 +633,24 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access token for {0} has expired..
+        /// </summary>
+        public static string SystemTrayBalloonAutoReconnectFailedMessage {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonAutoReconnectFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Did not reconnect to {0}.
+        /// </summary>
+        public static string SystemTrayBalloonAutoReconnectFailedTitle {
+            get {
+                return ResourceManager.GetString("SystemTrayBalloonAutoReconnectFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP={0}, IPv6={1}.
         /// </summary>
         public static string SystemTrayBalloonConnectedMessage {

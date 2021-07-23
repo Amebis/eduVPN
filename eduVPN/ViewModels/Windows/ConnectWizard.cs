@@ -88,6 +88,12 @@ namespace eduVPN.ViewModels.Windows
         public event EventHandler DiscoveredOrganizationsChanged;
 
         /// <summary>
+        /// Occurs when auto-reconnection failed.
+        /// </summary>
+        /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
+        public event EventHandler<AutoReconnectFailedEventArgs> AutoReconnectFailed;
+
+        /// <summary>
         /// Occurs when application should quit.
         /// </summary>
         /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
@@ -649,9 +655,16 @@ namespace eduVPN.ViewModels.Windows
                     var authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
                     if (authenticatingServer != null)
                     {
-                        await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
-                        ConnectionPage.ConnectingServer = connectingServer;
-                        CurrentPage = ConnectionPage;
+                        if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, Properties.Settings.Default.IsSignon) != null)
+                        {
+                            ConnectionPage.ConnectingServer = connectingServer;
+                            CurrentPage = ConnectionPage;
+                        }
+                        else
+                        {
+                            Properties.Settings.Default.LastSelectedServer = null;
+                            AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(authenticatingServer, connectingServer));
+                        }
                     }
                 }
                 else
@@ -659,9 +672,16 @@ namespace eduVPN.ViewModels.Windows
                     var srv = new Server(Properties.Settings.Default.LastSelectedServer);
                     srv.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
                     srv.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
-                    await AuthorizationPage.TriggerAuthorizationAsync(srv);
-                    ConnectionPage.ConnectingServer = srv;
-                    CurrentPage = ConnectionPage;
+                    if (await AuthorizationPage.TriggerAuthorizationAsync(srv, Properties.Settings.Default.IsSignon) != null)
+                    {
+                        ConnectionPage.ConnectingServer = srv;
+                        CurrentPage = ConnectionPage;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.LastSelectedServer = null;
+                        AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(srv, srv));
+                    }
                 }
             }
             catch (OperationCanceledException) { }
