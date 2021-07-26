@@ -371,4 +371,12 @@ Por favor aguarde...</value>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
     <value>_Start on sign-on</value>
   </data>
+  <data name="SystemTrayBalloonAutoReconnectFailedMessage" xml:space="preserve">
+    <value>Access token for {0} has expired.</value>
+    <comment>{0}=Server name</comment>
+  </data>
+  <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
+    <value>Did not reconnect to {0}</value>
+    <comment>{0}=Server name</comment>
+  </data>
 </root>

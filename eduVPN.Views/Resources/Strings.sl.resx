@@ -371,4 +371,12 @@ Prosimo, počakajte ...</value>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
     <value>_Zaženi ob prijavi</value>
   </data>
+  <data name="SystemTrayBalloonAutoReconnectFailedMessage" xml:space="preserve">
+    <value>Žeton za dostop do {0} je potekel.</value>
+    <comment>{0}=Server name</comment>
+  </data>
+  <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
+    <value>Ni ponovno povezano do {0}</value>
+    <comment>{0}=Server name</comment>
+  </data>
 </root>
