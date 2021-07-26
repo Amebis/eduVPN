@@ -294,7 +294,7 @@ namespace eduVPN.Views.Windows
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
 
-            if (eduVPN.Properties.Settings.Default.IsSignon)
+            if (eduVPN.Properties.Settings.Default.IsSignon && Views.Properties.Settings.Default.StartOnSignon)
             {
                 // Window_Loaded() will not be called as we are creating hidden window. Show the tray icon now.
                 NotifyIcon.Visible = true;

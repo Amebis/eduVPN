@@ -67,6 +67,7 @@ namespace eduVPN.Views
                 {
                     // User cancelled. Quit.
                     Shutdown(1);
+                    return;
                 }
             }
 
