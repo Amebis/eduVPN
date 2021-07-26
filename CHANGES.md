@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.2...HEAD)
+
+
+## [2.0.2](https://github.com/Amebis/eduVPN/compare/2.0.1...2.0.2) (2021-07-26)
 
 - Launching client on sign-on is an opt-in now
 - Skip client re-authorization if expired on sign-on
