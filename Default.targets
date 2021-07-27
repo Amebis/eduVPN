@@ -32,4 +32,8 @@
   <Target Name="CleanSign">
     <Delete Files="$(OutDir)$(TargetName).sign"/>
   </Target>
+
+  <PropertyGroup Condition="'$(Platform)' == 'x64'">
+    <AlToolPath>$(TargetFrameworkSDKToolsDirectory)$(PlatformTarget)\</AlToolPath>
+  </PropertyGroup>
 </Project>
