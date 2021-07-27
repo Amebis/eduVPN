@@ -73,6 +73,7 @@
     <Compile Include="ViewModels\Pages\SelfUpdatePromptPage.cs" />
     <Compile Include="ViewModels\Pages\SelfUpdateProgressPage.cs" />
     <Compile Include="Models\DownloadedFileCorruptException.cs" />
+    <Compile Include="ViewModels\VPN\OpenVPNException.cs" />
     <Compile Include="Xml\AccessTokenDictionary.cs" />
     <Compile Include="Xml\Dictionary.cs" />
     <Compile Include="Xml\InstanceRef.cs" />

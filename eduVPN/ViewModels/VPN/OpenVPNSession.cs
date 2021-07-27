@@ -296,16 +296,11 @@ namespace eduVPN.ViewModels.VPN
                     () =>
                     {
                         State = SessionStatusType.Error;
-                        var msg = Resources.Strings.OpenVPNStateTypeFatalError;
-                        if (e.Message != null && e.Message.Length > 0)
-                        {
-                            // Append OpenVPN message.
-                            msg += "\r\n" + e.Message;
-                        }
-                        StateDescription = msg;
+                        var ex = new OpenVPNException(e.Message);
+                        StateDescription = ex.ToString();
 
                         // Also, display the error message in the connect wizard.
-                        Wizard.Error = new Exception(msg);
+                        Wizard.Error = ex;
                     }));
 
             ManagementSession.HoldReported += (object sender, HoldReportedEventArgs e) =>
