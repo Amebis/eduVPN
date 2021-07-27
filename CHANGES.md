@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.2...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.3...HEAD)
+
+
+## [2.0.3](https://github.com/Amebis/eduVPN/compare/2.0.2...2.0.3) (2021-07-27)
 
 - OpenVPN updated to 2.5.3-20210727
 
