@@ -108,6 +108,7 @@ namespace eduVPN.Models
         public RequestAuthorizationEventArgs(string scope)
         {
             Scope = scope;
+            SourcePolicy = SourcePolicyType.SavedOnly;
         }
 
         #endregion

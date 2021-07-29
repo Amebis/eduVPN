@@ -87,13 +87,14 @@ namespace eduVPN.ViewModels.Pages
         /// Triggers authorization for selected server asynchronously
         /// </summary>
         /// <param name="srv">Server</param>
+        /// <param name="isInteractive"><c>true</c> when process was triggered by user, <c>false</c> when automated</param>
         /// <returns>Access token</returns>
         /// <exception cref="InvalidAccessTokenException">Authorization failed</exception>
-        public async Task<AccessToken> TriggerAuthorizationAsync(Server srv, bool savedOnly = false)
+        public async Task<AccessToken> TriggerAuthorizationAsync(Server srv, bool isInteractive = true)
         {
             var e = new RequestAuthorizationEventArgs("config");
-            if (savedOnly)
-                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly;
+            if (isInteractive)
+                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.Any;
             var task = new Task(() => OnRequestAuthorization(srv, e), Window.Abort.Token, TaskCreationOptions.LongRunning);
             task.Start();
             await task;

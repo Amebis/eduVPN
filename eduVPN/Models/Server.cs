@@ -244,16 +244,10 @@ namespace eduVPN.Models
                             // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
                             // Retry with forced access token refresh.
                             e.ForceRefresh = true;
+                            goto retry;
                         }
-                        else
-                        {
-                            // Retry with forced authorization, ignoring saved access token completely.
-                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                        }
-                        goto retry;
                     }
-                    else
-                        throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex);
+                    throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex);
                 }
                 catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
             }
@@ -336,13 +330,8 @@ namespace eduVPN.Models
                                 // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
                                 // Retry with forced access token refresh.
                                 e.ForceRefresh = true;
+                                goto retry;
                             }
-                            else
-                            {
-                                // Retry with forced authorization, ignoring saved access token completely.
-                                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                            }
-                            goto retry;
                         }
                     }
                     catch (Exception) { }
@@ -390,16 +379,10 @@ namespace eduVPN.Models
                             // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
                             // Retry with forced access token refresh.
                             e.ForceRefresh = true;
+                            goto retry;
                         }
-                        else
-                        {
-                            // Retry with forced authorization, ignoring saved access token completely.
-                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                        }
-                        goto retry;
                     }
-                    else
-                        throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
+                    throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex);
                 }
                 catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorClientCertificateLoad, ex); }
             }

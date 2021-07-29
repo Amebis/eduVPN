@@ -655,7 +655,7 @@ namespace eduVPN.ViewModels.Windows
                     var authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
                     if (authenticatingServer != null)
                     {
-                        if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, Properties.Settings.Default.IsSignon) != null)
+                        if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, false) != null)
                         {
                             ConnectionPage.ConnectingServer = connectingServer;
                             CurrentPage = ConnectionPage;
@@ -672,7 +672,7 @@ namespace eduVPN.ViewModels.Windows
                     var srv = new Server(Properties.Settings.Default.LastSelectedServer);
                     srv.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
                     srv.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
-                    if (await AuthorizationPage.TriggerAuthorizationAsync(srv, Properties.Settings.Default.IsSignon) != null)
+                    if (await AuthorizationPage.TriggerAuthorizationAsync(srv, false) != null)
                     {
                         ConnectionPage.ConnectingServer = srv;
                         CurrentPage = ConnectionPage;

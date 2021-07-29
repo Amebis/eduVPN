@@ -81,9 +81,6 @@ namespace eduVPN.ViewModels.Pages
             get { return _ConnectingServer; }
             set
             {
-                if (_ConnectingServer == value)
-                    return;
-
                 ProfilesRefreshInProgress?.Cancel();
 
                 SetProperty(ref _ConnectingServer, value);
@@ -274,15 +271,19 @@ namespace eduVPN.ViewModels.Pages
                 if (_ToggleSession == null)
                 {
                     _ToggleSession = new DelegateCommand(
-                        () =>
+                        async () =>
                         {
                             try
                             {
                                 if (ActiveSession != null && ActiveSession.Disconnect.CanExecute())
                                     ActiveSession.Disconnect.Execute();
                                 else if (ActiveSession == null && StartSession.CanExecute())
+                                {
+                                    await Wizard.AuthorizationPage.TriggerAuthorizationAsync(Wizard.GetAuthenticatingServer(ConnectingServer));
                                     StartSession.Execute();
+                                }
                             }
+                            catch (OperationCanceledException) { }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
                         () =>
@@ -350,25 +351,6 @@ namespace eduVPN.ViewModels.Pages
         public ConnectionPage(ConnectWizard wizard) :
             base(wizard)
         {
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <inheritdoc/>
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            // When there are profiles available from before (connecting to the same server again),
-            // and there is exactly one profile available, auto-connect.
-            if (Profiles != null && Profiles.Count == 1)
-            {
-                SelectedProfile = Profiles[0];
-                if (StartSession.CanExecute())
-                    StartSession.Execute();
-            }
         }
 
         #endregion
