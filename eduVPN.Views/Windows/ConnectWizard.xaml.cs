@@ -219,31 +219,28 @@ namespace eduVPN.Views.Windows
                                     {
                                         NotifyIcon.Icon = TrayIcon;
 
-                                        if (!IsActive)
+                                        switch (viewModel.ConnectionPage.ActiveSession.State)
                                         {
-                                            switch (viewModel.ConnectionPage.ActiveSession.State)
-                                            {
-                                                case SessionStatusType.Connected:
-                                                    // Client connected. Popup the balloon message.
+                                            case SessionStatusType.Connected:
+                                                // Client connected. Popup the balloon message.
+                                                NotifyIcon.ShowBalloonTip(
+                                                    5000,
+                                                    string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile),
+                                                    string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
+                                                    System.Windows.Forms.ToolTipIcon.Info);
+                                                break;
+
+                                            default:
+                                                if (SessionState == SessionStatusType.Connected)
+                                                {
+                                                    // Client has been disconnected. Popup the balloon message.
                                                     NotifyIcon.ShowBalloonTip(
                                                         5000,
-                                                        string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile),
-                                                        string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
-                                                        System.Windows.Forms.ToolTipIcon.Info);
-                                                    break;
-
-                                                default:
-                                                    if (SessionState == SessionStatusType.Connected)
-                                                    {
-                                                        // Client has been disconnected. Popup the balloon message.
-                                                        NotifyIcon.ShowBalloonTip(
-                                                            5000,
-                                                            eduVPN.Properties.Settings.Default.ClientTitle,
-                                                            Views.Resources.Strings.SystemTrayBalloonDisconnectedMessage,
-                                                            System.Windows.Forms.ToolTipIcon.Warning);
-                                                    }
-                                                    break;
-                                            }
+                                                        eduVPN.Properties.Settings.Default.ClientTitle,
+                                                        Views.Resources.Strings.SystemTrayBalloonDisconnectedMessage,
+                                                        System.Windows.Forms.ToolTipIcon.Warning);
+                                                }
+                                                break;
                                         }
 
                                         // Save VPN session state.
@@ -256,7 +253,7 @@ namespace eduVPN.Views.Windows
                                     if (!viewModel.ConnectionPage.ActiveSession.Expired &&
                                         viewModel.ConnectionPage.ActiveSession.SuggestRenewal)
                                     {
-                                        if (!WasSessionExpirationWarned && !IsActive)
+                                        if (!WasSessionExpirationWarned)
                                         {
                                             NotifyIcon.ShowBalloonTip(
                                                 5000,
