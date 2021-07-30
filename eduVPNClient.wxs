@@ -489,15 +489,6 @@
             Execute="deferred"
             Impersonate="no"/>
 
-        <CustomAction
-            Id="LaunchApplication"
-            HideTarget="yes"
-            Impersonate="no"
-            Execute="deferred"
-            FileKey="$(var.ClientTarget).Client.exe"
-            ExeCommand="/setup"
-            Return="asyncNoWait" />
-
         <InstallExecuteSequence>
             <Custom
                 Action="EvaluateWintunPool"
@@ -506,10 +497,6 @@
             <Custom
                 Action="RemoveWintunPool"
                 Before="RemoveFiles"/>
-
-            <Custom
-                Action="LaunchApplication"
-                Before="InstallFinalize"><![CDATA[(&$(var.ClientTarget).Client = 3) AND NOT DO_NOT_LAUNCH]]></Custom>
         </InstallExecuteSequence>
 
         <UI>

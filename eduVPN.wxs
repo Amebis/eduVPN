@@ -101,6 +101,8 @@
                 SourceFile="Install\uk\thm.wxl"/>
         </BootstrapperApplicationRef>
 
+        <Variable Name="LaunchTarget" Value="[ProgramFiles6432Folder]$(var.ClientTitle)\Core\$(var.ClientTarget).Client.exe"/>
+
         <util:RegistrySearchRef Id="NETFRAMEWORK45"/>
 
         <Chain>
