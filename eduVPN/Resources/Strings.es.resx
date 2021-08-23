@@ -241,6 +241,6 @@
     <value>Nombre de host no válido: los nombres de host contienen letras, números, guiones y puntos.</value>
   </data>
   <data name="ErrorSelfUpdateDetection" xml:space="preserve">
-    <value>Detecting self-update failed.</value>
+    <value>Detectando auto-actualización fallida.</value>
   </data>
 </root>

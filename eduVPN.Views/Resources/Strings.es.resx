@@ -369,14 +369,14 @@ Espere por favor...</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>_Empezar al iniciar sesión</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage" xml:space="preserve">
-    <value>Access token for {0} has expired.</value>
+    <value>El token de acceso para {0} ha expirado.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>No se ha reconectado a {0}</value>
     <comment>{0}=Server name</comment>
   </data>
 </root>

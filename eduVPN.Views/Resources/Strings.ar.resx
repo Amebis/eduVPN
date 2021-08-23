@@ -339,44 +339,44 @@
     <value>مظهر</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>انتهت هذه الجلسة</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>تجديد الجلسة</value>
   </data>
   <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
-    <value>Renew before {0}</value>
+    <value>تجديد قبل {0}</value>
     <comment>{0}=date and time</comment>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
-    <value>{0} is about to expire</value>
+    <value>{0} على وشك الانتهاء</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="TimeSpanDaysAndHours" xml:space="preserve">
-    <value>{0:day|days} and {1:hour|hours}</value>
+    <value>{0:يوم|أيام} و {1:ساعة|ساعات}</value>
     <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
   </data>
   <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
-    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <value>{0:ساعة|ساعات} و {1:دقيقة|دقائق}</value>
     <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
   </data>
   <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
-    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <value>{0:دقيقة|دقائق} و {1:ثانية|ثوان}</value>
     <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
   </data>
   <data name="TimeSpanSeconds" xml:space="preserve">
-    <value>{0:second|seconds}</value>
+    <value>{0:ثانية|ثوان}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>_ابدأ عند تسجيل الدخول</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage" xml:space="preserve">
-    <value>Access token for {0} has expired.</value>
+    <value>انتهت صلاحية عربون الدخول لـ {0}.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>لم يتم إعادة الاتصال بـ {0}</value>
     <comment>{0}=Server name</comment>
   </data>
 </root>
