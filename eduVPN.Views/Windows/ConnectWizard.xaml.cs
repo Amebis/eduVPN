@@ -175,7 +175,7 @@ namespace eduVPN.Views.Windows
 
             // Attach to view model events.
             var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
-            viewModel.QuitApplication += ConnectWizard_QuitApplication;
+            viewModel.QuitApplication += Exit_Click;
 
             // Create notify icon, set default icon, and setup events.
             // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
@@ -346,10 +346,6 @@ namespace eduVPN.Views.Windows
                 // Hide tray icon when closed.
                 NotifyIcon.Visible = false;
 
-                // Dismiss all pop-ups.
-                foreach (Window popup in OwnedWindows)
-                    popup.Close();
-
                 // Save window position on closing.
                 Properties.Settings.Default.WindowState = (int)WindowState;
                 if (WindowState == WindowState.Normal)
@@ -422,7 +418,7 @@ namespace eduVPN.Views.Windows
         /// <param name="sender">Event sender (ignored)</param>
         /// <param name="e">Event arguments (ignored)</param>
         /// <remarks>Occurs when a <see cref="MenuItem"/> is clicked.</remarks>
-        public void Open_Click(object sender, RoutedEventArgs e)
+        private void Open_Click(object sender, RoutedEventArgs e)
         {
             // (Re)activate window.
             if (WindowState == WindowState.Minimized)
@@ -447,19 +443,7 @@ namespace eduVPN.Views.Windows
         /// <param name="sender">Event sender (ignored)</param>
         /// <param name="e">Event arguments (ignored)</param>
         /// <remarks>Occurs when a <see cref="MenuItem"/> is clicked.</remarks>
-        protected void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            DoClose = true;
-            Close();
-        }
-
-        /// <summary>
-        /// Closes connecting wizard window to quit the application.
-        /// </summary>
-        /// <param name="sender">Event sender (ignored)</param>
-        /// <param name="e">Event arguments (ignored)</param>
-        /// <remarks>Occurs when application should quit.</remarks>
-        private void ConnectWizard_QuitApplication(object sender, EventArgs e)
+        private void Exit_Click(object sender, EventArgs e)
         {
             DoClose = true;
             Close();
