@@ -95,6 +95,7 @@ namespace eduVPN.ViewModels.Pages
             var e = new RequestAuthorizationEventArgs("config");
             if (isInteractive)
                 e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.Any;
+            e.ForceRefresh = true;
             var task = new Task(() => OnRequestAuthorization(srv, e), Window.Abort.Token, TaskCreationOptions.LongRunning);
             task.Start();
             await task;
