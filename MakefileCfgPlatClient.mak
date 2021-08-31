@@ -37,8 +37,7 @@ UnregisterShortcuts ::
 RegisterOpenVPNInteractiveService :: \
 	UnregisterOpenVPNInteractiveServiceSCM \
 	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
-	"bin\OpenVPN\$(PLAT)\config"
+	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)"             $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)\openvpn.exe" $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "config_dir"       /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)\config"      $(REG_FLAGS)
