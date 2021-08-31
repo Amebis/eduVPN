@@ -99,6 +99,7 @@ namespace eduVPN.ViewModels.Pages
                         {
                             var list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
                             //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+                            //list = new ObservableCollection<Profile>(); // Mock an empty list of profiles for testing.
                             ct.ThrowIfCancellationRequested();
                             Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
                             {

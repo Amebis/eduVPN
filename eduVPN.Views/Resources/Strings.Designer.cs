@@ -224,6 +224,33 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no profiles available to connect..
+        /// </summary>
+        public static string ConnectionPageProfilesEmptyText {
+            get {
+                return ResourceManager.GetString("ConnectionPageProfilesEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please contact server operator..
+        /// </summary>
+        public static string ConnectionPageProfilesEmptyWithoutSupportText {
+            get {
+                return ResourceManager.GetString("ConnectionPageProfilesEmptyWithoutSupportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please contact support..
+        /// </summary>
+        public static string ConnectionPageProfilesEmptyWithSupportText {
+            get {
+                return ResourceManager.GetString("ConnectionPageProfilesEmptyWithSupportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Profiles.
         /// </summary>
         public static string ConnectionPageProfilesLabel {

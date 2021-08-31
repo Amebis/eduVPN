@@ -199,6 +199,28 @@
             Style="{StaticResource NoteStyle}"
             Visibility="{Binding Profiles, Converter={StaticResource NullVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
 
+        <StackPanel
+            Grid.Row="4"
+            Margin="22,7"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Visibility="{Binding Profiles.Count, Converter={StaticResource IntegerInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            <TextBlock
+                TextAlignment="Center"
+                Text="{x:Static res:Strings.ConnectionPageProfilesEmptyText}"
+                Style="{StaticResource NoteStyle}"/>
+            <TextBlock
+                TextAlignment="Center"
+                Text="{x:Static res:Strings.ConnectionPageProfilesEmptyWithSupportText}"
+                Style="{StaticResource NoteStyle}"
+                Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+            <TextBlock
+                TextAlignment="Center"
+                Text="{x:Static res:Strings.ConnectionPageProfilesEmptyWithoutSupportText}"
+                Style="{StaticResource NoteStyle}"
+                Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+        </StackPanel>
+
         <ToggleButton
             Grid.Row="4"
             Margin="7"
