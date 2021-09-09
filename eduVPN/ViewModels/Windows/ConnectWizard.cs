@@ -420,35 +420,35 @@ namespace eduVPN.ViewModels.Windows
                 DiscoveredServers = dict;
                 DiscoveredInstituteServerIndex = idx;
             }
-            if (Properties.Settings.Default.CleanupInstituteAccessAndOwnServers)
-            {
-                // Migrate non-discovered institute access servers to own servers.
-                // Migrate discovered own servers to institute access servers.
-                var instituteAccessServers = new Xml.UriList();
-                var ownServers = new Xml.UriList();
-                foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
-                    if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
-                    {
-                        if (!ownServers.Contains(baseUri))
-                            ownServers.Add(baseUri);
-                    }
-                    else if (!instituteAccessServers.Contains(baseUri))
-                        instituteAccessServers.Add(baseUri);
-                foreach (var baseUri in Properties.Settings.Default.OwnServers)
-                    if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
-                    {
-                        if (!instituteAccessServers.Contains(baseUri))
-                            instituteAccessServers.Add(baseUri);
-                    }
-                    else if (!ownServers.Contains(baseUri))
-                        ownServers.Add(baseUri);
-                Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
-                Properties.Settings.Default.OwnServers = ownServers;
-                Properties.Settings.Default.CleanupInstituteAccessAndOwnServers = false;
-            }
-
             Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
             {
+                if (Properties.Settings.Default.CleanupInstituteAccessAndOwnServers)
+                {
+                    // Migrate non-discovered institute access servers to own servers.
+                    // Migrate discovered own servers to institute access servers.
+                    var instituteAccessServers = new Xml.UriList();
+                    var ownServers = new Xml.UriList();
+                    foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
+                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
+                        {
+                            if (!ownServers.Contains(baseUri))
+                                ownServers.Add(baseUri);
+                        }
+                        else if (!instituteAccessServers.Contains(baseUri))
+                            instituteAccessServers.Add(baseUri);
+                    foreach (var baseUri in Properties.Settings.Default.OwnServers)
+                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
+                        {
+                            if (!instituteAccessServers.Contains(baseUri))
+                                instituteAccessServers.Add(baseUri);
+                        }
+                        else if (!ownServers.Contains(baseUri))
+                            ownServers.Add(baseUri);
+                    Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
+                    Properties.Settings.Default.OwnServers = ownServers;
+                    Properties.Settings.Default.CleanupInstituteAccessAndOwnServers = false;
+                }
+
                 DiscoveredServersChanged?.Invoke(this, EventArgs.Empty);
                 AutoReconnect();
             }));
