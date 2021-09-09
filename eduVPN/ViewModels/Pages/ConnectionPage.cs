@@ -196,9 +196,10 @@ namespace eduVPN.ViewModels.Pages
                             try
                             {
                                 // Launch the VPN session in the background.
-                                new Thread(new ThreadStart(
-                                    () =>
+                                new Thread(new ParameterizedThreadStart(
+                                    param =>
                                     {
+                                        var profile = param as Profile;
                                         Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
                                         try
                                         {
@@ -206,41 +207,36 @@ namespace eduVPN.ViewModels.Pages
                                             using (var session = new OpenVPNSession(
                                                     Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance,
                                                     Wizard,
-                                                    SelectedProfile))
+                                                    profile))
                                             {
                                                 var finalState = StateType.Initial;
+                                                session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession?.RaiseCanExecuteChanged();
+                                                session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                                                {
+                                                    if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
+                                                        (session.State == SessionStatusType.Initializing || session.State == SessionStatusType.Connecting || session.State == SessionStatusType.Connected || session.State == SessionStatusType.Disconnecting) &&
+                                                        session.Expired)
+                                                    {
+                                                        finalState = StateType.SessionExpired;
+                                                        if (session.Disconnect.CanExecute())
+                                                            session.Disconnect.Execute();
+                                                    }
+                                                };
                                                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
                                                     () =>
                                                     {
-                                                        session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession?.RaiseCanExecuteChanged();
-                                                        session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-                                                        {
-                                                            if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
-                                                                (session.State == SessionStatusType.Initializing || session.State == SessionStatusType.Connecting || session.State == SessionStatusType.Connected || session.State == SessionStatusType.Disconnecting) &&
-                                                                session.Expired)
-                                                            {
-                                                                finalState = StateType.SessionExpired;
-                                                                if (session.Disconnect.CanExecute())
-                                                                    session.Disconnect.Execute();
-                                                            }
-                                                        };
                                                         ActiveSession = session;
                                                         State = StateType.SessionActive;
-                                                    }));
-                                                try
-                                                {
-                                                    // Set server/profile to auto-start on next launch.
-                                                    Properties.Settings.Default.LastSelectedServer = SelectedProfile.Server.Base;
+                                                        Wizard.TaskCount--;
 
-                                                    // Run our session.
-                                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--));
-                                                    try { session.Run(); }
-                                                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++)); }
-                                                }
-                                                finally
-                                                {
-                                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                                                        {
+                                                        // Set server/profile to auto-start on next launch.
+                                                        Properties.Settings.Default.LastSelectedServer = profile.Server.Base;
+                                                    }));
+                                                try { session.Run(); }
+                                                finally {
+                                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
+                                                        () => {
+                                                            Wizard.TaskCount++;
                                                             ActiveSession = null;
                                                             State = finalState;
                                                         }));
@@ -250,7 +246,7 @@ namespace eduVPN.ViewModels.Pages
                                         catch (OperationCanceledException) { }
                                         catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
                                         finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                                    })).Start();
+                                    })).Start(SelectedProfile);
                             }
                             catch (Exception ex) { Wizard.Error = ex; }
                         },
