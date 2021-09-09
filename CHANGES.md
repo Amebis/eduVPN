@@ -1,6 +1,11 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.6...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.0.7...HEAD)
+
+
+## [2.0.7](https://github.com/Amebis/eduVPN/compare/2.0.6...2.0.7) (2021-09-09)
+
+- Fixes
 
 
 ## [2.0.6](https://github.com/Amebis/eduVPN/compare/2.0.5...2.0.6) (2021-09-03)
