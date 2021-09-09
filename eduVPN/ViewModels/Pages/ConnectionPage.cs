@@ -274,7 +274,7 @@ namespace eduVPN.ViewModels.Pages
                             {
                                 if (ActiveSession != null && ActiveSession.Disconnect.CanExecute())
                                     ActiveSession.Disconnect.Execute();
-                                else if (ActiveSession == null && StartSession.CanExecute())
+                                else if (StartSession.CanExecute())
                                 {
                                     await Wizard.AuthorizationPage.TriggerAuthorizationAsync(Wizard.GetAuthenticatingServer(ConnectingServer));
                                     StartSession.Execute();
@@ -285,7 +285,7 @@ namespace eduVPN.ViewModels.Pages
                         },
                         () =>
                             ActiveSession != null && ActiveSession.Disconnect.CanExecute() ||
-                            ActiveSession == null && StartSession.CanExecute());
+                            StartSession.CanExecute());
                     StartSession.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession.RaiseCanExecuteChanged();
                 }
                 return _ToggleSession;
