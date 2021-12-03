@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-    <?define LanguageId = "SL"?>
-
-    <?define eduEd25519.resources.dll.ComponentGUID = "{BB1384C5-E197-4E7D-B8DE-FF2466E87FDE}"?>
-    <?define eduJSON.resources.dll.ComponentGUID = "{209B274A-EEE5-44BA-B4B6-CDD9B907F779}"?>
-    <?define eduOAuth.resources.dll.ComponentGUID = "{DB53F78C-785A-4006-B0D0-F43EDC33654E}"?>
-    <?define eduOpenVPN.resources.dll.ComponentGUID = "{DC81E7C2-B26E-4C25-9526-062C94D8494E}"?>
-    <?define eduVPN.resources.dll.ComponentGUID = "{6A4987F0-47C6-48FE-AF14-1AB6CC2A070E}"?>
-    <?define eduVPN.Views.resources.dll.ComponentGUID = "{427ECC36-EB2D-4326-8417-6983A1B62FC5}"?>
+    <?define LanguageId = "0424"?>
 </Include>

@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-    <?define LanguageId = "PTPT"?>
-
-    <?define eduEd25519.resources.dll.ComponentGUID = "{A19BF50E-B201-4B7A-8DD0-E8BAEC777007}"?>
-    <?define eduJSON.resources.dll.ComponentGUID = "{20BF0C4B-FA4E-4D64-84C1-B756FF5731EE}"?>
-    <?define eduOAuth.resources.dll.ComponentGUID = "{5FB82626-3B95-4E9B-B481-6FCCF55563A0}"?>
-    <?define eduOpenVPN.resources.dll.ComponentGUID = "{15BE98D2-F9A1-430E-B91A-061E6C116F34}"?>
-    <?define eduVPN.resources.dll.ComponentGUID = "{03BAADB3-7F4F-4093-A51A-4DD181AD22DB}"?>
-    <?define eduVPN.Views.resources.dll.ComponentGUID = "{5CC520AF-5653-41C7-8BBB-D79864F5ABD9}"?>
+    <?define LanguageId = "0816"?>
 </Include>
