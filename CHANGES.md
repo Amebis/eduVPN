@@ -1,6 +1,11 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.2...HEAD)
+
+
+## [2.1.2](https://github.com/Amebis/eduVPN/compare/2.1.1...2.1.2) (2021-12-03)
+
+- x64 dependency DLLs fixed
 
 
 ## [2.1.1](https://github.com/Amebis/eduVPN/compare/2.1...2.1.1) (2021-12-03)
