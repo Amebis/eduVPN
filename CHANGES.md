@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.1...HEAD)
+
+
+## [2.1.1](https://github.com/Amebis/eduVPN/compare/2.1...2.1.1) (2021-12-03)
 
 - OpenVPN updated to 2.5.4-20211202
 - Wintun updated to 0.14.1
