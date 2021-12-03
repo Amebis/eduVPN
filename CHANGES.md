@@ -4,6 +4,7 @@
 
 - OpenVPN updated to 2.5.4-20211202
 - Wintun updated to 0.14.1
+- Uninstall previous version before installing the new one
 
 
 ## [2.1](https://github.com/Amebis/eduVPN/compare/2.0.7...2.1) (2021-09-21)

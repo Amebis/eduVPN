@@ -88,7 +88,7 @@
         -->
         <MajorUpgrade
             DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
-            Schedule="afterInstallExecute"
+            Schedule="afterInstallInitialize"
             AllowSameVersionUpgrades="yes"/>
         <?if $(var.ClientTarget) = "eduVPN"?>
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
