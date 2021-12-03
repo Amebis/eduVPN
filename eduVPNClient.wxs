@@ -11,7 +11,7 @@
 <?if $(var.ClientTarget) = "eduVPN"?>
     <?define libcrypto_1_1.dll.ComponentGUID = "{BF2C61B2-2970-49F3-812A-6DEB4A15870C}"?>
     <?define libssl_1_1.dll.ComponentGUID = "{55E6958F-DF31-4742-91A3-904FB0102150}"?>
-    <?define liblzo2_2.dll.ComponentGUID = "{4C072186-6C47-49B3-B945-D09503A20FB3}"?>
+    <?define lzo2.dll.ComponentGUID = "{9C2FBFEC-89F7-402F-B74C-FF3BB9676561}"?>
     <?define libpkcs11_helper_1.dll.ComponentGUID = "{1D7D0360-15AD-466F-B667-840C8C8827C5}"?>
     <?define openvpn.exe.ComponentGUID = "{101FF3BB-DD5A-41CB-8A8C-0B582F7BF1D7}"?>
     <?define openvpnserv.exe.ComponentGUID = "{1A38AF86-1516-49FA-91AE-D48EAE37468D}"?>
@@ -30,7 +30,7 @@
 <?elseif $(var.ClientTarget) = "LetsConnect"?>
     <?define libcrypto_1_1.dll.ComponentGUID = "{3BB68B8B-913D-47BF-B092-CCC7CBB9A7CC}"?>
     <?define libssl_1_1.dll.ComponentGUID = "{D58368FD-3678-4762-9E5E-2F19A8E7613E}"?>
-    <?define liblzo2_2.dll.ComponentGUID = "{D073932D-4ECF-480C-B54A-4FEBCE3FB015}"?>
+    <?define lzo2.dll.ComponentGUID = "{7081351A-5C75-42A6-8FAA-E99FAA32AB31}"?>
     <?define libpkcs11_helper_1.dll.ComponentGUID = "{8EFE985A-9800-440D-8517-DAEFB50ECA74}"?>
     <?define openvpn.exe.ComponentGUID = "{46C7AD2F-6AA7-408A-BD02-9E8C59DD8C76}"?>
     <?define openvpnserv.exe.ComponentGUID = "{D54DD0B1-8C81-42F8-BD3F-BB988B786782}"?>
@@ -194,11 +194,11 @@
             <Component Id="libssl_1_1.dll" Guid="$(var.libssl_1_1.dll.ComponentGUID)">
                 <File Source="$(var.OpenVPN.Dir)libssl-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
-            <Component Id="liblzo2_2.dll" Guid="$(var.liblzo2_2.dll.ComponentGUID)">
-                <File Source="$(var.OpenVPN.Dir)liblzo2-2.dll"/>
-            </Component>
             <Component Id="libpkcs11_helper_1.dll" Guid="$(var.libpkcs11_helper_1.dll.ComponentGUID)">
                 <File Source="$(var.OpenVPN.Dir)libpkcs11-helper-1.dll"/>
+            </Component>
+            <Component Id="lzo2.dll" Guid="$(var.lzo2.dll.ComponentGUID)">
+                <File Source="$(var.OpenVPN.Dir)lzo2.dll"/>
             </Component>
             <Component Id="wintun.dll" Guid="{BCD1B70D-A1D3-4DC1-98$(var.ClientId)-8E90D8EF9FE0}">
                 <File Source="$(var.OpenVPN.Dir)wintun.dll"/>
@@ -432,8 +432,8 @@
 
             <ComponentRef Id="libcrypto_1_1.dll"/>
             <ComponentRef Id="libssl_1_1.dll"/>
-            <ComponentRef Id="liblzo2_2.dll"/>
             <ComponentRef Id="libpkcs11_helper_1.dll"/>
+            <ComponentRef Id="lzo2.dll"/>
             <ComponentRef Id="wintun.dll"/>
             <ComponentRef Id="openvpn.exe"/>
             <ComponentRef Id="openvpnserv.exe"/>
