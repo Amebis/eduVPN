@@ -81,7 +81,6 @@
 
         <Property Id="ARPPRODUCTICON" Value="App.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUri)"/>
-        <Property Id="WINTUNPOOL" Value="OpenVPN$$$(var.ClientTarget)"/>
 
 
         <!--
@@ -478,24 +477,24 @@
             Custom Actions
         -->
         <CustomAction
-            Id="EvaluateWintunPool"
+            Id="EvaluateWintunDriver"
             BinaryKey="OpenVPN.MSICA.dll"
-            DllEntry="EvaluateWintunPool"/>
+            DllEntry="EvaluateWintunDriver"/>
 
         <CustomAction
-            Id="RemoveWintunPool"
+            Id="RemoveWintunDriver"
             BinaryKey="OpenVPN.MSICA.dll"
-            DllEntry="RemoveWintunPool"
+            DllEntry="RemoveWintunDriver"
             Execute="deferred"
             Impersonate="no"/>
 
         <InstallExecuteSequence>
             <Custom
-                Action="EvaluateWintunPool"
+                Action="EvaluateWintunDriver"
                 After="ProcessComponents"/>
 
             <Custom
-                Action="RemoveWintunPool"
+                Action="RemoveWintunDriver"
                 Before="RemoveFiles"/>
         </InstallExecuteSequence>
 
