@@ -315,20 +315,22 @@
                 <File Source="eduVPN.Views.dll"/>
             </Component>
             <Component Id="$(var.ClientTarget).Client.exe" Guid="$(var.Client.exe.ComponentGUID)">
-                <File Source="$(var.ClientTarget).Client.exe" KeyPath="yes"/>
-
-                <!-- Note: "$(var.ClientTarget).Client" feature and "App.ico" icon are defined elsewhere. -->
+                <File Source="$(var.ClientTarget).Client.exe"/>
+            </Component>
+            <Component Id="$(var.ClientTarget).Client.exe.config" Guid="{45701D9C-8997-43DE-86$(var.ClientId)-326773549F26}">
+                <File Source="$(var.ClientTarget).Client.exe.config"/>
+            </Component>
+            <Component Id="$(var.ClientTarget).Client.exe.StartMenuShortcut" Guid="{30029230-E864-4CBC-A0$(var.ClientId)-8D8B189895C2}">
                 <Shortcut
                     Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"
                     Directory="ProgramMenuFolder"
                     Name="$(var.ClientTitle) Client" DisplayResourceDll="[RESDIR]eduVPN.Resources.dll" DisplayResourceId="$(var.IDS_CLIENT_PREFIX)1"
                     DescriptionResourceDll="[RESDIR]eduVPN.Resources.dll" DescriptionResourceId="$(var.IDS_CLIENT_PREFIX)2"
-                    Target="$(var.ClientTarget).Client"
+                    Target="[COREDIR]$(var.ClientTarget).Client.exe"
                     WorkingDirectory="COREDIR"
                     Icon="App.ico"/>
-            </Component>
-            <Component Id="$(var.ClientTarget).Client.exe.config" Guid="{45701D9C-8997-43DE-86$(var.ClientId)-326773549F26}">
-                <File Source="$(var.ClientTarget).Client.exe.config"/>
+                <RemoveFolder Id="$(var.ClientTarget).Client.exe.StartMenuShortcut" Directory="ProgramMenuFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
             <!--
             <Component Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Guid="{C630B2C1-7CD1-4E9C-90$(var.ClientId)-1F6EA79C5D85}">
@@ -424,6 +426,7 @@
             <ComponentRef Id="eduVPN.Views.dll"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
+            <ComponentRef Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"/>
             <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
             <ComponentRef Id="$(var.ClientTarget).Client.exe.StartOnSignon"/>
             <ComponentRef Id="ARP.DisplayName"/>

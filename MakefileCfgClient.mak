@@ -11,6 +11,7 @@ WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dClientTitle="$(CLIENT_TITLE)" \
 	-dClientUpgradeCode="$(CLIENT_UPGRADE_CODE)" \
 	-dClientAboutUri="$(CLIENT_ABOUT_URI)" \
+	-dClientUrn="$(CLIENT_URN)" \
 	-dClientId="$(CLIENT_ID)" \
 	-dIDS_CLIENT_PREFIX="$(IDS_CLIENT_PREFIX)"
 
