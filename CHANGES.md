@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.2...HEAD)
 
+- Stable network adapter GUIDs for reusable NLA Public/Private profile assignments
+
 
 ## [2.1.2](https://github.com/Amebis/eduVPN/compare/2.1.1...2.1.2) (2021-12-03)
 

@@ -20,7 +20,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading;
 using System.Web.Security;
 using System.Windows.Threading;
@@ -589,7 +591,19 @@ namespace eduVPN.ViewModels.VPN
 
                                 // Set Wintun interface to be used.
                                 sw.Write("windows-driver wintun\n");
-                                sw.Write("dev-node " + eduOpenVPN.Configuration.EscapeParamValue(Properties.Settings.Default.ClientTitle) + "\n");
+                                var hash = new SHA1CryptoServiceProvider(); // https://datatracker.ietf.org/doc/html/rfc4122#section-4.3
+                                byte[] bufferPrefix = { 0x6b, 0xa7, 0xb8, 0x11, 0x9d, 0xad, 0x11, 0xd1, 0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8 }; // https://datatracker.ietf.org/doc/html/rfc4122#appendix-C in network byte order
+                                hash.TransformBlock(bufferPrefix, 0, bufferPrefix.Length, bufferPrefix, 0);
+                                var bufferUri = Encoding.UTF8.GetBytes(new Uri(ConnectingProfile.Server.Base, ConnectingProfile.Id).AbsoluteUri);
+                                hash.TransformFinalBlock(bufferUri, 0, bufferUri.Length);
+                                var guid = new Guid(
+                                    ((uint)hash.Hash[0] << 24) | ((uint)hash.Hash[1] << 16) | ((uint)hash.Hash[2] << 8) | hash.Hash[3], // time_low
+                                    (ushort)(((uint)hash.Hash[4] << 8) | hash.Hash[5]), // time_mid
+                                    (ushort)(((((uint)hash.Hash[6] << 8) | hash.Hash[7]) & 0x0fff) | 0x5000), // time_hi_and_version
+                                    (byte)(((uint)hash.Hash[8] & 0x3f) | 0x80), // clock_seq_hi_and_reserved
+                                    hash.Hash[9], // clock_seq_low
+                                    hash.Hash[10], hash.Hash[11], hash.Hash[12], hash.Hash[13], hash.Hash[14], hash.Hash[15]); // node[0-5]
+                                sw.Write("dev-node {" + guid + "}\n");
 
 #if DEBUG
                                 // Renegotiate data channel every 5 minutes in debug versions.
