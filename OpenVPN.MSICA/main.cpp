@@ -20,11 +20,10 @@
 
 using namespace std;
 
-#define WINTUN_COMPONENT             TEXT("wintun.dll")
-#define WINTUN_FILE_NAME             TEXT("wintun.dll")
-#define WINTUN_DIRECTORY             TEXT("OPENVPNDIR")
-#define WUNTUN_REMOVE_DRIVER_CA_NAME TEXT("RemoveWintunDriver")
-#define ERROR_MSICA_ERRNO            2550L
+#define WINTUN_COMPONENT  TEXT("wintun.dll")
+#define WINTUN_FILE_NAME  TEXT("wintun.dll")
+#define WINTUN_DIRECTORY  TEXT("OPENVPNDIR")
+#define ERROR_MSICA_ERRNO 2550L
 
 static MSIHANDLE s_hInstall; // Handle to the installation session
 
@@ -117,6 +116,32 @@ WintunLogger(_In_ WINTUN_LOGGER_LEVEL Level, _In_ DWORD64 Timestamp, _In_z_ LPCW
     MsiProcessMessage(s_hInstall, eType, hRecord);
 }
 
+static UINT
+SetFormattedProperty(_In_ MSIHANDLE hInstall, _In_z_ LPCTSTR szPropertyName, _In_z_ LPCTSTR szFormat)
+{
+    PMSIHANDLE hRecord = MsiCreateRecord(1);
+    if (!(MSIHANDLE)hRecord) {
+        LOG_ERROR(TEXT("MsiCreateRecord failed"));
+        return ERROR_OUTOFMEMORY;
+    }
+    UINT uiResult = MsiRecordSetString(hRecord, 0, szFormat);
+    if (uiResult != ERROR_SUCCESS) {
+        LOG_ERROR_NUM(uiResult, TEXT("MsiRecordSetString failed"));
+        return uiResult;
+    }
+    tstring sValue;
+    uiResult = MsiFormatRecord(hInstall, hRecord, sValue);
+    if (uiResult != ERROR_SUCCESS) {
+        LOG_ERROR_NUM(uiResult, TEXT("MsiFormatRecord failed"));
+        return uiResult;
+    }
+    uiResult = MsiSetProperty(hInstall, szPropertyName, sValue.c_str());
+    if (uiResult != ERROR_SUCCESS) {
+        LOG_ERROR_NUM(uiResult, TEXT("MsiSetProperty(\"%s\") failed"), szPropertyName);
+        return uiResult;
+    }
+    return ERROR_SUCCESS;
+}
 
 _Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
 EvaluateWintunDriver(_In_ MSIHANDLE hInstall)
@@ -135,27 +160,7 @@ EvaluateWintunDriver(_In_ MSIHANDLE hInstall)
     {
         // Wintun is installed, but should be degraded to advertised/removed.
         // Schedule Wintun driver deletition.
-        PMSIHANDLE hRecord = MsiCreateRecord(1);
-        if (!(MSIHANDLE)hRecord) {
-            LOG_ERROR(TEXT("MsiCreateRecord failed"));
-            return ERROR_SUCCESS;
-        }
-        uiResult = MsiRecordSetString(hRecord, 0, TEXT("\"[") WINTUN_DIRECTORY TEXT("]") WINTUN_FILE_NAME TEXT("\""));
-        if (uiResult != ERROR_SUCCESS) {
-            LOG_ERROR_NUM(uiResult, TEXT("MsiRecordSetString failed"));
-            return ERROR_SUCCESS;
-        }
-        tstring sRemoveWintunDriver;
-        uiResult = MsiFormatRecord(hInstall, hRecord, sRemoveWintunDriver);
-        if (uiResult != ERROR_SUCCESS) {
-            LOG_ERROR_NUM(uiResult, TEXT("MsiFormatRecord failed"));
-            return ERROR_SUCCESS;
-        }
-        uiResult = MsiSetProperty(hInstall, WUNTUN_REMOVE_DRIVER_CA_NAME, sRemoveWintunDriver.c_str());
-        if (uiResult != ERROR_SUCCESS) {
-            LOG_ERROR_NUM(uiResult, TEXT("MsiSetProperty(\"%s\") failed"), WUNTUN_REMOVE_DRIVER_CA_NAME);
-            return ERROR_SUCCESS;
-        }
+        SetFormattedProperty(hInstall, TEXT("RemoveWintunDriver"), TEXT("\"[") WINTUN_DIRECTORY TEXT("]") WINTUN_FILE_NAME TEXT("\""));
     }
 
     return ERROR_SUCCESS;
