@@ -156,25 +156,25 @@
 
         <DirectoryRef Id="OPENVPNDIR">
             <Component Id="libcrypto_1_1.dll" Guid="{64000BBF-E4A4-4D94-AB$(var.ClientId)-2CF61EA09412}">
-                <File Source="$(var.OpenVPN.Dir)libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
+                <File Source="$(var.TargetDir)libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="libssl_1_1.dll" Guid="{B8DFE07B-0FDE-444D-BC$(var.ClientId)-499F6C972801}">
-                <File Source="$(var.OpenVPN.Dir)libssl-1_1$(var.OpenSSL.Platform).dll"/>
+                <File Source="$(var.TargetDir)libssl-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="libpkcs11_helper_1.dll" Guid="{5540E132-AAE2-44A4-9D$(var.ClientId)-FC1D54BBD3BD}">
-                <File Source="$(var.OpenVPN.Dir)libpkcs11-helper-1.dll"/>
+                <File Source="$(var.TargetDir)libpkcs11-helper-1.dll"/>
             </Component>
             <Component Id="lzo2.dll" Guid="{83D40701-9835-4FDA-92$(var.ClientId)-92A28F2FCCB0}">
-                <File Source="$(var.OpenVPN.Dir)lzo2.dll"/>
+                <File Source="$(var.TargetDir)lzo2.dll"/>
             </Component>
             <Component Id="wintun.dll" Guid="{BCD1B70D-A1D3-4DC1-98$(var.ClientId)-8E90D8EF9FE0}">
-                <File Source="$(var.OpenVPN.Dir)wintun.dll"/>
+                <File Source="$(var.TargetDir)wintun.dll"/>
             </Component>
             <Component Id="openvpn.exe" Guid="{4C9A4BD7-3E90-4B61-80$(var.ClientId)-B86E1AADA918}">
-                <File Source="$(var.OpenVPN.Dir)openvpn.exe"/>
+                <File Source="$(var.TargetDir)openvpn.exe"/>
             </Component>
             <Component Id="openvpnserv.exe" Guid="$(var.openvpnserv.exe.ComponentGUID)">
-                <File Source="$(var.OpenVPN.Dir)openvpnserv.exe"/>
+                <File Source="$(var.TargetDir)openvpnserv.exe"/>
                 <CreateFolder Directory="OPENVPNCONFIGDIR">
                     <!--
                         SYSTEM (SY): full

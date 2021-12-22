@@ -15,10 +15,16 @@ SETUP_TARGET=$(SETUP_TARGET)D
 
 !IF "$(PLAT)" == "x64"
 OPENSSL_PLAT=-x64
+OPENVPN_PLAT=x64
+VCPKG_PLAT=x64
 !ELSEIF "$(PLAT)" == "ARM64"
 OPENSSL_PLAT=-arm64
+OPENVPN_PLAT=ARM64
+VCPKG_PLAT=arm64
 !ELSE
 OPENSSL_PLAT=
+OPENVPN_PLAT=Win32
+VCPKG_PLAT=x86
 !ENDIF
 
 # WiX parameters
@@ -26,7 +32,6 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-arch $(PLAT) \
 	-dPlatform="$(PLAT)" \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
-	-dOpenVPN.Dir="bin\OpenVPN\$(PLAT)\\" \
 	-dOpenSSL.Platform="$(OPENSSL_PLAT)" \
 	-dVersionInformational="$(VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64"
@@ -49,7 +54,8 @@ VC142REDIST_MSM=Microsoft_VC142_CRT_$(PLAT).msm
 ######################################################################
 
 !IF "$(CFG)" == "Release"
-SetupBuild ::
+SetupBuild :: \
+	OpenVPNBuild$(CFG)$(PLAT)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 !ENDIF
 
@@ -59,6 +65,9 @@ SetupBuild ::
 ######################################################################
 
 "bin\$(CFG)\$(PLAT)" : "bin\$(CFG)"
+	if not exist $@ md $@
+
+"bin\$(CFG)\$(PLAT)\config" : "bin\$(CFG)\$(PLAT)"
 	if not exist $@ md $@
 
 "bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" ::
@@ -73,6 +82,58 @@ Clean ::
 
 Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" del /f /q "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
+
+OpenVPNBuild$(CFG)$(PLAT) ::
+	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
+	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
+
+OpenVPNBuild$(CFG)$(PLAT) :: \
+	"bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" \
+	"bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" \
+	"bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" \
+	"bin\$(CFG)\$(PLAT)\lzo2.dll" \
+	"bin\$(CFG)\$(PLAT)\wintun.dll" \
+	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
+	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+
+"bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\libcrypto-1_1$(OPENSSL_PLAT).dll"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
+	copy /y $** $@ > NUL
+
+"bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\libssl-1_1$(OPENSSL_PLAT).dll"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
+	copy /y $** $@ > NUL
+
+"bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\libpkcs11-helper-1.dll"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
+	copy /y $** $@ > NUL
+
+"bin\$(CFG)\$(PLAT)\lzo2.dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\lzo2.dll"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
+	copy /y $** $@ > NUL
+
+"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\bin\wintun.dll"
+	copy /y $** $@ > NUL
+
+"bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpn.exe"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN" /q $**
+	copy /y $** $@ > NUL
+
+"bin\$(CFG)\$(PLAT)\openvpnserv.exe" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpnserv.exe"
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN Interactive Service" /q $**
+	copy /y $** $@ > NUL
+
+Clean ::
+	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
+	-vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+	-if exist "bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" del /f /q "bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
+	-if exist "bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"    del /f /q "bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
+	-if exist "bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"           del /f /q "bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\lzo2.dll"                         del /f /q "bin\$(CFG)\$(PLAT)\lzo2.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"                       del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"                      del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
 
 
 ######################################################################

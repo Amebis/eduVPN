@@ -38,17 +38,19 @@ UnregisterShortcuts ::
 RegisterOpenVPNInteractiveService :: \
 	UnregisterOpenVPNInteractiveServiceSCM \
 	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)"             $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)\openvpn.exe" $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "config_dir"       /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)\config"      $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "config_ext"       /t REG_SZ /d "conf"                                       $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "log_dir"          /t REG_SZ /d "$(MAKEDIR)\bin\OpenVPN\$(PLAT)\config"      $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "log_append"       /t REG_SZ /d "0"                                          $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "priority"         /t REG_SZ /d "NORMAL_PRIORITY_CLASS"                      $(REG_FLAGS)
-	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "ovpn_admin_group" /t REG_SZ /d "Users"                                      $(REG_FLAGS)
+	"bin\$(CFG)\$(PLAT)\config" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
+	OpenVPNBuild$(CFG)$(PLAT)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)"             $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "config_dir"       /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\config"      $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "config_ext"       /t REG_SZ /d "conf"                                      $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "log_dir"          /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\config"      $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "log_append"       /t REG_SZ /d "0"                                         $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "priority"         /t REG_SZ /d "NORMAL_PRIORITY_CLASS"                     $(REG_FLAGS)
+	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "ovpn_admin_group" /t REG_SZ /d "Users"                                     $(REG_FLAGS)
 	sc.exe create "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" \
-		binpath= "\"$(MAKEDIR)\bin\OpenVPN\$(PLAT)\openvpnserv.exe\" -instance interactive $$$(CLIENT_TARGET)" \
+		binpath= "\"$(MAKEDIR)\bin\$(CFG)\$(PLAT)\openvpnserv.exe\" -instance interactive $$$(CLIENT_TARGET)" \
 		DisplayName= "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)5" \
 		type= own \
 		start= auto \
