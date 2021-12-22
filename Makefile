@@ -32,37 +32,11 @@ WIX_INSIGNIA_FLAGS=-nologo
 
 
 ######################################################################
-# Default target
-######################################################################
-
-All :: \
-	Setup
-
-
-######################################################################
-# Registration
-######################################################################
-
-Register :: \
-	NuGetRestore \
-	RegisterOpenVPNInteractiveService \
-	RegisterShortcuts
-
-Unregister :: \
-	UnregisterShortcuts \
-	UnregisterOpenVPNInteractiveService
-
-NuGetRestore ::
-	bin\nuget.exe restore $(NUGET_FLAGS)
-
-
-######################################################################
 # Setup
 ######################################################################
 
 Setup :: \
-	NuGetRestore \
-	SetupBuild \
+	Build \
 	SetupMSI \
 	SetupExe
 

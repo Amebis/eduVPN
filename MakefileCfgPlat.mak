@@ -50,17 +50,6 @@ VC142REDIST_MSM=Microsoft_VC142_CRT_$(PLAT).msm
 
 
 ######################################################################
-# Setup
-######################################################################
-
-!IF "$(CFG)" == "Release"
-SetupBuild :: \
-	OpenVPNBuild$(CFG)$(PLAT)
-	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
-!ENDIF
-
-
-######################################################################
 # Building
 ######################################################################
 
@@ -70,25 +59,25 @@ SetupBuild :: \
 "bin\$(CFG)\$(PLAT)\config" : "bin\$(CFG)\$(PLAT)"
 	if not exist $@ md $@
 
-"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" ::
+!IF "$(CFG)" == "Release"
+Build :: \
+	Build$(CFG)$(PLAT)
+!ENDIF
+
+Build$(CFG)$(PLAT) :: \
+	"bin\$(CFG)\$(PLAT)"
+	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
+	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
 	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
+	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
-"bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC142REDIST_MSM)"
-	copy /y $** $@ > NUL
-
-Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" del /f /q "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
-
-OpenVPNBuild$(CFG)$(PLAT) ::
-	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
-	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
-	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
-
-OpenVPNBuild$(CFG)$(PLAT) :: \
+Build$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" \
 	"bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" \
 	"bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" \
@@ -124,9 +113,10 @@ OpenVPNBuild$(CFG)$(PLAT) :: \
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN Interactive Service" /q $**
 	copy /y $** $@ > NUL
 
+"bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC142REDIST_MSM)"
+	copy /y $** $@ > NUL
+
 Clean ::
-	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
-	-vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
 	-if exist "bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" del /f /q "bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
 	-if exist "bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"    del /f /q "bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
 	-if exist "bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"           del /f /q "bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"
@@ -134,6 +124,7 @@ Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"                       del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
 	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"                      del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
 	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+	-if exist "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"               del /f /q "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
 
 
 ######################################################################

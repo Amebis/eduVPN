@@ -16,31 +16,25 @@ WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT=$(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) \
 
 
 ######################################################################
+# Setup
+######################################################################
+
+!IF "$(CFG)" == "Release"
+SetupMSI :: \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET).msi"
+!ENDIF
+
+
+######################################################################
 # Registration
 ######################################################################
 
 !IF "$(CFG)" == "$(TEST_CFG)"
 !IF "$(PLAT)" == "$(TEST_PLAT)"
-RegisterShortcuts :: \
-	"$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk"
-
-UnregisterShortcuts ::
-	-if exist "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" del /f /q "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk"
-
-"$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
-	cscript.exe "bin\MkLnk.wsf" //Nologo $@ "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
-		/F:"$(MAKEDIR)\bin\$(CFG)\$(PLAT)" \
-		/LN:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)1" \
-		/C:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)2"
-
-RegisterOpenVPNInteractiveService :: \
+Register :: \
 	UnregisterOpenVPNInteractiveServiceSCM \
-	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\config" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
-	OpenVPNBuild$(CFG)$(PLAT)
+	Build$(CFG)$(PLAT) \
+	"bin\$(CFG)\$(PLAT)\config"
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)"             $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "config_dir"       /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\config"      $(REG_FLAGS)
@@ -57,8 +51,15 @@ RegisterOpenVPNInteractiveService :: \
 		depend= "Dhcp"
 	sc.exe description "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)6"
 	net.exe start "OpenVPNServiceInteractive$$$(CLIENT_TARGET)"
+	cscript.exe "bin\MkLnk.wsf" //Nologo "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
+		/F:"$(MAKEDIR)\bin\$(CFG)\$(PLAT)" \
+		/LN:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)1" \
+		/C:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)2"
 
-UnregisterOpenVPNInteractiveService :: \
+Unregister ::
+	-if exist "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" del /f /q "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk"
+
+Unregister :: \
 	UnregisterOpenVPNInteractiveServiceSCM
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   $(REG_FLAGS) > NUL 2>&1
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         $(REG_FLAGS) > NUL 2>&1
@@ -77,25 +78,8 @@ UnregisterOpenVPNInteractiveServiceSCM ::
 
 
 ######################################################################
-# Setup
-######################################################################
-
-!IF "$(CFG)" == "Release"
-SetupMSI :: \
-	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET).msi"
-!ENDIF
-
-
-######################################################################
 # Building
 ######################################################################
-
-"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" ::
-	bin\nuget.exe restore $(NUGET_FLAGS)
-	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
-
-Clean ::
-	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" : \
 	"eduVPNClient.wxs" \
