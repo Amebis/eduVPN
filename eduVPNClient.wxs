@@ -130,7 +130,7 @@
                     <Directory Id="OPENVPNDIR" Name="OpenVPN" FileSource="$(var.TargetDir)">
                         <Directory Id="OPENVPNCONFIGDIR" Name="config"/>
                     </Directory>
-                    <Directory Id="COREDIR" Name="Core" FileSource="$(var.TargetDir)">
+                    <Directory Id="COREDIR" Name="Core" FileSource="$(var.TargetDirClient)">
                         <?foreach Language in $(var.LanguageList)?>
                         <?include Install\$(var.Language)\defs.wxi?>
                         <Directory Id="RESOURCEDIR$(var.LanguageId)" Name="$(var.Language)"/>
@@ -156,25 +156,25 @@
 
         <DirectoryRef Id="OPENVPNDIR">
             <Component Id="libcrypto_1_1.dll" Guid="{64000BBF-E4A4-4D94-AB$(var.ClientId)-2CF61EA09412}">
-                <File Source="$(var.TargetDir)libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
+                <File Source="libcrypto-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="libssl_1_1.dll" Guid="{B8DFE07B-0FDE-444D-BC$(var.ClientId)-499F6C972801}">
-                <File Source="$(var.TargetDir)libssl-1_1$(var.OpenSSL.Platform).dll"/>
+                <File Source="libssl-1_1$(var.OpenSSL.Platform).dll"/>
             </Component>
             <Component Id="libpkcs11_helper_1.dll" Guid="{5540E132-AAE2-44A4-9D$(var.ClientId)-FC1D54BBD3BD}">
-                <File Source="$(var.TargetDir)libpkcs11-helper-1.dll"/>
+                <File Source="libpkcs11-helper-1.dll"/>
             </Component>
             <Component Id="lzo2.dll" Guid="{83D40701-9835-4FDA-92$(var.ClientId)-92A28F2FCCB0}">
-                <File Source="$(var.TargetDir)lzo2.dll"/>
+                <File Source="lzo2.dll"/>
             </Component>
             <Component Id="wintun.dll" Guid="{BCD1B70D-A1D3-4DC1-98$(var.ClientId)-8E90D8EF9FE0}">
-                <File Source="$(var.TargetDir)wintun.dll"/>
+                <File Source="wintun.dll"/>
             </Component>
             <Component Id="openvpn.exe" Guid="{4C9A4BD7-3E90-4B61-80$(var.ClientId)-B86E1AADA918}">
-                <File Source="$(var.TargetDir)openvpn.exe"/>
+                <File Source="openvpn.exe"/>
             </Component>
             <Component Id="openvpnserv.exe" Guid="$(var.openvpnserv.exe.ComponentGUID)">
-                <File Source="$(var.TargetDir)openvpnserv.exe"/>
+                <File Source="openvpnserv.exe"/>
                 <CreateFolder Directory="OPENVPNCONFIGDIR">
                     <!--
                         SYSTEM (SY): full
@@ -291,34 +291,34 @@
 
         <DirectoryRef Id="COREDIR">
             <Component Id="Prism.dll" Guid="{4A143204-1EBB-4BDE-BA$(var.ClientId)-B0770670ECC3}">
-                <File Source="Prism.dll"/>
+                <File Source="$(var.TargetDirClient)Prism.dll"/>
             </Component>
             <Component Id="eduEd25519.dll" Guid="{03F051ED-A1D6-4D40-B6$(var.ClientId)-F56CD5EDBCA2}">
-                <File Source="eduEd25519.dll"/>
+                <File Source="$(var.TargetDirClient)eduEd25519.dll"/>
             </Component>
             <Component Id="eduEx.dll" Guid="{36A66334-6B59-48A1-8B$(var.ClientId)-512FE8F3EE6A}">
-                <File Source="eduEx.dll"/>
+                <File Source="$(var.TargetDirClient)eduEx.dll"/>
             </Component>
             <Component Id="eduJSON.dll" Guid="{1949F863-03BA-48D6-9D$(var.ClientId)-843909694F00}">
-                <File Source="eduJSON.dll"/>
+                <File Source="$(var.TargetDirClient)eduJSON.dll"/>
             </Component>
             <Component Id="eduOAuth.dll" Guid="{9DA24812-54AC-4D76-BB$(var.ClientId)-BBEF15776AE0}">
-                <File Source="eduOAuth.dll"/>
+                <File Source="$(var.TargetDirClient)eduOAuth.dll"/>
             </Component>
             <Component Id="eduOpenVPN.dll" Guid="{3D0AF961-809D-479E-BE$(var.ClientId)-ED6457A8519A}">
-                <File Source="eduOpenVPN.dll"/>
+                <File Source="$(var.TargetDirClient)eduOpenVPN.dll"/>
             </Component>
             <Component Id="eduVPN.dll" Guid="{0DC980F5-147E-408A-9E$(var.ClientId)-E3C02AE2FCBA}">
-                <File Source="eduVPN.dll"/>
+                <File Source="$(var.TargetDirClient)eduVPN.dll"/>
             </Component>
             <Component Id="eduVPN.Views.dll" Guid="{D87A53A9-295E-4E10-88$(var.ClientId)-9580E76160A0}">
-                <File Source="eduVPN.Views.dll"/>
+                <File Source="$(var.TargetDirClient)eduVPN.Views.dll"/>
             </Component>
             <Component Id="$(var.ClientTarget).Client.exe" Guid="$(var.Client.exe.ComponentGUID)">
-                <File Source="$(var.ClientTarget).Client.exe"/>
+                <File Source="$(var.TargetDirClient)$(var.ClientTarget).Client.exe"/>
             </Component>
             <Component Id="$(var.ClientTarget).Client.exe.config" Guid="{45701D9C-8997-43DE-86$(var.ClientId)-326773549F26}">
-                <File Source="$(var.ClientTarget).Client.exe.config"/>
+                <File Source="$(var.TargetDirClient)$(var.ClientTarget).Client.exe.config"/>
             </Component>
             <Component Id="$(var.ClientTarget).Client.exe.StartMenuShortcut" Guid="{30029230-E864-4CBC-A0$(var.ClientId)-8D8B189895C2}">
                 <Shortcut
@@ -372,22 +372,22 @@
         <?include Install\$(var.Language)\defs.wxi?>
         <DirectoryRef Id="RESOURCEDIR$(var.LanguageId)">
             <Component Id="eduEd25519.resources.dll.$(var.LanguageId)" Guid="{A5E5AE0E-3247-$(var.LanguageId)-9C$(var.ClientId)-6238841468C1}">
-                <File Id="eduEd25519.resources.dll.$(var.LanguageId)" Source="$(var.Language)\eduEd25519.resources.dll"/>
+                <File Id="eduEd25519.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduEd25519.resources.dll"/>
             </Component>
             <Component Id="eduJSON.resources.dll.$(var.LanguageId)" Guid="{82195943-3982-$(var.LanguageId)-BE$(var.ClientId)-24616577F555}">
-                <File Id="eduJSON.resources.dll.$(var.LanguageId)" Source="$(var.Language)\eduJSON.resources.dll"/>
+                <File Id="eduJSON.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduJSON.resources.dll"/>
             </Component>
             <Component Id="eduOAuth.resources.dll.$(var.LanguageId)" Guid="{742587D9-B9B9-$(var.LanguageId)-A7$(var.ClientId)-266F1B6FF16C}">
-                <File Id="eduOAuth.resources.dll.$(var.LanguageId)" Source="$(var.Language)\eduOAuth.resources.dll"/>
+                <File Id="eduOAuth.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduOAuth.resources.dll"/>
             </Component>
             <Component Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Guid="{F8C05323-1B02-$(var.LanguageId)-A3$(var.ClientId)-84B11ABE904D}">
-                <File Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Source="$(var.Language)\eduOpenVPN.resources.dll"/>
+                <File Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduOpenVPN.resources.dll"/>
             </Component>
             <Component Id="eduVPN.resources.dll.$(var.LanguageId)" Guid="{44C82307-41F5-$(var.LanguageId)-8F$(var.ClientId)-D1785F6776E2}">
-                <File Id="eduVPN.resources.dll.$(var.LanguageId)" Source="$(var.Language)\eduVPN.resources.dll"/>
+                <File Id="eduVPN.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduVPN.resources.dll"/>
             </Component>
             <Component Id="eduVPN.Views.resources.dll.$(var.LanguageId)" Guid="{8BABD0AE-B662-$(var.LanguageId)-A3$(var.ClientId)-096D71CCCC64}">
-                <File Id="eduVPN.Views.resources.dll.$(var.LanguageId)" Source="$(var.Language)\eduVPN.Views.resources.dll"/>
+                <File Id="eduVPN.Views.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduVPN.Views.resources.dll"/>
             </Component>
         </DirectoryRef>
         <?endforeach?>

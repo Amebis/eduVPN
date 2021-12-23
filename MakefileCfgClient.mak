@@ -82,7 +82,8 @@ Clean ::
 	"Install\$(CLIENT_TARGET)\logo.png" \
 	"bin\$(CFG)\$(CLIENT_TARGET).wixobj" \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_x86.msi" \
-	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_x64.msi"
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_x64.msi" \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_ARM64.msi"
 	"$(WIX)bin\light.exe" $(WIX_LIGHT_FLAGS) -cultures:en -loc "Install\eduVPN.wxl" -out $@ "bin\$(CFG)\$(CLIENT_TARGET).wixobj"
 
 Clean ::

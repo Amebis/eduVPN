@@ -27,6 +27,9 @@ PLAT=x86
 PLAT=x64
 !INCLUDE "MakefileCfgPlat.mak"
 
+PLAT=ARM64
+!INCLUDE "MakefileCfgPlat.mak"
+
 
 ######################################################################
 # Client-specific rules

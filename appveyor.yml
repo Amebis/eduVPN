@@ -9,6 +9,7 @@ configuration:
 platform:
   - x86
   - x64
+  - ARM64
 build:
   project: eduVPN.sln
   parallel: true

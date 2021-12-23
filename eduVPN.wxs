@@ -144,6 +144,11 @@
                 Id="$(var.ClientTarget)Client_x64"
                 SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)_x64.msi"
                 InstallCondition="VersionNT64"/>
+
+            <MsiPackage
+                Id="$(var.ClientTarget)Client_ARM64"
+                SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)_ARM64.msi"
+                InstallCondition="NativeMachine = 43620"/>
         </Chain>
     </Bundle>
 </Wix>
