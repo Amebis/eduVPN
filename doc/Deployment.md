@@ -54,7 +54,7 @@ After all workstations have the .NET Framework installed, deploy `eduVPNClient_<
 
 Binaries are published [here](https://github.com/Amebis/eduVPN/releases)
 
-Packages can be deployed using the same Group Policy Object. We advise against making `x86` versions available to Win64 machines. Please use the `x64` for Win64 machines.
+Packages can be deployed using the same Group Policy Object. We advise against making `x86` versions available to x64 machines. Please use the `x64` for x64 machines.
 
 
 # Keeping eduVPN Client Up-to-date

@@ -18,6 +18,8 @@
 - _eduVPN.Views_: Client UI (View)
 - _Install_: WiX installer additional files
 - _LetsConnect.Client_: Let's Connect! client application (Shell)
+- _openvpn_: OpenVPN source code
+- _vcpkg_: vcpkg build system for building OpenVPN and its prerequisites
 
 
 ## Pre-requisites
@@ -53,12 +55,12 @@ In order to have the build process digitally sign the release output files, one 
 
 ### General Building Guidelines
 
-All `nmake` commands should be invoked from the _x64 Native Tools Command Prompt for VS 2017_ (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2017_). x86 build environment can be used when the 32-bit version is preferred.
-This command prompt sets all Visual Studio 2017 environment variables required by the command line building.
+All `nmake` commands should be invoked from the _x64 Native Tools Command Prompt for VS 2019_ (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2019_). x86 build environment can be used when the 32-bit version is preferred.
+This command prompt sets all Visual Studio 2019 environment variables required by the command line building.
 
-`nmake register` and `nmake unregister` require elevation. Start the _x64 Native Tools Command Prompt for VS 2017_ elevated (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2017_ » _Run as Administrator_). Other `nmake` commands can be run from a non-elevated _x64 Native Tools Command Prompt for VS 2017_.
+`nmake register` and `nmake unregister` require elevation. Start the _x64 Native Tools Command Prompt for VS 2019_ elevated (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2019_ » _Run as Administrator_). Other `nmake` commands can be run from a non-elevated _x64 Native Tools Command Prompt for VS 2019_.
 
-Before pulling a new version of the eduVPN source code from the GitHub a `nmake unregister` and `nmake clean` is strongly recommended. You can run both commands combined as `nmake unregister clean` in a single elevated _x64 Native Tools Command Prompt for VS 2017_.
+Before pulling a new version of the eduVPN source code from the GitHub a `nmake unregister` and `nmake clean` is strongly recommended. You can run both commands combined as `nmake unregister clean` in a single elevated _x64 Native Tools Command Prompt for VS 2019_.
 
 
 ### Testing and Debugging
@@ -71,7 +73,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
 - Builds the Debug version of the eduVPN and Let's Connect! clients.
 - Creates Start Menu shortcuts.
 
-1. Start the _x64 Native Tools Command Prompt for VS 2017_ elevated (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2017_ » _Run as Administrator_).
+1. Start the _x64 Native Tools Command Prompt for VS 2019_ elevated (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2019_ » _Run as Administrator_).
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the initial build and registration using `nmake Register` command. This command will:
    - Build the Debug version.
@@ -83,7 +85,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
 #### Debugging Clients
 
 1. Perform the [initial registration](#initial-registration) described above.
-2. Open the `eduVPN.sln` file (with VS2017).
+2. Open the `eduVPN.sln` file (with VS2019).
 3. _Build_ » _Configuration Manager..._: Select desired active solution and platform. Please note _AnyCPU_ is not supported (yet).
 4. In the _Solution Explorer_ pane, locate _eduVPN.Client_ or _LetsConnect.Client_ project, right click on it, and _Set as StartUp Project_.
 5. _Build_ » _Build Solution_.
@@ -92,7 +94,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
 
 ### Building MSI Packages and EXE Installer
 
-1. Start the _x64 Native Tools Command Prompt for VS 2017_ (_Start_ » _All Programs_ » _Visual Studio 2017_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2017_). x86 build environment can be used if required too. Both versions build all MSI packages and EXE installers
+1. Start the _x64 Native Tools Command Prompt for VS 2019_ (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2019_). x86 build environment can be used if required too. Both versions build all MSI packages and EXE installers
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. Start the MSI build using `nmake Setup` command.
 4. The MSI packages and EXE installers will be saved to the `bin\Setup` folder.
