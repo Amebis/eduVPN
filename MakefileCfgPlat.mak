@@ -11,6 +11,9 @@ MSVC_VERSION = \
 SETUP_TARGET=$(PLAT)
 !IF "$(CFG)" == "Debug"
 SETUP_TARGET=$(SETUP_TARGET)D
+VCPKG_BIN=debug\bin
+!ELSE
+VCPKG_BIN=bin
 !ENDIF
 
 !IF "$(PLAT)" == "x64"
@@ -90,23 +93,23 @@ Build$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
 
-"bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\libcrypto-1_1$(OPENSSL_PLAT).dll"
+"bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\libcrypto-1_1$(OPENSSL_PLAT).dll"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\libssl-1_1$(OPENSSL_PLAT).dll"
+"bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\libssl-1_1$(OPENSSL_PLAT).dll"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\libpkcs11-helper-1.dll"
+"bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\libpkcs11-helper-1.dll"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\lzo2.dll" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\lzo2.dll"
+"bin\$(CFG)\$(PLAT)\lzo2.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\lzo2.dll"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\bin\wintun.dll"
+"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\wintun.dll"
 	copy /y $** $@ > NUL
 
 "bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpn.exe"
