@@ -17,6 +17,11 @@
 <?else?>
     <?error Unknown client?>
 <?endif?>
+<?if $(var.Platform) = "ARM64"?>
+    <?define InstallerVersion=500?>
+<?else?>
+    <?define InstallerVersion=400?>
+<?endif?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product
@@ -29,7 +34,7 @@
 
         <Package
             InstallScope="perMachine"
-            InstallerVersion="400"
+            InstallerVersion="$(var.InstallerVersion)"
             Compressed="yes"
             SummaryCodepage="!(loc.SummaryCodepage)"
             ReadOnly="yes"/>
