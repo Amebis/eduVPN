@@ -2,7 +2,7 @@
 <!--
     eduVPN - VPN for education and research
 
-    Copyright: 2017-2021 The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2022 The Commons Conservancy eduVPN Programme
     SPDX-License-Identifier: GPL-3.0+
 -->
 <WixLocalization
@@ -18,7 +18,7 @@
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1055</String>
     <String Id="SummaryCodepage">1254</String>
-    <String Id="LegalCopyright">Telif hakkı: 2017-2021 The Commons Conservancy eduVPN Programı</String>
+    <String Id="LegalCopyright">Telif hakkı: 2017-2022 The Commons Conservancy eduVPN Programı</String>
 
     <String Id="NewerVersionInstalled">[SimpleProductName] ürününün daha yeni bir sürümü zaten yüklü. Kurulumdan çıkılıyor.</String>
 
