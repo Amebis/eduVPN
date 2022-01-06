@@ -143,7 +143,7 @@
             <MsiPackage
                 Id="$(var.ClientTarget)Client_x64"
                 SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)_x64.msi"
-                InstallCondition="VersionNT64"/>
+                InstallCondition="NativeMachine = 34404 OR VersionNT64 AND NOT NativeMachine"/>
 
             <MsiPackage
                 Id="$(var.ClientTarget)Client_ARM64"
