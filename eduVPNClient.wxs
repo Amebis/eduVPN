@@ -146,7 +146,7 @@
             <Directory Id="ProgramMenuFolder"/>
             <Directory Id="DesktopFolder"/>
 
-            <Merge Id="VC150Redist" SourceFile="$(var.VC150RedistMSM)" DiskId="1" Language="0"/>
+            <Merge Id="VCRedist" SourceFile="$(var.VCRedistMSM)" DiskId="1" Language="0"/>
         </Directory>
 
 
@@ -420,7 +420,7 @@
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
 
-            <MergeRef Id="VC150Redist"/>
+            <MergeRef Id="VCRedist"/>
             <ComponentRef Id="Prism.dll"/>
             <ComponentRef Id="eduEd25519.dll"/>
             <ComponentRef Id="eduEx.dll"/>

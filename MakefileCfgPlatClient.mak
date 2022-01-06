@@ -83,9 +83,9 @@ UnregisterOpenVPNInteractiveServiceSCM ::
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" : \
 	"eduVPNClient.wxs" \
-	"bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
+	"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNClient.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVC150RedistMSM="$(VC142REDIST_MSM)" -out $@ "eduVPNClient.wxs"
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVCRedistMSM="$(VCREDIST_MSM)" -out $@ "eduVPNClient.wxs"
 
 Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj"

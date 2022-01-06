@@ -50,9 +50,9 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
 !ENDIF
 
 !IF "$(CFG)" == "Debug"
-VC142REDIST_MSM=Microsoft_VC142_DebugCRT_$(CLIENT_PLAT).msm
+VCREDIST_MSM=Microsoft_VC142_DebugCRT_$(CLIENT_PLAT).msm
 !ELSE
-VC142REDIST_MSM=Microsoft_VC142_CRT_$(CLIENT_PLAT).msm
+VCREDIST_MSM=Microsoft_VC142_CRT_$(CLIENT_PLAT).msm
 !ENDIF
 
 
@@ -120,7 +120,7 @@ Build$(CFG)$(PLAT) :: \
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN Interactive Service" /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VC142REDIST_MSM)"
+"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VCREDIST_MSM)"
 	copy /y $** $@ > NUL
 
 Clean ::
@@ -131,7 +131,7 @@ Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"                       del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
 	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"                      del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
 	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
-	-if exist "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"               del /f /q "bin\$(CFG)\$(PLAT)\$(VC142REDIST_MSM)"
+	-if exist "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"                  del /f /q "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
 
 
 ######################################################################
