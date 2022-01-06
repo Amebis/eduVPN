@@ -83,7 +83,8 @@ namespace eduVPN.Models.Tests
                 catch (AggregateException ex)
                 {
                     if (ex.InnerException is WebException ex_web &&
-                        (ex_web.Status == WebExceptionStatus.ConnectFailure || // connection refused
+                        (ex_web.Status == WebExceptionStatus.NameResolutionFailure || // DNS resolving failure
+                        ex_web.Status == WebExceptionStatus.ConnectFailure || // connection refused
                         ex_web.Status == WebExceptionStatus.TrustFailure || // expired or invalid server certificate
                         ex_web.Status == WebExceptionStatus.SecureChannelFailure || // TLS failure
                         ex_web.Status == WebExceptionStatus.Timeout)) // server down
