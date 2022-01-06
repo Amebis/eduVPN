@@ -3,7 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.2...HEAD)
 
 - Stable network adapter GUIDs for reusable NLA Public/Private profile assignments
-- OpenVPN updated to 2.5.5-20220106
+- OpenVPN updated to 2.5.5-20220107
 - Windows 10 and 11 on ARM64 support
 
 

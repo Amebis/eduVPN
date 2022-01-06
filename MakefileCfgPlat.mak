@@ -17,17 +17,14 @@ VCPKG_BIN=bin
 !ENDIF
 
 !IF "$(PLAT)" == "x64"
-OPENSSL_PLAT=-x64
 OPENVPN_PLAT=x64
 VCPKG_PLAT=x64
 CLIENT_PLAT=x64
 !ELSEIF "$(PLAT)" == "ARM64"
-OPENSSL_PLAT=-arm64
 OPENVPN_PLAT=ARM64
 VCPKG_PLAT=arm64
 CLIENT_PLAT=x86
 !ELSE
-OPENSSL_PLAT=
 OPENVPN_PLAT=Win32
 VCPKG_PLAT=x86
 CLIENT_PLAT=x86
@@ -39,7 +36,6 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dPlatform="$(PLAT)" \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
 	-dTargetDirClient="bin\$(CFG)\$(CLIENT_PLAT)\\" \
-	-dOpenSSL.Platform="$(OPENSSL_PLAT)" \
 	-dVersionInformational="$(VERSION) $(SETUP_TARGET)"
 !IF "$(PLAT)" == "x64" || "$(PLAT)" == "ARM64"
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
@@ -85,29 +81,9 @@ Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Build$(CFG)$(PLAT) :: \
-	"bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" \
-	"bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" \
-	"bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" \
-	"bin\$(CFG)\$(PLAT)\lzo2.dll" \
 	"bin\$(CFG)\$(PLAT)\wintun.dll" \
 	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
-
-"bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\libcrypto-1_1$(OPENSSL_PLAT).dll"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
-	copy /y $** $@ > NUL
-
-"bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\libssl-1_1$(OPENSSL_PLAT).dll"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
-	copy /y $** $@ > NUL
-
-"bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\libpkcs11-helper-1.dll"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
-	copy /y $** $@ > NUL
-
-"bin\$(CFG)\$(PLAT)\lzo2.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\lzo2.dll"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /q $**
-	copy /y $** $@ > NUL
 
 "bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\wintun.dll"
 	copy /y $** $@ > NUL
@@ -124,14 +100,10 @@ Build$(CFG)$(PLAT) :: \
 	copy /y $** $@ > NUL
 
 Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll" del /f /q "bin\$(CFG)\$(PLAT)\libcrypto-1_1$(OPENSSL_PLAT).dll"
-	-if exist "bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"    del /f /q "bin\$(CFG)\$(PLAT)\libssl-1_1$(OPENSSL_PLAT).dll"
-	-if exist "bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"           del /f /q "bin\$(CFG)\$(PLAT)\libpkcs11-helper-1.dll"
-	-if exist "bin\$(CFG)\$(PLAT)\lzo2.dll"                         del /f /q "bin\$(CFG)\$(PLAT)\lzo2.dll"
-	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"                       del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
-	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"                      del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
-	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe"                  del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
-	-if exist "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"                  del /f /q "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
+	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"      del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"     del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe" del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+	-if exist "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" del /f /q "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
 
 
 ######################################################################
