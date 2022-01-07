@@ -136,13 +136,14 @@ namespace eduVPN.ViewModels.VPN
         /// <inheritdoc/>
         public override bool SuggestRenewal
         {
-            get {
+            get
+            {
                 if (ClientCertificate == null)
                     return false;
                 var now = DateTimeOffset.UtcNow;
                 return
                     (now - ClientCertificate.NotBefore).Ticks >= 0.75 * (ClientCertificate.NotAfter - ClientCertificate.NotBefore).Ticks &&
-                    (ClientCertificate.NotAfter - now).Days < 7;
+                    (ClientCertificate.NotAfter - now).TotalHours <= 24;
             }
         }
 
