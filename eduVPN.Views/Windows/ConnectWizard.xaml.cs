@@ -224,7 +224,7 @@ namespace eduVPN.Views.Windows
                                             case SessionStatusType.Connected:
                                                 // Client connected. Popup the balloon message.
                                                 NotifyIcon.ShowBalloonTip(
-                                                    5000,
+                                                    1000 * 5,
                                                     string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile),
                                                     string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
                                                     System.Windows.Forms.ToolTipIcon.Info);
@@ -235,7 +235,7 @@ namespace eduVPN.Views.Windows
                                                 {
                                                     // Client has been disconnected. Popup the balloon message.
                                                     NotifyIcon.ShowBalloonTip(
-                                                        5000,
+                                                        1000 * 5,
                                                         eduVPN.Properties.Settings.Default.ClientTitle,
                                                         Views.Resources.Strings.SystemTrayBalloonDisconnectedMessage,
                                                         System.Windows.Forms.ToolTipIcon.Warning);
@@ -256,7 +256,7 @@ namespace eduVPN.Views.Windows
                                         if (!WasSessionExpirationWarned)
                                         {
                                             NotifyIcon.ShowBalloonTip(
-                                                5000,
+                                                1000 * 60 * 5,
                                                 string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile.Server),
                                                 string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
                                                 System.Windows.Forms.ToolTipIcon.Info);
@@ -278,7 +278,7 @@ namespace eduVPN.Views.Windows
             {
                 // Auto-reconnecting failed. Popup the balloon message.
                 NotifyIcon.ShowBalloonTip(
-                    10000,
+                    1000 * 60 * 5,
                     string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedTitle, e2.ConnectingServer),
                     string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedMessage, e2.AuthenticatingServer),
                     System.Windows.Forms.ToolTipIcon.Warning);
@@ -367,7 +367,7 @@ namespace eduVPN.Views.Windows
                 {
                     // Notify user that the eduVPN client did not close, but was "minimized" to system tray.
                     NotifyIcon.ShowBalloonTip(
-                        10000,
+                        1000 * 5,
                         eduVPN.Properties.Settings.Default.ClientTitle,
                         Views.Resources.Strings.SystemTrayBalloonHiddenMessage,
                         System.Windows.Forms.ToolTipIcon.Info);
