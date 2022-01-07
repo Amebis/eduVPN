@@ -105,6 +105,7 @@ namespace eduVPN.ViewModels.VPN
                     RaisePropertyChanged(nameof(ValidTo));
                     RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(OfferRenewal));
                     RaisePropertyChanged(nameof(SuggestRenewal));
                 }
             }
@@ -130,6 +131,26 @@ namespace eduVPN.ViewModels.VPN
                 return ClientCertificate != null ?
                     ClientCertificate.NotAfter - DateTimeOffset.UtcNow :
                     TimeSpan.MaxValue;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool OfferRenewal
+        {
+            get
+            {
+                if (ClientCertificate == null)
+                    return false;
+                var now = DateTimeOffset.UtcNow;
+                return
+                    (now - ClientCertificate.NotBefore).TotalMinutes >=
+#if DEBUG
+                        1
+#else
+                        30
+#endif
+                        + 5 /* Servers are issuing certificates with NotBefore 5 minutes in the past. */ &&
+                    (ClientCertificate.NotAfter - now).TotalHours <= 24;
             }
         }
 
@@ -263,6 +284,7 @@ namespace eduVPN.ViewModels.VPN
                 {
                     RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(OfferRenewal));
                     RaisePropertyChanged(nameof(SuggestRenewal));
                     _ShowLog?.RaiseCanExecuteChanged();
                 },

@@ -5,6 +5,7 @@
 - Stable network adapter GUIDs for reusable NLA Public/Private profile assignments
 - OpenVPN updated to 2.5.5-20220107
 - Windows 10 and 11 on ARM64 support
+- Session renewal available 30 min after authentication and 24 hours before expiration
 
 
 ## [2.1.2](https://github.com/Amebis/eduVPN/compare/2.1.1...2.1.2) (2021-12-03)

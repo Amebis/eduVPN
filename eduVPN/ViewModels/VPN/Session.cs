@@ -187,7 +187,12 @@ namespace eduVPN.ViewModels.VPN
         public virtual TimeSpan ExpiresTime { get; } = TimeSpan.MaxValue;
 
         /// <summary>
-        /// Should UI suggest/offer session renewal?
+        /// Should UI offer session renewal?
+        /// </summary>
+        public virtual bool OfferRenewal { get; } = false;
+
+        /// <summary>
+        /// Should UI suggest session renewal?
         /// </summary>
         public virtual bool SuggestRenewal { get; } = false;
 
