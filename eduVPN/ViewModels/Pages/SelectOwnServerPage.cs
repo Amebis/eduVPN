@@ -58,7 +58,8 @@ namespace eduVPN.ViewModels.Pages
                                 srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
                                 await Wizard.AuthorizationPage.TriggerAuthorizationAsync(srv);
                                 Wizard.HomePage.AddOwnServer(srv);
-                                Wizard.CurrentPage = Wizard.HomePage;
+                                Wizard.ConnectionPage.ConnectingServer = srv;
+                                Wizard.CurrentPage = Wizard.ConnectionPage;
                             }
                             catch (OperationCanceledException) { }
                             catch (Exception ex) { Wizard.Error = ex; }

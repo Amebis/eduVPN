@@ -94,7 +94,8 @@ namespace eduVPN.ViewModels.Pages
                             {
                                 await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
                                 Wizard.HomePage.AddInstituteAccessServer(SelectedInstituteAccessServer);
-                                Wizard.CurrentPage = Wizard.HomePage;
+                                Wizard.ConnectionPage.ConnectingServer = SelectedInstituteAccessServer;
+                                Wizard.CurrentPage = Wizard.ConnectionPage;
                                 Query = "";
                             }
                             catch (OperationCanceledException) { }
@@ -154,7 +155,8 @@ namespace eduVPN.ViewModels.Pages
                                 authenticatingServer.OrganizationId = SelectedOrganization.Id;
                                 await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
                                 Wizard.HomePage.SetSecureInternetOrganization(SelectedOrganization);
-                                Wizard.CurrentPage = Wizard.HomePage;
+                                Wizard.ConnectionPage.ConnectingServer = authenticatingServer;
+                                Wizard.CurrentPage = Wizard.ConnectionPage;
                                 Query = "";
                             }
                             catch (OperationCanceledException) { }
@@ -214,7 +216,8 @@ namespace eduVPN.ViewModels.Pages
                             {
                                 await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
                                 Wizard.HomePage.AddOwnServer(SelectedOwnServer);
-                                Wizard.CurrentPage = Wizard.HomePage;
+                                Wizard.ConnectionPage.ConnectingServer = SelectedOwnServer;
+                                Wizard.CurrentPage = Wizard.ConnectionPage;
                                 Query = "";
                             }
                             catch (OperationCanceledException) { }
