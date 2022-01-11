@@ -15,6 +15,7 @@
 - Session renewal available 30 min after authentication and 24 hours before expiration
 - Auto-connect on server add
 - Faster startup
+- Fixes and cleanups
 
 
 ## [2.1.2](https://github.com/Amebis/eduVPN/compare/2.1.1...2.1.2) (2021-12-03)
