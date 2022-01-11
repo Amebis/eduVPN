@@ -4,6 +4,13 @@
 
 - Stable network adapter GUIDs for reusable NLA Public/Private profile assignments
 - OpenVPN updated to 2.5.5-20220107
+    - openvpn 2.5.5 e3bac09f6a128260e23d94463862757b576a12c3
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - MSVC building
+    - Wintun 0.14+ support
+    - net_gateway_ipv6 support
+    - static build
 - Windows 10 and 11 on ARM64 support
 - Session renewal available 30 min after authentication and 24 hours before expiration
 - Auto-connect on server add
@@ -17,6 +24,12 @@
 ## [2.1.1](https://github.com/Amebis/eduVPN/compare/2.1...2.1.1) (2021-12-03)
 
 - OpenVPN updated to 2.5.4-20211202
+    - openvpn 2.5.4 36b3129d47a6dbfcd43ff4773c69618a28eb48bc
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - MSVC building
+    - Wintun 0.14+ support
+    - net_gateway_ipv6 support
 - Wintun updated to 0.14.1
 - Uninstall previous version before installing the new one
 
@@ -34,6 +47,10 @@
 ## [2.0.6](https://github.com/Amebis/eduVPN/compare/2.0.5...2.0.6) (2021-09-03)
 
 - OpenVPN updated to 2.5.3-20210903
+    - openvpn 2.5.3 477781335cbca1aec69a372cbc18bf086155eea1
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - Wintun 0.13+ support
 - Fixes
 
 
@@ -50,6 +67,10 @@
 ## [2.0.3](https://github.com/Amebis/eduVPN/compare/2.0.2...2.0.3) (2021-07-27)
 
 - OpenVPN updated to 2.5.3-20210727
+    - openvpn 2.5.3 6204dc7cb8e1731fc0fdf6c2fcd016f9c049ac69
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - Wintun 0.9+ support revised
 
 
 ## [2.0.2](https://github.com/Amebis/eduVPN/compare/2.0.1...2.0.2) (2021-07-26)
@@ -63,6 +84,10 @@
 
 - Launch client on sign-on and install
 - OpenVPN updated to 2.5.3-20210709
+    - openvpn 2.5.3 12146fbee792455e551b7b422da8a8ba7c9054ff
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - Wintun 0.9+ support
 - GUI refinements
 
 
@@ -80,12 +105,20 @@ None. Testing self-update.
 
 - Switch back to official self-update channel
 - OpenVPN updated to 2.5.2-20210615
+    - openvpn 2.5.2 1601f79bc2c771976a68a708abd11fd024adc4dc
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - Wintun 0.9+ support
 - Wintun updated to 0.11
 
 
 ## [1.255.9](https://github.com/Amebis/eduVPN/compare/1.255.8...1.255.9) (2021-04-22)
 
 - OpenVPN updated to 2.5.2-20210422
+    - openvpn 2.5.2 acf52dda9f4cb117e9d020dd06fccd7ecb90d303
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - Wintun 0.9+ support
 - GUI refinements
 
 
@@ -93,6 +126,10 @@ None. Testing self-update.
 
 - Upgrade to .NET Framework 4.8
 - OpenVPN updated to 2.5.1-20210408
+    - openvpn 2.5.1 acf52dda9f4cb117e9d020dd06fccd7ecb90d303
+    - dead code removed, MSVC warnings resolved
+    - openvpnserv fix unexpected termination
+    - Wintun 0.9+ support
 - Spanish (Latin America) translations
 - Translations updated
 - Auto-reconnect on client restart
@@ -103,6 +140,10 @@ None. Testing self-update.
 ## [1.255.7](https://github.com/Amebis/eduVPN/compare/1.255.6...1.255.7) (2021-03-24)
 
 - OpenVPN updated to 2.5.1-20210322
+    - openvpn 2.5.1 475d17a53eba85591f270008f8b583383a5b9afa
+    - openvpnserv fix event log error reporting
+    - openvpnserv fix unexpected termination
+    - Wintun 0.9+ support
 - Network adapter switched to Wintun
 - Individual MSI packages merged into one (per platform)
 - .wxl setup localization files moved to Install\<language ID>
@@ -112,6 +153,11 @@ None. Testing self-update.
 ## [1.255.6](https://github.com/Amebis/eduVPN/compare/1.255.5...1.255.6) (2021-03-03)
 
 - OpenVPN updated to 2.5.1-20210303
+    - openvpn 2.5.1
+    - openvpnmsica silence adapter creation
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
+    - openvpnserv fix event log error reporting
+    - openvpnserv fix unexpected termination
 - Translations updated
 
 
@@ -124,6 +170,11 @@ None. Testing self-update.
 
 - GUI refinements
 - OpenVPN updated to 2.5.1-20210225
+    - openvpn 2.5.1
+    - openvpnmsica silence adapter creation
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
+    - openvpnserv fix event log error reporting
+    - openvpnserv fix unexpected termination
 - Customizing with .config.local files migrated to registry
 
 
@@ -132,6 +183,11 @@ None. Testing self-update.
 - Support session renewal before it expires
 - GUI refinements
 - OpenVPN updated to 2.5.0-20210217
+    - openvpn 2.5.0 1f61f3f755a84ed9765da744c7b61a35f36c4d4b
+    - openvpnmsica silence adapter creation
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
+    - openvpnserv fix event log error reporting
+    - openvpnserv fix unexpected termination
 - Prism updated to 8.0.0.1909
 - Turkish translation
 - Fixes
@@ -159,22 +215,38 @@ None. Testing self-update.
 ## [1.0.36](https://github.com/Amebis/eduVPN/compare/1.0.35...1.0.36) (2020-12-18)
 
 - OpenVPN updated to 2.5.0-20201217
+    - openvpn 2.5.0 2f2df474158b6c24325a47334fc8b5eb77a69b85
+    - openvpnmsica silence adapter creation
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
+    - openvpnserv fix event log error reporting
+    - openvpnserv fix unexpected termination
 
 
 ## [1.0.35](https://github.com/Amebis/eduVPN/compare/1.0.34...1.0.35) (2020-11-23)
 
 - OpenVPN updated to 2.5.0-20201120
+    - openvpn 2.5.0
+    - openvpnmsica silence adapter creation
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
 
 
 ## [1.0.34](https://github.com/Amebis/eduVPN/compare/1.0.33...1.0.34) (2020-10-05)
 
 - OpenVPN updated to 2.5-20201005
+    - openvpn 2.5_rc2 7b4f53095c761bde8c6b39cf645cade4c1c0c5d4
+    - openvpnmsica silence adapter creation
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
 - TAP-Windows updated to 9.24.5
 
 
 ## [1.0.33](https://github.com/Amebis/eduVPN/compare/1.0.32...1.0.33) (2020-09-24)
 
 - OpenVPN updated to 2.5-20200924
+    - openvpn 2.5_rc1
+    - netsh calls by interface index rather than name
+    - netsh DNSv6 and WINS cleanup on disconnect
+    - openvpnmsica code simplifications, silence adapter creation
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
 - Arab translations included in the setup
 
 
@@ -188,12 +260,21 @@ None. Testing self-update.
 
 - Right-to-left support
 - OpenVPN updated to 2.5-20200918
+    - openvpn 2.5_beta4 a5964e34057bd3a2c0cb232f1abc6feeefdf146e
+    - openvpnmsica code simplifications, silence adapter creation
+    - netsh calls by interface index rather than name
+    - netsh DNSv6 and WINS cleanup on disconnect
+    - openvpnmsica ignore legacy TAP-Windows6 adapters
 - TAP-Windows updated to 9.24.4
 
 
 ## [1.0.30](https://github.com/Amebis/eduVPN/compare/1.0.29...1.0.30) (2020-09-11)
 
 - OpenVPN updated to 2.5-20200904
+    - openvpn 2.5_beta3 d8c037eaff4e87106e8ca798ee4abff522f0ce34
+    - openvpnmsica code simplifications, silence adapter creation
+    - netsh calls by interface index rather than name
+    - netsh DNSv6 and WINS cleanup on disconnect
 - TAP-Windows setup updated to MSI
 - TLS 1.3 support
 - Switch to OpenVPN/OpenSSL certificate management
