@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -73,6 +74,16 @@ namespace eduVPN.Xml
             }
 
             return objWeb;
+        }
+
+        /// <summary>
+        /// Removes all cache entries older than 6 months
+        /// </summary>
+        public void PurgeOldCacheEntries()
+        {
+            var threshold = DateTime.Now.AddMonths(-6);
+            lock (Lock)
+                this.RemoveAll(el => el.Timestamp <= threshold);
         }
 
         #endregion

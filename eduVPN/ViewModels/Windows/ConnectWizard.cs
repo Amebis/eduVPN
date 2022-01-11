@@ -339,6 +339,10 @@ namespace eduVPN.ViewModels.Windows
         {
             var actions = new List<KeyValuePair<Action, int>>();
 
+            actions.Add(new KeyValuePair<Action, int>(
+                Properties.Settings.Default.ResponseCache.PurgeOldCacheEntries,
+                24 * 60 * 60 * 1000)); // Repeat every 24 hours
+
             if (Properties.SettingsEx.Default.ServersDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     DiscoverServers,
