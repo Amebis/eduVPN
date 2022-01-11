@@ -26,8 +26,7 @@ SetupExe :: \
 
 Publish :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION).exe" \
-	"bin\Setup\$(CLIENT_TARGET).windows.json" \
-	"bin\Setup\$(CLIENT_TARGET).windows.json.minisig"
+	"bin\Setup\$(CLIENT_TARGET).windows.json"
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION).exe" : \
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
