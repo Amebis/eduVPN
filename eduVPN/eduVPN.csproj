@@ -82,6 +82,7 @@
     <Compile Include="Xml\InstanceSourceSettingsBase.cs" />
     <Compile Include="Xml\JSONResponseDictionary.cs" />
     <Compile Include="Xml\LocalInstanceSourceSettings.cs" />
+    <Compile Include="Xml\MinisignPublicKey.cs" />
     <Compile Include="Xml\MinisignPublicKeyDictionary.cs" />
     <Compile Include="Xml\ProfileRefList.cs" />
     <Compile Include="Xml\ProfileRef.cs" />

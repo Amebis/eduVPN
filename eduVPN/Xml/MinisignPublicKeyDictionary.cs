@@ -21,7 +21,7 @@ namespace eduVPN.Xml
     /// Serializable Minisign public key list
     /// </summary>
     [Serializable]
-    public class MinisignPublicKeyDictionary : Dictionary<ulong, byte[]>, IXmlSerializable, IRegistrySerializable
+    public class MinisignPublicKeyDictionary : Dictionary<ulong, MinisignPublicKey>, IXmlSerializable, IRegistrySerializable
     {
         #region Constructors
 
@@ -36,7 +36,7 @@ namespace eduVPN.Xml
         /// Constructs a dictionary
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new dictionary</param>
-        public MinisignPublicKeyDictionary(IDictionary<ulong, byte[]> collection) :
+        public MinisignPublicKeyDictionary(IDictionary<ulong, MinisignPublicKey> collection) :
             base(collection)
         {
         }
@@ -49,7 +49,8 @@ namespace eduVPN.Xml
         /// Adds a public key
         /// </summary>
         /// <param name="public_key">Base64 encoded public key to add</param>
-        public void Add(string public_key)
+        /// <param name="supportedAlgorithms">Bitwise mask of supported Minisign algorithms</param>
+        public void Add(string public_key, MinisignPublicKey.AlgorithmMask supportedAlgorithms = MinisignPublicKey.AlgorithmMask.All)
         {
             using (var s = new MemoryStream(Convert.FromBase64String(public_key), false))
             using (var r = new BinaryReader(s))
@@ -57,11 +58,13 @@ namespace eduVPN.Xml
                 if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
                     throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
                 ulong keyId = r.ReadUInt64();
-                var key = new byte[32];
-                if (r.Read(key, 0, 32) != 32)
+                var key = new MinisignPublicKey();
+                key.Value = new byte[32];
+                if (r.Read(key.Value, 0, 32) != 32)
                     throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
                 if (ContainsKey(keyId))
                     throw new ArgumentException(string.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, keyId));
+                key.SupportedAlgorithms = supportedAlgorithms;
                 Add(keyId, key);
             }
         }
@@ -93,10 +96,12 @@ namespace eduVPN.Xml
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "PublicKey")
                 {
+                    string v;
+                    var supportedAlgorithms = ((v = reader["SupportedAlgorithms"]) != null) ? (MinisignPublicKey.AlgorithmMask)int.Parse(v) : MinisignPublicKey.AlgorithmMask.All;
                     while (reader.Read() &&
                         !(reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "PublicKey"))
                         if (reader.NodeType == XmlNodeType.Text)
-                            Add(reader.Value);
+                            Add(reader.Value, supportedAlgorithms);
                 }
             }
         }
@@ -110,6 +115,7 @@ namespace eduVPN.Xml
             foreach (var el in this)
             {
                 writer.WriteStartElement("PublicKey");
+                writer.WriteAttributeString("SupportedAlgorithms", ((int)el.Value.SupportedAlgorithms).ToString());
                 using (var s = new MemoryStream(42))
                 {
                     using (var w = new BinaryWriter(s))
@@ -117,7 +123,7 @@ namespace eduVPN.Xml
                         w.Write('E');
                         w.Write('d');
                         w.Write(el.Key);
-                        w.Write(el.Value);
+                        w.Write(el.Value.Value);
                     }
                     writer.WriteBase64(s.GetBuffer(), 0, (int)s.Length);
                 }
@@ -134,7 +140,13 @@ namespace eduVPN.Xml
             if (key.GetValue(name) is string[] v)
             {
                 foreach (var str in v)
-                    Add(str);
+                {
+                    var fields = str.Split('|');
+                    if (fields.Length == 1)
+                        Add(fields[0]);
+                    else if (fields.Length >= 2)
+                        Add(fields[0], (MinisignPublicKey.AlgorithmMask)int.Parse(fields[1]));
+                }
                 return true;
             }
             return false;

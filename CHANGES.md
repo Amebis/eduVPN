@@ -17,6 +17,7 @@
 - Faster startup
 - Fixes and cleanups
 - Binaries published on GitHub will be Minisigned with [minisign.pub](bin/Setup/minisign.pub) key
+- Minisign signature verification may be configured to accept specific algorithm only
 
 
 ## [2.1.2](https://github.com/Amebis/eduVPN/compare/2.1.1...2.1.2) (2021-12-03)

@@ -30,7 +30,7 @@ To override specific setting, add a value described in this chapter to the `HKEY
 
 ### `ServersDiscoveryPublicKeys` (`REG_MULTI_SZ`)
 
-`ServersDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `ServersDiscovery` URI content is expected to be signed with one of those. Add one Base64 encoded Minisign public key per string/line. Should the sign check not be required (strongly discouraged), set `ServersDiscoveryPublicKeys` to an empty list.
+`ServersDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `ServersDiscovery` URI content is expected to be signed with one of those. Add one `<Base64 encoded public key>[|<algorithm mask>]` per string/line. Should the sign check not be required (strongly discouraged), set `ServersDiscoveryPublicKeys` to an empty list.
 
 Ignored when server discovery is off.
 
@@ -42,7 +42,7 @@ Ignored when server discovery is off.
 
 ### `OrganizationsDiscoveryPublicKeys` (`REG_MULTI_SZ`)
 
-`OrganizationsDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `OrganizationsDiscovery` URI content is expected to be signed with one of those. Add one Base64 encoded Minisign public key per string/line. Should the sign check not be required (strongly discouraged), set `OrganizationsDiscoveryPublicKeys` to an empty list.
+`OrganizationsDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `OrganizationsDiscovery` URI content is expected to be signed with one of those. Add one `<Base64 encoded public key>[|<algorithm mask>]` per string/line. Should the sign check not be required (strongly discouraged), set `OrganizationsDiscoveryPublicKeys` to an empty list.
 
 Ignored when server discovery is off.
 
@@ -54,7 +54,7 @@ Ignored when server discovery is off.
 
 ### `SelfUpdateDiscoveryPublicKeys` (`REG_MULTI_SZ`)
 
-`SelfUpdateDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `SelfUpdateDiscovery` URI content is expected to be signed with one of those. Add one Base64 encoded Minisign public key per string/line. Should the sign check not be required (strongly discouraged), set `SelfUpdateDiscoveryPublicKeys` to an empty list.
+`SelfUpdateDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `SelfUpdateDiscovery` URI content is expected to be signed with one of those. Add one `<Base64 encoded public key>[|<algorithm mask>]` per string/line. Should the sign check not be required (strongly discouraged), set `SelfUpdateDiscoveryPublicKeys` to an empty list.
 
 Ignored when self-updating is off.
 
@@ -76,3 +76,12 @@ Use in combination with `OpenVPNAddOptions` setting to override the OpenVPN opti
 Custom options to be added to provisioned OpenVPN profile configuration at run-time. Those options are appended to the OpenVPN profile configuration file (OVPN) at run-time and should conform to the OVPN file syntax. It can contain multiple strings/lines to specify multiple OpenVPN options.
 
 Use in combination with `OpenVPNRemoveOptions` setting to override the OpenVPN options provisioned by the VPN provider.
+
+
+### Minisign algorithm masks
+
+Value | Algorithm
+------|----------
+1     | legacy
+2     | prehashed
+3     | any

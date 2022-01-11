@@ -235,28 +235,23 @@ namespace eduVPN.Xml
                     {
                         if (r.ReadChar() != 'E')
                             throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                        byte[] payload;
-                        switch (r.ReadChar())
-                        {
-                            case 'd': // PureEdDSA
-                                payload = data;
-                                break;
-
-                            case 'D': // HashedEdDSA
-                                payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
-                                break;
-
-                            default:
-                                throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                        }
+                        var alg = r.ReadChar();
                         ulong keyId = r.ReadUInt64();
                         if (!res.PublicKeys.ContainsKey(keyId))
                             throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
                         var sig = new byte[64];
                         if (r.Read(sig, 0, 64) != 64)
                             throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);
-                        using (eduEd25519.ED25519 key = new eduEd25519.ED25519(res.PublicKeys[keyId]))
-                            if (!key.VerifyDetached(payload, sig))
+                        var key = res.PublicKeys[keyId];
+                        byte[] payload;
+                        if (alg == 'd' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Legacy) != 0)
+                            payload = data;
+                        else if (alg == 'D' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Hashed) != 0)
+                            payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
+                        else
+                            throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
+                        using (eduEd25519.ED25519 k = new eduEd25519.ED25519(key.Value))
+                            if (!k.VerifyDetached(payload, sig))
                                 throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
                     }
                 }
