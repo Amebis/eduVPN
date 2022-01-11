@@ -16,6 +16,7 @@
 - Auto-connect on server add
 - Faster startup
 - Fixes and cleanups
+- Binaries published on GitHub will be Minisigned with [minisign.pub](bin/Setup/minisign.pub) key
 
 
 ## [2.1.2](https://github.com/Amebis/eduVPN/compare/2.1.1...2.1.2) (2021-12-03)
