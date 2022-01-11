@@ -113,7 +113,7 @@ namespace eduVPN.Xml
             {
                 httpRequest.UserAgent = UserAgent;
                 httpRequest.Accept = responseType;
-                if (previous != null && param != null)
+                if (previous != null && param == null)
                 {
                     httpRequest.IfModifiedSince = previous.Timestamp;
 
