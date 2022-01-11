@@ -30,32 +30,41 @@ namespace eduVPN.Xml
         /// Gets sequenced JSON from the given URI.
         /// </summary>
         /// <param name="res">URI and public key for signature verification</param>
+        /// <returns>JSON content</returns>
+        public Response GetSeqFromCache(ResourceRef res)
+        {
+            var key = res.Uri.AbsoluteUri;
+            lock (Lock)
+                return TryGetValue(key, out var value) ? value : null;
+        }
+
+
+        /// <summary>
+        /// Gets sequenced JSON from the given URI.
+        /// </summary>
+        /// <param name="res">URI and public key for signature verification</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>JSON content</returns>
         public Dictionary<string, object> GetSeq(ResourceRef res, CancellationToken ct = default)
         {
-            // Retrieve response from cache (if available).
-            var key = res.Uri.AbsoluteUri;
-            Response responseCache = null;
-            lock (Lock)
-                if (!TryGetValue(key, out responseCache))
-                    responseCache = null;
+            // Retrieve response from cache.
+            var cachedResponse = GetSeqFromCache(res);
 
             // Get JSON.
             var webResponse = Xml.Response.Get(
                 res: res,
                 ct: ct,
-                previous: responseCache);
+                previous: cachedResponse);
 
             // Parse JSON.
             var objWeb = (Dictionary<string, object>)eduJSON.Parser.Parse(webResponse.Value, ct);
 
             if (webResponse.IsFresh)
             {
-                if (responseCache != null)
+                if (cachedResponse != null)
                 {
                     // Verify version.
-                    var objCache = (Dictionary<string, object>)eduJSON.Parser.Parse(responseCache.Value, ct);
+                    var objCache = (Dictionary<string, object>)eduJSON.Parser.Parse(cachedResponse.Value, ct);
                     if (eduJSON.Parser.GetValue(objCache, "v", out long vCache))
                     {
                         if (!eduJSON.Parser.GetValue(objWeb, "v", out long vWeb) ||
@@ -63,14 +72,14 @@ namespace eduVPN.Xml
                         {
                             // Version rollback detected. Revert to cached version.
                             objWeb = objCache;
-                            webResponse = responseCache;
+                            webResponse = cachedResponse;
                         }
                     }
                 }
 
                 // Save response to cache.
                 lock (Lock)
-                    this[key] = webResponse;
+                    this[res.Uri.AbsoluteUri] = webResponse;
             }
 
             return objWeb;

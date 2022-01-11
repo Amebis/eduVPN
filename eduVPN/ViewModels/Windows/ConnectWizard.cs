@@ -344,9 +344,12 @@ namespace eduVPN.ViewModels.Windows
                 24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
             if (Properties.SettingsEx.Default.ServersDiscovery?.Uri != null)
+            {
+                InitServers();
                 actions.Add(new KeyValuePair<Action, int>(
                     DiscoverServers,
                     6 * 60 * 60 * 1000)); // Repeat every 6 hours
+            }
             else
             {
                 Properties.Settings.Default.InstituteAccessServers.Clear();
@@ -355,9 +358,12 @@ namespace eduVPN.ViewModels.Windows
             }
 
             if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri != null)
+            {
+                InitOrganizations();
                 actions.Add(new KeyValuePair<Action, int>(
                     DiscoverOrganizations,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
+            }
             else
             {
                 Properties.Settings.Default.SecureInternetConnectingServer = null;
@@ -400,10 +406,8 @@ namespace eduVPN.ViewModels.Windows
 
         #region Methods
 
-        private void DiscoverServers()
+        private void UpdateServers(Dictionary<string, object> obj)
         {
-            // Load and index list of discovered servers.
-            var obj = Properties.Settings.Default.ResponseCache.GetSeq(Properties.SettingsEx.Default.ServersDiscovery, Abort.Token);
             var dict = new ServerDictionary();
             dict.Load(obj);
             //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
@@ -456,6 +460,21 @@ namespace eduVPN.ViewModels.Windows
             }));
         }
 
+        private void InitServers()
+        {
+            var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.ServersDiscovery);
+            if (response != null)
+                UpdateServers((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
+
+        }
+
+        private void DiscoverServers()
+        {
+            UpdateServers(Properties.Settings.Default.ResponseCache.GetSeq(
+                Properties.SettingsEx.Default.ServersDiscovery,
+                Abort.Token));
+        }
+
         /// <summary>
         /// Returns available institute access server with given base URI
         /// </summary>
@@ -471,10 +490,8 @@ namespace eduVPN.ViewModels.Windows
                     srv is T srvT ? srvT : null;
         }
 
-        private void DiscoverOrganizations()
+        private void UpdateOrganizations(Dictionary<string, object> obj)
         {
-            // Load and index list of discovered organizations.
-            var obj = Properties.Settings.Default.ResponseCache.GetSeq(Properties.SettingsEx.Default.OrganizationsDiscovery, Abort.Token);
             var dict = new OrganizationDictionary();
             dict.Load(obj);
             //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
@@ -495,6 +512,20 @@ namespace eduVPN.ViewModels.Windows
                 DiscoveredOrganizationsChanged?.Invoke(this, EventArgs.Empty);
                 AutoReconnect();
             }));
+        }
+
+        private void InitOrganizations()
+        {
+            var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.OrganizationsDiscovery);
+            if (response != null)
+                UpdateOrganizations((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
+        }
+
+        private void DiscoverOrganizations()
+        {
+            UpdateOrganizations(Properties.Settings.Default.ResponseCache.GetSeq(
+                Properties.SettingsEx.Default.OrganizationsDiscovery,
+                Abort.Token));
         }
 
         /// <summary>
