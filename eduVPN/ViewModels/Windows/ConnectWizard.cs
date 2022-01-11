@@ -403,11 +403,9 @@ namespace eduVPN.ViewModels.Windows
         private void DiscoverServers()
         {
             // Load and index list of discovered servers.
+            var obj = Properties.Settings.Default.ResponseCache.GetSeq(Properties.SettingsEx.Default.ServersDiscovery, Abort.Token);
             var dict = new ServerDictionary();
-            dict.LoadJSON(Xml.Response.Get(
-                res: Properties.SettingsEx.Default.ServersDiscovery,
-                ct: Abort.Token).Value,
-                Abort.Token);
+            dict.Load(obj);
             //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
             //throw new Exception("Server list download failed"); // Mock download failure.
             var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
@@ -476,11 +474,9 @@ namespace eduVPN.ViewModels.Windows
         private void DiscoverOrganizations()
         {
             // Load and index list of discovered organizations.
+            var obj = Properties.Settings.Default.ResponseCache.GetSeq(Properties.SettingsEx.Default.OrganizationsDiscovery, Abort.Token);
             var dict = new OrganizationDictionary();
-            dict.LoadJSON(Xml.Response.Get(
-                res: Properties.SettingsEx.Default.OrganizationsDiscovery,
-                ct: Abort.Token).Value,
-                Abort.Token);
+            dict.Load(obj);
             //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
             //throw new Exception("Organization list download failed"); // Mock download failure.
             var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
