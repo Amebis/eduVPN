@@ -56,9 +56,9 @@ namespace eduVPN.Xml
                 {
                     // Verify version.
                     var objCache = (Dictionary<string, object>)eduJSON.Parser.Parse(responseCache.Value, ct);
-                    if (eduJSON.Parser.GetValue(objCache, "v", out int vCache))
+                    if (eduJSON.Parser.GetValue(objCache, "v", out long vCache))
                     {
-                        if (!eduJSON.Parser.GetValue(objWeb, "v", out int vWeb) ||
+                        if (!eduJSON.Parser.GetValue(objWeb, "v", out long vWeb) ||
                             vWeb <= vCache)
                         {
                             // Version rollback detected. Revert to cached version.
