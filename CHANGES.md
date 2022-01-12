@@ -3,8 +3,8 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.2...HEAD)
 
 - Stable network adapter GUIDs for reusable NLA Public/Private profile assignments
-- OpenVPN updated to 2.5.5-20220107
-    - openvpn 2.5.5 e3bac09f6a128260e23d94463862757b576a12c3
+- OpenVPN updated to 2.5.5-20220112
+    - openvpn 2.5.5 813d1ee3c8b6a914599e4705eee3b8835d606e4b
     - dead code removed, MSVC warnings resolved
     - openvpnserv fix unexpected termination
     - MSVC building
