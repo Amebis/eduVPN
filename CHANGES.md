@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.2...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.3...HEAD)
+
+
+## [2.1.3](https://github.com/Amebis/eduVPN/compare/2.1.2...2.1.3) (2022-01-12)
 
 - Stable network adapter GUIDs for reusable NLA Public/Private profile assignments
 - OpenVPN updated to 2.5.5-20220112
