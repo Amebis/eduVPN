@@ -11,6 +11,7 @@
     - Wintun 0.14+ support
     - net_gateway_ipv6 support
     - static build
+- libsodium updated to 1.0.18-stable
 - Windows 10 and 11 on ARM64 support
 - Session renewal available 30 min after authentication and 24 hours before expiration
 - Auto-connect on server add
