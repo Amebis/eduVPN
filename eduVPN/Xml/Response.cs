@@ -308,8 +308,10 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Value), Value);
-            writer.WriteAttributeString(nameof(LastModified), LastModified.ToString("o"));
-            writer.WriteAttributeString(nameof(ETag), ETag);
+            if (LastModified != DateTimeOffset.MinValue)
+                writer.WriteAttributeString(nameof(LastModified), LastModified.ToString("o"));
+            if (ETag != null)
+                writer.WriteAttributeString(nameof(ETag), ETag);
             writer.WriteAttributeString(nameof(IsFresh), IsFresh.ToString());
         }
 
