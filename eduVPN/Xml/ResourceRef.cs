@@ -39,12 +39,12 @@ namespace eduVPN.Xml
         /// <summary>
         /// Resource URI
         /// </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri { get; private set; }
 
         /// <summary>
         /// Minisign public keys
         /// </summary>
-        public MinisignPublicKeyDictionary PublicKeys { get; set; }
+        public MinisignPublicKeyDictionary PublicKeys { get; private set; }
 
         #endregion
 
@@ -55,6 +55,15 @@ namespace eduVPN.Xml
         /// </summary>
         public ResourceRef()
         {
+        }
+
+        /// <summary>
+        /// Constructs an object
+        /// </summary>
+        /// <param name="uri">Resource URI</param>
+        public ResourceRef(Uri uri)
+        {
+            Uri = uri;
         }
 
         #endregion

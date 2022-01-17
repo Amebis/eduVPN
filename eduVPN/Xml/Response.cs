@@ -55,22 +55,22 @@ namespace eduVPN.Xml
         /// <summary>
         /// String content (JSON, plain text, etc.)
         /// </summary>
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         /// <summary>
         /// Content timestamp
         /// </summary>
-        public DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; private set; }
 
         /// <summary>
         /// Content ETag
         /// </summary>
-        public string ETag { get; set; }
+        public string ETag { get; private set; }
 
         /// <summary>
         /// <c>true</c> - the content was freshly loaded, <c>false</c> - Content not modified
         /// </summary>
-        public bool IsFresh { get; set; }
+        public bool IsFresh { get; private set; }
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace eduVPN.Xml
         /// <returns>Content</returns>
         public static Response Get(Uri uri, NameValueCollection param = null, AccessToken token = null, string responseType = "application/json", Response previous = null, CancellationToken ct = default)
         {
-            return Get(new ResourceRef() { Uri = uri }, param, token, responseType, previous, ct);
+            return Get(new ResourceRef(uri), param, token, responseType, previous, ct);
         }
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace eduVPN.Xml
         /// <summary>
         /// Connecting instance list
         /// </summary>
-        public InstanceRefList ConnectingInstanceList { get; set; } = new InstanceRefList();
+        public InstanceRefList ConnectingInstanceList { get; private set; } = new InstanceRefList();
 
         #endregion
 

@@ -24,17 +24,17 @@ namespace eduVPN.Xml
         /// <summary>
         /// Profile identifier
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Profile name to display in GUI
         /// </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; private set; }
 
         /// <summary>
         /// Popularity factor in the [0.0, 1.0] range (default 1.0)
         /// </summary>
-        public float Popularity { get; set; } = 1.0f;
+        public float Popularity { get; private set; } = 1.0f;
 
         #endregion
 

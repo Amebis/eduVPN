@@ -23,12 +23,12 @@ namespace eduVPN.Xml
         /// <summary>
         /// Connecting server base URI
         /// </summary>
-        public Uri ConnectingServer { get; set; }
+        public Uri ConnectingServer { get; private set; }
 
         /// <summary>
         /// Profile identifier
         /// </summary>
-        public string ProfileId { get; set; }
+        public string ProfileId { get; private set; }
 
         #endregion
 

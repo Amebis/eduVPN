@@ -24,17 +24,17 @@ namespace eduVPN.Xml
         /// <summary>
         /// Instance base URI
         /// </summary>
-        public Uri Base { get; set; }
+        public Uri Base { get; private set; }
 
         /// <summary>
         /// Popularity factor in the [0.0, 1.0] range (default 1.0)
         /// </summary>
-        public float Popularity { get; set; } = 1.0f;
+        public float Popularity { get; private set; } = 1.0f;
 
         /// <summary>
         /// List of profiles
         /// </summary>
-        public ProfileRefList Profiles { get; set; }
+        public ProfileRefList Profiles { get; private set; }
 
         #endregion
 

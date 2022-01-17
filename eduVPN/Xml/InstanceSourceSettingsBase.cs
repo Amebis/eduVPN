@@ -24,7 +24,7 @@ namespace eduVPN.Xml
         /// Last connecting instance
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Uri ConnectingInstance { get; set; }
+        public Uri ConnectingInstance { get; private set; }
 
         #endregion
 

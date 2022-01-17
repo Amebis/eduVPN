@@ -23,7 +23,7 @@ namespace eduVPN.Xml
         /// <summary>
         /// Instance source
         /// </summary>
-        public InstanceSourceSettingsBase InstanceSource { get; set; }
+        public InstanceSourceSettingsBase InstanceSource { get; private set; }
 
         #endregion
 
