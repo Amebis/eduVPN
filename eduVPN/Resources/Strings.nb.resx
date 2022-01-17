@@ -175,15 +175,6 @@
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
     <value>Venter på første svar fra tjeneren...</value>
   </data>
-  <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatisk)</value>
-  </data>
-  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Network interface with {0} Id not found.</value>
-  </data>
-  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Nettverksgrensesnitt {0} finnes ikke.</value>
-  </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Navn på egenskap {0} er ugyldig.</value>
     <comment>{0}=Property name</comment>

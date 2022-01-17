@@ -175,15 +175,6 @@
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
     <value>Esperando la respuesta inicial del servidor...</value>
   </data>
-  <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatico)</value>
-  </data>
-  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Interfaz de red con ID {0} no encontrada.</value>
-  </data>
-  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Interfaz de red {0} no encontrada.</value>
-  </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Nombre de propiedad {0} no es válido.</value>
     <comment>{0}=Property name</comment>

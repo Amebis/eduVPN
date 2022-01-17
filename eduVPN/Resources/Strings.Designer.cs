@@ -214,24 +214,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network interface with {0} Id not found..
-        /// </summary>
-        internal static string ErrorNetworkInterfaceIdNotFound {
-            get {
-                return ResourceManager.GetString("ErrorNetworkInterfaceIdNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Network interface {0} not found..
-        /// </summary>
-        internal static string ErrorNetworkInterfaceNameNotFound {
-            get {
-                return ResourceManager.GetString("ErrorNetworkInterfaceNameNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Loading of profile configuration failed..
         /// </summary>
         internal static string ErrorProfileConfigLoad {
@@ -309,15 +291,6 @@ namespace eduVPN.Resources {
         internal static string ErrorUserDisabled {
             get {
                 return ResourceManager.GetString("ErrorUserDisabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (Automatic).
-        /// </summary>
-        internal static string InterfaceNameAutomatic {
-            get {
-                return ResourceManager.GetString("InterfaceNameAutomatic", resourceCulture);
             }
         }
         

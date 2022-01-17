@@ -175,19 +175,6 @@
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
     <value>Warten auf initiale Antwort vom Server...</value>
   </data>
-  <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(Automatisch)</value>
-  </data>
-  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Netzwerkschnittstelle mit Id {0}nicht gefunden.</value>
-  </data>
-  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Netzwerkschnittstelle {0} nicht gefunden.</value>
-  </data>
-  <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value>Eigenschaftsname {0} ist nicht gültig.</value>
-    <comment>{0}=Property name</comment>
-  </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interaktiver Dienst gescheitert.</value>
   </data>

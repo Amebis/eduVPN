@@ -175,19 +175,6 @@
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
     <value>في انتظار الاستجابة الأولية من الخادم ...</value>
   </data>
-  <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(تلقائي)</value>
-  </data>
-  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>لم يتم العثور على واجهة الشبكة ذات المعرف {0}.</value>
-  </data>
-  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>لم يتم العثور على واجهة الشبكة {0}.</value>
-  </data>
-  <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value>اسم الخاصية {0} غير صالح.</value>
-    <comment>{0}=Property name</comment>
-  </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>فشل الخدمة التفاعلية.</value>
   </data>

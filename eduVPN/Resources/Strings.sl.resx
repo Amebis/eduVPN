@@ -175,15 +175,6 @@
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
     <value>Čakanje na uvodni odgovor strežnika ...</value>
   </data>
-  <data name="InterfaceNameAutomatic" xml:space="preserve">
-    <value>(samodejno)</value>
-  </data>
-  <data name="ErrorNetworkInterfaceIdNotFound" xml:space="preserve">
-    <value>Omrežni vmesnik z ID-jem {0} ni najden.</value>
-  </data>
-  <data name="ErrorNetworkInterfaceNameNotFound" xml:space="preserve">
-    <value>Omrežni vmesnik {0} ni najden.</value>
-  </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
     <value>Ime lastnosti {0} ni veljavno.</value>
     <comment>{0}=Property name</comment>
