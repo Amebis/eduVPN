@@ -90,9 +90,10 @@ namespace eduVPN.Xml
         /// </summary>
         public void PurgeOldCacheEntries()
         {
-            var threshold = DateTimeOffset.Now.AddMonths(-6);
+            var now = DateTimeOffset.Now;
+            var threshold = now.AddMonths(-6);
             lock (Lock)
-                this.RemoveAll(el => el.LastModified <= threshold);
+                this.RemoveAll(el => el.Expires <= now || el.LastModified <= threshold);
         }
 
         #endregion

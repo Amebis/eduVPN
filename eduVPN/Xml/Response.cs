@@ -58,6 +58,11 @@ namespace eduVPN.Xml
         public string Value { get; private set; }
 
         /// <summary>
+        /// Content expiration
+        /// </summary>
+        public DateTimeOffset Expires { get; private set; }
+
+        /// <summary>
         /// Content last modification time
         /// </summary>
         public DateTimeOffset LastModified { get; private set; }
@@ -257,11 +262,11 @@ namespace eduVPN.Xml
                     }
                 }
 
-                return
-                    response is HttpWebResponse webResponse ?
+                return response is HttpWebResponse webResponse ?
                     new Response()
                     {
                         Value = Encoding.UTF8.GetString(data),
+                        Expires = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
                         LastModified = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
                         ETag = webResponse.GetResponseHeader("ETag"),
                         IsFresh = true
@@ -296,6 +301,7 @@ namespace eduVPN.Xml
             string v;
 
             Value = reader[nameof(Value)];
+            Expires = DateTimeOffset.TryParse(reader[nameof(Expires)], out var expires) ? expires : DateTimeOffset.MaxValue;
             LastModified = DateTimeOffset.TryParse(reader[nameof(LastModified)], out var lastModified) ? lastModified : DateTimeOffset.MinValue;
             ETag = reader[nameof(ETag)];
             IsFresh = (v = reader[nameof(IsFresh)]) != null && bool.TryParse(v, out var isFresh) && isFresh;
@@ -308,6 +314,8 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Value), Value);
+            if (Expires != DateTimeOffset.MaxValue)
+                writer.WriteAttributeString(nameof(Expires), Expires.ToString("o"));
             if (LastModified != DateTimeOffset.MinValue)
                 writer.WriteAttributeString(nameof(LastModified), LastModified.ToString("o"));
             if (ETag != null)
