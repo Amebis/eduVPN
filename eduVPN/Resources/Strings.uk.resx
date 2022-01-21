@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>Сервер API відповів помилкою.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Приватний ключ недійсний або не підтримується.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Помилка завантаження API кінцевого обладнання.</value>
   </data>

@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>رد خادم واجهة برمجة التطبيقات بخطأ.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>المفتاح الخاص غير صالح أو شكله غير مدعوم.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>فشل تحميل أطراف واجهة برمجة التطبيقات.</value>
   </data>

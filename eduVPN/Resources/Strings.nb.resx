@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>API-tjeneren svarte med en feil.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Privatnøkkelen er ugyldig eller i et ukjent format.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Innlasting av API-endepunkt feilet.</value>
   </data>

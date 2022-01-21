@@ -187,15 +187,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Private key is invalid or of unsupported format..
-        /// </summary>
-        internal static string ErrorInvalidPrivateKey {
-            get {
-                return ResourceManager.GetString("ErrorInvalidPrivateKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Property name {0} is not valid..
         /// </summary>
         internal static string ErrorInvalidPropertyName {

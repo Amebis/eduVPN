@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -118,58 +117,6 @@ namespace eduVPN.Models
 
                 // If we got here, return the config.
                 return openVPNConfig;
-            }
-            catch (OperationCanceledException) { throw; }
-            catch (WebException ex)
-            {
-                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    // Access token was rejected (401 Unauthorized).
-                    if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
-                    {
-                        // Access token loaded from the settings was rejected.
-                        // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
-                        // Retry with forced access token refresh.
-                        e.ForceRefresh = true;
-                        goto retry;
-                    }
-                }
-                throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex);
-            }
-            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex); }
-        }
-
-        /// <summary>
-        /// Gets profile OpenVPN complete configuration
-        /// </summary>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>Profile configuration</returns>
-        public string GetCompleteOpenVPNConfig(CancellationToken ct = default)
-        {
-            // Get API endpoints.
-            var api = Server.GetEndpoints(ct);
-            var e = new RequestAuthorizationEventArgs("config");
-
-            retry:
-            // Request authentication token.
-            RequestAuthorization?.Invoke(this, e);
-
-            try
-            {
-                // Get complete profile config.
-                var openVPNCompleteConfig = Xml.Response.Get(
-                    uri: api.ProfileCompleteConfig,
-                    param: new NameValueCollection
-                    {
-                        { "display_name", string.Format("{0} Client for Windows", Properties.Settings.Default.ClientTitle) }, // Always use English display_name
-                        { "profile_id", Id }
-                    },
-                    token: e.AccessToken,
-                    responseType: "application/x-openvpn-profile",
-                    ct: ct).Value;
-
-                // If we got here, return the config.
-                return openVPNCompleteConfig;
             }
             catch (OperationCanceledException) { throw; }
             catch (WebException ex)

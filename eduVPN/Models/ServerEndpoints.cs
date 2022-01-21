@@ -44,11 +44,6 @@ namespace eduVPN.Models
         public Uri CheckCertificate { get; private set; }
 
         /// <summary>
-        /// Profile complete OpenVPN configuration URI
-        /// </summary>
-        public Uri ProfileCompleteConfig { get; private set; }
-
-        /// <summary>
         /// Profile OpenVPN configuration URI
         /// </summary>
         public Uri ProfileConfig { get; private set; }
@@ -57,16 +52,6 @@ namespace eduVPN.Models
         /// Profile list URI
         /// </summary>
         public Uri Profiles { get; private set; }
-
-        /// <summary>
-        /// System messages URI
-        /// </summary>
-        public Uri SystemMessages { get; private set; }
-
-        /// <summary>
-        /// User messages URI
-        /// </summary>
-        public Uri UserMessages { get; private set; }
 
         #endregion
 
@@ -128,10 +113,6 @@ namespace eduVPN.Models
                 new Uri(checkCertificate) :
                 BaseUri != null ? AppendPath(BaseUri, "/check_certificate") : null;
 
-            ProfileCompleteConfig = eduJSON.Parser.GetValue(api, "create_config", out string createConfig) ?
-                new Uri(createConfig) :
-                BaseUri != null ? AppendPath(BaseUri, "/create_config") : null;
-
             ProfileConfig = eduJSON.Parser.GetValue(api, "profile_config", out string profileConfig) ?
                 new Uri(profileConfig) :
                 BaseUri != null ? AppendPath(BaseUri, "/profile_config") : null;
@@ -139,14 +120,6 @@ namespace eduVPN.Models
             Profiles = eduJSON.Parser.GetValue(api, "profile_list", out string profileList) ?
                 new Uri(profileList) :
                 BaseUri != null ? AppendPath(BaseUri, "/profile_list") : null;
-
-            SystemMessages = eduJSON.Parser.GetValue(api, "system_messages", out string systemMessages) ?
-                new Uri(systemMessages) :
-                BaseUri != null ? AppendPath(BaseUri, "/system_messages") : null;
-
-            UserMessages = eduJSON.Parser.GetValue(api, "user_messages", out string userMessages) ?
-                new Uri(userMessages) :
-                BaseUri != null ? AppendPath(BaseUri, "/user_messages") : null;
         }
 
         /// <summary>

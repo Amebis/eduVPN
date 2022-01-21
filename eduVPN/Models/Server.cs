@@ -117,20 +117,6 @@ namespace eduVPN.Models
             Base = b;
         }
 
-        /// <summary>
-        /// Constructs the authenticating server
-        /// </summary>
-        /// <param name="authorizationEndpoint">Authorization endpoint URI - used by the client to obtain authorization from the resource owner via user-agent redirection.</param>
-        /// <param name="tokenEndpoint">Token endpoint URI - used by the client to exchange an authorization grant for an access token, typically with client authentication.</param>
-        public Server(Uri authorizationEndpoint, Uri tokenEndpoint) : this()
-        {
-            // Make a guess for the base name - required to identify server (e.g. when caching access tokens).
-            Base = new Uri(authorizationEndpoint.GetLeftPart(UriPartial.Authority) + "/");
-
-            // Set API endpoints manually.
-            Endpoints = new ServerEndpoints(authorizationEndpoint, tokenEndpoint);
-        }
-
         #endregion
 
         #region Methods

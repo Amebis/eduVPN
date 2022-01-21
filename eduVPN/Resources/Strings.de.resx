@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>API-Server antwortete mit einem Fehler.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Privater Schlüssel ist ungültig oder hat ein nicht unterstütztes Format.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Das Laden der API-Endpunkte ist fehlgeschlagen.</value>
   </data>

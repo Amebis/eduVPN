@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>Le serveur API a répondu avec une erreur.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>La clé privée est invalide ou d'un format non supporté. </value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Le chargement des points d'accès de l'API a échoué. </value>
   </data>

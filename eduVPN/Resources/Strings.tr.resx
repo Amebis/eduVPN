@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>API sunucusu bir hata ile yanıt verdi.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Özel anahtar geçersiz veya desteklenmeyen formatta.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>API uç noktalarının yüklenmesi başarısız oldu.</value>
   </data>

@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>API-server antwoordde met een fout.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>Privésleutel is ongeldig of niet ondersteund formaat.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Laden van API endpoints mislukt.</value>
   </data>

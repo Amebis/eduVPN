@@ -56,7 +56,6 @@
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\CertificateCheck.cs" />
     <Compile Include="Models\CertificateCheckException.cs" />
-    <Compile Include="Models\CertificatePrivateKeyException.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
     <Compile Include="Models\ObservableCollectionEx.cs" />
@@ -120,22 +119,44 @@
     <Compile Include="Xml\StartSessionParams.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.ar.resx" />
-    <EmbeddedResource Include="Resources\Strings.de.resx" />
-    <EmbeddedResource Include="Resources\Strings.es.resx" />
-    <EmbeddedResource Include="Resources\Strings.es-ES.resx" />
-    <EmbeddedResource Include="Resources\Strings.nb.resx" />
+    <EmbeddedResource Include="Resources\Strings.ar.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.es-ES.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.nb.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.fr.resx" />
-    <EmbeddedResource Include="Resources\Strings.nl.resx" />
-    <EmbeddedResource Include="Resources\Strings.pt-PT.resx" />
-    <EmbeddedResource Include="Resources\Strings.sl.resx" />
-    <EmbeddedResource Include="Resources\Strings.tr.resx" />
-    <EmbeddedResource Include="Resources\Strings.uk.resx" />
+    <EmbeddedResource Include="Resources\Strings.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.nl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.pt-PT.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.sl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.tr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.uk.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">

@@ -123,9 +123,6 @@
   <data name="ErrorAPIServerReply" xml:space="preserve">
     <value>O servidor da API respondeu com um erro.</value>
   </data>
-  <data name="ErrorInvalidPrivateKey" xml:space="preserve">
-    <value>A chave privada é inválida ou está num formato não suportado.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>O carregamento de extremos da API falhou.</value>
   </data>
