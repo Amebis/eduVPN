@@ -86,14 +86,14 @@ namespace eduVPN.Xml
         }
 
         /// <summary>
-        /// Removes all cache entries older than 6 months
+        /// Removes all cache entries expired or older than 6 months
         /// </summary>
         public void PurgeOldCacheEntries()
         {
             var now = DateTimeOffset.Now;
             var threshold = now.AddMonths(-6);
             lock (Lock)
-                this.RemoveAll(el => el.Expires <= now || el.LastModified <= threshold);
+                this.RemoveAll(el => el.Expires <= now || el.Date <= threshold);
         }
 
         #endregion

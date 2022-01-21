@@ -58,6 +58,11 @@ namespace eduVPN.Xml
         public string Value { get; private set; }
 
         /// <summary>
+        /// Content date
+        /// </summary>
+        public DateTimeOffset Date { get; private set; }
+
+        /// <summary>
         /// Content expiration
         /// </summary>
         public DateTimeOffset Expires { get; private set; }
@@ -266,6 +271,7 @@ namespace eduVPN.Xml
                     new Response()
                     {
                         Value = Encoding.UTF8.GetString(data),
+                        Date = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Date"), out var date) ? date : DateTimeOffset.Now,
                         Expires = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
                         LastModified = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
                         ETag = webResponse.GetResponseHeader("ETag"),
@@ -301,6 +307,7 @@ namespace eduVPN.Xml
             string v;
 
             Value = reader[nameof(Value)];
+            Date = DateTimeOffset.TryParse(reader[nameof(Date)], out var date) ? date : DateTimeOffset.Now;
             Expires = DateTimeOffset.TryParse(reader[nameof(Expires)], out var expires) ? expires : DateTimeOffset.MaxValue;
             LastModified = DateTimeOffset.TryParse(reader[nameof(LastModified)], out var lastModified) ? lastModified : DateTimeOffset.MinValue;
             ETag = reader[nameof(ETag)];
@@ -314,6 +321,7 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Value), Value);
+            writer.WriteAttributeString(nameof(Date), Date.ToString("o"));
             if (Expires != DateTimeOffset.MaxValue)
                 writer.WriteAttributeString(nameof(Expires), Expires.ToString("o"));
             if (LastModified != DateTimeOffset.MinValue)
