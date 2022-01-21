@@ -112,7 +112,7 @@ namespace eduVPN.ViewModels.Pages
                             try
                             {
                                 Trace.TraceInformation("User choose to skip this update.");
-                                Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MaxValue;
+                                Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MaxValue;
                                 if (NavigateBack.CanExecute())
                                     NavigateBack.Execute();
                             }
@@ -239,13 +239,13 @@ namespace eduVPN.ViewModels.Pages
 
             //// Mock the values for testing.
             //InstalledVersion = new Version(1, 0);
-            //Properties.Settings.Default.SelfUpdateLastReminder = DateTime.MinValue;
+            //Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MinValue;
 
             try
             {
                 if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == AvailableVersion &&
-                    (Properties.Settings.Default.SelfUpdateLastReminder == DateTime.MaxValue ||
-                    (DateTime.UtcNow - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
+                    (Properties.Settings.Default.SelfUpdateLastReminder == DateTimeOffset.MaxValue ||
+                    (DateTimeOffset.Now - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
                 {
                     // We already prompted user for this version.
                     // Either user opted not to be reminded of this version update again,
@@ -276,7 +276,7 @@ namespace eduVPN.ViewModels.Pages
                 if (Wizard.NavigateTo.CanExecute(this))
                 {
                     Properties.Settings.Default.SelfUpdateLastVersion = AvailableVersion.ToString();
-                    Properties.Settings.Default.SelfUpdateLastReminder = DateTime.UtcNow;
+                    Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.Now;
                     Wizard.NavigateTo.Execute(this);
                 }
             }));

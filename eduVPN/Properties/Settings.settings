@@ -5,7 +5,7 @@
     <Setting Name="SelfUpdateLastVersion" Description="The last product version user was prompted to update to" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SelfUpdateLastReminder" Description="The last time user was prompted to update at" Type="System.DateTime" Scope="User">
+    <Setting Name="SelfUpdateLastReminder" Description="The last time user was prompted to update at" Type="System.DateTimeOffset" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OpenVPNInteractiveServiceInstance" Description="Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:&#xD;&#xA; - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client.&#xD;&#xA; - &quot;&quot; - Use original OpenVPN installation." Type="System.String" Scope="Application">
