@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.3...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.0...HEAD)
+
+
+## [2.255.0](https://github.com/Amebis/eduVPN/compare/2.1.3...2.255.0) (2022-01-24)
 
 - Switch to eduVPN Server APIv3
 - OpenVPN updated to 2.5.5-20220124
