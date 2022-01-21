@@ -58,9 +58,9 @@ namespace eduVPN.Xml
         public string Value { get; private set; }
 
         /// <summary>
-        /// Content timestamp
+        /// Content last modification time
         /// </summary>
-        public DateTime Timestamp { get; private set; }
+        public DateTimeOffset LastModified { get; private set; }
 
         /// <summary>
         /// Content ETag
@@ -115,7 +115,8 @@ namespace eduVPN.Xml
                 httpRequest.Accept = responseType;
                 if (previous != null && param == null)
                 {
-                    httpRequest.IfModifiedSince = previous.Timestamp;
+                    if (previous.LastModified != DateTimeOffset.MinValue)
+                        httpRequest.IfModifiedSince = previous.LastModified.UtcDateTime;
 
                     if (previous.ETag != null)
                         httpRequest.Headers.Add("If-None-Match", previous.ETag);
@@ -261,7 +262,7 @@ namespace eduVPN.Xml
                     new Response()
                     {
                         Value = Encoding.UTF8.GetString(data),
-                        Timestamp = DateTime.TryParse(webResponse.GetResponseHeader("Last-Modified"), out var timestamp) ? timestamp : default,
+                        LastModified = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
                         ETag = webResponse.GetResponseHeader("ETag"),
                         IsFresh = true
                     } :
@@ -295,7 +296,7 @@ namespace eduVPN.Xml
             string v;
 
             Value = reader[nameof(Value)];
-            Timestamp = DateTime.TryParse(reader[nameof(Timestamp)], out var timestamp) ? timestamp : default;
+            LastModified = DateTimeOffset.TryParse(reader[nameof(LastModified)], out var lastModified) ? lastModified : DateTimeOffset.MinValue;
             ETag = reader[nameof(ETag)];
             IsFresh = (v = reader[nameof(IsFresh)]) != null && bool.TryParse(v, out var isFresh) && isFresh;
         }
@@ -307,7 +308,7 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Value), Value);
-            writer.WriteAttributeString(nameof(Timestamp), Timestamp.ToString("o"));
+            writer.WriteAttributeString(nameof(LastModified), LastModified.ToString("o"));
             writer.WriteAttributeString(nameof(ETag), ETag);
             writer.WriteAttributeString(nameof(IsFresh), IsFresh.ToString());
         }
