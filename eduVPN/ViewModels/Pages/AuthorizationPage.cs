@@ -125,7 +125,7 @@ namespace eduVPN.ViewModels.Pages
                     var key = authenticatingServer.Base.AbsoluteUri;
                     if (Properties.Settings.Default.AccessTokenCache.TryGetValue(key, out var accessToken))
                     {
-                        if (!e.ForceRefresh && DateTime.Now < accessToken.Expires)
+                        if (!e.ForceRefresh && DateTimeOffset.Now < accessToken.Expires)
                         {
                             e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Saved;
                             e.AccessToken = accessToken;

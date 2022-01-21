@@ -45,14 +45,14 @@ namespace eduVPN.ViewModels.Pages
         }
 
         /// <summary>
-        /// Build timestamp (UTC)
+        /// Build timestamp
         /// </summary>
-        public DateTime Build
+        public DateTimeOffset Build
         {
             get
             {
                 // The Builtin class is implemented in Builtin target in Default.targets.
-                return new DateTime(Builtin.CompileTime);
+                return new DateTimeOffset(Builtin.CompileTime, TimeSpan.Zero);
             }
         }
 
