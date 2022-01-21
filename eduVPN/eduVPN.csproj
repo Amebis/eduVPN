@@ -57,7 +57,6 @@
     <Compile Include="Models\CertificateCheck.cs" />
     <Compile Include="Models\CertificateCheckException.cs" />
     <Compile Include="Models\CertificatePrivateKeyException.cs" />
-    <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
     <Compile Include="Models\ObservableCollectionEx.cs" />

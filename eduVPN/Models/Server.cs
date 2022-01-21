@@ -214,22 +214,34 @@ namespace eduVPN.Models
 
                 try
                 {
-                    // Get and load profile list.
-                    var profileList = new ObservableCollection<Profile>();
-                    profileList.LoadJSONAPIResponse(Xml.Response.Get(
-                        uri: api.Profiles,
-                        token: e.AccessToken,
-                        ct: ct).Value, "profile_list", ct);
+                    // Parse JSON string and get inner key/value dictionary.
+                    var obj = eduJSON.Parser.GetValue<Dictionary<string, object>>(
+                        (Dictionary<string, object>)eduJSON.Parser.Parse(Xml.Response.Get(
+                            uri: api.Profiles,
+                            token: e.AccessToken,
+                            ct: ct).Value, ct),
+                        "profile_list");
 
-                    foreach (var profile in profileList)
+                    // Verify response status.
+                    if (eduJSON.Parser.GetValue(obj, "ok", out bool ok) && !ok)
+                        throw new APIErrorException();
+
+                    // Load collection.
+                    if (!(obj["data"] is List<object> obj2))
+                        throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(List<object>), obj.GetType());
+
+                    // Parse all items listed. Don't do it in parallel to preserve the sort order.
+                    var profileList = new ObservableCollection<Profile>();
+                    foreach (var el in obj2)
                     {
-                        // Bind profile to our server.
-                        profile.Server = this;
+                        var profile = new Profile(this);
+                        profile.Load(el);
 
                         // Attach to RequestAuthorization profile events.
                         profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => OnRequestAuthorization(authenticatingServer, e_profile);
-                    }
 
+                        profileList.Add(profile);
+                    }
                     return Profiles = profileList;
                 }
                 catch (OperationCanceledException) { throw; }

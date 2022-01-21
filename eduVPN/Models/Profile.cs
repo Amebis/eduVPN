@@ -24,7 +24,7 @@ namespace eduVPN.Models
         /// <summary>
         /// The server this profile belongs to
         /// </summary>
-        public Server Server { get; set; }
+        public Server Server { get; }
 
         /// <summary>
         /// Profile identifier
@@ -49,17 +49,10 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates a profile
         /// </summary>
-        public Profile() { }
-
-        /// <summary>
-        /// Creates a profile with a given identifier
-        /// </summary>
-        /// <param name="id">Profile identifier</param>
-        /// <param name="displayName">Profile name to display in GUI</param>
-        public Profile(string id, string displayName = null)
+        /// <param name="server">The server this profile belongs to</param>
+        public Profile(Server server)
         {
-            Id = id;
-            DisplayName = displayName;
+            Server = server;
         }
 
         #endregion
