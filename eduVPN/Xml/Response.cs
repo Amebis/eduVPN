@@ -79,6 +79,11 @@ namespace eduVPN.Xml
         public string ETag { get; private set; }
 
         /// <summary>
+        /// Date when token used to obtain this request was authorized
+        /// </summary>
+        public DateTimeOffset Authorized { get; private set; }
+
+        /// <summary>
         /// <c>true</c> - the content was freshly loaded, <c>false</c> - Content not modified
         /// </summary>
         public bool IsFresh { get; private set; }
@@ -340,6 +345,7 @@ namespace eduVPN.Xml
                             Expires = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
                             LastModified = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
                             ETag = httpResponse.GetResponseHeader("ETag"),
+                            Authorized = token != null ? token.Authorized : DateTimeOffset.MinValue,
                             IsFresh = true
                         };
                     }
@@ -348,6 +354,7 @@ namespace eduVPN.Xml
                         return new Response()
                         {
                             Value = Encoding.UTF8.GetString(data), // SECURITY: Securely convert data to a SecureString
+                            Authorized = token != null ? token.Authorized : DateTimeOffset.MinValue,
                             IsFresh = true
                         };
                     }
@@ -386,6 +393,7 @@ namespace eduVPN.Xml
             Expires = DateTimeOffset.TryParse(reader[nameof(Expires)], out var expires) ? expires : DateTimeOffset.MaxValue;
             LastModified = DateTimeOffset.TryParse(reader[nameof(LastModified)], out var lastModified) ? lastModified : DateTimeOffset.MinValue;
             ETag = reader[nameof(ETag)];
+            Authorized = DateTimeOffset.TryParse(reader[nameof(Authorized)], out var authorized) ? authorized : DateTimeOffset.MinValue;
             IsFresh = (v = reader[nameof(IsFresh)]) != null && bool.TryParse(v, out var isFresh) && isFresh;
         }
 
@@ -403,6 +411,8 @@ namespace eduVPN.Xml
                 writer.WriteAttributeString(nameof(LastModified), LastModified.ToString("o"));
             if (ETag != null)
                 writer.WriteAttributeString(nameof(ETag), ETag);
+            if (Authorized != DateTimeOffset.MinValue)
+                writer.WriteAttributeString(nameof(Authorized), Authorized.ToString("o"));
             writer.WriteAttributeString(nameof(IsFresh), IsFresh.ToString());
         }
 

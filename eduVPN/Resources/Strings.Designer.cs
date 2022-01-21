@@ -277,6 +277,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server does not support eduVPN APIv3..
+        /// </summary>
+        internal static string ErrorUnsupportedServerAPI {
+            get {
+                return ResourceManager.GetString("ErrorUnsupportedServerAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minisign public key is not trusted..
         /// </summary>
         internal static string ErrorUntrustedMinisignPublicKey {

@@ -21,7 +21,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Web.Security;
@@ -51,11 +50,6 @@ namespace eduVPN.ViewModels.VPN
         /// OpenVPN working folder
         /// </summary>
         private readonly string WorkingFolder;
-
-        /// <summary>
-        /// Profile configuration
-        /// </summary>
-        private string ProfileConfig;
 
         /// <summary>
         /// Should HOLD hint on reconnect be ignored?
@@ -91,83 +85,6 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         string LogPath { get => WorkingFolder + ConnectionId + ".txt"; }
 
-        /// <summary>
-        /// Client certificate
-        /// </summary>
-        private X509Certificate2 ClientCertificate
-        {
-            get { return _ClientCertificate; }
-            set
-            {
-                if (SetProperty(ref _ClientCertificate, value))
-                {
-                    RaisePropertyChanged(nameof(ValidFrom));
-                    RaisePropertyChanged(nameof(ValidTo));
-                    RaisePropertyChanged(nameof(Expired));
-                    RaisePropertyChanged(nameof(ExpiresTime));
-                    RaisePropertyChanged(nameof(OfferRenewal));
-                    RaisePropertyChanged(nameof(SuggestRenewal));
-                }
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private X509Certificate2 _ClientCertificate;
-
-        /// <inheritdoc/>
-        public override DateTimeOffset ValidFrom { get => ClientCertificate != null ? ClientCertificate.NotBefore : DateTimeOffset.MinValue; }
-
-        /// <inheritdoc/>
-        public override DateTimeOffset ValidTo { get => ClientCertificate != null ? ClientCertificate.NotAfter : DateTimeOffset.MaxValue; }
-
-        /// <inheritdoc/>
-        public override bool Expired { get => ClientCertificate != null && ClientCertificate.NotAfter <= DateTimeOffset.UtcNow; }
-
-        /// <inheritdoc/>
-        public override TimeSpan ExpiresTime
-        {
-            get
-            {
-                return ClientCertificate != null ?
-                    ClientCertificate.NotAfter - DateTimeOffset.UtcNow :
-                    TimeSpan.MaxValue;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool OfferRenewal
-        {
-            get
-            {
-                if (ClientCertificate == null)
-                    return false;
-                var now = DateTimeOffset.UtcNow;
-                return
-                    (now - ClientCertificate.NotBefore).TotalMinutes >=
-#if DEBUG
-                        1
-#else
-                        30
-#endif
-                        + 5 /* Servers are issuing certificates with NotBefore 5 minutes in the past. */ &&
-                    (ClientCertificate.NotAfter - now).TotalHours <= 24;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool SuggestRenewal
-        {
-            get
-            {
-                if (ClientCertificate == null)
-                    return false;
-                var now = DateTimeOffset.UtcNow;
-                return
-                    (now - ClientCertificate.NotBefore).Ticks >= 0.75 * (ClientCertificate.NotAfter - ClientCertificate.NotBefore).Ticks &&
-                    (ClientCertificate.NotAfter - now).TotalHours <= 24;
-            }
-        }
-
         /// <inheritdoc/>
         public override DelegateCommand Renew
         {
@@ -187,11 +104,8 @@ namespace eduVPN.ViewModels.VPN
                                     {
                                         try
                                         {
-                                            var cert = ConnectingProfile.Server.GetClientCertificate(
-                                                Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
-                                                true,
-                                                SessionAndWindowInProgress.Token);
-                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ClientCertificate = cert));
+                                            var config = ConnectingProfile.Connect(true, SessionAndWindowInProgress.Token);
+                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileConfig = config));
                                             ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
                                         }
                                         catch (OperationCanceledException) { }
@@ -294,17 +208,7 @@ namespace eduVPN.ViewModels.VPN
             PreRun.Add(() =>
             {
                 // Get profile's OpenVPN configuration.
-                ProfileConfig = ConnectingProfile.GetOpenVPNConfig(SessionAndWindowInProgress.Token);
-            });
-
-            PreRun.Add(() =>
-            {
-                // Get client certificate.
-                var cert = ConnectingProfile.Server.GetClientCertificate(
-                    Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
-                    false,
-                    SessionAndWindowInProgress.Token);
-                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ClientCertificate = cert));
+                ProfileConfig = ConnectingProfile.Connect(false, SessionAndWindowInProgress.Token);
             });
 
             // Set management session event handlers.
@@ -332,14 +236,6 @@ namespace eduVPN.ViewModels.VPN
             {
                 if (!IgnoreHoldHint && e.WaitHint > 0)
                     SessionAndWindowInProgress.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
-            };
-
-            ManagementSession.RemoteReported += (object sender, RemoteReportedEventArgs e) =>
-            {
-                if (e.Protocol == ProtoType.UDP && Properties.Settings.Default.OpenVPNForceTCP)
-                    e.Action = new RemoteSkipAction();
-                else
-                    e.Action = new RemoteAcceptAction();
             };
 
             ManagementSession.StateReported += (object sender, StateReportedEventArgs e) =>
@@ -436,7 +332,7 @@ namespace eduVPN.ViewModels.VPN
                     switch (e.Message)
                     {
                         case "connection-reset": // Connection was reset.
-                            if (ClientCertificate.NotAfter <= DateTime.Now)
+                            if (ValidTo <= DateTimeOffset.Now)
                             {
                                 // Client certificate expired. Try with a new client certificate then.
                                 goto case "tls-error";
@@ -445,12 +341,9 @@ namespace eduVPN.ViewModels.VPN
 
                         case "auth-failure": // Client certificate was deleted/revoked on the server side, or the user is disabled.
                         case "tls-error": // Client certificate is not compliant with this eduVPN server. Was eduVPN server reinstalled?
-                            // Refresh client certificate.
-                            var cert = ConnectingProfile.Server.GetClientCertificate(
-                                Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
-                                true,
-                                SessionAndWindowInProgress.Token);
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ClientCertificate = cert));
+                            // Refresh configuration.
+                            var config = ConnectingProfile.Connect(true, SessionAndWindowInProgress.Token);
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileConfig = config));
                             IgnoreHoldHint = true;
                             break;
 
@@ -515,7 +408,7 @@ namespace eduVPN.ViewModels.VPN
                                 if (Properties.SettingsEx.Default.OpenVPNRemoveOptions is StringCollection openVPNRemoveOptions)
                                 {
                                     // Remove options on the OpenVPNRemoveOptions list on the fly.
-                                    using (var sr = new StringReader(ProfileConfig))
+                                    using (var sr = new StringReader(ProfileConfig.Value))
                                     {
                                         string inlineTerm = null;
                                         bool inlineRemove = false;
@@ -581,7 +474,7 @@ namespace eduVPN.ViewModels.VPN
                                     }
                                 }
                                 else
-                                    sw.Write(ProfileConfig);
+                                    sw.Write(ProfileConfig.Value);
 
                                 // Append eduVPN Client specific configuration directives.
                                 sw.WriteLine();
@@ -602,11 +495,6 @@ namespace eduVPN.ViewModels.VPN
                                 sw.WriteLine("management-client");
                                 sw.WriteLine("management-hold");
                                 sw.WriteLine("management-query-passwords");
-                                sw.WriteLine("management-query-remote");
-
-                                // Configure client certificate.
-                                sw.WriteLine("cert " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Server.ClientCertificatePath));
-                                sw.WriteLine("key " + eduOpenVPN.Configuration.EscapeParamValue(ConnectingProfile.Server.ClientCertificatePath));
 
                                 // Ask when username/password is denied.
                                 sw.WriteLine("auth-retry interact");
@@ -739,6 +627,10 @@ namespace eduVPN.ViewModels.VPN
                 }
                 finally
                 {
+                    // Inform server we're done.
+                    try { ConnectingProfile.Server.Disconnect(); }
+                    catch { }
+
                     // Delete profile configuration file. If possible.
                     try { File.Delete(ConfigurationPath); }
                     catch { }

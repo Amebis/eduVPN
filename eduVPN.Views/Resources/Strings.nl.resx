@@ -162,9 +162,6 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
-  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Verbind alleen via _TCP</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Gedownload:</value>
   </data>

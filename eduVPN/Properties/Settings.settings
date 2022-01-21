@@ -11,7 +11,7 @@
     <Setting Name="OpenVPNInteractiveServiceInstance" Description="Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:&#xD;&#xA; - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client.&#xD;&#xA; - &quot;&quot; - Use original OpenVPN installation." Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenVPNForceTCP" Description="Always connect using TCP." Type="System.Boolean" Scope="User">
+    <Setting Name="OpenVPNPreferTCP" Description="Prefer connecting using TCP." Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">

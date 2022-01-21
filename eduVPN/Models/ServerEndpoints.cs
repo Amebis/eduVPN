@@ -31,49 +31,22 @@ namespace eduVPN.Models
         /// <summary>
         /// API base URI
         /// </summary>
-        public Uri BaseUri { get; private set; }
+        public Uri API { get; private set; }
 
         /// <summary>
-        /// Create client certificate URI
+        /// Get "Info" from the VPN server, including a list of available profiles
         /// </summary>
-        public Uri CreateCertificate { get; private set; }
+        public Uri Info { get; private set; }
 
         /// <summary>
-        /// Check client certificate URI
+        /// "Connect" to a VPN profile
         /// </summary>
-        public Uri CheckCertificate { get; private set; }
+        public Uri Connect { get; private set; }
 
         /// <summary>
-        /// Profile OpenVPN configuration URI
+        /// "Disconnect" from a VPN profile
         /// </summary>
-        public Uri ProfileConfig { get; private set; }
-
-        /// <summary>
-        /// Profile list URI
-        /// </summary>
-        public Uri Profiles { get; private set; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes server endpoints
-        /// </summary>
-        public ServerEndpoints()
-        {
-        }
-
-        /// <summary>
-        /// Initializes server endpoints
-        /// </summary>
-        /// <param name="authorizationEndpoint">Authorization endpoint URI</param>
-        /// <param name="tokenEndpoint">Token endpoint URI</param>
-        public ServerEndpoints(Uri authorizationEndpoint, Uri tokenEndpoint)
-        {
-            AuthorizationEndpoint = authorizationEndpoint;
-            TokenEndpoint = tokenEndpoint;
-        }
+        public Uri Disconnect { get; private set; }
 
         #endregion
 
@@ -90,9 +63,10 @@ namespace eduVPN.Models
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
             // Get api object.
-            var api = eduJSON.Parser.GetValue<Dictionary<string, object>>(
+            if (!eduJSON.Parser.GetValue(
                 eduJSON.Parser.GetValue<Dictionary<string, object>>(obj2, "api"),
-                "http://eduvpn.org/api#2");
+                "http://eduvpn.org/api#3", out Dictionary<string, object> api))
+                throw new UnsupportedServerAPIException();
 
             // Set authorization endpoint.
             AuthorizationEndpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "authorization_endpoint"));
@@ -101,25 +75,13 @@ namespace eduVPN.Models
             TokenEndpoint = new Uri(eduJSON.Parser.GetValue<string>(api, "token_endpoint"));
 
             // Set other URI(s).
-            BaseUri = eduJSON.Parser.GetValue(api, "api_base_uri", out string apiBaseUri) ?
-                new Uri(apiBaseUri) :
+            API = eduJSON.Parser.GetValue(api, "api_endpoint", out string apiEndpoint) ?
+                new Uri(apiEndpoint) :
                 null;
 
-            CreateCertificate = eduJSON.Parser.GetValue(api, "create_certificate", out string createCertificate) ?
-                new Uri(createCertificate) :
-                BaseUri != null ? AppendPath(BaseUri, "/create_keypair") : null;
-
-            CheckCertificate = eduJSON.Parser.GetValue(api, "check_certificate", out string checkCertificate) ?
-                new Uri(checkCertificate) :
-                BaseUri != null ? AppendPath(BaseUri, "/check_certificate") : null;
-
-            ProfileConfig = eduJSON.Parser.GetValue(api, "profile_config", out string profileConfig) ?
-                new Uri(profileConfig) :
-                BaseUri != null ? AppendPath(BaseUri, "/profile_config") : null;
-
-            Profiles = eduJSON.Parser.GetValue(api, "profile_list", out string profileList) ?
-                new Uri(profileList) :
-                BaseUri != null ? AppendPath(BaseUri, "/profile_list") : null;
+            Info = AppendPath(API, "/info");
+            Connect = AppendPath(API, "/connect");
+            Disconnect = AppendPath(API, "/disconnect");
         }
 
         /// <summary>
@@ -127,7 +89,7 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="uri">Base URI</param>
         /// <param name="path">Path to append to</param>
-        /// <returns></returns>
+        /// <returns>Combined URI</returns>
         private static Uri AppendPath(Uri uri, string path)
         {
             var uriBuilder = new UriBuilder(uri);

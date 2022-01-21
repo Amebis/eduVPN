@@ -162,9 +162,6 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Beschädigte Benutzereinstellungen</value>
   </data>
-  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Verbindung nur über _TCP</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Heruntergeladen:</value>
   </data>

@@ -162,9 +162,6 @@ Se continuar, as suas configurações de utilizador serão reiniciadas para os v
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Configurações de Utilizador Corrompidas</value>
   </data>
-  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>A ligar usando apenas _TCP</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Descarregado:</value>
   </data>

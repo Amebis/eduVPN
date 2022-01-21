@@ -72,18 +72,18 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Always connect using TCP.
+        /// Prefer connecting using TCP.
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Always connect using TCP.")]
+        [global::System.Configuration.SettingsDescriptionAttribute("Prefer connecting using TCP.")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OpenVPNForceTCP {
+        public bool OpenVPNPreferTCP {
             get {
-                return ((bool)(this["OpenVPNForceTCP"]));
+                return ((bool)(this["OpenVPNPreferTCP"]));
             }
             set {
-                this["OpenVPNForceTCP"] = value;
+                this["OpenVPNPreferTCP"] = value;
             }
         }
         

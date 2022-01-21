@@ -162,9 +162,6 @@ The Commons Conservancy eduVPN Programme</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Пошкоджено налаштування користувача</value>
   </data>
-  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>З'єднання тільки за допомогою _TCP.</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Завантажено:</value>
   </data>

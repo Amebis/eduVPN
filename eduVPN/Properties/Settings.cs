@@ -80,6 +80,18 @@ namespace eduVPN.Properties
             set { throw new NotSupportedException("AutoStartProfile is obsolete"); }
         }
 
+        /// <summary>
+        /// Always connect using TCP.
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public bool OpenVPNForceTCP
+        {
+            get { throw new NotSupportedException("OpenVPNForceTCP is obsolete"); }
+            set { throw new NotSupportedException("OpenVPNForceTCP is obsolete"); }
+        }
+
         #endregion
 
         #region Methods
@@ -115,6 +127,10 @@ namespace eduVPN.Properties
                 if (Default.GetPreviousVersion(nameof(AutoStartProfile)) is Xml.StartSessionParams autoStartProfile &&
                     autoStartProfile.ConnectingServer is Uri connectingServerBase)
                     Default.LastSelectedServer = connectingServerBase;
+
+                // Migrate OpenVPNForceTCP setting.
+                if (Default.GetPreviousVersion(nameof(OpenVPNForceTCP)) is bool openVPNForceTCP)
+                    Default.OpenVPNPreferTCP = openVPNForceTCP;
 
 #pragma warning restore 0612
             }

@@ -5,11 +5,12 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net;
 using System.Threading;
-using System.Web;
 
 namespace eduVPN.Models
 {
@@ -34,6 +35,16 @@ namespace eduVPN.Models
         /// Profile name to display in GUI
         /// </summary>
         public string DisplayName { get; private set; }
+
+        /// <summary>
+        /// Does this profile route all traffic thru the tunnel?
+        /// </summary>
+        public bool DefaultGateway { get; private set; }
+
+        /// <summary>
+        /// List of supported VPN protocols
+        /// </summary>
+        public HashSet<VPNProtocol> SupportedProtocols { get; private set; }
 
         /// <summary>
         /// Request authorization event
@@ -88,15 +99,18 @@ namespace eduVPN.Models
         }
 
         /// <summary>
-        /// Gets profile OpenVPN configuration
+        /// Gets configuration for the profile to connect
         /// </summary>
+        /// <param name="forceRefresh">Force client reauthorization</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetOpenVPNConfig(CancellationToken ct = default)
+        public eduVPN.Xml.Response Connect(bool forceRefresh = false, CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Server.GetEndpoints(ct);
             var e = new RequestAuthorizationEventArgs("config");
+            if (forceRefresh)
+                e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
 
             retry:
             // Request authentication token.
@@ -104,19 +118,16 @@ namespace eduVPN.Models
 
             try
             {
-                // Get profile config.
-                var uriBuilder = new UriBuilder(api.ProfileConfig);
-                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-                query["profile_id"] = Id;
-                uriBuilder.Query = query.ToString();
-                var openVPNConfig = Xml.Response.Get(
-                    uri: uriBuilder.Uri,
+                // Get complete profile config.
+                return Xml.Response.Get(
+                    uri: api.Connect,
+                    param: new NameValueCollection {
+                        { "profile_id", Id },
+                        { "prefer_tcp", Properties.Settings.Default.OpenVPNPreferTCP ? "yes" : "no" }
+                    },
                     token: e.AccessToken,
                     responseType: "application/x-openvpn-profile",
-                    ct: ct).Value;
-
-                // If we got here, return the config.
-                return openVPNConfig;
+                    ct: ct);
             }
             catch (OperationCanceledException) { throw; }
             catch (WebException ex)
@@ -132,6 +143,11 @@ namespace eduVPN.Models
                         e.ForceRefresh = true;
                         goto retry;
                     }
+                }
+                if (ex is WebExceptionEx exEx && ex.Response.ContentType == "application/json")
+                {
+                    var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(exEx.ResponseText, ct);
+                    throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad + "\n" + eduJSON.Parser.GetValue<string>(obj, "error"), ex);
                 }
                 throw new AggregateException(Resources.Strings.ErrorProfileConfigLoad, ex);
             }
@@ -158,6 +174,23 @@ namespace eduVPN.Models
             // Set display name.
             var displayName = new Dictionary<string, string>();
             DisplayName = eduJSON.Parser.GetDictionary(obj2, "display_name", displayName) ? displayName.GetLocalized(Id) : Id;
+
+            DefaultGateway = eduJSON.Parser.GetValue(obj2, "default_gateway", out bool defaultGateway) && defaultGateway;
+
+            // Set supported protocols.
+            if (eduJSON.Parser.GetValue(obj2, "vpn_proto_list", out List<object> vpnProtoList))
+            {
+                SupportedProtocols = new HashSet<VPNProtocol>();
+                foreach (var e in vpnProtoList)
+                    if (e is string str)
+                        switch (str)
+                        {
+                            case "openvpn": SupportedProtocols.Add(VPNProtocol.OpenVPN); break;
+                            case "wireguard": SupportedProtocols.Add(VPNProtocol.WireGuard); break;
+                        }
+            }
+            else
+                SupportedProtocols = null;
         }
 
         #endregion

@@ -162,9 +162,6 @@ Si continúa, su configuración de usuario se restablecerá a la predeterminada.
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Configuraciones de Usuario Corruptas</value>
   </data>
-  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Conectar solo usando _TCP</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Descargado:</value>
   </data>

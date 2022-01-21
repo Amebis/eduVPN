@@ -615,11 +615,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect using _TCP only.
+        ///   Looks up a localized string similar to Prefer _TCP connection.
         /// </summary>
-        public static string SettingsPageForceTCPLabel {
+        public static string SettingsPagePreferTCPLabel {
             get {
-                return ResourceManager.GetString("SettingsPageForceTCPLabel", resourceCulture);
+                return ResourceManager.GetString("SettingsPagePreferTCPLabel", resourceCulture);
             }
         }
         

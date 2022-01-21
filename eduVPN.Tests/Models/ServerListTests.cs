@@ -80,6 +80,10 @@ namespace eduVPN.Models.Tests
                 {
                     new Models.ServerEndpoints().LoadJSON(Xml.Response.Get(uriBuilder.Uri).Value);
                 }
+                catch (UnsupportedServerAPIException)
+                {
+                    // Ignore non-APIv3 servers.
+                }
                 catch (AggregateException ex)
                 {
                     if (ex.InnerException is WebException ex_web &&

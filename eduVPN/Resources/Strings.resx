@@ -237,4 +237,7 @@
   <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
     <value>Too many HTTP redirects.</value>
   </data>
+  <data name="ErrorUnsupportedServerAPI" xml:space="preserve">
+    <value>Server does not support eduVPN APIv3.</value>
+  </data>
 </root>

@@ -43,6 +43,8 @@
     <Compile Include="Models\AutoReconnectFailedEventArgs.cs" />
     <Compile Include="Models\INamedEntity.cs" />
     <Compile Include="Models\InstituteAccessServer.cs" />
+    <Compile Include="Models\UnsupportedServerAPIException.cs" />
+    <Compile Include="Models\VPNProtocol.cs" />
     <Compile Include="Properties\ApplicationSettingsBaseEx.cs" />
     <Compile Include="Properties\IRegistrySerializable.cs" />
     <Compile Include="Models\SecureInternetServer.cs" />

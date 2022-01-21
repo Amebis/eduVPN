@@ -162,9 +162,6 @@ Program Commons Conservancy eduVPN</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Pokvarjene uporabniške nastavitve</value>
   </data>
-  <data name="SettingsPageForceTCPLabel" xml:space="preserve">
-    <value>Poveži samo s _TCP</value>
-  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Dol:</value>
   </data>

@@ -63,6 +63,29 @@ namespace eduVPN.ViewModels.VPN
         public Profile ConnectingProfile { get; }
 
         /// <summary>
+        /// Profile configuration
+        /// </summary>
+        protected eduVPN.Xml.Response ProfileConfig
+        {
+            get { return _ProfileConfig; }
+            set
+            {
+                if (SetProperty(ref _ProfileConfig, value))
+                {
+                    RaisePropertyChanged(nameof(ValidFrom));
+                    RaisePropertyChanged(nameof(ValidTo));
+                    RaisePropertyChanged(nameof(Expired));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(OfferRenewal));
+                    RaisePropertyChanged(nameof(SuggestRenewal));
+                }
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private eduVPN.Xml.Response _ProfileConfig;
+
+        /// <summary>
         /// Client connection state
         /// </summary>
         public SessionStatusType State
@@ -168,33 +191,65 @@ namespace eduVPN.ViewModels.VPN
         /// Session valid from date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MinValue</c> when unknown or not available</remarks>
-        public virtual DateTimeOffset ValidFrom { get; } = DateTimeOffset.MinValue;
+        public DateTimeOffset ValidFrom { get => ProfileConfig != null ? ProfileConfig.Authorized : DateTimeOffset.MinValue; }
 
         /// <summary>
         /// Session expiration date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MaxValue</c> when unknown or not available</remarks>
-        public virtual DateTimeOffset ValidTo { get; } = DateTimeOffset.MaxValue;
+        public DateTimeOffset ValidTo { get => ProfileConfig != null ? ProfileConfig.Expires : DateTimeOffset.MaxValue; }
 
         /// <summary>
         /// Is the session expired?
         /// </summary>
-        public virtual bool Expired { get; } = false;
+        public bool Expired { get => ValidTo <= DateTimeOffset.Now; }
 
         /// <summary>
         /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
         /// </summary>
-        public virtual TimeSpan ExpiresTime { get; } = TimeSpan.MaxValue;
+        public TimeSpan ExpiresTime
+        {
+            get
+            {
+                var v = ValidTo;
+                return v != DateTimeOffset.MaxValue ?
+                    v - DateTimeOffset.Now :
+                    TimeSpan.MaxValue;
+            }
+        }
 
         /// <summary>
         /// Should UI offer session renewal?
         /// </summary>
-        public virtual bool OfferRenewal { get; } = false;
+        public bool OfferRenewal
+        {
+            get
+            {
+                DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
+                return
+#if DEBUG
+                    (now - from).TotalMinutes >= 1;
+#else
+                    (now - from).TotalMinutes >= 30 &&
+                    (to - now).TotalHours <= 24;
+#endif
+            }
+        }
 
         /// <summary>
         /// Should UI suggest session renewal?
         /// </summary>
-        public virtual bool SuggestRenewal { get; } = false;
+        public bool SuggestRenewal
+        {
+            get
+            {
+                DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
+                return
+                    from != DateTimeOffset.MinValue && to != DateTimeOffset.MaxValue &&
+                    (now - from).Ticks >= 0.75 * (to - from).Ticks &&
+                    (to - now).TotalHours <= 24;
+            }
+        }
 
         /// <summary>
         /// Renews and restarts the session
