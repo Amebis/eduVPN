@@ -114,62 +114,111 @@ namespace eduVPN.Xml
         /// <returns>Content</returns>
         public static Response Get(ResourceRef res, NameValueCollection param = null, AccessToken token = null, string responseType = "application/json", Response previous = null, CancellationToken ct = default)
         {
-            // Create request.
-            var request = WebRequest.Create(res.Uri);
-            request.CachePolicy = CachePolicy;
-            request.Proxy = null;
-            if (token != null)
-                token.AddToRequest(request);
-            if (request is HttpWebRequest httpRequest)
-            {
-                httpRequest.UserAgent = UserAgent;
-                httpRequest.Accept = responseType;
-                if (previous != null && param == null)
-                {
-                    if (previous.LastModified != DateTimeOffset.MinValue)
-                        httpRequest.IfModifiedSince = previous.LastModified.UtcDateTime;
-
-                    if (previous.ETag != null)
-                        httpRequest.Headers.Add("If-None-Match", previous.ETag);
-                }
-            }
-
-            if (param != null)
-            {
-                // Send data.
-                UTF8Encoding utf8 = new UTF8Encoding();
-                var binBody = Encoding.ASCII.GetBytes(string.Join("&", param.Cast<string>().Select(e => string.Format("{0}={1}", HttpUtility.UrlEncode(e, utf8), HttpUtility.UrlEncode(param[e], utf8)))));
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = binBody.Length;
-                try
-                {
-                    using (var requestStream = request.GetRequestStream())
-                        requestStream.Write(binBody, 0, binBody.Length, ct);
-                }
-                catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
-            }
-
-            ct.ThrowIfCancellationRequested();
-
-            // Wait for data to start comming in.
+            WebRequest request;
             WebResponse response;
-            try { response = request.GetResponse(); }
-            catch (WebException ex)
+            var uri = res.Uri;
+
+            for (var redirectHop = 0; ; redirectHop++)
             {
-                // When the content was not modified, return the previous one.
-                if (ex.Response is HttpWebResponse httpResponse)
+                ct.ThrowIfCancellationRequested();
+
+                // Create request.
+                request = WebRequest.Create(uri);
+                request.CachePolicy = CachePolicy;
+                request.Proxy = null;
+                if (token != null)
+                    token.AddToRequest(request);
+                if (request is HttpWebRequest httpRequest)
                 {
-                    if (httpResponse.StatusCode == HttpStatusCode.NotModified)
+                    httpRequest.UserAgent = UserAgent;
+                    httpRequest.Accept = responseType;
+                    if (previous != null && param == null)
                     {
-                        previous.IsFresh = false;
-                        return previous;
+                        if (previous.LastModified != DateTimeOffset.MinValue)
+                            httpRequest.IfModifiedSince = previous.LastModified.UtcDateTime;
+
+                        if (previous.ETag != null)
+                            httpRequest.Headers.Add("If-None-Match", previous.ETag);
                     }
 
-                    throw new WebExceptionEx(ex, ct);
+                    // Do HTTP redirection manually to refuse non-https schemes as per APIv3 requirement.
+                    // Note: By turning AllowAutoRedirect to false, request.GetResponse() will no longer throw on 3xx status.
+                    httpRequest.AllowAutoRedirect = false;
                 }
 
-                throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
+                if (param != null)
+                {
+                    // Send data.
+                    UTF8Encoding utf8 = new UTF8Encoding();
+                    var binBody = Encoding.ASCII.GetBytes(string.Join("&", param.Cast<string>().Select(e => string.Format("{0}={1}", HttpUtility.UrlEncode(e, utf8), HttpUtility.UrlEncode(param[e], utf8)))));
+                    request.Method = "POST";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.ContentLength = binBody.Length;
+                    try
+                    {
+                        using (var requestStream = request.GetRequestStream())
+                            requestStream.Write(binBody, 0, binBody.Length, ct);
+                    }
+                    catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
+                }
+
+                ct.ThrowIfCancellationRequested();
+
+                // Wait for data to start comming in.
+                try
+                {
+                    response = request.GetResponse();
+                    if (response is HttpWebResponse httpResponse)
+                    {
+                        switch (httpResponse.StatusCode)
+                        {
+                            case HttpStatusCode.OK:
+                            case HttpStatusCode.Created:
+                            case HttpStatusCode.Accepted:
+                            case HttpStatusCode.NonAuthoritativeInformation:
+                            case HttpStatusCode.NoContent:
+                            case HttpStatusCode.ResetContent:
+                            case HttpStatusCode.PartialContent:
+                                break;
+
+                            case HttpStatusCode.MovedPermanently:
+                            case HttpStatusCode.TemporaryRedirect:
+                                // Redirect using the same method.
+                                if (redirectHop >= (request as HttpWebRequest).MaximumAutomaticRedirections)
+                                    throw new HttpTooMayRedirectsException();
+                                uri = new Uri(uri, httpResponse.GetResponseHeader("Location"));
+                                if (uri.Scheme != "https")
+                                    throw new HttpRedirectToUnsafeUriException();
+                                continue;
+
+                            case HttpStatusCode.Found:
+                            case HttpStatusCode.SeeOther:
+                                // Redirect using GET method.
+                                if (redirectHop >= (request as HttpWebRequest).MaximumAutomaticRedirections)
+                                    throw new HttpTooMayRedirectsException();
+                                uri = new Uri(uri, httpResponse.GetResponseHeader("Location"));
+                                if (uri.Scheme != "https")
+                                    throw new HttpRedirectToUnsafeUriException();
+                                param = null;
+                                continue;
+
+                            case HttpStatusCode.NotModified:
+                                // When the content was not modified, return the previous one.
+                                previous.IsFresh = false;
+                                return previous;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                }
+                catch (WebException ex)
+                {
+                    if (ex.Response is HttpWebResponse httpResponse)
+                        throw new WebExceptionEx(ex, ct);
+                    throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
+                }
+                break;
             }
 
             ct.ThrowIfCancellationRequested();

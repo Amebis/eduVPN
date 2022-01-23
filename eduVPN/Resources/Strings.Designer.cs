@@ -133,6 +133,24 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HTTP server redirected to an unsafe URI..
+        /// </summary>
+        internal static string ErrorHttpRedirectToUnsafeUri {
+            get {
+                return ResourceManager.GetString("ErrorHttpRedirectToUnsafeUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many HTTP redirects..
+        /// </summary>
+        internal static string ErrorHttpTooMayRedirects {
+            get {
+                return ResourceManager.GetString("ErrorHttpTooMayRedirects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installer file not available. Updating aborted..
         /// </summary>
         internal static string ErrorInstallerFileUnavailable {

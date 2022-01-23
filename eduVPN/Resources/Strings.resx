@@ -231,4 +231,10 @@
   <data name="ErrorSelfUpdateDetection" xml:space="preserve">
     <value>Detecting self-update failed.</value>
   </data>
+  <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
+    <value>HTTP server redirected to an unsafe URI.</value>
+  </data>
+  <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
+    <value>Too many HTTP redirects.</value>
+  </data>
 </root>

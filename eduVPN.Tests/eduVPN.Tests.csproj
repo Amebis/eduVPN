@@ -67,6 +67,7 @@
     <Compile Include="Xml\MinisignPublicKeyDictionaryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xml\MinisignVerifyTests.cs" />
+    <Compile Include="Xml\ResponseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

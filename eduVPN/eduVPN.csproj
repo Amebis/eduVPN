@@ -74,6 +74,8 @@
     <Compile Include="ViewModels\VPN\OpenVPNException.cs" />
     <Compile Include="Xml\AccessTokenDictionary.cs" />
     <Compile Include="Xml\Dictionary.cs" />
+    <Compile Include="Xml\HttpRedirectToUnsafeUriException.cs" />
+    <Compile Include="Xml\HttpTooMayRedirectsException.cs" />
     <Compile Include="Xml\InstanceRef.cs" />
     <Compile Include="Xml\InstanceRefList.cs" />
     <Compile Include="Xml\InstanceSourceSettings.cs" />
