@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
@@ -13,7 +12,7 @@ using System.Security;
 using System.Text;
 using System.Xml;
 
-namespace eduVPN.Tests.Xml
+namespace eduVPN.Xml.Tests
 {
     [TestClass]
     public class MinisignVerifyTests
@@ -30,7 +29,7 @@ namespace eduVPN.Tests.Xml
                 xmlReader.Read();
             var source = new ResourceRef();
             source.ReadXml(xmlReader);
-            eduVPN.Xml.Response.Get(source);
+            Response.Get(source);
 
             xmlReader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(@"<ResourceRef Uri=""../../Setup/eduVPN.windows.json"">
 						<MinisignPublicKeyDictionary Key=""PublicKeys"">
@@ -41,7 +40,7 @@ namespace eduVPN.Tests.Xml
                 xmlReader.Read();
             source = new ResourceRef();
             source.ReadXml(xmlReader);
-            Assert.ThrowsException<ArgumentException>(() => eduVPN.Xml.Response.Get(source));
+            Assert.ThrowsException<ArgumentException>(() => Response.Get(source));
 
             xmlReader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(@"<ResourceRef Uri=""../../Setup/eduVPN.windows.json"">
 						<MinisignPublicKeyDictionary Key=""PublicKeys"">
@@ -52,7 +51,7 @@ namespace eduVPN.Tests.Xml
                 xmlReader.Read();
             source = new ResourceRef();
             source.ReadXml(xmlReader);
-            Assert.ThrowsException<SecurityException>(() => eduVPN.Xml.Response.Get(source));
+            Assert.ThrowsException<SecurityException>(() => Response.Get(source));
         }
     }
 }
