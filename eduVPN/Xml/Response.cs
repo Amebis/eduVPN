@@ -176,7 +176,7 @@ namespace eduVPN.Xml
             using (response)
             {
                 // Read the data.
-                var data = new byte[0];
+                var data = Array.Empty<byte>();
                 using (var stream = response.GetResponseStream())
                 {
                     var buffer = new byte[1048576];
