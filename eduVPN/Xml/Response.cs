@@ -267,21 +267,30 @@ namespace eduVPN.Xml
                     }
                 }
 
-                return response is HttpWebResponse webResponse ?
-                    new Response()
+                if (response is HttpWebResponse httpResponse)
+                {
+                    var charset = httpResponse.CharacterSet;
+                    var encoding = !string.IsNullOrEmpty(charset) ?
+                        Encoding.GetEncoding(charset) :
+                        Encoding.UTF8;
+                    return new Response()
                     {
-                        Value = Encoding.UTF8.GetString(data),
-                        Date = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Date"), out var date) ? date : DateTimeOffset.Now,
-                        Expires = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
-                        LastModified = DateTimeOffset.TryParse(webResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
-                        ETag = webResponse.GetResponseHeader("ETag"),
+                        Value = encoding.GetString(data),
+                        Date = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Date"), out var date) ? date : DateTimeOffset.Now,
+                        Expires = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
+                        LastModified = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
+                        ETag = httpResponse.GetResponseHeader("ETag"),
                         IsFresh = true
-                    } :
-                    new Response()
+                    };
+                }
+                else
+                {
+                    return new Response()
                     {
                         Value = Encoding.UTF8.GetString(data),
                         IsFresh = true
                     };
+                }
             }
         }
 
