@@ -6,6 +6,7 @@
 */
 
 using eduEx.Async;
+using eduEx.System;
 using eduOAuth;
 using System;
 using System.Collections.Specialized;
@@ -177,119 +178,135 @@ namespace eduVPN.Xml
             {
                 // Read the data.
                 var data = Array.Empty<byte>();
-                using (var stream = response.GetResponseStream())
+                try
                 {
-                    var buffer = new byte[1048576];
-                    for (; ; )
+                    using (var stream = response.GetResponseStream())
                     {
-                        // Read data chunk.
-                        var count = stream.Read(buffer, 0, buffer.Length, ct);
-                        if (count == 0)
-                            break;
-
-                        // Append it to the data.
-                        var newData = new byte[data.LongLength + count];
-                        Array.Copy(data, newData, data.LongLength);
-                        Array.Copy(buffer, 0, newData, data.LongLength, count);
-                        data = newData;
-                    }
-                }
-
-                if (res.PublicKeys != null)
-                {
-                    // Generate signature URI.
-                    var uriBuilderSig = new UriBuilder(res.Uri);
-                    uriBuilderSig.Path += ".minisig";
-
-                    // Create signature request.
-                    request = WebRequest.Create(uriBuilderSig.Uri);
-                    request.CachePolicy = CachePolicy;
-                    request.Proxy = null;
-                    if (token != null)
-                        token.AddToRequest(request);
-                    if (request is HttpWebRequest httpRequestSig)
-                    {
-                        httpRequestSig.UserAgent = UserAgent;
-                        httpRequestSig.Accept = "text/plain";
-                    }
-
-                    // Read the Minisign signature.
-                    byte[] signature = null;
-                    try
-                    {
-                        using (var responseSig = request.GetResponse())
-                        using (var streamSig = responseSig.GetResponseStream())
+                        var buffer = new byte[1048576];
+                        try
                         {
-                            ct.ThrowIfCancellationRequested();
-
-                            using (var readerSig = new StreamReader(streamSig))
+                            for (; ; )
                             {
-                                foreach (var l in readerSig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
-                                {
-                                    if (l.Trim().StartsWith($"untrusted comment:"))
-                                        continue;
-                                    signature = Convert.FromBase64String(l);
+                                // Read data chunk.
+                                var count = stream.Read(buffer, 0, buffer.Length, ct);
+                                if (count == 0)
                                     break;
-                                }
-                                if (signature == null)
-                                    throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
+
+                                // Append it to the data.
+                                var newData = new byte[data.LongLength + count];
+                                Array.Copy(data, newData, data.LongLength);
+                                data.Clear(0, data.LongLength);
+                                Array.Copy(buffer, 0, newData, data.LongLength, count);
+                                data = newData;
                             }
                         }
+                        finally
+                        {
+                            buffer.Clear(0, buffer.Length);
+                        }
                     }
-                    catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
 
-                    ct.ThrowIfCancellationRequested();
-
-                    // Verify Minisign signature.
-                    using (var s = new MemoryStream(signature, false))
-                    using (var r = new BinaryReader(s))
+                    if (res.PublicKeys != null)
                     {
-                        if (r.ReadChar() != 'E')
-                            throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                        var alg = r.ReadChar();
-                        ulong keyId = r.ReadUInt64();
-                        if (!res.PublicKeys.ContainsKey(keyId))
-                            throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
-                        var sig = new byte[64];
-                        if (r.Read(sig, 0, 64) != 64)
-                            throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);
-                        var key = res.PublicKeys[keyId];
-                        byte[] payload;
-                        if (alg == 'd' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Legacy) != 0)
-                            payload = data;
-                        else if (alg == 'D' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Hashed) != 0)
-                            payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
-                        else
-                            throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                        using (eduEd25519.ED25519 k = new eduEd25519.ED25519(key.Value))
-                            if (!k.VerifyDetached(payload, sig))
-                                throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
+                        // Generate signature URI.
+                        var uriBuilderSig = new UriBuilder(res.Uri);
+                        uriBuilderSig.Path += ".minisig";
+
+                        // Create signature request.
+                        request = WebRequest.Create(uriBuilderSig.Uri);
+                        request.CachePolicy = CachePolicy;
+                        request.Proxy = null;
+                        if (token != null)
+                            token.AddToRequest(request);
+                        if (request is HttpWebRequest httpRequestSig)
+                        {
+                            httpRequestSig.UserAgent = UserAgent;
+                            httpRequestSig.Accept = "text/plain";
+                        }
+
+                        // Read the Minisign signature.
+                        byte[] signature = null;
+                        try
+                        {
+                            using (var responseSig = request.GetResponse())
+                            using (var streamSig = responseSig.GetResponseStream())
+                            {
+                                ct.ThrowIfCancellationRequested();
+
+                                using (var readerSig = new StreamReader(streamSig))
+                                {
+                                    foreach (var l in readerSig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                                    {
+                                        if (l.Trim().StartsWith($"untrusted comment:"))
+                                            continue;
+                                        signature = Convert.FromBase64String(l);
+                                        break;
+                                    }
+                                    if (signature == null)
+                                        throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
+                                }
+                            }
+                        }
+                        catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
+
+                        ct.ThrowIfCancellationRequested();
+
+                        // Verify Minisign signature.
+                        using (var s = new MemoryStream(signature, false))
+                        using (var r = new BinaryReader(s))
+                        {
+                            if (r.ReadChar() != 'E')
+                                throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
+                            var alg = r.ReadChar();
+                            ulong keyId = r.ReadUInt64();
+                            if (!res.PublicKeys.ContainsKey(keyId))
+                                throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
+                            var sig = new byte[64];
+                            if (r.Read(sig, 0, 64) != 64)
+                                throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);
+                            var key = res.PublicKeys[keyId];
+                            byte[] payload;
+                            if (alg == 'd' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Legacy) != 0)
+                                payload = data;
+                            else if (alg == 'D' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Hashed) != 0)
+                                payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
+                            else
+                                throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
+                            using (eduEd25519.ED25519 k = new eduEd25519.ED25519(key.Value))
+                                if (!k.VerifyDetached(payload, sig))
+                                    throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
+                        }
+                    }
+
+                    if (response is HttpWebResponse httpResponse)
+                    {
+                        var charset = httpResponse.CharacterSet;
+                        var encoding = !string.IsNullOrEmpty(charset) ?
+                            Encoding.GetEncoding(charset) :
+                            Encoding.UTF8;
+                        return new Response()
+                        {
+                            Value = encoding.GetString(data), // SECURITY: Securely convert data to a SecureString
+                            Date = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Date"), out var date) ? date : DateTimeOffset.Now,
+                            Expires = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
+                            LastModified = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
+                            ETag = httpResponse.GetResponseHeader("ETag"),
+                            IsFresh = true
+                        };
+                    }
+                    else
+                    {
+                        return new Response()
+                        {
+                            Value = Encoding.UTF8.GetString(data), // SECURITY: Securely convert data to a SecureString
+                            IsFresh = true
+                        };
                     }
                 }
-
-                if (response is HttpWebResponse httpResponse)
+                catch
                 {
-                    var charset = httpResponse.CharacterSet;
-                    var encoding = !string.IsNullOrEmpty(charset) ?
-                        Encoding.GetEncoding(charset) :
-                        Encoding.UTF8;
-                    return new Response()
-                    {
-                        Value = encoding.GetString(data),
-                        Date = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Date"), out var date) ? date : DateTimeOffset.Now,
-                        Expires = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
-                        LastModified = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
-                        ETag = httpResponse.GetResponseHeader("ETag"),
-                        IsFresh = true
-                    };
-                }
-                else
-                {
-                    return new Response()
-                    {
-                        Value = Encoding.UTF8.GetString(data),
-                        IsFresh = true
-                    };
+                    data.Clear(0, data.LongLength);
+                    throw;
                 }
             }
         }
