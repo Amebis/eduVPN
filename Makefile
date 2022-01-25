@@ -15,6 +15,7 @@ TEST_PLAT=x64
 !ELSE
 TEST_PLAT=x86
 !ENDIF
+SETUP_CFG=Release
 
 # Utility default flags
 REG_FLAGS=/f
@@ -36,7 +37,7 @@ WIX_INSIGNIA_FLAGS=-nologo
 ######################################################################
 
 Setup :: \
-	Build \
+	SetupBuild \
 	SetupMSI \
 	SetupExe
 
@@ -82,30 +83,3 @@ TRANSIFEX_RES=eduvpn
 RESOURCE_DIR=$(MAKEDIR)\eduVPN.Views\Resources
 TRANSIFEX_RES=eduvpnviews
 !INCLUDE "MakefileTransifex.mak"
-
-
-######################################################################
-# Signing
-######################################################################
-
-Setup ::
-	echo Signing setup files
-	minisign.exe -Sm \
-		"bin\Setup\eduVPNClient_$(VERSION).exe" \
-		"bin\Setup\LetsConnectClient_$(VERSION).exe" \
-		"bin\Setup\eduVPNClient_$(VERSION)_ARM64.msi" \
-		"bin\Setup\eduVPNClient_$(VERSION)_x64.msi" \
-		"bin\Setup\eduVPNClient_$(VERSION)_x86.msi" \
-		"bin\Setup\LetsConnectClient_$(VERSION)_ARM64.msi" \
-		"bin\Setup\LetsConnectClient_$(VERSION)_x64.msi" \
-		"bin\Setup\LetsConnectClient_$(VERSION)_x86.msi"
-
-Publish ::
-	echo Signing self-update discovery files
-	minisign.exe -Sm \
-		"bin\Setup\eduVPN.windows.json" \
-		"bin\Setup\LetsConnect.windows.json"
-
-Clean ::
-	-if exist "bin\Setup\*Client_*.exe.minisig" del /f /q "bin\Setup\*Client_*.exe.minisig"
-	-if exist "bin\Setup\*Client_*.msi.minisig" del /f /q "bin\Setup\*Client_*.msi.minisig"

@@ -19,9 +19,9 @@ WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT=$(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) \
 # Setup
 ######################################################################
 
-!IF "$(CFG)" == "Release"
+!IF "$(CFG)" == "$(SETUP_CFG)"
 SetupMSI :: \
-	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET).msi"
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi"
 !ENDIF
 
 
@@ -83,6 +83,7 @@ UnregisterOpenVPNInteractiveServiceSCM ::
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" : \
 	"eduVPNClient.wxs" \
+	"bin\$(CFG)\$(PLAT)" \
 	"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNClient.wxs"
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVCRedistMSM="$(VCREDIST_MSM)" -out $@ "eduVPNClient.wxs"
@@ -90,45 +91,45 @@ UnregisterOpenVPNInteractiveServiceSCM ::
 Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj"
 
-"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET).msi" : \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_ar.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_de.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_fr.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_nl.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_sl.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_tr.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_uk.mst" \
-	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_en.msi"
-	copy /y "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_en.msi" "$(@:"=).tmp" > NUL
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_ar.mst" 1025  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_de.mst" 1031  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 22538 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 11274 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 16394 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 13322 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 9226  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 5130  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 23562 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 7178  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 12298 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 4106  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 18442 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 2058  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 19466 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 6154  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 10250 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 20490 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 15370 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 17418 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 21514 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 14346 /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_es.mst" 8202  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_fr.mst" 1036  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_nl.mst" 1043  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_sl.mst" 1060  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_tr.mst" 1055  /L
-	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)_$(SETUP_TARGET)_uk.mst" 1058  /L
+"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi" : \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_ar.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_de.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_fr.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_nl.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_sl.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_tr.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_uk.mst" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_en.msi"
+	copy /y "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_en.msi" "$(@:"=).tmp" > NUL
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_ar.mst" 1025  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_de.mst" 1031  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 22538 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 11274 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 16394 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 13322 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 9226  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 5130  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 23562 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 7178  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 12298 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 4106  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 18442 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 2058  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 19466 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 6154  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 10250 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 20490 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 15370 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 17418 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 21514 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 14346 /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_es.mst" 8202  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_fr.mst" 1036  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_nl.mst" 1043  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_sl.mst" 1060  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_tr.mst" 1055  /L
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_uk.mst" 1058  /L
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
 !ENDIF

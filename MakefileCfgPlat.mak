@@ -8,9 +8,7 @@
 MSVC_VERSION = \
 !INCLUDE "$(VCINSTALLDIR)Auxiliary\Build\Microsoft.VCRedistVersion.default.txt"
 
-SETUP_TARGET=$(PLAT)
 !IF "$(CFG)" == "Debug"
-SETUP_TARGET=$(SETUP_TARGET)D
 VCPKG_BIN=debug\bin
 !ELSE
 VCPKG_BIN=bin
@@ -36,7 +34,7 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-dPlatform="$(PLAT)" \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
 	-dTargetDirClient="bin\$(CFG)\$(CLIENT_PLAT)\\" \
-	-dVersionInformational="$(VERSION) $(SETUP_TARGET)"
+	-dVersionInformational="$(VERSION)$(CFG_TARGET) $(PLAT)"
 !IF "$(PLAT)" == "x64" || "$(PLAT)" == "ARM64"
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
 	-dProgramFilesFolder="ProgramFiles64Folder"
@@ -62,8 +60,8 @@ VCREDIST_MSM=Microsoft_VC142_CRT_$(CLIENT_PLAT).msm
 "bin\$(CFG)\$(PLAT)\config" : "bin\$(CFG)\$(PLAT)"
 	if not exist $@ md $@
 
-!IF "$(CFG)" == "Release"
-Build :: \
+!IF "$(CFG)" == "$(SETUP_CFG)"
+SetupBuild :: \
 	Build$(CFG)$(PLAT)
 !ENDIF
 
