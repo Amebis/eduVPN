@@ -41,6 +41,8 @@
   <ItemGroup>
     <ClInclude Include="msiex.h" />
     <ClInclude Include="string.h" />
+    <ClInclude Include="windowsex.h" />
+    <ClInclude Include="winstd.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -12,7 +12,7 @@
       <DisableSpecificWarnings>26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Msi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Msi.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
