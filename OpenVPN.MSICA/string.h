@@ -23,7 +23,7 @@ typedef std::string tstring;
 static inline std::string
 string_printf_v(_Printf_format_string_ const char* fmt, _In_ va_list args)
 {
-    std::string s{};
+    std::string s;
     va_list args2;
     va_copy(args2, args);
     s.resize((size_t)vsnprintf(nullptr, 0, fmt, args2) + 1);
@@ -36,12 +36,49 @@ string_printf_v(_Printf_format_string_ const char* fmt, _In_ va_list args)
 static inline std::wstring
 string_printf_v(_Printf_format_string_ const wchar_t* fmt, _In_ va_list args)
 {
-    std::wstring s{};
+    wchar_t szStackBuffer[0x100 / sizeof(wchar_t)];
+    std::wstring s;
     va_list args2;
+    int iResult;
+
+    // Try with stack buffer first.
     va_copy(args2, args);
-    s.resize((size_t)_vsnwprintf_s(nullptr, 0, _TRUNCATE, fmt, args2) + 1);
+    iResult = _vsnwprintf_s(szStackBuffer, _countof(szStackBuffer), _TRUNCATE, fmt, args2);
     va_end(args2);
-    vswprintf(const_cast<wchar_t*>(s.data()), s.capacity(), fmt, args);
-    s.pop_back();
+    if (iResult >= 0) {
+        // Copy from stack.
+        s.assign(szStackBuffer, iResult);
+        return s;
+    }
+    for (size_t nCapacity = 2 * 0x100 / sizeof(wchar_t); ; nCapacity *= 2) {
+        // Allocate on heap and retry.
+        std::unique_ptr<wchar_t[]> szBuffer(new wchar_t[nCapacity]);
+        va_copy(args2, args);
+        iResult = _vsnwprintf_s(szBuffer.get(), nCapacity, _TRUNCATE, fmt, args2);
+        va_end(args2);
+        if (iResult >= 0) {
+            s.assign(szBuffer.get(), iResult);
+            return s;
+        }
+    }
+}
+
+static inline std::string
+string_printf(_Printf_format_string_ const char* fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    std::string s(std::move(string_printf_v(fmt, args)));
+    va_end(args);
+    return s;
+}
+
+static inline std::wstring
+string_printf(_Printf_format_string_ const wchar_t* fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    std::wstring s(std::move(string_printf_v(fmt, args)));
+    va_end(args);
     return s;
 }

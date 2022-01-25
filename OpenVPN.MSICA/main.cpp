@@ -11,14 +11,21 @@
 #include <Windows.h>
 #include <Msi.h>
 #include <MsiQuery.h>
+#include <Shlwapi.h>
 #include <stdarg.h>
+#include <TlHelp32.h>
 #include <wchar.h>
 #include <wintun.h>
 
 #include "msiex.h"
 #include "string.h"
+#include "winstd.h"
+#include "windowsex.h"
+
+#include <vector>
 
 using namespace std;
+using namespace winstd;
 
 #define WINTUN_COMPONENT  TEXT("wintun.dll")
 #define WINTUN_FILE_NAME  TEXT("wintun.dll")
@@ -144,23 +151,39 @@ SetFormattedProperty(_In_ MSIHANDLE hInstall, _In_z_ LPCTSTR szPropertyName, _In
 }
 
 _Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
-EvaluateWintunDriver(_In_ MSIHANDLE hInstall)
+EvaluateComponents(_In_ MSIHANDLE hInstall)
 {
+    com_initializer com_init(NULL);
     s_hInstall = hInstall;
 
     // Get the wintun.dll component state.
     INSTALLSTATE iInstalled, iAction;
     UINT uiResult = MsiGetComponentState(hInstall, WINTUN_COMPONENT, &iInstalled, &iAction);
-    if (uiResult != ERROR_SUCCESS) {
+    if (uiResult == ERROR_SUCCESS) {
+        if (iInstalled >= INSTALLSTATE_LOCAL && iAction > INSTALLSTATE_BROKEN && iAction < INSTALLSTATE_LOCAL)
+        {
+            // Wintun is installed, but should be degraded to advertised/removed.
+            // Schedule Wintun driver deletition.
+            SetFormattedProperty(hInstall, TEXT("RemoveWintunDriver"), TEXT("[") WINTUN_DIRECTORY TEXT("]") WINTUN_FILE_NAME);
+        }
+    } else
         LOG_ERROR_NUM(uiResult, TEXT("MsiGetComponentState(\"%s\") failed"), WINTUN_COMPONENT);
-        return ERROR_SUCCESS;
-    }
 
-    if (iInstalled >= INSTALLSTATE_LOCAL && iAction > INSTALLSTATE_BROKEN && iAction < INSTALLSTATE_LOCAL)
-    {
-        // Wintun is installed, but should be degraded to advertised/removed.
-        // Schedule Wintun driver deletition.
-        SetFormattedProperty(hInstall, TEXT("RemoveWintunDriver"), TEXT("\"[") WINTUN_DIRECTORY TEXT("]") WINTUN_FILE_NAME TEXT("\""));
+    static LPCTSTR szClientFilenames[] = {
+        TEXT("eduVPN.Client.exe"),
+        TEXT("LetsConnect.Client.exe"),
+    };
+    for (size_t i = 0; i < _countof(szClientFilenames); ++i) {
+        // Get the client component state.
+        uiResult = MsiGetComponentState(hInstall, szClientFilenames[i], &iInstalled, &iAction);
+        if (uiResult == ERROR_SUCCESS) {
+            if (iInstalled >= INSTALLSTATE_LOCAL && iAction >= INSTALLSTATE_REMOVED) {
+                // Client component is installed and shall be removed/upgraded/reinstalled.
+                // Schedule client termination.
+                SetFormattedProperty(hInstall, TEXT("KillExecutableProcesses"), string_printf(TEXT("[COREDIR]%s"), szClientFilenames[i]).c_str());
+            }
+        } else if (uiResult != ERROR_UNKNOWN_COMPONENT)
+            LOG_ERROR_NUM(uiResult, TEXT("MsiGetComponentState(\"%s\") failed"), szClientFilenames[i]);
     }
 
     return ERROR_SUCCESS;
@@ -169,31 +192,23 @@ EvaluateWintunDriver(_In_ MSIHANDLE hInstall)
 _Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
 RemoveWintunDriver(_In_ MSIHANDLE hInstall)
 {
+    com_initializer com_init(NULL);
     s_hInstall = hInstall;
 
-    wstring sSequence;
-    UINT uiResult = MsiGetPropertyW(hInstall, L"CustomActionData", sSequence);
+    tstring sWintunPath;
+    UINT uiResult = MsiGetProperty(hInstall, TEXT("CustomActionData"), sWintunPath);
     if (uiResult != ERROR_SUCCESS) {
-        LOG_ERROR_NUM(uiResult, TEXT("MsiGetPropertyW(\"CustomActionData\") failed"));
+        LOG_ERROR_NUM(uiResult, TEXT("MsiGetProperty(\"CustomActionData\") failed"));
         return ERROR_SUCCESS;
     }
-    if (sSequence.empty())
+    if (sWintunPath.empty())
         return ERROR_SUCCESS;
-    int nArgs;
-    LPWSTR* szArg = CommandLineToArgvW(sSequence.c_str(), &nArgs);
-    if (szArg == NULL) {
-        LOG_ERROR_NUM(GetLastError(), TEXT("CommandLineToArgvW(\"%ls\") failed"), sSequence.c_str());
-        return ERROR_SUCCESS;
-    }
-    if (nArgs < 1) {
-        LOG_ERROR(TEXT("Syntax: <%s path>"), WINTUN_FILE_NAME);
-        goto cleanup_szArg;
-    }
-    HMODULE hWintun = LoadLibraryExW(szArg[0], NULL, LOAD_LIBRARY_SEARCH_APPLICATION_DIR | LOAD_LIBRARY_SEARCH_SYSTEM32);
+
+    library hWintun(LoadLibraryExW(sWintunPath.c_str(), NULL, LOAD_LIBRARY_SEARCH_APPLICATION_DIR | LOAD_LIBRARY_SEARCH_SYSTEM32));
     if (!hWintun)
     {
-        LOG_ERROR_NUM(GetLastError(), TEXT("LoadLibraryExW(\"%ls\") failed"), szArg[0]);
-        goto cleanup_szArg;
+        LOG_ERROR_NUM(GetLastError(), TEXT("LoadLibraryExW(\"%ls\") failed"), sWintunPath.c_str());
+        return ERROR_SUCCESS;
     }
     WINTUN_SET_LOGGER_FUNC *WintunSetLogger;
     WINTUN_DELETE_DRIVER_FUNC *WintunDeleteDriver;
@@ -203,14 +218,80 @@ RemoveWintunDriver(_In_ MSIHANDLE hInstall)
 #undef X
     {
         LOG_ERROR_NUM(GetLastError(), TEXT("GetProcAddress failed"));
-        goto cleanup_hWintun;
+        return ERROR_SUCCESS;
     }
     WintunSetLogger(WintunLogger);
     if (!WintunDeleteDriver())
-        LOG_ERROR_NUM(GetLastError(), TEXT("WintunDeleteDriver(\"%ls\") failed"), szArg[1]);
-cleanup_hWintun:
-    FreeLibrary(hWintun);
-cleanup_szArg:
-    LocalFree(szArg);
+        LOG_ERROR_NUM(GetLastError(), TEXT("WintunDeleteDriver failed"));
+    return ERROR_SUCCESS;
+}
+
+typedef struct tagFILEID {
+    DWORD dwVolumeSerialNumber;
+    DWORD nFileIndexHigh;
+    DWORD nFileIndexLow;
+} FILEID;
+typedef FILEID* LPFILEID;
+
+_Return_type_success_(return != FALSE) static BOOL
+CalculateFileId(_In_z_ LPCTSTR szPath, _Out_ LPFILEID id)
+{
+    win_handle<INVALID_HANDLE_VALUE> hFile(CreateFile(szPath, 0, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
+    if (!hFile)
+        return FALSE;
+    BY_HANDLE_FILE_INFORMATION info = { 0 };
+    if (!GetFileInformationByHandle(hFile, &info))
+        return FALSE;
+    id->dwVolumeSerialNumber = info.dwVolumeSerialNumber;
+    id->nFileIndexHigh = info.nFileIndexHigh;
+    id->nFileIndexLow = info.nFileIndexLow;
+    return TRUE;
+}
+
+_Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
+KillExecutableProcesses(_In_ MSIHANDLE hInstall)
+{
+    com_initializer com_init(NULL);
+    s_hInstall = hInstall;
+
+    tstring szExecutable;
+    UINT uiResult = MsiGetProperty(hInstall, TEXT("CustomActionData"), szExecutable);
+    if (uiResult != ERROR_SUCCESS) {
+        LOG_ERROR_NUM(uiResult, TEXT("MsiGetProperty(\"CustomActionData\") failed"));
+        return ERROR_SUCCESS;
+    }
+    if (szExecutable.empty())
+        return ERROR_SUCCESS;
+    FILEID idExecutable;
+    if (!CalculateFileId(szExecutable.c_str(), &idExecutable))
+        return ERROR_SUCCESS;
+
+    win_handle<INVALID_HANDLE_VALUE> hSnapshot(CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0));
+    if (!hSnapshot)
+        return ERROR_SUCCESS;
+
+    PROCESSENTRY32 pe32 = { sizeof(PROCESSENTRY32) };
+    for (BOOL fSuccess = Process32First(hSnapshot, &pe32); fSuccess; fSuccess = Process32Next(hSnapshot, &pe32)) {
+        win_handle<NULL> hProcess(OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pe32.th32ProcessID));
+        FILEID id;
+        if (hProcess &&
+            QueryFullProcessImageName(hProcess, 0, szExecutable) &&
+            CalculateFileId(szExecutable.c_str(), &id) &&
+            idExecutable.dwVolumeSerialNumber == id.dwVolumeSerialNumber &&
+            idExecutable.nFileIndexHigh == id.nFileIndexHigh &&
+            idExecutable.nFileIndexLow == id.nFileIndexLow &&
+            TerminateProcess(hProcess, 0xC000026BL /*STATUS_DLL_INIT_FAILED_LOGOFF*/))
+        {
+            WaitForSingleObject(hProcess, INFINITE);
+
+            PMSIHANDLE hRecord = MsiCreateRecord(3);
+            if ((MSIHANDLE)hRecord) {
+                MsiRecordSetString(hRecord, 0, TEXT("Killed \"[1]\" (pid [2])"));
+                MsiRecordSetString(hRecord, 1, szExecutable.c_str());
+                MsiRecordSetInteger(hRecord, 2, pe32.th32ProcessID);
+                MsiProcessMessage(hInstall, INSTALLMESSAGE_INFO, hRecord);
+            }
+        }
+    }
     return ERROR_SUCCESS;
 }

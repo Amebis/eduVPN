@@ -437,9 +437,9 @@
             Custom Actions
         -->
         <CustomAction
-            Id="EvaluateWintunDriver"
+            Id="EvaluateComponents"
             BinaryKey="OpenVPN.MSICA.dll"
-            DllEntry="EvaluateWintunDriver"/>
+            DllEntry="EvaluateComponents"/>
 
         <CustomAction
             Id="RemoveWintunDriver"
@@ -448,14 +448,25 @@
             Execute="deferred"
             Impersonate="no"/>
 
+        <CustomAction
+            Id="KillExecutableProcesses"
+            BinaryKey="OpenVPN.MSICA.dll"
+            DllEntry="KillExecutableProcesses"
+            Execute="deferred"
+            Impersonate="no" />
+
         <InstallExecuteSequence>
             <Custom
-                Action="EvaluateWintunDriver"
+                Action="EvaluateComponents"
                 After="ProcessComponents"/>
 
             <Custom
                 Action="RemoveWintunDriver"
                 Before="RemoveFiles"/>
+
+            <Custom
+                Action="KillExecutableProcesses"
+                Before="StopServices" />
         </InstallExecuteSequence>
 
         <UI>

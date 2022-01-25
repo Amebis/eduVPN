@@ -7,5 +7,6 @@
 
 LIBRARY OpenVPN.MSICA.dll
 EXPORTS
-	EvaluateWintunDriver
+	EvaluateComponents
 	RemoveWintunDriver
+	KillExecutableProcesses
