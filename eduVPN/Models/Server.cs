@@ -149,6 +149,7 @@ namespace eduVPN.Models
                     var endpoints = new ServerEndpoints();
                     var uriBuilder = new UriBuilder(Base);
                     uriBuilder.Path += ".well-known/vpn-user-portal";
+                    Trace.TraceInformation("Loading endpoints {0}", uriBuilder.Uri);
                     endpoints.LoadJSON(Xml.Response.Get(
                         uri: uriBuilder.Uri,
                         ct: ct).Value, ct);
@@ -183,6 +184,7 @@ namespace eduVPN.Models
                 try
                 {
                     // Parse JSON string and get inner key/value dictionary.
+                    Trace.TraceInformation("Loading info {0}", api.Info);
                     var obj = eduJSON.Parser.GetValue<Dictionary<string, object>>(
                         (Dictionary<string, object>)eduJSON.Parser.Parse(Xml.Response.Get(
                             uri: api.Info,
@@ -247,6 +249,7 @@ namespace eduVPN.Models
             RequestAuthorization?.Invoke(this, e);
             try
             {
+                Trace.TraceInformation("Disconnecting {0}", api.Disconnect);
                 Xml.Response.Get(
                     uri: api.Disconnect,
                     param: new NameValueCollection(),

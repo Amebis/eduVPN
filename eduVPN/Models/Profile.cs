@@ -9,6 +9,7 @@ using eduOAuth;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 
@@ -119,6 +120,7 @@ namespace eduVPN.Models
             try
             {
                 // Get complete profile config.
+                Trace.TraceInformation("Connecting {0}", api.Connect);
                 return Xml.Response.Get(
                     uri: api.Connect,
                     param: new NameValueCollection {
