@@ -318,6 +318,7 @@ namespace eduVPN.ViewModels.VPN
                         SessionAndWindowInProgress.Token.ThrowIfCancellationRequested();
                         if (File.GetLastWriteTimeUtc(f) <= timestamp)
                         {
+                            Trace.TraceInformation("Purging {0}", LogPath);
                             try { File.Delete(LogPath); }
                             catch { }
                         }

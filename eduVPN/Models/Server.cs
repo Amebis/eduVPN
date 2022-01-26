@@ -167,6 +167,7 @@ namespace eduVPN.Models
                     var endpoints = new ServerEndpoints();
                     var uriBuilder = new UriBuilder(Base);
                     uriBuilder.Path += "info.json";
+                    Trace.TraceInformation("Loading endpoints {0}", uriBuilder.Uri);
                     endpoints.LoadJSON(Xml.Response.Get(
                         uri: uriBuilder.Uri,
                         ct: ct).Value, ct);
@@ -201,6 +202,7 @@ namespace eduVPN.Models
                 try
                 {
                     // Parse JSON string and get inner key/value dictionary.
+                    Trace.TraceInformation("Loading profile list {0}", api.Profiles);
                     var obj = eduJSON.Parser.GetValue<Dictionary<string, object>>(
                         (Dictionary<string, object>)eduJSON.Parser.Parse(Xml.Response.Get(
                             uri: api.Profiles,
@@ -293,6 +295,7 @@ namespace eduVPN.Models
                         query["common_name"] = cert.GetNameInfo(X509NameType.SimpleName, false);
                         uriBuilder.Query = query.ToString();
                         var certCheck = new CertificateCheck();
+                        Trace.TraceInformation("Performing certificate check {0}", uriBuilder.Uri);
                         certCheck.LoadJSONAPIResponse(Xml.Response.Get(
                             uri: uriBuilder.Uri,
                             token: e.AccessToken,
@@ -339,6 +342,7 @@ namespace eduVPN.Models
                 {
                     // Get certificate and save it.
                     var cert = new Certificate();
+                    Trace.TraceInformation("Loading certificate {0}", api.CreateCertificate);
                     cert.LoadJSONAPIResponse(Xml.Response.Get(
                         uri: api.CreateCertificate,
                         param: new NameValueCollection

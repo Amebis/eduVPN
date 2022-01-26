@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -109,6 +110,7 @@ namespace eduVPN.Models
                 var query = HttpUtility.ParseQueryString(uriBuilder.Query);
                 query["profile_id"] = Id;
                 uriBuilder.Query = query.ToString();
+                Trace.TraceInformation("Loading OpenVPN configuration {0}", uriBuilder.Uri);
                 var openVPNConfig = Xml.Response.Get(
                     uri: uriBuilder.Uri,
                     token: e.AccessToken,
