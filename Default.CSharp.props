@@ -14,7 +14,7 @@
     <OutputPath>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutputPath>
     <WarningLevel>4</WarningLevel>
     <ErrorReport>prompt</ErrorReport>
-    <DefineConstants>TRACE;PLATFORM_$(Platform)</DefineConstants>
+    <DefineConstants>TRACE;PLATFORM_$(Platform);$(DefineConstants)</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
