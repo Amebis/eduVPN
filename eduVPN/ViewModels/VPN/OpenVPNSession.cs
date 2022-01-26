@@ -307,6 +307,26 @@ namespace eduVPN.ViewModels.VPN
                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ClientCertificate = cert));
             });
 
+            PreRun.Add(() =>
+            {
+                try
+                {
+                    // Purge stale log files.
+                    var timestamp = DateTime.UtcNow.Subtract(new TimeSpan(30, 0, 0, 0));
+                    foreach (var f in Directory.EnumerateFiles(WorkingFolder, "*.txt", SearchOption.TopDirectoryOnly))
+                    {
+                        SessionAndWindowInProgress.Token.ThrowIfCancellationRequested();
+                        if (File.GetLastWriteTimeUtc(f) <= timestamp)
+                        {
+                            try { File.Delete(LogPath); }
+                            catch { }
+                        }
+                    }
+                }
+                catch (OperationCanceledException) { throw; }
+                catch (Exception) { /* Failure to remove stale log files is not fatal. */ }
+            });
+
             // Set management session event handlers.
             ManagementSession.ByteCountReported += (object sender, ByteCountReportedEventArgs e) =>
                 Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
@@ -481,23 +501,6 @@ namespace eduVPN.ViewModels.VPN
                     mgmtServer.Start();
                     try
                     {
-                        try
-                        {
-                            // Purge stale log files.
-                            var timestamp = DateTime.UtcNow.Subtract(new TimeSpan(30, 0, 0, 0));
-                            foreach (var f in Directory.EnumerateFiles(WorkingFolder, "*.txt", SearchOption.TopDirectoryOnly))
-                            {
-                                SessionAndWindowInProgress.Token.ThrowIfCancellationRequested();
-                                if (File.GetLastWriteTimeUtc(f) <= timestamp)
-                                {
-                                    try { File.Delete(LogPath); }
-                                    catch { }
-                                }
-                            }
-                        }
-                        catch (OperationCanceledException) { throw; }
-                        catch (Exception) { /* Failure to remove stale log files is not fatal. */ }
-
                         try
                         {
                             // Save OpenVPN configuration file.
