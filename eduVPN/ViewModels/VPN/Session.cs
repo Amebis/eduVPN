@@ -48,9 +48,12 @@ namespace eduVPN.ViewModels.VPN
         #region Properties
 
         /// <summary>
-        /// The connecting wizard
+        /// UI thread's dispatcher
         /// </summary>
-        public ConnectWizard Wizard { get; }
+        /// <remarks>
+        /// Background threads must raise property change events in the UI thread.
+        /// </remarks>
+        protected Dispatcher Dispatcher { get; }
 
         /// <summary>
         /// Connecting eduVPN server profile
@@ -289,13 +292,13 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        /// <param name="wizard">The connecting wizard</param>
+        /// <param name="dispatcher">The GUI dispatcher</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public Session(ConnectWizard wizard, Profile connectingProfile)
+        public Session(Dispatcher dispatcher, Profile connectingProfile)
         {
             SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
 
-            Wizard = wizard;
+            Dispatcher = dispatcher;
             ConnectingProfile = connectingProfile;
             State = SessionStatusType.Initializing;
         }
@@ -313,19 +316,13 @@ namespace eduVPN.ViewModels.VPN
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal,
                 (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
-                Wizard.Dispatcher);
+                Dispatcher);
             connectedTimeUpdater.Start();
             try
             {
                 try
                 {
-                    Parallel.ForEach(PreRun,
-                        action =>
-                        {
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
-                            try { action(); }
-                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                        });
+                    Parallel.ForEach(PreRun, action => action());
                 }
                 catch (AggregateException ex)
                 {
