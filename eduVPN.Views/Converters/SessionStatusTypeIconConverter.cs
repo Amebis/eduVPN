@@ -33,10 +33,12 @@ namespace eduVPN.Converters
             if (value is SessionStatusType statusType)
             {
                 var resourceName = string.Format("SessionStatusType{0}Icon", Enum.GetName(typeof(SessionStatusType), statusType));
-                if (Application.Current.Resources.Contains(resourceName))
+                if (Application.Current != null && Application.Current.Resources.Contains(resourceName))
                     return Application.Current.Resources[resourceName];
             }
-            return Application.Current.Resources.Contains("SessionStatusTypeIcon") ? Application.Current.Resources["SessionStatusTypeIcon"] : null;
+            if (Application.Current != null && Application.Current.Resources.Contains("SessionStatusTypeIcon"))
+                return Application.Current.Resources["SessionStatusTypeIcon"];
+            return null;
         }
 
         /// <summary>

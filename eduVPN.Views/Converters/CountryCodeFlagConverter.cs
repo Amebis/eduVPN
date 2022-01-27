@@ -32,7 +32,7 @@ namespace eduVPN.Converters
             if (value is string code)
             {
                 var resourceName = string.Format("{0}DrawingImage", code.ToUpperInvariant());
-                if (Application.Current.Resources.Contains(resourceName))
+                if (Application.Current != null && Application.Current.Resources.Contains(resourceName))
                     return Application.Current.Resources[resourceName];
             }
             return null;

@@ -114,7 +114,7 @@ namespace eduVPN.Views.Windows
                     (DependencyObject d, DependencyPropertyChangedEventArgs e) =>
                     {
                         var src = new Uri(new Uri("pack://application:,,,/eduVPN.Views;component/Resources/"), (bool)e.NewValue ? "ColorsDark.xaml" : "Colors.xaml");
-                        var mergedDictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(dict => dict.Contains("WindowColor"));
+                        var mergedDictionary = Application.Current?.Resources.MergedDictionaries.FirstOrDefault(dict => dict.Contains("WindowColor"));
                         if (mergedDictionary != null)
                             mergedDictionary.Source = src;
                     }));

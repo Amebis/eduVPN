@@ -442,9 +442,7 @@ namespace Microsoft.Shell
         {
             // Set main window state and process command line args
             if (Application.Current == null)
-            {
                 return;
-            }
 
             ((TApplication)Application.Current).SignalExternalCommandLineArgs(args);
         }
