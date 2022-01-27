@@ -52,12 +52,8 @@ namespace eduVPN.ViewModels.Pages
                     _Cancel = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                AuthorizationInProgress?.Cancel();
-                                Wizard.CurrentPage = ReturnPage;
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            AuthorizationInProgress?.Cancel();
+                            Wizard.CurrentPage = ReturnPage;
                         });
                 return _Cancel;
             }

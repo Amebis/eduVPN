@@ -90,29 +90,25 @@ namespace eduVPN.ViewModels.VPN
                     _Renew = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                RenewInProgress = true;
-                                _Renew.RaiseCanExecuteChanged();
-                                new Thread(new ThreadStart(
-                                    () =>
+                            RenewInProgress = true;
+                            _Renew.RaiseCanExecuteChanged();
+                            new Thread(new ThreadStart(
+                                () =>
+                                {
+                                    try
                                     {
-                                        try
-                                        {
-                                            var config = ConnectingProfile.Connect(true, SessionAndWindowInProgress.Token);
-                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileConfig = config));
-                                            ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
-                                        }
-                                        catch (OperationCanceledException) { }
-                                        catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
-                                        finally
-                                        {
-                                            RenewInProgress = false;
-                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => _Renew.RaiseCanExecuteChanged()));
-                                        }
-                                    })).Start();
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                                        var config = ConnectingProfile.Connect(true, SessionAndWindowInProgress.Token);
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileConfig = config));
+                                        ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
+                                    }
+                                    catch (OperationCanceledException) { }
+                                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
+                                    finally
+                                    {
+                                        RenewInProgress = false;
+                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => _Renew.RaiseCanExecuteChanged()));
+                                    }
+                                })).Start();
                         },
                         () => !RenewInProgress && State == SessionStatusType.Connected);
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
@@ -131,15 +127,7 @@ namespace eduVPN.ViewModels.VPN
             {
                 if (_ShowLog == null)
                     _ShowLog = new DelegateCommand(
-                        () =>
-                        {
-                            try
-                            {
-                                // Open log file in registered application.
-                                Process.Start(LogPath);
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        },
+                        () => Process.Start(LogPath),
                         () => File.Exists(LogPath));
                 return _ShowLog;
             }
@@ -228,9 +216,7 @@ namespace eduVPN.ViewModels.VPN
                         State = SessionStatusType.Error;
                         var ex = new OpenVPNException(e.Message);
                         StateDescription = ex.ToString();
-
-                        // Also, display the error message in the connect wizard.
-                        Wizard.Error = ex;
+                        throw ex;
                     }));
 
             ManagementSession.HoldReported += (object sender, HoldReportedEventArgs e) =>

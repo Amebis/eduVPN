@@ -83,12 +83,8 @@ namespace eduVPN.ViewModels.Pages
                     _StartUpdate = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                if (Wizard.NavigateTo.CanExecute(Wizard.SelfUpdateProgressPage))
-                                    Wizard.NavigateTo.Execute(Wizard.SelfUpdateProgressPage);
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            if (Wizard.NavigateTo.CanExecute(Wizard.SelfUpdateProgressPage))
+                                Wizard.NavigateTo.Execute(Wizard.SelfUpdateProgressPage);
                         },
                         () => AvailableVersion != null);
                 return _StartUpdate;
@@ -109,14 +105,10 @@ namespace eduVPN.ViewModels.Pages
                     _SkipUpdate = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                Trace.TraceInformation("User choose to skip this update.");
-                                Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MaxValue;
-                                if (NavigateBack.CanExecute())
-                                    NavigateBack.Execute();
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            Trace.TraceInformation("User choose to skip this update.");
+                            Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MaxValue;
+                            if (NavigateBack.CanExecute())
+                                NavigateBack.Execute();
                         },
                         () => AvailableVersion != null);
                 return _SkipUpdate;
@@ -135,11 +127,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ShowChangelog == null)
                     _ShowChangelog = new DelegateCommand(
-                        () =>
-                        {
-                            try { Process.Start(Changelog.ToString()); }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        },
+                        () => Process.Start(Changelog.ToString()),
                         () => Changelog != null);
                 return _ShowChangelog;
             }

@@ -106,11 +106,7 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (_CopyError == null)
                     _CopyError = new DelegateCommand(
-                        () =>
-                        {
-                            try { Clipboard.SetDataObject(Error.ToString()); }
-                            catch (Exception ex) { Error = ex; }
-                        },
+                        () => Clipboard.SetDataObject(Error.ToString()),
                         () => Error != null);
                 return _CopyError;
             }

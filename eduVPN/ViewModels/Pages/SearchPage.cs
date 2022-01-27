@@ -90,16 +90,11 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmInstituteAccessServerSelection = new DelegateCommand(
                         async () =>
                         {
-                            try
-                            {
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
-                                Wizard.HomePage.AddInstituteAccessServer(SelectedInstituteAccessServer);
-                                Wizard.ConnectionPage.ConnectingServer = SelectedInstituteAccessServer;
-                                Wizard.CurrentPage = Wizard.ConnectionPage;
-                                Query = "";
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
+                            Wizard.HomePage.AddInstituteAccessServer(SelectedInstituteAccessServer);
+                            Wizard.ConnectionPage.ConnectingServer = SelectedInstituteAccessServer;
+                            Wizard.CurrentPage = Wizard.ConnectionPage;
+                            Query = "";
                         },
                         () => SelectedInstituteAccessServer != null);
                 return _ConfirmInstituteAccessServerSelection;
@@ -149,18 +144,13 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmOrganizationSelection = new DelegateCommand(
                         async () =>
                         {
-                            try
-                            {
-                                var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase);
-                                authenticatingServer.OrganizationId = SelectedOrganization.Id;
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
-                                Wizard.HomePage.SetSecureInternetOrganization(SelectedOrganization);
-                                Wizard.ConnectionPage.ConnectingServer = authenticatingServer;
-                                Wizard.CurrentPage = Wizard.ConnectionPage;
-                                Query = "";
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase);
+                            authenticatingServer.OrganizationId = SelectedOrganization.Id;
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
+                            Wizard.HomePage.SetSecureInternetOrganization(SelectedOrganization);
+                            Wizard.ConnectionPage.ConnectingServer = authenticatingServer;
+                            Wizard.CurrentPage = Wizard.ConnectionPage;
+                            Query = "";
                         },
                         () =>
                             SelectedOrganization != null &&
@@ -212,16 +202,11 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmOwnServerSelection = new DelegateCommand(
                         async () =>
                         {
-                            try
-                            {
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
-                                Wizard.HomePage.AddOwnServer(SelectedOwnServer);
-                                Wizard.ConnectionPage.ConnectingServer = SelectedOwnServer;
-                                Wizard.CurrentPage = Wizard.ConnectionPage;
-                                Query = "";
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
+                            Wizard.HomePage.AddOwnServer(SelectedOwnServer);
+                            Wizard.ConnectionPage.ConnectingServer = SelectedOwnServer;
+                            Wizard.CurrentPage = Wizard.ConnectionPage;
+                            Query = "";
                         },
                         () => SelectedOwnServer != null);
                 return _ConfirmOwnServerSelection;
@@ -238,11 +223,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_NavigateBack == null)
                     _NavigateBack = new DelegateCommand(
-                        () =>
-                        {
-                            try { Wizard.CurrentPage = Wizard.HomePage; }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        },
+                        () => Wizard.CurrentPage = Wizard.HomePage,
                         () => Wizard.StartingPage != this);
                 return _NavigateBack;
             }
@@ -301,7 +282,7 @@ namespace eduVPN.ViewModels.Pages
                         }));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
+                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
                     finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
                 })).Start();
             new Thread(new ThreadStart(
@@ -321,7 +302,7 @@ namespace eduVPN.ViewModels.Pages
                         }));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.Error = ex)); }
+                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
                     finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
                 })).Start();
 

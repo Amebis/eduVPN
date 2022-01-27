@@ -61,13 +61,8 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmSecureInternetServerSelection = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                Wizard.HomePage.SetSecureInternetConnectingServer(SelectedSecureInternetServer);
-                                Wizard.CurrentPage = Wizard.HomePage;
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            Wizard.HomePage.SetSecureInternetConnectingServer(SelectedSecureInternetServer);
+                            Wizard.CurrentPage = Wizard.HomePage;
                         },
                         () => SelectedSecureInternetServer != null);
                 return _ConfirmSecureInternetServerSelection;
@@ -83,12 +78,7 @@ namespace eduVPN.ViewModels.Pages
             get
             {
                 if (_NavigateBack == null)
-                    _NavigateBack = new DelegateCommand(
-                        () =>
-                        {
-                            try { Wizard.CurrentPage = Wizard.HomePage; }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        });
+                    _NavigateBack = new DelegateCommand(() => Wizard.CurrentPage = Wizard.HomePage);
                 return _NavigateBack;
             }
         }
