@@ -34,7 +34,7 @@ namespace eduVPN.ViewModels.Pages
             /// <summary>
             /// Waiting for user to (select profile and) connect
             /// </summary>
-            Initial = 0,
+            SessionInactive = 0,
 
             /// <summary>
             /// A session is active
@@ -209,7 +209,7 @@ namespace eduVPN.ViewModels.Pages
                                                     Wizard,
                                                     profile))
                                             {
-                                                var finalState = StateType.Initial;
+                                                var finalState = StateType.SessionInactive;
                                                 session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession?.RaiseCanExecuteChanged();
                                                 session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
                                                 {
