@@ -43,11 +43,6 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks>Actions will be run in parallel and session run will wait for all to finish.</remarks>
         protected List<Action> PreRun = new List<Action>();
 
-        /// <summary>
-        /// Connected time update timer
-        /// </summary>
-        protected DispatcherTimer ConnectedTimeUpdater;
-
         #endregion
 
         #region Properties
@@ -298,31 +293,15 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        public Session()
-        {
-        }
-
-        /// <summary>
-        /// Creates a VPN session
-        /// </summary>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public Session(ConnectWizard wizard, Profile connectingProfile) :
-            this()
+        public Session(ConnectWizard wizard, Profile connectingProfile)
         {
             SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
 
             Wizard = wizard;
             ConnectingProfile = connectingProfile;
             State = SessionStatusType.Initializing;
-
-            // Create dispatcher timer.
-            ConnectedTimeUpdater = new DispatcherTimer(
-                new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal,
-                (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
-                Wizard.Dispatcher);
-            ConnectedTimeUpdater.Start();
         }
 
         #endregion
@@ -334,26 +313,35 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public void Run()
         {
+            var connectedTimeUpdater = new DispatcherTimer(
+                new TimeSpan(0, 0, 0, 1),
+                DispatcherPriority.Normal,
+                (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
+                Wizard.Dispatcher);
+            connectedTimeUpdater.Start();
             try
             {
-                Parallel.ForEach(PreRun,
-                    action =>
-                    {
-                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
-                        try { action(); }
-                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                    });
-            }
-            catch (AggregateException ex)
-            {
-                var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
-                if (nonCancelledException.Any())
-                    throw new AggregateException("", nonCancelledException.ToArray());
-                throw new OperationCanceledException();
-            }
+                try
+                {
+                    Parallel.ForEach(PreRun,
+                        action =>
+                        {
+                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                            try { action(); }
+                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                        });
+                }
+                catch (AggregateException ex)
+                {
+                    var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
+                    if (nonCancelledException.Any())
+                        throw new AggregateException("", nonCancelledException.ToArray());
+                    throw new OperationCanceledException();
+                }
 
-            DoRun();
-            ConnectedTimeUpdater.Stop();
+                DoRun();
+            }
+            finally { connectedTimeUpdater.Stop(); }
         }
 
         /// <summary>
