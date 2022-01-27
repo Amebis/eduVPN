@@ -61,6 +61,11 @@ namespace eduVPN.ViewModels.VPN
         public Profile ConnectingProfile { get; }
 
         /// <summary>
+        /// VPN session worker
+        /// </summary>
+        public Thread Thread { get; private set; }
+
+        /// <summary>
         /// Profile configuration
         /// </summary>
         protected eduVPN.Xml.Response ProfileConfig
@@ -292,15 +297,13 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates a VPN session
         /// </summary>
-        /// <param name="dispatcher">The GUI dispatcher</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public Session(Dispatcher dispatcher, Profile connectingProfile)
+        public Session(Profile connectingProfile)
         {
             SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
 
-            Dispatcher = dispatcher;
+            Dispatcher = Dispatcher.CurrentDispatcher;
             ConnectingProfile = connectingProfile;
-            State = SessionStatusType.Initializing;
         }
 
         #endregion
@@ -308,41 +311,77 @@ namespace eduVPN.ViewModels.VPN
         #region Methods
 
         /// <summary>
-        /// Run the session
+        /// Starts the session
         /// </summary>
-        public void Run()
+        public void Start()
         {
-            var connectedTimeUpdater = new DispatcherTimer(
-                new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal,
-                (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
-                Dispatcher);
-            connectedTimeUpdater.Start();
-            try
+            State = SessionStatusType.Initializing;
+            Thread = new Thread(new ThreadStart(() =>
             {
                 try
                 {
-                    Parallel.ForEach(PreRun, action => action());
-                }
-                catch (AggregateException ex)
-                {
-                    var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
-                    if (nonCancelledException.Any())
-                        throw new AggregateException("", nonCancelledException.ToArray());
-                    throw new OperationCanceledException();
-                }
+                    var connectedTimeUpdater = new DispatcherTimer(
+                        new TimeSpan(0, 0, 0, 1),
+                        DispatcherPriority.Normal,
+                        (object senderTimer, EventArgs eTimer) => RaisePropertyChanged(nameof(ConnectedTime)),
+                        Dispatcher);
+                    connectedTimeUpdater.Start();
+                    try
+                    {
+                        try
+                        {
+                            Parallel.ForEach(PreRun, action => action());
+                        }
+                        catch (AggregateException ex)
+                        {
+                            var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
+                            if (nonCancelledException.Any())
+                                throw new AggregateException("", nonCancelledException.ToArray());
+                            throw new OperationCanceledException();
+                        }
 
-                DoRun();
-            }
-            finally { connectedTimeUpdater.Stop(); }
+                        Run();
+                    }
+                    finally { connectedTimeUpdater.Stop(); }
+
+                    TryInvoke((Action)(() =>
+                    {
+                        // Cleanup status properties.
+                        State = SessionStatusType.Disconnected;
+                        StateDescription = "";
+                    }));
+                }
+                catch (Exception ex)
+                {
+                    TryInvoke((Action)(() => {
+                        State = SessionStatusType.Error;
+                        StateDescription = ex.ToString();
+                        throw ex;
+                    }));
+                }
+            }));
+            Thread.IsBackground = false;
+            Thread.Start();
         }
 
         /// <summary>
         /// Run the session
         /// </summary>
-        protected virtual void DoRun()
+        protected virtual void Run()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Invoke method on GUI thread if it's not terminating.
+        /// </summary>
+        /// <param name="method">Method to execute</param>
+        /// <returns>The return value from the delegate being invoked or <c>null</c> if the delegate has no return value or dispatcher is shutting down.</returns>
+        protected object TryInvoke(Delegate method)
+        {
+            if (Dispatcher.HasShutdownStarted)
+                return null;
+            return Dispatcher.Invoke(DispatcherPriority.Normal, method);
         }
 
         #endregion

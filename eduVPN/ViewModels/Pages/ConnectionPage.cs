@@ -193,58 +193,34 @@ namespace eduVPN.ViewModels.Pages
                     _StartSession = new DelegateCommand(
                         () =>
                         {
-                            // Launch the VPN session in the background.
-                            new Thread(new ParameterizedThreadStart(
-                                param =>
+                            var session = new OpenVPNSession(Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance, SelectedProfile);
+                            var finalState = StateType.SessionInactive;
+                            session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession?.RaiseCanExecuteChanged();
+                            session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                            {
+                                if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
+                                    (session.State == SessionStatusType.Initializing || session.State == SessionStatusType.Connecting || session.State == SessionStatusType.Connected || session.State == SessionStatusType.Disconnecting) &&
+                                    session.Expired)
                                 {
-                                    var profile = param as Profile;
-                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
-                                    try
-                                    {
-                                        // Create our new session.
-                                        using (var session = new OpenVPNSession(
-                                                Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance,
-                                                Wizard.Dispatcher,
-                                                profile))
-                                        {
-                                            var finalState = StateType.SessionInactive;
-                                            session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession?.RaiseCanExecuteChanged();
-                                            session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-                                            {
-                                                if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
-                                                    (session.State == SessionStatusType.Initializing || session.State == SessionStatusType.Connecting || session.State == SessionStatusType.Connected || session.State == SessionStatusType.Disconnecting) &&
-                                                    session.Expired)
-                                                {
-                                                    finalState = StateType.SessionExpired;
-                                                    if (session.Disconnect.CanExecute())
-                                                        session.Disconnect.Execute();
-                                                }
-                                            };
-                                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                                () =>
-                                                {
-                                                    ActiveSession = session;
-                                                    State = StateType.SessionActive;
-                                                    Wizard.TaskCount--;
+                                    finalState = StateType.SessionExpired;
+                                    if (session.Disconnect.CanExecute())
+                                        session.Disconnect.Execute();
+                                }
 
-                                                    // Set server/profile to auto-start on next launch.
-                                                    Properties.Settings.Default.LastSelectedServer = profile.Server.Base;
-                                                }));
-                                            try { session.Run(); }
-                                            finally {
-                                                Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                                    () => {
-                                                        Wizard.TaskCount++;
-                                                        ActiveSession = null;
-                                                        State = finalState;
-                                                    }));
-                                            }
-                                        }
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
-                                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                                })).Start(SelectedProfile);
+                                if (e.PropertyName == nameof(session.State) && session.State == SessionStatusType.Disconnected)
+                                {
+                                    ActiveSession = null;
+                                    State = finalState;
+                                }
+                            };
+
+                            ActiveSession = session;
+                            State = StateType.SessionActive;
+
+                            // Set server/profile to auto-start on next launch.
+                            Properties.Settings.Default.LastSelectedServer = SelectedProfile.Server.Base;
+
+                            session.Start();
                         },
                         () => SelectedProfile != null && ActiveSession == null);
                 return _StartSession;

@@ -144,10 +144,9 @@ namespace eduVPN.ViewModels.VPN
         /// Creates an OpenVPN session
         /// </summary>
         /// <param name="instanceName">OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)</param>
-        /// <param name="dispatcher">The GUI dispatcher</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public OpenVPNSession(string instanceName, Dispatcher dispatcher, Profile connectingProfile) :
-            base(dispatcher, connectingProfile)
+        public OpenVPNSession(string instanceName, Profile connectingProfile) :
+            base(connectingProfile)
         {
             InstanceName = instanceName;
             ConnectionId = Guid.NewGuid().ToString();
@@ -202,16 +201,14 @@ namespace eduVPN.ViewModels.VPN
 
             // Set management session event handlers.
             ManagementSession.ByteCountReported += (object sender, ByteCountReportedEventArgs e) =>
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                    () =>
+                TryInvoke((Action)(() =>
                     {
                         BytesIn = e.BytesIn;
                         BytesOut = e.BytesOut;
                     }));
 
             ManagementSession.FatalErrorReported += (object sender, MessageReportedEventArgs e) =>
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                    () =>
+                TryInvoke((Action)(() =>
                     {
                         State = SessionStatusType.Error;
                         var ex = new OpenVPNException(e.Message);
@@ -227,92 +224,91 @@ namespace eduVPN.ViewModels.VPN
 
             ManagementSession.StateReported += (object sender, StateReportedEventArgs e) =>
             {
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                    () =>
+                var state = SessionStatusType.Error;
+                string msg = null;
+                switch (e.State)
+                {
+                    case OpenVPNStateType.Connecting:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeConnecting;
+                        break;
+
+                    case OpenVPNStateType.Resolving:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeResolving;
+                        break;
+
+                    case OpenVPNStateType.TcpConnecting:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeTcpConnecting;
+                        break;
+
+                    case OpenVPNStateType.Waiting:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeWaiting;
+                        break;
+
+                    case OpenVPNStateType.Authenticating:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeAuthenticating;
+                        break;
+
+                    case OpenVPNStateType.GettingConfiguration:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeGettingConfiguration;
+                        break;
+
+                    case OpenVPNStateType.AssigningIP:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeAssigningIP;
+                        break;
+
+                    case OpenVPNStateType.AddingRoutes:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeAddingRoutes;
+                        break;
+
+                    case OpenVPNStateType.Connected:
+                        state = SessionStatusType.Connected;
+                        msg = Resources.Strings.OpenVPNStateTypeConnected;
+                        break;
+
+                    case OpenVPNStateType.Reconnecting:
+                        state = SessionStatusType.Connecting;
+                        msg = Resources.Strings.OpenVPNStateTypeReconnecting;
+                        break;
+
+                    case OpenVPNStateType.Exiting:
+                        state = SessionStatusType.Disconnecting;
+                        msg = Resources.Strings.OpenVPNStateTypeExiting;
+                        break;
+                }
+                if (!string.IsNullOrEmpty(e.Message))
+                {
+                    if (msg != null)
                     {
-                        var state = SessionStatusType.Error;
-                        string msg = null;
-                        switch (e.State)
-                        {
-                            case OpenVPNStateType.Connecting:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeConnecting;
-                                break;
+                        // Append OpenVPN message.
+                        msg += "\r\n" + e.Message;
+                    }
+                    else
+                    {
+                        // Replace with OpenVPN message.
+                        msg = e.Message;
+                    }
+                }
+                else if (msg == null)
+                    msg = "";
+                TryInvoke((Action)(() =>
+                {
+                    StateDescription = msg;
+                    TunnelAddress = e.Tunnel;
+                    IPv6TunnelAddress = e.IPv6Tunnel;
+                    ConnectedAt = e.State == OpenVPNStateType.Connected ? (DateTimeOffset?)e.TimeStamp : null;
 
-                            case OpenVPNStateType.Resolving:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeResolving;
-                                break;
-
-                            case OpenVPNStateType.TcpConnecting:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeTcpConnecting;
-                                break;
-
-                            case OpenVPNStateType.Waiting:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeWaiting;
-                                break;
-
-                            case OpenVPNStateType.Authenticating:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeAuthenticating;
-                                break;
-
-                            case OpenVPNStateType.GettingConfiguration:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeGettingConfiguration;
-                                break;
-
-                            case OpenVPNStateType.AssigningIP:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeAssigningIP;
-                                break;
-
-                            case OpenVPNStateType.AddingRoutes:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeAddingRoutes;
-                                break;
-
-                            case OpenVPNStateType.Connected:
-                                state = SessionStatusType.Connected;
-                                msg = Resources.Strings.OpenVPNStateTypeConnected;
-                                break;
-
-                            case OpenVPNStateType.Reconnecting:
-                                state = SessionStatusType.Connecting;
-                                msg = Resources.Strings.OpenVPNStateTypeReconnecting;
-                                break;
-
-                            case OpenVPNStateType.Exiting:
-                                state = SessionStatusType.Disconnecting;
-                                msg = Resources.Strings.OpenVPNStateTypeExiting;
-                                break;
-                        }
-                        if (!string.IsNullOrEmpty(e.Message))
-                        {
-                            if (msg != null)
-                            {
-                                // Append OpenVPN message.
-                                msg += "\r\n" + e.Message;
-                            }
-                            else
-                            {
-                                // Replace with OpenVPN message.
-                                msg = e.Message;
-                            }
-                        }
-                        else if (msg == null)
-                            msg = "";
-                        StateDescription = msg;
-                        TunnelAddress = e.Tunnel;
-                        IPv6TunnelAddress = e.IPv6Tunnel;
-                        ConnectedAt = e.State == OpenVPNStateType.Connected ? (DateTimeOffset?)e.TimeStamp : null;
-
-                        // Set State property last, as the whole world is listening on this property to monitor connectivity changes.
-                        // It is important that we have IP addresses and other info already set before rising PropertyChanged event for State.
-                        State = state;
-                    }));
+                    // Set State property last, as the whole world is listening on this property to monitor connectivity changes.
+                    // It is important that we have IP addresses and other info already set before rising PropertyChanged event for State.
+                    State = state;
+                }));
 
                 if (e.State == OpenVPNStateType.Reconnecting)
                 {
@@ -330,7 +326,7 @@ namespace eduVPN.ViewModels.VPN
                         case "tls-error": // Client certificate is not compliant with this eduVPN server. Was eduVPN server reinstalled?
                             // Refresh configuration.
                             var config = ConnectingProfile.Connect(true, SessionAndWindowInProgress.Token);
-                            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileConfig = config));
+                            TryInvoke((Action)(() => ProfileConfig = config));
                             IgnoreHoldHint = true;
                             break;
 
@@ -349,7 +345,7 @@ namespace eduVPN.ViewModels.VPN
         #region Methods
 
         /// <inheritdoc/>
-        protected override void DoRun()
+        protected override void Run()
         {
             var propertyUpdater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
@@ -366,7 +362,7 @@ namespace eduVPN.ViewModels.VPN
             propertyUpdater.Start();
             try
             {
-                bool clean = false;
+                Thread.BeginCriticalRegion();
                 try
                 {
                     // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
@@ -564,40 +560,26 @@ namespace eduVPN.ViewModels.VPN
 
                                     // Wait for the session to end gracefully.
                                     ManagementSession.Monitor.Join();
-                                    if (ManagementSession.Error == null || ManagementSession.Error is OperationCanceledException)
-                                    {
-                                        // Session gracefully stopped or was cancelled.
-                                    }
-                                    else if (ManagementSession.Error is MonitorConnectionException)
-                                    {
-                                        // openvpn.exe died. Do the cleanup immediately, as Windows will kill our process on sign out next.
-                                        // Which is sooner than we get to the finally cleanup below!
-                                        try { ConnectingProfile.Server.Disconnect(); } catch { }
-                                        try { File.Delete(ConfigurationPath); } catch { }
-                                        clean = true;
-                                    }
-                                    else
-                                    {
-                                        // Session terminated in an error.
+                                    if (ManagementSession.Error != null && // Session terminated in an error.
+                                        !(ManagementSession.Error is OperationCanceledException) && // Session was not cancelled.
+                                        !(ManagementSession.Error is MonitorConnectionException)) // User is not signing out.
                                         goto retry;
-                                    }
                                 }
                                 finally { mgmtClient.Close(); }
                             }
                             finally
                             {
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                                    () =>
-                                    {
-                                        // Cleanup status properties.
-                                        State = SessionStatusType.Disconnecting;
-                                        StateDescription = Resources.Strings.OpenVPNStateTypeExiting;
-                                        TunnelAddress = null;
-                                        IPv6TunnelAddress = null;
-                                        ConnectedAt = null;
-                                        BytesIn = null;
-                                        BytesOut = null;
-                                    }));
+                                TryInvoke((Action)(() =>
+                                {
+                                    // Cleanup status properties.
+                                    State = SessionStatusType.Disconnecting;
+                                    StateDescription = Resources.Strings.OpenVPNStateTypeExiting;
+                                    TunnelAddress = null;
+                                    IPv6TunnelAddress = null;
+                                    ConnectedAt = null;
+                                    BytesIn = null;
+                                    BytesOut = null;
+                                }));
 
                                 // Wait for openvpn.exe to finish. Maximum 30s.
                                 try { Process.GetProcessById(openvpnInteractiveServiceConnection.ProcessId)?.WaitForExit(30000); }
@@ -609,21 +591,15 @@ namespace eduVPN.ViewModels.VPN
                 }
                 finally
                 {
-                    if (!clean)
-                    {
-                        try { ConnectingProfile.Server.Disconnect(); } catch { }
-                        try { File.Delete(ConfigurationPath); } catch { }
-                    }
+                    try { ConnectingProfile.Server.Disconnect(); } catch { }
+
+                    try { File.Delete(ConfigurationPath); }
+                    catch (Exception ex) { Trace.TraceWarning("Deleting {0} file failed: {1}", ConfigurationPath, ex.ToString()); }
+
+                    Thread.EndCriticalRegion();
                 }
             }
             finally { propertyUpdater.Stop(); }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(
-                () =>
-                {
-                    // Cleanup status properties.
-                    State = SessionStatusType.Disconnected;
-                    StateDescription = "";
-                }));
         }
 
         #endregion
