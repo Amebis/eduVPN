@@ -57,14 +57,9 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmInstituteAccessServerSelection = new DelegateCommand(
                         async () =>
                         {
-                            try
-                            {
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
-                                Wizard.ConnectionPage.ConnectingServer = SelectedInstituteAccessServer;
-                                Wizard.CurrentPage = Wizard.ConnectionPage;
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
+                            Wizard.ConnectionPage.ConnectingServer = SelectedInstituteAccessServer;
+                            Wizard.CurrentPage = Wizard.ConnectionPage;
                         },
                         () => SelectedInstituteAccessServer != null);
                 return _ConfirmInstituteAccessServerSelection;
@@ -85,18 +80,14 @@ namespace eduVPN.ViewModels.Pages
                     _ForgetInstituteAccessServer = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                Properties.Settings.Default.InstituteAccessServers.Remove(SelectedInstituteAccessServer.Base);
-                                SelectedInstituteAccessServer.Forget();
-                                InstituteAccessServers.Remove(SelectedInstituteAccessServer);
-                                SelectedInstituteAccessServer = null;
+                            Properties.Settings.Default.InstituteAccessServers.Remove(SelectedInstituteAccessServer.Base);
+                            SelectedInstituteAccessServer.Forget();
+                            InstituteAccessServers.Remove(SelectedInstituteAccessServer);
+                            SelectedInstituteAccessServer = null;
 
-                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                                if (Wizard.StartingPage != Wizard.CurrentPage)
-                                    Wizard.CurrentPage = Wizard.StartingPage;
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                            if (Wizard.StartingPage != Wizard.CurrentPage)
+                                Wizard.CurrentPage = Wizard.StartingPage;
                         },
                         () => SelectedInstituteAccessServer != null);
                 return _ForgetInstituteAccessServer;
@@ -160,14 +151,9 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmSecureInternetServerSelection = new DelegateCommand(
                         async () =>
                         {
-                            try
-                            {
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(AuthenticatingSecureInternetServer);
-                                Wizard.ConnectionPage.ConnectingServer = SelectedSecureInternetServer;
-                                Wizard.CurrentPage = Wizard.ConnectionPage;
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(AuthenticatingSecureInternetServer);
+                            Wizard.ConnectionPage.ConnectingServer = SelectedSecureInternetServer;
+                            Wizard.CurrentPage = Wizard.ConnectionPage;
                         },
                         () => AuthenticatingSecureInternetServer != null && SelectedSecureInternetServer != null);
                 return _ConfirmSecureInternetServerSelection;
@@ -188,25 +174,21 @@ namespace eduVPN.ViewModels.Pages
                     _ForgetSecureInternet = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                var authenticatingServer = AuthenticatingSecureInternetServer;
-                                if (authenticatingServer != null)
-                                    authenticatingServer.Forget();
-                                Properties.Settings.Default.SecureInternetOrganization = null;
-                                Properties.Settings.Default.SecureInternetConnectingServer = null;
-                                SecureInternetServers.Clear();
-                                SelectedSecureInternetServer = null;
-                                RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
-                                _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
-                                _ForgetSecureInternet?.RaiseCanExecuteChanged();
-                                _ChangeSecureInternetServer?.RaiseCanExecuteChanged();
+                            var authenticatingServer = AuthenticatingSecureInternetServer;
+                            if (authenticatingServer != null)
+                                authenticatingServer.Forget();
+                            Properties.Settings.Default.SecureInternetOrganization = null;
+                            Properties.Settings.Default.SecureInternetConnectingServer = null;
+                            SecureInternetServers.Clear();
+                            SelectedSecureInternetServer = null;
+                            RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
+                            _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
+                            _ForgetSecureInternet?.RaiseCanExecuteChanged();
+                            _ChangeSecureInternetServer?.RaiseCanExecuteChanged();
 
-                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                                if (Wizard.StartingPage != Wizard.CurrentPage)
-                                    Wizard.CurrentPage = Wizard.StartingPage;
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                            if (Wizard.StartingPage != Wizard.CurrentPage)
+                                Wizard.CurrentPage = Wizard.StartingPage;
                         },
                         () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
                 return _ForgetSecureInternet;
@@ -225,11 +207,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ChangeSecureInternetServer == null)
                     _ChangeSecureInternetServer = new DelegateCommand(
-                        () =>
-                        {
-                            try { Wizard.CurrentPage = Wizard.SelectSecureInternetServerPage; }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        },
+                        () => Wizard.CurrentPage = Wizard.SelectSecureInternetServerPage,
                         () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
                 return _ChangeSecureInternetServer;
             }
@@ -274,14 +252,9 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmOwnServerSelection = new DelegateCommand(
                         async () =>
                         {
-                            try
-                            {
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
-                                Wizard.ConnectionPage.ConnectingServer = SelectedOwnServer;
-                                Wizard.CurrentPage = Wizard.ConnectionPage;
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
+                            Wizard.ConnectionPage.ConnectingServer = SelectedOwnServer;
+                            Wizard.CurrentPage = Wizard.ConnectionPage;
                         },
                         () => SelectedOwnServer != null);
                 return _ConfirmOwnServerSelection;
@@ -302,18 +275,14 @@ namespace eduVPN.ViewModels.Pages
                     _ForgetOwnServer = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                Properties.Settings.Default.OwnServers.Remove(SelectedOwnServer.Base);
-                                SelectedOwnServer.Forget();
-                                OwnServers.Remove(SelectedOwnServer);
-                                SelectedOwnServer = null;
+                            Properties.Settings.Default.OwnServers.Remove(SelectedOwnServer.Base);
+                            SelectedOwnServer.Forget();
+                            OwnServers.Remove(SelectedOwnServer);
+                            SelectedOwnServer = null;
 
-                                // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                                if (Wizard.StartingPage != Wizard.CurrentPage)
-                                    Wizard.CurrentPage = Wizard.StartingPage;
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
+                            if (Wizard.StartingPage != Wizard.CurrentPage)
+                                Wizard.CurrentPage = Wizard.StartingPage;
                         },
                         () => SelectedOwnServer != null);
                 return _ForgetOwnServer;
@@ -331,12 +300,7 @@ namespace eduVPN.ViewModels.Pages
             get
             {
                 if (_AddAnother == null)
-                    _AddAnother = new DelegateCommand(
-                        () =>
-                        {
-                            try { Wizard.CurrentPage = Wizard.AddAnotherPage; }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        });
+                    _AddAnother = new DelegateCommand(() => Wizard.CurrentPage = Wizard.AddAnotherPage);
                 return _AddAnother;
             }
         }

@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.JSON;
 using eduVPN.Models;
 using eduVPN.ViewModels.Pages;
 using Prism.Commands;
@@ -62,12 +61,7 @@ namespace eduVPN.ViewModels.Windows
             get
             {
                 if (_NavigateTo == null)
-                    _NavigateTo = new DelegateCommand<ConnectWizardPopupPage>(
-                        page =>
-                        {
-                            try { CurrentPopupPage = page; }
-                            catch (Exception ex) { Error = ex; }
-                        });
+                    _NavigateTo = new DelegateCommand<ConnectWizardPopupPage>(page => CurrentPopupPage = page);
                 return _NavigateTo;
             }
         }
@@ -389,7 +383,7 @@ namespace eduVPN.ViewModels.Windows
                         Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
                         try { action.Key(); }
                         catch (OperationCanceledException) { }
-                        catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Error = ex)); }
+                        catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
                         finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
                     }
                     // Sleep for given time±10%, then retry.
@@ -678,45 +672,40 @@ namespace eduVPN.ViewModels.Windows
                 ConnectionPage.ActiveSession != null || Properties.Settings.Default.LastSelectedServer == null)
                 return;
 
-            try
+            var connectingServer = GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.LastSelectedServer);
+            if (connectingServer != null)
             {
-                var connectingServer = GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.LastSelectedServer);
-                if (connectingServer != null)
+                var authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
+                if (authenticatingServer != null)
                 {
-                    var authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
-                    if (authenticatingServer != null)
+                    if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, false) != null)
                     {
-                        if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, false) != null)
-                        {
-                            ConnectionPage.ConnectingServer = connectingServer;
-                            CurrentPage = ConnectionPage;
-                        }
-                        else
-                        {
-                            Properties.Settings.Default.LastSelectedServer = null;
-                            AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(authenticatingServer, connectingServer));
-                        }
-                    }
-                }
-                else
-                {
-                    var srv = new Server(Properties.Settings.Default.LastSelectedServer);
-                    srv.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
-                    srv.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
-                    if (await AuthorizationPage.TriggerAuthorizationAsync(srv, false) != null)
-                    {
-                        ConnectionPage.ConnectingServer = srv;
+                        ConnectionPage.ConnectingServer = connectingServer;
                         CurrentPage = ConnectionPage;
                     }
                     else
                     {
                         Properties.Settings.Default.LastSelectedServer = null;
-                        AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(srv, srv));
+                        AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(authenticatingServer, connectingServer));
                     }
                 }
             }
-            catch (OperationCanceledException) { }
-            catch (Exception ex) { Error = ex; }
+            else
+            {
+                var srv = new Server(Properties.Settings.Default.LastSelectedServer);
+                srv.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
+                srv.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
+                if (await AuthorizationPage.TriggerAuthorizationAsync(srv, false) != null)
+                {
+                    ConnectionPage.ConnectingServer = srv;
+                    CurrentPage = ConnectionPage;
+                }
+                else
+                {
+                    Properties.Settings.Default.LastSelectedServer = null;
+                    AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(srv, srv));
+                }
+            }
         }
 
         /// <summary>

@@ -50,19 +50,14 @@ namespace eduVPN.ViewModels.Pages
                     _AddServer = new DelegateCommand(
                         async () =>
                         {
-                            try
-                            {
-                                TryParseUri(Hostname, out var uri);
-                                var srv = new Server(uri);
-                                srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                                srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(srv);
-                                Wizard.HomePage.AddOwnServer(srv);
-                                Wizard.ConnectionPage.ConnectingServer = srv;
-                                Wizard.CurrentPage = Wizard.ConnectionPage;
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            TryParseUri(Hostname, out var uri);
+                            var srv = new Server(uri);
+                            srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
+                            srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(srv);
+                            Wizard.HomePage.AddOwnServer(srv);
+                            Wizard.ConnectionPage.ConnectingServer = srv;
+                            Wizard.CurrentPage = Wizard.ConnectionPage;
                         },
                         () => !string.IsNullOrEmpty(Hostname) && !HasErrors);
                 return _AddServer;
@@ -79,14 +74,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_NavigateBack == null)
                     _NavigateBack = new DelegateCommand(
-                        // execute
-                        () =>
-                        {
-                            try { Wizard.CurrentPage = Wizard.HomePage; }
-                            catch (Exception ex) { Wizard.Error = ex; }
-                        },
-
-                        // canExecute
+                        () => Wizard.CurrentPage = Wizard.HomePage,
                         () => Wizard.StartingPage != this);
                 return _NavigateBack;
             }

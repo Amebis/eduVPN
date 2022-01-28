@@ -207,16 +207,12 @@ namespace eduVPN.ViewModels.VPN
                     _Disconnect = new DelegateCommand(
                         () =>
                         {
-                            try
-                            {
-                                // Terminate connection.
-                                SessionInProgress.Cancel();
-                                _Disconnect.RaiseCanExecuteChanged();
+                            // Terminate connection.
+                            SessionInProgress.Cancel();
+                            _Disconnect.RaiseCanExecuteChanged();
 
-                                // Clear server/profile to auto-start on next launch.
-                                Properties.Settings.Default.LastSelectedServer = null;
-                            }
-                            catch (Exception ex) { Wizard.Error = ex; }
+                            // Clear server/profile to auto-start on next launch.
+                            Properties.Settings.Default.LastSelectedServer = null;
                         },
                         () => !SessionInProgress.IsCancellationRequested);
                 return _Disconnect;
