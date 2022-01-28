@@ -86,6 +86,20 @@ namespace eduVPN.Views
         /// <inheritdoc/>
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
         {
+            var activeSession = ((ViewModels.Windows.ConnectWizard)(MainWindow as Windows.ConnectWizard)?.DataContext).ConnectionPage.ActiveSession;
+            if (activeSession != null)
+            {
+                // Prevent active session thread from dispatching events to our thread.
+                // Otherwise, Dispatcher.Invoke() and Join() below deadlocks each other.
+                Dispatcher.InvokeShutdown();
+
+                // Wait for the active session to terminate gracefully.
+                // We must not return from this method, or allow base.OnSessionEnding() call
+                // *before* the active session is done. Otherwise, the framework would get a
+                // chance (and use it) to kill other threads including active session.
+                activeSession.Thread?.Join();
+            }
+
             base.OnSessionEnding(e);
 
             // Save view settings on logout.
