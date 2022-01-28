@@ -48,12 +48,9 @@ namespace eduVPN.ViewModels.VPN
         #region Properties
 
         /// <summary>
-        /// UI thread's dispatcher
+        /// The connecting wizard
         /// </summary>
-        /// <remarks>
-        /// Background threads must raise property change events in the UI thread.
-        /// </remarks>
-        protected Dispatcher Dispatcher { get; }
+        public ConnectWizard Wizard { get; }
 
         /// <summary>
         /// Connecting eduVPN server profile
@@ -297,12 +294,13 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates a VPN session
         /// </summary>
+        /// <param name="wizard">The connecting wizard</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public Session(Profile connectingProfile)
+        public Session(ConnectWizard wizard, Profile connectingProfile)
         {
             SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
 
-            Dispatcher = Dispatcher.CurrentDispatcher;
+            Wizard = wizard;
             ConnectingProfile = connectingProfile;
         }
 
@@ -324,13 +322,19 @@ namespace eduVPN.ViewModels.VPN
                         new TimeSpan(0, 0, 0, 1),
                         DispatcherPriority.Normal,
                         (object senderTimer, EventArgs eTimer) => RaisePropertyChanged(nameof(ConnectedTime)),
-                        Dispatcher);
+                        Wizard.Dispatcher);
                     connectedTimeUpdater.Start();
                     try
                     {
                         try
                         {
-                            Parallel.ForEach(PreRun, action => action());
+                            Parallel.ForEach(PreRun,
+                                action =>
+                                {
+                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                                    try { action(); }
+                                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                                });
                         }
                         catch (AggregateException ex)
                         {
@@ -379,9 +383,9 @@ namespace eduVPN.ViewModels.VPN
         /// <returns>The return value from the delegate being invoked or <c>null</c> if the delegate has no return value or dispatcher is shutting down.</returns>
         protected object TryInvoke(Delegate method)
         {
-            if (Dispatcher.HasShutdownStarted)
+            if (Wizard.Dispatcher.HasShutdownStarted)
                 return null;
-            return Dispatcher.Invoke(DispatcherPriority.Normal, method);
+            return Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, method);
         }
 
         #endregion

@@ -102,10 +102,11 @@ namespace eduVPN.Models
         /// <summary>
         /// Gets configuration for the profile to connect
         /// </summary>
+        /// <param name="authenticatingServer">Authenticating server (can be same as this server)</param>
         /// <param name="forceRefresh">Force client reauthorization</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public eduVPN.Xml.Response Connect(bool forceRefresh = false, CancellationToken ct = default)
+        public eduVPN.Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Server.GetEndpoints(ct);
@@ -115,7 +116,7 @@ namespace eduVPN.Models
 
             retry:
             // Request authentication token.
-            RequestAuthorization?.Invoke(this, e);
+            RequestAuthorization?.Invoke(authenticatingServer, e);
 
             try
             {

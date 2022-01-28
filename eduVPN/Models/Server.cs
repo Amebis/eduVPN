@@ -241,12 +241,13 @@ namespace eduVPN.Models
         /// <summary>
         /// Notifies server to release resources related to our sessions
         /// </summary>
+        /// <param name="authenticatingServer">Authenticating server (can be same as this server)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        public void Disconnect(CancellationToken ct = default)
+        public void Disconnect(Server authenticatingServer, CancellationToken ct = default)
         {
             var api = GetEndpoints(ct);
             var e = new RequestAuthorizationEventArgs("config");
-            RequestAuthorization?.Invoke(this, e);
+            RequestAuthorization?.Invoke(authenticatingServer, e);
             try
             {
                 Trace.TraceInformation("Disconnecting {0}", api.Disconnect);
