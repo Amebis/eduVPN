@@ -298,9 +298,9 @@ namespace eduVPN.ViewModels.VPN
                             Parallel.ForEach(PreRun,
                                 action =>
                                 {
-                                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                                    TryInvoke((Action)(() => Wizard.TaskCount++));
                                     try { action(); }
-                                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                                    finally { TryInvoke((Action)(() => Wizard.TaskCount--)); }
                                 });
                         }
                         catch (AggregateException ex)

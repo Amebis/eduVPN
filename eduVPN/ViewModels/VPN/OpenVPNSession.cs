@@ -101,15 +101,15 @@ namespace eduVPN.ViewModels.VPN
                                             Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                                             true,
                                             Window.Abort.Token);
-                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => ProfileConfig = config));
+                                        TryInvoke((Action)(() => ProfileConfig = config));
                                         ManagementSession.SendSignal(SignalType.SIGHUP, Window.Abort.Token);
                                     }
                                     catch (OperationCanceledException) { }
-                                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
+                                    catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
                                     finally
                                     {
                                         RenewInProgress = false;
-                                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => _Renew.RaiseCanExecuteChanged()));
+                                        TryInvoke((Action)(() => _Renew.RaiseCanExecuteChanged()));
                                     }
                                 })).Start();
                         },
@@ -255,7 +255,6 @@ namespace eduVPN.ViewModels.VPN
                 propertyUpdater.Start();
                 try
                 {
-                    Thread.BeginCriticalRegion();
                     try
                     {
                         // Get a random TCP port for openvpn.exe management interface.
@@ -508,8 +507,6 @@ namespace eduVPN.ViewModels.VPN
 
                         try { File.Delete(ConfigurationPath); }
                         catch (Exception ex) { Trace.TraceWarning("Deleting {0} file failed: {1}", ConfigurationPath, ex.ToString()); }
-
-                        Thread.EndCriticalRegion();
                     }
                 }
                 finally { propertyUpdater.Stop(); }
