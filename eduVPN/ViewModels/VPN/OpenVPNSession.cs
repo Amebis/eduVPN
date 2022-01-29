@@ -110,58 +110,15 @@ namespace eduVPN.ViewModels.VPN
         private X509Certificate2 _ClientCertificate;
 
         /// <inheritdoc/>
-        public override DateTimeOffset ValidFrom { get => ClientCertificate != null ? ClientCertificate.NotBefore : DateTimeOffset.MinValue; }
+        public override DateTimeOffset ValidFrom
+        {
+            get => ClientCertificate != null ?
+                ClientCertificate.NotBefore.AddMinutes(5) /* Servers are issuing certificates with NotBefore 5 minutes in the past. */ :
+                DateTimeOffset.MinValue;
+        }
 
         /// <inheritdoc/>
         public override DateTimeOffset ValidTo { get => ClientCertificate != null ? ClientCertificate.NotAfter : DateTimeOffset.MaxValue; }
-
-        /// <inheritdoc/>
-        public override bool Expired { get => ClientCertificate != null && ClientCertificate.NotAfter <= DateTimeOffset.UtcNow; }
-
-        /// <inheritdoc/>
-        public override TimeSpan ExpiresTime
-        {
-            get
-            {
-                return ClientCertificate != null ?
-                    ClientCertificate.NotAfter - DateTimeOffset.UtcNow :
-                    TimeSpan.MaxValue;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool OfferRenewal
-        {
-            get
-            {
-                if (ClientCertificate == null)
-                    return false;
-                var now = DateTimeOffset.UtcNow;
-                return
-                    (now - ClientCertificate.NotBefore).TotalMinutes >=
-#if DEBUG
-                        1
-#else
-                        30
-#endif
-                        + 5 /* Servers are issuing certificates with NotBefore 5 minutes in the past. */ &&
-                    (ClientCertificate.NotAfter - now).TotalHours <= 24;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool SuggestRenewal
-        {
-            get
-            {
-                if (ClientCertificate == null)
-                    return false;
-                var now = DateTimeOffset.UtcNow;
-                return
-                    (now - ClientCertificate.NotBefore).Ticks >= 0.75 * (ClientCertificate.NotAfter - ClientCertificate.NotBefore).Ticks &&
-                    (ClientCertificate.NotAfter - now).TotalHours <= 24;
-            }
-        }
 
         /// <inheritdoc/>
         public override DelegateCommand Renew
@@ -731,7 +688,7 @@ namespace eduVPN.ViewModels.VPN
                 switch (e.Message)
                 {
                     case "connection-reset": // Connection was reset.
-                        if (ClientCertificate.NotAfter <= DateTime.Now)
+                        if (ValidTo <= DateTime.Now)
                         {
                             // Client certificate expired. Try with a new client certificate then.
                             goto case "tls-error";

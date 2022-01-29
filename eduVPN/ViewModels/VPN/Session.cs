@@ -169,22 +169,54 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Is the session expired?
         /// </summary>
-        public virtual bool Expired { get; } = false;
+        public bool Expired { get => ValidTo <= DateTimeOffset.Now; }
 
         /// <summary>
         /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
         /// </summary>
-        public virtual TimeSpan ExpiresTime { get; } = TimeSpan.MaxValue;
+        public TimeSpan ExpiresTime
+        {
+            get
+            {
+                var v = ValidTo;
+                return v != DateTimeOffset.MaxValue ?
+                    v - DateTimeOffset.Now :
+                    TimeSpan.MaxValue;
+            }
+        }
 
         /// <summary>
         /// Should UI offer session renewal?
         /// </summary>
-        public virtual bool OfferRenewal { get; } = false;
+        public bool OfferRenewal
+        {
+            get
+            {
+                DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
+                return
+#if DEBUG
+                    (now - from).TotalMinutes >= 1;
+#else
+                    (now - from).TotalMinutes >= 30 &&
+                    (to - now).TotalHours <= 24;
+#endif
+            }
+        }
 
         /// <summary>
         /// Should UI suggest session renewal?
         /// </summary>
-        public virtual bool SuggestRenewal { get; } = false;
+        public bool SuggestRenewal
+        {
+            get
+            {
+                DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
+                return
+                    from != DateTimeOffset.MinValue && to != DateTimeOffset.MaxValue &&
+                    (now - from).Ticks >= 0.75 * (to - from).Ticks &&
+                    (to - now).TotalHours <= 24;
+            }
+        }
 
         /// <summary>
         /// Renews and restarts the session
