@@ -58,6 +58,11 @@ namespace eduVPN.ViewModels.VPN
         public Profile ConnectingProfile { get; }
 
         /// <summary>
+        /// VPN session worker
+        /// </summary>
+        public Thread Thread { get; private set; }
+
+        /// <summary>
         /// Client connection state
         /// </summary>
         public SessionStatusType State
@@ -242,7 +247,6 @@ namespace eduVPN.ViewModels.VPN
 
             Wizard = wizard;
             ConnectingProfile = connectingProfile;
-            State = SessionStatusType.Initializing;
         }
 
         #endregion
@@ -250,48 +254,83 @@ namespace eduVPN.ViewModels.VPN
         #region Methods
 
         /// <summary>
-        /// Run the session
+        /// Starts the session
         /// </summary>
-        public void Run()
+        public void Start()
         {
-            // Create dispatcher timer.
-            var connectedTimeUpdater = new DispatcherTimer(
-                new TimeSpan(0, 0, 0, 1),
-                DispatcherPriority.Normal,
-                (object sender, EventArgs e) => RaisePropertyChanged(nameof(ConnectedTime)),
-                Wizard.Dispatcher);
-            connectedTimeUpdater.Start();
-            try
+            State = SessionStatusType.Initializing;
+            Thread = new Thread(new ThreadStart(() =>
             {
                 try
                 {
-                    Parallel.ForEach(PreRun,
-                        action =>
+                    var connectedTimeUpdater = new DispatcherTimer(
+                        new TimeSpan(0, 0, 0, 1),
+                        DispatcherPriority.Normal,
+                        (object senderTimer, EventArgs eTimer) => RaisePropertyChanged(nameof(ConnectedTime)),
+                        Wizard.Dispatcher);
+                    connectedTimeUpdater.Start();
+                    try
+                    {
+                        try
                         {
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
-                            try { action(); }
-                            finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
-                        });
-                }
-                catch (AggregateException ex)
-                {
-                    var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
-                    if (nonCancelledException.Any())
-                        throw new AggregateException("", nonCancelledException.ToArray());
-                    throw new OperationCanceledException();
-                }
+                            Parallel.ForEach(PreRun,
+                                action =>
+                                {
+                                    TryInvoke((Action)(() => Wizard.TaskCount++));
+                                    try { action(); }
+                                    finally { TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                                });
+                        }
+                        catch (AggregateException ex)
+                        {
+                            var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
+                            if (nonCancelledException.Any())
+                                throw new AggregateException("", nonCancelledException.ToArray());
+                            throw new OperationCanceledException();
+                        }
 
-                DoRun();
-            }
-            finally { connectedTimeUpdater.Stop(); }
+                        Run();
+                    }
+                    finally { connectedTimeUpdater.Stop(); }
+
+                    TryInvoke((Action)(() =>
+                    {
+                        // Cleanup status properties.
+                        State = SessionStatusType.Disconnected;
+                        StateDescription = "";
+                    }));
+                }
+                catch (Exception ex)
+                {
+                    TryInvoke((Action)(() => {
+                        State = SessionStatusType.Error;
+                        StateDescription = ex.ToString();
+                        throw ex;
+                    }));
+                }
+            }));
+            Thread.IsBackground = false;
+            Thread.Start();
         }
 
         /// <summary>
         /// Run the session
         /// </summary>
-        protected virtual void DoRun()
+        protected virtual void Run()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Invoke method on GUI thread if it's not terminating.
+        /// </summary>
+        /// <param name="method">Method to execute</param>
+        /// <returns>The return value from the delegate being invoked or <c>null</c> if the delegate has no return value or dispatcher is shutting down.</returns>
+        protected object TryInvoke(Delegate method)
+        {
+            if (Wizard.Dispatcher.HasShutdownStarted)
+                return null;
+            return Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, method);
         }
 
         #endregion
