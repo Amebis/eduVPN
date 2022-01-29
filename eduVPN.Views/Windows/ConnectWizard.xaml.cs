@@ -163,6 +163,9 @@ namespace eduVPN.Views.Windows
             if (!double.IsNaN(Properties.Settings.Default.WindowTop))
                 Top = Math.Min(Math.Max(Properties.Settings.Default.WindowTop, SystemParameters.VirtualScreenTop), SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - Height);
 
+            // Attach to application events.
+            Application.Current.SessionEnding += Window_Save;
+
             // Preload icons to be used on system tray.
             var iconSize = System.Windows.Forms.SystemInformation.SmallIconSize;
             Icons = new Dictionary<SessionStatusType, Icon>();
@@ -307,6 +310,7 @@ namespace eduVPN.Views.Windows
             RefreshUseDarkTheme();
         }
 
+        [DebuggerStepThrough]
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WM_WININICHANGE &&
@@ -347,14 +351,7 @@ namespace eduVPN.Views.Windows
                 NotifyIcon.Visible = false;
 
                 // Save window position on closing.
-                Properties.Settings.Default.WindowState = (int)WindowState;
-                if (WindowState == WindowState.Normal)
-                {
-                    Properties.Settings.Default.WindowTop = Top;
-                    Properties.Settings.Default.WindowLeft = Left;
-                    Properties.Settings.Default.WindowHeight = Height;
-                    Properties.Settings.Default.WindowWidth = Width;
-                }
+                Window_Save(sender, e);
             }
             else
             {
@@ -447,6 +444,23 @@ namespace eduVPN.Views.Windows
         {
             DoClose = true;
             Close();
+        }
+
+        /// <summary>
+        /// Saves window position.
+        /// </summary>
+        /// <param name="sender">Event sender (ignored)</param>
+        /// <param name="e">Event arguments (ignored)</param>
+        private void Window_Save(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.WindowState = (int)WindowState;
+            if (WindowState == WindowState.Normal)
+            {
+                Properties.Settings.Default.WindowTop = Top;
+                Properties.Settings.Default.WindowLeft = Left;
+                Properties.Settings.Default.WindowHeight = Height;
+                Properties.Settings.Default.WindowWidth = Width;
+            }
         }
 
         #endregion
