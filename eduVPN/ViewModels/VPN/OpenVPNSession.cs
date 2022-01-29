@@ -262,7 +262,9 @@ namespace eduVPN.ViewModels.VPN
             PreRun.Add(() =>
             {
                 // Get profile's OpenVPN configuration.
-                ProfileConfig = ConnectingProfile.GetOpenVPNConfig(SessionAndWindowInProgress.Token);
+                ProfileConfig = ConnectingProfile.GetOpenVPNConfig(
+                    Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                    SessionAndWindowInProgress.Token);
             });
 
             PreRun.Add(() =>
@@ -458,7 +460,6 @@ namespace eduVPN.ViewModels.VPN
             TryInvoke((Action)(() => Wizard.TaskCount++));
             try
             {
-                // Create dispatcher timer to refresh properties and commands periodically.
                 var propertyUpdater = new DispatcherTimer(
                     new TimeSpan(0, 0, 0, 1),
                     DispatcherPriority.Normal,

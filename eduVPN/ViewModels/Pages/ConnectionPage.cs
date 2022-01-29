@@ -193,7 +193,8 @@ namespace eduVPN.ViewModels.Pages
                     _StartSession = new DelegateCommand(
                         () =>
                         {
-                            var session = new OpenVPNSession(Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance,
+                            var session = new OpenVPNSession(
+                                Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance,
                                 Wizard,
                                 SelectedProfile);
                             var finalState = StateType.SessionInactive;

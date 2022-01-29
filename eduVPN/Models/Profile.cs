@@ -91,9 +91,10 @@ namespace eduVPN.Models
         /// <summary>
         /// Gets profile OpenVPN configuration
         /// </summary>
+        /// <param name="authenticatingServer">Authenticating server (can be same as this profile's server)</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public string GetOpenVPNConfig(CancellationToken ct = default)
+        public string GetOpenVPNConfig(Server authenticatingServer, CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Server.GetEndpoints(ct);
@@ -101,7 +102,7 @@ namespace eduVPN.Models
 
             retry:
             // Request authentication token.
-            RequestAuthorization?.Invoke(this, e);
+            RequestAuthorization?.Invoke(authenticatingServer, e);
 
             try
             {
