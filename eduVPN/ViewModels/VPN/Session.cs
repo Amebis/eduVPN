@@ -23,19 +23,9 @@ namespace eduVPN.ViewModels.VPN
     /// <summary>
     /// VPN session base class
     /// </summary>
-    public class Session : BindableBase, IDisposable
+    public class Session : BindableBase
     {
         #region Fields
-
-        /// <summary>
-        /// Session termination token
-        /// </summary>
-        private readonly CancellationTokenSource SessionInProgress = new CancellationTokenSource();
-
-        /// <summary>
-        /// Quit token
-        /// </summary>
-        protected CancellationTokenSource SessionAndWindowInProgress;
 
         /// <summary>
         /// List of actions to run prior running the session
@@ -259,28 +249,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Disconnect command
         /// </summary>
-        public DelegateCommand Disconnect
-        {
-            get
-            {
-                if (_Disconnect == null)
-                    _Disconnect = new DelegateCommand(
-                        () =>
-                        {
-                            // Terminate connection.
-                            SessionInProgress.Cancel();
-                            _Disconnect.RaiseCanExecuteChanged();
-
-                            // Clear server/profile to auto-start on next launch.
-                            Properties.Settings.Default.LastSelectedServer = null;
-                        },
-                        () => !SessionInProgress.IsCancellationRequested);
-                return _Disconnect;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _Disconnect;
+        public virtual DelegateCommand Disconnect { get; } = new DelegateCommand(() => { }, () => false);
 
         /// <summary>
         /// Show log command
@@ -298,8 +267,6 @@ namespace eduVPN.ViewModels.VPN
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
         public Session(ConnectWizard wizard, Profile connectingProfile)
         {
-            SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
-
             Wizard = wizard;
             ConnectingProfile = connectingProfile;
         }
@@ -388,53 +355,6 @@ namespace eduVPN.ViewModels.VPN
             return Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, method);
         }
 
-        #endregion
-
-        #region IDisposable Support
-        /// <summary>
-        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool disposedValue = false;
-
-        /// <summary>
-        /// Called to dispose the object.
-        /// </summary>
-        /// <param name="disposing">Dispose managed objects</param>
-        /// <remarks>
-        /// To release resources for inherited classes, override this method.
-        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
-        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
-        /// </remarks>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    if (SessionAndWindowInProgress != null)
-                        SessionAndWindowInProgress.Dispose();
-
-                    if (SessionInProgress != null)
-                        SessionInProgress.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
-        /// </summary>
-        /// <remarks>
-        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
-        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
-        /// </remarks>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
         #endregion
     }
 }
