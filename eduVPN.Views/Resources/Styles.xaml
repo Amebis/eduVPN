@@ -684,6 +684,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="Command" Value="{x:Null}">
+                <Setter Property="IsEnabled" Value="False"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}">
