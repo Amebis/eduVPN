@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.1.4...HEAD)
 
+- Fixes
+
 
 ## [2.1.4](https://github.com/Amebis/eduVPN/compare/2.1.3...2.1.4) (2022-01-31)
 
