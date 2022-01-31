@@ -105,16 +105,15 @@ namespace eduVPN.ViewModels.Pages
             get
             {
                 var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                if (org != null)
-                {
-                    var srv = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                    if (srv != null)
-                    {
-                        srv.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
-                        return srv;
-                    }
-                }
-                return null;
+                if (org == null)
+                    return null;
+
+                var srv = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
+                if (srv == null)
+                    return null;
+
+                srv.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
+                return srv;
             }
         }
 
@@ -175,8 +174,7 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             var authenticatingServer = AuthenticatingSecureInternetServer;
-                            if (authenticatingServer != null)
-                                authenticatingServer.Forget();
+                            authenticatingServer?.Forget();
                             Properties.Settings.Default.SecureInternetOrganization = null;
                             Properties.Settings.Default.SecureInternetConnectingServer = null;
                             SecureInternetServers.Clear();
@@ -386,10 +384,14 @@ namespace eduVPN.ViewModels.Pages
             try
             {
                 list.Clear();
-                SecureInternetServer srv;
-                if ((srv = Wizard.GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.SecureInternetConnectingServer)) != null ||
-                    (srv = AuthenticatingSecureInternetServer) != null)
-                    list.Add(srv);
+                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
+                if (org != null)
+                {
+                    SecureInternetServer srv;
+                    if ((srv = Wizard.GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.SecureInternetConnectingServer)) != null ||
+                        (srv = AuthenticatingSecureInternetServer) != null)
+                        list.Add(srv);
+                }
             }
             finally { SecureInternetServers.EndUpdate(); }
             SelectedSecureInternetServer = Wizard.GetDiscoveredServer<SecureInternetServer>(selected);
