@@ -32,7 +32,7 @@ namespace eduVPN.Converters
             if (value is string str)
             {
                 var sb = new StringBuilder();
-                char accessKey = '\0';
+                var accessKey = '\0';
                 for (int i = 0, n = str.Length; i < n; i++)
                 {
                     var nextIndex = i + 1;

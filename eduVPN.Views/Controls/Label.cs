@@ -63,7 +63,7 @@ namespace eduVPN.Views.Controls
 
         private static void OnContentProxyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            d.SetCurrentValue(System.Windows.Controls.Label.ContentProperty, Format((string)e.NewValue, GetCharacterCasing(d)));
+            d.SetCurrentValue(ContentControl.ContentProperty, Format((string)e.NewValue, GetCharacterCasing(d)));
 
             string Format(string text, CharacterCasing casing)
             {

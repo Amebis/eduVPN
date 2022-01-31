@@ -98,14 +98,14 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// The page the wizard is currently displaying
         /// </summary>
-        public ConnectWizardPage DisplayPage { get => (ConnectWizardPage)_CurrentPopupPage ?? _CurrentPage; }
+        public ConnectWizardPage DisplayPage => (ConnectWizardPage)_CurrentPopupPage ?? _CurrentPage;
 
         /// <summary>
         /// The page the wizard should be displaying (if no pop-up page)
         /// </summary>
         public ConnectWizardStandardPage CurrentPage
         {
-            get { return _CurrentPage; }
+            get => _CurrentPage;
             set
             {
                 if (SetProperty(ref _CurrentPage, value))
@@ -125,7 +125,7 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public ConnectWizardPopupPage CurrentPopupPage
         {
-            get { return _CurrentPopupPage; }
+            get => _CurrentPopupPage;
             set
             {
                 if (SetProperty(ref _CurrentPopupPage, value))
@@ -142,7 +142,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Page to add another server
         /// </summary>
-        public ConnectWizardStandardPage AddAnotherPage { get => Properties.SettingsEx.Default.ServersDiscovery?.Uri != null ? (ConnectWizardStandardPage)SearchPage : SelectOwnServerPage; }
+        public ConnectWizardStandardPage AddAnotherPage => Properties.SettingsEx.Default.ServersDiscovery?.Uri != null ? (ConnectWizardStandardPage)SearchPage : SelectOwnServerPage;
 
         /// <summary>
         /// The first page of the wizard
@@ -522,7 +522,8 @@ namespace eduVPN.ViewModels.Windows
             w.DoWork += (object sender, DoWorkEventArgs e) =>
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
-                try {
+                try
+                {
                     UpdateOrganizations(Properties.Settings.Default.ResponseCache.GetSeq(
                         Properties.SettingsEx.Default.OrganizationsDiscovery,
                         Abort.Token));

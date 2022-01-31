@@ -44,7 +44,7 @@ namespace eduVPN.Models
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
             Cert = eduJSON.Parser.GetValue<string>(obj2, "certificate");
-            PrivateKey = (new NetworkCredential("", eduJSON.Parser.GetValue<string>(obj2, "private_key"))).SecurePassword;
+            PrivateKey = new NetworkCredential("", eduJSON.Parser.GetValue<string>(obj2, "private_key")).SecurePassword;
         }
 
         /// <summary>

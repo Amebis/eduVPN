@@ -22,8 +22,8 @@ namespace eduVPN
         /// </summary>
         public T Minimum
         {
-            get { return _Minimum; }
-            set { SetProperty(ref _Minimum, value); }
+            get => _Minimum;
+            set => SetProperty(ref _Minimum, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -34,8 +34,8 @@ namespace eduVPN
         /// </summary>
         public T Maximum
         {
-            get { return _Maximum; }
-            set { SetProperty(ref _Maximum, value); }
+            get => _Maximum;
+            set => SetProperty(ref _Maximum, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -46,8 +46,8 @@ namespace eduVPN
         /// </summary>
         public T Value
         {
-            get { return _Value; }
-            set { SetProperty(ref _Value, value); }
+            get => _Value;
+            set => SetProperty(ref _Value, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

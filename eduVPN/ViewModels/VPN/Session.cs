@@ -57,8 +57,8 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public SessionStatusType State
         {
-            get { return _State; }
-            protected set { SetProperty(ref _State, value); }
+            get => _State;
+            protected set => SetProperty(ref _State, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -69,8 +69,8 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public string StateDescription
         {
-            get { return _StateDescription; }
-            protected set { SetProperty(ref _StateDescription, value); }
+            get => _StateDescription;
+            protected set => SetProperty(ref _StateDescription, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -82,8 +82,8 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public IPAddress TunnelAddress
         {
-            get { return _TunnelAddress; }
-            protected set { SetProperty(ref _TunnelAddress, value); }
+            get => _TunnelAddress;
+            protected set => SetProperty(ref _TunnelAddress, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -95,8 +95,8 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public IPAddress IPv6TunnelAddress
         {
-            get { return _IPv6TunnelAddress; }
-            protected set { SetProperty(ref _IPv6TunnelAddress, value); }
+            get => _IPv6TunnelAddress;
+            protected set => SetProperty(ref _IPv6TunnelAddress, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -108,7 +108,7 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public DateTimeOffset? ConnectedAt
         {
-            get { return _ConnectedAt; }
+            get => _ConnectedAt;
             protected set
             {
                 if (SetProperty(ref _ConnectedAt, value))
@@ -123,10 +123,7 @@ namespace eduVPN.ViewModels.VPN
         /// Running time connected
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public TimeSpan? ConnectedTime
-        {
-            get { return ConnectedAt != null ? DateTimeOffset.UtcNow - ConnectedAt : null; }
-        }
+        public TimeSpan? ConnectedTime => ConnectedAt != null ? DateTimeOffset.UtcNow - ConnectedAt : null;
 
         /// <summary>
         /// Number of bytes that have been received from the server

@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduOAuth;
 using eduVPN.JSON;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN server
     /// </summary>
-    public class Server : JSON.ILoadableItem
+    public class Server : ILoadableItem
     {
         #region Fields
 
@@ -50,13 +51,10 @@ namespace eduVPN.Models
         /// <summary>
         /// PEM encoded client certificate path
         /// </summary>
-        public string ClientCertificatePath
-        {
-            get => Path.Combine(
+        public string ClientCertificatePath => Path.Combine(
                 Path.GetDirectoryName(Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)),
                 "certs",
                 Base.Host + ".pem");
-        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly object ClientCertificateLock = new object();
@@ -74,7 +72,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Request authorization event
         /// </summary>
-        /// <remarks>Sender is the authenticating server <see cref="eduVPN.Models.Server"/>.</remarks>
+        /// <remarks>Sender is the authenticating server <see cref="Server"/>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         /// <summary>
@@ -86,14 +84,14 @@ namespace eduVPN.Models
         {
             RequestAuthorization?.Invoke(authenticatingServer, e);
 
-            if (e.AccessToken is eduOAuth.InvalidToken)
+            if (e.AccessToken is InvalidToken)
                 throw new InvalidAccessTokenException(string.Format(Resources.Strings.ErrorInvalidAccessToken, this));
         }
 
         /// <summary>
         /// Forget authorization event
         /// </summary>
-        /// <remarks>Sender is the authenticating server <see cref="eduVPN.Models.Server"/>.</remarks>
+        /// <remarks>Sender is the authenticating server <see cref="Server"/>.</remarks>
         public event EventHandler<ForgetAuthorizationEventArgs> ForgetAuthorization;
 
         #endregion
@@ -353,7 +351,7 @@ namespace eduVPN.Models
                         ct: ct).Value, "create_keypair", ct);
 
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
-                    using (StreamWriter file = new StreamWriter(path))
+                    using (var file = new StreamWriter(path))
                     {
                         file.Write(cert.Cert);
                         file.Write("\n");

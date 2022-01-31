@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// No access token granted.
     /// </summary>
     [Serializable]
-    class InvalidAccessTokenException : Exception
+    public class InvalidAccessTokenException : Exception
     {
         #region Constructors
 

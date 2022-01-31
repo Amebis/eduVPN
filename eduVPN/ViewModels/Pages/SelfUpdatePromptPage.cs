@@ -30,8 +30,8 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public Version InstalledVersion
         {
-            get { return _InstalledVersion; }
-            private set { SetProperty(ref _InstalledVersion, value); }
+            get => _InstalledVersion;
+            private set => SetProperty(ref _InstalledVersion, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -42,7 +42,7 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public Version AvailableVersion
         {
-            get { return _AvailableVersion; }
+            get => _AvailableVersion;
             private set
             {
                 if (SetProperty(ref _AvailableVersion, value))
@@ -61,7 +61,7 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public Uri Changelog
         {
-            get { return _Changelog; }
+            get => _Changelog;
             private set
             {
                 if (SetProperty(ref _Changelog, value))

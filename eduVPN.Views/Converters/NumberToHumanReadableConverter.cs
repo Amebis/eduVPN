@@ -33,8 +33,8 @@ namespace eduVPN.Converters
         /// </summary>
         public string Unit
         {
-            get { return _Unit; }
-            set { SetProperty(ref _Unit, value); }
+            get => _Unit;
+            set => SetProperty(ref _Unit, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -45,8 +45,8 @@ namespace eduVPN.Converters
         /// </summary>
         public int Base
         {
-            get { return _Base; }
-            set { SetProperty(ref _Base, value); }
+            get => _Base;
+            set => SetProperty(ref _Base, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -57,8 +57,8 @@ namespace eduVPN.Converters
         /// </summary>
         public bool EmptyIfZero
         {
-            get { return _EmptyIfZero; }
-            set { SetProperty(ref _EmptyIfZero, value); }
+            get => _EmptyIfZero;
+            set => SetProperty(ref _EmptyIfZero, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -81,14 +81,14 @@ namespace eduVPN.Converters
             if (value == null)
                 return null;
 
-            double number = System.Convert.ToDouble(value);
-            int b = parameter != null ? System.Convert.ToInt32(parameter) : Base;
+            var number = System.Convert.ToDouble(value);
+            var b = parameter != null ? System.Convert.ToInt32(parameter) : Base;
 
             if (number <= 0.5 && EmptyIfZero)
                 return "";
 
-            int n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(b)), Prefixes.Length) : 0;
-            double x = number / Math.Pow(b, n);
+            var n = number > 0.5 ? Math.Min((int)Math.Truncate(Math.Log(Math.Abs(number)) / Math.Log(b)), Prefixes.Length) : 0;
+            var x = number / Math.Pow(b, n);
             return string.Format(
                 Views.Resources.Strings.NumberToHumanReadable,
                 n > 0 && Math.Abs(x) < 10 ?

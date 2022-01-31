@@ -39,7 +39,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Request authorization event
         /// </summary>
-        /// <remarks>Sender is the profile <see cref="eduVPN.Models.Profile"/>.</remarks>
+        /// <remarks>Sender is the profile <see cref="Profile"/>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         #endregion

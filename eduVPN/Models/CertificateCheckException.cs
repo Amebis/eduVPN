@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// No access token granted.
     /// </summary>
     [Serializable]
-    class CertificateCheckException : Exception
+    public class CertificateCheckException : Exception
     {
         #region Constructors
 

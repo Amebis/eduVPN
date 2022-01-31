@@ -39,7 +39,7 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public string Query
         {
-            get { return _Query; }
+            get => _Query;
             set
             {
                 if (SetProperty(ref _Query, value))
@@ -55,8 +55,8 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public ObservableCollection<InstituteAccessServer> InstituteAccessServers
         {
-            get { return _InstituteAccessServers; }
-            private set { SetProperty(ref _InstituteAccessServers, value); }
+            get => _InstituteAccessServers;
+            private set => SetProperty(ref _InstituteAccessServers, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -68,7 +68,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public InstituteAccessServer SelectedInstituteAccessServer
         {
-            get { return _SelectedInstituteAccessServer; }
+            get => _SelectedInstituteAccessServer;
             set
             {
                 if (SetProperty(ref _SelectedInstituteAccessServer, value))
@@ -109,8 +109,8 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public ObservableCollection<Organization> Organizations
         {
-            get { return _Organizations; }
-            private set { SetProperty(ref _Organizations, value); }
+            get => _Organizations;
+            private set => SetProperty(ref _Organizations, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -122,7 +122,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public Organization SelectedOrganization
         {
-            get { return _SelectedOrganization; }
+            get => _SelectedOrganization;
             set
             {
                 if (SetProperty(ref _SelectedOrganization, value))
@@ -167,8 +167,8 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public ObservableCollection<Server> OwnServers
         {
-            get { return _OwnServers; }
-            private set { SetProperty(ref _OwnServers, value); }
+            get => _OwnServers;
+            private set => SetProperty(ref _OwnServers, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -180,7 +180,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public Server SelectedOwnServer
         {
-            get { return _SelectedOwnServer; }
+            get => _SelectedOwnServer;
             set
             {
                 if (SetProperty(ref _SelectedOwnServer, value))

@@ -31,12 +31,12 @@ namespace eduVPN.Xml
             /// <summary>
             /// Legacy signatures
             /// </summary>
-            Legacy = (1 << 0), // 1
+            Legacy = 1 << 0, // 1
 
             /// <summary>
             /// Hashed signatures
             /// </summary>
-            Hashed = (1 << 1), // 2
+            Hashed = 1 << 1, // 2
         }
 
         #endregion

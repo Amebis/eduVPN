@@ -32,7 +32,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public InstituteAccessServer SelectedInstituteAccessServer
         {
-            get { return _SelectedInstituteAccessServer; }
+            get => _SelectedInstituteAccessServer;
             set
             {
                 if (SetProperty(ref _SelectedInstituteAccessServer, value))
@@ -128,7 +128,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public SecureInternetServer SelectedSecureInternetServer
         {
-            get { return _SelectedSecureInternetServer; }
+            get => _SelectedSecureInternetServer;
             set
             {
                 if (SetProperty(ref _SelectedSecureInternetServer, value))
@@ -225,7 +225,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public Server SelectedOwnServer
         {
-            get { return _SelectedOwnServer; }
+            get => _SelectedOwnServer;
             set
             {
                 if (SetProperty(ref _SelectedOwnServer, value))
