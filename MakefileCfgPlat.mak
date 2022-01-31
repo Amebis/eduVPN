@@ -9,17 +9,17 @@ MSVC_VERSION = \
 !INCLUDE "$(VCINSTALLDIR)Auxiliary\Build\Microsoft.VCRedistVersion.default.txt"
 
 !IF "$(PLAT)" == "x64"
-OPENVPN_PLAT=x64
-VCPKG_PLAT=x64
-CLIENT_PLAT=x64
+PLAT_OPENVPN=x64
+PLAT_VCPKG=x64
+PLAT_CLIENT=x64
 !ELSEIF "$(PLAT)" == "ARM64"
-OPENVPN_PLAT=ARM64
-VCPKG_PLAT=arm64
-CLIENT_PLAT=x86
+PLAT_OPENVPN=ARM64
+PLAT_VCPKG=arm64
+PLAT_CLIENT=x86
 !ELSE
-OPENVPN_PLAT=Win32
-VCPKG_PLAT=x86
-CLIENT_PLAT=x86
+PLAT_OPENVPN=Win32
+PLAT_VCPKG=x86
+PLAT_CLIENT=x86
 !ENDIF
 
 # WiX parameters
@@ -27,7 +27,7 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG) \
 	-arch $(PLAT) \
 	-dPlatform="$(PLAT)" \
 	-dTargetDir="bin\$(CFG)\$(PLAT)\\" \
-	-dTargetDirClient="bin\$(CFG)\$(CLIENT_PLAT)\\" \
+	-dTargetDirClient="bin\$(CFG)\$(PLAT_CLIENT)\\" \
 	-dVersionInformational="$(VERSION)$(CFG_TARGET) $(PLAT)"
 !IF "$(PLAT)" == "x64" || "$(PLAT)" == "ARM64"
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
@@ -38,9 +38,9 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
 !ENDIF
 
 !IF "$(CFG)" == "Debug"
-VCREDIST_MSM=Microsoft_VC142_DebugCRT_$(CLIENT_PLAT).msm
+VCREDIST_MSM=Microsoft_VC142_DebugCRT_$(PLAT_CLIENT).msm
 !ELSE
-VCREDIST_MSM=Microsoft_VC142_CRT_$(CLIENT_PLAT).msm
+VCREDIST_MSM=Microsoft_VC142_CRT_$(PLAT_CLIENT).msm
 !ENDIF
 
 
@@ -62,14 +62,14 @@ SetupBuild :: \
 Build$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)"
 	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
-	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
-	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
+	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_OPENVPN)" $(MSBUILD_FLAGS)
 	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
-	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(VCPKG_PLAT)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
-	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(OPENVPN_PLAT)" $(MSBUILD_FLAGS)
+	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_OPENVPN)" $(MSBUILD_FLAGS)
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Build$(CFG)$(PLAT) :: \
@@ -77,14 +77,14 @@ Build$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
 
-"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(CFG_VCPKG)bin\wintun.dll"
+"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)bin\wintun.dll"
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpn.exe"
+"bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpn.exe"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN" /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\openvpnserv.exe" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpnserv.exe"
+"bin\$(CFG)\$(PLAT)\openvpnserv.exe" : "openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpnserv.exe"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN Interactive Service" /q $**
 	copy /y $** $@ > NUL
 
@@ -100,10 +100,10 @@ Clean ::
 !IF "$(CFG)" == "$(SETUP_CFG)"
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \
 	bin\$(CFG)\$(PLAT)\*.pdb \
-	"openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\compat.pdb" \
-	"openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpn.pdb" \
-	"openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpnserv.pdb" \
-	"vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
+	"openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\compat.pdb" \
+	"openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpn.pdb" \
+	"openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpnserv.pdb" \
+	"vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
 !ENDIF
 
 
