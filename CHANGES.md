@@ -6,6 +6,7 @@
 - Fix cleanup when user signs out or shuts down computer
 - Make OpenVPN management interface communication more secure
 - Publish PDB files
+- Switch to pre-release self-update channel
 
 
 ## [2.255.0](https://github.com/Amebis/eduVPN/compare/2.1.3...2.255.0) (2022-01-24)
