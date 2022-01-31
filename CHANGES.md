@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.1...HEAD)
 
+- Discover organizations as required
 - Fixes
 
 

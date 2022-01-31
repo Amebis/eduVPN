@@ -256,6 +256,13 @@ namespace eduVPN.ViewModels.Pages
 
         #region Methods
 
+        /// <inheritdoc/>
+        public override void OnActivate()
+        {
+            base.OnActivate();
+            Wizard.DiscoverOrganizations();
+        }
+
         /// <summary>
         /// Trigger search
         /// </summary>
