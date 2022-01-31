@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.0...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.1...HEAD)
+
+
+## [2.255.1](https://github.com/Amebis/eduVPN/compare/2.255.0...2.255.1) (2022-01-31)
 
 - Kill running client on repair/upgrade/uninstall
 - Fix cleanup when user signs out or shuts down computer
