@@ -352,12 +352,7 @@ namespace eduVPN.ViewModels.Windows
             }
 
             if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri != null)
-            {
                 InitOrganizations();
-                actions.Add(new KeyValuePair<Action, int>(
-                    DiscoverOrganizations,
-                    24 * 60 * 60 * 1000)); // Repeat every 24 hours
-            }
             else
             {
                 Properties.Settings.Default.SecureInternetConnectingServer = null;
@@ -515,11 +510,29 @@ namespace eduVPN.ViewModels.Windows
                 UpdateOrganizations((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
         }
 
-        private void DiscoverOrganizations()
+        /// <summary>
+        /// Triggers background organization discovery
+        /// </summary>
+        public void DiscoverOrganizations()
         {
-            UpdateOrganizations(Properties.Settings.Default.ResponseCache.GetSeq(
-                Properties.SettingsEx.Default.OrganizationsDiscovery,
-                Abort.Token));
+            if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri == null)
+                return;
+
+            var w = new BackgroundWorker();
+            w.DoWork += (object sender, DoWorkEventArgs e) =>
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                try {
+                    UpdateOrganizations(Properties.Settings.Default.ResponseCache.GetSeq(
+                        Properties.SettingsEx.Default.OrganizationsDiscovery,
+                        Abort.Token));
+                }
+                catch (OperationCanceledException) { }
+                catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
+                finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
+            };
+            w.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) => (sender as BackgroundWorker)?.Dispose();
+            w.RunWorkerAsync();
         }
 
         /// <summary>
