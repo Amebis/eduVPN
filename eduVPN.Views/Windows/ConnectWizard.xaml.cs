@@ -99,8 +99,8 @@ namespace eduVPN.Views.Windows
         /// </summary>
         public bool UseDarkTheme
         {
-            get { return (bool)GetValue(UseDarkThemeProperty); }
-            set { SetValue(UseDarkThemeProperty, value); }
+            get => (bool)GetValue(UseDarkThemeProperty);
+            set => SetValue(UseDarkThemeProperty, value);
         }
 
         public static readonly DependencyProperty UseDarkThemeProperty =
@@ -294,7 +294,7 @@ namespace eduVPN.Views.Windows
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
 
-            if (eduVPN.Properties.Settings.Default.IsSignon && Views.Properties.Settings.Default.StartOnSignon)
+            if (eduVPN.Properties.Settings.Default.IsSignon && Properties.Settings.Default.StartOnSignon)
             {
                 // Window_Loaded() will not be called as we are creating hidden window. Show the tray icon now.
                 NotifyIcon.Visible = true;
@@ -305,7 +305,7 @@ namespace eduVPN.Views.Windows
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            var source = PresentationSource.FromVisual(this) as HwndSource;
             source.AddHook(WndProc);
             RefreshUseDarkTheme();
         }

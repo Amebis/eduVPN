@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// Downloaded file is corrupt.
     /// </summary>
     [Serializable]
-    class DownloadedFileCorruptException : Exception
+    public class DownloadedFileCorruptException : Exception
     {
         #region Constructors
 

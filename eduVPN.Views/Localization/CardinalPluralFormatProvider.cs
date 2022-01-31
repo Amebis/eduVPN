@@ -58,14 +58,14 @@ namespace eduVPN.Localization
         /// <inheritdoc/>
         public string Format(string format, object arg, IFormatProvider formatProvider)
         {
-            string[] forms = format.Split('|');
+            var forms = format.Split('|');
             if (arg is int n)
             {
                 if (CardinalPluralizers.TryGetValue(System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag, out var pluralizer) ||
                     CardinalPluralizers.TryGetValue(System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName, out pluralizer) ||
                     CardinalPluralizers.TryGetValue("", out pluralizer))
                 {
-                    int form = pluralizer(n >= 0 ? n : -n);
+                    var form = pluralizer(n >= 0 ? n : -n);
                     if (form >= forms.Length)
                         throw new ArgumentException(string.Format("Numeral {0} should use {1}. plural form, but \"{2}\" provides only {3} plural form(s).", n, form + 1, format, forms.Length));
                     return

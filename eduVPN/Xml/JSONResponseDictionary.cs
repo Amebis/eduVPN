@@ -38,7 +38,6 @@ namespace eduVPN.Xml
                 return TryGetValue(key, out var value) ? value : null;
         }
 
-
         /// <summary>
         /// Gets sequenced JSON from the given URI.
         /// </summary>
@@ -51,7 +50,7 @@ namespace eduVPN.Xml
             var cachedResponse = GetSeqFromCache(res);
 
             // Get JSON.
-            var webResponse = Xml.Response.Get(
+            var webResponse = Response.Get(
                 res: res,
                 ct: ct,
                 previous: cachedResponse);

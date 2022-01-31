@@ -26,8 +26,8 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public ObservableCollection<SecureInternetServer> SecureInternetServers
         {
-            get { return _SecureInternetServers; }
-            private set { SetProperty(ref _SecureInternetServers, value); }
+            get => _SecureInternetServers;
+            private set => SetProperty(ref _SecureInternetServers, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -39,7 +39,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public SecureInternetServer SelectedSecureInternetServer
         {
-            get { return _SelectedSecureInternetServer; }
+            get => _SelectedSecureInternetServer;
             set
             {
                 if (SetProperty(ref _SelectedSecureInternetServer, value))

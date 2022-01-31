@@ -28,7 +28,7 @@ namespace eduVPN.ViewModels.Pages
         [CustomValidation(typeof(SelectOwnServerPage), nameof(CheckHostname))]
         public string Hostname
         {
-            get { return _Hostname; }
+            get => _Hostname;
             set
             {
                 if (SetProperty(ref _Hostname, value))

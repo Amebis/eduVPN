@@ -46,8 +46,8 @@ namespace System.Collections.Generic
         {
             if (str.Length > 2)
             {
-                for (int start = 0; start < str.Length - 2; ++start)
-                    for (int end = start + 2; end <= str.Length; ++end)
+                for (var start = 0; start < str.Length - 2; ++start)
+                    for (var end = start + 2; end <= str.Length; ++end)
                         idx.Add(str.Substring(start, end - start), el);
             }
             else

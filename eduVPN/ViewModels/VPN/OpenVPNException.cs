@@ -14,7 +14,7 @@ namespace eduVPN.ViewModels.VPN
     /// OpenVPN reported fatal error.
     /// </summary>
     [Serializable]
-    class OpenVPNException : Exception
+    public class OpenVPNException : Exception
     {
         #region Constructors
 

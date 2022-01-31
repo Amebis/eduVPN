@@ -73,12 +73,12 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN profile configuration file path
         /// </summary>
-        string ConfigurationPath { get => WorkingFolder + ConnectionId + ".conf"; }
+        private string ConfigurationPath => WorkingFolder + ConnectionId + ".conf";
 
         /// <summary>
         /// OpenVPN connection log
         /// </summary>
-        string LogPath { get => WorkingFolder + ConnectionId + ".txt"; }
+        private string LogPath => WorkingFolder + ConnectionId + ".txt";
 
         /// <inheritdoc/>
         public override DelegateCommand Renew
@@ -147,7 +147,7 @@ namespace eduVPN.ViewModels.VPN
         private DelegateCommand _Disconnect;
 
         /// <inheritdoc/>
-        override public DelegateCommand ShowLog
+        public override DelegateCommand ShowLog
         {
             get
             {
@@ -185,7 +185,7 @@ namespace eduVPN.ViewModels.VPN
                     using (var key = hklmKey.OpenSubKey("SOFTWARE\\OpenVPN" + InstanceName, false))
                     {
                         WorkingFolder = key.GetValue("config_dir").ToString().TrimEnd();
-                        string pathSeparator = Path.DirectorySeparatorChar.ToString();
+                        var pathSeparator = Path.DirectorySeparatorChar.ToString();
                         if (!WorkingFolder.EndsWith(pathSeparator))
                             WorkingFolder += pathSeparator;
                         if (!Directory.Exists(WorkingFolder))
@@ -283,7 +283,7 @@ namespace eduVPN.ViewModels.VPN
                                         using (var sr = new StringReader(ProfileConfig.Value))
                                         {
                                             string inlineTerm = null;
-                                            bool inlineRemove = false;
+                                            var inlineRemove = false;
                                             for (; ; )
                                             {
                                                 var line = sr.ReadLine();
@@ -301,7 +301,7 @@ namespace eduVPN.ViewModels.VPN
                                                             !trimmedLine.StartsWith(";"))
                                                         {
                                                             // Not a comment.
-                                                            var option = eduOpenVPN.Configuration.ParseParams(trimmedLine);
+                                                            var option = Configuration.ParseParams(trimmedLine);
                                                             if (option.Count > 0)
                                                             {
                                                                 if (option[0].StartsWith("<") && !option[0].StartsWith("</") && option[0].EndsWith(">"))
@@ -357,13 +357,13 @@ namespace eduVPN.ViewModels.VPN
                                     var assembly = Assembly.GetExecutingAssembly();
                                     var assemblyTitleAttribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
                                     var assemblyVersion = assembly?.GetName()?.Version;
-                                    sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
+                                    sw.WriteLine("setenv IV_GUI_VER " + Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
 
                                     // Configure log file (relative to WorkingFolder).
-                                    sw.WriteLine("log-append " + eduOpenVPN.Configuration.EscapeParamValue(ConnectionId + ".txt"));
+                                    sw.WriteLine("log-append " + Configuration.EscapeParamValue(ConnectionId + ".txt"));
 
                                     // Configure interaction between us and openvpn.exe.
-                                    sw.WriteLine("management " + eduOpenVPN.Configuration.EscapeParamValue(mgmtEndpoint.Address.ToString()) + " " + eduOpenVPN.Configuration.EscapeParamValue(mgmtEndpoint.Port.ToString()) + " stdin");
+                                    sw.WriteLine("management " + Configuration.EscapeParamValue(mgmtEndpoint.Address.ToString()) + " " + Configuration.EscapeParamValue(mgmtEndpoint.Port.ToString()) + " stdin");
                                     sw.WriteLine("management-hold"); // Wait for our signal to start connecting.
                                     sw.WriteLine("management-signal"); // Raise SIGUSR1 if our client dies/closes management interface.
                                     sw.WriteLine("remap-usr1 SIGTERM"); // SIGUSR1 (reconnect) => SIGTERM (disconnect)

@@ -50,7 +50,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Request authorization event
         /// </summary>
-        /// <remarks>Sender is the profile <see cref="eduVPN.Models.Profile"/>.</remarks>
+        /// <remarks>Sender is the profile <see cref="Profile"/>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         #endregion
@@ -106,7 +106,7 @@ namespace eduVPN.Models
         /// <param name="forceRefresh">Force client reauthorization</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public eduVPN.Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, CancellationToken ct = default)
+        public Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Server.GetEndpoints(ct);

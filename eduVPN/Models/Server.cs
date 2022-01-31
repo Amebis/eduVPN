@@ -20,7 +20,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN server
     /// </summary>
-    public class Server : JSON.ILoadableItem
+    public class Server : ILoadableItem
     {
         #region Fields
 
@@ -56,7 +56,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Request authorization event
         /// </summary>
-        /// <remarks>Sender is the authenticating server <see cref="eduVPN.Models.Server"/>.</remarks>
+        /// <remarks>Sender is the authenticating server <see cref="Server"/>.</remarks>
         public event EventHandler<RequestAuthorizationEventArgs> RequestAuthorization;
 
         /// <summary>
@@ -68,14 +68,14 @@ namespace eduVPN.Models
         {
             RequestAuthorization?.Invoke(authenticatingServer, e);
 
-            if (e.AccessToken is eduOAuth.InvalidToken)
+            if (e.AccessToken is InvalidToken)
                 throw new InvalidAccessTokenException(string.Format(Resources.Strings.ErrorInvalidAccessToken, this));
         }
 
         /// <summary>
         /// Forget authorization event
         /// </summary>
-        /// <remarks>Sender is the authenticating server <see cref="eduVPN.Models.Server"/>.</remarks>
+        /// <remarks>Sender is the authenticating server <see cref="Server"/>.</remarks>
         public event EventHandler<ForgetAuthorizationEventArgs> ForgetAuthorization;
 
         #endregion

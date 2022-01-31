@@ -65,8 +65,8 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public StateType State
         {
-            get { return _State; }
-            private set { SetProperty(ref _State, value); }
+            get => _State;
+            private set => SetProperty(ref _State, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -78,7 +78,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public Server ConnectingServer
         {
-            get { return _ConnectingServer; }
+            get => _ConnectingServer;
             set
             {
                 ProfilesRefreshInProgress?.Cancel();
@@ -133,8 +133,8 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public ObservableCollection<Profile> Profiles
         {
-            get { return _Profiles; }
-            private set { SetProperty(ref _Profiles, value); }
+            get => _Profiles;
+            private set => SetProperty(ref _Profiles, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -146,7 +146,7 @@ namespace eduVPN.ViewModels.Pages
         /// <remarks><c>null</c> if none selected.</remarks>
         public Profile SelectedProfile
         {
-            get { return _SelectedProfile; }
+            get => _SelectedProfile;
             set
             {
                 if (SetProperty(ref _SelectedProfile, value))
@@ -166,7 +166,7 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public Session ActiveSession
         {
-            get { return _ActiveSession; }
+            get => _ActiveSession;
             private set
             {
                 if (SetProperty(ref _ActiveSession, value))

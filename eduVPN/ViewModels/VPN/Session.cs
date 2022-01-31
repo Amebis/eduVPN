@@ -55,9 +55,9 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Profile configuration
         /// </summary>
-        protected eduVPN.Xml.Response ProfileConfig
+        protected Xml.Response ProfileConfig
         {
-            get { return _ProfileConfig; }
+            get => _ProfileConfig;
             set
             {
                 if (SetProperty(ref _ProfileConfig, value))
@@ -73,15 +73,15 @@ namespace eduVPN.ViewModels.VPN
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private eduVPN.Xml.Response _ProfileConfig;
+        private Xml.Response _ProfileConfig;
 
         /// <summary>
         /// Client connection state
         /// </summary>
         public SessionStatusType State
         {
-            get { return _State; }
-            protected set { SetProperty(ref _State, value); }
+            get => _State;
+            protected set => SetProperty(ref _State, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -92,8 +92,8 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public string StateDescription
         {
-            get { return _StateDescription; }
-            protected set { SetProperty(ref _StateDescription, value); }
+            get => _StateDescription;
+            protected set => SetProperty(ref _StateDescription, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -105,8 +105,8 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public IPAddress TunnelAddress
         {
-            get { return _TunnelAddress; }
-            protected set { SetProperty(ref _TunnelAddress, value); }
+            get => _TunnelAddress;
+            protected set => SetProperty(ref _TunnelAddress, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -118,8 +118,8 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public IPAddress IPv6TunnelAddress
         {
-            get { return _IPv6TunnelAddress; }
-            protected set { SetProperty(ref _IPv6TunnelAddress, value); }
+            get => _IPv6TunnelAddress;
+            protected set => SetProperty(ref _IPv6TunnelAddress, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -131,7 +131,7 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public DateTimeOffset? ConnectedAt
         {
-            get { return _ConnectedAt; }
+            get => _ConnectedAt;
             protected set
             {
                 if (SetProperty(ref _ConnectedAt, value))
@@ -146,10 +146,7 @@ namespace eduVPN.ViewModels.VPN
         /// Running time connected
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public TimeSpan? ConnectedTime
-        {
-            get { return ConnectedAt != null ? DateTimeOffset.UtcNow - ConnectedAt : null; }
-        }
+        public TimeSpan? ConnectedTime => ConnectedAt != null ? DateTimeOffset.UtcNow - ConnectedAt : null;
 
         /// <summary>
         /// Number of bytes that have been received from the server
@@ -157,8 +154,8 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public ulong? BytesIn
         {
-            get { return _BytesIn; }
-            protected set { SetProperty(ref _BytesIn, value); }
+            get => _BytesIn;
+            protected set => SetProperty(ref _BytesIn, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -170,8 +167,8 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks><c>null</c> when not connected</remarks>
         public ulong? BytesOut
         {
-            get { return _BytesOut; }
-            protected set { SetProperty(ref _BytesOut, value); }
+            get => _BytesOut;
+            protected set => SetProperty(ref _BytesOut, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -181,18 +178,18 @@ namespace eduVPN.ViewModels.VPN
         /// Session valid from date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MinValue</c> when unknown or not available</remarks>
-        public DateTimeOffset ValidFrom { get => ProfileConfig != null ? ProfileConfig.Authorized : DateTimeOffset.MinValue; }
+        public DateTimeOffset ValidFrom => ProfileConfig != null ? ProfileConfig.Authorized : DateTimeOffset.MinValue;
 
         /// <summary>
         /// Session expiration date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MaxValue</c> when unknown or not available</remarks>
-        public DateTimeOffset ValidTo { get => ProfileConfig != null ? ProfileConfig.Expires : DateTimeOffset.MaxValue; }
+        public DateTimeOffset ValidTo => ProfileConfig != null ? ProfileConfig.Expires : DateTimeOffset.MaxValue;
 
         /// <summary>
         /// Is the session expired?
         /// </summary>
-        public bool Expired { get => ValidTo <= DateTimeOffset.Now; }
+        public bool Expired => ValidTo <= DateTimeOffset.Now;
 
         /// <summary>
         /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
@@ -324,7 +321,8 @@ namespace eduVPN.ViewModels.VPN
                 }
                 catch (Exception ex)
                 {
-                    TryInvoke((Action)(() => {
+                    TryInvoke((Action)(() =>
+                    {
                         State = SessionStatusType.Error;
                         StateDescription = ex.ToString();
                         throw ex;

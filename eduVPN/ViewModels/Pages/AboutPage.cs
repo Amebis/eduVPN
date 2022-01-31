@@ -36,25 +36,14 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Copyright notice
         /// </summary>
-        public string Copyright
-        {
-            get
-            {
-                return (Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute)?.Copyright;
-            }
-        }
+        public string Copyright => (Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute)?.Copyright;
 
         /// <summary>
         /// Build timestamp
         /// </summary>
-        public DateTimeOffset Build
-        {
-            get
-            {
+        public DateTimeOffset Build =>
                 // The Builtin class is implemented in Builtin target in Default.targets.
-                return new DateTimeOffset(Builtin.CompileTime, TimeSpan.Zero);
-            }
-        }
+                new DateTimeOffset(Builtin.CompileTime, TimeSpan.Zero);
 
         #endregion
 

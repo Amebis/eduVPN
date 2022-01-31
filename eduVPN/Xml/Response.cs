@@ -154,7 +154,7 @@ namespace eduVPN.Xml
                 if (param != null)
                 {
                     // Send data.
-                    UTF8Encoding utf8 = new UTF8Encoding();
+                    var utf8 = new UTF8Encoding();
                     var binBody = Encoding.ASCII.GetBytes(string.Join("&", param.Cast<string>().Select(e => string.Format("{0}={1}", HttpUtility.UrlEncode(e, utf8), HttpUtility.UrlEncode(param[e], utf8)))));
                     request.Method = "POST";
                     request.ContentType = "application/x-www-form-urlencoded";
@@ -312,21 +312,18 @@ namespace eduVPN.Xml
                             if (r.ReadChar() != 'E')
                                 throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
                             var alg = r.ReadChar();
-                            ulong keyId = r.ReadUInt64();
+                            var keyId = r.ReadUInt64();
                             if (!res.PublicKeys.ContainsKey(keyId))
                                 throw new SecurityException(Resources.Strings.ErrorUntrustedMinisignPublicKey);
                             var sig = new byte[64];
                             if (r.Read(sig, 0, 64) != 64)
                                 throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignSignature);
                             var key = res.PublicKeys[keyId];
-                            byte[] payload;
-                            if (alg == 'd' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Legacy) != 0)
-                                payload = data;
-                            else if (alg == 'D' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Hashed) != 0)
-                                payload = new eduEd25519.BLAKE2b(512).ComputeHash(data);
-                            else
+                            var payload =
+                                alg == 'd' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Legacy) != 0 ? data :
+                                alg == 'D' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Hashed) != 0 ? new eduEd25519.BLAKE2b(512).ComputeHash(data) :
                                 throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                            using (eduEd25519.ED25519 k = new eduEd25519.ED25519(key.Value))
+                            using (var k = new eduEd25519.ED25519(key.Value))
                                 if (!k.VerifyDetached(payload, sig))
                                     throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
                         }

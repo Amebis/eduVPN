@@ -32,7 +32,7 @@ namespace eduVPN.Converters
             if (value is SessionStatusType statusType)
             {
                 var id = string.Format("SessionStatusType{0}", Enum.GetName(typeof(SessionStatusType), statusType));
-                try { return eduVPN.Views.Resources.Strings.ResourceManager.GetString(id, eduVPN.Views.Resources.Strings.Culture); } catch { }
+                try { return Views.Resources.Strings.ResourceManager.GetString(id, Views.Resources.Strings.Culture); } catch { }
             }
             return null;
         }

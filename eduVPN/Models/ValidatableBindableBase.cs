@@ -84,7 +84,7 @@ namespace eduVPN.Models
                 throw new ArgumentException(string.Format(Resources.Strings.ErrorInvalidPropertyName, propertyName), nameof(propertyName));
 
             var propertyErrors = new List<ValidationResult>();
-            bool isValid = TryValidateProperty(propertyInfo, propertyErrors);
+            var isValid = TryValidateProperty(propertyInfo, propertyErrors);
             ErrorsContainer.SetErrors(propertyInfo.Name, propertyErrors);
 
             return isValid;
@@ -101,7 +101,7 @@ namespace eduVPN.Models
             var results = new List<ValidationResult>();
             var context = new ValidationContext(this) { MemberName = propertyInfo.Name };
             var propertyValue = propertyInfo.GetValue(this);
-            bool isValid = Validator.TryValidateProperty(propertyValue, context, results);
+            var isValid = Validator.TryValidateProperty(propertyValue, context, results);
             if (results.Any())
                 propertyErrors.AddRange(results);
 
@@ -114,7 +114,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Gets a value that indicates whether the entity has validation errors.
         /// </summary>
-        public bool HasErrors { get => ErrorsContainer.HasErrors; }
+        public bool HasErrors => ErrorsContainer.HasErrors;
 
         /// <summary>
         /// Gets the validation errors for a specified property or for the entire entity.

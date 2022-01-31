@@ -22,8 +22,8 @@ namespace eduVPN.Converters
         /// </summary>
         public bool Invert
         {
-            get { return _Invert; }
-            set { SetProperty(ref _Invert, value); }
+            get => _Invert;
+            set => SetProperty(ref _Invert, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

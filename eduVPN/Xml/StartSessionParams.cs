@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 namespace eduVPN.Xml
 {
     /// <summary>
-    /// Serializable <see cref="eduVPN.ViewModels.Pages.ConnectionPage.StartSession"/> command parameter set
+    /// Serializable <see cref="ViewModels.Pages.ConnectionPage.StartSession"/> command parameter set
     /// </summary>
     [Obsolete]
     public class StartSessionParams : IXmlSerializable

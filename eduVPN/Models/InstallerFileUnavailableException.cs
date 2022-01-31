@@ -14,7 +14,7 @@ namespace eduVPN.Models
     /// Installer file not available. Updating aborted.
     /// </summary>
     [Serializable]
-    class InstallerFileUnavailableException : Exception
+    public class InstallerFileUnavailableException : Exception
     {
         #region Constructors
 

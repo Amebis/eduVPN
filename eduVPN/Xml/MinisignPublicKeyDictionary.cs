@@ -57,7 +57,7 @@ namespace eduVPN.Xml
             {
                 if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
                     throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
-                ulong keyId = r.ReadUInt64();
+                var keyId = r.ReadUInt64();
                 var key = new MinisignPublicKey();
                 key.Value = new byte[32];
                 if (r.Read(key.Value, 0, 32) != 32)
