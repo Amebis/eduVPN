@@ -10,6 +10,7 @@
 - Make OpenVPN management interface communication more secure
 - OpenVPN updated to 2.5.5-20220124
     - openvpn 2.5.5 a184e790df801bd074619f2c90992866d40d8c3b
+- Publish PDB files
 - Fixes and cleanups
 
 
