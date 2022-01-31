@@ -39,7 +39,8 @@ WIX_INSIGNIA_FLAGS=-nologo
 Setup :: \
 	SetupBuild \
 	SetupMSI \
-	SetupExe
+	SetupExe \
+	SetupPDB
 
 
 ######################################################################

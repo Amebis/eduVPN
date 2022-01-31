@@ -8,12 +8,6 @@
 MSVC_VERSION = \
 !INCLUDE "$(VCINSTALLDIR)Auxiliary\Build\Microsoft.VCRedistVersion.default.txt"
 
-!IF "$(CFG)" == "Debug"
-VCPKG_BIN=debug\bin
-!ELSE
-VCPKG_BIN=bin
-!ENDIF
-
 !IF "$(PLAT)" == "x64"
 OPENVPN_PLAT=x64
 VCPKG_PLAT=x64
@@ -83,7 +77,7 @@ Build$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
 
-"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(VCPKG_BIN)\wintun.dll"
+"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(CFG_VCPKG)bin\wintun.dll"
 	copy /y $** $@ > NUL
 
 "bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpn.exe"
@@ -102,6 +96,15 @@ Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"     del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
 	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe" del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
 	-if exist "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" del /f /q "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
+
+!IF "$(CFG)" == "$(SETUP_CFG)"
+"bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \
+	bin\$(CFG)\$(PLAT)\*.pdb \
+	"openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\compat.pdb" \
+	"openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpn.pdb" \
+	"openvpn\$(OPENVPN_PLAT)-Output\$(CFG)\openvpnserv.pdb" \
+	"vcpkg\installed\$(VCPKG_PLAT)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
+!ENDIF
 
 
 ######################################################################

@@ -7,8 +7,10 @@
 
 !IF "$(CFG)" == "Debug"
 CFG_TARGET=D
+CFG_VCPKG=debug\\
 !ELSE
 CFG_TARGET=
+CFG_VCPKG=
 !ENDIF
 
 # WiX parameters
@@ -22,6 +24,19 @@ WIX_CANDLE_FLAGS_CFG=$(WIX_CANDLE_FLAGS) \
 
 "bin\$(CFG)" :
 	if not exist $@ md $@
+
+!IF "$(CFG)" == "$(SETUP_CFG)"
+SetupPDB :: \
+	"bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip"
+
+"bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" :
+	-if exist "$(@:"=).tmp" del /f /q "$(@:"=).tmp"
+	zip.exe -9 "$(@:"=).tmp" $**
+	move /y "$(@:"=).tmp" $@ > NUL
+
+Clean ::
+	-if exist "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" del /f /q "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip"
+!ENDIF
 
 
 ######################################################################
