@@ -1,7 +1,7 @@
 ﻿/*
     eduVPN - VPN for education and research
 
-    Copyright: 2017-2022 The Commons Conservancy eduVPN Programme
+    Copyright: 2017-2022 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
 */
 

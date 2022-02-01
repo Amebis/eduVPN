@@ -1,7 +1,7 @@
 /*
     OpenVPN.MSICA - MSI Custom Actions for OpenVPN
 
-    Copyright: 2022 The Commons Conservancy eduVPN Programme
+    Copyright: 2022 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
 */
 

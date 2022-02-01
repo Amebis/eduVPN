@@ -62,7 +62,7 @@ namespace eduVPN.Views.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to Copyright © 2017-{0}
-        ///The Commons Conservancy eduVPN Programme.
+        ///The Commons Conservancy.
         /// </summary>
         public static string AboutPageCopyright2 {
             get {

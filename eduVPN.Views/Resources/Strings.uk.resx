@@ -119,7 +119,7 @@
   </resheader>
   <data name="AboutPageCopyright2" xml:space="preserve">
     <value>Copyright © 2017-{0}
-The Commons Conservancy eduVPN Programme</value>
+The Commons Conservancy</value>
   </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Версія {0}</value>
