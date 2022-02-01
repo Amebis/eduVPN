@@ -61,16 +61,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright © 2017-{0}
-        ///The Commons Conservancy.
-        /// </summary>
-        public static string AboutPageCopyright2 {
-            get {
-                return ResourceManager.GetString("AboutPageCopyright2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Version {0}.
         /// </summary>
         public static string AboutPageVersion {

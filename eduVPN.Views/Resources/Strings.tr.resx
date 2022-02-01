@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutPageCopyright2" xml:space="preserve">
-    <value>Telif hakkı © 2017-{0}
-The Commons Conservancy eduVPN Programı</value>
-  </data>
   <data name="AboutPageVersion" xml:space="preserve">
     <value>Sürüm {0}</value>
   </data>

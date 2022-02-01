@@ -44,7 +44,7 @@
             Margin="7"
             TextAlignment="Center"
             Style="{StaticResource FineprintNoteStyle}"
-            Text="{Binding Build.Year, StringFormat={x:Static res:Strings.AboutPageCopyright2}}"/>
+            Text="{Binding Copyright}"/>
 
         <Button
             Grid.Row="3"
