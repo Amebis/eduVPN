@@ -63,12 +63,12 @@ namespace eduVPN.Models.Tests
             source.ReadXml(xmlReader);
 
             // Load list of organizations.
-            var organizationListJson = Xml.Response.Get(source);
+            var organizationListJson = Response.Get(source);
             var dict = new OrganizationDictionary();
             dict.LoadJSON(organizationListJson.Value);
 
             // Re-load list of organizations.
-            Xml.Response.Get(
+            Response.Get(
                 res: source,
                 previous: organizationListJson);
         }

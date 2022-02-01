@@ -67,7 +67,7 @@ namespace eduVPN.Models.Tests
             source.ReadXml(xmlReader);
 
             // Load list of servers.
-            var server_list_list_json = Xml.Response.Get(source);
+            var server_list_list_json = Response.Get(source);
             var server_list_list_ia = new ServerDictionary();
             server_list_list_ia.LoadJSON(server_list_list_json.Value);
 
@@ -78,7 +78,7 @@ namespace eduVPN.Models.Tests
                 uriBuilder.Path += "info.json";
                 try
                 {
-                    new Models.ServerEndpoints().LoadJSON(Xml.Response.Get(uriBuilder.Uri).Value);
+                    new ServerEndpoints().LoadJSON(Response.Get(uriBuilder.Uri).Value);
                 }
                 catch (UnsupportedServerAPIException)
                 {
@@ -101,7 +101,7 @@ namespace eduVPN.Models.Tests
             });
 
             // Re-load list of servers.
-            server_list_list_json = Xml.Response.Get(
+            server_list_list_json = Response.Get(
                 res: source,
                 previous: server_list_list_json);
         }
