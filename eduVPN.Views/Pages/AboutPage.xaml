@@ -54,12 +54,5 @@
             Style="{StaticResource LinkButtonStyle}"
             Click="Website_Click"
             Content="{Binding ClientAboutUri, Source={x:Static prop:Settings.Default}}"/>
-
-        <ContentControl
-            Grid.Row="4"
-            Margin="7"
-            HorizontalAlignment="Center"
-            ContentTemplate="{StaticResource SURFLogo}"
-            IsTabStop="False"/>
     </Grid>
 </Page>
