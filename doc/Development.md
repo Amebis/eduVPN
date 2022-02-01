@@ -8,7 +8,7 @@
    - _Release_: Release binaries
    - _OpenVPN_: OpenVPN upstream binaries
    - _Setup_: MSI packages and EXE installer
-- _eduEd25519_: libsodium wrapper providing Ed25519 signing and verifying support to C#/.NET
+- _eduLibsodium_: libsodium wrapper providing crypto support to C#/.NET
 - _eduJSON_: Lightweight JSON parser
 - _eduOAuth_: OAuth 2.0 library
 - _eduOpenVPN_: OpenVPN IPC for C#/.NET
@@ -27,14 +27,14 @@
 1. Install [Visual Studio 2019 Community Edition](https://www.visualstudio.com/vs/community/). A minimum set of required features is:
    - Workloads
       - .NET desktop development
-      - Desktop development with C++ (required by eduEd25519 and OpenVPN submodules and eduVPN.Resources resource projects)
+      - Desktop development with C++ (required by eduLibsodium and OpenVPN submodules and eduVPN.Resources resource projects)
    - Individual components
       - Code tools
          - Git for Windows (if not installed by other means)
       - Compilers, build tools, and runtimes
-         - Windows Universal CRT SDK (required by eduEd25519 submodule)
+         - Windows Universal CRT SDK (required by eduLibsodium submodule)
       - SDKs, libraries, and frameworks
-         - Windows 8.1 SDK (required by eduEd25519 submodule)
+         - Windows 8.1 SDK (required by eduLibsodium submodule)
 2. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 3. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
 4. Install [WiX Toolset 3.14.0.5722 or later](https://wixtoolset.org/releases/v3-14-0-5722/) (required for MSI and EXE installer packaging).

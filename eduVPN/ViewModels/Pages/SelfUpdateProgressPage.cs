@@ -119,7 +119,7 @@ namespace eduVPN.ViewModels.Pages
                                     using (var stream = response.GetResponseStream())
                                     {
                                         installerFile.Seek(0, SeekOrigin.Begin);
-                                        var hash = new eduEd25519.SHA256();
+                                        var hash = new eduLibsodium.SHA256();
                                         var buffer = new byte[1048576];
                                         long offset = 0, total = response.ContentLength;
 

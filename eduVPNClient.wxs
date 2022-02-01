@@ -286,8 +286,8 @@
             <Component Id="Prism.dll" Guid="{4A143204-1EBB-4BDE-BA$(var.ClientId)-B0770670ECC3}">
                 <File Source="$(var.TargetDirClient)Prism.dll"/>
             </Component>
-            <Component Id="eduEd25519.dll" Guid="{03F051ED-A1D6-4D40-B6$(var.ClientId)-F56CD5EDBCA2}">
-                <File Source="$(var.TargetDirClient)eduEd25519.dll"/>
+            <Component Id="eduLibsodium.dll" Guid="{2A7020F2-83EF-4197-94$(var.ClientId)-484E64F85962}">
+                <File Source="$(var.TargetDirClient)eduLibsodium.dll"/>
             </Component>
             <Component Id="eduEx.dll" Guid="{36A66334-6B59-48A1-8B$(var.ClientId)-512FE8F3EE6A}">
                 <File Source="$(var.TargetDirClient)eduEx.dll"/>
@@ -364,8 +364,8 @@
         <?foreach Language in $(var.LanguageList)?>
         <?include Install\$(var.Language)\defs.wxi?>
         <DirectoryRef Id="RESOURCEDIR$(var.LanguageId)">
-            <Component Id="eduEd25519.resources.dll.$(var.LanguageId)" Guid="{A5E5AE0E-3247-$(var.LanguageId)-9C$(var.ClientId)-6238841468C1}">
-                <File Id="eduEd25519.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduEd25519.resources.dll"/>
+            <Component Id="eduLibsodium.resources.dll.$(var.LanguageId)" Guid="{EFCFA402-FD73-$(var.LanguageId)-82$(var.ClientId)-D7C9C7575BD6}">
+                <File Id="eduLibsodium.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduLibsodium.resources.dll"/>
             </Component>
             <Component Id="eduJSON.resources.dll.$(var.LanguageId)" Guid="{82195943-3982-$(var.LanguageId)-BE$(var.ClientId)-24616577F555}">
                 <File Id="eduJSON.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduJSON.resources.dll"/>
@@ -406,7 +406,7 @@
 
             <MergeRef Id="VCRedist"/>
             <ComponentRef Id="Prism.dll"/>
-            <ComponentRef Id="eduEd25519.dll"/>
+            <ComponentRef Id="eduLibsodium.dll"/>
             <ComponentRef Id="eduEx.dll"/>
             <ComponentRef Id="eduJSON.dll"/>
             <ComponentRef Id="eduOAuth.dll"/>
@@ -423,7 +423,7 @@
 
             <?foreach Language in $(var.LanguageList)?>
             <?include Install\$(var.Language)\defs.wxi?>
-            <ComponentRef Id="eduEd25519.resources.dll.$(var.LanguageId)"/>
+            <ComponentRef Id="eduLibsodium.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduJSON.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOAuth.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOpenVPN.resources.dll.$(var.LanguageId)"/>

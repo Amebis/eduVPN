@@ -61,8 +61,8 @@ CFG=Release
 TRANSIFEX_ORG=amebis
 TRANSIFEX_PROJ=eduvpn
 
-RESOURCE_DIR=$(MAKEDIR)\eduEd25519\eduEd25519
-TRANSIFEX_RES=edued25519
+RESOURCE_DIR=$(MAKEDIR)\eduLibsodium\eduLibsodium
+TRANSIFEX_RES=edulibsodium
 !INCLUDE "MakefileTransifex.mak"
 
 RESOURCE_DIR=$(MAKEDIR)\eduJSON\eduJSON\Resources
