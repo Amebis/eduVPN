@@ -321,9 +321,9 @@ namespace eduVPN.Xml
                             var key = res.PublicKeys[keyId];
                             var payload =
                                 alg == 'd' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Legacy) != 0 ? data :
-                                alg == 'D' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Hashed) != 0 ? new eduEd25519.BLAKE2b(512).ComputeHash(data) :
+                                alg == 'D' && (key.SupportedAlgorithms & MinisignPublicKey.AlgorithmMask.Hashed) != 0 ? new eduLibsodium.BLAKE2b(512).ComputeHash(data) :
                                 throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignSignature);
-                            using (var k = new eduEd25519.ED25519(key.Value))
+                            using (var k = new eduLibsodium.ED25519(key.Value))
                                 if (!k.VerifyDetached(payload, sig))
                                     throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
                         }

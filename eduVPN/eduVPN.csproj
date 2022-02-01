@@ -163,9 +163,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eduEd25519\eduEd25519\eduEd25519.vcxproj">
+    <ProjectReference Include="..\eduLibsodium\eduLibsodium\eduLibsodium.vcxproj">
       <Project>{a25c3684-302e-4c4d-96e9-176c12fe7423}</Project>
-      <Name>eduEd25519</Name>
+      <Name>eduLibsodium</Name>
     </ProjectReference>
     <ProjectReference Include="..\eduEx\eduEx\eduEx.csproj">
       <Project>{0e2c74ac-c81c-4cc6-b88d-81192623a66d}</Project>

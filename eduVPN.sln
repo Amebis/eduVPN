@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{34019D9B-CB1A-4C13-B6F8-992DE8AB6F39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEd25519.Tests", "eduEd25519\eduEd25519.Tests\eduEd25519.Tests.csproj", "{A4AE321A-E6B4-47A8-A2B2-0727D1A17721}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduLibsodium.Tests", "eduLibsodium\eduLibsodium.Tests\eduLibsodium.Tests.csproj", "{A4AE321A-E6B4-47A8-A2B2-0727D1A17721}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduJSON.Tests", "eduJSON\eduJSON.Tests\eduJSON.Tests.csproj", "{2C761E16-7CE7-4702-9BB9-C36C0903C8FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPN", "eduVPN\eduVPN.csproj", "{2E6427E4-0C1A-49B9-A80D-886035995CBE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduEd25519", "eduEd25519\eduEd25519\eduEd25519.vcxproj", "{A25C3684-302E-4C4D-96E9-176C12FE7423}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduLibsodium", "eduLibsodium\eduLibsodium\eduLibsodium.vcxproj", "{A25C3684-302E-4C4D-96E9-176C12FE7423}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduJSON", "eduJSON\eduJSON\eduJSON.csproj", "{8F4C3F22-1988-4077-9220-ED2512FC0248}"
 EndProject
