@@ -183,6 +183,7 @@ namespace eduVPN.Xml
 
                             case HttpStatusCode.MovedPermanently:
                             case HttpStatusCode.TemporaryRedirect:
+                            case (HttpStatusCode)308:
                                 // Redirect using the same method.
                                 if (redirectHop >= (request as HttpWebRequest).MaximumAutomaticRedirections)
                                     throw new HttpTooMayRedirectsException();
