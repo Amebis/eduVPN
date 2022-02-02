@@ -9,15 +9,15 @@ MSVC_VERSION = \
 !INCLUDE "$(VCINSTALLDIR)Auxiliary\Build\Microsoft.VCRedistVersion.default.txt"
 
 !IF "$(PLAT)" == "x64"
-PLAT_OPENVPN=x64
+PLAT_MSVC=x64
 PLAT_VCPKG=x64
 PLAT_CLIENT=x64
 !ELSEIF "$(PLAT)" == "ARM64"
-PLAT_OPENVPN=ARM64
+PLAT_MSVC=ARM64
 PLAT_VCPKG=arm64
 PLAT_CLIENT=x86
 !ELSE
-PLAT_OPENVPN=Win32
+PLAT_MSVC=Win32
 PLAT_VCPKG=x86
 PLAT_CLIENT=x86
 !ENDIF
@@ -63,13 +63,13 @@ Build$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)"
 	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
 	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
-	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_OPENVPN)" $(MSBUILD_FLAGS)
+	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
 	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
-	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_OPENVPN)" $(MSBUILD_FLAGS)
+	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Build$(CFG)$(PLAT) :: \
@@ -80,11 +80,11 @@ Build$(CFG)$(PLAT) :: \
 "bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)bin\wintun.dll"
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpn.exe"
+"bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.exe"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN" /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\openvpnserv.exe" : "openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpnserv.exe"
+"bin\$(CFG)\$(PLAT)\openvpnserv.exe" : "openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.exe"
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN Interactive Service" /q $**
 	copy /y $** $@ > NUL
 
@@ -100,9 +100,10 @@ Clean ::
 !IF "$(CFG)" == "$(SETUP_CFG)"
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \
 	bin\$(CFG)\$(PLAT)\*.pdb \
-	"openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\compat.pdb" \
-	"openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpn.pdb" \
-	"openvpn\$(PLAT_OPENVPN)-Output\$(CFG)\openvpnserv.pdb" \
+	"eduLibsodium\libsodium\$(CFG)\$(PLAT_MSVC)\libsodium.pdb" \
+	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\compat.pdb" \
+	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.pdb" \
+	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.pdb" \
 	"vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
 !ENDIF
 
