@@ -20,6 +20,7 @@
 - _LetsConnect.Client_: Let's Connect! client application (Shell)
 - _openvpn_: OpenVPN source code
 - _vcpkg_: vcpkg build system for building OpenVPN and its prerequisites
+- _WinStd_: Win32 Standard C++ helpers
 
 
 ## Pre-requisites

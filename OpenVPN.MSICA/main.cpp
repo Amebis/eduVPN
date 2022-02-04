@@ -15,12 +15,10 @@
 #include <stdarg.h>
 #include <TlHelp32.h>
 #include <wchar.h>
+#include <WinStd/COM.h>
+#include <WinStd/MSI.h>
+#include <WinStd/Win.h>
 #include <wintun.h>
-
-#include "msiex.h"
-#include "string.h"
-#include "winstd.h"
-#include "windowsex.h"
 
 #include <vector>
 
@@ -51,7 +49,9 @@ LogErrorNumV(_In_ DWORD dwError, _In_z_ LPCTSTR szFunction, _Printf_format_strin
         return;
     MsiRecordSetInteger(hRecord, 1, ERROR_MSICA_ERRNO);
     MsiRecordSetString(hRecord, 2, szFunction);
-    MsiRecordSetString(hRecord, 3, string_printf_v(szFormat, args).c_str());
+    tstring str;
+    vsprintf(str, szFormat, args);
+    MsiRecordSetString(hRecord, 3, str.c_str());
     MsiRecordSetInteger(hRecord, 4, dwError);
     MsiRecordSetString(hRecord, 5, szSystemMessage ? szSystemMessage : TEXT(""));
     MsiProcessMessage(s_hInstall, INSTALLMESSAGE_ERROR, hRecord);
@@ -77,7 +77,9 @@ LogErrorV(_In_z_ LPCTSTR szFunction, _Printf_format_string_ LPCTSTR szFormat, _I
         return;
     MsiRecordSetInteger(hRecord, 1, ERROR_MSICA_ERRNO);
     MsiRecordSetString(hRecord, 2, szFunction);
-    MsiRecordSetString(hRecord, 3, string_printf_v(szFormat, args).c_str());
+    tstring str;
+    vsprintf(str, szFormat, args);
+    MsiRecordSetString(hRecord, 3, str.c_str());
     MsiProcessMessage(s_hInstall, INSTALLMESSAGE_ERROR, hRecord);
 }
 
@@ -180,7 +182,7 @@ EvaluateComponents(_In_ MSIHANDLE hInstall)
             if (iInstalled >= INSTALLSTATE_LOCAL && iAction >= INSTALLSTATE_REMOVED) {
                 // Client component is installed and shall be removed/upgraded/reinstalled.
                 // Schedule client termination.
-                SetFormattedProperty(hInstall, TEXT("KillExecutableProcesses"), string_printf(TEXT("[COREDIR]%s"), szClientFilenames[i]).c_str());
+                SetFormattedProperty(hInstall, TEXT("KillExecutableProcesses"), tstring_printf(TEXT("[COREDIR]%s"), szClientFilenames[i]).c_str());
             }
         } else if (uiResult != ERROR_UNKNOWN_COMPONENT)
             LOG_ERROR_NUM(uiResult, TEXT("MsiGetComponentState(\"%s\") failed"), szClientFilenames[i]);
@@ -236,7 +238,7 @@ typedef FILEID* LPFILEID;
 _Return_type_success_(return != FALSE) static BOOL
 CalculateFileId(_In_z_ LPCTSTR szPath, _Out_ LPFILEID id)
 {
-    win_handle<INVALID_HANDLE_VALUE> hFile(CreateFile(szPath, 0, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
+    file hFile(CreateFile(szPath, 0, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
     if (!hFile)
         return FALSE;
     BY_HANDLE_FILE_INFORMATION info = { 0 };
@@ -266,13 +268,13 @@ KillExecutableProcesses(_In_ MSIHANDLE hInstall)
     if (!CalculateFileId(szExecutable.c_str(), &idExecutable))
         return ERROR_SUCCESS;
 
-    win_handle<INVALID_HANDLE_VALUE> hSnapshot(CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0));
+    process_snapshot hSnapshot(CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0));
     if (!hSnapshot)
         return ERROR_SUCCESS;
 
     PROCESSENTRY32 pe32 = { sizeof(PROCESSENTRY32) };
     for (BOOL fSuccess = Process32First(hSnapshot, &pe32); fSuccess; fSuccess = Process32Next(hSnapshot, &pe32)) {
-        win_handle<NULL> hProcess(OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pe32.th32ProcessID));
+        process hProcess(OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pe32.th32ProcessID));
         FILEID id;
         if (hProcess &&
             QueryFullProcessImageName(hProcess, 0, szExecutable) &&
