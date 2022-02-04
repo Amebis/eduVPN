@@ -15,12 +15,10 @@
 #include <stdarg.h>
 #include <TlHelp32.h>
 #include <wchar.h>
+#include <WinStd/COM.h>
+#include <WinStd/MSI.h>
+#include <WinStd/Win.h>
 #include <wintun.h>
-
-#include "msiex.h"
-#include "string.h"
-#include "winstd.h"
-#include "windowsex.h"
 
 #include <vector>
 
@@ -51,7 +49,9 @@ LogErrorNumV(_In_ DWORD dwError, _In_z_ LPCTSTR szFunction, _Printf_format_strin
         return;
     MsiRecordSetInteger(hRecord, 1, ERROR_MSICA_ERRNO);
     MsiRecordSetString(hRecord, 2, szFunction);
-    MsiRecordSetString(hRecord, 3, string_printf_v(szFormat, args).c_str());
+    tstring str;
+    vsprintf(str, szFormat, args);
+    MsiRecordSetString(hRecord, 3, str.c_str());
     MsiRecordSetInteger(hRecord, 4, dwError);
     MsiRecordSetString(hRecord, 5, szSystemMessage ? szSystemMessage : TEXT(""));
     MsiProcessMessage(s_hInstall, INSTALLMESSAGE_ERROR, hRecord);
@@ -77,7 +77,9 @@ LogErrorV(_In_z_ LPCTSTR szFunction, _Printf_format_string_ LPCTSTR szFormat, _I
         return;
     MsiRecordSetInteger(hRecord, 1, ERROR_MSICA_ERRNO);
     MsiRecordSetString(hRecord, 2, szFunction);
-    MsiRecordSetString(hRecord, 3, string_printf_v(szFormat, args).c_str());
+    tstring str;
+    vsprintf(str, szFormat, args);
+    MsiRecordSetString(hRecord, 3, str.c_str());
     MsiProcessMessage(s_hInstall, INSTALLMESSAGE_ERROR, hRecord);
 }
 
@@ -180,7 +182,7 @@ EvaluateComponents(_In_ MSIHANDLE hInstall)
             if (iInstalled >= INSTALLSTATE_LOCAL && iAction >= INSTALLSTATE_REMOVED) {
                 // Client component is installed and shall be removed/upgraded/reinstalled.
                 // Schedule client termination.
-                SetFormattedProperty(hInstall, TEXT("KillExecutableProcesses"), string_printf(TEXT("[COREDIR]%s"), szClientFilenames[i]).c_str());
+                SetFormattedProperty(hInstall, TEXT("KillExecutableProcesses"), tstring_printf(TEXT("[COREDIR]%s"), szClientFilenames[i]).c_str());
             }
         } else if (uiResult != ERROR_UNKNOWN_COMPONENT)
             LOG_ERROR_NUM(uiResult, TEXT("MsiGetComponentState(\"%s\") failed"), szClientFilenames[i]);

@@ -38,12 +38,6 @@
   <ItemGroup>
     <None Include="exports.def" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="msiex.h" />
-    <ClInclude Include="string.h" />
-    <ClInclude Include="windowsex.h" />
-    <ClInclude Include="winstd.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{6B6FEA3D-D88B-4205-8A95-F8893507DEA2}</ProjectGuid>

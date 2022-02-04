@@ -24,18 +24,4 @@
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="msiex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="string.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="winstd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="windowsex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>
