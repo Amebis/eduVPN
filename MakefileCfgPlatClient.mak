@@ -32,8 +32,10 @@ SetupMSI :: \
 !IF "$(CFG)" == "$(TEST_CFG)"
 !IF "$(PLAT)" == "$(TEST_PLAT)"
 Register :: \
-	UnregisterOpenVPNInteractiveServiceSCM \
-	Build$(CFG)$(PLAT) \
+	UnregisterServices \
+	BuildLibsodium$(CFG)$(PLAT) \
+	BuildOpenVPN$(CFG)$(PLAT) \
+	Build$(CFG)$(PLAT)
 	"bin\$(CFG)\$(PLAT)\config"
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)"             $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)
@@ -60,7 +62,7 @@ Unregister ::
 	-if exist "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" del /f /q "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk"
 
 Unregister :: \
-	UnregisterOpenVPNInteractiveServiceSCM
+	UnregisterServices
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   $(REG_FLAGS) > NUL 2>&1
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         $(REG_FLAGS) > NUL 2>&1
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "config_dir"       $(REG_FLAGS) > NUL 2>&1
@@ -70,7 +72,7 @@ Unregister :: \
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "priority"         $(REG_FLAGS) > NUL 2>&1
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "ovpn_admin_group" $(REG_FLAGS) > NUL 2>&1
 
-UnregisterOpenVPNInteractiveServiceSCM ::
+UnregisterServices ::
 	-net.exe stop "OpenVPNServiceInteractive$$$(CLIENT_TARGET)"  > NUL 2>&1
 	-sc.exe delete "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" > NUL 2>&1
 !ENDIF
