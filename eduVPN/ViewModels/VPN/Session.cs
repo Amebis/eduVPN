@@ -311,21 +311,24 @@ namespace eduVPN.ViewModels.VPN
                         Run();
                     }
                     finally { connectedTimeUpdater.Stop(); }
-
-                    TryInvoke((Action)(() =>
-                    {
-                        // Cleanup status properties.
-                        State = SessionStatusType.Disconnected;
-                        StateDescription = "";
-                    }));
                 }
                 catch (Exception ex)
                 {
                     TryInvoke((Action)(() =>
                     {
-                        State = SessionStatusType.Error;
-                        StateDescription = ex.ToString();
+                        // Clear failing server/profile to auto-start on next launch.
+                        Properties.Settings.Default.LastSelectedServer = null;
+
                         throw ex;
+                    }));
+                }
+                finally
+                {
+                    TryInvoke((Action)(() =>
+                    {
+                        // Cleanup status properties.
+                        State = SessionStatusType.Disconnected;
+                        StateDescription = "";
                     }));
                 }
             }));
