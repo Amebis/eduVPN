@@ -9,6 +9,9 @@ Please read the [Installation and update instructions](doc/Installation.md) to g
 ## Usage
 _Start_ » _All Programs_ » _eduVPN Client_
 
+## Frequently Asked Questions
+Assorted topics about the client usage can be found in our [FAQ](doc/FAQ.md).
+
 
 # Enterprise Administrators
 
