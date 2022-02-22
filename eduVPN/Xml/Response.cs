@@ -59,6 +59,11 @@ namespace eduVPN.Xml
         public string Value { get; private set; }
 
         /// <summary>
+        /// Content MIME type
+        /// </summary>
+        public string ContentType { get; private set; }
+
+        /// <summary>
         /// Content date
         /// </summary>
         public DateTimeOffset Date { get; private set; }
@@ -339,6 +344,7 @@ namespace eduVPN.Xml
                         return new Response()
                         {
                             Value = encoding.GetString(data), // SECURITY: Securely convert data to a SecureString
+                            ContentType = httpResponse.ContentType,
                             Date = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Date"), out var date) ? date : DateTimeOffset.Now,
                             Expires = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Expires"), out var expires) ? expires : DateTimeOffset.MaxValue,
                             LastModified = DateTimeOffset.TryParse(httpResponse.GetResponseHeader("Last-Modified"), out var lastModified) ? lastModified : DateTimeOffset.MinValue,
@@ -387,6 +393,7 @@ namespace eduVPN.Xml
             string v;
 
             Value = reader[nameof(Value)];
+            ContentType = reader[nameof(ContentType)];
             Date = DateTimeOffset.TryParse(reader[nameof(Date)], out var date) ? date : DateTimeOffset.Now;
             Expires = DateTimeOffset.TryParse(reader[nameof(Expires)], out var expires) ? expires : DateTimeOffset.MaxValue;
             LastModified = DateTimeOffset.TryParse(reader[nameof(LastModified)], out var lastModified) ? lastModified : DateTimeOffset.MinValue;
@@ -402,6 +409,8 @@ namespace eduVPN.Xml
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString(nameof(Value), Value);
+            if (ContentType != null)
+                writer.WriteAttributeString(nameof(ContentType), ContentType);
             writer.WriteAttributeString(nameof(Date), Date.ToString("o"));
             if (Expires != DateTimeOffset.MaxValue)
                 writer.WriteAttributeString(nameof(Expires), Expires.ToString("o"));
