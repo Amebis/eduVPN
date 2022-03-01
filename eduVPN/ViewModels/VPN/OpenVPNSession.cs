@@ -36,11 +36,6 @@ namespace eduVPN.ViewModels.VPN
         #region Fields
 
         /// <summary>
-        /// OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)
-        /// </summary>
-        private readonly string InstanceName;
-
-        /// <summary>
         /// OpenVPN connection identifier
         /// </summary>
         /// <remarks>Connection identifier determines .conf and .log filenames.</remarks>
@@ -49,7 +44,46 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN working folder
         /// </summary>
-        private readonly string WorkingFolder;
+        public static string WorkingFolder
+        {
+            get
+            {
+                lock (WorkingFolderLock)
+                {
+                    if (_WorkingFolder == null)
+                    {
+                        try
+                        {
+                            // Use OpenVPN configuration folder.
+                            using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                            {
+                                using (var key = hklmKey.OpenSubKey("SOFTWARE\\OpenVPN" + Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance, false))
+                                {
+                                    _WorkingFolder = key.GetValue("config_dir").ToString().TrimEnd();
+                                    var pathSeparator = Path.DirectorySeparatorChar.ToString();
+                                    if (!_WorkingFolder.EndsWith(pathSeparator))
+                                        _WorkingFolder += pathSeparator;
+                                    if (!Directory.Exists(_WorkingFolder))
+                                        throw new FileNotFoundException();
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            // Use temporary folder.
+                            _WorkingFolder = Path.GetTempPath();
+                        }
+                    }
+                    return _WorkingFolder;
+                }
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static string _WorkingFolder;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static readonly object WorkingFolderLock = new object();
 
         /// <summary>
         /// Should HOLD hint on reconnect be ignored?
@@ -169,35 +203,12 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Creates an OpenVPN session
         /// </summary>
-        /// <param name="instanceName">OpenVPN Interactive Service instance name to connect to (e.g. "$eduVPN", "", etc.)</param>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public OpenVPNSession(string instanceName, ConnectWizard wizard, Profile connectingProfile) :
+        public OpenVPNSession(ConnectWizard wizard, Profile connectingProfile) :
             base(wizard, connectingProfile)
         {
-            InstanceName = instanceName;
             ConnectionId = Guid.NewGuid().ToString();
-            try
-            {
-                // Use OpenVPN configuration folder.
-                using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-                {
-                    using (var key = hklmKey.OpenSubKey("SOFTWARE\\OpenVPN" + InstanceName, false))
-                    {
-                        WorkingFolder = key.GetValue("config_dir").ToString().TrimEnd();
-                        var pathSeparator = Path.DirectorySeparatorChar.ToString();
-                        if (!WorkingFolder.EndsWith(pathSeparator))
-                            WorkingFolder += pathSeparator;
-                        if (!Directory.Exists(WorkingFolder))
-                            throw new FileNotFoundException();
-                    }
-                }
-            }
-            catch
-            {
-                // Use temporary folder.
-                WorkingFolder = Path.GetTempPath();
-            }
 
             PreRun.Add(() =>
             {
@@ -206,27 +217,6 @@ namespace eduVPN.ViewModels.VPN
                     Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                     false,
                     Window.Abort.Token);
-            });
-
-            PreRun.Add(() =>
-            {
-                try
-                {
-                    // Purge stale log files.
-                    var timestamp = DateTime.UtcNow.Subtract(new TimeSpan(30, 0, 0, 0));
-                    foreach (var f in Directory.EnumerateFiles(WorkingFolder, "*.txt", SearchOption.TopDirectoryOnly))
-                    {
-                        Window.Abort.Token.ThrowIfCancellationRequested();
-                        if (File.GetLastWriteTimeUtc(f) <= timestamp)
-                        {
-                            Trace.TraceInformation("Purging {0}", LogPath);
-                            try { File.Delete(LogPath); }
-                            catch { }
-                        }
-                    }
-                }
-                catch (OperationCanceledException) { throw; }
-                catch (Exception) { /* Failure to remove stale log files is not fatal. */ }
             });
         }
 
@@ -427,7 +417,7 @@ namespace eduVPN.ViewModels.VPN
                                 try
                                 {
                                     openvpnInteractiveServiceConnection.Connect(
-                                        string.Format("openvpn{0}\\service", InstanceName),
+                                        string.Format("openvpn{0}\\service", Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance),
                                         WorkingFolder,
                                         new string[] { "--config", ConnectionId + ".conf", },
                                         mgmtPassword + "\n",
@@ -651,6 +641,24 @@ namespace eduVPN.ViewModels.VPN
                 }
 
                 ManagementSession.QueueReleaseHold(Window.Abort.Token);
+            }
+        }
+
+        /// <summary>
+        /// Purges stale log files
+        /// </summary>
+        public static void PurgeOldLogs()
+        {
+            var timestamp = DateTime.UtcNow.Subtract(new TimeSpan(7, 0, 0, 0));
+            foreach (var f in Directory.EnumerateFiles(WorkingFolder, "*.txt", SearchOption.TopDirectoryOnly))
+            {
+                Window.Abort.Token.ThrowIfCancellationRequested();
+                if (File.GetLastWriteTimeUtc(f) <= timestamp)
+                {
+                    Trace.TraceInformation("Purging {0}", f);
+                    try { File.Delete(f); }
+                    catch { }
+                }
             }
         }
 

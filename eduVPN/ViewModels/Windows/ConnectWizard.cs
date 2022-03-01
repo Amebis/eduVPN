@@ -337,6 +337,10 @@ namespace eduVPN.ViewModels.Windows
                 Properties.Settings.Default.ResponseCache.PurgeOldCacheEntries,
                 24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
+            actions.Add(new KeyValuePair<Action, int>(
+                VPN.OpenVPNSession.PurgeOldLogs,
+                24 * 60 * 60 * 1000)); // Repeat every 24 hours
+
             if (Properties.SettingsEx.Default.ServersDiscovery?.Uri != null)
             {
                 InitServers();
