@@ -64,12 +64,14 @@ Build$(CFG)$(PLAT) :: \
 	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
 	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl3 lz4 lzo pkcs11-helper tap-windows6 wintun
 	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
+	msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
 	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl3 lz4 lzo pkcs11-helper tap-windows6 wintun
 	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
+	-msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Build$(CFG)$(PLAT) :: \
@@ -100,7 +102,7 @@ Clean ::
 !IF "$(CFG)" == "$(SETUP_CFG)"
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \
 	bin\$(CFG)\$(PLAT)\*.pdb \
-	"eduLibsodium\libsodium\$(CFG)\$(PLAT_MSVC)\libsodium.pdb" \
+	"eduLibsodium\libsodium\Build\$(CFG)\$(PLAT_MSVC)\libsodium.pdb" \
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\compat.pdb" \
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.pdb" \
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.pdb" \
