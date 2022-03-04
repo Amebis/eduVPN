@@ -3,6 +3,9 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.1...HEAD)
 
 - Discover organizations as required
+- OpenVPN updated to 2.5.5-20220304
+    - openvpn 2.5.5 3e0c506e5d9135ef4b08547db8679cc5bd2a7582
+    - openssl 3.0.1
 - Fixes
 
 
