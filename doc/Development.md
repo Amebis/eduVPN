@@ -19,6 +19,7 @@
 - _Install_: WiX installer additional files
 - _LetsConnect.Client_: Let's Connect! client application (Shell)
 - _openvpn_: OpenVPN source code
+- _OpenVPN.MSICA_: Custom actions DLL for MSI installer
 - _vcpkg_: vcpkg build system for building OpenVPN and its prerequisites
 - _WinStd_: Win32 Standard C++ helpers
 
