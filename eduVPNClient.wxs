@@ -49,8 +49,8 @@
             SourceFile="$(var.ClientTarget).Client\Resources\App.ico"/>
 
         <Binary
-            Id="OpenVPN.MSICA.dll"
-            SourceFile="OpenVPN.MSICA.dll"/>
+            Id="eduMSICA.dll"
+            SourceFile="eduMSICA.dll"/>
 
         <Property Id="ARPPRODUCTICON" Value="App.ico"/>
         <Property Id="ARPURLINFOABOUT" Value="$(var.ClientAboutUri)"/>
@@ -438,19 +438,19 @@
         -->
         <CustomAction
             Id="EvaluateComponents"
-            BinaryKey="OpenVPN.MSICA.dll"
+            BinaryKey="eduMSICA.dll"
             DllEntry="EvaluateComponents"/>
 
         <CustomAction
             Id="RemoveWintunDriver"
-            BinaryKey="OpenVPN.MSICA.dll"
+            BinaryKey="eduMSICA.dll"
             DllEntry="RemoveWintunDriver"
             Execute="deferred"
             Impersonate="no"/>
 
         <CustomAction
             Id="KillExecutableProcesses"
-            BinaryKey="OpenVPN.MSICA.dll"
+            BinaryKey="eduMSICA.dll"
             DllEntry="KillExecutableProcesses"
             Execute="deferred"
             Impersonate="no" />
@@ -470,7 +470,7 @@
         </InstallExecuteSequence>
 
         <UI>
-            <Error Id="2550">!(OpenVPN.MSICA [2]: [3]: Error [4]: [5])</Error>
+            <Error Id="2550">!(eduMSICA [2]: [3]: Error [4]: [5])</Error>
         </UI>
     </Product>
 </Wix>

@@ -1,5 +1,5 @@
 /*
-    OpenVPN.MSICA - MSI Custom Actions for OpenVPN
+    eduMSICA - MSI Custom Actions
 
     Copyright: 2021-2022 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
@@ -28,7 +28,7 @@ using namespace winstd;
 #define WINTUN_COMPONENT  TEXT("wintun.dll")
 #define WINTUN_FILE_NAME  TEXT("wintun.dll")
 #define WINTUN_DIRECTORY  TEXT("OPENVPNDIR")
-#define ERROR_MSICA_ERRNO 2550L
+#define ERROR_EDUMSICA_ERRNO 2550L
 
 static MSIHANDLE s_hInstall; // Handle to the installation session
 
@@ -47,7 +47,7 @@ LogErrorNumV(_In_ DWORD dwError, _In_z_ LPCTSTR szFunction, _Printf_format_strin
     PMSIHANDLE hRecord = MsiCreateRecord(5);
     if (!(MSIHANDLE)hRecord)
         return;
-    MsiRecordSetInteger(hRecord, 1, ERROR_MSICA_ERRNO);
+    MsiRecordSetInteger(hRecord, 1, ERROR_EDUMSICA_ERRNO);
     MsiRecordSetString(hRecord, 2, szFunction);
     tstring str;
     vsprintf(str, szFormat, args);
@@ -75,7 +75,7 @@ LogErrorV(_In_z_ LPCTSTR szFunction, _Printf_format_string_ LPCTSTR szFormat, _I
     PMSIHANDLE hRecord = MsiCreateRecord(3);
     if (!(MSIHANDLE)hRecord)
         return;
-    MsiRecordSetInteger(hRecord, 1, ERROR_MSICA_ERRNO);
+    MsiRecordSetInteger(hRecord, 1, ERROR_EDUMSICA_ERRNO);
     MsiRecordSetString(hRecord, 2, szFunction);
     tstring str;
     vsprintf(str, szFormat, args);

@@ -22,5 +22,5 @@
 
     <String Id="NewerVersionInstalled">Novejša verzija aplikacije [SimpleProductName] je že nameščena. Namestitev se bo zdaj zaključila.</String>
 
-    <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Napaka [4]: [5]</String>
+    <String Id="eduMSICA.Error">eduMSICA [2]: [3]: Napaka [4]: [5]</String>
 </WixLocalization>

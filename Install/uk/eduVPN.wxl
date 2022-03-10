@@ -22,5 +22,5 @@
 
     <String Id="NewerVersionInstalled">Нова версія [SimpleProductName] вже встановлено. Вихід з програми установки.</String>
 
-    <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Помилка [4]: [5]</String>
+    <String Id="eduMSICA.Error">eduMSICA [2]: [3]: Помилка [4]: [5]</String>
 </WixLocalization>

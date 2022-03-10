@@ -22,5 +22,5 @@
 
     <String Id="NewerVersionInstalled">A newer version of [SimpleProductName] is already installed. Setup will now exit.</String>
 
-    <String Id="OpenVPN.MSICA.Error">OpenVPN.MSICA [2]: [3]: Error [4]: [5]</String>
+    <String Id="eduMSICA.Error">eduMSICA [2]: [3]: Error [4]: [5]</String>
 </WixLocalization>
