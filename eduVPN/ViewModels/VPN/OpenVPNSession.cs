@@ -52,26 +52,15 @@ namespace eduVPN.ViewModels.VPN
                 {
                     if (_WorkingFolder == null)
                     {
-                        try
+                        using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                         {
-                            // Use OpenVPN configuration folder.
-                            using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                            using (var key = hklmKey.OpenSubKey("SOFTWARE\\OpenVPN" + Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance, false))
                             {
-                                using (var key = hklmKey.OpenSubKey("SOFTWARE\\OpenVPN" + Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance, false))
-                                {
-                                    _WorkingFolder = key.GetValue("config_dir").ToString().TrimEnd();
-                                    var pathSeparator = Path.DirectorySeparatorChar.ToString();
-                                    if (!_WorkingFolder.EndsWith(pathSeparator))
-                                        _WorkingFolder += pathSeparator;
-                                    if (!Directory.Exists(_WorkingFolder))
-                                        throw new FileNotFoundException();
-                                }
+                                var path = key.GetValue("config_dir").ToString().TrimEnd();
+                                if (!Directory.Exists(path))
+                                    throw new FileNotFoundException();
+                                _WorkingFolder = path;
                             }
-                        }
-                        catch
-                        {
-                            // Use temporary folder.
-                            _WorkingFolder = Path.GetTempPath();
                         }
                     }
                     return _WorkingFolder;
@@ -107,12 +96,12 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN profile configuration file path
         /// </summary>
-        private string ConfigurationPath => WorkingFolder + ConnectionId + ".conf";
+        private string ConfigurationPath => Path.Combine(WorkingFolder, ConnectionId + ".conf");
 
         /// <summary>
         /// OpenVPN connection log
         /// </summary>
-        private string LogPath => WorkingFolder + ConnectionId + ".txt";
+        private string LogPath => Path.Combine(WorkingFolder, ConnectionId + ".txt");
 
         /// <inheritdoc/>
         public override DelegateCommand Renew
