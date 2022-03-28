@@ -10,12 +10,10 @@ using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.VPN
@@ -25,16 +23,6 @@ namespace eduVPN.ViewModels.VPN
     /// </summary>
     public class Session : BindableBase
     {
-        #region Fields
-
-        /// <summary>
-        /// List of actions to run prior running the session
-        /// </summary>
-        /// <remarks>Actions will be run in parallel and session run will wait for all to finish.</remarks>
-        protected List<Action> PreRun = new List<Action>();
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -46,11 +34,6 @@ namespace eduVPN.ViewModels.VPN
         /// Connecting eduVPN server profile
         /// </summary>
         public Profile ConnectingProfile { get; }
-
-        /// <summary>
-        /// VPN session worker
-        /// </summary>
-        public Thread Thread { get; private set; }
 
         /// <summary>
         /// Profile configuration
@@ -74,6 +57,11 @@ namespace eduVPN.ViewModels.VPN
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Xml.Response _ProfileConfig;
+
+        /// <summary>
+        /// VPN session worker
+        /// </summary>
+        public Thread Thread { get; private set; }
 
         /// <summary>
         /// Client connection state
@@ -192,7 +180,7 @@ namespace eduVPN.ViewModels.VPN
         public bool Expired => ValidTo <= DateTimeOffset.Now;
 
         /// <summary>
-        /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when certificate does not expire
+        /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when session does not expire
         /// </summary>
         public TimeSpan ExpiresTime
         {
@@ -262,10 +250,22 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public Session(ConnectWizard wizard, Profile connectingProfile)
+        /// <param name="profileConfig">Initial profile configuration</param>
+        public Session(ConnectWizard wizard, Profile connectingProfile, Xml.Response profileConfig)
         {
             Wizard = wizard;
             ConnectingProfile = connectingProfile;
+            ProfileConfig = profileConfig;
+
+            PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                // Disconnect session when expired.
+                if ((e.PropertyName == nameof(State) || e.PropertyName == nameof(Expired)) &&
+                    (State == SessionStatusType.Initializing || State == SessionStatusType.Connecting || State == SessionStatusType.Connected) &&
+                    Expired &&
+                    Disconnect.CanExecute())
+                    Disconnect.Execute();
+            };
         }
 
         #endregion
@@ -273,67 +273,41 @@ namespace eduVPN.ViewModels.VPN
         #region Methods
 
         /// <summary>
-        /// Starts the session
+        /// Executes the session
         /// </summary>
-        public void Start()
+        public void Execute()
         {
-            State = SessionStatusType.Initializing;
-            Thread = new Thread(new ThreadStart(() =>
+            Wizard.TryInvoke((Action)(() =>
             {
-                try
-                {
-                    var connectedTimeUpdater = new DispatcherTimer(
-                        new TimeSpan(0, 0, 0, 1),
-                        DispatcherPriority.Normal,
-                        (object senderTimer, EventArgs eTimer) => RaisePropertyChanged(nameof(ConnectedTime)),
-                        Wizard.Dispatcher);
-                    connectedTimeUpdater.Start();
-                    try
-                    {
-                        try
-                        {
-                            Parallel.ForEach(PreRun,
-                                action =>
-                                {
-                                    TryInvoke((Action)(() => Wizard.TaskCount++));
-                                    try { action(); }
-                                    finally { TryInvoke((Action)(() => Wizard.TaskCount--)); }
-                                });
-                        }
-                        catch (AggregateException ex)
-                        {
-                            var nonCancelledException = ex.InnerExceptions.Where(exInner => !(exInner is OperationCanceledException));
-                            if (nonCancelledException.Any())
-                                throw new AggregateException("", nonCancelledException.ToArray());
-                            throw new OperationCanceledException();
-                        }
-
-                        Run();
-                    }
-                    finally { connectedTimeUpdater.Stop(); }
-                }
-                catch (Exception ex)
-                {
-                    TryInvoke((Action)(() =>
-                    {
-                        // Clear failing server/profile to auto-start on next launch.
-                        Properties.Settings.Default.LastSelectedServer = null;
-
-                        throw ex;
-                    }));
-                }
-                finally
-                {
-                    TryInvoke((Action)(() =>
-                    {
-                        // Cleanup status properties.
-                        State = SessionStatusType.Disconnected;
-                        StateDescription = "";
-                    }));
-                }
+                State = SessionStatusType.Initializing;
             }));
-            Thread.IsBackground = false;
-            Thread.Start();
+            try
+            {
+                var propertyUpdater = new DispatcherTimer(
+                    new TimeSpan(0, 0, 0, 1),
+                    DispatcherPriority.Normal,
+                    (object senderTimer, EventArgs eTimer) =>
+                    {
+                        RaisePropertyChanged(nameof(ConnectedTime));
+                        RaisePropertyChanged(nameof(Expired));
+                        RaisePropertyChanged(nameof(ExpiresTime));
+                        RaisePropertyChanged(nameof(OfferRenewal));
+                        RaisePropertyChanged(nameof(SuggestRenewal));
+                    },
+                    Wizard.Dispatcher);
+                propertyUpdater.Start();
+                try { Run(); }
+                finally { propertyUpdater.Stop(); }
+            }
+            finally
+            {
+                Wizard.TryInvoke((Action)(() =>
+                {
+                    // Cleanup status properties.
+                    State = SessionStatusType.Disconnected;
+                    StateDescription = "";
+                }));
+            }
         }
 
         /// <summary>
@@ -342,18 +316,6 @@ namespace eduVPN.ViewModels.VPN
         protected virtual void Run()
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Invoke method on GUI thread if it's not terminating.
-        /// </summary>
-        /// <param name="method">Method to execute</param>
-        /// <returns>The return value from the delegate being invoked or <c>null</c> if the delegate has no return value or dispatcher is shutting down.</returns>
-        protected object TryInvoke(Delegate method)
-        {
-            if (Wizard.Dispatcher.HasShutdownStarted)
-                return null;
-            return Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, method);
         }
 
         #endregion

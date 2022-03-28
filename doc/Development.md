@@ -17,6 +17,8 @@
 - _eduVPN.Client_: eduVPN client application (Shell)
 - _eduVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for Start Menu shortcuts
 - _eduVPN.Views_: Client UI (View)
+- _eduWGSvcHost_: WireGuard manager and tunnel services
+- _eduWireGuard_: WireGuard Tunnel Manager Service IPC for C#/.NET
 - _Install_: WiX installer additional files
 - _LetsConnect.Client_: Let's Connect! client application (Shell)
 - _openvpn_: OpenVPN source code
@@ -69,18 +71,16 @@ Before pulling a new version of the eduVPN source code from the GitHub a `nmake 
 
 #### Initial Registration
 
-The registration prepares the working environment for the eduVPN and Let's Connect! clients for testing on the build/development computer. It performs the following:
-- Prepares local OpenVPN binaries.
-- Installs and starts OpenVPN Interactive Service.
-- Builds the Debug version of the eduVPN and Let's Connect! clients.
-- Creates Start Menu shortcuts.
+The registration prepares the working environment for the eduVPN and Let's Connect! clients for testing on the build/development computer.
 
 1. Start the _x64 Native Tools Command Prompt for VS 2019_ elevated (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2019_ » _Run as Administrator_).
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
-3. Start the initial build and registration using `nmake Register` command. This command will:
+3. Start the initial build and registration using `nmake register` command. This command will:
+   - Build all prerequisites.
    - Build the Debug version.
-   - Create a Start menu eduVPN and Let's Connect! client shortcuts.
    - Install OpenVPN Interactive Service: one instance per client.
+   - Install WireGuard Tunnel Manager Service: one instance per client.
+   - Create a Start menu eduVPN and Let's Connect! client shortcuts.
 4. The clients can now be started using the Start menu shortcut.
 
 

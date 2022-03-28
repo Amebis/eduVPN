@@ -35,7 +35,8 @@ Register :: \
 	UnregisterServices \
 	BuildLibsodium$(CFG)$(PLAT) \
 	BuildOpenVPN$(CFG)$(PLAT) \
-	Build$(CFG)$(PLAT)
+	BuildWireGuard$(CFG)$(PLAT) \
+	Build$(CFG)$(PLAT) \
 	"bin\$(CFG)\$(PLAT)\config"
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)"             $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)
@@ -53,6 +54,15 @@ Register :: \
 		depend= "Dhcp"
 	sc.exe description "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)6"
 	net.exe start "OpenVPNServiceInteractive$$$(CLIENT_TARGET)"
+	reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\Eventlog\Application\eduWGSvcHost$$$(CLIENT_TARGET)" /v "EventMessageFile" /t REG_EXPAND_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe" $(REG_FLAGS)
+	reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\Eventlog\Application\eduWGSvcHost$$$(CLIENT_TARGET)" /v "TypesSupported"   /t REG_DWORD     /d 7                                                $(REG_FLAGS)
+	sc.exe create "eduWGManager$$$(CLIENT_TARGET)" \
+		binpath= "\"$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe\" $(CLIENT_TARGET) Manager" \
+		DisplayName= "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe,-$(IDS_CLIENT_PREFIX)1" \
+		type= own \
+		start= auto
+	sc.exe description "eduWGManager$$$(CLIENT_TARGET)" "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe,-$(IDS_CLIENT_PREFIX)2"
+	net.exe start "eduWGManager$$$(CLIENT_TARGET)"
 	cscript.exe "bin\MkLnk.wsf" //Nologo "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
 		/F:"$(MAKEDIR)\bin\$(CFG)\$(PLAT)" \
 		/LN:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)1" \
@@ -71,10 +81,13 @@ Unregister :: \
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "log_append"       $(REG_FLAGS) > NUL 2>&1
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "priority"         $(REG_FLAGS) > NUL 2>&1
 	-reg.exe delete "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "ovpn_admin_group" $(REG_FLAGS) > NUL 2>&1
+	-reg.exe delete "HKLM\SYSTEM\CurrentControlSet\Services\Eventlog\Application\eduWGSvcHost$$$(CLIENT_TARGET)" /va $(REG_FLAGS) > NUL 2>&1
 
 UnregisterServices ::
 	-net.exe stop "OpenVPNServiceInteractive$$$(CLIENT_TARGET)"  > NUL 2>&1
 	-sc.exe delete "OpenVPNServiceInteractive$$$(CLIENT_TARGET)" > NUL 2>&1
+	-net.exe stop "eduWGManager$$$(CLIENT_TARGET)"  > NUL 2>&1
+	-sc.exe delete "eduWGManager$$$(CLIENT_TARGET)" > NUL 2>&1
 !ENDIF
 !ENDIF
 

@@ -37,9 +37,19 @@ namespace eduVPN.ViewModels.Pages
             SessionInactive = 0,
 
             /// <summary>
+            /// A session is activating
+            /// </summary>
+            SessionActivating,
+
+            /// <summary>
             /// A session is active
             /// </summary>
             SessionActive,
+
+            /// <summary>
+            /// A session is deactivating
+            /// </summary>
+            SessionDeactivating,
 
             /// <summary>
             /// The active session expired
@@ -56,6 +66,11 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         private CancellationTokenSource ProfilesRefreshInProgress;
 
+        /// <summary>
+        /// Profile connect cancellation token
+        /// </summary>
+        private CancellationTokenSource ProfileConnectInProgress;
+
         #endregion
 
         #region Properties
@@ -66,7 +81,14 @@ namespace eduVPN.ViewModels.Pages
         public StateType State
         {
             get => _State;
-            private set => SetProperty(ref _State, value);
+            private set
+            {
+                if (SetProperty(ref _State, value))
+                {
+                    RaisePropertyChanged(nameof(IsSessionActive));
+                    RaisePropertyChanged(nameof(CanSessionToggle));
+                }
+            }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -151,9 +173,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (SetProperty(ref _SelectedProfile, value))
                 {
+                    RaisePropertyChanged(nameof(CanSessionToggle));
                     if (ConnectingServer != null && SelectedProfile != null)
                         Properties.Settings.Default.LastSelectedProfile[ConnectingServer.Base.AbsoluteUri] = SelectedProfile.Id;
                     _StartSession?.RaiseCanExecuteChanged();
+                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -172,7 +196,7 @@ namespace eduVPN.ViewModels.Pages
                 if (SetProperty(ref _ActiveSession, value))
                 {
                     _StartSession?.RaiseCanExecuteChanged();
-                    _ToggleSession?.RaiseCanExecuteChanged();
+                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
                     _SessionInfo?.RaiseCanExecuteChanged();
                     _NavigateBack?.RaiseCanExecuteChanged();
                 }
@@ -181,6 +205,44 @@ namespace eduVPN.ViewModels.Pages
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Session _ActiveSession;
+
+        /// <summary>
+        /// Is VPN session active
+        /// </summary>
+        public bool IsSessionActive
+        {
+            get => StateType.SessionActivating <= State && State <= StateType.SessionActive;
+            set
+            {
+                if (!CanSessionToggle)
+                    return;
+                if (ActiveSession != null && !value)
+                {
+                    if (ActiveSession.Disconnect.CanExecute())
+                    {
+                        ActiveSession.Disconnect.Execute();
+
+                        // Clear server/profile to auto-start on next launch.
+                        Properties.Settings.Default.LastSelectedServer = null;
+                    }
+                }
+                else if (ActiveSession == null && value)
+                {
+                    if (AuthenticateAndStartSession.CanExecute())
+                        AuthenticateAndStartSession.Execute();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Can session be activated or deactivated?
+        /// </summary>
+        public bool CanSessionToggle
+        {
+            get =>
+                State == StateType.SessionInactive && SelectedProfile != null ||
+                State == StateType.SessionActive;
+        }
 
         /// <summary>
         /// Starts VPN session
@@ -193,36 +255,94 @@ namespace eduVPN.ViewModels.Pages
                     _StartSession = new DelegateCommand(
                         () =>
                         {
-                            var session = new OpenVPNSession(Wizard, SelectedProfile);
-                            var finalState = StateType.SessionInactive;
-                            session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession?.RaiseCanExecuteChanged();
-                            session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-                            {
-                                if ((e.PropertyName == nameof(session.State) || e.PropertyName == nameof(session.Expired)) &&
-                                    (session.State == SessionStatusType.Initializing || session.State == SessionStatusType.Connecting || session.State == SessionStatusType.Connected || session.State == SessionStatusType.Disconnecting) &&
-                                    session.Expired)
+                            State = StateType.SessionActivating;
+                            ProfileConnectInProgress?.Cancel();
+
+                            var connectingProfile = SelectedProfile;
+
+                            ProfileConnectInProgress = new CancellationTokenSource();
+                            var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfileConnectInProgress.Token, Window.Abort.Token).Token;
+                            new Thread(new ThreadStart(
+                                () =>
                                 {
-                                    finalState = StateType.SessionExpired;
-                                    if (session.Disconnect.CanExecute())
-                                        session.Disconnect.Execute();
-                                }
+                                    Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                                    try
+                                    {
+                                        // Get session profile.
+                                        var authenticatingServer = Wizard.GetAuthenticatingServer(connectingProfile.Server);
+                                        var profileConfig = connectingProfile.Connect(authenticatingServer: authenticatingServer, ct: ct);
+                                        Session session;
+                                        try
+                                        {
+                                            // Initialize session.
+                                            switch (profileConfig.ContentType.ToLowerInvariant())
+                                            {
+                                                case "application/x-openvpn-profile":
+                                                    session = new OpenVPNSession(Wizard, connectingProfile, profileConfig);
+                                                    break;
+                                                case "application/x-wireguard-profile":
+                                                    session = new WireGuardSession(Wizard, connectingProfile, profileConfig);
+                                                    break;
+                                                default:
+                                                    throw new ArgumentOutOfRangeException(nameof(profileConfig.ContentType), profileConfig.ContentType, null);
+                                            }
+                                            session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                                            {
+                                                // Update connection page when session disconnects.
+                                                if (e.PropertyName == nameof(session.State))
+                                                    switch (session.State)
+                                                    {
+                                                        case SessionStatusType.Connecting:
+                                                            State = StateType.SessionActivating;
+                                                            break;
 
-                                if (e.PropertyName == nameof(session.State) && session.State == SessionStatusType.Disconnected)
-                                {
-                                    ActiveSession = null;
-                                    State = finalState;
-                                }
-                            };
+                                                        case SessionStatusType.Connected:
+                                                            State = StateType.SessionActive;
+                                                            break;
 
-                            ActiveSession = session;
-                            State = StateType.SessionActive;
+                                                        case SessionStatusType.Disconnecting:
+                                                            State = StateType.SessionDeactivating;
+                                                            break;
 
-                            // Set server/profile to auto-start on next launch.
-                            Properties.Settings.Default.LastSelectedServer = SelectedProfile.Server.Base;
+                                                        case SessionStatusType.Disconnected:
+                                                            ActiveSession = null;
+                                                            State = session.Expired ? StateType.SessionExpired : StateType.SessionInactive;
+                                                            break;
+                                                    }
+                                            };
 
-                            session.Start();
+                                            // Activate session.
+                                            Wizard.TryInvoke((Action)(() =>
+                                            {
+                                                ActiveSession = session;
+
+                                                // Set server/profile to auto-start on next launch.
+                                                Properties.Settings.Default.LastSelectedServer = SelectedProfile.Server.Base;
+
+                                                Wizard.TaskCount--;
+                                            }));
+                                            try { session.Execute(); }
+                                            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                                        }
+                                        finally
+                                        {
+                                            try { connectingProfile.Server.Disconnect(authenticatingServer); } catch { }
+                                        }
+                                    }
+                                    catch (OperationCanceledException) { }
+                                    catch (Exception ex)
+                                    {
+                                        Wizard.TryInvoke((Action)(() =>
+                                        {
+                                            // Clear failing server/profile to auto-start on next launch.
+                                            Properties.Settings.Default.LastSelectedServer = null;
+                                            throw ex;
+                                        }));
+                                    }
+                                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                                })).Start();
                         },
-                        () => SelectedProfile != null && ActiveSession == null);
+                        () => ActiveSession == null && SelectedProfile != null);
                 return _StartSession;
             }
         }
@@ -231,36 +351,26 @@ namespace eduVPN.ViewModels.Pages
         private DelegateCommand _StartSession;
 
         /// <summary>
-        /// Activates a VPN session for selected profile or deactivates the active VPN session
+        /// Starts VPN session
         /// </summary>
-        public DelegateCommand ToggleSession
+        public DelegateCommand AuthenticateAndStartSession
         {
             get
             {
-                if (_ToggleSession == null)
-                {
-                    _ToggleSession = new DelegateCommand(
+                if (_AuthenticateAndStartSession == null)
+                    _AuthenticateAndStartSession = new DelegateCommand(
                         async () =>
                         {
-                            if (ActiveSession != null && ActiveSession.Disconnect.CanExecute())
-                                ActiveSession.Disconnect.Execute();
-                            else if (StartSession.CanExecute())
-                            {
-                                await Wizard.AuthorizationPage.TriggerAuthorizationAsync(Wizard.GetAuthenticatingServer(ConnectingServer));
-                                StartSession.Execute();
-                            }
+                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(Wizard.GetAuthenticatingServer(ConnectingServer));
+                            StartSession.Execute();
                         },
-                        () =>
-                            ActiveSession != null && ActiveSession.Disconnect.CanExecute() ||
-                            StartSession.CanExecute());
-                    StartSession.CanExecuteChanged += (object sender, EventArgs e) => _ToggleSession.RaiseCanExecuteChanged();
-                }
-                return _ToggleSession;
+                        () => StartSession.CanExecute());
+                return _AuthenticateAndStartSession;
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _ToggleSession;
+        private DelegateCommand _AuthenticateAndStartSession;
 
         /// <summary>
         /// Connection info command

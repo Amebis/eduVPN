@@ -5,9 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-// Prevent inclusion of winsock.h in windows.h.
-#define _WINSOCKAPI_
-
+#define _WINSOCKAPI_ // Prevent inclusion of winsock.h in windows.h.
 #include <Windows.h>
 #include <Msi.h>
 #include <MsiQuery.h>

@@ -33,6 +33,26 @@ WIX_INSIGNIA_FLAGS=-nologo
 
 
 ######################################################################
+# Build
+######################################################################
+
+BuildWireGuard ::
+	cd "wireguard-windows\embeddable-dll-service"
+	build.bat
+	cd "$(MAKEDIR)"
+
+Clean ::
+	-if exist "wireguard-windows\.deps"                        rd /q /s "wireguard-windows\.deps"
+	-if exist "wireguard-windows\amd64"                        rd /q /s "wireguard-windows\amd64"
+	-if exist "wireguard-windows\arm64"                        rd /q /s "wireguard-windows\arm64"
+	-if exist "wireguard-windows\x86"                          rd /q /s "wireguard-windows\x86"
+	-if exist "wireguard-windows\resources_*.syso"             del /f /q "wireguard-windows\resources_*.syso"
+	-if exist "wireguard-windows\embeddable-dll-service\amd64" rd /q /s "wireguard-windows\embeddable-dll-service\amd64"
+	-if exist "wireguard-windows\embeddable-dll-service\arm64" rd /q /s "wireguard-windows\embeddable-dll-service\arm64"
+	-if exist "wireguard-windows\embeddable-dll-service\x86"   rd /q /s "wireguard-windows\embeddable-dll-service\x86"
+
+
+######################################################################
 # Setup
 ######################################################################
 

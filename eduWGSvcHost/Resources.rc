@@ -1,0 +1,80 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+#pragma code_page(65001) // UTF8
+
+#define APSTUDIO_READONLY_SYMBOLS
+#include <winres.h>
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#include <Messages.rc>
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+VS_VERSION_INFO VERSIONINFO
+	FILEVERSION 2,255,1,0
+	PRODUCTVERSION 2,255,1,0
+	FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
+#ifdef _DEBUG
+	FILEFLAGS VS_FF_DEBUG
+#else
+	FILEFLAGS 0x0L
+#endif
+	FILEOS VOS_NT_WINDOWS32
+	FILETYPE VFT_APP
+	FILESUBTYPE 0x0L
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904b0"
+		BEGIN
+			VALUE "CompanyName",      "SURF"
+			VALUE "FileDescription",  "WireGuard Service Host for eduVPN Client"
+			VALUE "FileVersion",      "2.255.1"
+			VALUE "LegalCopyright",   "Copyright © 2022 The Commons Conservancy"
+			VALUE "OriginalFilename", "eduWGSvcHost.exe"
+			VALUE "ProductName",      "eduVPN"
+			VALUE "ProductVersion",   "2.255.1"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1200
+	END
+END
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_MGR_SERVICE_TITLE            "WireGuard Manager Service (eduVPN)"
+	IDS_EDUVPN_MGR_SERVICE_DESCRIPTION      "WireGuard tunnel manager for eduVPN client. If stopped or disabled, eduVPN client will not function."
+	IDS_EDUVPN_TUN_SERVICE_TITLE            "WireGuard Tunnel Service (eduVPN): %s"
+	IDS_EDUVPN_TUN_SERVICE_DESCRIPTION      "WireGuard tunnel service for eduVPN client. This service is managed by the WireGuard Manager Service (eduVPN)."
+
+	IDS_LETSCONNECT_MGR_SERVICE_TITLE       "WireGuard Manager Service (Let's Connect!)"
+	IDS_LETSCONNECT_MGR_SERVICE_DESCRIPTION "WireGuard tunnel manager for Let's Connect! client. If stopped or disabled, Let's Connect! client will not function."
+	IDS_LETSCONNECT_TUN_SERVICE_TITLE       "WireGuard Tunnel Service (Let's Connect!): %s"
+	IDS_LETSCONNECT_TUN_SERVICE_DESCRIPTION "WireGuard tunnel service for Let's Connect! client. This service is managed by the WireGuard Manager Service (Let's Connect!)."
+END
+
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Slovenian resources
+
+LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_MGR_SERVICE_TITLE            "Storitev upravnika tunelov WireGuard (eduVPN)"
+	IDS_EDUVPN_MGR_SERVICE_DESCRIPTION      "Upravnik tunelov WireGuard za odjemalca eduVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec eduVPN ne bo deloval."
+	IDS_EDUVPN_TUN_SERVICE_TITLE            "Storitev tunela WireGuard (eduVPN): %s"
+	IDS_EDUVPN_TUN_SERVICE_DESCRIPTION      "Tunel WireGuard za odjemalca eduVPN. To storitev upravlja Storitev upravnika tunelov WireGuard (eduVPN)."
+
+	IDS_LETSCONNECT_MGR_SERVICE_TITLE       "Storitev upravnika tunelov WireGuard (Let's Connect!)"
+	IDS_LETSCONNECT_MGR_SERVICE_DESCRIPTION "Upravnik tunelov WireGuard za odjemalca Let's Connect!. Če je ta storitev zaustavljena ali onemogočena, odjemalec Let's Connect! ne bo deloval."
+	IDS_LETSCONNECT_TUN_SERVICE_TITLE       "Storitev tunela WireGuard (Let's Connect!): %s"
+	IDS_LETSCONNECT_TUN_SERVICE_DESCRIPTION "Tunel WireGuard za odjemalca Let's Connect!. To storitev upravlja Storitev upravnika tunelov WireGuard (Let's Connect!)."
+END

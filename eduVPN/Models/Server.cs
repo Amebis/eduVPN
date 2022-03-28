@@ -20,7 +20,7 @@ namespace eduVPN.Models
     /// <summary>
     /// An eduVPN server
     /// </summary>
-    public class Server : ILoadableItem
+    public class Server : ILoadableItem, IDisposable
     {
         #region Fields
 
@@ -39,6 +39,14 @@ namespace eduVPN.Models
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly object ProfilesLock = new object();
+
+        /// <summary>
+        /// Ed25519 keypair
+        /// </summary>
+        private eduLibsodium.Box Keypair;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly object KeypairLock = new object();
 
         #endregion
 
@@ -276,6 +284,45 @@ namespace eduVPN.Models
             ForgetAuthorization?.Invoke(this, new ForgetAuthorizationEventArgs("config"));
         }
 
+        /// <summary>
+        /// Returns Ed25519 public key
+        /// </summary>
+        /// <returns>Ed25519 public key</returns>
+        public byte[] GetPublicKey()
+        {
+            lock (KeypairLock)
+            {
+                if (Keypair == null)
+                    Keypair = new eduLibsodium.Box();
+            }
+            return Keypair.PublicKey;
+        }
+
+        /// <summary>
+        /// Returns Ed25519 private key
+        /// </summary>
+        /// <returns>Ed25519 private key</returns>
+        public byte[] GetPrivateKey()
+        {
+            lock (KeypairLock)
+            {
+                if (Keypair == null)
+                    Keypair = new eduLibsodium.Box();
+            }
+            return Keypair.SecretKey;
+        }
+
+        /// <summary>
+        /// Resets Ed25519 keypair
+        /// </summary>
+        public void ResetKeypair()
+        {
+            lock (KeypairLock)
+            {
+                Keypair = null;
+            }
+        }
+
         #endregion
 
         #region ILoadableItem Support
@@ -303,6 +350,50 @@ namespace eduVPN.Models
                         SupportContacts.Add(new Uri(cStr));
         }
 
+        #endregion
+
+        #region IDisposable Support
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (Keypair != null)
+                        Keypair.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
         #endregion
     }
 }

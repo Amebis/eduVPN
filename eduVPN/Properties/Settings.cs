@@ -43,6 +43,13 @@ namespace eduVPN.Properties
         public string ClientTitle { get; set; }
 
         /// <summary>
+        /// Client simple name (without spaces and limited punctuation)
+        /// </summary>
+        [ApplicationScopedSetting()]
+        [SettingsDescription("Client Title")]
+        public string ClientSimpleName { get; set; }
+
+        /// <summary>
         /// Client URI
         /// </summary>
         [ApplicationScopedSetting()]

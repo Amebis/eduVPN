@@ -123,16 +123,17 @@ namespace eduVPN.ViewModels.VPN
                                         var config = ConnectingProfile.Connect(
                                             Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                                             true,
+                                            ProfileConfig.ContentType,
                                             Window.Abort.Token);
-                                        TryInvoke((Action)(() => ProfileConfig = config));
+                                        Wizard.TryInvoke((Action)(() => ProfileConfig = config));
                                         ManagementSession.SendSignal(SignalType.SIGHUP, Window.Abort.Token);
                                     }
                                     catch (OperationCanceledException) { }
-                                    catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
+                                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
                                     finally
                                     {
                                         RenewInProgress = false;
-                                        TryInvoke((Action)(() => _Renew.RaiseCanExecuteChanged()));
+                                        Wizard.TryInvoke((Action)(() => _Renew.RaiseCanExecuteChanged()));
                                     }
                                 })).Start();
                         },
@@ -156,10 +157,8 @@ namespace eduVPN.ViewModels.VPN
                         () =>
                         {
                             // Terminate connection.
-                            ManagementSession.SendSignal(SignalType.SIGTERM);
-
-                            // Clear server/profile to auto-start on next launch.
-                            Properties.Settings.Default.LastSelectedServer = null;
+                            State = SessionStatusType.Disconnecting;
+                            ManagementSession.QueueSendSignal(SignalType.SIGTERM);
                         },
                         () => ManagementSession != null);
                 return _Disconnect;
@@ -194,19 +193,11 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="connectingProfile">Connecting eduVPN profile</param>
-        public OpenVPNSession(ConnectWizard wizard, Profile connectingProfile) :
-            base(wizard, connectingProfile)
+        /// <param name="profileConfig">Initial profile configuration</param>
+        public OpenVPNSession(ConnectWizard wizard, Profile connectingProfile, Xml.Response profileConfig) :
+            base(wizard, connectingProfile, profileConfig)
         {
             ConnectionId = Guid.NewGuid().ToString();
-
-            PreRun.Add(() =>
-            {
-                // Get profile's OpenVPN configuration.
-                ProfileConfig = ConnectingProfile.Connect(
-                    Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
-                    false,
-                    Window.Abort.Token);
-            });
         }
 
         #endregion
@@ -216,20 +207,13 @@ namespace eduVPN.ViewModels.VPN
         /// <inheritdoc/>
         protected override void Run()
         {
-            TryInvoke((Action)(() => Wizard.TaskCount++));
+            Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
             try
             {
                 var propertyUpdater = new DispatcherTimer(
                     new TimeSpan(0, 0, 0, 1),
                     DispatcherPriority.Normal,
-                    (object sender, EventArgs e) =>
-                    {
-                        RaisePropertyChanged(nameof(Expired));
-                        RaisePropertyChanged(nameof(ExpiresTime));
-                        RaisePropertyChanged(nameof(OfferRenewal));
-                        RaisePropertyChanged(nameof(SuggestRenewal));
-                        _ShowLog?.RaiseCanExecuteChanged();
-                    },
+                    (object sender, EventArgs e) => _ShowLog?.RaiseCanExecuteChanged(),
                     Wizard.Dispatcher);
                 propertyUpdater.Start();
                 try
@@ -440,10 +424,10 @@ namespace eduVPN.ViewModels.VPN
                                         ManagementSession.SetByteCount(5, Window.Abort.Token);
                                         ManagementSession.ReleaseHold(Window.Abort.Token);
 
-                                        TryInvoke((Action)(() =>
+                                        Wizard.TryInvoke((Action)(() =>
                                         {
-                                            _Renew.RaiseCanExecuteChanged();
-                                            _Disconnect.RaiseCanExecuteChanged();
+                                            _Renew?.RaiseCanExecuteChanged();
+                                            _Disconnect?.RaiseCanExecuteChanged();
                                             Wizard.TaskCount--;
                                         }));
                                         try
@@ -454,13 +438,13 @@ namespace eduVPN.ViewModels.VPN
                                                 !(ManagementSession.Error is OperationCanceledException)) // Session was not cancelled.
                                                 goto retry;
                                         }
-                                        finally { TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                                        finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
                                     }
                                     finally { mgmtClient.Close(); }
                                 }
                                 finally
                                 {
-                                    TryInvoke((Action)(() =>
+                                    Wizard.TryInvoke((Action)(() =>
                                     {
                                         // Cleanup status properties.
                                         State = SessionStatusType.Disconnecting;
@@ -482,20 +466,18 @@ namespace eduVPN.ViewModels.VPN
                     }
                     finally
                     {
-                        try { ConnectingProfile.Server.Disconnect(Wizard.GetAuthenticatingServer(ConnectingProfile.Server)); } catch { }
-
                         try { File.Delete(ConfigurationPath); }
                         catch (Exception ex) { Trace.TraceWarning("Deleting {0} file failed: {1}", ConfigurationPath, ex.ToString()); }
                     }
                 }
                 finally { propertyUpdater.Stop(); }
             }
-            finally { TryInvoke((Action)(() => Wizard.TaskCount--)); }
+            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
         }
 
         private void ManagementSession_ByteCountReported(object sender, ByteCountReportedEventArgs e)
         {
-            TryInvoke((Action)(() =>
+            Wizard.TryInvoke((Action)(() =>
             {
                 BytesIn = e.BytesIn;
                 BytesOut = e.BytesOut;
@@ -504,7 +486,7 @@ namespace eduVPN.ViewModels.VPN
 
         private void ManagementSession_FatalErrorReported(object sender, MessageReportedEventArgs e)
         {
-            TryInvoke((Action)(() =>
+            Wizard.TryInvoke((Action)(() =>
             {
                 State = SessionStatusType.Error;
                 var ex = new OpenVPNException(e.Message);
@@ -589,7 +571,7 @@ namespace eduVPN.ViewModels.VPN
             }
             else if (msg == null)
                 msg = "";
-            TryInvoke((Action)(() =>
+            Wizard.TryInvoke((Action)(() =>
             {
                 StateDescription = msg;
                 TunnelAddress = e.Tunnel;
@@ -619,8 +601,9 @@ namespace eduVPN.ViewModels.VPN
                         var config = ConnectingProfile.Connect(
                             Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                             true,
+                            ProfileConfig.ContentType,
                             Window.Abort.Token);
-                        TryInvoke((Action)(() => ProfileConfig = config));
+                        Wizard.TryInvoke((Action)(() => ProfileConfig = config));
                         IgnoreHoldHint = true;
                         break;
 

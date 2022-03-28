@@ -10,7 +10,6 @@
     xmlns:conv="clr-namespace:eduVPN.Converters"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <conv:ActiveProfileEqualSelectedProfileConverter x:Key="ActiveProfileEqualSelectedProfileConverter"/>
     <conv:BooleanVisibilityConverter x:Key="BooleanInverseVisibilityConverter">
         <conv:BooleanVisibilityConverter.Invert>
             <sys:Boolean>True</sys:Boolean>

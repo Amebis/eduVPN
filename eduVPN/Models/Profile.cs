@@ -106,7 +106,7 @@ namespace eduVPN.Models
         /// <param name="forceRefresh">Force client reauthorization</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, CancellationToken ct = default)
+        public Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, string responseType = "application/x-openvpn-profile, application/x-wireguard-profile", CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Server.GetEndpoints(ct);
@@ -122,15 +122,19 @@ namespace eduVPN.Models
             {
                 // Get complete profile config.
                 Trace.TraceInformation("Connecting {0}", api.Connect);
-                return Xml.Response.Get(
+                var profile = Xml.Response.Get(
                     uri: api.Connect,
                     param: new NameValueCollection {
                         { "profile_id", Id },
+                        { "public_key", Convert.ToBase64String(Server.GetPublicKey()) },
                         { "prefer_tcp", Properties.Settings.Default.OpenVPNPreferTCP ? "yes" : "no" }
                     },
                     token: e.AccessToken,
-                    responseType: "application/x-openvpn-profile",
+                    responseType: responseType,
                     ct: ct);
+                if (profile.ContentType.ToLowerInvariant() == "application/x-wireguard-profile")
+                    profile.Value = profile.Value.Replace("[Interface]", "[Interface]\nPrivateKey = " + Convert.ToBase64String(Server.GetPrivateKey())); // SECURITY: Securely convert profile string to a SecureString
+                return profile;
             }
             catch (OperationCanceledException) { throw; }
             catch (WebException ex)

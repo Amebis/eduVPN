@@ -12,14 +12,17 @@ MSVC_VERSION = \
 PLAT_MSVC=x64
 PLAT_VCPKG=x64
 PLAT_CLIENT=x64
+PLAT_PROCESSOR_ARCHITECTURE=amd64
 !ELSEIF "$(PLAT)" == "ARM64"
 PLAT_MSVC=ARM64
 PLAT_VCPKG=arm64
 PLAT_CLIENT=x86
+PLAT_PROCESSOR_ARCHITECTURE=arm64
 !ELSE
 PLAT_MSVC=Win32
 PLAT_VCPKG=x86
 PLAT_CLIENT=x86
+PLAT_PROCESSOR_ARCHITECTURE=x86
 !ENDIF
 
 # WiX parameters
@@ -58,6 +61,7 @@ VCREDIST_MSM=Microsoft_VC142_CRT_$(PLAT_CLIENT).msm
 SetupBuild :: \
 	BuildLibsodium$(CFG)$(PLAT) \
 	BuildOpenVPN$(CFG)$(PLAT) \
+	BuildWireGuard$(CFG)$(PLAT) \
 	Build$(CFG)$(PLAT)
 !ENDIF
 
@@ -78,6 +82,12 @@ BuildOpenVPN$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
 
 BuildOpenVPN :: BuildOpenVPN$(CFG)$(PLAT)
+
+BuildWireGuard$(CFG)$(PLAT) :: \
+	BuildWireGuard \
+	"bin\$(CFG)\$(PLAT)" \
+	"bin\$(CFG)\$(PLAT)\wireguard.dll" \
+	"bin\$(CFG)\$(PLAT)\tunnel.dll"
 
 Build$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)"
@@ -104,7 +114,15 @@ Clean ::
 "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VCREDIST_MSM)"
 	copy /y $** $@ > NUL
 
+"bin\$(CFG)\$(PLAT)\wireguard.dll" : "wireguard-windows\.deps\wireguard-nt\bin\$(PLAT_PROCESSOR_ARCHITECTURE)\wireguard.dll"
+	copy /y $** $@ > NUL
+
+"bin\$(CFG)\$(PLAT)\tunnel.dll" : "wireguard-windows\embeddable-dll-service\$(PLAT_PROCESSOR_ARCHITECTURE)\tunnel.dll"
+	copy /y $** $@ > NUL
+
 Clean ::
+	-if exist "bin\$(CFG)\$(PLAT)\tunnel.dll"      del /f /q "bin\$(CFG)\$(PLAT)\tunnel.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\wireguard.dll"   del /f /q "bin\$(CFG)\$(PLAT)\wireguard.dll"
 	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"      del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
 	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"     del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
 	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe" del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"

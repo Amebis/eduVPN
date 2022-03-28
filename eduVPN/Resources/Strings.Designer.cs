@@ -313,6 +313,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tunnel Manager Service failure..
+        /// </summary>
+        internal static string ErrorWireGuardTunnelManagerService {
+            get {
+                return ResourceManager.GetString("ErrorWireGuardTunnelManagerService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adding routes to system....
         /// </summary>
         internal static string OpenVPNStateTypeAddingRoutes {

@@ -56,7 +56,7 @@ namespace eduVPN.Xml
         /// <summary>
         /// String content (JSON, plain text, etc.)
         /// </summary>
-        public string Value { get; private set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// Content MIME type

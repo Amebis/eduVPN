@@ -9,6 +9,7 @@
 <?define LanguageList=ar;de;es;es-ES;fr;nb;nl;pt-PT;sl;tr;uk?>
 
 <?define openvpnserv.exe.ComponentGUID = "{501E24B9-1EE1-4982-84$(var.ClientId)-52AD4697AF10}"?>
+<?define eduWGSvcHost.exe.ComponentGUID = "{ABCA5853-91AF-4ED3-90$(var.ClientId)-5C1142DFFEF1}"?>
 <?define Client.exe.ComponentGUID = "{61234C26-2ACA-4076-81$(var.ClientId)-201D4AE50A74}"?>
 <?if $(var.ClientTarget) = "eduVPN"?>
     <?define OldProductGUIDs={03CB2E09-0CAD-469B-AB45-655D66FE3B65};{0841DE4F-F902-41E6-B0CD-820A36D52B0E};{08EFF53C-15CB-4CE5-BA6E-8C93274B795E};{0B43FFC8-2FCD-461E-A2AE-16F9DC6A183D};{0E05ED6A-162E-490D-A86B-4D1754B73586};{0E142612-80B6-41DA-B018-CDB5AD4755AD};{0ECF4980-96D5-47B5-B1E0-FDDBEF02BF54};{12E71E11-B4B2-4F9D-8D0C-2D8DE2912637};{14ACE545-3D1E-4261-8E3E-D09389B7DC45};{1C44BEDC-0BA8-4AA5-B256-35358AA63D37};{20607E48-5B55-49A0-85FA-324B88405825};{20C03B25-2908-4B88-A9B4-43BACEE9F0D1};{26C061F4-0B3C-4504-87F5-1242186FD3E4};{2BBA222F-8D7B-4753-B3D8-98C67A9600CF};{2DD2C4E5-02ED-415E-A32F-1D3864715A56};{30DDCF52-4B2D-4D19-BC08-D65240DB321F};{37F3A6BD-34BA-4495-B6D2-906BB7AE7F90};{3827A306-CF9D-4563-9A49-592452B3B2B3};{3B2B4912-3847-4D91-A326-B96094959E8B};{41FE8D9A-4F4E-4C9D-8FA0-2C084D8AA2D2};{476E2607-8BA4-42B0-8B30-B6AC07158419};{47A7E1A5-A9D1-4B50-AF87-42CE5213A843};{4B3862B7-C58C-459C-B470-CA16BA4A68CB};{5116EF0B-FC1D-4310-8B31-8F2B00B2CBBF};{5232255B-AEFF-48EB-B7D2-D9DDE5EB9239};{5461A901-8935-4D30-A1E2-78EF195D4EC2};{58C633A1-6357-42A4-9953-91EC71C71450};{5A6DD426-111A-4DD2-AA89-4F036D0F4C48};{5CDB1F77-0AC9-41DD-8B5D-6B3E2A97C898};{5EFB583A-FAAE-4CDA-B2DD-80CE51C3B9A0};{5FC9442C-7B87-4E23-8085-DDAC61549D91};{60634577-01E3-4B26-8D8A-57ED6BAD3CBA};{60B2F5C3-F34A-4812-B9C0-6DFEBFF09A1D};{60E84675-E746-4603-B251-5B47F66CBFA4};{739A267F-5B41-4828-AC35-41E7B7683856};{78738805-E2DC-407B-89E7-A26D789BAF9E};{7A818601-E231-4A33-A3D0-775A05A2D4A6};{7B1FBFE6-92B3-4B6D-A808-A26DF770606A};{7FD5B9C8-1C74-4789-BF33-87E3A6EF6CE6};{803E3649-24C4-4F8B-AB5E-59EE7B3736BF};{81292611-58F5-4893-908D-653FC8F2BEA5};{82794A05-BA03-47F6-BFBC-07D8D29F5E84};{82AD5A76-89BA-466B-8EAF-339FC95125CC};{852699DE-2476-4B5F-88E7-FF6E4F8857B8};{85BCE1C8-4A69-4F21-8509-2E02F72355FF};{88A64758-C09D-4CFF-ADD8-2D02BF9262B7};{8AA8BC85-09C9-47D0-8284-3E79D64D88F1};{8C3E9E9C-CC76-4F8D-A6EB-B2355451F938};{93D94585-B36B-4199-9D2A-8AB6BA6B6D1E};{94EB5DFF-78AD-4DC8-B663-B8017C00EE3C};{955AAA6D-EDEE-42E5-A4BD-DB2BE2052676};{9A7F021A-EB4C-401C-9196-60589CE51C70};{9C29CA3B-6C6D-4ED6-8573-89E8DAE89E05};{9DAA52BC-511D-4547-8083-BDA9880291C7};{9FC10C3C-C5C8-4830-B0C4-DF18DA1A1394};{A2BC5B6A-7DF3-4BC4-AB30-A8492DAD41D2};{ADF3E7EE-82D8-4BB8-8698-FD52832CD701};{B142EC9C-D49D-45D8-A6F6-23B635F55BF5};{B2BCB303-6FDE-45F3-9760-E3E77BDB6607};{C28834F3-EE73-4BE1-AEE3-82E77D4DC722};{C2C12548-4F1B-4E20-B376-39A54C5F371F};{C3D2B5A6-3B91-4F1B-B42C-98A9F3050E73};{C74A763B-1EA0-4473-B2C5-F47AFBE4F808};{C80A6D07-DFFC-468B-BDF8-96F1D027E949};{C94815B1-25BF-4F42-950E-3445895FEDC3};{CD8D16F9-340D-4865-9164-9D0EE4B6F77C};{CFEF527D-232C-49D5-9A86-BEF160F048BE};{D73B4DFB-57DC-47E6-ACA9-30E8959F3EA0};{D8AD66E1-C27C-4D68-B334-B7183A36ABDA};{E1E80171-6002-403A-A896-CB6D97C5DB80};{E66CCFAF-E026-405A-9CBE-F85248F4FBA4};{E83C358E-BFFA-4600-83BA-E0B4DB1662D4};{E9B7F177-C6A8-49D7-AD62-D44762FFF209};{EAA1D8B1-192B-4CF9-A94F-3565F33E0F7F};{EC67F277-0699-4DB8-BA80-38E80593CB43};{F018B421-F402-43E6-A0BE-2B9143C24CAD};{F1494643-7CF6-4C15-BE70-D9C06581DE2D};{F53CCDEE-9507-492F-ABF4-02630BB90B13};{FD027AB5-F028-4613-A61D-DCD4CE2BCB1B}?>
@@ -114,6 +115,15 @@
             Id="OPENVPNDIR"
             Value="[OPENVPNDIRPREV]"
             Sequence="first"><![CDATA[OPENVPNDIRPREV AND NOT Installed]]></SetProperty>
+        <Property Id="WIREGUARDDIRPREV">
+            <ComponentSearch Id="eduWGSvcHost.exe" Guid="$(var.eduWGSvcHost.exe.ComponentGUID)"/>
+        </Property>
+        <SetProperty
+            After="AppSearch"
+            Action="SetWireGuardDirPrev"
+            Id="WIREGUARDDIR"
+            Value="[WIREGUARDDIRPREV]"
+            Sequence="first"><![CDATA[WIREGUARDDIRPREV AND NOT Installed]]></SetProperty>
         <Property Id="COREDIRPREV">
             <ComponentSearch Id="$(var.ClientTarget).Client.exe" Guid="$(var.Client.exe.ComponentGUID)"/>
         </Property>
@@ -134,6 +144,9 @@
                     <Directory Id="RESDIR" Name="Res" FileSource="$(var.TargetDir)"/>
                     <Directory Id="OPENVPNDIR" Name="OpenVPN" FileSource="$(var.TargetDir)">
                         <Directory Id="OPENVPNCONFIGDIR" Name="config"/>
+                    </Directory>
+                    <Directory Id="WIREGUARDDIR" Name="WireGuard" FileSource="$(var.TargetDir)">
+                        <Directory Id="WIREGUARDCONFIGDIR" Name="config"/>
                     </Directory>
                     <Directory Id="COREDIR" Name="Core" FileSource="$(var.TargetDirClient)">
                         <?foreach Language in $(var.LanguageList)?>
@@ -282,6 +295,79 @@
             </Component>
         </DirectoryRef>
 
+        <DirectoryRef Id="WIREGUARDDIR">
+            <Component Id="wireguard.dll" Guid="{E7781023-18B3-4F9B-9E$(var.ClientId)-03584826E039}">
+                <File Source="wireguard.dll"/>
+            </Component>
+            <Component Id="tunnel.dll" Guid="{CA1CA6A8-7DC4-4E3E-AC$(var.ClientId)-B181C08E3244}">
+                <File Source="tunnel.dll"/>
+            </Component>
+            <Component Id="eduWGSvcHost.exe" Guid="$(var.eduWGSvcHost.exe.ComponentGUID)">
+                <File Source="eduWGSvcHost.exe"/>
+                <CreateFolder Directory="WIREGUARDCONFIGDIR">
+                    <!--
+                        SYSTEM (SY): full
+                        Administrators (BA): full
+                        Users (BU): create files
+                        CREATOR OWNER (CO): full
+                    -->
+                    <PermissionEx Id="WIREGUARDCONFIGDIR" Sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;;0x100003;;;BU)(A;OIIO;FA;;;CO)"/>
+                </CreateFolder>
+                <RemoveFile
+                    Id="WIREGUARDCONFIGDIR.conf"
+                    Directory="WIREGUARDCONFIGDIR"
+                    Name="*.conf"
+                    On="uninstall"/>
+                <RemoveFile
+                    Id="WIREGUARDCONFIGDIR.conf.dpapi"
+                    Directory="WIREGUARDCONFIGDIR"
+                    Name="*.conf.dpapi"
+                    On="uninstall"/>
+                <RemoveFile
+                    Id="WIREGUARDCONFIGDIR.txt"
+                    Directory="WIREGUARDCONFIGDIR"
+                    Name="*.txt"
+                    On="uninstall"/>
+                <RemoveFolder
+                    Id="WIREGUARDCONFIGDIR"
+                    Directory="WIREGUARDCONFIGDIR"
+                    On="uninstall"/>
+                <ServiceControl
+                    Id="eduWGManager.$(var.ClientTarget)"
+                    Name="eduWGManager$$$(var.ClientTarget)"
+                    Start="install"
+                    Stop="both"
+                    Remove="uninstall"/>
+                <ServiceInstall
+                    Id="eduWGManager.$(var.ClientTarget)"
+                    Name="eduWGManager$$$(var.ClientTarget)"
+                    DisplayName="@[WIREGUARDDIR]eduWGSvcHost.exe,-$(var.IDS_CLIENT_PREFIX)1"
+                    Description="@[WIREGUARDDIR]eduWGSvcHost.exe,-$(var.IDS_CLIENT_PREFIX)2"
+                    Arguments="$(var.ClientTarget) Manager"
+                    Type="ownProcess"
+                    Start="auto"
+                    ErrorControl="normal">
+                    <ServiceDependency Id="Dhcp"/>
+                </ServiceInstall>
+            </Component>
+            <Component Id="eduWGSvcHost.exe.reg0" Guid="{CB21AF47-4A94-45EB-A5$(var.ClientId)-D9678FA38F97}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="SYSTEM\CurrentControlSet\Services\Eventlog\Application\eduWGSvcHost$$$(var.ClientTarget)"
+                    Name="EventMessageFile"
+                    Type="string"
+                    Value="[WIREGUARDDIR]eduWGSvcHost.exe"/>
+            </Component>
+            <Component Id="eduWGSvcHost.exe.reg1" Guid="{BF1F4CDB-40A9-496C-AC$(var.ClientId)-088417E0CE3B}">
+                <RegistryValue
+                    Root="HKLM"
+                    Key="SYSTEM\CurrentControlSet\Services\Eventlog\Application\eduWGSvcHost$$$(var.ClientTarget)"
+                    Name="TypesSupported"
+                    Type="integer"
+                    Value="7"/>
+            </Component>
+        </DirectoryRef>
+
         <DirectoryRef Id="COREDIR">
             <Component Id="Prism.dll" Guid="{4A143204-1EBB-4BDE-BA$(var.ClientId)-B0770670ECC3}">
                 <File Source="$(var.TargetDirClient)Prism.dll"/>
@@ -300,6 +386,9 @@
             </Component>
             <Component Id="eduOpenVPN.dll" Guid="{3D0AF961-809D-479E-BE$(var.ClientId)-ED6457A8519A}">
                 <File Source="$(var.TargetDirClient)eduOpenVPN.dll"/>
+            </Component>
+            <Component Id="eduWireGuard.dll" Guid="{FF3F5F45-AC23-4A5B-BE$(var.ClientId)-AA72A2B378D0}">
+                <File Source="$(var.TargetDirClient)eduWireGuard.dll"/>
             </Component>
             <Component Id="eduVPN.dll" Guid="{0DC980F5-147E-408A-9E$(var.ClientId)-E3C02AE2FCBA}">
                 <File Source="$(var.TargetDirClient)eduVPN.dll"/>
@@ -376,6 +465,9 @@
             <Component Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Guid="{F8C05323-1B02-$(var.LanguageId)-A3$(var.ClientId)-84B11ABE904D}">
                 <File Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduOpenVPN.resources.dll"/>
             </Component>
+            <Component Id="eduWireGuard.resources.dll.$(var.LanguageId)" Guid="{866ADB16-4463-$(var.LanguageId)-AD$(var.ClientId)-FEB63FA1C48B}">
+                <File Id="eduWireGuard.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduWireGuard.resources.dll"/>
+            </Component>
             <Component Id="eduVPN.resources.dll.$(var.LanguageId)" Guid="{44C82307-41F5-$(var.LanguageId)-8F$(var.ClientId)-D1785F6776E2}">
                 <File Id="eduVPN.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduVPN.resources.dll"/>
             </Component>
@@ -404,6 +496,12 @@
             <ComponentRef Id="openvpnserv.exe.reg6"/>
             <ComponentRef Id="openvpnserv.exe.reg7"/>
 
+            <ComponentRef Id="wireguard.dll"/>
+            <ComponentRef Id="tunnel.dll"/>
+            <ComponentRef Id="eduWGSvcHost.exe"/>
+            <ComponentRef Id="eduWGSvcHost.exe.reg0"/>
+            <ComponentRef Id="eduWGSvcHost.exe.reg1"/>
+
             <MergeRef Id="VCRedist"/>
             <ComponentRef Id="Prism.dll"/>
             <ComponentRef Id="eduLibsodium.dll"/>
@@ -411,6 +509,7 @@
             <ComponentRef Id="eduJSON.dll"/>
             <ComponentRef Id="eduOAuth.dll"/>
             <ComponentRef Id="eduOpenVPN.dll"/>
+            <ComponentRef Id="eduWireGuard.dll"/>
             <ComponentRef Id="eduVPN.dll"/>
             <ComponentRef Id="eduVPN.Views.dll"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
@@ -427,6 +526,7 @@
             <ComponentRef Id="eduJSON.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOAuth.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOpenVPN.resources.dll.$(var.LanguageId)"/>
+            <ComponentRef Id="eduWireGuard.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduVPN.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduVPN.Views.resources.dll.$(var.LanguageId)"/>
             <?endforeach?>

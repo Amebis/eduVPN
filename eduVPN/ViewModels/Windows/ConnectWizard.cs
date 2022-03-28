@@ -334,11 +334,12 @@ namespace eduVPN.ViewModels.Windows
             var actions = new List<KeyValuePair<Action, int>>();
 
             actions.Add(new KeyValuePair<Action, int>(
-                Properties.Settings.Default.ResponseCache.PurgeOldCacheEntries,
-                24 * 60 * 60 * 1000)); // Repeat every 24 hours
-
-            actions.Add(new KeyValuePair<Action, int>(
-                VPN.OpenVPNSession.PurgeOldLogs,
+                () =>
+                {
+                    try { Properties.Settings.Default.ResponseCache.PurgeOldCacheEntries(); } catch { }
+                    try { VPN.OpenVPNSession.PurgeOldLogs(); } catch { }
+                    try { VPN.WireGuardSession.PurgeOldLogs(); } catch { }
+                },
                 24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
             if (Properties.SettingsEx.Default.ServersDiscovery?.Uri != null)
@@ -734,6 +735,18 @@ namespace eduVPN.ViewModels.Windows
         {
             Trace.TraceInformation("Quitting client...");
             QuitApplication?.Invoke(sender, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Invoke method on GUI thread if it's not terminating.
+        /// </summary>
+        /// <param name="method">Method to execute</param>
+        /// <returns>The return value from the delegate being invoked or <c>null</c> if the delegate has no return value or dispatcher is shutting down.</returns>
+        public object TryInvoke(Delegate method)
+        {
+            if (Dispatcher.HasShutdownStarted)
+                return null;
+            return Dispatcher.Invoke(DispatcherPriority.Normal, method);
         }
 
         #endregion

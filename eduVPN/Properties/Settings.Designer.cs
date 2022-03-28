@@ -293,5 +293,22 @@ namespace eduVPN.Properties {
                 this["LastSelectedServer"] = value;
             }
         }
+        
+        /// <summary>
+        /// Which WireGuard tunnel manager service instance client should use:
+        /// - &quot;$eduVPN&quot; - Use WireGuard installation bundled with the eduVPN client.
+        /// - &quot;$LetsConnect&quot; - Use WireGuard installation bundled with the Let&apos;s Connect! client.
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Which WireGuard tunnel manager service instance client should use:\r\n - \"$eduVPN\" " +
+            "- Use WireGuard installation bundled with the eduVPN client.\r\n - \"$LetsConnect\" " +
+            "- Use WireGuard installation bundled with the Let\'s Connect! client.")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WireGuardTunnelManagerServiceInstance {
+            get {
+                return ((string)(this["WireGuardTunnelManagerServiceInstance"]));
+            }
+        }
     }
 }

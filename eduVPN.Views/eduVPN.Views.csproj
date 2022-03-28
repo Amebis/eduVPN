@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Controls\Label.cs" />
-    <Compile Include="Converters\ActiveProfileEqualSelectedProfileConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\CountRowHeightAutoConverter.cs" />
     <Compile Include="Converters\CountRowHeightOneStarConverter.cs" />

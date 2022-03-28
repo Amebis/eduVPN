@@ -74,6 +74,7 @@
     <Compile Include="ViewModels\Pages\SelfUpdateProgressPage.cs" />
     <Compile Include="Models\DownloadedFileCorruptException.cs" />
     <Compile Include="ViewModels\VPN\OpenVPNException.cs" />
+    <Compile Include="ViewModels\VPN\WireGuardSession.cs" />
     <Compile Include="Xml\AccessTokenDictionary.cs" />
     <Compile Include="Xml\Dictionary.cs" />
     <Compile Include="Xml\HttpRedirectToUnsafeUriException.cs" />
@@ -182,6 +183,10 @@
     <ProjectReference Include="..\eduOpenVPN\eduOpenVPN\eduOpenVPN.csproj">
       <Project>{ddf40a25-1180-40b1-9bf1-8d3d66d734ad}</Project>
       <Name>eduOpenVPN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eduWireGuard\eduWireGuard\eduWireGuard.csproj">
+      <Project>{e9506f49-b222-4ff3-ad1b-b5fa33035bef}</Project>
+      <Name>eduWireGuard</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

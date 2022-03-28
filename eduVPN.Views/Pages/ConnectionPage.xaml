@@ -228,15 +228,8 @@
             VerticalAlignment="Top"
             Style="{StaticResource ToggleButtonStyle}"
             Visibility="{Binding Profiles.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
-            Command="{Binding ToggleSession}">
-            <ToggleButton.IsChecked>
-                <MultiBinding
-                    Converter="{StaticResource ActiveProfileEqualSelectedProfileConverter}"
-                    Mode="OneWay">
-                    <Binding Path="ActiveSession.ConnectingProfile"/>
-                    <Binding Path="SelectedProfile"/>
-                </MultiBinding>
-            </ToggleButton.IsChecked>
+            IsChecked="{Binding IsSessionActive}"
+            IsEnabled="{Binding CanSessionToggle}">
         </ToggleButton>
 
         <Grid

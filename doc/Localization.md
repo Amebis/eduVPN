@@ -6,7 +6,12 @@ eduVPN and Let's Connect! clients are the same client targeted for a different a
 
    Though many terms are error messages and they never appear for lucky users, we do encourage you to translate them. The unlucky users might be grateful for better understanding the error message.
 
-2. Setup
+2. WireGuard Service Host
+
+   - [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduWGSvcHost/Resources.rc)
+   - [Messages.mc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduWGSvcHost/Messages.mc)
+
+3. Setup
 
    - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/eduVPN.wxl)
    - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/thm.wxl)

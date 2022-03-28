@@ -23,3 +23,6 @@
 [submodule "WinStd"]
 	path = WinStd
 	url = https://github.com/Amebis/WinStd.git
+[submodule "wireguard-windows"]
+	path = wireguard-windows
+	url = https://github.com/Amebis/wireguard-windows.git
