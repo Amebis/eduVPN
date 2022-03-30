@@ -1,12 +1,16 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.2...HEAD)
+
+
+## [2.255.2](https://github.com/Amebis/eduVPN/compare/2.255.1...2.255.2) (2022-03-30)
 
 - WireGuard support
 - Discover organizations as required
 - OpenVPN updated to 2.5.6-20220330
     - openvpn 2.5.6 aa6f15dd2a1df68409384d6f955f68692595b77b
 - libsodium updated to 1.0.18-20220307
+- Stop using auto-generated fourth version fields in .NET assemblies
 - Fixes
 
 
