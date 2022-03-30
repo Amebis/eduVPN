@@ -4,9 +4,8 @@
 
 - WireGuard support
 - Discover organizations as required
-- OpenVPN updated to 2.5.5-20220304
-    - openvpn 2.5.5 3e0c506e5d9135ef4b08547db8679cc5bd2a7582
-    - openssl 3.0.1
+- OpenVPN updated to 2.5.6-20220330
+    - openvpn 2.5.6 aa6f15dd2a1df68409384d6f955f68692595b77b
 - libsodium updated to 1.0.18-20220307
 - Fixes
 

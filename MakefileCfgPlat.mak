@@ -73,7 +73,7 @@ BuildLibsodium :: BuildLibsodium$(CFG)$(PLAT)
 BuildOpenVPN$(CFG)$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)"
 	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
-	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl3 lz4 lzo pkcs11-helper tap-windows6 wintun
+	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
 	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 
 BuildOpenVPN$(CFG)$(PLAT) :: \
@@ -95,7 +95,7 @@ Build$(CFG)$(PLAT) :: \
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
-	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl3 lz4 lzo pkcs11-helper tap-windows6 wintun
+	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
 	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 	-msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
