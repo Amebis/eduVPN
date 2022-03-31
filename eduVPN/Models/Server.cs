@@ -210,8 +210,6 @@ namespace eduVPN.Models
                     {
                         var profile = new Profile(this);
                         profile.Load(el);
-                        if (!profile.SupportedProtocols.Contains(VPNProtocol.OpenVPN))
-                            continue;
 
                         // Attach to RequestAuthorization profile events.
                         profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => OnRequestAuthorization(authenticatingServer, e_profile);
