@@ -20,4 +20,4 @@ build:
   parallel: true
   verbosity: minimal
 artifacts:
-  - path: bin\$(configuration)\$(platform)
+  - path: bin\$(configuration)
