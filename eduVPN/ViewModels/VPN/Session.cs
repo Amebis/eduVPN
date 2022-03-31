@@ -61,7 +61,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// VPN session worker
         /// </summary>
-        public Thread Thread { get; private set; }
+        public Thread Thread { get; }
 
         /// <summary>
         /// Client connection state
@@ -256,6 +256,7 @@ namespace eduVPN.ViewModels.VPN
             Wizard = wizard;
             ConnectingProfile = connectingProfile;
             ProfileConfig = profileConfig;
+            Thread = Thread.CurrentThread;
 
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
