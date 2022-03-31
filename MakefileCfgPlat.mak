@@ -59,46 +59,27 @@ VCREDIST_MSM=Microsoft_VC142_CRT_$(PLAT_CLIENT).msm
 
 !IF "$(CFG)" == "$(SETUP_CFG)"
 SetupBuild :: \
-	BuildLibsodium$(CFG)$(PLAT) \
-	BuildOpenVPN$(CFG)$(PLAT) \
-	BuildWireGuard$(CFG)$(PLAT) \
-	Build$(CFG)$(PLAT)
+	Build-$(CFG)-$(PLAT)
 !ENDIF
 
-BuildLibsodium$(CFG)$(PLAT) ::
+BuildLibsodium \
+BuildLibsodium-$(CFG)-$(PLAT) ::
 	msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 
-BuildLibsodium :: BuildLibsodium$(CFG)$(PLAT)
+CleanLibsodium \
+CleanLibsodium-$(CFG)-$(PLAT) ::
+	-msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 
-BuildOpenVPN$(CFG)$(PLAT) :: \
-	"bin\$(CFG)\$(PLAT)"
-	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
-	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+BuildOpenVPN \
+BuildOpenVPN-$(CFG)-$(PLAT) ::
 	msbuild.exe "openvpn\openvpn.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 
-BuildOpenVPN$(CFG)$(PLAT) :: \
+BuildOpenVPN \
+BuildOpenVPN-$(CFG)-$(PLAT) :: \
+	"bin\$(CFG)\$(PLAT)" \
 	"bin\$(CFG)\$(PLAT)\wintun.dll" \
 	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
-
-BuildOpenVPN :: BuildOpenVPN$(CFG)$(PLAT)
-
-BuildWireGuard$(CFG)$(PLAT) :: \
-	BuildWireGuard \
-	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\wireguard.dll" \
-	"bin\$(CFG)\$(PLAT)\tunnel.dll"
-
-Build$(CFG)$(PLAT) :: \
-	"bin\$(CFG)\$(PLAT)"
-	bin\nuget.exe restore $(NUGET_FLAGS)
-	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
-
-Clean ::
-	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
-	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
-	-msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
-	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 "bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)bin\wintun.dll"
 	copy /y $** $@ > NUL
@@ -111,8 +92,17 @@ Clean ::
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN Interactive Service" /q $**
 	copy /y $** $@ > NUL
 
-"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VCREDIST_MSM)"
-	copy /y $** $@ > NUL
+CleanOpenVPN \
+CleanOpenVPN-$(CFG)-$(PLAT) ::
+	-msbuild.exe "openvpn\openvpn.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
+	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"      del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"     del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe" del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+
+BuildWireGuard :: \
+	"bin\$(CFG)\$(PLAT)" \
+	"bin\$(CFG)\$(PLAT)\wireguard.dll" \
+	"bin\$(CFG)\$(PLAT)\tunnel.dll"
 
 "bin\$(CFG)\$(PLAT)\wireguard.dll" : "wireguard-windows\.deps\wireguard-nt\bin\$(PLAT_PROCESSOR_ARCHITECTURE)\wireguard.dll"
 	copy /y $** $@ > NUL
@@ -120,12 +110,23 @@ Clean ::
 "bin\$(CFG)\$(PLAT)\tunnel.dll" : "wireguard-windows\embeddable-dll-service\$(PLAT_PROCESSOR_ARCHITECTURE)\tunnel.dll"
 	copy /y $** $@ > NUL
 
+CleanWireGuard ::
+	-if exist "bin\$(CFG)\$(PLAT)\wireguard.dll" del /f /q "bin\$(CFG)\$(PLAT)\wireguard.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\tunnel.dll"    del /f /q "bin\$(CFG)\$(PLAT)\tunnel.dll"
+
+Build \
+Build-$(CFG)-$(PLAT) :: \
+	"bin\$(CFG)\$(PLAT)"
+	bin\nuget.exe restore $(NUGET_FLAGS)
+	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
+
 Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\tunnel.dll"      del /f /q "bin\$(CFG)\$(PLAT)\tunnel.dll"
-	-if exist "bin\$(CFG)\$(PLAT)\wireguard.dll"   del /f /q "bin\$(CFG)\$(PLAT)\wireguard.dll"
-	-if exist "bin\$(CFG)\$(PLAT)\wintun.dll"      del /f /q "bin\$(CFG)\$(PLAT)\wintun.dll"
-	-if exist "bin\$(CFG)\$(PLAT)\openvpn.exe"     del /f /q "bin\$(CFG)\$(PLAT)\openvpn.exe"
-	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.exe" del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
+
+"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VCREDIST_MSM)"
+	copy /y $** $@ > NUL
+
+Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" del /f /q "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
 
 !IF "$(CFG)" == "$(SETUP_CFG)"

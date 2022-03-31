@@ -2,6 +2,10 @@ version: 2.255.3.{build}
 image: Visual Studio 2019
 before_build:
   - git submodule update -q --init --recursive
+  - cmd: |
+      if /i %platform% equ x86   "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_x86   && nmake "BuildLibsodium-%configuration%-%platform%" BuildVcpkg-%platform% "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard /ls
+      if /i %platform% equ x64   "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64       && nmake "BuildLibsodium-%configuration%-%platform%" BuildVcpkg-%platform% "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard /ls
+      if /i %platform% equ ARM64 "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64 && nmake "BuildLibsodium-%configuration%-%platform%" BuildVcpkg-%platform% "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard /ls
   - nuget restore -Verbosity quiet
 configuration:
   - Debug

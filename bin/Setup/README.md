@@ -1,4 +1,4 @@
-The `nmake Setup` prepares distributable binaries in this folder.
+The `nmake setup` prepares distributable binaries in this folder.
 
 
 # EXE Installers

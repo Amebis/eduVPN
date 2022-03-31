@@ -33,10 +33,7 @@ SetupMSI :: \
 !IF "$(PLAT)" == "$(TEST_PLAT)"
 Register :: \
 	UnregisterServices \
-	BuildLibsodium$(CFG)$(PLAT) \
-	BuildOpenVPN$(CFG)$(PLAT) \
-	BuildWireGuard$(CFG)$(PLAT) \
-	Build$(CFG)$(PLAT) \
+	Build-$(CFG)-$(PLAT) \
 	"bin\$(CFG)\$(PLAT)\config"
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /ve                   /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)"             $(REG_FLAGS)
 	reg.exe add "HKLM\Software\OpenVPN$$$(CLIENT_TARGET)" /v "exe_path"         /t REG_SZ /d "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\openvpn.exe" $(REG_FLAGS)

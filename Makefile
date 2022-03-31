@@ -33,15 +33,33 @@ WIX_INSIGNIA_FLAGS=-nologo
 
 
 ######################################################################
+# Default target
+######################################################################
+
+Build ::
+
+
+######################################################################
 # Build
 ######################################################################
+
+BuildDeps :: \
+	BuildLibsodium \
+	BuildVcpkg \
+	BuildOpenVPN \
+	BuildWireGuard
 
 BuildWireGuard ::
 	cd "wireguard-windows\embeddable-dll-service"
 	build.bat
 	cd "$(MAKEDIR)"
 
-Clean ::
+CleanDeps :: \
+	CleanLibsodium \
+	CleanOpenVPN \
+	CleanWireGuard
+
+CleanWireGuard ::
 	-if exist "wireguard-windows\.deps"                        rd /q /s "wireguard-windows\.deps"
 	-if exist "wireguard-windows\amd64"                        rd /q /s "wireguard-windows\amd64"
 	-if exist "wireguard-windows\arm64"                        rd /q /s "wireguard-windows\arm64"
@@ -61,6 +79,20 @@ Setup :: \
 	SetupMSI \
 	SetupExe \
 	SetupPDB
+
+
+######################################################################
+# Platform specific rules
+######################################################################
+
+PLAT=x86
+!INCLUDE "MakefilePlat.mak"
+
+PLAT=x64
+!INCLUDE "MakefilePlat.mak"
+
+PLAT=ARM64
+!INCLUDE "MakefilePlat.mak"
 
 
 ######################################################################
