@@ -158,6 +158,9 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Korrupterte brukerinnstillinger</value>
   </data>
+  <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
+    <value>Prefer _TCP connection</value>
+  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Downloaded:</value>
   </data>

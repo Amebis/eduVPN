@@ -158,6 +158,9 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Corrupt User Settings</value>
   </data>
+  <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
+    <value>Prefer _TCP connection</value>
+  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Downloaded:</value>
   </data>

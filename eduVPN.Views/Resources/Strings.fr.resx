@@ -158,6 +158,9 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
     <value>Paramètres Utilisateur Corrompus</value>
   </data>
+  <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
+    <value>Prefer _TCP connection</value>
+  </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Téléchargé (descendant) :</value>
   </data>
