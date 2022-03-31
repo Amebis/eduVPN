@@ -380,11 +380,11 @@ namespace eduVPN.ViewModels.Windows
                     var random = new Random();
                     do
                     {
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                        TryInvoke((Action)(() => TaskCount++));
                         try { action.Key(); }
                         catch (OperationCanceledException) { }
-                        catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
-                        finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
+                        catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
+                        finally { TryInvoke((Action)(() => TaskCount--)); }
                     }
                     // Sleep for given time±10%, then retry.
                     while (action.Value != 0 && !Abort.Token.WaitHandle.WaitOne(random.Next(action.Value * 9 / 10, action.Value * 11 / 10)));
@@ -420,7 +420,7 @@ namespace eduVPN.ViewModels.Windows
                 DiscoveredServers = dict;
                 DiscoveredInstituteServerIndex = idx;
             }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            TryInvoke((Action)(() =>
             {
                 if (Properties.Settings.Default.CleanupInstituteAccessAndOwnServers)
                 {
@@ -501,7 +501,7 @@ namespace eduVPN.ViewModels.Windows
                 DiscoveredOrganizations = dict;
                 DiscoveredOrganizationIndex = idx;
             }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            TryInvoke((Action)(() =>
             {
                 DiscoveredOrganizationsChanged?.Invoke(this, EventArgs.Empty);
                 AutoReconnect();
@@ -526,7 +526,7 @@ namespace eduVPN.ViewModels.Windows
             var w = new BackgroundWorker();
             w.DoWork += (object sender, DoWorkEventArgs e) =>
             {
-                Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount++));
+                TryInvoke((Action)(() => TaskCount++));
                 try
                 {
                     UpdateOrganizations(Properties.Settings.Default.ResponseCache.GetSeq(
@@ -534,8 +534,8 @@ namespace eduVPN.ViewModels.Windows
                         Abort.Token));
                 }
                 catch (OperationCanceledException) { }
-                catch (Exception ex) { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
-                finally { Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => TaskCount--)); }
+                catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
+                finally { TryInvoke((Action)(() => TaskCount--)); }
             };
             w.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) => (sender as BackgroundWorker)?.Dispose();
             w.RunWorkerAsync();

@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -171,7 +170,7 @@ namespace eduVPN.ViewModels.Pages
 
                             var repoVersion = new Version((string)obj["version"]);
                             Trace.TraceInformation("Online version: {0}", repoVersion.ToString());
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => {
+                            Wizard.TryInvoke((Action)(() => {
                                 AvailableVersion = repoVersion;
                                 Changelog = eduJSON.Parser.GetValue(obj, "changelog_uri", out string changelogUri) ? new Uri(changelogUri) : null;
                                 Wizard.SelfUpdateProgressPage.DownloadUris = new List<Uri>(((List<object>)obj["uri"]).Select(uri => new Uri(res.Uri, (string)uri)));
@@ -207,14 +206,14 @@ namespace eduVPN.ViewModels.Pages
                                     }
                                 }
                             }
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => { InstalledVersion = productVersion; }));
+                            Wizard.TryInvoke((Action)(() => { InstalledVersion = productVersion; }));
                         },
                     },
                     action =>
                     {
-                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                         try { action(); }
-                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                        finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                     });
             }
             catch (AggregateException ex)
@@ -259,7 +258,7 @@ namespace eduVPN.ViewModels.Pages
             }
 
             // We're in the background thread - raise the prompt event via dispatcher.
-            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+            Wizard.TryInvoke((Action)(() =>
             {
                 if (Wizard.NavigateTo.CanExecute(this))
                 {

@@ -13,11 +13,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.Pages
 {
-
     /// <summary>
     /// Server/organization selection wizard page
     /// </summary>
@@ -275,12 +273,12 @@ namespace eduVPN.ViewModels.Pages
             new Thread(new ThreadStart(
                 () =>
                 {
-                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                    Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                     try
                     {
                         var orderedServerHits = Wizard.GetDiscoveredInstituteAccessServers(keywords, ct);
                         ct.ThrowIfCancellationRequested();
-                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        Wizard.TryInvoke((Action)(() =>
                         {
                             if (ct.IsCancellationRequested) return;
                             var selected = SelectedInstituteAccessServer?.Base;
@@ -289,18 +287,18 @@ namespace eduVPN.ViewModels.Pages
                         }));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
-                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                 })).Start();
             new Thread(new ThreadStart(
                 () =>
                 {
-                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                    Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                     try
                     {
                         var orderedOrganizationHits = Wizard.GetDiscoveredOrganizations(keywords, ct);
                         ct.ThrowIfCancellationRequested();
-                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        Wizard.TryInvoke((Action)(() =>
                         {
                             if (ct.IsCancellationRequested) return;
                             var selected = SelectedOrganization?.Id;
@@ -309,8 +307,8 @@ namespace eduVPN.ViewModels.Pages
                         }));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
-                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                 })).Start();
 
             if (keywords.Length == 1 && keywords[0].Split('.').Length >= 3)

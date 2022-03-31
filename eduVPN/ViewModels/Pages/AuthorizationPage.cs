@@ -16,7 +16,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -174,13 +173,12 @@ namespace eduVPN.ViewModels.Pages
 
                 if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.SavedOnly)
                 {
-                    // We're in the background thread - notify via dispatcher.
-                    Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                    AuthorizationInProgress = new CancellationTokenSource();
+                    Wizard.TryInvoke((Action)(() =>
                     {
                         Wizard.TaskCount++;
                         ReturnPage = Wizard.CurrentPage;
                         Wizard.CurrentPage = this;
-                        AuthorizationInProgress = new CancellationTokenSource();
                     }));
                     try
                     {
@@ -193,12 +191,9 @@ namespace eduVPN.ViewModels.Pages
                         var httpListener = new eduOAuth.HttpListener(IPAddress.Loopback, 0);
                         httpListener.HttpCallback += (object _, HttpCallbackEventArgs eHTTPCallback) =>
                         {
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
-                            {
-                                callbackUri = eHTTPCallback.Uri;
-                                AuthorizationInProgress.Cancel();
-                                Wizard.CurrentPage = ReturnPage;
-                            }));
+                            callbackUri = eHTTPCallback.Uri;
+                            AuthorizationInProgress.Cancel();
+                            Wizard.TryInvoke((Action)(() => Wizard.CurrentPage = ReturnPage));
                         };
                         httpListener.HttpRequest += (object _, HttpRequestEventArgs eHTTPRequest) =>
                         {
@@ -265,7 +260,7 @@ namespace eduVPN.ViewModels.Pages
                         e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Authorized;
                         Properties.Settings.Default.AccessTokenCache[authenticatingServer.Base.AbsoluteUri] = e.AccessToken;
                     }
-                    finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                 }
             }
         }

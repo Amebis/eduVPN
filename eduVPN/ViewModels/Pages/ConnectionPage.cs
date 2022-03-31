@@ -15,7 +15,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -116,14 +115,14 @@ namespace eduVPN.ViewModels.Pages
                 new Thread(new ThreadStart(
                     () =>
                     {
-                        Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount++));
+                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                         try
                         {
                             var list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
                             //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
                             //list = new ObservableCollection<Profile>(); // Mock an empty list of profiles for testing.
                             ct.ThrowIfCancellationRequested();
-                            Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                            Wizard.TryInvoke((Action)(() =>
                             {
                                 if (ct.IsCancellationRequested) return;
                                 Profiles = list;
@@ -141,8 +140,8 @@ namespace eduVPN.ViewModels.Pages
                             }));
                         }
                         catch (OperationCanceledException) { }
-                        catch (Exception ex) { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => throw ex)); }
-                        finally { Wizard.Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => Wizard.TaskCount--)); }
+                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                        finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                     })).Start();
             }
         }
