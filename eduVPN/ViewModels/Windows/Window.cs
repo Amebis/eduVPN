@@ -130,7 +130,10 @@ namespace eduVPN.ViewModels.Windows
             Dispatcher.UnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
             {
                 if (!(e.Exception is OperationCanceledException))
+                {
+                    Trace.TraceWarning("Error: {0}", e.Exception.ToString());
                     Error = e.Exception;
+                }
                 e.Handled = true;
             };
 

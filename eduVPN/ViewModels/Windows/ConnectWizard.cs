@@ -458,12 +458,15 @@ namespace eduVPN.ViewModels.Windows
         {
             var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.ServersDiscovery);
             if (response != null)
+            {
+                Trace.TraceInformation("Populating servers from cache");
                 UpdateServers((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
-
+            }
         }
 
         private void DiscoverServers()
         {
+            Trace.TraceInformation("Updating servers {0}", Properties.SettingsEx.Default.ServersDiscovery.Uri.AbsoluteUri);
             UpdateServers(Properties.Settings.Default.ResponseCache.GetSeq(
                 Properties.SettingsEx.Default.ServersDiscovery,
                 Abort.Token));
@@ -512,7 +515,10 @@ namespace eduVPN.ViewModels.Windows
         {
             var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.OrganizationsDiscovery);
             if (response != null)
+            {
+                Trace.TraceInformation("Populating organizations from cache");
                 UpdateOrganizations((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
+            }
         }
 
         /// <summary>
@@ -529,6 +535,7 @@ namespace eduVPN.ViewModels.Windows
                 TryInvoke((Action)(() => TaskCount++));
                 try
                 {
+                    Trace.TraceInformation("Updating organizations {0}", Properties.SettingsEx.Default.OrganizationsDiscovery.Uri.AbsoluteUri);
                     UpdateOrganizations(Properties.Settings.Default.ResponseCache.GetSeq(
                         Properties.SettingsEx.Default.OrganizationsDiscovery,
                         Abort.Token));
@@ -733,7 +740,7 @@ namespace eduVPN.ViewModels.Windows
         /// <param name="sender">Event sender</param>
         public void OnQuitApplication(object sender)
         {
-            Trace.TraceInformation("Quitting client...");
+            Trace.TraceInformation("Quitting client");
             QuitApplication?.Invoke(sender, EventArgs.Empty);
         }
 

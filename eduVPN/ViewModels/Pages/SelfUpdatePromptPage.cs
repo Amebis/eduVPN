@@ -104,7 +104,7 @@ namespace eduVPN.ViewModels.Pages
                     _SkipUpdate = new DelegateCommand(
                         () =>
                         {
-                            Trace.TraceInformation("User choose to skip this update.");
+                            Trace.TraceInformation("User choose to skip this update");
                             Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MaxValue;
                             if (NavigateBack.CanExecute())
                                 NavigateBack.Execute();
@@ -165,7 +165,7 @@ namespace eduVPN.ViewModels.Pages
                         {
                             // Get self-update.
                             var res = Properties.SettingsEx.Default.SelfUpdateDiscovery;
-                            Trace.TraceInformation("Downloading self-update JSON discovery from {0}...", res.Uri.AbsoluteUri);
+                            Trace.TraceInformation("Downloading self-update JSON discovery {0}", res.Uri.AbsoluteUri);
                             var obj = Properties.Settings.Default.ResponseCache.GetSeq(res, Window.Abort.Token);
 
                             var repoVersion = new Version((string)obj["version"]);
@@ -184,7 +184,7 @@ namespace eduVPN.ViewModels.Pages
                             // Evaluate installed products.
                             Version productVersion = null;
                             var productId = Properties.Settings.Default.SelfUpdateBundleId.ToUpperInvariant();
-                            Trace.TraceInformation("Evaluating installed products...");
+                            Trace.TraceInformation("Evaluating installed products");
                             using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
                             using (var uninstallKey = hklmKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
                             {
@@ -237,7 +237,7 @@ namespace eduVPN.ViewModels.Pages
                     // We already prompted user for this version.
                     // Either user opted not to be reminded of this version update again,
                     // or it has been less than three days since the last prompt.
-                    Trace.TraceInformation("Update deferred by user choice.");
+                    Trace.TraceInformation("Update deferred by user choice");
                     return;
                 }
             }
@@ -246,14 +246,14 @@ namespace eduVPN.ViewModels.Pages
             if (InstalledVersion == null)
             {
                 // Nothing to update.
-                Trace.TraceInformation("Product not installed or version could not be determined.");
+                Trace.TraceInformation("Product not installed or version could not be determined");
                 return; // Quit self-updating.
             }
 
             if (AvailableVersion <= InstalledVersion)
             {
                 // Product already up-to-date.
-                Trace.TraceInformation("Update not required.");
+                Trace.TraceInformation("Update not required");
                 return;
             }
 

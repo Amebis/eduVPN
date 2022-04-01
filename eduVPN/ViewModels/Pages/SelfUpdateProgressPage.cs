@@ -97,7 +97,7 @@ namespace eduVPN.ViewModels.Pages
                         try
                         {
                             var binaryUri = DownloadUris[uriIndex];
-                            Trace.TraceInformation("Downloading installer file from {0}...", binaryUri.AbsoluteUri);
+                            Trace.TraceInformation("Downloading installer file {0}", binaryUri.AbsoluteUri);
                             var request = WebRequest.Create(binaryUri);
                             request.Proxy = null;
                             using (var response = request.GetResponse())
@@ -157,7 +157,7 @@ namespace eduVPN.ViewModels.Pages
                                     installerFile = null;
 
                                     // Delete installer file. If possible.
-                                    Trace.TraceInformation("Deleting file {0}...", installerFilename);
+                                    Trace.TraceInformation("Deleting file {0}", installerFilename);
                                     try { File.Delete(installerFilename); }
                                     catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installerFilename, ex2.ToString()); }
                                     installerFilename = null;
@@ -228,7 +228,7 @@ namespace eduVPN.ViewModels.Pages
                             writer.Flush();
 
                             // Prepare WSF launch parameters.
-                            Trace.TraceInformation("Launching update script file {0}...", updaterFilename);
+                            Trace.TraceInformation("Launching update script file {0}", updaterFilename);
                             var process = new Process();
                             process.StartInfo.FileName = "wscript.exe";
                             process.StartInfo.Arguments = "\"" + updaterFilename + "\"";
@@ -246,7 +246,7 @@ namespace eduVPN.ViewModels.Pages
                             updaterFile.Close();
 
                             // Delete WSF file. If possible.
-                            Trace.TraceInformation("Deleting file {0}...", updaterFilename);
+                            Trace.TraceInformation("Deleting file {0}", updaterFilename);
                             try { File.Delete(updaterFilename); }
                             catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", updaterFilename, ex2.ToString()); }
 
@@ -259,7 +259,7 @@ namespace eduVPN.ViewModels.Pages
                         installerFile.Close();
 
                         // Delete installer file. If possible.
-                        Trace.TraceInformation("Deleting file {0}...", installerFilename);
+                        Trace.TraceInformation("Deleting file {0}", installerFilename);
                         try { File.Delete(installerFilename); }
                         catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", installerFilename, ex2.ToString()); }
 
