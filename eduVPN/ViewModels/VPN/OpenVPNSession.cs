@@ -85,7 +85,7 @@ namespace eduVPN.ViewModels.VPN
         private eduOpenVPN.Management.Session ManagementSession;
 
         /// <summary>
-        /// Session renewal token
+        /// Session renewal in progress
         /// </summary>
         private volatile bool RenewInProgress;
 
