@@ -65,11 +65,6 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         private CancellationTokenSource ProfilesRefreshInProgress;
 
-        /// <summary>
-        /// Profile connect cancellation token
-        /// </summary>
-        private CancellationTokenSource ProfileConnectInProgress;
-
         #endregion
 
         #region Properties
@@ -86,6 +81,9 @@ namespace eduVPN.ViewModels.Pages
                 {
                     RaisePropertyChanged(nameof(IsSessionActive));
                     RaisePropertyChanged(nameof(CanSessionToggle));
+                    _StartSession?.RaiseCanExecuteChanged();
+                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
+                    _SessionInfo?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -193,12 +191,7 @@ namespace eduVPN.ViewModels.Pages
             private set
             {
                 if (SetProperty(ref _ActiveSession, value))
-                {
-                    _StartSession?.RaiseCanExecuteChanged();
-                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
-                    _SessionInfo?.RaiseCanExecuteChanged();
                     _NavigateBack?.RaiseCanExecuteChanged();
-                }
             }
         }
 
@@ -206,7 +199,7 @@ namespace eduVPN.ViewModels.Pages
         private Session _ActiveSession;
 
         /// <summary>
-        /// Is VPN session active
+        /// Is VPN session active?
         /// </summary>
         public bool IsSessionActive
         {
@@ -215,21 +208,15 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (!CanSessionToggle)
                     return;
-                if (ActiveSession != null && !value)
+                if (ActiveSession != null && ActiveSession.Disconnect.CanExecute() && !value)
                 {
-                    if (ActiveSession.Disconnect.CanExecute())
-                    {
-                        ActiveSession.Disconnect.Execute();
+                    ActiveSession.Disconnect.Execute();
 
-                        // Clear server/profile to auto-start on next launch.
-                        Properties.Settings.Default.LastSelectedServer = null;
-                    }
+                    // Clear server/profile to auto-start on next launch.
+                    Properties.Settings.Default.LastSelectedServer = null;
                 }
-                else if (ActiveSession == null && value)
-                {
-                    if (AuthenticateAndStartSession.CanExecute())
-                        AuthenticateAndStartSession.Execute();
-                }
+                else if (AuthenticateAndStartSession.CanExecute() && value)
+                    AuthenticateAndStartSession.Execute();
             }
         }
 
@@ -255,12 +242,8 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             State = StateType.SessionActivating;
-                            ProfileConnectInProgress?.Cancel();
 
                             var connectingProfile = SelectedProfile;
-
-                            ProfileConnectInProgress = new CancellationTokenSource();
-                            var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfileConnectInProgress.Token, Window.Abort.Token).Token;
                             new Thread(new ThreadStart(
                                 () =>
                                 {
@@ -269,7 +252,7 @@ namespace eduVPN.ViewModels.Pages
                                     {
                                         // Get session profile.
                                         var authenticatingServer = Wizard.GetAuthenticatingServer(connectingProfile.Server);
-                                        var profileConfig = connectingProfile.Connect(authenticatingServer: authenticatingServer, ct: ct);
+                                        var profileConfig = connectingProfile.Connect(authenticatingServer: authenticatingServer, ct: Window.Abort.Token);
                                         Session session;
                                         try
                                         {
@@ -316,7 +299,7 @@ namespace eduVPN.ViewModels.Pages
                                                 ActiveSession = session;
 
                                                 // Set server/profile to auto-start on next launch.
-                                                Properties.Settings.Default.LastSelectedServer = SelectedProfile.Server.Base;
+                                                Properties.Settings.Default.LastSelectedServer = connectingProfile.Server.Base;
 
                                                 Wizard.TaskCount--;
                                             }));
@@ -341,7 +324,7 @@ namespace eduVPN.ViewModels.Pages
                                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                                 })).Start();
                         },
-                        () => ActiveSession == null && SelectedProfile != null);
+                        () => State == StateType.SessionInactive && SelectedProfile != null);
                 return _StartSession;
             }
         }
@@ -381,7 +364,7 @@ namespace eduVPN.ViewModels.Pages
                 if (_SessionInfo == null)
                     _SessionInfo = new DelegateCommand(
                         () => Wizard.CurrentPage = this,
-                        () => ActiveSession != null);
+                        () => State != StateType.SessionInactive);
                 return _SessionInfo;
             }
         }
