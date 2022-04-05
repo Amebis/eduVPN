@@ -89,6 +89,11 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         private volatile bool RenewInProgress;
 
+        /// <summary>
+        /// Session disconnect in progress
+        /// </summary>
+        private volatile bool DisconnectInProgress;
+
         #endregion
 
         #region Properties
@@ -156,11 +161,14 @@ namespace eduVPN.ViewModels.VPN
                     _Disconnect = new DelegateCommand(
                         () =>
                         {
+                            DisconnectInProgress = true;
+                            _Disconnect.RaiseCanExecuteChanged();
+
                             // Terminate connection.
                             State = SessionStatusType.Disconnecting;
                             ManagementSession.QueueSendSignal(SignalType.SIGTERM);
                         },
-                        () => ManagementSession != null);
+                        () => !DisconnectInProgress && ManagementSession != null);
                 return _Disconnect;
             }
         }

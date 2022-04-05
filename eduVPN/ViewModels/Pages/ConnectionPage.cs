@@ -78,13 +78,7 @@ namespace eduVPN.ViewModels.Pages
             private set
             {
                 if (SetProperty(ref _State, value))
-                {
-                    RaisePropertyChanged(nameof(IsSessionActive));
-                    RaisePropertyChanged(nameof(CanSessionToggle));
-                    _StartSession?.RaiseCanExecuteChanged();
-                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
                     _SessionInfo?.RaiseCanExecuteChanged();
-                }
             }
         }
 
@@ -191,7 +185,11 @@ namespace eduVPN.ViewModels.Pages
             private set
             {
                 if (SetProperty(ref _ActiveSession, value))
+                {
+                    RaisePropertyChanged(nameof(IsSessionActive));
+                    RaisePropertyChanged(nameof(CanSessionToggle));
                     _NavigateBack?.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -203,20 +201,18 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public bool IsSessionActive
         {
-            get => StateType.SessionActivating <= State && State <= StateType.SessionActive;
+            get => ActiveSession != null;
             set
             {
-                if (!CanSessionToggle)
-                    return;
-                if (ActiveSession != null && ActiveSession.Disconnect.CanExecute() && !value)
+                if (ActiveSession == null && AuthenticateAndStartSession.CanExecute() && value)
+                    AuthenticateAndStartSession.Execute();
+                else if (ActiveSession != null && ActiveSession.Disconnect.CanExecute() && !value)
                 {
                     ActiveSession.Disconnect.Execute();
 
                     // Clear server/profile to auto-start on next launch.
                     Properties.Settings.Default.LastSelectedServer = null;
                 }
-                else if (AuthenticateAndStartSession.CanExecute() && value)
-                    AuthenticateAndStartSession.Execute();
             }
         }
 
@@ -226,8 +222,8 @@ namespace eduVPN.ViewModels.Pages
         public bool CanSessionToggle
         {
             get =>
-                State == StateType.SessionInactive && SelectedProfile != null ||
-                State == StateType.SessionActive;
+                ActiveSession == null && AuthenticateAndStartSession.CanExecute() ||
+                ActiveSession != null && ActiveSession.Disconnect.CanExecute();
         }
 
         /// <summary>
@@ -292,6 +288,7 @@ namespace eduVPN.ViewModels.Pages
                                                             break;
                                                     }
                                             };
+                                            session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
 
                                             // Activate session.
                                             Wizard.TryInvoke((Action)(() =>
@@ -324,7 +321,7 @@ namespace eduVPN.ViewModels.Pages
                                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                                 })).Start();
                         },
-                        () => State == StateType.SessionInactive && SelectedProfile != null);
+                        () => SelectedProfile != null);
                 return _StartSession;
             }
         }

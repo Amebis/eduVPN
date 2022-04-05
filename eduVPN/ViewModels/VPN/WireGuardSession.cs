@@ -129,7 +129,7 @@ namespace eduVPN.ViewModels.VPN
                             RenewInProgress.Cancel();
                             _Renew.RaiseCanExecuteChanged();
                         },
-                        () => RenewInProgress != null && State == SessionStatusType.Connected && !RenewInProgress.IsCancellationRequested);
+                        () => RenewInProgress != null && !RenewInProgress.IsCancellationRequested && State == SessionStatusType.Connected);
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
                 }
                 return _Renew;
@@ -148,11 +148,11 @@ namespace eduVPN.ViewModels.VPN
                     _Disconnect = new DelegateCommand(
                         () =>
                         {
-                            // Deactivate tunnel.
                             State = SessionStatusType.Disconnecting;
                             DeactivateInProgress.Cancel();
+                            _Disconnect.RaiseCanExecuteChanged();
                         },
-                        () => DeactivateInProgress != null);
+                        () => DeactivateInProgress != null && !DeactivateInProgress.IsCancellationRequested);
                 return _Disconnect;
             }
         }
