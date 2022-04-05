@@ -159,7 +159,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
     <value>Beschadigde gebruikersinstellingen</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>Voorkeur om via TCP te verbinden</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Gedownload:</value>
@@ -365,23 +365,23 @@ Even geduld aub... </value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>Start bij inloggen</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage" xml:space="preserve">
-    <value>Access token for {0} has expired.</value>
+    <value>Toegangssleutel {0} is verlopen.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>Niet opnieuw verbinding gemaakt met {0}</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
-    <value>There are no profiles available to connect.</value>
+    <value>Er zijn geen profielen beschikbaar om mee te verbinden. </value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Please contact server operator.</value>
+    <value>Neem contact op met de server beheerder.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Please contact support.</value>
+    <value>Neem contact op met uw helpdesk.</value>
   </data>
 </root>
