@@ -69,6 +69,9 @@ CleanWireGuard ::
 	-if exist "wireguard-windows\embeddable-dll-service\arm64" rd /q /s "wireguard-windows\embeddable-dll-service\arm64"
 	-if exist "wireguard-windows\embeddable-dll-service\x86"   rd /q /s "wireguard-windows\embeddable-dll-service\x86"
 
+Clean ::
+	-if exist "bin\Setup\PDB_*.zip" del /f /q "bin\Setup\PDB_*.zip"
+
 
 ######################################################################
 # Setup

@@ -33,9 +33,6 @@ SetupPDB :: \
 	-if exist "$(@:"=).tmp" del /f /q "$(@:"=).tmp"
 	zip.exe -9 "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
-
-Clean ::
-	-if exist "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" del /f /q "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip"
 !ENDIF
 
 
