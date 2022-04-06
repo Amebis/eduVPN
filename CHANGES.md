@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.3...HEAD)
 
+- OpenVPN updated to 2.5.6-20220406
+    - openvpn 2.5.5 aa6f15dd2a1df68409384d6f955f68692595b77b
+    - support for DOMAIN-SEARCH
 - Fixes
 
 
