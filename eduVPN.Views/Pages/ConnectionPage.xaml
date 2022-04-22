@@ -74,8 +74,12 @@
         </Style>
 
         <Style x:Key="ConnectionInfoValueStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FineprintNoteStyle}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="ConnectionInfoMinorValueStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ConnectionInfoValueStyle}">
+            <Setter Property="FontSize" Value="8"/>
         </Style>
     </Page.Resources>
 
@@ -346,11 +350,23 @@
                     Style="{StaticResource ConnectionInfoHeadingStyle}"
                     Text="{x:Static res:Strings.ConnectionPageConnectionInfoProfile}"/>
 
-                <TextBlock
+                <Grid
                     Grid.Column="1"
-                    Grid.Row="1"
-                    Style="{StaticResource ConnectionInfoValueStyle}"
-                    Text="{Binding ActiveSession.ConnectingProfile}"/>
+                    Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Style="{StaticResource ConnectionInfoValueStyle}"
+                        Text="{Binding ActiveSession.ConnectingProfile}"/>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Style="{StaticResource ConnectionInfoMinorValueStyle}"
+                        Text="{Binding ActiveSession, Converter={StaticResource SessionTypeConverter}}"/>
+                </Grid>
 
                 <TextBlock
                     Grid.Column="1"

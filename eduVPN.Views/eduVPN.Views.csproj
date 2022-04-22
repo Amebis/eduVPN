@@ -56,6 +56,7 @@
     <Compile Include="Converters\InvertableConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
+    <Compile Include="Converters\SessionTypeConverter.cs" />
     <Compile Include="Localization\CardinalPluralFormatProvider.cs" />
     <Compile Include="Converters\ProfileSelectionVisibilityConverter.cs" />
     <Compile Include="Converters\RemoveAccessKeyConverter.cs" />
