@@ -241,6 +241,6 @@
     <value>Server does not support eduVPN APIv3.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
-    <value>Tunnel Manager Service failure.</value>
+    <value>فشل خدمة إدارة النفق.</value>
   </data>
 </root>
