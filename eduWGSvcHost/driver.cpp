@@ -1,8 +1,8 @@
 /*
-    eduVPN - VPN for education and research
+	eduVPN - VPN for education and research
 
-    Copyright: 2022 The Commons Conservancy
-    SPDX-License-Identifier: GPL-3.0+
+	Copyright: 2022 The Commons Conservancy
+	SPDX-License-Identifier: GPL-3.0+
 */
 
 #define _WINSOCKAPI_ // Prevent inclusion of winsock.h in windows.h.

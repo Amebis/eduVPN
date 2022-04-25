@@ -1,8 +1,8 @@
 ;
-;   eduMSICA - MSI Custom Actions
+;	eduMSICA - MSI Custom Actions
 ;
-;   Copyright: 2021-2022 The Commons Conservancy
-;   SPDX-License-Identifier: GPL-3.0+
+;	Copyright: 2021-2022 The Commons Conservancy
+;	SPDX-License-Identifier: GPL-3.0+
 ;
 
 LIBRARY eduMSICA.dll
