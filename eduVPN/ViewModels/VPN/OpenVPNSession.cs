@@ -412,9 +412,20 @@ namespace eduVPN.ViewModels.VPN
                                 {
                                     // Connect to the openvpn.exe management interface.
                                     var mgmtClient = new TcpClient();
+                                    var reconnectCount = 0;
+                                    reconnect:
                                     var mgmtClientTask = mgmtClient.ConnectAsync(mgmtEndpoint.Address, mgmtEndpoint.Port);
                                     try { mgmtClientTask.Wait(30000, Window.Abort.Token); }
-                                    catch (AggregateException ex) { throw ex.InnerException; }
+                                    catch (AggregateException ex)
+                                    {
+                                        if (ex.InnerException is SocketException ex2 && ex2.SocketErrorCode == SocketError.ConnectionRefused &&
+                                            ++reconnectCount < 30 && !Window.Abort.Token.WaitHandle.WaitOne(1000))
+                                        {
+                                            Trace.TraceWarning("Failed to connect to openvpn.exe");
+                                            goto reconnect;
+                                        }
+                                        throw ex.InnerException;
+                                    }
                                     try
                                     {
                                         // Create and start the management session.
