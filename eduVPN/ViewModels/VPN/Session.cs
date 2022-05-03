@@ -202,11 +202,13 @@ namespace eduVPN.ViewModels.VPN
             {
                 DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
                 return
+                    from != DateTimeOffset.MinValue && to != DateTimeOffset.MaxValue &&
 #if DEBUG
-                    (now - from).TotalMinutes >= 1;
+                    (now - from).TotalMinutes > 1;
 #else
-                    (now - from).TotalMinutes >= 30 &&
-                    (to - now).TotalHours <= 24;
+                    (now - from).TotalMinutes > 30 &&
+                    (to - now).TotalHours < 24 &&
+                    (now - from).Ticks > 0.75 * (to - from).Ticks;
 #endif
             }
         }
@@ -221,8 +223,8 @@ namespace eduVPN.ViewModels.VPN
                 DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
                 return
                     from != DateTimeOffset.MinValue && to != DateTimeOffset.MaxValue &&
-                    (now - from).Ticks >= 0.75 * (to - from).Ticks &&
-                    (to - now).TotalHours <= 24;
+                    (now - from).TotalMinutes > 30 &&
+                    (to - now).TotalMinutes < 60;
             }
         }
 
