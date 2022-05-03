@@ -204,7 +204,7 @@ namespace eduVPN.ViewModels.Pages
                                 eHTTPRequest.Content = res.Stream;
                             }
                         };
-                        httpListener.Start();
+                        httpListener.Start(Window.Abort.Token);
                         try
                         {
                             // Make the authorization URI.
