@@ -4,8 +4,6 @@
 Right click on the server name. A menu should popup. Select _Forget_.
 
 ## How to reset all my client settings?
-
-### Resetting manually
 Close the eduVPN and Let's Encrypt! clients first. Open a command prompt and paste one or both lines:
 
 ```cmd
@@ -14,6 +12,3 @@ for /d %i in ("%LOCALAPPDATA%\SURF\LetsConnect.Client.exe_Url_*") do rd /s /q "%
 ```
 
 Don't forget to press _Enter_ key after the line is pasted. This will reset eduVPN and Let's Encrypt! clients to factory defaults.
-
-### Resetting after uninstall
-Uninstall the client. On next sign-in, the client settings of the user signing-in will be cleaned.
