@@ -553,7 +553,21 @@
             BinaryKey="eduMSICA.dll"
             DllEntry="KillExecutableProcesses"
             Execute="deferred"
-            Impersonate="no" />
+            Impersonate="no"/>
+
+        <CustomAction
+            Id="UnpublishActiveSetup"
+            BinaryKey="eduMSICA.dll"
+            DllEntry="UnpublishActiveSetup"
+            Execute="deferred"
+            Impersonate="no"/>
+
+        <CustomAction
+            Id="PublishActiveSetup"
+            BinaryKey="eduMSICA.dll"
+            DllEntry="PublishActiveSetup"
+            Execute="deferred"
+            Impersonate="no"/>
 
         <InstallExecuteSequence>
             <Custom
@@ -566,7 +580,15 @@
 
             <Custom
                 Action="KillExecutableProcesses"
-                Before="StopServices" />
+                Before="StopServices"/>
+
+            <Custom
+                Action="UnpublishActiveSetup"
+                Before="UnpublishFeatures"/>
+
+            <Custom
+                Action="PublishActiveSetup"
+                After="PublishFeatures"/>
         </InstallExecuteSequence>
 
         <UI>

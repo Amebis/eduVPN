@@ -18,6 +18,7 @@
 #include <WinStd/Win.h>
 #include <wintun.h>
 
+#include <memory>
 #include <vector>
 
 using namespace std;
@@ -170,7 +171,7 @@ EvaluateComponents(_In_ MSIHANDLE hInstall)
 	else
 		LOG_ERROR_NUM(uiResult, TEXT("MsiGetComponentState(\"%s\") failed"), WINTUN_COMPONENT);
 
-	static LPCTSTR szClientFilenames[] = {
+	static const LPCTSTR szClientFilenames[] = {
 		TEXT("eduVPN.Client.exe"),
 		TEXT("LetsConnect.Client.exe"),
 	};
@@ -182,6 +183,47 @@ EvaluateComponents(_In_ MSIHANDLE hInstall)
 				// Client component is installed and shall be removed/upgraded/reinstalled.
 				// Schedule client termination.
 				SetFormattedProperty(hInstall, TEXT("KillExecutableProcesses"), tstring_printf(TEXT("[COREDIR]%s"), szClientFilenames[i]).c_str());
+			}
+		}
+		else if (uiResult != ERROR_UNKNOWN_COMPONENT)
+			LOG_ERROR_NUM(uiResult, TEXT("MsiGetComponentState(\"%s\") failed"), szClientFilenames[i]);
+	}
+
+	static const LPCTSTR szActiveSetupActionCodes[] = {
+		TEXT("{B26CF707-1200-4760-A900-C4621CEEADC0}"),
+		TEXT("{B26CF707-1200-4760-A901-C4621CEEADC0}"),
+	};
+	for (size_t i = 0; i < _countof(szActiveSetupActionCodes) && i < _countof(szClientFilenames); ++i) {
+		// Get the client component state.
+		uiResult = MsiGetComponentState(hInstall, szClientFilenames[i], &iInstalled, &iAction);
+		if (uiResult == ERROR_SUCCESS) {
+			tstring sRegPath;
+			sprintf(sRegPath, TEXT("Software\\Microsoft\\Active Setup\\Installed Components\\%s"), szActiveSetupActionCodes[i]);
+			unsigned int uiVersion = 0;
+			reg_key key;
+			uiResult = RegOpenKeyEx(HKEY_LOCAL_MACHINE, sRegPath.c_str(), 0, KEY_QUERY_VALUE, key);
+			if (uiResult == ERROR_SUCCESS) {
+				DWORD dwType;
+				vector<TCHAR> aData;
+				if (RegQueryValueEx(key, TEXT("Version"), 0, &dwType, aData) == ERROR_SUCCESS && dwType == REG_SZ) {
+					aData.push_back(TEXT('\0'));
+					uiVersion = _tcstoul(aData.data(), NULL, 10);
+				}
+			}
+
+			if (iInstalled >= INSTALLSTATE_LOCAL && iAction >= INSTALLSTATE_REMOVED) {
+				// Client component is installed and shall be removed/upgraded/reinstalled.
+				// Schedule user configuration cleanup.
+				SetFormattedProperty(hInstall, TEXT("PublishActiveSetup"), tstring_printf(
+					TEXT("\"%s\" \"[ProductName]\" %u \"cmd.exe /c \\\"for /d %%i in (\\\"\\\"%%LOCALAPPDATA%%\\SURF\\%s_Url_*\\\"\\\") do rd /s /q \\\"\\\"%%i\\\"\\\"\\\"\""),
+					sRegPath.c_str(),
+					uiVersion + 1,
+					szClientFilenames[i]).c_str());
+			}
+			if (iAction >= INSTALLSTATE_LOCAL) {
+				// Client component shall be installed.
+				// Cancel user configuration cleanup.
+				MsiSetProperty(hInstall, TEXT("UnpublishActiveSetup"), tstring_printf(TEXT("\"%s\""), sRegPath.c_str()).c_str());
 			}
 		}
 		else if (uiResult != ERROR_UNKNOWN_COMPONENT)
@@ -295,5 +337,91 @@ KillExecutableProcesses(_In_ MSIHANDLE hInstall)
 			}
 		}
 	}
+	return ERROR_SUCCESS;
+}
+
+static LSTATUS
+RegSetValueEx(_In_ HKEY hKey, _In_opt_ LPCTSTR lpValueName, _Reserved_ DWORD Reserved, _In_ DWORD dwData)
+{
+	return RegSetValueEx(hKey, lpValueName, Reserved, REG_DWORD, reinterpret_cast<const BYTE*>(&dwData), sizeof(dwData));
+}
+
+static LSTATUS
+RegSetValueExW(_In_ HKEY hKey, _In_opt_ LPCWSTR lpValueName, _Reserved_ DWORD Reserved, _In_z_ LPCWSTR szData)
+{
+	size_t nSize = (wcslen(szData) + 1) * sizeof(WCHAR);
+	if (nSize > MAXDWORD)
+		return ERROR_INVALID_PARAMETER;
+	return RegSetValueExW(hKey, lpValueName, Reserved, REG_SZ, reinterpret_cast<const BYTE*>(szData), (DWORD)nSize);
+}
+
+_Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
+UnpublishActiveSetup(_In_ MSIHANDLE hInstall)
+{
+	com_initializer com_init(NULL);
+	s_hInstall = hInstall;
+
+	wstring sData;
+	UINT uiResult = MsiGetPropertyW(hInstall, L"CustomActionData", sData);
+	if (uiResult != ERROR_SUCCESS) {
+		LOG_ERROR_NUM(uiResult, TEXT("MsiGetProperty(\"CustomActionData\") failed"));
+		return ERROR_SUCCESS;
+	}
+	if (sData.empty())
+		return ERROR_SUCCESS;
+	int wargc;
+	unique_ptr<LPWSTR[], LocalFree_delete<LPWSTR[]>> wargv(CommandLineToArgvW(sData.c_str(), &wargc));
+	if (wargv == NULL) {
+		LOG_ERROR_NUM(GetLastError(), TEXT("CommandLineToArgvW failed"));
+		return ERROR_SUCCESS;
+	}
+	if (wargc < 1)
+		return ERROR_SUCCESS;
+
+	reg_key key;
+	if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, wargv[0], 0, KEY_SET_VALUE, key) != ERROR_SUCCESS)
+		return ERROR_SUCCESS;
+	RegSetValueEx(key, TEXT("IsInstalled"), 0, 0ul);
+	if (wargc > 1)
+		RegSetValueExW(key, L"StubPath", 0, wargv[1]);
+	else
+		RegDeleteValue(key, TEXT("StubPath"));
+	return ERROR_SUCCESS;
+}
+
+_Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
+PublishActiveSetup(_In_ MSIHANDLE hInstall)
+{
+	com_initializer com_init(NULL);
+	s_hInstall = hInstall;
+
+	wstring sData;
+	UINT uiResult = MsiGetPropertyW(hInstall, L"CustomActionData", sData);
+	if (uiResult != ERROR_SUCCESS) {
+		LOG_ERROR_NUM(uiResult, TEXT("MsiGetProperty(\"CustomActionData\") failed"));
+		return ERROR_SUCCESS;
+	}
+	if (sData.empty())
+		return ERROR_SUCCESS;
+	int wargc;
+	unique_ptr<LPWSTR[], LocalFree_delete<LPWSTR[]>> wargv(CommandLineToArgvW(sData.c_str(), &wargc));
+	if (wargv == NULL) {
+		LOG_ERROR_NUM(GetLastError(), TEXT("CommandLineToArgvW failed"));
+		return ERROR_SUCCESS;
+	}
+	if (wargc < 3)
+		return ERROR_SUCCESS;
+
+	reg_key key;
+	if (RegCreateKeyExW(HKEY_LOCAL_MACHINE, wargv[0], 0, NULL, REG_OPTION_NON_VOLATILE, KEY_SET_VALUE, NULL, key, NULL) != ERROR_SUCCESS)
+		return ERROR_SUCCESS;
+	RegSetValueExW(key, NULL, 0, wargv[1]);
+	RegSetValueExW(key, L"Version", 0, wargv[2]);
+	RegSetValueEx(key, TEXT("IsInstalled"), 0, 1ul);
+	RegSetValueEx(key, TEXT("DontAsk"), 0, 2ul);
+	if (wargc > 3)
+		RegSetValueExW(key, L"StubPath", 0, wargv[3]);
+	else
+		RegDeleteValue(key, TEXT("StubPath"));
 	return ERROR_SUCCESS;
 }

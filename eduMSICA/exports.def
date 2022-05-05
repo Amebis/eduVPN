@@ -10,3 +10,5 @@ EXPORTS
 	EvaluateComponents
 	RemoveWintunDriver
 	KillExecutableProcesses
+	UnpublishActiveSetup
+	PublishActiveSetup
