@@ -1,9 +1,13 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.5...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.6...HEAD)
+
+
+## [2.255.6](https://github.com/Amebis/eduVPN/compare/2.255.5...2.255.6) (2022-05-05)
 
 - OpenVPN updated to 2.5.6-20220505
     - openvpn 2.5.6 7b1b100557608db8a311d06f7578ceb7c4d33aa6
+- Fixes
 
 
 ## [2.255.5](https://github.com/Amebis/eduVPN/compare/2.255.4...2.255.5) (2022-04-25)
