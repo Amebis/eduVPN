@@ -159,7 +159,7 @@
     <value>Пошкоджено налаштування користувача</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>Віддавайте перевагу з’єднанню _TCP</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Завантажено:</value>
@@ -364,23 +364,23 @@
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>_Почати під час входу</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage" xml:space="preserve">
-    <value>Access token for {0} has expired.</value>
+    <value>Термін дії маркера доступу для {0} минув.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>Не відбулось повторне підключення до {0}</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
-    <value>There are no profiles available to connect.</value>
+    <value>Немає профілів, доступних для підключення.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Please contact server operator.</value>
+    <value>Будь ласка, зв'яжіться з оператором сервера.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Please contact support.</value>
+    <value>Будь ласка, зверніться до служби підтримки.</value>
   </data>
 </root>

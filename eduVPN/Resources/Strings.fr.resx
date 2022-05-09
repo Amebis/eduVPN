@@ -229,18 +229,18 @@
     <value>Nom d'hôte invalide: les noms d'hôte contiennent des lettres, des chiffres, des tirets et des points.  </value>
   </data>
   <data name="ErrorSelfUpdateDetection" xml:space="preserve">
-    <value>Detecting self-update failed.</value>
+    <value>Échec de la détection de la mise à jour automatique.</value>
   </data>
   <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
-    <value>HTTP server redirected to an unsafe URI.</value>
+    <value>Redirection du serveur HTTP vers un URI non sécurisé.</value>
   </data>
   <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
-    <value>Too many HTTP redirects.</value>
+    <value>Trop grand nombre de redirections HTTP.</value>
   </data>
   <data name="ErrorUnsupportedServerAPI" xml:space="preserve">
-    <value>Server does not support eduVPN APIv3.</value>
+    <value>L'APIv3 eduVPN n'est pas supportée par le serveur.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
-    <value>Tunnel Manager Service failure.</value>
+    <value>Échec du Service Tunnel Manager.</value>
   </data>
 </root>

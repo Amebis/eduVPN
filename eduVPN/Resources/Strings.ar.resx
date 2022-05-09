@@ -232,13 +232,13 @@
     <value>فشل اكتشاف التحديث الذاتي.</value>
   </data>
   <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
-    <value>HTTP server redirected to an unsafe URI.</value>
+    <value>خادم HTTP يوجه إلى موقع غير آمن.</value>
   </data>
   <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
-    <value>Too many HTTP redirects.</value>
+    <value>عمليات إعادة توجيه HTTP كثيرة.</value>
   </data>
   <data name="ErrorUnsupportedServerAPI" xml:space="preserve">
-    <value>Server does not support eduVPN APIv3.</value>
+    <value>لا يقبل الخادم واجهة برمجة التطبيقات اصدار 3 لeduVPN.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
     <value>فشل خدمة إدارة النفق.</value>

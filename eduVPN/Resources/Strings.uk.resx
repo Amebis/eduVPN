@@ -229,18 +229,18 @@
     <value>Недійсне ім'я хоста: імена хостів містять літери, цифри, дефіси та крапки.</value>
   </data>
   <data name="ErrorSelfUpdateDetection" xml:space="preserve">
-    <value>Detecting self-update failed.</value>
+    <value>Не вдалося визначити самооновлення.</value>
   </data>
   <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
-    <value>HTTP server redirected to an unsafe URI.</value>
+    <value>HTTP-сервер перенаправлено на небезпечний URI.</value>
   </data>
   <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
-    <value>Too many HTTP redirects.</value>
+    <value>Забагато перенаправлень HTTP.</value>
   </data>
   <data name="ErrorUnsupportedServerAPI" xml:space="preserve">
-    <value>Server does not support eduVPN APIv3.</value>
+    <value>Сервер не підтримує eduVPN APIv3.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
-    <value>Tunnel Manager Service failure.</value>
+    <value>Помилка служби Tunnel Manager.</value>
   </data>
 </root>

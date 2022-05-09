@@ -159,7 +159,7 @@
     <value>تلف إعدادات المستخدم</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>تفضيل الاتصال عبر _ميفاق التحكم بالنقل</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>تم تحميل:</value>

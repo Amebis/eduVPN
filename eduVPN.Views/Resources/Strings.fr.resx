@@ -159,7 +159,7 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
     <value>Paramètres Utilisateur Corrompus</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>Préférer la connection _TCP</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Téléchargé (descendant) :</value>
@@ -365,23 +365,23 @@ Veuillez patienter...</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>_Exécuter au démarrage de la session</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage" xml:space="preserve">
-    <value>Access token for {0} has expired.</value>
+    <value>Le jeton d'accès pour {0}a expiré.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>N'a pas reconnecté à {0}</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
-    <value>There are no profiles available to connect.</value>
+    <value>Aucun profil disponible auquel se connecter.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Please contact server operator.</value>
+    <value>Veuillez contacter l'opérateur du serveur.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Please contact support.</value>
+    <value>Veuillez contacter le service d'assistance.</value>
   </data>
 </root>
