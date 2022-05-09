@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.6...HEAD)
 
+- OpenVPN updated to 2.5.6-20220509
+    - openvpn 2.5.6 55cfc0b9541ff25fac31059ffcf7eea06fd6c0ec
 - libsodium updated to 1.0.18-20220509
 
 
