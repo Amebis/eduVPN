@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/2.255.6...HEAD)
 
+- libsodium updated to 1.0.18-20220509
+
 
 ## [2.255.6](https://github.com/Amebis/eduVPN/compare/2.255.5...2.255.6) (2022-05-05)
 
