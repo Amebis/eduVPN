@@ -49,6 +49,11 @@ namespace eduVPN.ViewModels.Windows
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly object DiscoveredListLock = new object();
 
+        /// <summary>
+        /// Is auto-reconnect in progress?
+        /// </summary>
+        private bool IsAutoReconnectInProgress = false;
+
         #endregion
 
         #region Properties
@@ -693,10 +698,12 @@ namespace eduVPN.ViewModels.Windows
         private async void AutoReconnect()
         {
             // Requires DiscoveredServers and DiscoveredOrganizations to be available.
-            // Also, don't auto-reconnect if already connected.
+            // Also, don't auto-reconnect if already auto-reconnecting.
             if (DiscoveredServers == null || DiscoveredOrganizations == null ||
-                ConnectionPage.ActiveSession != null || Properties.Settings.Default.LastSelectedServer == null)
+                Properties.Settings.Default.LastSelectedServer == null ||
+                IsAutoReconnectInProgress)
                 return;
+            IsAutoReconnectInProgress = true;
 
             var connectingServer = GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.LastSelectedServer);
             if (connectingServer != null)
