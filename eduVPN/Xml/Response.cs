@@ -42,12 +42,12 @@ namespace eduVPN.Xml
         /// <summary>
         /// User agent
         /// </summary>
-        public static readonly string UserAgent = (Attribute.GetCustomAttributes(ExecutingAssembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title + "/" + ExecutingAssembly?.GetName()?.Version?.ToString();
+        private static readonly string UserAgent = (Attribute.GetCustomAttributes(ExecutingAssembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute)?.Title + "/" + ExecutingAssembly?.GetName()?.Version?.ToString();
 
         /// <summary>
         /// Caching policy
         /// </summary>
-        public static readonly HttpRequestCachePolicy CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+        private static readonly HttpRequestCachePolicy CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
 
         #endregion
 
@@ -98,6 +98,32 @@ namespace eduVPN.Xml
         #region Methods
 
         /// <summary>
+        /// Creates a standardized web request
+        /// </summary>
+        /// <param name="uri">Request URI</param>
+        /// <param name="token">Acces token</param>
+        /// <param name="responseType">Expected response MIME type</param>
+        /// <returns>WebRequest object</returns>
+        public static WebRequest CreateRequest(Uri uri, AccessToken token = null, string responseType = "*/*")
+        {
+            var request = WebRequest.Create(uri);
+            request.CachePolicy = CachePolicy;
+            request.Proxy = null;
+            if (token != null)
+                token.AddToRequest(request);
+            if (request is HttpWebRequest httpRequest)
+            {
+                httpRequest.Accept = responseType;
+                httpRequest.UserAgent = UserAgent;
+
+                // Do HTTP redirection manually to refuse non-https schemes as per APIv3 requirement.
+                // Note: By turning AllowAutoRedirect to false, request.GetResponse() will no longer throw on 3xx status.
+                httpRequest.AllowAutoRedirect = false;
+            }
+            return request;
+        }
+
+        /// <summary>
         /// Gets UTF-8 text from the given URI.
         /// </summary>
         /// <param name="uri">URI</param>
@@ -133,15 +159,9 @@ namespace eduVPN.Xml
                 ct.ThrowIfCancellationRequested();
 
                 // Create request.
-                request = WebRequest.Create(uri);
-                request.CachePolicy = CachePolicy;
-                request.Proxy = null;
-                if (token != null)
-                    token.AddToRequest(request);
+                request = CreateRequest(uri, token, responseType);
                 if (request is HttpWebRequest httpRequest)
                 {
-                    httpRequest.UserAgent = UserAgent;
-                    httpRequest.Accept = responseType;
                     if (previous != null && param == null)
                     {
                         if (previous.LastModified != DateTimeOffset.MinValue)
@@ -150,10 +170,6 @@ namespace eduVPN.Xml
                         if (previous.ETag != null)
                             httpRequest.Headers.Add("If-None-Match", previous.ETag);
                     }
-
-                    // Do HTTP redirection manually to refuse non-https schemes as per APIv3 requirement.
-                    // Note: By turning AllowAutoRedirect to false, request.GetResponse() will no longer throw on 3xx status.
-                    httpRequest.AllowAutoRedirect = false;
                 }
 
                 if (param != null)
@@ -273,37 +289,34 @@ namespace eduVPN.Xml
                         uriBuilderSig.Path += ".minisig";
 
                         // Create signature request.
-                        request = WebRequest.Create(uriBuilderSig.Uri);
-                        request.CachePolicy = CachePolicy;
-                        request.Proxy = null;
-                        if (token != null)
-                            token.AddToRequest(request);
-                        if (request is HttpWebRequest httpRequestSig)
-                        {
-                            httpRequestSig.UserAgent = UserAgent;
-                            httpRequestSig.Accept = "text/plain";
-                        }
+                        request = CreateRequest(uriBuilderSig.Uri, token, "text/plain");
 
                         // Read the Minisign signature.
                         byte[] signature = null;
                         try
                         {
                             using (var responseSig = request.GetResponse())
-                            using (var streamSig = responseSig.GetResponseStream())
                             {
-                                ct.ThrowIfCancellationRequested();
+                                // When request redirects are disabled, GetResponse() doesn't throw on 3xx status.
+                                if (responseSig is HttpWebResponse httpResponseSig && httpResponseSig.StatusCode != HttpStatusCode.OK)
+                                    throw new WebException("Response status code not 200", null, WebExceptionStatus.UnknownError, responseSig);
 
-                                using (var readerSig = new StreamReader(streamSig))
+                                using (var streamSig = responseSig.GetResponseStream())
                                 {
-                                    foreach (var l in readerSig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                                    ct.ThrowIfCancellationRequested();
+
+                                    using (var readerSig = new StreamReader(streamSig))
                                     {
-                                        if (l.Trim().StartsWith($"untrusted comment:"))
-                                            continue;
-                                        signature = Convert.FromBase64String(l);
-                                        break;
+                                        foreach (var l in readerSig.ReadToEnd(ct).Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                                        {
+                                            if (l.Trim().StartsWith($"untrusted comment:"))
+                                                continue;
+                                            signature = Convert.FromBase64String(l);
+                                            break;
+                                        }
+                                        if (signature == null)
+                                            throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
                                     }
-                                    if (signature == null)
-                                        throw new SecurityException(string.Format(Resources.Strings.ErrorInvalidSignature, res.Uri));
                                 }
                             }
                         }

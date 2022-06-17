@@ -98,10 +98,15 @@ namespace eduVPN.ViewModels.Pages
                         {
                             var binaryUri = DownloadUris[uriIndex];
                             Trace.TraceInformation("Downloading installer file {0}", binaryUri.AbsoluteUri);
-                            var request = WebRequest.Create(binaryUri);
-                            request.Proxy = null;
+                            var request = Xml.Response.CreateRequest(
+                                uri: binaryUri,
+                                responseType: "application/vnd.microsoft.portable-executable,application/x-msdos-program,application/octet-stream,*/*;q=0.8");
                             using (var response = request.GetResponse())
                             {
+                                // When request redirects are disabled, GetResponse() doesn't throw on 3xx status.
+                                if (response is HttpWebResponse httpResponse && httpResponse.StatusCode != HttpStatusCode.OK)
+                                    throw new WebException("Response status code not 200", null, WebExceptionStatus.UnknownError, response);
+
                                 // 1. Get installer filename from Content-Disposition header.
                                 // 2. Get installer filename from the last segment of URI path.
                                 // 3. Fallback to a predefined installer filename.

@@ -139,12 +139,7 @@ namespace eduVPN.ViewModels.Pages
                             var api = authenticatingServer.GetEndpoints(Window.Abort.Token);
 
                             // Prepare web request.
-                            var request = WebRequest.Create(api.TokenEndpoint);
-                            request.CachePolicy = Xml.Response.CachePolicy;
-                            request.Proxy = null;
-                            if (request is HttpWebRequest requestHTTP)
-                                requestHTTP.UserAgent = Xml.Response.UserAgent;
-
+                            var request = Xml.Response.CreateRequest(api.TokenEndpoint);
                             try
                             {
                                 accessToken = accessToken.RefreshToken(request, null, Window.Abort.Token);
@@ -244,11 +239,7 @@ namespace eduVPN.ViewModels.Pages
                             throw new OperationCanceledException();
 
                         // Get access token from authorization grant.
-                        var request = WebRequest.Create(api.TokenEndpoint);
-                        request.CachePolicy = Xml.Response.CachePolicy;
-                        request.Proxy = null;
-                        if (request is HttpWebRequest requestHTTP)
-                            requestHTTP.UserAgent = Xml.Response.UserAgent;
+                        var request = Xml.Response.CreateRequest(api.TokenEndpoint);
                         e.AccessToken = authorizationGrant.ProcessResponse(
                             HttpUtility.ParseQueryString(callbackUri.Query),
                             request,
