@@ -52,38 +52,69 @@ VCREDIST_MSM=Microsoft_VC142_CRT_$(PLAT_CLIENT).msm
 ######################################################################
 
 !IF "$(CFG)" == "Release"
-Publish :: \
-	"bin\$(CFG)\$(PLAT)\eduEx.dll" \
-	"bin\$(CFG)\$(PLAT)\eduJSON.dll" \
-	"bin\$(CFG)\$(PLAT)\eduLibsodium.dll" \
-	"bin\$(CFG)\$(PLAT)\eduMSICA.dll" \
-	"bin\$(CFG)\$(PLAT)\eduOAuth.dll" \
-	"bin\$(CFG)\$(PLAT)\eduOpenVPN.dll" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.dll" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
-	"bin\$(CFG)\$(PLAT)\eduVPN.Views.dll" \
-	"bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe" \
-	"bin\$(CFG)\$(PLAT)\eduWireGuard.dll" \
-	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
-	"bin\$(CFG)\$(PLAT)\openvpnserv.exe" \
-	"bin\$(CFG)\$(PLAT)\tunnel.dll"
 !IFDEF VIRUSTOTALAPIKEY
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduEx.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduJSON.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduLibsodium.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduMSICA.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduOAuth.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduOpenVPN.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.Client.exe"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.Views.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduWireGuard.dll"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\openvpn.exe"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\openvpnserv.exe"
-	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\tunnel.dll"
+Publish :: \
+	"bin\$(CFG)\$(PLAT)\eduMSICA.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduWGSvcHost.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\openvpn.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\openvpnserv.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\tunnel.vtanalysis" \
+!IF "$(PLAT)" != "ARM64"
+	"bin\$(CFG)\$(PLAT)\eduEx.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"
 !ENDIF
+!ENDIF
+
+"bin\$(CFG)\$(PLAT)\eduEx.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduEx.dll"
+
+"bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduJSON.dll"
+
+"bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduLibsodium.dll"
+
+"bin\$(CFG)\$(PLAT)\eduMSICA.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduMSICA.dll"
+
+"bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduOAuth.dll"
+
+"bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduOpenVPN.dll"
+
+"bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduVPN.dll"
+
+"bin\$(CFG)\$(PLAT)\eduVPN.Resources.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
+
+"bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduVPN.Views.dll"
+
+"bin\$(CFG)\$(PLAT)\eduWGSvcHost.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe"
+
+"bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduWireGuard.dll"
+
+"bin\$(CFG)\$(PLAT)\openvpn.vtanalysis" : "bin\$(CFG)\$(PLAT)\openvpn.exe"
+
+"bin\$(CFG)\$(PLAT)\openvpnserv.vtanalysis" : "bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+
+"bin\$(CFG)\$(PLAT)\tunnel.vtanalysis" : "bin\$(CFG)\$(PLAT)\tunnel.dll"
+
+Clean ::
+	-if exist "bin\$(CFG)\$(PLAT)\eduMSICA.vtanalysis"         del /f /q "bin\$(CFG)\$(PLAT)\eduMSICA.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.Resources.vtanalysis" del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.Resources.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduWGSvcHost.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduWGSvcHost.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpn.vtanalysis"          del /f /q "bin\$(CFG)\$(PLAT)\openvpn.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\openvpnserv.vtanalysis"      del /f /q "bin\$(CFG)\$(PLAT)\openvpnserv.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\tunnel.vtanalysis"           del /f /q "bin\$(CFG)\$(PLAT)\tunnel.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduEx.vtanalysis"            del /f /q "bin\$(CFG)\$(PLAT)\eduEx.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis"          del /f /q "bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"         del /f /q "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"       del /f /q "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis"           del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"
 !ENDIF
 
 

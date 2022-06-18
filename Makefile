@@ -72,6 +72,20 @@ CleanWireGuard ::
 Clean ::
 	-if exist "bin\Setup\PDB_*.zip" del /f /q "bin\Setup\PDB_*.zip"
 
+.SUFFIXES : .exe .dll .msi
+
+.exe.vtanalysis :
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@$**" --output "$(@:"=).tmp"
+	move /y "$(@:"=).tmp" $@ > NUL
+
+.dll.vtanalysis :
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@$**" --output "$(@:"=).tmp"
+	move /y "$(@:"=).tmp" $@ > NUL
+
+.msi.vtanalysis :
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@$**" --output "$(@:"=).tmp"
+	move /y "$(@:"=).tmp" $@ > NUL
+
 
 ######################################################################
 # Setup
