@@ -5,6 +5,8 @@
 - Fixes: #197
 - Switch to pre-release self-update channel
 - VirusTotal file submissions automated
+- OpenVPN updated to 2.5.7-20220618
+    - openvpn 2.5.7 cf5864f5922e4f40357d9f75a35cd448e671dddf
 
 
 ## [3.0.1](https://github.com/Amebis/eduVPN/compare/3.0...3.0.1) (2022-06-09)
