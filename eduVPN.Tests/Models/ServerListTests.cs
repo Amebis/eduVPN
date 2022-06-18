@@ -98,6 +98,16 @@ namespace eduVPN.Models.Tests
                     else
                         throw;
                 }
+                catch (WebException ex)
+                {
+                    if (ex.Response is HttpWebResponse response &&
+                        response.StatusCode == HttpStatusCode.NotFound) // 404 Not Found
+                    {
+                        // Ignore specific WebException(s), as some servers have issues.
+                    }
+                    else
+                        throw;
+                }
             });
 
             // Re-load list of servers.
