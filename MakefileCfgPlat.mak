@@ -48,6 +48,46 @@ VCREDIST_MSM=Microsoft_VC142_CRT_$(PLAT_CLIENT).msm
 
 
 ######################################################################
+# Setup
+######################################################################
+
+!IF "$(CFG)" == "Release"
+Publish :: \
+	"bin\$(CFG)\$(PLAT)\eduEx.dll" \
+	"bin\$(CFG)\$(PLAT)\eduJSON.dll" \
+	"bin\$(CFG)\$(PLAT)\eduLibsodium.dll" \
+	"bin\$(CFG)\$(PLAT)\eduMSICA.dll" \
+	"bin\$(CFG)\$(PLAT)\eduOAuth.dll" \
+	"bin\$(CFG)\$(PLAT)\eduOpenVPN.dll" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.dll" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Views.dll" \
+	"bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe" \
+	"bin\$(CFG)\$(PLAT)\eduWireGuard.dll" \
+	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
+	"bin\$(CFG)\$(PLAT)\openvpnserv.exe" \
+	"bin\$(CFG)\$(PLAT)\tunnel.dll"
+!IFDEF VIRUSTOTALAPIKEY
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduEx.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduJSON.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduLibsodium.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduMSICA.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduOAuth.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduOpenVPN.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.Client.exe"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduVPN.Views.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\eduWireGuard.dll"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\openvpn.exe"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\tunnel.dll"
+!ENDIF
+!ENDIF
+
+
+######################################################################
 # Building
 ######################################################################
 

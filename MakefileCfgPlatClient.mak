@@ -24,6 +24,16 @@ SetupMSI :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi"
 !ENDIF
 
+!IF "$(CFG)" == "Release"
+Publish :: \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi" \
+	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe"
+!IFDEF VIRUSTOTALAPIKEY
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi"
+	curl.exe --request POST --url "https://www.virustotal.com/api/v3/files" --header "Accept: application/json" --header "Content-Type: multipart/form-data" --header "x-apikey: $(VIRUSTOTALAPIKEY)" --form "file=@bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe"
+!ENDIF
+!ENDIF
+
 
 ######################################################################
 # Registration

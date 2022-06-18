@@ -54,6 +54,11 @@ In order to have the build process digitally sign the release output files, one 
    - `ManifestTimestampRFC3161Url` - set the value to URL used to perform timestamp signature (e.g. `http://sha256timestamp.ws.symantec.com/sha256/timestamp`, `http://timestamp.digicert.com` etc.). In order to perform the timestamp signing successfully, the computer running the build should be online and able to access this URL.
 
 
+### VirusTotal Submissions
+
+In order to have the build process submit all release binaries to the VirusTotal for analysis, one should provide own VirusTotal API key in the `VirusTotalAPIKey` environment variable.
+
+
 ## Building and Packaging
 
 

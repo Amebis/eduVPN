@@ -4,6 +4,7 @@
 
 - Fixes: #197
 - Switch to pre-release self-update channel
+- VirusTotal file submissions automated
 
 
 ## [3.0.1](https://github.com/Amebis/eduVPN/compare/3.0...3.0.1) (2022-06-09)
