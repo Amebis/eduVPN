@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.0.3...HEAD)
 
+- Fix self-update binary download HTTP redirections
+
 
 ## [3.0.3](https://github.com/Amebis/eduVPN/compare/3.0.2...3.0.3) (2022-06-22)
 
