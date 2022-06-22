@@ -31,29 +31,24 @@ namespace eduVPN.ViewModels.Pages
         public enum StateType
         {
             /// <summary>
-            /// Waiting for user to (select profile and) connect
+            /// Waiting for user to (select profile and) start connection
             /// </summary>
-            SessionInactive = 0,
+            Inactive = 0,
 
             /// <summary>
-            /// A session is activating
+            /// Getting profile configuration
             /// </summary>
-            SessionActivating,
+            Initializing,
 
             /// <summary>
-            /// A session is active
+            /// Session is active
             /// </summary>
-            SessionActive,
+            Active,
 
             /// <summary>
-            /// A session is deactivating
+            /// Session expired
             /// </summary>
-            SessionDeactivating,
-
-            /// <summary>
-            /// The active session expired
-            /// </summary>
-            SessionExpired,
+            Expired,
         }
 
         #endregion
@@ -78,7 +73,12 @@ namespace eduVPN.ViewModels.Pages
             private set
             {
                 if (SetProperty(ref _State, value))
+                {
+                    RaisePropertyChanged(nameof(CanSessionToggle));
+                    _StartSession?.RaiseCanExecuteChanged();
+                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
                     _SessionInfo?.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -204,9 +204,9 @@ namespace eduVPN.ViewModels.Pages
             get => ActiveSession != null;
             set
             {
-                if (ActiveSession == null && AuthenticateAndStartSession.CanExecute() && value)
+                if (value && AuthenticateAndStartSession.CanExecute())
                     AuthenticateAndStartSession.Execute();
-                else if (ActiveSession != null && ActiveSession.Disconnect.CanExecute() && !value)
+                else if (!value && ActiveSession != null && ActiveSession.Disconnect.CanExecute())
                 {
                     ActiveSession.Disconnect.Execute();
 
@@ -222,7 +222,7 @@ namespace eduVPN.ViewModels.Pages
         public bool CanSessionToggle
         {
             get =>
-                ActiveSession == null && AuthenticateAndStartSession.CanExecute() ||
+                AuthenticateAndStartSession.CanExecute() ||
                 ActiveSession != null && ActiveSession.Disconnect.CanExecute();
         }
 
@@ -237,8 +237,9 @@ namespace eduVPN.ViewModels.Pages
                     _StartSession = new DelegateCommand(
                         () =>
                         {
-                            State = StateType.SessionActivating;
-
+                            if (SelectedProfile == null || State != StateType.Inactive && State != StateType.Expired)
+                                return;
+                            State = StateType.Initializing;
                             var connectingProfile = SelectedProfile;
                             new Thread(new ThreadStart(
                                 () =>
@@ -270,21 +271,9 @@ namespace eduVPN.ViewModels.Pages
                                                 if (e.PropertyName == nameof(session.State))
                                                     switch (session.State)
                                                     {
-                                                        case SessionStatusType.Connecting:
-                                                            State = StateType.SessionActivating;
-                                                            break;
-
-                                                        case SessionStatusType.Connected:
-                                                            State = StateType.SessionActive;
-                                                            break;
-
-                                                        case SessionStatusType.Disconnecting:
-                                                            State = StateType.SessionDeactivating;
-                                                            break;
-
                                                         case SessionStatusType.Disconnected:
                                                             ActiveSession = null;
-                                                            State = session.Expired ? StateType.SessionExpired : StateType.SessionInactive;
+                                                            State = session.Expired ? StateType.Expired : StateType.Inactive;
                                                             break;
                                                     }
                                             };
@@ -294,6 +283,7 @@ namespace eduVPN.ViewModels.Pages
                                             Wizard.TryInvoke((Action)(() =>
                                             {
                                                 ActiveSession = session;
+                                                State = StateType.Active;
 
                                                 // Set server/profile to auto-start on next launch.
                                                 Properties.Settings.Default.LastSelectedServer = connectingProfile.Server.Base;
@@ -315,13 +305,15 @@ namespace eduVPN.ViewModels.Pages
                                         {
                                             // Clear failing server/profile to auto-start on next launch.
                                             Properties.Settings.Default.LastSelectedServer = null;
+                                            ActiveSession = null;
+                                            State = StateType.Inactive;
                                             throw ex;
                                         }));
                                     }
                                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                                 })).Start();
                         },
-                        () => SelectedProfile != null);
+                        () => SelectedProfile != null && (State == StateType.Inactive || State == StateType.Expired));
                 return _StartSession;
             }
         }
@@ -361,7 +353,7 @@ namespace eduVPN.ViewModels.Pages
                 if (_SessionInfo == null)
                     _SessionInfo = new DelegateCommand(
                         () => Wizard.CurrentPage = this,
-                        () => State != StateType.SessionInactive);
+                        () => State != StateType.Inactive);
                 return _SessionInfo;
             }
         }

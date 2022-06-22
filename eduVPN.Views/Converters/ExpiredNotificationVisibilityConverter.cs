@@ -14,7 +14,7 @@ using System.Windows.Data;
 namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if active session expired or page state is SessionExpired; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="Visibility.Visible"/> if active session expired or page state is Expired; or <see cref="Visibility.Collapsed"/> otherwise.
     /// </summary>
     public class ExpiredNotificationVisibilityConverter : IMultiValueConverter
     {
@@ -37,7 +37,7 @@ namespace eduVPN.Converters
         {
             return
                 values[0] is bool sessionExpired && sessionExpired ||
-                values[1] is ConnectionPage.StateType state && state == ConnectionPage.StateType.SessionExpired ?
+                values[1] is ConnectionPage.StateType state && state == ConnectionPage.StateType.Expired ?
                 Visibility.Visible : Visibility.Collapsed;
         }
 
