@@ -101,6 +101,12 @@ namespace eduVPN.ViewModels.Pages
                             var request = Xml.Response.CreateRequest(
                                 uri: binaryUri,
                                 responseType: "application/vnd.microsoft.portable-executable,application/x-msdos-program,application/octet-stream,*/*;q=0.8");
+                            if (request is HttpWebRequest httpRequest)
+                            {
+                                // Allow HTTP redirects, as GitHub downloads use them extensively.
+                                // The integrity of the downloaded file is checked against trusted hash explicitly, so unsafe redirects to http:// may be tolerated.
+                                httpRequest.AllowAutoRedirect = true;
+                            }
                             using (var response = request.GetResponse())
                             {
                                 // When request redirects are disabled, GetResponse() doesn't throw on 3xx status.
