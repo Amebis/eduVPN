@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.0.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.0.2...HEAD)
+
+
+## [3.0.2](https://github.com/Amebis/eduVPN/compare/3.0.1...3.0.2) (2022-06-18)
 
 - Fixes: #197
 - Switch to pre-release self-update channel
