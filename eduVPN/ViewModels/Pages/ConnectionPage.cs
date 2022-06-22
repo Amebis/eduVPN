@@ -305,12 +305,18 @@ namespace eduVPN.ViewModels.Pages
                                         {
                                             // Clear failing server/profile to auto-start on next launch.
                                             Properties.Settings.Default.LastSelectedServer = null;
-                                            ActiveSession = null;
-                                            State = StateType.Inactive;
                                             throw ex;
                                         }));
                                     }
-                                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                                    finally {
+                                        Wizard.TryInvoke((Action)(() =>
+                                        {
+                                            ActiveSession = null;
+                                            if (State != StateType.Expired)
+                                                State = StateType.Inactive;
+                                            Wizard.TaskCount--;
+                                        }));
+                                    }
                                 })).Start();
                         },
                         () => SelectedProfile != null && (State == StateType.Inactive || State == StateType.Expired));
