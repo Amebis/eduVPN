@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.0.5...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1...HEAD)
+
+
+## [3.1](https://github.com/Amebis/eduVPN/compare/3.0.5...3.1) (2022-06-23)
 
 - Switch to release self-update channel
 
