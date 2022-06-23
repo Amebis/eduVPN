@@ -47,7 +47,11 @@ Publish :: \
 !IFDEF VIRUSTOTALAPIKEY
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" \
 !ENDIF
-	"bin\Setup\$(CLIENT_TARGET).windows.json"
+	"bin\Setup\$(CLIENT_TARGET).windows.json" \
+	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)" \
+	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.installer.yaml" \
+	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" \
+	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml"
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 
@@ -61,7 +65,91 @@ Clean ::
 "version": "$(VERSION)",
 "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
 <<NOKEEP
-	for /f %%a in ('CertUtil.exe -hashfile $** SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo "hash-sha256": "%%a"}>> "$(@:"=).tmp"
+	for /f %%a in ('CertUtil.exe -hashfile $** SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo "hash-sha256": "%%a"}>> "$(@:"=).tmp"
+	move /y "$(@:"=).tmp" $@ > NUL
+
+"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client" : "bin\Setup\winpkg-manifests\s\SURF"
+	if not exist $@ md $@
+
+"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)" : "bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client"
+	if not exist $@ md $@
+
+"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.installer.yaml" : \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi" \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi"
+	move /y << "$(@:"=).tmp" > NUL
+# Created using eduVPN build system
+# yaml-language-server: $$schema=https://aka.ms/winget-manifest.installer.1.1.0.schema.json
+
+PackageIdentifier: SURF.$(CLIENT_TARGET)Client
+PackageVersion: $(VERSION)
+Installers:
+- InstallerLocale: en-US
+  Architecture: arm64
+  InstallerType: wix
+  InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi
+<<NOKEEP
+	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
+	type << >> "$(@:"=).tmp"
+  ProductCode: '$(CLIENT_PRODUCT_CODE)'
+- InstallerLocale: en-US
+  Architecture: x64
+  InstallerType: wix
+  InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi
+<<NOKEEP
+	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
+	type << >> "$(@:"=).tmp"
+  ProductCode: '$(CLIENT_PRODUCT_CODE)'
+- InstallerLocale: en-US
+  Architecture: x86
+  InstallerType: wix
+  InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi
+<<NOKEEP
+	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
+	type << >> "$(@:"=).tmp"
+  ProductCode: '$(CLIENT_PRODUCT_CODE)'
+ManifestType: installer
+ManifestVersion: 1.1.0
+
+<<NOKEEP
+	move /y "$(@:"=).tmp" $@ > NUL
+
+"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" :
+	move /y << "$(@:"=).tmp" > NUL
+# Created using eduVPN build system
+# yaml-language-server: $$schema=https://aka.ms/winget-manifest.defaultLocale.1.1.0.schema.json
+
+PackageIdentifier: SURF.$(CLIENT_TARGET)Client
+PackageVersion: $(VERSION)
+PackageLocale: en-US
+Publisher: SURF
+PublisherUrl: $(CLIENT_ABOUT_URI)
+PackageName: $(CLIENT_TITLE) Client
+License: GPL-3.0
+ShortDescription: Access your institute's network or the Internet using an encrypted connection.
+Tags:
+- vpn
+- eduvpn
+ReleaseNotesUrl: https://github.com/Amebis/eduVPN/releases/tag/$(VERSION)
+ManifestType: defaultLocale
+ManifestVersion: 1.1.0
+
+<<NOKEEP
+	move /y "$(@:"=).tmp" $@ > NUL
+
+"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml" :
+	move /y << "$(@:"=).tmp" > NUL
+# Created using eduVPN build system
+# yaml-language-server: $$schema=https://aka.ms/winget-manifest.version.1.1.0.schema.json
+
+PackageIdentifier: SURF.$(CLIENT_TARGET)Client
+PackageVersion: $(VERSION)
+DefaultLocale: en-US
+ManifestType: version
+ManifestVersion: 1.1.0
+
+<<NOKEEP
 	move /y "$(@:"=).tmp" $@ > NUL
 !ENDIF
 
