@@ -240,84 +240,93 @@ namespace eduVPN.ViewModels.Pages
                             if (SelectedProfile == null || State != StateType.Inactive && State != StateType.Expired)
                                 return;
                             State = StateType.Initializing;
-                            var connectingProfile = SelectedProfile;
-                            new Thread(new ThreadStart(
-                                () =>
-                                {
-                                    Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                                    try
+                            try
+                            {
+                                var connectingProfile = SelectedProfile;
+                                new Thread(new ThreadStart(
+                                    () =>
                                     {
-                                        // Get session profile.
-                                        var authenticatingServer = Wizard.GetAuthenticatingServer(connectingProfile.Server);
-                                        var profileConfig = connectingProfile.Connect(authenticatingServer: authenticatingServer, ct: Window.Abort.Token);
-                                        Session session;
+                                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                                         try
                                         {
-                                            // Initialize session.
-                                            switch (profileConfig.ContentType.ToLowerInvariant())
+                                            // Get session profile.
+                                            var authenticatingServer = Wizard.GetAuthenticatingServer(connectingProfile.Server);
+                                            var profileConfig = connectingProfile.Connect(authenticatingServer: authenticatingServer, ct: Window.Abort.Token);
+                                            Session session;
+                                            try
                                             {
-                                                case "application/x-openvpn-profile":
-                                                    session = new OpenVPNSession(Wizard, connectingProfile, profileConfig);
-                                                    break;
-                                                case "application/x-wireguard-profile":
-                                                    session = new WireGuardSession(Wizard, connectingProfile, profileConfig);
-                                                    break;
-                                                default:
-                                                    throw new ArgumentOutOfRangeException(nameof(profileConfig.ContentType), profileConfig.ContentType, null);
-                                            }
-                                            session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-                                            {
-                                                // Update connection page when session disconnects.
-                                                if (e.PropertyName == nameof(session.State))
-                                                    switch (session.State)
-                                                    {
-                                                        case SessionStatusType.Disconnected:
-                                                            ActiveSession = null;
-                                                            State = session.Expired ? StateType.Expired : StateType.Inactive;
-                                                            break;
-                                                    }
-                                            };
-                                            session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
+                                                // Initialize session.
+                                                switch (profileConfig.ContentType.ToLowerInvariant())
+                                                {
+                                                    case "application/x-openvpn-profile":
+                                                        session = new OpenVPNSession(Wizard, connectingProfile, profileConfig);
+                                                        break;
+                                                    case "application/x-wireguard-profile":
+                                                        session = new WireGuardSession(Wizard, connectingProfile, profileConfig);
+                                                        break;
+                                                    default:
+                                                        throw new ArgumentOutOfRangeException(nameof(profileConfig.ContentType), profileConfig.ContentType, null);
+                                                }
+                                                session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                                                {
+                                                    // Update connection page when session disconnects.
+                                                    if (e.PropertyName == nameof(session.State))
+                                                        switch (session.State)
+                                                        {
+                                                            case SessionStatusType.Disconnected:
+                                                                ActiveSession = null;
+                                                                State = session.Expired ? StateType.Expired : StateType.Inactive;
+                                                                break;
+                                                        }
+                                                };
+                                                session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
 
-                                            // Activate session.
+                                                // Activate session.
+                                                Wizard.TryInvoke((Action)(() =>
+                                                {
+                                                    ActiveSession = session;
+                                                    State = StateType.Active;
+
+                                                    // Set server/profile to auto-start on next launch.
+                                                    Properties.Settings.Default.LastSelectedServer = connectingProfile.Server.Base;
+
+                                                    Wizard.TaskCount--;
+                                                }));
+                                                try { session.Execute(); }
+                                                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                                            }
+                                            finally
+                                            {
+                                                try { connectingProfile.Server.Disconnect(authenticatingServer); } catch { }
+                                            }
+                                        }
+                                        catch (OperationCanceledException) { }
+                                        catch (Exception ex)
+                                        {
                                             Wizard.TryInvoke((Action)(() =>
                                             {
-                                                ActiveSession = session;
-                                                State = StateType.Active;
-
-                                                // Set server/profile to auto-start on next launch.
-                                                Properties.Settings.Default.LastSelectedServer = connectingProfile.Server.Base;
-
-                                                Wizard.TaskCount--;
+                                                // Clear failing server/profile to auto-start on next launch.
+                                                Properties.Settings.Default.LastSelectedServer = null;
+                                                throw ex;
                                             }));
-                                            try { session.Execute(); }
-                                            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
                                         }
                                         finally
                                         {
-                                            try { connectingProfile.Server.Disconnect(authenticatingServer); } catch { }
+                                            Wizard.TryInvoke((Action)(() =>
+                                            {
+                                                ActiveSession = null;
+                                                if (State != StateType.Expired)
+                                                    State = StateType.Inactive;
+                                                Wizard.TaskCount--;
+                                            }));
                                         }
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (Exception ex)
-                                    {
-                                        Wizard.TryInvoke((Action)(() =>
-                                        {
-                                            // Clear failing server/profile to auto-start on next launch.
-                                            Properties.Settings.Default.LastSelectedServer = null;
-                                            throw ex;
-                                        }));
-                                    }
-                                    finally {
-                                        Wizard.TryInvoke((Action)(() =>
-                                        {
-                                            ActiveSession = null;
-                                            if (State != StateType.Expired)
-                                                State = StateType.Inactive;
-                                            Wizard.TaskCount--;
-                                        }));
-                                    }
-                                })).Start();
+                                    })).Start();
+                            }
+                            catch (Exception ex)
+                            {
+                                State = StateType.Inactive;
+                                throw ex;
+                            }
                         },
                         () => SelectedProfile != null && (State == StateType.Inactive || State == StateType.Expired));
                 return _StartSession;
