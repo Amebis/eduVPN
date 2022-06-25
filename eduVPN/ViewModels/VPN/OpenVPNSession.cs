@@ -453,8 +453,7 @@ namespace eduVPN.ViewModels.VPN
                                         {
                                             // Wait for the session to end gracefully.
                                             ManagementSession.Monitor.Join();
-                                            if (ManagementSession.Error != null && // Session terminated in an error.
-                                                !(ManagementSession.Error is OperationCanceledException)) // Session was not cancelled.
+                                            if (!(ManagementSession.Error is OperationCanceledException) && !DisconnectInProgress)
                                                 goto retry;
                                         }
                                         finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
