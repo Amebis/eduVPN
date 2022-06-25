@@ -48,10 +48,10 @@ Publish :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" \
 !ENDIF
 	"bin\Setup\$(CLIENT_TARGET).windows.json" \
-	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)" \
-	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.installer.yaml" \
-	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" \
-	"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml"
+	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)" \
+	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.installer.yaml" \
+	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" \
+	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml"
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 
@@ -68,13 +68,13 @@ Clean ::
 	for /f %%a in ('CertUtil.exe -hashfile $** SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo "hash-sha256": "%%a"}>> "$(@:"=).tmp"
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client" : "bin\Setup\winpkg-manifests\s\SURF"
+"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client" : "bin\Setup\winget-manifests\s\SURF"
 	if not exist $@ md $@
 
-"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)" : "bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client"
+"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)" : "bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client"
 	if not exist $@ md $@
 
-"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.installer.yaml" : \
+"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.installer.yaml" : \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi" \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi"
@@ -115,7 +115,7 @@ ManifestVersion: 1.1.0
 <<NOKEEP
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" :
+"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" :
 	move /y << "$(@:"=).tmp" > NUL
 # Created using eduVPN build system
 # yaml-language-server: $$schema=https://aka.ms/winget-manifest.defaultLocale.1.1.0.schema.json
@@ -138,7 +138,7 @@ ManifestVersion: 1.1.0
 <<NOKEEP
 	move /y "$(@:"=).tmp" $@ > NUL
 
-"bin\Setup\winpkg-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml" :
+"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml" :
 	move /y << "$(@:"=).tmp" > NUL
 # Created using eduVPN build system
 # yaml-language-server: $$schema=https://aka.ms/winget-manifest.version.1.1.0.schema.json
