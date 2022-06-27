@@ -23,5 +23,5 @@ ImportTranslations ::
 	move /y "$(TRANSIFEX_RES)_uk.resx"     "Strings.uk.resx"     > NUL
 	cd "$(MAKEDIR)"
 !ELSE
-	echo $(USERPROFILE)\Downloads\$(TRANSIFEX_ORG)_$(TRANSIFEX_PROJ)_$(TRANSIFEX_RES).zip : Warning: File does not exist. Skipping...
+	@echo $(USERPROFILE)\Downloads\$(TRANSIFEX_ORG)_$(TRANSIFEX_PROJ)_$(TRANSIFEX_RES).zip : Warning: File does not exist. Skipping...
 !ENDIF

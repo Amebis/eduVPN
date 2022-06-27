@@ -65,7 +65,7 @@ Clean ::
 "version": "$(VERSION)",
 "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
 <<NOKEEP
-	for /f %%a in ('CertUtil.exe -hashfile $** SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo "hash-sha256": "%%a"}>> "$(@:"=).tmp"
+	for /f %%a in ('CertUtil.exe -hashfile $** SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo "hash-sha256": "%%a"}>> "$(@:"=).tmp"
 	move /y "$(@:"=).tmp" $@ > NUL
 
 "bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client" : "bin\Setup\winget-manifests\s\SURF"
@@ -90,7 +90,7 @@ Installers:
   InstallerType: wix
   InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi
 <<NOKEEP
-	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
+	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
 	type << >> "$(@:"=).tmp"
   ProductCode: '$(CLIENT_PRODUCT_CODE)'
 - InstallerLocale: en-US
@@ -98,7 +98,7 @@ Installers:
   InstallerType: wix
   InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi
 <<NOKEEP
-	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
+	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
 	type << >> "$(@:"=).tmp"
   ProductCode: '$(CLIENT_PRODUCT_CODE)'
 - InstallerLocale: en-US
@@ -106,7 +106,7 @@ Installers:
   InstallerType: wix
   InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi
 <<NOKEEP
-	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
+	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
 	type << >> "$(@:"=).tmp"
   ProductCode: '$(CLIENT_PRODUCT_CODE)'
 ManifestType: installer
