@@ -27,6 +27,7 @@
     <String Id="HelpCloseButton">&amp;Zapri</String>
     <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;licenčni pogoji&lt;/a&gt;.</String>
     <String Id="InstallAcceptCheckbox">Strinj&amp;am se z licenčnimi pogoji</String>
+    <String Id="InstallDesktopShortcut">Ustvari &amp;bližnjico na namizju</String>
     <String Id="InstallOptionsButton">M&amp;ožnosti</String>
     <String Id="InstallInstallButton">Namest&amp;i</String>
     <String Id="InstallCloseButton">&amp;Zapri</String>

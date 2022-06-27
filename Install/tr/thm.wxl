@@ -26,6 +26,7 @@
     <String Id="HelpCloseButton">&amp;Kapat</String>
     <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;lisans şartları&lt;/a&gt;.</String>
     <String Id="InstallAcceptCheckbox">Lisans &amp;şartlarını kabul ediyorum.</String>
+    <String Id="InstallDesktopShortcut">Create &amp;desktop shortcut</String>
     <String Id="InstallOptionsButton">&amp;Ayarlar</String>
     <String Id="InstallInstallButton">&amp;Kur</String>
     <String Id="InstallCloseButton">&amp;Kapat</String>

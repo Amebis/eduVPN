@@ -101,6 +101,11 @@
                 SourceFile="Install\uk\thm.wxl"/>
         </BootstrapperApplicationRef>
 
+        <util:RegistrySearch
+            Variable="AddDesktopShortcut"
+            Result="exists"
+            Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Value="DesktopShortcut"/>
+
         <Variable Name="LaunchTarget" Value="[ProgramFiles6432Folder]$(var.ClientTitle)\Core\$(var.ClientTarget).Client.exe"/>
 
         <util:RegistrySearchRef Id="NETFRAMEWORK45"/>
@@ -138,17 +143,23 @@
             <MsiPackage
                 Id="$(var.ClientTarget)Client_x86"
                 SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)$(var.CfgTarget)_x86.msi"
-                InstallCondition="NOT VersionNT64"/>
+                InstallCondition="NOT VersionNT64">
+                <MsiProperty Name="AddDesktopShortcut" Value="[AddDesktopShortcut]"/>
+            </MsiPackage>
 
             <MsiPackage
                 Id="$(var.ClientTarget)Client_x64"
                 SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)$(var.CfgTarget)_x64.msi"
-                InstallCondition="NativeMachine = 34404 OR VersionNT64 AND NOT NativeMachine"/>
+                InstallCondition="NativeMachine = 34404 OR VersionNT64 AND NOT NativeMachine">
+                <MsiProperty Name="AddDesktopShortcut" Value="[AddDesktopShortcut]"/>
+            </MsiPackage>
 
             <MsiPackage
                 Id="$(var.ClientTarget)Client_ARM64"
                 SourceFile="bin\Setup\$(var.ClientTarget)Client_$(var.Version)$(var.CfgTarget)_ARM64.msi"
-                InstallCondition="NativeMachine = 43620"/>
+                InstallCondition="NativeMachine = 43620">
+                <MsiProperty Name="AddDesktopShortcut" Value="[AddDesktopShortcut]"/>
+            </MsiPackage>
         </Chain>
     </Bundle>
 </Wix>

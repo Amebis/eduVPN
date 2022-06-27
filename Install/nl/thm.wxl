@@ -27,6 +27,7 @@
     <String Id="HelpCloseButton">&amp;Sluiten</String>
     <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;licentie&lt;/a&gt;.</String>
     <String Id="InstallAcceptCheckbox">Ik ga &amp;akkoord met de licentie</String>
+    <String Id="InstallDesktopShortcut">Bureaubla&amp;d snelkoppeling maken</String>
     <String Id="InstallOptionsButton">&amp;Opties</String>
     <String Id="InstallInstallButton">&amp;Installeren</String>
     <String Id="InstallCloseButton">&amp;Sluiten</String>

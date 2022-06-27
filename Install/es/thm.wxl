@@ -26,6 +26,7 @@
     <String Id="HelpCloseButton">&amp;Cerrar</String>
     <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;términos de licencia&lt;/a&gt;.</String>
     <String Id="InstallAcceptCheckbox">Estoy &amp;de acuerdo con los terminos de licencia</String>
+    <String Id="InstallDesktopShortcut">Crear un &amp;icono en el escritorio</String>
     <String Id="InstallOptionsButton">&amp;Opciones</String>
     <String Id="InstallInstallButton">&amp;Instalar</String>
     <String Id="InstallCloseButton">&amp;Cerrar</String>

@@ -414,7 +414,6 @@
                 <RemoveFolder Id="$(var.ClientTarget).Client.exe.StartMenuShortcut" Directory="ProgramMenuFolder" On="uninstall"/>
                 <RegistryValue Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
-            <!--
             <Component Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Guid="{C630B2C1-7CD1-4E9C-90$(var.ClientId)-1F6EA79C5D85}">
                 <Shortcut
                     Id="$(var.ClientTarget).Client.exe.DesktopShortcut"
@@ -426,8 +425,8 @@
                     Icon="App.ico"/>
                 <RemoveFolder Id="$(var.ClientTarget).Client.exe.DesktopShortcut" Directory="DesktopFolder" On="uninstall"/>
                 <RegistryValue Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+                <Condition>ADDDESKTOPSHORTCUT=1</Condition>
             </Component>
-            -->
             <Component Id="$(var.ClientTarget).Client.exe.StartOnSignon" Guid="{D83E7F79-E156-4B11-98$(var.ClientId)-BCBCF5E9B84F}">
                 <RegistryValue
                     Root="HKLM"
@@ -515,7 +514,7 @@
             <ComponentRef Id="$(var.ClientTarget).Client.exe"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe.config"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe.StartMenuShortcut"/>
-            <!--<ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>-->
+            <ComponentRef Id="$(var.ClientTarget).Client.exe.DesktopShortcut"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe.StartOnSignon"/>
             <ComponentRef Id="ARP.DisplayName"/>
             <ComponentRef Id="ARP.Publisher"/>

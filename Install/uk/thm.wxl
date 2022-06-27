@@ -25,6 +25,7 @@
     <String Id="HelpCloseButton">&amp;Зактири</String>
     <String Id="InstallLicenseLinkText">[WixBundleName] &lt;a href="#"&gt;ліцензійні умови&lt;/a&gt;.</String>
     <String Id="InstallAcceptCheckbox">Я &amp;згоден з ліцензійними умовами</String>
+    <String Id="InstallDesktopShortcut">Розмістити &amp;іконку на робочому столі</String>
     <String Id="InstallOptionsButton">&amp;Параметри</String>
     <!--<UI Control="InstallButton" Width="90"/>-->
     <String Id="InstallInstallButton">&amp;Встановити</String>

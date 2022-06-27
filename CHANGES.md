@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.1...HEAD)
 
+- Optionally install desktop shortcut
+
 
 ## [3.1.1](https://github.com/Amebis/eduVPN/compare/3.1...3.1.1) (2022-06-25)
 
