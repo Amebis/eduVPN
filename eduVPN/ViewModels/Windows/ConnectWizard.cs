@@ -697,47 +697,44 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         private async void AutoReconnect()
         {
-            // Requires DiscoveredServers and DiscoveredOrganizations to be available.
-            // Also, don't auto-reconnect if already auto-reconnecting.
-            if (DiscoveredServers == null || DiscoveredOrganizations == null ||
-                Properties.Settings.Default.LastSelectedServer == null ||
+            if (Properties.Settings.Default.LastSelectedServer == null ||
                 IsAutoReconnectInProgress)
                 return;
-            IsAutoReconnectInProgress = true;
 
-            var connectingServer = GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.LastSelectedServer);
-            if (connectingServer != null)
+            // Select connecting and authenticating server. Or make one.
+            Server connectingServer = null, authenticatingServer = null;
+            if (DiscoveredServers != null)
             {
-                var authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
-                if (authenticatingServer != null)
+                connectingServer = GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.LastSelectedServer);
+                if (connectingServer != null)
                 {
-                    if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, false) != null)
-                    {
-                        ConnectionPage.ConnectingServer = connectingServer;
-                        CurrentPage = ConnectionPage;
-                    }
-                    else
-                    {
-                        Properties.Settings.Default.LastSelectedServer = null;
-                        AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(authenticatingServer, connectingServer));
-                    }
+                    if (DiscoveredOrganizations == null)
+                        return;
+                    authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
+                    if (authenticatingServer == null)
+                        return;
                 }
+                else
+                    connectingServer = authenticatingServer = GetDiscoveredServer<InstituteAccessServer>(Properties.Settings.Default.LastSelectedServer);
+            }
+            if (connectingServer == null)
+            {
+                connectingServer = authenticatingServer = new Server(Properties.Settings.Default.LastSelectedServer);
+                connectingServer.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
+                connectingServer.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
+            }
+
+            // Authorize and start connecting.
+            IsAutoReconnectInProgress = true;
+            if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, false) != null)
+            {
+                ConnectionPage.ConnectingServer = connectingServer;
+                CurrentPage = ConnectionPage;
             }
             else
             {
-                var srv = new Server(Properties.Settings.Default.LastSelectedServer);
-                srv.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
-                srv.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
-                if (await AuthorizationPage.TriggerAuthorizationAsync(srv, false) != null)
-                {
-                    ConnectionPage.ConnectingServer = srv;
-                    CurrentPage = ConnectionPage;
-                }
-                else
-                {
-                    Properties.Settings.Default.LastSelectedServer = null;
-                    AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(srv, srv));
-                }
+                Properties.Settings.Default.LastSelectedServer = null;
+                AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(authenticatingServer, connectingServer));
             }
         }
 
