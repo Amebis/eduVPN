@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.2...HEAD)
 
+- OpenVPN updated to 2.5.7-20220628
+    - openvpn 2.5.7 70897fd139e84a64d6344bf6af28fe0b0b8087d3
+    - openvpnserv client&pipe management revised.
+
 
 ## [3.1.2](https://github.com/Amebis/eduVPN/compare/3.1.1...3.1.2) (2022-06-27)
 
