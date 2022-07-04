@@ -650,11 +650,11 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Access token for {0} has expired..
+        ///   Looks up a localized string similar to {0} requires reauthorization..
         /// </summary>
-        public static string SystemTrayBalloonAutoReconnectFailedMessage {
+        public static string SystemTrayBalloonAutoReconnectFailedMessage2 {
             get {
-                return ResourceManager.GetString("SystemTrayBalloonAutoReconnectFailedMessage", resourceCulture);
+                return ResourceManager.GetString("SystemTrayBalloonAutoReconnectFailedMessage2", resourceCulture);
             }
         }
         

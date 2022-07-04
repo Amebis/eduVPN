@@ -283,7 +283,7 @@ namespace eduVPN.Views.Windows
                 NotifyIcon.ShowBalloonTip(
                     1000 * 60 * 5,
                     string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedTitle, e2.ConnectingServer),
-                    string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedMessage, e2.AuthenticatingServer),
+                    string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedMessage2, e2.AuthenticatingServer),
                     System.Windows.Forms.ToolTipIcon.Warning);
             };
 
