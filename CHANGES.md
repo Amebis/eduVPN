@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.4...HEAD)
 
+- OpenVPN updated to 2.5.7-20220704
+    - openvpn 2.5.7 ce24bec7e2518d4ea7aa931021454d1191f4906b
 - OpenSSL updated to 3.0.4
 
 
