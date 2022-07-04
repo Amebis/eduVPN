@@ -228,8 +228,9 @@ namespace eduVPN.Models
                         {
                             // Access token loaded from the settings was rejected.
                             // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                            // Or the token was revoked on the server side.
                             // Retry with forced access token refresh.
-                            e.ForceRefresh = true;
+                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
                             goto retry;
                         }
                     }
