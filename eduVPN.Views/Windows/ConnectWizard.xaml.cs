@@ -287,18 +287,13 @@ namespace eduVPN.Views.Windows
                     System.Windows.Forms.ToolTipIcon.Warning);
             };
 
-            Loaded += Window_Loaded;
             Closing += Window_Closing;
 
             // Set context menu data context to allow bindings to work.
             if (Resources["SystemTrayMenu"] is ContextMenu menu)
                 menu.DataContext = DataContext;
 
-            if (eduVPN.Properties.Settings.Default.IsSignon && Properties.Settings.Default.StartOnSignon)
-            {
-                // Window_Loaded() will not be called as we are creating hidden window. Show the tray icon now.
-                NotifyIcon.Visible = true;
-            }
+            NotifyIcon.Visible = true;
         }
 
         /// <inheritdoc/>
@@ -323,18 +318,6 @@ namespace eduVPN.Views.Windows
         private void RefreshUseDarkTheme()
         {
             UseDarkTheme = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1) is int appsUseLightTheme && appsUseLightTheme == 0;
-        }
-
-        /// <summary>
-        /// Shows tray icon.
-        /// </summary>
-        /// <param name="sender">Event sender (ignored)</param>
-        /// <param name="e">Event arguments (ignored)</param>
-        /// <remarks>Occurs when the element is laid out, rendered, and ready for interaction.</remarks>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Show tray icon when Connect Wizard is loaded.
-            NotifyIcon.Visible = true;
         }
 
         /// <summary>
