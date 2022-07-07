@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.5...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.6...HEAD)
+
+
+## [3.1.6](https://github.com/Amebis/eduVPN/compare/3.1.5...3.1.6) (2022-07-07)
 
 - OpenSSL updated to 3.0.5
 
