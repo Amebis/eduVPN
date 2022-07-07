@@ -13,8 +13,8 @@
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 VS_VERSION_INFO VERSIONINFO
-	FILEVERSION 3,1,6,0
-	PRODUCTVERSION 3,1,6,0
+	FILEVERSION 3,1,7,0
+	PRODUCTVERSION 3,1,7,0
 	FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
 #ifdef _DEBUG
 	FILEFLAGS VS_FF_DEBUG
@@ -31,11 +31,11 @@ BEGIN
 		BEGIN
 			VALUE "CompanyName",      "SURF"
 			VALUE "FileDescription",  "eduVPN Native Resources"
-			VALUE "FileVersion",      "3.1.6"
+			VALUE "FileVersion",      "3.1.7"
 			VALUE "LegalCopyright",   "Copyright © 2017-2022 The Commons Conservancy"
 			VALUE "OriginalFilename", "eduVPN.Resources.dll"
 			VALUE "ProductName",      "eduVPN"
-			VALUE "ProductVersion",   "3.1.6"
+			VALUE "ProductVersion",   "3.1.7"
 		END
 	END
 	BLOCK "VarFileInfo"
