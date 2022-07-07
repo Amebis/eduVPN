@@ -51,6 +51,8 @@ Ignored when server discovery is off.
 
 `SelfUpdateDiscovery` specifies self-update discovery URI. The client checks this URI for the latest release. The self-updating is turned off by setting this value to a blank string.
 
+Example: [How to switch client to pre-release update channel?](FAQ.md#how-to-switch-client-to-pre-release-update-channel)
+
 
 ### `SelfUpdateDiscoveryPublicKeys` (`REG_MULTI_SZ`)
 
@@ -58,6 +60,7 @@ Ignored when server discovery is off.
 
 Ignored when self-updating is off.
 
+Example: [How to switch client to pre-release update channel?](FAQ.md#how-to-switch-client-to-pre-release-update-channel)
 
 ### `OpenVPNInteractiveServiceInstance` (`REG_SZ`)
 
