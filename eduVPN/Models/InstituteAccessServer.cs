@@ -29,6 +29,25 @@ namespace eduVPN.Models
 
         #endregion
 
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a server
+        /// </summary>
+        public InstituteAccessServer() : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructs an Institute Access server manually
+        /// </summary>
+        /// <param name="b">Server base URI</param>
+        public InstituteAccessServer(Uri b) : base(b)
+        {
+        }
+
+        #endregion
+
         #region Methods
 
         /// <inheritdoc/>

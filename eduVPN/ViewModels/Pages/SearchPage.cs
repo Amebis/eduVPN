@@ -270,26 +270,29 @@ namespace eduVPN.ViewModels.Pages
             SearchInProgress = new CancellationTokenSource();
             var ct = CancellationTokenSource.CreateLinkedTokenSource(SearchInProgress.Token, Window.Abort.Token).Token;
             var keywords = Query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                    try
+            if (Properties.SettingsEx.Default.InstituteAccessServers == null)
+            {
+                new Thread(new ThreadStart(
+                    () =>
                     {
-                        var orderedServerHits = Wizard.GetDiscoveredInstituteAccessServers(keywords, ct);
-                        ct.ThrowIfCancellationRequested();
-                        Wizard.TryInvoke((Action)(() =>
+                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                        try
                         {
-                            if (ct.IsCancellationRequested) return;
-                            var selected = SelectedInstituteAccessServer?.Base;
-                            InstituteAccessServers = orderedServerHits;
-                            SelectedInstituteAccessServer = Wizard.GetDiscoveredServer<InstituteAccessServer>(selected);
-                        }));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
-                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
-                })).Start();
+                            var orderedServerHits = Wizard.GetDiscoveredInstituteAccessServers(keywords, ct);
+                            ct.ThrowIfCancellationRequested();
+                            Wizard.TryInvoke((Action)(() =>
+                            {
+                                if (ct.IsCancellationRequested) return;
+                                var selected = SelectedInstituteAccessServer?.Base;
+                                InstituteAccessServers = orderedServerHits;
+                                SelectedInstituteAccessServer = Wizard.GetDiscoveredServer<InstituteAccessServer>(selected);
+                            }));
+                        }
+                        catch (OperationCanceledException) { }
+                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                        finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                    })).Start();
+            }
             new Thread(new ThreadStart(
                 () =>
                 {

@@ -156,7 +156,8 @@ namespace eduVPN.ViewModels.Windows
         {
             get
             {
-                if (Properties.Settings.Default.InstituteAccessServers.Count == 0 &&
+                if (Properties.SettingsEx.Default.InstituteAccessServers == null &&
+                    Properties.Settings.Default.InstituteAccessServers.Count == 0 &&
                     string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) &&
                     Properties.Settings.Default.OwnServers.Count == 0)
                     return AddAnotherPage;
@@ -433,22 +434,38 @@ namespace eduVPN.ViewModels.Windows
                     // Migrate discovered own servers to institute access servers.
                     var instituteAccessServers = new Xml.UriList();
                     var ownServers = new Xml.UriList();
-                    foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
-                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
-                        {
-                            if (!ownServers.Contains(baseUri))
-                                ownServers.Add(baseUri);
-                        }
-                        else if (!instituteAccessServers.Contains(baseUri))
-                            instituteAccessServers.Add(baseUri);
-                    foreach (var baseUri in Properties.Settings.Default.OwnServers)
-                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
-                        {
+                    var list = Properties.SettingsEx.Default.InstituteAccessServers;
+                    if (list != null)
+                    {
+                        foreach (var baseUri in list)
                             if (!instituteAccessServers.Contains(baseUri))
                                 instituteAccessServers.Add(baseUri);
-                        }
-                        else if (!ownServers.Contains(baseUri))
-                            ownServers.Add(baseUri);
+                        foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
+                            if (!list.Contains(baseUri) && !ownServers.Contains(baseUri))
+                                ownServers.Add(baseUri);
+                        foreach (var baseUri in Properties.Settings.Default.OwnServers)
+                            if (!list.Contains(baseUri) && !ownServers.Contains(baseUri))
+                                ownServers.Add(baseUri);
+                    }
+                    else
+                    {
+                        foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
+                            if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
+                            {
+                                if (!ownServers.Contains(baseUri))
+                                    ownServers.Add(baseUri);
+                            }
+                            else if (!instituteAccessServers.Contains(baseUri))
+                                instituteAccessServers.Add(baseUri);
+                        foreach (var baseUri in Properties.Settings.Default.OwnServers)
+                            if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
+                            {
+                                if (!instituteAccessServers.Contains(baseUri))
+                                    instituteAccessServers.Add(baseUri);
+                            }
+                            else if (!ownServers.Contains(baseUri))
+                                ownServers.Add(baseUri);
+                    }
                     Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
                     Properties.Settings.Default.OwnServers = ownServers;
                     Properties.Settings.Default.CleanupInstituteAccessAndOwnServers = false;

@@ -47,6 +47,17 @@ Ignored when server discovery is off.
 Ignored when server discovery is off.
 
 
+### `InstituteAccessServers` (`REG_MULTI_SZ`)
+
+`InstituteAccessServers` allows preconfiguring the client with specific Institute Access server(s). It has three possible states:
+
+State            | Meaning
+-----------------|--------
+absent           | No Institute Access server is preconfigured. User must search and add servers on his own. (default)
+blank            | Institute Access is completely disabled.
+one or more URLs | Only Institute Access servers from the list will be displayed. User cannot modify the Institute Access server list on his own.
+
+
 ### `SelfUpdateDiscovery` (`REG_SZ`)
 
 `SelfUpdateDiscovery` specifies self-update discovery URI. The client checks this URI for the latest release. The self-updating is turned off by setting this value to a blank string.

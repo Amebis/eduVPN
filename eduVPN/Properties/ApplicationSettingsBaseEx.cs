@@ -5,10 +5,13 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Xml;
 using Microsoft.Win32;
+using System;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Diagnostics;
+using System.Linq;
 
 namespace eduVPN.Properties
 {
@@ -103,6 +106,18 @@ namespace eduVPN.Properties
             {
                 value = new StringCollection();
                 value.AddRange(v);
+                return true;
+            }
+            value = default;
+            return false;
+        }
+
+        protected bool GetValue(string name, out UriList value)
+        {
+            if (Key?.GetValue(name) is string[] v)
+            {
+                value = new UriList();
+                value.AddRange(v.Select(entry => new Uri(entry)));
                 return true;
             }
             value = default;

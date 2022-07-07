@@ -89,6 +89,11 @@ namespace eduVPN.Properties
             }
         }
 
+        /// <summary>
+        /// List of preconfigured institute access servers
+        /// </summary>
+        public UriList InstituteAccessServers => GetValue(nameof(InstituteAccessServers), out UriList value) ? value : null;
+
         #endregion
     }
 }
