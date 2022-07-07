@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.5...HEAD)
 
+- OpenSSL updated to 3.0.5
+
 
 ## [3.1.5](https://github.com/Amebis/eduVPN/compare/3.1.4...3.1.5) (2022-07-04)
 
