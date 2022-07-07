@@ -56,7 +56,7 @@ Publish :: \
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 
 Clean ::
-	-if exist "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis"
+	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*$(CFG_TARGET).vtanalysis" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*$(CFG_TARGET).vtanalysis"
 
 "bin\Setup\$(CLIENT_TARGET).windows.json" : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 	move /y << "$(@:"=).tmp" > NUL

@@ -38,8 +38,8 @@ Publish :: \
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.vtanalysis" : "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe"
 
 Clean ::
-	-if exist "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).vtanalysis" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).vtanalysis"
-	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.vtanalysis"                       del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.vtanalysis"
+	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*$(CFG_TARGET)_$(PLAT).vtanalysis" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*$(CFG_TARGET)_$(PLAT).vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.vtanalysis"              del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.vtanalysis"
 !ENDIF
 
 
