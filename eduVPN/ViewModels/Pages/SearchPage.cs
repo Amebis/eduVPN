@@ -293,26 +293,29 @@ namespace eduVPN.ViewModels.Pages
                         finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                     })).Start();
             }
-            new Thread(new ThreadStart(
-                () =>
-                {
-                    Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                    try
+            if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
+            {
+                new Thread(new ThreadStart(
+                    () =>
                     {
-                        var orderedOrganizationHits = Wizard.GetDiscoveredOrganizations(keywords, ct);
-                        ct.ThrowIfCancellationRequested();
-                        Wizard.TryInvoke((Action)(() =>
+                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                        try
                         {
-                            if (ct.IsCancellationRequested) return;
-                            var selected = SelectedOrganization?.Id;
-                            Organizations = orderedOrganizationHits;
-                            SelectedOrganization = Wizard.GetDiscoveredOrganization(selected);
-                        }));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
-                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
-                })).Start();
+                            var orderedOrganizationHits = Wizard.GetDiscoveredOrganizations(keywords, ct);
+                            ct.ThrowIfCancellationRequested();
+                            Wizard.TryInvoke((Action)(() =>
+                            {
+                                if (ct.IsCancellationRequested) return;
+                                var selected = SelectedOrganization?.Id;
+                                Organizations = orderedOrganizationHits;
+                                SelectedOrganization = Wizard.GetDiscoveredOrganization(selected);
+                            }));
+                        }
+                        catch (OperationCanceledException) { }
+                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                        finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                    })).Start();
+            }
 
             if (keywords.Length == 1 && keywords[0].Split('.').Length >= 3)
             {

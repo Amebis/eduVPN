@@ -104,7 +104,12 @@ namespace eduVPN.ViewModels.Pages
         {
             get
             {
-                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
+                var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
+                if (orgId == "")
+                    return null;
+                if (orgId == null)
+                    orgId = Properties.Settings.Default.SecureInternetOrganization;
+                var org = Wizard.GetDiscoveredOrganization(orgId);
                 if (org == null)
                     return null;
 
@@ -112,7 +117,7 @@ namespace eduVPN.ViewModels.Pages
                 if (srv == null)
                     return null;
 
-                srv.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
+                srv.OrganizationId = orgId;
                 return srv;
             }
         }
@@ -188,7 +193,7 @@ namespace eduVPN.ViewModels.Pages
                             if (Wizard.StartingPage != Wizard.CurrentPage)
                                 Wizard.CurrentPage = Wizard.StartingPage;
                         },
-                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
+                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) && Properties.SettingsEx.Default.SecureInternetOrganization == null);
                 return _ForgetSecureInternet;
             }
         }
@@ -206,7 +211,15 @@ namespace eduVPN.ViewModels.Pages
                 if (_ChangeSecureInternetServer == null)
                     _ChangeSecureInternetServer = new DelegateCommand(
                         () => Wizard.CurrentPage = Wizard.SelectSecureInternetServerPage,
-                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization));
+                        () =>
+                        {
+                            var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
+                            if (orgId == "")
+                                return false;
+                            if (orgId == null)
+                                orgId = Properties.Settings.Default.SecureInternetOrganization;
+                            return !string.IsNullOrEmpty(orgId);
+                        });
                 return _ChangeSecureInternetServer;
             }
         }
@@ -404,13 +417,19 @@ namespace eduVPN.ViewModels.Pages
             try
             {
                 list.Clear();
-                var org = Wizard.GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                if (org != null)
+                var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
+                if (orgId != "")
                 {
-                    SecureInternetServer srv;
-                    if ((srv = Wizard.GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.SecureInternetConnectingServer)) != null ||
-                        (srv = AuthenticatingSecureInternetServer) != null)
-                        list.Add(srv);
+                    if (orgId == null)
+                        orgId = Properties.Settings.Default.SecureInternetOrganization;
+                    var org = Wizard.GetDiscoveredOrganization(orgId);
+                    if (org != null)
+                    {
+                        SecureInternetServer srv;
+                        if ((srv = Wizard.GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.SecureInternetConnectingServer)) != null ||
+                            (srv = AuthenticatingSecureInternetServer) != null)
+                            list.Add(srv);
+                    }
                 }
             }
             finally { SecureInternetServers.EndUpdate(); }
@@ -425,6 +444,8 @@ namespace eduVPN.ViewModels.Pages
         /// <param name="org">Organization</param>
         public void SetSecureInternetOrganization(Organization org)
         {
+            if (Properties.SettingsEx.Default.SecureInternetOrganization != null)
+                return;
             Properties.Settings.Default.SecureInternetOrganization = org.Id;
             Properties.Settings.Default.SecureInternetConnectingServer = org.SecureInternetBase;
             RebuildSecureInternetServers(this, null);

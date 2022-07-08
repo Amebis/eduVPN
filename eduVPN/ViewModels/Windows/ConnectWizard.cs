@@ -156,13 +156,20 @@ namespace eduVPN.ViewModels.Windows
         {
             get
             {
-                if (Properties.SettingsEx.Default.InstituteAccessServers == null &&
-                    Properties.Settings.Default.InstituteAccessServers.Count == 0 &&
-                    string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) &&
-                    Properties.Settings.Default.OwnServers.Count == 0)
-                    return AddAnotherPage;
+                var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
+                if (precfgList != null && precfgList.Count != 0)
+                    return HomePage;
 
-                return HomePage;
+                var precfgOrgId = Properties.SettingsEx.Default.SecureInternetOrganization;
+                if (!string.IsNullOrEmpty(precfgOrgId))
+                    return HomePage;
+
+                if (precfgList == null && Properties.Settings.Default.InstituteAccessServers.Count != 0 ||
+                    precfgOrgId == null && !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) ||
+                    Properties.Settings.Default.OwnServers.Count != 0)
+                    return HomePage;
+
+                return AddAnotherPage;
             }
         }
 
@@ -363,7 +370,10 @@ namespace eduVPN.ViewModels.Windows
             }
 
             if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri != null)
-                InitOrganizations();
+            {
+                if (!InitOrganizations())
+                    actions.Add(new KeyValuePair<Action, int>(DiscoverOrganizations, 0));
+            }
             else
             {
                 Properties.Settings.Default.SecureInternetConnectingServer = null;
@@ -476,14 +486,16 @@ namespace eduVPN.ViewModels.Windows
             }));
         }
 
-        private void InitServers()
+        private bool InitServers()
         {
             var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.ServersDiscovery);
             if (response != null)
             {
                 Trace.TraceInformation("Populating servers from cache");
                 UpdateServers((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
+                return true;
             }
+            return false;
         }
 
         private void DiscoverServers()
@@ -533,14 +545,16 @@ namespace eduVPN.ViewModels.Windows
             }));
         }
 
-        private void InitOrganizations()
+        private bool InitOrganizations()
         {
             var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.OrganizationsDiscovery);
             if (response != null)
             {
                 Trace.TraceInformation("Populating organizations from cache");
                 UpdateOrganizations((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
+                return true;
             }
+            return false;
         }
 
         /// <summary>
@@ -697,13 +711,19 @@ namespace eduVPN.ViewModels.Windows
         {
             if (connectingServer is SecureInternetServer)
             {
-                var org = GetDiscoveredOrganization(Properties.Settings.Default.SecureInternetOrganization);
-                if (org != null)
+                var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
+                if (orgId != "")
                 {
-                    var srv = GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                    if (srv != null)
-                        srv.OrganizationId = Properties.Settings.Default.SecureInternetOrganization;
-                    return srv;
+                    if (orgId == null)
+                        orgId = Properties.Settings.Default.SecureInternetOrganization;
+                    var org = GetDiscoveredOrganization(orgId);
+                    if (org != null)
+                    {
+                        var srv = GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
+                        if (srv != null)
+                            srv.OrganizationId = orgId;
+                        return srv;
+                    }
                 }
             }
             return connectingServer;

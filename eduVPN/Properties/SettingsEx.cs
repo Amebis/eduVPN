@@ -94,6 +94,11 @@ namespace eduVPN.Properties
         /// </summary>
         public UriList InstituteAccessServers => GetValue(nameof(InstituteAccessServers), out UriList value) ? value : null;
 
+        /// <summary>
+        /// Preconfigured Secure Internet organization Id
+        /// </summary>
+        public string SecureInternetOrganization => GetValue(nameof(SecureInternetOrganization), out string value) ? value : null;
+
         #endregion
     }
 }

@@ -58,6 +58,17 @@ blank            | Institute Access is completely disabled.
 one or more URLs | Only Institute Access servers from the list will be displayed. User cannot modify the Institute Access server list on his own.
 
 
+### `SecureInternetOrganization` (`REG_SZ`)
+
+`SecureInternetOrganization` allows preconfiguring the client with specific Secure Internet organization. It has three possible states:
+
+State            | Meaning
+-----------------|--------
+absent           | No Secure Internet organization is preconfigured. User must search and add organization on his own. (default)
+blank            | Secure Internet is completely disabled.
+organization ID  | Secure Internet organization is preset. User cannot modify the Secure Internet organization on his own. But, is allowed to change Secure Internet server to connect to.
+
+
 ### `SelfUpdateDiscovery` (`REG_SZ`)
 
 `SelfUpdateDiscovery` specifies self-update discovery URI. The client checks this URI for the latest release. The self-updating is turned off by setting this value to a blank string.
