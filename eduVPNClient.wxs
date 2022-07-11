@@ -304,12 +304,11 @@
                 <File Source="eduWGSvcHost.exe"/>
                 <CreateFolder Directory="WIREGUARDCONFIGDIR">
                     <!--
-                        SYSTEM (SY): full (FA)
-                        Administrators (BA): full (FA)
+                        SYSTEM (SY): read&write&delete file (FRFWSD)
                         Users (BU): create&list files (0x100003)
-                        CREATOR OWNER (CO): full (FA)
+                        CREATOR OWNER (CO): read&write&delete file (FRFWSD)
                     -->
-                    <PermissionEx Id="WIREGUARDCONFIGDIR" Sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;;0x100003;;;BU)(A;OIIO;FA;;;CO)"/>
+                    <PermissionEx Id="WIREGUARDCONFIGDIR" Sddl="D:PAI(A;OICI;FRFWSD;;;SY)(A;;0x100003;;;BU)(A;OIIO;FRFWSD;;;CO)"/>
                 </CreateFolder>
                 <RemoveFile
                     Id="WIREGUARDCONFIGDIR.conf"
