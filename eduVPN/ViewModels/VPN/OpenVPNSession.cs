@@ -101,7 +101,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN profile configuration file path
         /// </summary>
-        private string ConfigurationPath => Path.Combine(WorkingFolder, ConnectionId + ".ovpn");
+        private string ConfigurationPath => Path.Combine(WorkingFolder, ConnectionId + ".ovpn.dpapi");
 
         /// <summary>
         /// OpenVPN connection log
@@ -237,13 +237,8 @@ namespace eduVPN.ViewModels.VPN
                             try
                             {
                                 // Save OpenVPN configuration file.
-                                using (var fs = new FileStream(
-                                    ConfigurationPath,
-                                    FileMode.Create,
-                                    FileAccess.Write,
-                                    FileShare.Read,
-                                    1048576,
-                                    FileOptions.SequentialScan))
+                                var fs = new MemoryStream();
+                                using (fs)
                                 using (var sw = new StreamWriter(fs))
                                 {
                                     // Save profile's configuration to file.
@@ -382,6 +377,17 @@ namespace eduVPN.ViewModels.VPN
                                         sw.WriteLine(openVPNAddOptions);
                                     }
                                 }
+                                var ovpn = fs.ToArray();
+                                var ovpnDpapi = ProtectedData.Protect(ovpn, null, DataProtectionScope.CurrentUser);
+                                Array.Clear(ovpn, 0, ovpn.Length);
+                                using (var fsDpapi = new FileStream(
+                                    ConfigurationPath,
+                                    FileMode.Create,
+                                    FileAccess.Write,
+                                    FileShare.Read,
+                                    1048576,
+                                    FileOptions.SequentialScan))
+                                    fsDpapi.Write(ovpnDpapi, 0, ovpnDpapi.Length);
                             }
                             catch (OperationCanceledException) { throw; }
                             catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
@@ -400,7 +406,7 @@ namespace eduVPN.ViewModels.VPN
                                     openvpnInteractiveServiceConnection.Connect(
                                         string.Format("openvpn{0}\\service", Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance),
                                         WorkingFolder,
-                                        new string[] { "--config", ConnectionId + ".ovpn", },
+                                        new string[] { "--config", ConnectionId + ".ovpn.dpapi", },
                                         mgmtPassword + "\n",
                                         3000,
                                         Window.Abort.Token);

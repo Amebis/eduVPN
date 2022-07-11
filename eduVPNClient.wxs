@@ -194,6 +194,11 @@
                     Name="*.ovpn"
                     On="uninstall"/>
                 <RemoveFile
+                    Id="OPENVPNCONFIGDIR.ovpn.dpapi"
+                    Directory="OPENVPNCONFIGDIR"
+                    Name="*.ovpn.dpapi"
+                    On="uninstall"/>
+                <RemoveFile
                     Id="OPENVPNCONFIGDIR.conf"
                     Directory="OPENVPNCONFIGDIR"
                     Name="*.conf"
@@ -262,7 +267,7 @@
                     Key="Software\OpenVPN$$$(var.ClientTarget)"
                     Name="config_ext"
                     Type="string"
-                    Value="ovpn"/>
+                    Value="ovpn.dpapi"/>
             </Component>
             <Component Id="openvpnserv.exe.reg4" Guid="{C1BE59CF-289E-4C1F-AF$(var.ClientId)-74F7DFC3E93E}">
                 <RegistryValue
