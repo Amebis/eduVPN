@@ -4,6 +4,8 @@
 
 - Preconfigurable Institute Access
 - Preconfigurable Secure Internet
+- libsodium updated to 1.0.18-20220711
+    - libsodium 1.0.18 stable d69a2342bccb98a3c28c0b7d5e4e6f3b8c789621
 
 
 ## [3.1.6](https://github.com/Amebis/eduVPN/compare/3.1.5...3.1.6) (2022-07-07)
