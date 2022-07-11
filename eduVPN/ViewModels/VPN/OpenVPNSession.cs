@@ -38,7 +38,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN connection identifier
         /// </summary>
-        /// <remarks>Connection identifier determines .conf and .log filenames.</remarks>
+        /// <remarks>Connection identifier determines .ovpn and .log filenames.</remarks>
         private readonly string ConnectionId;
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// OpenVPN profile configuration file path
         /// </summary>
-        private string ConfigurationPath => Path.Combine(WorkingFolder, ConnectionId + ".conf");
+        private string ConfigurationPath => Path.Combine(WorkingFolder, ConnectionId + ".ovpn");
 
         /// <summary>
         /// OpenVPN connection log
@@ -400,7 +400,7 @@ namespace eduVPN.ViewModels.VPN
                                     openvpnInteractiveServiceConnection.Connect(
                                         string.Format("openvpn{0}\\service", Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance),
                                         WorkingFolder,
-                                        new string[] { "--config", ConnectionId + ".conf", },
+                                        new string[] { "--config", ConnectionId + ".ovpn", },
                                         mgmtPassword + "\n",
                                         3000,
                                         Window.Abort.Token);
