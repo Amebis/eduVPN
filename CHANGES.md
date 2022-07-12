@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.6...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.7...HEAD)
+
+
+## [3.1.7](https://github.com/Amebis/eduVPN/compare/3.1.6...3.1.7) (2022-07-12)
 
 - Preconfigurable Institute Access
 - Preconfigurable Secure Internet
