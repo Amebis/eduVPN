@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.7...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.1.8...HEAD)
+
+
+## [3.1.8](https://github.com/Amebis/eduVPN/compare/3.1.7...3.1.8) (2022-07-12)
 
 - Desktop shortcut made opt-out
 
