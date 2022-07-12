@@ -7,9 +7,11 @@
 - libsodium updated to 1.0.18-20220711
     - libsodium 1.0.18 stable d69a2342bccb98a3c28c0b7d5e4e6f3b8c789621
 - OpenVPN configuration file extension changed from .conf to .ovpn
-- OpenVPN updated to 2.5.7-20220711
+- OpenVPN configuration delivery over pipe and stdin
+- OpenVPN updated to 2.5.7-20220712
     - openvpn 2.5.7 ce24bec7e2518d4ea7aa931021454d1191f4906b
     - DPAPI protection of .ovpn files
+    - Interactive Service --config stdin support
 
 
 ## [3.1.6](https://github.com/Amebis/eduVPN/compare/3.1.5...3.1.6) (2022-07-07)
