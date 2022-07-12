@@ -101,10 +101,19 @@
                 SourceFile="Install\uk\thm.wxl"/>
         </BootstrapperApplicationRef>
 
+        <Variable Name="AddDesktopShortcut" Value="1"/>
         <util:RegistrySearch
+            Id="UserRegKeyExist"
+            Variable="UserRegKeyExist"
+            Result="exists"
+            Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)"/>
+        <util:RegistrySearch
+            Id="AddDesktopShortcut"
             Variable="AddDesktopShortcut"
             Result="exists"
-            Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Value="DesktopShortcut"/>
+            Root="HKCU" Key="SOFTWARE\$(var.ClientUrn)" Value="DesktopShortcut"
+            Condition="UserRegKeyExist"
+            After="UserRegKeyExist"/>
 
         <Variable Name="LaunchTarget" Value="[ProgramFiles6432Folder]$(var.ClientTitle)\Core\$(var.ClientTarget).Client.exe"/>
 
