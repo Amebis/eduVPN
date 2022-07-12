@@ -114,7 +114,8 @@ UnregisterServices ::
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" : \
 	"eduVPNClient.wxs" \
 	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
+	"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" \
+	"Makefile"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNClient.wxs"
 	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVCRedistMSM="$(VCREDIST_MSM)" -out $@ "eduVPNClient.wxs"
 

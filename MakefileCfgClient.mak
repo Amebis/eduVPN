@@ -158,9 +158,9 @@ ManifestVersion: 1.1.0
 # Building
 ######################################################################
 
-"bin\$(CFG)\$(CLIENT_TARGET).wixobj" : "eduVPN.wxs"
-	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) $**
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_CLIENT) -out $@ $**
+"bin\$(CFG)\$(CLIENT_TARGET).wixobj" : "eduVPN.wxs" "Makefile"
+	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPN.wxs"
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_CLIENT) -out $@ "eduVPN.wxs"
 
 Clean ::
 	-if exist "bin\$(CFG)\$(CLIENT_TARGET).wixobj" del /f /q "bin\$(CFG)\$(CLIENT_TARGET).wixobj"
