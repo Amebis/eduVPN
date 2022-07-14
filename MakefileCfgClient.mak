@@ -92,7 +92,10 @@ Installers:
 <<NOKEEP
 	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
 	type << >> "$(@:"=).tmp"
-  ProductCode: '$(CLIENT_PRODUCT_CODE)'
+  AppsAndFeaturesEntries:
+  - ProductCode: '$(CLIENT_PRODUCT_CODE)'
+    DisplayName: $(CLIENT_TITLE) Client $(VERSION) ARM64
+    UpgradeCode: '$(CLIENT_UPGRADE_GUID_64)'
 - InstallerLocale: en-US
   Architecture: x64
   InstallerType: wix
@@ -100,7 +103,10 @@ Installers:
 <<NOKEEP
 	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
 	type << >> "$(@:"=).tmp"
-  ProductCode: '$(CLIENT_PRODUCT_CODE)'
+  AppsAndFeaturesEntries:
+  - ProductCode: '$(CLIENT_PRODUCT_CODE)'
+    DisplayName: $(CLIENT_TITLE) Client $(VERSION) x64
+    UpgradeCode: '$(CLIENT_UPGRADE_GUID_64)'
 - InstallerLocale: en-US
   Architecture: x86
   InstallerType: wix
@@ -108,7 +114,10 @@ Installers:
 <<NOKEEP
 	for /f %%a in ('CertUtil.exe -hashfile "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo ^ ^ InstallerSha256: %%a>> "$(@:"=).tmp"
 	type << >> "$(@:"=).tmp"
-  ProductCode: '$(CLIENT_PRODUCT_CODE)'
+  AppsAndFeaturesEntries:
+  - ProductCode: '$(CLIENT_PRODUCT_CODE)'
+    DisplayName: $(CLIENT_TITLE) Client $(VERSION) x86
+    UpgradeCode: '$(CLIENT_UPGRADE_GUID_32)'
 ManifestType: installer
 ManifestVersion: 1.1.0
 
