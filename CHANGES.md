@@ -1,6 +1,11 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.2...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.2.1...HEAD)
+
+
+## [3.2.1](https://github.com/Amebis/eduVPN/compare/3.2...3.2.1) (2022-07-19)
+
+- Allow SYSTEM user to delete configuration and log files on update or remove
 
 
 ## [3.2](https://github.com/Amebis/eduVPN/compare/3.1.8...3.2) (2022-07-13)
