@@ -208,7 +208,9 @@ Clean ::
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \
 	bin\$(CFG)\$(PLAT)\*.pdb \
 	"eduLibsodium\libsodium\Build\$(CFG)\$(PLAT_MSVC)\libsodium.pdb" \
+!IF "$(CFG)" != "Debug" && "$(PLAT)" != "ARM64"
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\compat.pdb" \
+!ENDIF
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.pdb" \
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.pdb" \
 	"vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
