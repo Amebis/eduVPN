@@ -191,6 +191,70 @@ EvaluateComponents(_In_ MSIHANDLE hInstall)
 	return ERROR_SUCCESS;
 }
 
+static void
+RemoveFiles(_In_z_ LPCTSTR szPath)
+{
+	PMSIHANDLE hRecordSuccess = MsiCreateRecord(2);
+	if ((MSIHANDLE)hRecordSuccess)
+		MsiRecordSetString(hRecordSuccess, 0, TEXT("Deleted \"[1]\""));
+	PMSIHANDLE hRecordFailure = MsiCreateRecord(3);
+	if ((MSIHANDLE)hRecordFailure)
+		MsiRecordSetString(hRecordFailure, 0, TEXT("Failed to delete \"[1]\": [2]"));
+
+	tstring szPath2(szPath);
+	size_t offset = szPath2.length();
+	szPath2 += TEXT("*.*");
+	WIN32_FIND_DATA data;
+	find_file hHandle(FindFirstFile(szPath2.c_str(), &data));
+	if (!hHandle)
+		return;
+	do {
+		if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			continue;
+		szPath2.replace(offset, (size_t)-1, data.cFileName);
+		if (DeleteFile(szPath2.c_str())) {
+			if ((MSIHANDLE)hRecordSuccess) {
+				MsiRecordSetString(hRecordSuccess, 1, szPath2.c_str());
+				MsiProcessMessage(s_hInstall, INSTALLMESSAGE_INFO, hRecordSuccess);
+			}
+		}
+		else {
+			DWORD dwError = GetLastError();
+			if ((MSIHANDLE)hRecordFailure) {
+				MsiRecordSetString(hRecordFailure, 1, szPath2.c_str());
+				MsiRecordSetInteger(hRecordFailure, 2, dwError);
+				MsiProcessMessage(s_hInstall, INSTALLMESSAGE_INFO, hRecordFailure);
+			}
+		}
+	} while (FindNextFile(hHandle, &data));
+}
+
+_Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
+PurgeConfigFolders(_In_ MSIHANDLE hInstall)
+{
+	com_initializer com_init(NULL);
+	s_hInstall = hInstall;
+
+	tstring szValue;
+	UINT uiResult = MsiGetProperty(hInstall, TEXT("ISSUE205VERSIONSINSTALLED"), szValue);
+	if (uiResult != ERROR_SUCCESS || szValue.empty())
+		return ERROR_SUCCESS;
+	
+	static LPCTSTR szConfigFolderProperty[] = {
+		TEXT("OPENVPNCONFIGDIR"),
+		TEXT("WIREGUARDCONFIGDIR")
+	};
+	tstring szPath;
+	for (size_t i = 0; i < _countof(szConfigFolderProperty); ++i) {
+		uiResult = MsiGetProperty(hInstall, szConfigFolderProperty[i], szValue);
+		if (uiResult == ERROR_SUCCESS && !szValue.empty())
+			RemoveFiles(szValue.c_str());
+		else
+			LOG_ERROR_NUM(uiResult, TEXT("MsiGetProperty(\"%s\") failed"), szConfigFolderProperty[i]);
+	}
+	return ERROR_SUCCESS;
+}
+
 _Return_type_success_(return == ERROR_SUCCESS) UINT __stdcall
 RemoveWintunDriver(_In_ MSIHANDLE hInstall)
 {
