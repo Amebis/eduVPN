@@ -68,28 +68,24 @@
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
             <UpgradeVersion
-                Minimum="0.0.0.0"
-                Maximum="1.0.10.0"
+                Maximum="1.0.10"
                 Property="OLDVERSIONSINSTALLED"
-                IncludeMinimum="yes"
                 MigrateFeatures="yes"/>
         </Upgrade>
         <?endif?>
         <Property Id="TAPWININSTALLED" Secure="yes"/>
         <Upgrade Id="$(var.TAPWin.UpgradeGUID)">
             <UpgradeVersion
-                Minimum="0.0.0.0"
+                Minimum="0.0"
                 Property="TAPWININSTALLED"
-                IncludeMinimum="yes"
                 MigrateFeatures="no"
                 IgnoreRemoveFailure="yes"/>
         </Upgrade>
         <Property Id="OPENVPNINSTALLED" Secure="yes"/>
         <Upgrade Id="$(var.OpenVPN.UpgradeGUID)">
             <UpgradeVersion
-                Minimum="0.0.0.0"
+                Minimum="0.0"
                 Property="OPENVPNINSTALLED"
-                IncludeMinimum="yes"
                 MigrateFeatures="no"
                 IgnoreRemoveFailure="yes"/>
         </Upgrade>
@@ -97,10 +93,8 @@
         <Property Id="OLDOPENVPNINSTALLED" Secure="yes"/>
         <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
             <UpgradeVersion
-                Minimum="0.0.0.0"
                 Maximum="2.4.4.1"
                 Property="OLDOPENVPNINSTALLED"
-                IncludeMinimum="yes"
                 IncludeMaximum="yes"
                 MigrateFeatures="no"
                 IgnoreRemoveFailure="yes"/>
