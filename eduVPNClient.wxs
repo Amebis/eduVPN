@@ -350,6 +350,11 @@
                     Directory="WIREGUARDCONFIGDIR"
                     Name="*.txt"
                     On="uninstall"/>
+                <RemoveFile
+                    Id="WIREGUARDCONFIGDIR.log.bin"
+                    Directory="WIREGUARDCONFIGDIR"
+                    Name="log.bin"
+                    On="uninstall"/>
                 <RemoveFolder
                     Id="WIREGUARDCONFIGDIR"
                     Directory="WIREGUARDCONFIGDIR"
