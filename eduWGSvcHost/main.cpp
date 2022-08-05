@@ -233,6 +233,7 @@ static void activate_tunnel(_In_z_ const wchar_t* tunnel_name, _In_count_(config
 			// Start the tunnel service.
 			if (!StartServiceW(service, 0, NULL))
 				throw win_runtime_error("Failed to start tunnel service");
+			DeleteService(service);
 			SERVICE_STATUS tunnel_service_status;
 			for (int i = 0; wait_for_start && i < 180 && QueryServiceStatus(service, &tunnel_service_status) && tunnel_service_status.dwCurrentState == SERVICE_START_PENDING; ++i)
 				if (WaitForSingleObject(quit, 1000) == WAIT_OBJECT_0)
