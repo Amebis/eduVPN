@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.2.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.2.2...HEAD)
+
+
+## [3.2.2](https://github.com/Amebis/eduVPN/compare/3.2.1...3.2.2) (2022-08-08)
 
 - Fixes: #205, #207
 - OpenVPN updated to 2.5.7-20220808
