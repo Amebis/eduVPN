@@ -369,7 +369,7 @@ static DWORD WINAPI client_thread(_In_ LPVOID lpThreadParameter)
 						msg_in.size() < sizeof(message_activate_tunnel) + _msg_in->config_len)
 						throw invalid_argument("Invalid request");
 					MultiByteToWideChar(CP_UTF8, 0, _msg_in->tunnel_name, MAX_WG_TUNNEL_NAME, tunnel_name);
-					activate_tunnel(tunnel_name.c_str(), _msg_in->config, _msg_in->config_len, false);
+					activate_tunnel(tunnel_name.c_str(), _msg_in->config, _msg_in->config_len, true);
 					break;
 				}
 
