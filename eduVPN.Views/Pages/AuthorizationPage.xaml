@@ -13,7 +13,7 @@
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     mc:Ignorable="d"
     d:DesignWidth="319"
-    d:DesignHeight="419"
+    d:DesignHeight="459"
     Style="{StaticResource ConnectWizardPageStyle}">
 
     <Grid VerticalAlignment="Top">
