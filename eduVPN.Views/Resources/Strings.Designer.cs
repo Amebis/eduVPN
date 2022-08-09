@@ -61,6 +61,25 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changelog....
+        /// </summary>
+        public static string AboutPageChangelogTitle {
+            get {
+                return ResourceManager.GetString("AboutPageChangelogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download {0} and _update now
+        ///(Client will restart).
+        /// </summary>
+        public static string AboutPageUpdateTitle {
+            get {
+                return ResourceManager.GetString("AboutPageUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version {0}.
         /// </summary>
         public static string AboutPageVersion {

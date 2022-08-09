@@ -43,7 +43,7 @@
             Margin="22,7"
             HorizontalAlignment="Center"
             Style="{StaticResource LinkButtonStyle}"
-            Command="{Binding ShowChangelog}"
+            Command="{Binding Wizard.ShowChangelog}"
             Content="{x:Static res:Strings.SelfUpdatePromptPageChangelogTitle}"/>
 
         <Button
@@ -53,7 +53,7 @@
             Padding="3"
             IsDefault="True"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.SelfUpdatePromptPageUpdateTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-            Command="{Binding StartUpdate}">
+            Command="{Binding Wizard.StartUpdate}">
             <AccessText
                 TextAlignment="Center"
                 Text="{x:Static res:Strings.SelfUpdatePromptPageUpdateTitle}"/>

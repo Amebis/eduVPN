@@ -6,6 +6,7 @@
 - OpenVPN updated to 2.5.7-20220809
     - openvpn 2.5.7 e3c397b0edd86158b8c417f6d396920a7e2eae68
     - Fix AppVeyor vcpkg integration
+- Show update button on the About page when available
 
 
 ## [3.2.2](https://github.com/Amebis/eduVPN/compare/3.2.1...3.2.2) (2022-08-08)
