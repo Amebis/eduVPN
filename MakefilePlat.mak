@@ -20,9 +20,13 @@ PLAT_VCPKG=x86
 
 BuildVcpkg \
 BuildVcpkg-$(PLAT) ::
-	if not exist vcpkg\vcpkg.exe vcpkg\bootstrap-vcpkg.bat -disableMetrics
-	vcpkg\vcpkg.exe install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+!IFNDEF APPVEYOR
+	if not exist "$(VCPKG_ROOT)\vcpkg.exe" "$(VCPKG_ROOT)\bootstrap-vcpkg.bat" -disableMetrics
+	"$(VCPKG_ROOT)\vcpkg.exe" install --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+!ENDIF
 
 CleanVcpkg \
 CleanVcpkg-$(PLAT) ::
-	-if exist vcpkg\vcpkg.exe vcpkg\vcpkg.exe remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+!IFNDEF APPVEYOR
+	-if exist "$(VCPKG_ROOT)\vcpkg.exe" "$(VCPKG_ROOT)\vcpkg.exe" remove --overlay-ports=openvpn\contrib\vcpkg-ports --overlay-triplets=openvpn\contrib\vcpkg-triplets --triplet "$(PLAT_VCPKG)-windows-ovpn" openssl lz4 lzo pkcs11-helper tap-windows6 wintun
+!ENDIF

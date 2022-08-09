@@ -152,7 +152,7 @@ BuildOpenVPN-$(CFG)-$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
 
-"bin\$(CFG)\$(PLAT)\wintun.dll" : "vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)bin\wintun.dll"
+"bin\$(CFG)\$(PLAT)\wintun.dll" : "$(VCPKG_ROOT)\packages\wintun_$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)bin\wintun.dll"
 	copy /y $** $@ > NUL
 
 "bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.exe"
@@ -213,7 +213,7 @@ Clean ::
 !ENDIF
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.pdb" \
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.pdb" \
-	"vcpkg\installed\$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
+	"$(VCPKG_ROOT)\packages\wintun_$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
 !ENDIF
 
 

@@ -8,6 +8,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>true</VcpkgEnabled>
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgAdditionalInstallOptions>--overlay-triplets=$(SolutionDir)openvpn\contrib\vcpkg-triplets --overlay-ports=$(SolutionDir)openvpn\contrib\vcpkg-ports</VcpkgAdditionalInstallOptions>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Platform)'=='ARM64'">
     <VcpkgTriplet>arm64-windows-ovpn</VcpkgTriplet>
