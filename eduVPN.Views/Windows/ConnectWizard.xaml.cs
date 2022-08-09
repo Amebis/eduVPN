@@ -153,10 +153,10 @@ namespace eduVPN.Views.Windows
                 case 2: WindowState = WindowState.Maximized; break;
             }
             Height = !double.IsNaN(Properties.Settings.Default.WindowHeight) ?
-                Math.Min(Properties.Settings.Default.WindowHeight, SystemParameters.VirtualScreenHeight) :
+                Math.Max(Math.Min(Properties.Settings.Default.WindowHeight, SystemParameters.VirtualScreenHeight), MinHeight) :
                 MinHeight;
             Width = !double.IsNaN(Properties.Settings.Default.WindowWidth) ?
-                Math.Min(Properties.Settings.Default.WindowWidth, SystemParameters.VirtualScreenWidth) :
+                Math.Max(Math.Min(Properties.Settings.Default.WindowWidth, SystemParameters.VirtualScreenWidth), MinWidth) :
                 MinWidth;
             if (!double.IsNaN(Properties.Settings.Default.WindowLeft))
                 Left = Math.Min(Math.Max(Properties.Settings.Default.WindowLeft, SystemParameters.VirtualScreenLeft), SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - Width);
