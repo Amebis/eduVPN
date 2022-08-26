@@ -1,11 +1,15 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.2.2...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3...HEAD)
+
+
+## [3.3](https://github.com/Amebis/eduVPN/compare/3.2.2...3.3) (2022-08-26)
 
 - Fix AppVeyor vcpkg integration
 - OpenVPN updated to 2.5.7-20220809
     - openvpn 2.5.7 e3c397b0edd86158b8c417f6d396920a7e2eae68
     - Fix AppVeyor vcpkg integration
+- Version bumped
 
 
 ## [3.2.2](https://github.com/Amebis/eduVPN/compare/3.2.1...3.2.2) (2022-08-08)
