@@ -212,8 +212,7 @@ Clean ::
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\compat.pdb" \
 !ENDIF
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.pdb" \
-	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.pdb" \
-	"$(VCPKG_ROOT)\packages\wintun_$(PLAT_VCPKG)-windows-ovpn\$(CFG_VCPKG)lib\ossl_static.pdb"
+	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.pdb"
 !ENDIF
 
 
