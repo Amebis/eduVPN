@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3...HEAD)
 
+- Increase minimum window height
+
 
 ## [3.3](https://github.com/Amebis/eduVPN/compare/3.2.2...3.3) (2022-08-26)
 
