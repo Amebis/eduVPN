@@ -362,6 +362,7 @@ namespace eduVPN.ViewModels.Pages
                 var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
                 if (precfgList != null)
                 {
+                    Trace.TraceInformation("Using preconfigured Institute Access servers {0}", string.Join(", ", precfgList));
                     foreach (var baseUri in precfgList)
                     {
                         Window.Abort.Token.ThrowIfCancellationRequested();
@@ -418,6 +419,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 list.Clear();
                 var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
+                if (orgId != null)
+                    Trace.TraceInformation("Using preconfigured Secure Internet organization {0}", orgId);
                 if (orgId != "")
                 {
                     if (orgId == null)
