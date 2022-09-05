@@ -4,6 +4,7 @@
 
 - Increase minimum window height
 - Show update button on the About page when available
+- vcpkg updated to 2022.08.15 927006b24c3a28dfd8aa0ec5f8ce43098480a7f1
 
 
 ## [3.3](https://github.com/Amebis/eduVPN/compare/3.2.2...3.3) (2022-08-26)
