@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.1...HEAD)
+
+
+## [3.3.1](https://github.com/Amebis/eduVPN/compare/3.3...3.3.1)
 
 - Increase minimum window height
 - Show update button on the About page when available
