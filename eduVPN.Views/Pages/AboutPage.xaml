@@ -24,6 +24,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -37,14 +39,14 @@
             Grid.Row="1"
             Margin="7,0,7,7"
             TextAlignment="Center"
-            Text="{Binding Version, StringFormat={x:Static res:Strings.AboutPageVersion}}"/>
+            Text="{Binding Wizard.Version, StringFormat={x:Static res:Strings.AboutPageVersion}}"/>
 
         <TextBlock
             Grid.Row="2"
             Margin="7"
             TextAlignment="Center"
             Style="{StaticResource FineprintNoteStyle}"
-            Text="{Binding Copyright}"/>
+            Text="{Binding Wizard.Copyright}"/>
 
         <Button
             Grid.Row="3"
@@ -54,5 +56,26 @@
             Style="{StaticResource LinkButtonStyle}"
             Click="Website_Click"
             Content="{Binding ClientAboutUri, Source={x:Static prop:Settings.Default}}"/>
+
+        <Button
+            Grid.Row="4"
+            Margin="7"
+            HorizontalAlignment="Center"
+            Style="{StaticResource LinkButtonStyle}"
+            Command="{Binding Wizard.ShowChangelog}"
+            Content="{x:Static res:Strings.AboutPageChangelogTitle}"/>
+
+        <Button
+            Grid.Row="5"
+            Margin="22,7"
+            Width="200" Height="Auto"
+            Padding="3"
+            Style="{StaticResource DiscreteButtonStyle}"
+            AutomationProperties.Name="{Binding Wizard.AvailableVersion, StringFormat={x:Static res:Strings.AboutPageUpdateTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Wizard.StartUpdate}">
+            <AccessText
+                TextAlignment="Center"
+                Text="{Binding Wizard.AvailableVersion, StringFormat={x:Static res:Strings.AboutPageUpdateTitle}}"/>
+        </Button>
     </Grid>
 </Page>

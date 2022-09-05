@@ -698,6 +698,14 @@
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}"/>
 
+    <Style x:Key="DiscreteButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="NavigationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonBaseStyle}">
         <Setter Property="Width" Value="26"/>
         <Setter Property="Height" Value="26"/>

@@ -5,8 +5,10 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx.System;
 using eduVPN.Models;
 using eduVPN.ViewModels.Pages;
+using Microsoft.Win32;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.Windows
@@ -57,6 +61,121 @@ namespace eduVPN.ViewModels.Windows
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Copyright notice
+        /// </summary>
+        public string Copyright => (Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute)?.Copyright;
+
+        /// <summary>
+        /// Executing assembly version
+        /// </summary>
+        public Version Version
+        {
+            get
+            {
+                var ver = Assembly.GetExecutingAssembly()?.GetName()?.Version;
+                return
+                    ver.Revision != 0 ? new Version(ver.Major, ver.Minor, ver.Build, ver.Revision) :
+                    ver.Build != 0 ? new Version(ver.Major, ver.Minor, ver.Build) :
+                        new Version(ver.Major, ver.Minor);
+            }
+        }
+
+        /// <summary>
+        /// Build timestamp
+        /// </summary>
+        public DateTimeOffset Build =>
+                // The Builtin class is implemented in Builtin target in Default.targets.
+                new DateTimeOffset(Builtin.CompileTime, TimeSpan.Zero);
+
+        /// <summary>
+        /// Installed product version
+        /// </summary>
+        public Version InstalledVersion
+        {
+            get => _InstalledVersion;
+            private set
+            {
+                if (SetProperty(ref _InstalledVersion, value))
+                    _StartUpdate?.RaiseCanExecuteChanged();
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Version _InstalledVersion;
+
+        /// <summary>
+        /// Available product version
+        /// </summary>
+        public Version AvailableVersion
+        {
+            get => _AvailableVersion;
+            private set
+            {
+                if (SetProperty(ref _AvailableVersion, value))
+                    _StartUpdate?.RaiseCanExecuteChanged();
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Version _AvailableVersion;
+
+        /// <summary>
+        /// Product changelog
+        /// </summary>
+        public Uri Changelog
+        {
+            get => _Changelog;
+            private set
+            {
+                if (SetProperty(ref _Changelog, value))
+                    _ShowChangelog?.RaiseCanExecuteChanged();
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Uri _Changelog;
+
+        /// <summary>
+        /// Show changelog command
+        /// </summary>
+        public DelegateCommand ShowChangelog
+        {
+            get
+            {
+                if (_ShowChangelog == null)
+                    _ShowChangelog = new DelegateCommand(
+                        () => Process.Start(Changelog.ToString()),
+                        () => Changelog != null);
+                return _ShowChangelog;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _ShowChangelog;
+
+        /// <summary>
+        /// Pass control to the self-update page
+        /// </summary>
+        public DelegateCommand StartUpdate
+        {
+            get
+            {
+                if (_StartUpdate == null)
+                    _StartUpdate = new DelegateCommand(
+                        () =>
+                        {
+                            if (NavigateTo.CanExecute(SelfUpdateProgressPage))
+                                NavigateTo.Execute(SelfUpdateProgressPage);
+                        },
+                        () => AvailableVersion != null && InstalledVersion != null && AvailableVersion > InstalledVersion);
+                return _StartUpdate;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _StartUpdate;
 
         /// <summary>
         /// Navigate to a pop-up page command
@@ -382,7 +501,7 @@ namespace eduVPN.ViewModels.Windows
 
             if (Properties.SettingsEx.Default.SelfUpdateDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
-                    SelfUpdatePromptPage.CheckForUpdates,
+                    DiscoverVersions,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
             // Show Starting wizard page.
@@ -773,6 +892,120 @@ namespace eduVPN.ViewModels.Windows
                 Properties.Settings.Default.LastSelectedServer = null;
                 AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(authenticatingServer, connectingServer));
             }
+        }
+
+        private void DiscoverVersions()
+        {
+            try
+            {
+                Parallel.ForEach(new List<Action>()
+                    {
+                        () =>
+                        {
+                            // Get self-update.
+                            var res = Properties.SettingsEx.Default.SelfUpdateDiscovery;
+                            Trace.TraceInformation("Downloading self-update JSON discovery {0}", res.Uri.AbsoluteUri);
+                            var obj = Properties.Settings.Default.ResponseCache.GetSeq(res, Abort.Token);
+
+                            var repoVersion = new Version((string)obj["version"]);
+                            Trace.TraceInformation("Online version: {0}", repoVersion.ToString());
+                            TryInvoke((Action)(() => {
+                                AvailableVersion = repoVersion;
+                                Changelog = eduJSON.Parser.GetValue(obj, "changelog_uri", out string changelogUri) ? new Uri(changelogUri) : null;
+                                SelfUpdateProgressPage.DownloadUris = new List<Uri>(((List<object>)obj["uri"]).Select(uri => new Uri(res.Uri, (string)uri)));
+                                SelfUpdateProgressPage.Hash = ((string)obj["hash-sha256"]).FromHexToBin();
+                                SelfUpdateProgressPage.Arguments = eduJSON.Parser.GetValue(obj, "arguments", out string installerArguments) ? installerArguments : null;
+                            }));
+                        },
+
+                        () =>
+                        {
+                            // Evaluate installed products.
+                            Version productVersion = null;
+                            var productId = Properties.Settings.Default.SelfUpdateBundleId.ToUpperInvariant();
+                            Trace.TraceInformation("Evaluating installed products");
+                            using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                            using (var uninstallKey = hklmKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", false))
+                            {
+                                foreach (var productKeyName in uninstallKey.GetSubKeyNames())
+                                {
+                                    Abort.Token.ThrowIfCancellationRequested();
+                                    using (var productKey = uninstallKey.OpenSubKey(productKeyName))
+                                    {
+                                        var bundleUpgradeCode = productKey.GetValue("BundleUpgradeCode");
+                                        if ((bundleUpgradeCode is string   bundleUpgradeCodeString && bundleUpgradeCodeString.ToUpperInvariant() == productId ||
+                                                bundleUpgradeCode is string[] bundleUpgradeCodeArray  && bundleUpgradeCodeArray.FirstOrDefault(code => code.ToUpperInvariant() == productId) != null) &&
+                                            productKey.GetValue("BundleVersion") is string bundleVersionString)
+                                        {
+                                            // Our product entry found.
+                                            productVersion = new Version(productKey.GetValue("DisplayVersion") is string displayVersionString ? displayVersionString : bundleVersionString);
+                                            Trace.TraceInformation("Installed version: {0}", productVersion.ToString());
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            TryInvoke((Action)(() => { InstalledVersion = productVersion; }));
+                        },
+                    },
+                action =>
+                {
+                    TryInvoke((Action)(() => TaskCount++));
+                    try { action(); }
+                    finally { TryInvoke((Action)(() => TaskCount--)); }
+                });
+            }
+            catch (AggregateException ex)
+            {
+                var nonCancelledException = ex.InnerExceptions.Where(innerException => !(innerException is OperationCanceledException));
+                if (nonCancelledException.Any())
+                    throw new AggregateException(Resources.Strings.ErrorSelfUpdateDetection, nonCancelledException.ToArray());
+                throw new OperationCanceledException();
+            }
+
+            //// Mock the values for testing.
+            //InstalledVersion = new Version(1, 0);
+            //Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MinValue;
+
+            try
+            {
+                if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == AvailableVersion &&
+                    (Properties.Settings.Default.SelfUpdateLastReminder == DateTimeOffset.MaxValue ||
+                    (DateTimeOffset.Now - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
+                {
+                    // We already prompted user for this version.
+                    // Either user opted not to be reminded of this version update again,
+                    // or it has been less than three days since the last prompt.
+                    Trace.TraceInformation("Update deferred by user choice");
+                    return;
+                }
+            }
+            catch { }
+
+            if (InstalledVersion == null)
+            {
+                // Nothing to update.
+                Trace.TraceInformation("Product not installed or version could not be determined");
+                return; // Quit self-updating.
+            }
+
+            if (AvailableVersion <= InstalledVersion)
+            {
+                // Product already up-to-date.
+                Trace.TraceInformation("Update not required");
+                return;
+            }
+
+            // We're in the background thread - raise the prompt event via dispatcher.
+            TryInvoke((Action)(() =>
+            {
+                if (NavigateTo.CanExecute(SelfUpdatePromptPage))
+                {
+                    Properties.Settings.Default.SelfUpdateLastVersion = AvailableVersion.ToString();
+                    Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.Now;
+                    NavigateTo.Execute(SelfUpdatePromptPage);
+                }
+            }));
         }
 
         /// <summary>
