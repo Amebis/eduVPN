@@ -31,12 +31,6 @@ WIX_CANDLE_FLAGS=-nologo \
 WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 $(WIX_EXTENSIONS)
 WIX_INSIGNIA_FLAGS=-nologo
 
-!IFDEF APPVEYOR
-VCPKG_ROOT=C:\Tools\vcpkg
-!ELSE
-VCPKG_ROOT=vcpkg
-!ENDIF
-
 
 ######################################################################
 # Default target
@@ -51,7 +45,6 @@ Build ::
 
 BuildDeps :: \
 	BuildLibsodium \
-	BuildVcpkg \
 	BuildOpenVPN \
 	BuildWireGuard
 
@@ -102,20 +95,6 @@ Setup :: \
 	SetupMSI \
 	SetupExe \
 	SetupPDB
-
-
-######################################################################
-# Platform specific rules
-######################################################################
-
-PLAT=x86
-!INCLUDE "MakefilePlat.mak"
-
-PLAT=x64
-!INCLUDE "MakefilePlat.mak"
-
-PLAT=ARM64
-!INCLUDE "MakefilePlat.mak"
 
 
 ######################################################################

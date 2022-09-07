@@ -17,9 +17,6 @@
 	path = openvpn
 	url = https://github.com/Amebis/openvpn.git
 	branch = release/2.5
-[submodule "vcpkg"]
-	path = vcpkg
-	url = https://github.com/Microsoft/vcpkg.git
 [submodule "WinStd"]
 	path = WinStd
 	url = https://github.com/Amebis/WinStd.git
