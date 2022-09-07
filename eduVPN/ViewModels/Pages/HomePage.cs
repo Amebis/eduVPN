@@ -89,7 +89,15 @@ namespace eduVPN.ViewModels.Pages
                             if (Wizard.StartingPage != Wizard.CurrentPage)
                                 Wizard.CurrentPage = Wizard.StartingPage;
                         },
-                        () => SelectedInstituteAccessServer != null && Properties.SettingsEx.Default.InstituteAccessServers == null);
+                        () =>
+                        {
+                            if (SelectedInstituteAccessServer == null)
+                                return false;
+                            var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
+                            if (precfgList != null && precfgList.Contains(SelectedInstituteAccessServer.Base))
+                                return false;
+                            return true;
+                        });
                 return _ForgetInstituteAccessServer;
             }
         }
@@ -362,7 +370,7 @@ namespace eduVPN.ViewModels.Pages
                 var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
                 if (precfgList != null)
                 {
-                    Trace.TraceInformation("Using preconfigured Institute Access servers {0}", string.Join(", ", precfgList));
+                    Trace.TraceInformation("Adding preconfigured Institute Access servers {0}", string.Join(", ", precfgList));
                     foreach (var baseUri in precfgList)
                     {
                         Window.Abort.Token.ThrowIfCancellationRequested();
@@ -376,15 +384,14 @@ namespace eduVPN.ViewModels.Pages
                         list.Add(srv);
                     }
                 }
-                else
+                foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
                 {
-                    foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
-                    {
-                        Window.Abort.Token.ThrowIfCancellationRequested();
-                        var srv = Wizard.GetDiscoveredServer<InstituteAccessServer>(baseUri);
-                        if (srv != null)
-                            list.Add(srv);
-                    }
+                    Window.Abort.Token.ThrowIfCancellationRequested();
+                    if (precfgList != null && precfgList.Contains(baseUri))
+                        continue;
+                    var srv = Wizard.GetDiscoveredServer<InstituteAccessServer>(baseUri);
+                    if (srv != null)
+                        list.Add(srv);
                 }
             }
             finally { InstituteAccessServers.EndUpdate(); }
@@ -397,7 +404,8 @@ namespace eduVPN.ViewModels.Pages
         /// <param name="srv">Server</param>
         public void AddInstituteAccessServer(InstituteAccessServer srv)
         {
-            if (Properties.SettingsEx.Default.InstituteAccessServers != null ||
+            var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
+            if (precfgList != null && precfgList.Contains(srv.Base) ||
                 Properties.Settings.Default.InstituteAccessServers.Contains(srv.Base))
                 return;
             Properties.Settings.Default.InstituteAccessServers.Add(srv.Base);

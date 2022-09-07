@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.1...HEAD)
 
+- Preconfigurable Institute Access is no longer enforcing. Users may add additional servers.
+
 
 ## [3.3.1](https://github.com/Amebis/eduVPN/compare/3.3...3.3.1)
 

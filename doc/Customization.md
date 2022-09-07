@@ -49,13 +49,7 @@ Ignored when server discovery is off.
 
 ### `InstituteAccessServers` (`REG_MULTI_SZ`)
 
-`InstituteAccessServers` allows preconfiguring the client with specific Institute Access server(s). It has three possible states:
-
-State            | Meaning
------------------|--------
-absent           | No Institute Access server is preconfigured. User must search and add servers on his own. (default)
-blank            | Institute Access is completely disabled.
-one or more URLs | Only Institute Access servers from the list will be displayed. User cannot modify the Institute Access server list on his own.
+`InstituteAccessServers` allows preconfiguring the client with Institute Access server(s). May contain any number of eduVPN server base URLs (e.g. `https://demo.eduvpn.nl/`). The servers on this list are displayed first and cannot be modified by user. However, user may add additional Institute Access servers.
 
 
 ### `SecureInternetOrganization` (`REG_SZ`)
