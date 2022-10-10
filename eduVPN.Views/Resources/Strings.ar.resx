@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -191,16 +191,16 @@
     <value>_حول...</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
-    <value>خ_روج</value>
+    <value>خرو_ج</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
     <value>_فتح</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
-    <value>_إعدادات...</value>
+    <value>إع_دادات...</value>
   </data>
   <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>_معلومات عن الاتصال...</value>
+    <value>م_علومات عن الاتصال...</value>
   </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>RTL</value>
@@ -210,7 +210,7 @@
     <value>ابحث عن مؤسستك ...</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_مؤسسة</value>
+    <value>م_ؤسسة</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
     <value>اتصل بخادمك الخاص</value>
@@ -291,7 +291,7 @@
     <value>_مظاهر</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>_معلومات عن الاتصال</value>
+    <value>م_علومات عن الاتصال</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
     <value>صالح الى غاية</value>
@@ -368,7 +368,7 @@
     <value>_ابدأ عند تسجيل الدخول</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} requires reauthorization.</value>
+    <value>{0} يحتاج إعادة تفويض.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
@@ -385,11 +385,11 @@
     <value>المرجو الاتصال بالدعم.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>تغييرات...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>تحميل {0} و تحدي_ث الآن
+(سيتم إعادة تشغيل العميل)</value>
     <comment>{0}=version number</comment>
   </data>
 </root>

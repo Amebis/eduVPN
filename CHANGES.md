@@ -5,6 +5,7 @@
 - Preconfigurable Institute Access is no longer enforcing. Users may add additional servers.
 - OpenVPN updated to 2.5.7-20220907
     - openvpn 2.5.7 64cac790b9d64b3c07fa5222bf46754a04ea1659
+- Translations updated
 
 
 ## [3.3.1](https://github.com/Amebis/eduVPN/compare/3.3...3.3.1)
