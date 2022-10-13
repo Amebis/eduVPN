@@ -107,8 +107,24 @@ static DWORD WINAPI manager_handler(_In_ DWORD dwControl, _In_opt_ DWORD dwEvent
 	return ERROR_CALL_NOT_IMPLEMENTED;
 }
 
+static void validate_tunnel_name(_In_z_ const wchar_t* tunnel_name)
+{
+	if (!tunnel_name[0])
+		throw invalid_argument("Tunnel name cannot be empty");
+	for (size_t i = 0; tunnel_name[i]; ++i)
+		if (tunnel_name[i] == L'/' || tunnel_name[i] == L'\\' ||
+			tunnel_name[i] == L'<' || tunnel_name[i] == L'>' ||
+			tunnel_name[i] == L':' || tunnel_name[i] == L'\"' ||
+			tunnel_name[i] == L'|' || tunnel_name[i] == L'?' ||
+			tunnel_name[i] == L'*' ||
+			iswcntrl(tunnel_name[i]))
+			throw invalid_argument("Tunnel name contains invalid characters");
+}
+
 static void deactivate_tunnel(_In_z_ const wchar_t* tunnel_name, _In_ bool wait_for_stop)
 {
+	validate_tunnel_name(tunnel_name);
+
 	sc_handle scm(OpenSCManagerW(NULL, NULL, SC_MANAGER_ALL_ACCESS));
 	if (!scm)
 		throw win_runtime_error("Failed to open SCM");
@@ -136,6 +152,8 @@ static void deactivate_tunnel(_In_z_ const wchar_t* tunnel_name, _In_ bool wait_
 
 static void activate_tunnel(_In_z_ const wchar_t* tunnel_name, _In_count_(config_len) const char* config, _In_ unsigned int config_len, _In_ bool wait_for_start)
 {
+	validate_tunnel_name(tunnel_name);
+
 	sc_handle scm(OpenSCManagerW(NULL, NULL, SC_MANAGER_ALL_ACCESS));
 	if (!scm)
 		throw win_runtime_error("Failed to open SCM");
@@ -601,6 +619,8 @@ static DWORD WINAPI wg_log_monitor(_In_opt_ LPVOID lpThreadParameter)
 
 static int tunnel(_In_z_ const wchar_t* tunnel_name)
 {
+	validate_tunnel_name(tunnel_name);
+
 	{
 		// Open WireGuard ringlog.
 		// There is only one global WireGuard log. It is named "log.bin" and resides in the same folder than tunnel configuration.
