@@ -113,7 +113,9 @@ UnregisterServices ::
 
 "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" : \
 	"eduVPNClient.wxs" \
+	"$(CLIENT_TARGET).Client\Resources\App.ico" \
 	"bin\$(CFG)\$(PLAT)" \
+	"bin\$(CFG)\$(PLAT)\eduMSICA.dll" \
 	"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" \
 	"Makefile"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNClient.wxs"
