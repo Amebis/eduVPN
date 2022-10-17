@@ -10,4 +10,5 @@ EXPORTS
 	EvaluateComponents
 	RemoveWintunDriver
 	KillExecutableProcesses
+	ResetACLAndPurgeFolder
 	PurgeConfigFolders
