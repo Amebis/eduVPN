@@ -6,6 +6,7 @@
 - OpenVPN updated to 2.5.7-20221010
     - openvpn 2.5.7 af546d798213587285b225cd0031944a81e8e26c
 - Translations updated
+- Fixes: #212
 
 
 ## [3.3.1](https://github.com/Amebis/eduVPN/compare/3.3...3.3.1)
