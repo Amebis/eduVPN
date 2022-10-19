@@ -138,6 +138,8 @@ namespace eduVPN.ViewModels.Pages
                             // Get API endpoints. (Not called from the UI thread or already cached by now. Otherwise it would need to be spawned as a background task to avoid deadlock.)
                             var api = authenticatingServer.GetEndpoints(Window.Abort.Token);
 
+                            var RetryTokenRefreshCount = 5;
+                        RetryTokenRefresh:
                             // Prepare web request.
                             var request = Xml.Response.CreateRequest(api.TokenEndpoint);
                             try
@@ -151,6 +153,15 @@ namespace eduVPN.ViewModels.Pages
                                 e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Refreshed;
                                 e.AccessToken = accessToken;
                                 return;
+                            }
+                            catch (WebException)
+                            {
+                                if (RetryTokenRefreshCount-- > 0)
+                                {
+                                    Window.Abort.Token.WaitHandle.WaitOne(1000);
+                                    goto RetryTokenRefresh;
+                                }
+                                throw;
                             }
                             catch (AccessTokenException ex)
                             {
@@ -238,13 +249,27 @@ namespace eduVPN.ViewModels.Pages
                         if (callbackUri == null)
                             throw new OperationCanceledException();
 
+                        var RetryTokenGetCount = 5;
+                    RetryTokenGet:
                         // Get access token from authorization grant.
                         var request = Xml.Response.CreateRequest(api.TokenEndpoint);
-                        e.AccessToken = authorizationGrant.ProcessResponse(
-                            HttpUtility.ParseQueryString(callbackUri.Query),
-                            request,
-                            null,
-                            Window.Abort.Token);
+                        try
+                        {
+                            e.AccessToken = authorizationGrant.ProcessResponse(
+                                HttpUtility.ParseQueryString(callbackUri.Query),
+                                request,
+                                null,
+                                Window.Abort.Token);
+                        }
+                        catch (WebException)
+                        {
+                            if (RetryTokenGetCount-- > 0)
+                            {
+                                Window.Abort.Token.WaitHandle.WaitOne(1000);
+                                goto RetryTokenGet;
+                            }
+                            throw;
+                        }
                         Window.Abort.Token.ThrowIfCancellationRequested();
 
                         // Save access token to the cache.

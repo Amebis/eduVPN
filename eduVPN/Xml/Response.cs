@@ -119,6 +119,9 @@ namespace eduVPN.Xml
                 // Do HTTP redirection manually to refuse non-https schemes as per APIv3 requirement.
                 // Note: By turning AllowAutoRedirect to false, request.GetResponse() will no longer throw on 3xx status.
                 httpRequest.AllowAutoRedirect = false;
+
+                httpRequest.Timeout = 10 * 1000; // 10 seconds max for GetResponse() and GetRequestStream()
+                httpRequest.ReadWriteTimeout = 30 * 1000; // 30 seconds max for R/W
             }
             return request;
         }
@@ -158,6 +161,8 @@ namespace eduVPN.Xml
             {
                 ct.ThrowIfCancellationRequested();
 
+                var RetryRequestCount = 5;
+            RetryRequest:
                 // Create request.
                 request = CreateRequest(uri, token, responseType);
                 if (request is HttpWebRequest httpRequest)
@@ -185,7 +190,15 @@ namespace eduVPN.Xml
                         using (var requestStream = request.GetRequestStream())
                             requestStream.Write(binBody, 0, binBody.Length, ct);
                     }
-                    catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorUploading, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
+                    catch (WebException ex)
+                    {
+                        if (RetryRequestCount-- > 0)
+                        {
+                            ct.WaitHandle.WaitOne(1000);
+                            goto RetryRequest;
+                        }
+                        throw new AggregateException(Resources.Strings.ErrorUploading, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex);
+                    }
                 }
 
                 ct.ThrowIfCancellationRequested();
@@ -241,6 +254,11 @@ namespace eduVPN.Xml
                 }
                 catch (WebException ex)
                 {
+                    if (RetryRequestCount-- > 0)
+                    {
+                        ct.WaitHandle.WaitOne(1000);
+                        goto RetryRequest;
+                    }
                     if (ex.Response is HttpWebResponse httpResponse)
                         throw new WebExceptionEx(ex, ct);
                     throw new AggregateException(Resources.Strings.ErrorDownloading, ex);
@@ -288,6 +306,8 @@ namespace eduVPN.Xml
                         var uriBuilderSig = new UriBuilder(res.Uri);
                         uriBuilderSig.Path += ".minisig";
 
+                        var RetrySignatureCount = 5;
+                    RetrySignature:
                         // Create signature request.
                         request = CreateRequest(uriBuilderSig.Uri, token, "text/plain");
 
@@ -320,7 +340,15 @@ namespace eduVPN.Xml
                                 }
                             }
                         }
-                        catch (WebException ex) { throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex); }
+                        catch (WebException ex)
+                        {
+                            if (RetrySignatureCount-- > 0)
+                            {
+                                ct.WaitHandle.WaitOne(1000);
+                                goto RetrySignature;
+                            }
+                            throw new AggregateException(Resources.Strings.ErrorDownloadingSignature, ex.Response is HttpWebResponse ? new WebExceptionEx(ex, ct) : ex);
+                        }
 
                         ct.ThrowIfCancellationRequested();
 
