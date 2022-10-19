@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.2...HEAD)
+
+
+## [3.3.2](https://github.com/Amebis/eduVPN/compare/3.3.1...3.3.2) (2022-10-19)
 
 - Preconfigurable Institute Access is no longer enforcing. Users may add additional servers.
 - OpenVPN updated to 2.5.7-20221010
@@ -10,7 +13,7 @@
 - Fixes: #212
 
 
-## [3.3.1](https://github.com/Amebis/eduVPN/compare/3.3...3.3.1)
+## [3.3.1](https://github.com/Amebis/eduVPN/compare/3.3...3.3.1) (2022-09-05)
 
 - Increase minimum window height
 - Show update button on the About page when available
