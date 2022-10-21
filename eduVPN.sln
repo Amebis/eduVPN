@@ -50,6 +50,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduWGSvcHost", "eduWGSvcHos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduWireGuard", "eduWireGuard\eduWireGuard\eduWireGuard.csproj", "{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrepopulateResponseCache", "PrepopulateResponseCache\PrepopulateResponseCache.csproj", "{867391FA-59AA-49FA-9281-746404B2D493}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -288,6 +290,18 @@ Global
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x64.Build.0 = Release|x64
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x86.ActiveCfg = Release|x86
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x86.Build.0 = Release|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|ARM64.ActiveCfg = Debug|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|ARM64.Build.0 = Debug|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x64.ActiveCfg = Debug|x64
+		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x64.Build.0 = Debug|x64
+		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x86.ActiveCfg = Debug|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x86.Build.0 = Debug|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Release|ARM64.ActiveCfg = Release|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Release|ARM64.Build.0 = Release|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x64.ActiveCfg = Release|x64
+		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x64.Build.0 = Release|x64
+		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x86.ActiveCfg = Release|x86
+		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,12 +37,18 @@ WIX_INSIGNIA_FLAGS=-nologo
 ######################################################################
 
 Build ::
-	bin\nuget.exe restore $(NUGET_FLAGS)
 
 
 ######################################################################
 # Build
 ######################################################################
+
+Build \
+SetupBuild :: \
+	"bin\$(TEST_CFG)\$(TEST_PLAT)"
+	bin\nuget.exe restore $(NUGET_FLAGS)
+	msbuild.exe "eduVPN.sln" /t:PrepopulateResponseCache /p:Configuration="$(TEST_CFG)" /p:Platform="$(TEST_PLAT)" $(MSBUILD_FLAGS)
+	"bin\$(TEST_CFG)\$(TEST_PLAT)\PrepopulateResponseCache.exe" "eduVPN.Client\app.config"
 
 BuildDeps :: \
 	BuildLibsodium \

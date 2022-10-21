@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.2...HEAD)
 
+- Server and organization discovery now pre-cached in eduVPN client
+
 
 ## [3.3.2](https://github.com/Amebis/eduVPN/compare/3.3.1...3.3.2) (2022-10-19)
 
