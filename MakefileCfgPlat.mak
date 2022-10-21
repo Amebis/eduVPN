@@ -189,10 +189,12 @@ CleanWireGuard ::
 	-if exist "bin\$(CFG)\$(PLAT)\wireguard.dll" del /f /q "bin\$(CFG)\$(PLAT)\wireguard.dll"
 	-if exist "bin\$(CFG)\$(PLAT)\tunnel.dll"    del /f /q "bin\$(CFG)\$(PLAT)\tunnel.dll"
 
+Build-$(CFG)-$(PLAT) ::
+	bin\nuget.exe restore $(NUGET_FLAGS)
+
 Build \
 Build-$(CFG)-$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)"
-	bin\nuget.exe restore $(NUGET_FLAGS)
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
 
 Clean ::
