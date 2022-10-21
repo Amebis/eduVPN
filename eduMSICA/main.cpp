@@ -566,12 +566,10 @@ PurgeFolder(_In_z_ LPCTSTR szPath)
 		TCHAR sTempFilename[MAX_PATH];
 		GetTempPath(_countof(sTempFilename), sTempFilename);
 		GetTempFileName(sTempFilename, TEXT("eduVPN"), 0, sTempFilename);
+		sTempFilename[_countof(sTempFilename) - 1] = 0;
 		try {
 			// Spawn elevated ResetACLAndPurgeFolder process.
-			ShellExecuteElevated(sRunDll32Path, tstring_printf(TEXT("\"%.*s\",ResetACLAndPurgeFolder \"%s\" \"%.*s\""),
-				_countof(sDllPath), sDllPath,
-				szPath,
-				_countof(sTempFilename), sTempFilename).c_str(), sSystem32Path, SW_HIDE);
+			ShellExecuteElevated(sRunDll32Path, tstring_printf(TEXT("\"%s\",ResetACLAndPurgeFolder \"%s\" \"%s\""), sDllPath, szPath, sTempFilename).c_str(), sSystem32Path, SW_HIDE);
 
 			{
 				// Unfortunately, I am not aware of a way to make ICMLuaUtil::ShellExec() sync with the child process.
@@ -803,6 +801,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 		GetSystemWindowsDirectoryW(sExplorerPath, _countof(sExplorerPath));
 		PathCombineW(sExplorerPath, sExplorerPath, L"explorer.exe");
 		GetModuleFileName(hinstDLL, sDllPath, _countof(sDllPath));
+		sDllPath[_countof(sDllPath) - 1] = 0;
 		break;
 	}
 	return TRUE;
