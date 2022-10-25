@@ -3,7 +3,7 @@
 
 This document describes customization of the eduVPN and Let's Connect! Clients for Windows only. For eduVPN server setup see [eduVPN Documentation](https://github.com/eduvpn/documentation).
 
-eduVPN and Let's Connect! clients are the same client targeted for a different audience. While their UI is different, the customization is identical. Therefore, the remainder of this document will reference "eduVPN" only for readability. For Let's Connect! use case, the "eduVPN" in paths and filenames translates to "LetsConnect".
+eduVPN and Let's Connect! clients are the same client targeted for a different audience. While their UI is different, the customization is mostly identical. Therefore, the remainder of this document will reference "eduVPN" only for readability. For Let's Connect! use case, the "eduVPN" in paths and filenames translates to "LetsConnect".
 
 
 ## Default values
@@ -27,6 +27,8 @@ To override specific setting, add a value described in this chapter to the `HKEY
 
 `ServersDiscovery` specifies server list discovery URI. The client downloads a [list of available servers](https://github.com/eduvpn/documentation/blob/v2/SERVER_DISCOVERY.md) from this URI. The server discovery is turned off by setting this value to a blank string (e.g. in Let's Connect! client).
 
+See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
+
 
 ### `ServersDiscoveryPublicKeys` (`REG_MULTI_SZ`)
 
@@ -34,10 +36,14 @@ To override specific setting, add a value described in this chapter to the `HKEY
 
 Ignored when server discovery is off.
 
+See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
+
 
 ### `OrganizationsDiscovery` (`REG_SZ`)
 
 `OrganizationsDiscovery` specifies organization list discovery URI. The client downloads a [list of available organizations](https://github.com/eduvpn/documentation/blob/v2/SERVER_DISCOVERY.md) from this URI. The organization discovery is turned off by setting this value to a blank string (e.g. in Let's Connect! client).
+
+See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
 
 
 ### `OrganizationsDiscoveryPublicKeys` (`REG_MULTI_SZ`)
@@ -45,6 +51,8 @@ Ignored when server discovery is off.
 `OrganizationsDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `OrganizationsDiscovery` URI content is expected to be signed with one of those. Add one `<Base64 encoded public key>[|<algorithm mask>]` per string/line. Should the sign check not be required (strongly discouraged), set `OrganizationsDiscoveryPublicKeys` to an empty list.
 
 Ignored when server discovery is off.
+
+See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
 
 
 ### `InstituteAccessServers` (`REG_MULTI_SZ`)
