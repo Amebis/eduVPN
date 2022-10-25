@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.3...HEAD)
 
+- Server bookkeeping as discovery changes
+
 
 ## [3.3.3](https://github.com/Amebis/eduVPN/compare/3.3.2...3.3.3)
 

@@ -69,13 +69,6 @@ namespace eduVPN.Properties
         }
 
         /// <summary>
-        /// Perform institute access and own server list cleanup
-        /// </summary>
-        [UserScopedSetting()]
-        [SettingsDescription("Perform institute access and own server list cleanup")]
-        public bool CleanupInstituteAccessAndOwnServers { get; set; }
-
-        /// <summary>
         /// Profile to automatically connect to on startup
         /// </summary>
         [UserScopedSetting()]
@@ -120,7 +113,6 @@ namespace eduVPN.Properties
                 if (Default.GetPreviousVersion(nameof(InstituteAccessInstanceSourceSettings)) is Xml.InstanceSourceSettings instituteAccessServerSourceSettings &&
                     instituteAccessServerSourceSettings.InstanceSource is Xml.LocalInstanceSourceSettings instituteAccessSourceSettings)
                 {
-                    Default.CleanupInstituteAccessAndOwnServers = true;
                     foreach (var srv in instituteAccessSourceSettings.ConnectingInstanceList)
                     {
                         if (!Default.InstituteAccessServers.Contains(srv.Base))

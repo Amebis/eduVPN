@@ -557,42 +557,38 @@ namespace eduVPN.ViewModels.Windows
             }
             TryInvoke((Action)(() =>
             {
-                if (Properties.Settings.Default.CleanupInstituteAccessAndOwnServers)
+                var instituteAccessServers = new Xml.UriList();
+                var ownServers = new Xml.UriList();
+                var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
+                if (precfgList != null)
                 {
-                    // Migrate non-discovered institute access servers to own servers.
-                    // Migrate discovered own servers to institute access servers.
-                    var instituteAccessServers = new Xml.UriList();
-                    var ownServers = new Xml.UriList();
-                    var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
-                    if (precfgList != null)
+                    foreach (var baseUri in precfgList)
+                        if (!instituteAccessServers.Contains(baseUri))
+                            instituteAccessServers.Add(baseUri);
+                }
+                // Migrate non-discovered institute access servers to own servers.
+                foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
+                    if (!instituteAccessServers.Contains(baseUri))
                     {
-                        foreach (var baseUri in precfgList)
-                            if (!instituteAccessServers.Contains(baseUri))
-                                instituteAccessServers.Add(baseUri);
-                    }
-                    foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
-                        if (!instituteAccessServers.Contains(baseUri))
+                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
                         {
-                            if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
-                            {
-                                if (!ownServers.Contains(baseUri))
-                                    ownServers.Add(baseUri);
-                            }
-                            else
-                                instituteAccessServers.Add(baseUri);
-                        }
-                    foreach (var baseUri in Properties.Settings.Default.OwnServers)
-                        if (!instituteAccessServers.Contains(baseUri))
-                        {
-                            if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
-                                instituteAccessServers.Add(baseUri);
-                            else if (!ownServers.Contains(baseUri))
+                            if (!ownServers.Contains(baseUri))
                                 ownServers.Add(baseUri);
                         }
-                    Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
-                    Properties.Settings.Default.OwnServers = ownServers;
-                    Properties.Settings.Default.CleanupInstituteAccessAndOwnServers = false;
-                }
+                        else
+                            instituteAccessServers.Add(baseUri);
+                    }
+                // Migrate discovered own servers to institute access servers.
+                foreach (var baseUri in Properties.Settings.Default.OwnServers)
+                    if (!instituteAccessServers.Contains(baseUri))
+                    {
+                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
+                            instituteAccessServers.Add(baseUri);
+                        else if (!ownServers.Contains(baseUri))
+                            ownServers.Add(baseUri);
+                    }
+                Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
+                Properties.Settings.Default.OwnServers = ownServers;
 
                 DiscoveredServersChanged?.Invoke(this, EventArgs.Empty);
                 AutoReconnect();
