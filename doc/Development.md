@@ -28,7 +28,7 @@
 
 ## Pre-requisites
 
-1. Install [Visual Studio 2019 Community Edition](https://www.visualstudio.com/vs/community/). A minimum set of required features is:
+1. Install [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/community/). A minimum set of required features is:
    - Workloads
       - .NET desktop development
       - Desktop development with C++ (required by eduLibsodium and OpenVPN submodules and eduVPN.Resources resource projects)
@@ -36,9 +36,11 @@
       - Code tools
          - Git for Windows (if not installed by other means)
       - Compilers, build tools, and runtimes
-         - Windows Universal CRT SDK (required by eduLibsodium submodule)
+         - C++ 2022 Redistributable MSMs
+         - MSVC v143 ARM64, ARM64EC and x64/x86 build tools
+         - Python (required by openvpn submodule)
       - SDKs, libraries, and frameworks
-         - Windows 8.1 SDK (required by eduLibsodium submodule)
+         - Windows 11 SDK
 2. Install [vcpkg](https://vcpkg.io/). Bootstrap it and run `vcpkg integrate install` to integrate it into MSBuild/Visual Studio.
 3. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 4. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
@@ -65,14 +67,14 @@ In order to have the build process submit all release binaries to the VirusTotal
 
 ### General Building Guidelines
 
-All `nmake` commands should be invoked from the _x64 Native Tools Command Prompt for VS 2019_ (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2019_). x86 build environment can be used when the 32-bit version is preferred.
-This command prompt sets all Visual Studio 2019 environment variables required by the command line building.
+All `nmake` commands should be invoked from the _x64 Native Tools Command Prompt for VS 2022_ (_Start_ » _All Programs_ » _Visual Studio 2022_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2022_). x86 build environment can be used when the 32-bit version is preferred.
+This command prompt sets all Visual Studio 2022 environment variables required by the command line building.
 
 As dependencies take long time to build, separate `nmake` commands are available: `nmake builddeps` and `nmake cleandeps`.
 
-`nmake register` and `nmake unregister` require elevation. Start the _x64 Native Tools Command Prompt for VS 2019_ elevated (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2019_ » _Run as Administrator_). Other `nmake` commands can be run from a non-elevated _x64 Native Tools Command Prompt for VS 2019_.
+`nmake register` and `nmake unregister` require elevation. Start the _x64 Native Tools Command Prompt for VS 2022_ elevated (_Start_ » _All Programs_ » _Visual Studio 2022_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2022_ » _Run as Administrator_). Other `nmake` commands can be run from a non-elevated _x64 Native Tools Command Prompt for VS 2022_.
 
-Before pulling a new version of the eduVPN source code from the GitHub a `nmake unregister` and `nmake clean cleandeps` is strongly recommended. You can run both commands combined as `nmake unregister clean cleandeps` in a single elevated _x64 Native Tools Command Prompt for VS 2019_.
+Before pulling a new version of the eduVPN source code from the GitHub a `nmake unregister` and `nmake clean cleandeps` is strongly recommended. You can run both commands combined as `nmake unregister clean cleandeps` in a single elevated _x64 Native Tools Command Prompt for VS 2022_.
 
 
 ### Testing and Debugging
@@ -81,7 +83,7 @@ Before pulling a new version of the eduVPN source code from the GitHub a `nmake 
 
 The registration prepares the working environment for the eduVPN and Let's Connect! clients for testing on the build/development computer.
 
-1. Start the _x64 Native Tools Command Prompt for VS 2019_ elevated (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2019_ » _Run as Administrator_).
+1. Start the _x64 Native Tools Command Prompt for VS 2022_ elevated (_Start_ » _All Programs_ » _Visual Studio 2022_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2022_ » _Run as Administrator_).
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. If you haven't done so yet, build dependencies with `nmake builddeps`.
 4. Start the initial build and registration using `nmake register` command. This command will:
@@ -96,7 +98,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
 #### Debugging Clients
 
 1. Perform the [initial registration](#initial-registration) described above.
-2. Open the `eduVPN.sln` file (with VS2019).
+2. Open the `eduVPN.sln` file (with VS2022).
 3. _Build_ » _Configuration Manager..._: Select desired active solution and platform. Please note _AnyCPU_ is not supported (yet).
 4. In the _Solution Explorer_ pane, locate _eduVPN.Client_ or _LetsConnect.Client_ project, right click on it, and _Set as StartUp Project_.
 5. _Build_ » _Build Solution_.
@@ -105,7 +107,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
 
 ### Building MSI Packages and EXE Installer
 
-1. Start the _x64 Native Tools Command Prompt for VS 2019_ (_Start_ » _All Programs_ » _Visual Studio 2019_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2019_). x86 build environment can be used if required too. Both versions build all MSI packages and EXE installers
+1. Start the _x64 Native Tools Command Prompt for VS 2022_ (_Start_ » _All Programs_ » _Visual Studio 2022_ » _Visual Studio Tools_ » _VC_ » _x64 Native Tools Command Prompt for VS 2022_). x86 build environment can be used if required too. Both versions build all MSI packages and EXE installers
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
 3. If you haven't done so yet, build dependencies with `nmake builddeps`.
 4. Start the MSI build using `nmake setup` command.
