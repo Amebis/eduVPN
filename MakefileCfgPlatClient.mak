@@ -116,10 +116,9 @@ UnregisterServices ::
 	"$(CLIENT_TARGET).Client\Resources\App.ico" \
 	"bin\$(CFG)\$(PLAT)" \
 	"bin\$(CFG)\$(PLAT)\eduMSICA.dll" \
-	"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" \
 	"Makefile"
 	"$(WIX)bin\wixcop.exe" $(WIX_WIXCOP_FLAGS) "eduVPNClient.wxs"
-	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -dVCRedistMSM="$(VCREDIST_MSM)" -out $@ "eduVPNClient.wxs"
+	"$(WIX)bin\candle.exe" $(WIX_CANDLE_FLAGS_CFG_PLAT_CLIENT) -out $@ "eduVPNClient.wxs"
 
 Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj" del /f /q "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client.wixobj"

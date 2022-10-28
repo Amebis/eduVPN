@@ -36,7 +36,6 @@
       - Code tools
          - Git for Windows (if not installed by other means)
       - Compilers, build tools, and runtimes
-         - C++ 2022 Redistributable MSMs
          - MSVC v143 ARM64, ARM64EC and x64/x86 build tools
          - Python (required by openvpn submodule)
       - SDKs, libraries, and frameworks

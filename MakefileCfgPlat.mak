@@ -41,9 +41,13 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
 !ENDIF
 
 !IF "$(CFG)" == "Debug"
-VCREDIST_MSM=Microsoft_VC143_DebugCRT_$(PLAT_CLIENT).msm
+WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
+	-dVCRedistDir="$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\debug_nonredist\$(PLAT_CLIENT)\Microsoft.VC143.DebugCRT\\" \
+	-dVCRedistSuffix="d"
 !ELSE
-VCREDIST_MSM=Microsoft_VC143_CRT_$(PLAT_CLIENT).msm
+WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
+	-dVCRedistDir="$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\$(PLAT_CLIENT)\Microsoft.VC143.CRT\\" \
+	-dVCRedistSuffix=""
 !ENDIF
 
 
@@ -199,12 +203,6 @@ Build-$(CFG)-$(PLAT) :: \
 
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
-
-"bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" : "$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\MergeModules\$(VCREDIST_MSM)"
-	copy /y $** $@ > NUL
-
-Clean ::
-	-if exist "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)" del /f /q "bin\$(CFG)\$(PLAT)\$(VCREDIST_MSM)"
 
 !IF "$(CFG)" == "$(SETUP_CFG)"
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \

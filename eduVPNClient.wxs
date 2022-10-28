@@ -170,8 +170,6 @@
             </Directory>
             <Directory Id="ProgramMenuFolder"/>
             <Directory Id="DesktopFolder"/>
-
-            <Merge Id="VCRedist" SourceFile="$(var.VCRedistMSM)" DiskId="1" Language="0"/>
         </Directory>
 
 
@@ -399,6 +397,9 @@
             <Component Id="Prism.dll" Guid="{4A143204-1EBB-4BDE-BA$(var.ClientId)-B0770670ECC3}">
                 <File Source="$(var.TargetDirClient)Prism.dll"/>
             </Component>
+            <Component Id="VCRUNTIME140.dll" Guid="{6B7E12B7-C8CB-4E94-A0$(var.ClientId)-F3FC616FC7D3}">
+                <File Source="$(var.VCRedistDir)VCRUNTIME140$(var.VCRedistSuffix).dll"/>
+            </Component>
             <Component Id="eduLibsodium.dll" Guid="{2A7020F2-83EF-4197-94$(var.ClientId)-484E64F85962}">
                 <File Source="$(var.TargetDirClient)eduLibsodium.dll"/>
             </Component>
@@ -528,8 +529,8 @@
             <ComponentRef Id="eduWGSvcHost.exe.reg0"/>
             <ComponentRef Id="eduWGSvcHost.exe.reg1"/>
 
-            <MergeRef Id="VCRedist"/>
             <ComponentRef Id="Prism.dll"/>
+            <ComponentRef Id="VCRUNTIME140.dll"/>
             <ComponentRef Id="eduLibsodium.dll"/>
             <ComponentRef Id="eduEx.dll"/>
             <ComponentRef Id="eduJSON.dll"/>
