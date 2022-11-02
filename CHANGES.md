@@ -5,6 +5,8 @@
 - OpenVPN updated to 2.5.8-20221102
     - openvpn 2.5.8 0357ceb877687faa2f3c671fcb8bc88b5a69b449
     - OpenSSL 3.0.7
+- libsodium updated to 1.0.18-20221102
+    - libsodium 1.0.18 stable fd5cbe9e696c1b886e45f3111dd099d51b12de6e
 - Server bookkeeping as discovery changes
 
 
