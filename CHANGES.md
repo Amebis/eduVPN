@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.3...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.4...HEAD)
+
+
+## [3.3.4](https://github.com/Amebis/eduVPN/compare/3.3.3...3.3.4) (2022-11-02)
 
 - OpenVPN updated to 2.5.8-20221102
     - openvpn 2.5.8 0357ceb877687faa2f3c671fcb8bc88b5a69b449
@@ -10,7 +13,7 @@
 - Server bookkeeping as discovery changes
 
 
-## [3.3.3](https://github.com/Amebis/eduVPN/compare/3.3.2...3.3.3)
+## [3.3.3](https://github.com/Amebis/eduVPN/compare/3.3.2...3.3.3) (2022-10-25)
 
 - Server and organization discovery now pre-cached in eduVPN client
 
