@@ -31,7 +31,7 @@ SetupPDB :: \
 
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" :
 	-if exist "$(@:"=).tmp" del /f /q "$(@:"=).tmp"
-	zip.exe -9 "$(@:"=).tmp" $**
+	tar.exe -c -a -f "$(@:"=).tmp" $**
 	move /y "$(@:"=).tmp" $@ > NUL
 !ENDIF
 
