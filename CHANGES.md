@@ -29,6 +29,13 @@
     - openvpn 2.5.7 64cac790b9d64b3c07fa5222bf46754a04ea1659
 
 
+## [3.3.0.1](https://github.com/Amebis/eduVPN/compare/3.3...3.3.0.1) (2022-11-02)
+
+- OpenVPN updated to 2.5.7-20221102
+    - openvpn 2.5.7 e3c397b0edd86158b8c417f6d396920a7e2eae68
+    - OpenSSL 3.0.7
+
+
 ## [3.3](https://github.com/Amebis/eduVPN/compare/3.2.2...3.3) (2022-08-26)
 
 - Fix AppVeyor vcpkg integration
