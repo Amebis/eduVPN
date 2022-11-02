@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.3...HEAD)
 
+- OpenVPN updated to 2.5.8-20221102
+    - openvpn 2.5.8 0357ceb877687faa2f3c671fcb8bc88b5a69b449
+    - OpenSSL 3.0.7
 - Server bookkeeping as discovery changes
 
 
