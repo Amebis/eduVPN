@@ -31,7 +31,7 @@ namespace eduVPN.ViewModels.VPN
     /// <summary>
     /// OpenVPN session
     /// </summary>
-    public class OpenVPNSession : Session
+    public class OpenVPNSession : Session, IDisposable
     {
         #region Fields
 
@@ -90,9 +90,14 @@ namespace eduVPN.ViewModels.VPN
         private volatile bool RenewInProgress;
 
         /// <summary>
-        /// Session disconnect in progress
+        /// Session termination token
         /// </summary>
-        private volatile bool DisconnectInProgress;
+        private readonly CancellationTokenSource SessionInProgress = new CancellationTokenSource();
+
+        /// <summary>
+        /// Quit token
+        /// </summary>
+        protected CancellationTokenSource SessionAndWindowInProgress;
 
         #endregion
 
@@ -129,9 +134,9 @@ namespace eduVPN.ViewModels.VPN
                                             Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                                             true,
                                             ProfileConfig.ContentType,
-                                            Window.Abort.Token);
+                                            SessionAndWindowInProgress.Token);
                                         Wizard.TryInvoke((Action)(() => ProfileConfig = config));
-                                        ManagementSession.SendSignal(SignalType.SIGHUP, Window.Abort.Token);
+                                        ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
                                     }
                                     catch (OperationCanceledException) { }
                                     catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
@@ -161,14 +166,10 @@ namespace eduVPN.ViewModels.VPN
                     _Disconnect = new DelegateCommand(
                         () =>
                         {
-                            DisconnectInProgress = true;
+                            SessionInProgress.Cancel();
                             _Disconnect.RaiseCanExecuteChanged();
-
-                            // Terminate connection.
-                            State = SessionStatusType.Disconnecting;
-                            ManagementSession.QueueSendSignal(SignalType.SIGTERM);
                         },
-                        () => !DisconnectInProgress && ManagementSession != null);
+                        () => !SessionInProgress.IsCancellationRequested);
                 return _Disconnect;
             }
         }
@@ -206,6 +207,7 @@ namespace eduVPN.ViewModels.VPN
             base(wizard, connectingProfile, profileConfig)
         {
             ConnectionId = Guid.NewGuid().ToString();
+            SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
         }
 
         #endregion
@@ -226,7 +228,7 @@ namespace eduVPN.ViewModels.VPN
                 propertyUpdater.Start();
                 try
                 {
-                    // Get a random TCP port for openvpn.exe management interface.
+                    // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
                     var mgmtServer = new TcpListener(IPAddress.Loopback, 0);
                     mgmtServer.Start();
                     try
@@ -331,9 +333,8 @@ namespace eduVPN.ViewModels.VPN
                                 sw.WriteLine("<management-client-pass>");
                                 sw.WriteLine(mgmtPassword);
                                 sw.WriteLine("</management-client-pass>");
+                                sw.WriteLine("management-client"); // Instruct openvpn.exe to contact us.
                                 sw.WriteLine("management-hold"); // Wait for our signal to start connecting.
-                                sw.WriteLine("management-signal"); // Raise SIGUSR1 if our client dies/closes management interface.
-                                sw.WriteLine("remap-usr1 SIGTERM"); // SIGUSR1 (reconnect) => SIGTERM (disconnect)
                                 sw.WriteLine("management-query-passwords");
 
                                 // Ask when username/password is denied.
@@ -387,9 +388,6 @@ namespace eduVPN.ViewModels.VPN
                         // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
                         using (var openvpnInteractiveServiceConnection = new eduOpenVPN.InteractiveService.Session())
                         {
-                            // Release TCP port for openvpn.exe management interface.
-                            mgmtServer.Stop();
-
                             try
                             {
                                 openvpnInteractiveServiceConnection.Connect(
@@ -398,29 +396,18 @@ namespace eduVPN.ViewModels.VPN
                                     new string[] { "--config", "stdin", },
                                     Encoding.UTF8.GetString(ovpn),
                                     3000,
-                                    Window.Abort.Token);
+                                    SessionAndWindowInProgress.Token);
                             }
                             catch (OperationCanceledException) { throw; }
                             catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorInteractiveService, ex); }
 
                             try
                             {
-                                // Connect to the openvpn.exe management interface.
-                                var mgmtClient = new TcpClient();
-                                var reconnectCount = 0;
-                                reconnect:
-                                var mgmtClientTask = mgmtClient.ConnectAsync(mgmtEndpoint.Address, mgmtEndpoint.Port);
-                                try { mgmtClientTask.Wait(30000, Window.Abort.Token); }
-                                catch (AggregateException ex)
-                                {
-                                    if (ex.InnerException is SocketException ex2 && ex2.SocketErrorCode == SocketError.ConnectionRefused &&
-                                        ++reconnectCount < 30 && !Window.Abort.Token.WaitHandle.WaitOne(1000))
-                                    {
-                                        Trace.TraceWarning("Failed to connect to openvpn.exe");
-                                        goto reconnect;
-                                    }
-                                    throw ex.InnerException;
-                                }
+                                // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
+                                var mgmtClientTask = mgmtServer.AcceptTcpClientAsync();
+                                try { mgmtClientTask.Wait(30000, SessionAndWindowInProgress.Token); }
+                                catch (AggregateException ex) { throw ex.InnerException; }
+                                var mgmtClient = mgmtClientTask.Result;
                                 try
                                 {
                                     // Create and start the management session.
@@ -429,26 +416,27 @@ namespace eduVPN.ViewModels.VPN
                                     ManagementSession.FatalErrorReported += ManagementSession_FatalErrorReported;
                                     ManagementSession.HoldReported += ManagementSession_HoldReported;
                                     ManagementSession.StateReported += ManagementSession_StateReported;
-                                    ManagementSession.Start(mgmtClient.GetStream(), mgmtPassword, Window.Abort.Token);
+                                    ManagementSession.Start(mgmtClient.GetStream(), mgmtPassword, SessionAndWindowInProgress.Token);
 
                                     // Initialize session and release openvpn.exe to get started.
-                                    ManagementSession.SetVersion(3, Window.Abort.Token);
-                                    ManagementSession.ReplayAndEnableState(Window.Abort.Token);
-                                    ManagementSession.ReplayAndEnableEcho(Window.Abort.Token);
-                                    ManagementSession.SetByteCount(5, Window.Abort.Token);
-                                    ManagementSession.ReleaseHold(Window.Abort.Token);
+                                    ManagementSession.SetVersion(3, SessionAndWindowInProgress.Token);
+                                    ManagementSession.ReplayAndEnableState(SessionAndWindowInProgress.Token);
+                                    ManagementSession.ReplayAndEnableEcho(SessionAndWindowInProgress.Token);
+                                    ManagementSession.SetByteCount(5, SessionAndWindowInProgress.Token);
+                                    ManagementSession.ReleaseHold(SessionAndWindowInProgress.Token);
 
                                     Wizard.TryInvoke((Action)(() =>
                                     {
                                         _Renew?.RaiseCanExecuteChanged();
-                                        _Disconnect?.RaiseCanExecuteChanged();
                                         Wizard.TaskCount--;
                                     }));
                                     try
                                     {
                                         // Wait for the session to end gracefully.
                                         ManagementSession.Monitor.Join();
-                                        if (!(ManagementSession.Error is OperationCanceledException) && !DisconnectInProgress)
+                                        if (ManagementSession.Error != null && // Session terminated in an error.
+                                            !(ManagementSession.Error is OperationCanceledException) && // Session was not cancelled.
+                                            !(ManagementSession.Error is MonitorConnectionException)) // User is not signing out.
                                             goto retry;
                                     }
                                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
@@ -505,7 +493,7 @@ namespace eduVPN.ViewModels.VPN
         private void ManagementSession_HoldReported(object sender, HoldReportedEventArgs e)
         {
             if (!IgnoreHoldHint && e.WaitHint > 0)
-                Window.Abort.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
+                SessionAndWindowInProgress.Token.WaitHandle.WaitOne(e.WaitHint * 1000);
         }
 
         private void ManagementSession_StateReported(object sender, StateReportedEventArgs e)
@@ -604,12 +592,12 @@ namespace eduVPN.ViewModels.VPN
 
                     case "auth-failure": // Client certificate was deleted/revoked on the server side, or the user is disabled.
                     case "tls-error": // Client certificate is not compliant with this eduVPN server. Was eduVPN server reinstalled?
-                                      // Refresh configuration.
+                        // Refresh configuration.
                         var config = ConnectingProfile.Connect(
                             Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
                             true,
                             ProfileConfig.ContentType,
-                            Window.Abort.Token);
+                            SessionAndWindowInProgress.Token);
                         Wizard.TryInvoke((Action)(() => ProfileConfig = config));
                         IgnoreHoldHint = true;
                         break;
@@ -619,7 +607,7 @@ namespace eduVPN.ViewModels.VPN
                         break;
                 }
 
-                ManagementSession.QueueReleaseHold(Window.Abort.Token);
+                ManagementSession.QueueReleaseHold(SessionAndWindowInProgress.Token);
             }
         }
 
@@ -641,6 +629,50 @@ namespace eduVPN.ViewModels.VPN
             }
         }
 
+        #endregion
+
+        #region IDisposable Support
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    SessionAndWindowInProgress?.Dispose();
+                    SessionInProgress?.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
         #endregion
     }
 }
