@@ -100,7 +100,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Tunnel deactivate token
         /// </summary>
-        private CancellationTokenSource DeactivateInProgress;
+        private CancellationTokenSource SessionInProgress = new CancellationTokenSource();
 
         /// <summary>
         /// Tunnel renew token
@@ -149,10 +149,10 @@ namespace eduVPN.ViewModels.VPN
                         () =>
                         {
                             State = SessionStatusType.Disconnecting;
-                            DeactivateInProgress.Cancel();
+                            SessionInProgress.Cancel();
                             _Disconnect.RaiseCanExecuteChanged();
                         },
-                        () => DeactivateInProgress != null && !DeactivateInProgress.IsCancellationRequested);
+                        () => !SessionInProgress.IsCancellationRequested);
                 return _Disconnect;
             }
         }
@@ -192,7 +192,6 @@ namespace eduVPN.ViewModels.VPN
             TunnelName = connectingProfile.Server.Base.Host;
             if (TunnelName.Length > 32)
                 TunnelName = TunnelName.Substring(0, 32);
-            DeactivateInProgress = new CancellationTokenSource();
         }
 
         #endregion
@@ -259,7 +258,7 @@ namespace eduVPN.ViewModels.VPN
 
                         // Wait for a change and update stats.
                         var ct = CancellationTokenSource.CreateLinkedTokenSource(new CancellationToken[]{
-                            DeactivateInProgress.Token,
+                            SessionInProgress.Token,
                             RenewInProgress.Token,
                             Window.Abort.Token
                         });
@@ -296,7 +295,7 @@ namespace eduVPN.ViewModels.VPN
                             State = SessionStatusType.Disconnecting;
                         }));
                         managerSession.Deactivate();
-                        if (DeactivateInProgress.IsCancellationRequested || Window.Abort.IsCancellationRequested)
+                        if (SessionInProgress.IsCancellationRequested || Window.Abort.IsCancellationRequested)
                             return;
                     }
 
