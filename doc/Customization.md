@@ -93,6 +93,8 @@ Profile types client accepts. Allowed values are `application/x-openvpn-profile`
 
 This value targets testers and developers and is not intended for production use.
 
+See [eduVPN_Accept_all.reg](Customization/eduVPN_Accept_all.reg), [eduVPN_Accept_OpenVPN-only.reg](Customization/eduVPN_Accept_OpenVPN-only.reg) and [eduVPN_Accept_WireGuard-only.reg](Customization/eduVPN_Accept_WireGuard-only.reg) files for example.
+
 
 ### `OpenVPNInteractiveServiceInstance` (`REG_SZ`)
 
