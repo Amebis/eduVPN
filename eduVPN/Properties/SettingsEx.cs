@@ -23,6 +23,17 @@ namespace eduVPN.Properties
         /// </summary>
         public static SettingsEx Default { get; } = ((SettingsEx)Synchronized(new SettingsEx()));
 
+        /// <see cref="Settings.AcceptProfileTypes"/>
+        public StringCollection AcceptProfileTypes
+        {
+            get
+            {
+                if (GetValue(nameof(AcceptProfileTypes), out StringCollection value))
+                    return value;
+                return Settings.Default.AcceptProfileTypes;
+            }
+        }
+
         /// <see cref="Settings.OpenVPNInteractiveServiceInstance"/>
         public string OpenVPNInteractiveServiceInstance
         {

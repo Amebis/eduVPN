@@ -104,9 +104,10 @@ namespace eduVPN.Models
         /// </summary>
         /// <param name="authenticatingServer">Authenticating server (can be same as this server)</param>
         /// <param name="forceRefresh">Force client reauthorization</param>
+        /// <param name="responseType">Comma delimited list of acceptable MIME types</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, string responseType = "application/x-openvpn-profile, application/x-wireguard-profile", CancellationToken ct = default)
+        public Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, string responseType = "*/*", CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Server.GetEndpoints(ct);

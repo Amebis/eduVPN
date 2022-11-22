@@ -86,6 +86,14 @@ Ignored when self-updating is off.
 
 Example: [How to switch client to pre-release update channel?](FAQ.md#how-to-switch-client-to-pre-release-update-channel)
 
+
+### `AcceptProfileTypes` (`REG_MULTI_SZ`)
+
+Profile types client accepts. Allowed values are `application/x-openvpn-profile` and `application/x-wireguard-profile`. Specify one MIME type per string/line. If this value is not present, client defaults to `application/x-openvpn-profile` and `application/x-wireguard-profile`.
+
+This value targets testers and developers and is not intended for production use.
+
+
 ### `OpenVPNInteractiveServiceInstance` (`REG_SZ`)
 
 `OpenVPNInteractiveServiceInstance` specifies the OpenVPN instance ID when more than one instance of the OpenVPN is installed. Defaults to "$eduVPN" or "$LetsConnect". Set to blank string to use default OpenVPN installed instance.

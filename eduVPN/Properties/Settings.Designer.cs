@@ -12,7 +12,7 @@ namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -228,6 +228,25 @@ namespace eduVPN.Properties {
         public global::eduVPN.Xml.ResourceRef SelfUpdateDiscovery {
             get {
                 return ((global::eduVPN.Xml.ResourceRef)(this["SelfUpdateDiscovery"]));
+            }
+        }
+        
+        /// <summary>
+        /// Profile types client accepts. Allowed values are `application/x-openvpn-profile` and `application/x-wireguard-profile`. Specify one MIME type per string/line. This value targets testers and developers and is not intended for production use.
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Profile types client accepts. Allowed values are `application/x-openvpn-profile` " +
+            "and `application/x-wireguard-profile`. Specify one MIME type per string/line. Th" +
+            "is value targets testers and developers and is not intended for production use.")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>application/x-openvpn-profile</string>
+  <string>application/x-wireguard-profile</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection AcceptProfileTypes {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["AcceptProfileTypes"]));
             }
         }
         

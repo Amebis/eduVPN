@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.4...HEAD)
 
+- Support for AcceptProfileTypes tweak
 - Fixes: #213
 
 

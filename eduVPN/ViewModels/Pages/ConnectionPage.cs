@@ -251,7 +251,10 @@ namespace eduVPN.ViewModels.Pages
                                         {
                                             // Get session profile.
                                             var authenticatingServer = Wizard.GetAuthenticatingServer(connectingProfile.Server);
-                                            var profileConfig = connectingProfile.Connect(authenticatingServer: authenticatingServer, ct: Window.Abort.Token);
+                                            var profileConfig = connectingProfile.Connect(
+                                                authenticatingServer: authenticatingServer,
+                                                responseType: string.Join(", ", Properties.SettingsEx.Default.AcceptProfileTypes.Cast<string>()),
+                                                ct: Window.Abort.Token);
                                             Session session;
                                             try
                                             {
