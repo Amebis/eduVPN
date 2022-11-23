@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.5...HEAD)
 
+- Enforce `--script-security 1` on OpenVPN connections
+
 
 ## [3.3.5](https://github.com/Amebis/eduVPN/compare/3.3.4...3.3.5) (2022-11-22)
 

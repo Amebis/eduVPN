@@ -370,6 +370,8 @@ namespace eduVPN.ViewModels.VPN
                                     sw.WriteLine("rcvbuf 65536");
                                 }
 
+                                sw.WriteLine("script-security 1");
+
                                 var openVPNAddOptions = Properties.SettingsEx.Default.OpenVPNAddOptions;
                                 if (!string.IsNullOrWhiteSpace(openVPNAddOptions))
                                 {
