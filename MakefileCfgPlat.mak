@@ -5,7 +5,7 @@
 #   SPDX-License-Identifier: GPL-3.0+
 #
 
-MSVC_VERSION = \
+MSVC_REDIST_VERSION = \
 !INCLUDE "$(VCINSTALLDIR)Auxiliary\Build\Microsoft.VCRedistVersion.default.txt"
 
 !IF "$(PLAT)" == "x64"
@@ -42,11 +42,11 @@ WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
 
 !IF "$(CFG)" == "Debug"
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
-	-dVCRedistDir="$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\debug_nonredist\$(PLAT_CLIENT)\Microsoft.VC143.DebugCRT\\" \
+	-dVCRedistDir="$(VCINSTALLDIR)Redist\MSVC\$(MSVC_REDIST_VERSION)\debug_nonredist\$(PLAT_CLIENT)\Microsoft.VC143.DebugCRT\\" \
 	-dVCRedistSuffix="d"
 !ELSE
 WIX_CANDLE_FLAGS_CFG_PLAT=$(WIX_CANDLE_FLAGS_CFG_PLAT) \
-	-dVCRedistDir="$(VCINSTALLDIR)Redist\MSVC\$(MSVC_VERSION)\$(PLAT_CLIENT)\Microsoft.VC143.CRT\\" \
+	-dVCRedistDir="$(VCINSTALLDIR)Redist\MSVC\$(MSVC_REDIST_VERSION)\$(PLAT_CLIENT)\Microsoft.VC143.CRT\\" \
 	-dVCRedistSuffix=""
 !ENDIF
 
