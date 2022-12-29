@@ -1,7 +1,7 @@
 ﻿/*
     eduVPN - VPN for education and research
 
-    Copyright: 2017-2022 The Commons Conservancy
+    Copyright: 2017-2023 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("PrepopulateResponseCache")]
 [assembly: AssemblyCompany("SURF")]
 [assembly: AssemblyProduct("eduVPN")]
-[assembly: AssemblyCopyright("Copyright © 2017-2022 The Commons Conservancy")]
+[assembly: AssemblyCopyright("Copyright © 2017-2023 The Commons Conservancy")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

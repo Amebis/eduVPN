@@ -1,7 +1,7 @@
 /*
 	eduVPN - VPN for education and research
 
-	Copyright: 2022 The Commons Conservancy
+	Copyright: 2022-2023 The Commons Conservancy
 	SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -660,7 +660,7 @@ static int tunnel(_In_z_ const wchar_t* tunnel_name)
 
 	version_t ver;
 	module_version(ver);
-	wg_log->write(string_printf("eduWGSvcHost v%u.%u.%u.%u, Copyright \xc2\xa9 2022 The Commons Conservancy", ver[0], ver[1], ver[2], ver[3]).c_str());
+	wg_log->write(string_printf("eduWGSvcHost v%u.%u.%u.%u, Copyright \xc2\xa9 2022-2023 The Commons Conservancy", ver[0], ver[1], ver[2], ver[3]).c_str());
 
 	// Start the tunnel.
 	library tunnel_lib(LoadLibraryW(L"tunnel.dll"));

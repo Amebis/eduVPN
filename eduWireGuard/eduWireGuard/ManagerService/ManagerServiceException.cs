@@ -1,7 +1,7 @@
 ﻿/*
     eduWireGuard - WireGuard Tunnel Manager Library for eduVPN
 
-    Copyright: 2022 The Commons Conservancy
+    Copyright: 2022-2023 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
 */
 

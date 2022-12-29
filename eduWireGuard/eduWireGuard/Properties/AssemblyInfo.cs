@@ -1,7 +1,7 @@
 ﻿/*
     eduWireGuard - WireGuard Tunnel Manager Library for eduVPN
 
-    Copyright: 2022 The Commons Conservancy
+    Copyright: 2022-2023 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WireGuard Management Library")]
 [assembly: AssemblyCompany("SURF")]
 [assembly: AssemblyProduct("eduWireGuard")]
-[assembly: AssemblyCopyright("Copyright © 2022 The Commons Conservancy")]
+[assembly: AssemblyCopyright("Copyright © 2022-2023 The Commons Conservancy")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
