@@ -7,6 +7,7 @@
 
 using eduEx.Async;
 using eduEx.System;
+using eduEx.System.Net;
 using eduOAuth;
 using System;
 using System.Collections.Specialized;

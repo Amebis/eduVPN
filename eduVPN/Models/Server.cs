@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx.System.Net;
 using eduOAuth;
 using eduVPN.JSON;
 using System;
