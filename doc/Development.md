@@ -47,7 +47,7 @@
 5. Install [WiX Toolset 3.14.0.5722 or compatible](https://wixtoolset.org/docs/wix3/#development-builds) (required for MSI and EXE installer packaging).
 
 
-### Code Signing
+### Code Signing and Minisign
 
 In order to have the build process digitally sign the release output files, one should provide the following:
 
@@ -55,6 +55,11 @@ In order to have the build process digitally sign the release output files, one 
 2. The following variables in the environment:
    - `ManifestCertificateThumbprint` - set the value to certificate’s SHA1 thumbprint (hexadecimal, without spaces, e.g. `bc0d8da45f9eeefcbe4e334e1fc262804df88d7e`).
    - `ManifestTimestampRFC3161Url` - set the value to URL used to perform timestamp signature (e.g. `http://sha256timestamp.ws.symantec.com/sha256/timestamp`, `http://timestamp.digicert.com` etc.). In order to perform the timestamp signing successfully, the computer running the build should be online and able to access this URL.
+
+In order to have the build process produce `.minisig` files for publishing, one should provide the following:
+
+1. Have `minisign.exe` in path.
+2. Have Minisign private key in `%USERPROFILE%\.minisign\minisign.key`. Run `minisign -G` to create a new keypair.
 
 
 ### VirusTotal Submissions

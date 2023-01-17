@@ -65,6 +65,7 @@ PLAT=ARM64
 
 !IF "$(CFG)" == "$(SETUP_CFG)"
 Setup ::
+!IF EXISTS("$(USERPROFILE)\.minisign\minisign.key")
 	@echo Signing setup files
 	minisign.exe -Sm \
 		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET).exe" \
@@ -75,6 +76,7 @@ Setup ::
 		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
 		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
 		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x86.msi"
+!ENDIF
 
 Clean ::
 	-if exist "bin\Setup\*Client_*.exe.minisig" del /f /q "bin\Setup\*Client_*.exe.minisig"
@@ -83,8 +85,10 @@ Clean ::
 
 !IF "$(CFG)" == "Release"
 Publish ::
+!IF EXISTS("$(USERPROFILE)\.minisign\minisign.key")
 	@echo Signing self-update discovery files
 	minisign.exe -Sm \
 		"bin\Setup\eduVPN.windows.json" \
 		"bin\Setup\LetsConnect.windows.json"
+!ENDIF
 !ENDIF
