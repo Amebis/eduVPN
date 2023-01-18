@@ -74,6 +74,7 @@
             DowngradeErrorMessage="!(loc.NewerVersionInstalled)"
             Schedule="afterInstallInitialize"
             AllowSameVersionUpgrades="yes"/>
+        <?ifdef Issue205UpgradeGUID?>
         <Property Id="ISSUE205VERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="$(var.Issue205UpgradeGUID)"><!-- Don't use $(var.UpgradeGUID), as it might change in the future. -->
             <UpgradeVersion
@@ -82,6 +83,7 @@
                 Property="ISSUE205VERSIONSINSTALLED"
                 OnlyDetect="yes"/>
         </Upgrade>
+        <?endif?>
         <?if $(var.ClientTarget) = "eduVPN"?>
         <Property Id="OLDVERSIONSINSTALLED" Secure="yes"/>
         <Upgrade Id="{ADD9689E-1061-43AF-85C6-2AAB99A7284E}">
@@ -91,6 +93,7 @@
                 MigrateFeatures="yes"/>
         </Upgrade>
         <?endif?>
+        <?ifdef TAPWin.UpgradeGUID?>
         <Property Id="TAPWININSTALLED" Secure="yes"/>
         <Upgrade Id="$(var.TAPWin.UpgradeGUID)">
             <UpgradeVersion
@@ -99,6 +102,8 @@
                 MigrateFeatures="no"
                 IgnoreRemoveFailure="yes"/>
         </Upgrade>
+        <?endif?>
+        <?ifdef OpenVPN.UpgradeGUID?>
         <Property Id="OPENVPNINSTALLED" Secure="yes"/>
         <Upgrade Id="$(var.OpenVPN.UpgradeGUID)">
             <UpgradeVersion
@@ -107,6 +112,7 @@
                 MigrateFeatures="no"
                 IgnoreRemoveFailure="yes"/>
         </Upgrade>
+        <?endif?>
         <?if $(var.ClientTarget) = "eduVPN"?>
         <Property Id="OLDOPENVPNINSTALLED" Secure="yes"/>
         <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
@@ -469,9 +475,11 @@
                 <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.ProductGUID)" Name="DisplayName_Localized" Type="string" Value="@[RESDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)1"/>
 
                 <!-- Remove stale registry entries of old installations. -->
+                <?ifdef OldProductGUIDs?>
                 <?foreach OldProductGUID in $(var.OldProductGUIDs)?>
                 <RemoveRegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.OldProductGUID)" Action="removeOnInstall"/>
                 <?endforeach?>
+                <?endif?>
             </Component>
             <Component Id="ARP.Publisher">
                 <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(var.ProductGUID)" Name="Publisher_Localized" Type="string" Value="@[RESDIR]eduVPN.Resources.dll,-$(var.IDS_CLIENT_PREFIX)3"/>
