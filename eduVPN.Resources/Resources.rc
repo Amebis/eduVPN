@@ -57,6 +57,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "govVPN Client"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "The open source VPN"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, govVPN client will not function."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -77,6 +83,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Permet la gestion de la configuration des connexions réseaux OpenVPN. Si arrêté ou désactivé, le client Let's Connect! ne fonctionnera pas."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "govVPN Client"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "Le VPN open source"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Permet la gestion de la configuration des connexions réseaux OpenVPN. Si arrêté ou désactivé, le client govVPN ne fonctionnera pas."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -97,6 +109,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Maakt OpenVPN-verbinding netwerkconfiguratiebeheer mogelijk. Indien gestopt of uitgeschakeld, zal de Let's Connect!-client niet werken."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "govVPN Client"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "Open source VPN"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Maakt OpenVPN-verbinding netwerkconfiguratiebeheer mogelijk. Indien gestopt of uitgeschakeld, zal de govVPN-client niet werken."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -117,6 +135,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Interaktivna storitev OpenVPN (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec Let's Connect! ne bo deloval."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "Odjemalec govVPN"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "Odprtokodni VPN"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "Interaktivna storitev OpenVPN (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Omogoča upravljanje nastavitev omrežja za povezave OpenVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec govVPN ne bo deloval."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -137,6 +161,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Інтерактивна служба (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Вмикає керування конфігурацією мережі підключення OpenVPN. Якщо зупинено або відключено, клієнт Let's Connect! не працюватиме."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "Клієнт govVPN"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "VPN з відкритим кодом"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "OpenVPN Інтерактивна служба (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Вмикає керування конфігурацією мережі підключення OpenVPN. Якщо зупинено або відключено, клієнт govVPN не працюватиме."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -157,6 +187,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Interaktiver OpenVPN Dienst (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Ermöglicht die Verwaltung der Konfiguration von OpenVPN-Verbindungsnetzwerken. Wenn angehalten oder deaktiviert, funktioniert Let's Connect! client nicht."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "govVPN-Client"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "Das Open-Source-VPN"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "Interaktiver OpenVPN Dienst (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Ermöglicht die Verwaltung der Konfiguration von OpenVPN-Verbindungsnetzwerken. Wenn angehalten oder deaktiviert, funktioniert govVPN client nicht."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -177,6 +213,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "خدمة OpenVPN التفاعلية (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل Let's Connect!."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "عميل govVPN"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "الشبكة الخاصة الافتراضية مفتوحة المصدر"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "خدمة OpenVPN التفاعلية (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "يمكن من إدارة تكوين شبكة اتصال OpenVPN. إذا تم إيقافه أو تعطيله ، فلن يعمل عميل govVPN."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -197,6 +239,12 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Etkileşimli Hizmet (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, Let's Connect! çalışmayacak."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "govVPN İstemci"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "Açık kaynak VPN"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "OpenVPN Etkileşimli Hizmet (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "OpenVPN ağ bağlantılarının konfigürasyon yönetimine izin verir. Durdurulursa veya devre dışı bırakılırsa, govVPN çalışmayacak."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -218,6 +266,12 @@ BEGIN \
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF" \
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "Servicio Interactivo OpenVPN (Let's Connect!)" \
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente Let's Connect! no funcionará." \
+\
+	IDS_GOVVPN_CLIENT_TITLE                 "Cliente govVPN" \
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "La VPN de código abierto" \
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF" \
+	IDS_GOVVPN_INTERACTIVE_TITLE            "Servicio Interactivo OpenVPN (govVPN)" \
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Habilita la administración de la configuración de red de la conexión OpenVPN. Si se detiene o deshabilita, el cliente govVPN no funcionará." \
 END
 
 X(LANG_SPANISH, SUBLANG_SPANISH_MEXICAN)
@@ -262,4 +316,10 @@ BEGIN
 	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
 	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
 	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "govVPN Client"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "The open source VPN"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, govVPN client will not function."
 END

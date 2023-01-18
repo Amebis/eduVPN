@@ -225,3 +225,6 @@ Clean ::
 
 !INCLUDE "LetsConnect.mak"
 !INCLUDE "MakefileCfgPlatClient.mak"
+
+!INCLUDE "govVPN.mak"
+!INCLUDE "MakefileCfgPlatClient.mak"

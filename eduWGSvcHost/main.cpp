@@ -27,7 +27,7 @@ static HINSTANCE hInstance;
 static WCHAR module_file_path[MAX_PATH];
 static WCHAR config_folder_path[MAX_PATH];
 static LPCWSTR client_id;
-enum class client_type_t { eduvpn, letsconnect };
+enum class client_type_t { eduvpn, letsconnect, govvpn };
 static client_type_t client_type;
 static event quit;
 static SERVICE_STATUS_HANDLE service_handle;
@@ -205,6 +205,7 @@ static void activate_tunnel(_In_z_ const wchar_t* tunnel_name, _In_count_(config
 		LoadStringW(NULL,
 			client_type == client_type_t::eduvpn ? IDS_EDUVPN_TUN_SERVICE_TITLE :
 			client_type == client_type_t::letsconnect ? IDS_LETSCONNECT_TUN_SERVICE_TITLE :
+			client_type == client_type_t::govvpn ? IDS_GOVVPN_TUN_SERVICE_TITLE :
 			throw invalid_argument("Unknown client"),
 			fmt);
 		wstring mgr_short_name;
@@ -244,6 +245,7 @@ static void activate_tunnel(_In_z_ const wchar_t* tunnel_name, _In_count_(config
 				MAX_PATH, module_file_path,
 				client_type == client_type_t::eduvpn ? IDS_EDUVPN_TUN_SERVICE_DESCRIPTION :
 				client_type == client_type_t::letsconnect ? IDS_LETSCONNECT_TUN_SERVICE_DESCRIPTION :
+				client_type == client_type_t::govvpn ? IDS_GOVVPN_TUN_SERVICE_DESCRIPTION :
 				throw invalid_argument("Unknown client"));
 			SERVICE_DESCRIPTIONW description = { const_cast<LPWSTR>(desc.c_str()) };
 			ChangeServiceConfig2W(service, SERVICE_CONFIG_DESCRIPTION, &description);
@@ -704,6 +706,11 @@ int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PWSTR cmdline, int c
 		{
 			client_id = L"LetsConnect";
 			client_type = client_type_t::letsconnect;
+		}
+		else if (_wcsicmp(wargv[1], L"govVPN") == 0)
+		{
+			client_id = L"govVPN";
+			client_type = client_type_t::govvpn;
 		}
 		else
 			throw invalid_argument("Unknown client");

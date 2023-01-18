@@ -1,0 +1,5 @@
+{"arguments": "/install",
+"uri": [ "https://github.com/Amebis/eduVPN/releases/download/3.3.7/govVPNClient_3.3.7.exe" ],
+"version": "3.3.7",
+"changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
+"hash-sha256": "ac302cf9cf7de91aca2a9322a0821836846d15ef0354132463bff8cf5a55cf04"}

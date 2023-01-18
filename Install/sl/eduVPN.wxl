@@ -15,6 +15,9 @@
     <String Id="LetsConnect.Name">Odjemalec Let's Connect!</String>
     <String Id="LetsConnect.OpenVPNName">Odjemalec Let's Connect! - komponente OpenVPN</String>
 
+    <String Id="govVPN.Name">Odjemalec govVPN</String>
+    <String Id="govVPN.OpenVPNName">Odjemalec govVPN - komponente OpenVPN</String>
+
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1060</String>
     <String Id="SummaryCodepage">1250</String>

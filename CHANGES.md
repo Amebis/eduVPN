@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.6...HEAD)
 
+- govVPN introduced
 - Fixes: #214
 
 

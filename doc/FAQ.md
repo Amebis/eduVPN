@@ -4,11 +4,12 @@
 Right click on the server name. A menu should popup. Select _Forget_.
 
 ## How to reset all my client settings?
-Close the eduVPN and Let's Connect! clients first. Open a command prompt and paste one or both lines:
+Close the eduVPN, Let's Connect! and govVPN clients first. Open a command prompt and paste one or both lines:
 
 ```cmd
 for /d %i in ("%LOCALAPPDATA%\SURF\eduVPN.Client.exe_Url_*") do rd /s /q "%i"
 for /d %i in ("%LOCALAPPDATA%\SURF\LetsConnect.Client.exe_Url_*") do rd /s /q "%i"
+for /d %i in ("%LOCALAPPDATA%\SURF\govVPN.Client.exe_Url_*") do rd /s /q "%i"
 ```
 
 Don't forget to press _Enter_ key after the line is pasted. This will reset eduVPN and Let's Connect! clients to factory defaults.
@@ -20,3 +21,5 @@ Download [eduVPN_Pre-release_Self-update_Channel_On.reg](Customization/eduVPN_Pr
 Should you want to switch back to the default update channel, use [eduVPN_Pre-release_Self-update_Channel_Off.reg](Customization/eduVPN_Pre-release_Self-update_Channel_Off.reg) file.
 
 For Let's Connect! client use [LetsConnect_Pre-release_Self-update_Channel_On.reg](Customization/LetsConnect_Pre-release_Self-update_Channel_On.reg) and/or [LetsConnect_Pre-release_Self-update_Channel_Off.reg](Customization/LetsConnect_Pre-release_Self-update_Channel_Off.reg) file respectively.
+
+For govVPN client use [govVPN_Pre-release_Self-update_Channel_On.reg](Customization/govVPN_Pre-release_Self-update_Channel_On.reg) and/or [govVPN_Pre-release_Self-update_Channel_Off.reg](Customization/govVPN_Pre-release_Self-update_Channel_Off.reg) file respectively.

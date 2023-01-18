@@ -25,6 +25,7 @@
     <?else?>
         <?define Issue205UpgradeGUID={76E93AAB-1F90-4AA3-B7EE-F697A4B1B479}?>
     <?endif?>
+<?elseif $(var.ClientTarget) = "govVPN"?>
 <?else?>
     <?error Unknown client?>
 <?endif?>

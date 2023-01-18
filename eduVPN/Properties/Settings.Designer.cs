@@ -317,11 +317,13 @@ namespace eduVPN.Properties {
         /// Which WireGuard tunnel manager service instance client should use:
         /// - &quot;$eduVPN&quot; - Use WireGuard installation bundled with the eduVPN client.
         /// - &quot;$LetsConnect&quot; - Use WireGuard installation bundled with the Let&apos;s Connect! client.
+        /// - &quot;$govVPN&quot; - Use WireGuard installation bundled with the govVPN client.
         /// </summary>
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("Which WireGuard tunnel manager service instance client should use:\r\n - \"$eduVPN\" " +
             "- Use WireGuard installation bundled with the eduVPN client.\r\n - \"$LetsConnect\" " +
-            "- Use WireGuard installation bundled with the Let\'s Connect! client.")]
+            "- Use WireGuard installation bundled with the Let\'s Connect! client.\r\n - \"$govVPN\" " +
+            "- Use WireGuard installation bundled with the govVPN client.")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string WireGuardTunnelManagerServiceInstance {

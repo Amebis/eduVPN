@@ -1,4 +1,4 @@
-# Development of eduVPN and Let's Connect! Clients for Windows
+# Development of eduVPN Clients for Windows
 
 
 ## Folders
@@ -19,6 +19,7 @@
 - _eduVPN.Views_: Client UI (View)
 - _eduWGSvcHost_: WireGuard manager and tunnel services
 - _eduWireGuard_: WireGuard Tunnel Manager Service IPC for C#/.NET
+- _govVPN.Client_: govVPN client application (Shell)
 - _Install_: WiX installer additional files
 - _LetsConnect.Client_: Let's Connect! client application (Shell)
 - _openvpn_: OpenVPN source code
@@ -86,7 +87,7 @@ Before pulling a new version of the eduVPN source code from the GitHub a `nmake 
 
 #### Initial Registration
 
-The registration prepares the working environment for the eduVPN and Let's Connect! clients for testing on the build/development computer.
+The registration prepares the working environment for the eduVPN clients for testing on the build/development computer.
 
 1. Start the _x64 Native Tools Command Prompt for VS 2022_ elevated (_Start_ » _All Programs_ » _Visual Studio 2022_ » _Visual Studio Tools_ » _VC_ » Right click _x64 Native Tools Command Prompt for VS 2022_ » _Run as Administrator_).
 2. `cd` to the project folder - the one where `eduVPN.sln` and `Makefile` files are located.
@@ -96,7 +97,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
    - Build the Debug version.
    - Install OpenVPN Interactive Service: one instance per client.
    - Install WireGuard Tunnel Manager Service: one instance per client.
-   - Create a Start menu eduVPN and Let's Connect! client shortcuts.
+   - Create a Start menu eduVPN, Let's Connect! and govVPN client shortcuts.
 5. The clients can now be started using the Start menu shortcut.
 
 
@@ -105,7 +106,7 @@ The registration prepares the working environment for the eduVPN and Let's Conne
 1. Perform the [initial registration](#initial-registration) described above.
 2. Open the `eduVPN.sln` file (with VS2022).
 3. _Build_ » _Configuration Manager..._: Select desired active solution and platform. Please note _AnyCPU_ is not supported (yet).
-4. In the _Solution Explorer_ pane, locate _eduVPN.Client_ or _LetsConnect.Client_ project, right click on it, and _Set as StartUp Project_.
+4. In the _Solution Explorer_ pane, locate _eduVPN.Client_, _LetsConnect.Client_ or _govVPN.Client_ project, right click on it, and _Set as StartUp Project_.
 5. _Build_ » _Build Solution_.
 6. _Debug_ » _Start Debugging_.
 

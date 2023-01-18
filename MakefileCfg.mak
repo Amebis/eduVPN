@@ -58,6 +58,9 @@ PLAT=ARM64
 !INCLUDE "LetsConnect.mak"
 !INCLUDE "MakefileCfgClient.mak"
 
+!INCLUDE "govVPN.mak"
+!INCLUDE "MakefileCfgClient.mak"
+
 
 ######################################################################
 # Signing
@@ -70,12 +73,16 @@ Setup ::
 	minisign.exe -Sm \
 		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET).exe" \
 		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET).exe" \
+		"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET).exe" \
 		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
 		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
 		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_x86.msi" \
 		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
 		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
-		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x86.msi"
+		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x86.msi" \
+		"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
+		"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
+		"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET)_x86.msi"
 !ENDIF
 
 Clean ::
@@ -89,6 +96,7 @@ Publish ::
 	@echo Signing self-update discovery files
 	minisign.exe -Sm \
 		"bin\Setup\eduVPN.windows.json" \
-		"bin\Setup\LetsConnect.windows.json"
+		"bin\Setup\LetsConnect.windows.json" \
+		"bin\Setup\govVPN.windows.json"
 !ENDIF
 !ENDIF

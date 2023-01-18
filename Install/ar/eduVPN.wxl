@@ -15,6 +15,9 @@
     <String Id="LetsConnect.Name">عميل Let's Connect!</String>
     <String Id="LetsConnect.OpenVPNName">مكونات OpenVPN لعميل Let's Connect!</String>
 
+    <String Id="govVPN.Name">عميل govVPN</String>
+    <String Id="govVPN.OpenVPNName">مكونات OpenVPN لعميل govVPN</String>
+
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1025</String>
     <String Id="SummaryCodepage">1256</String>
