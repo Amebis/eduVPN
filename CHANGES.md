@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.6...HEAD)
 
 - govVPN introduced
+- govVPN: Switch to pre-release self-update channel
 - Fixes: #214
 
 
