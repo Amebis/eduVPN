@@ -33,13 +33,8 @@ namespace eduVPN.Models
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly object EndpointsLock = new object();
 
-        /// <summary>
-        /// List of available profiles
-        /// </summary>
-        private ObservableCollection<Profile> Profiles;
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly object ProfilesLock = new object();
+        private DateTimeOffset EndpointsExpires;
 
         /// <summary>
         /// Ed25519 keypair
@@ -149,7 +144,7 @@ namespace eduVPN.Models
         {
             lock (EndpointsLock)
             {
-                if (Endpoints != null)
+                if (Endpoints != null && DateTimeOffset.Now < EndpointsExpires)
                     return Endpoints;
 
                 try
@@ -162,7 +157,9 @@ namespace eduVPN.Models
                     endpoints.LoadJSON(Xml.Response.Get(
                         uri: uriBuilder.Uri,
                         ct: ct).Value, ct);
-                    return Endpoints = endpoints;
+                    Endpoints = endpoints;
+                    EndpointsExpires = DateTimeOffset.Now.AddSeconds(60);
+                    return endpoints;
                 }
                 catch (OperationCanceledException) { throw; }
                 catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorEndpointsLoad, ex); }
@@ -177,73 +174,67 @@ namespace eduVPN.Models
         /// <returns>Profile list</returns>
         public ObservableCollection<Profile> GetProfileList(Server authenticatingServer, CancellationToken ct = default)
         {
-            lock (ProfilesLock)
+            // Get API endpoints.
+            var api = GetEndpoints(ct);
+            var e = new RequestAuthorizationEventArgs("config");
+
+            retry:
+            // Request authentication token.
+            OnRequestAuthorization(authenticatingServer, e);
+
+            try
             {
-                if (Profiles != null)
-                    return Profiles;
+                // Parse JSON string and get inner key/value dictionary.
+                Trace.TraceInformation("Loading info {0}", api.Info);
+                var obj = eduJSON.Parser.GetValue<Dictionary<string, object>>(
+                    (Dictionary<string, object>)eduJSON.Parser.Parse(Xml.Response.Get(
+                        uri: api.Info,
+                        token: e.AccessToken,
+                        ct: ct).Value, ct),
+                    "info");
 
-                // Get API endpoints.
-                var api = GetEndpoints(ct);
-                var e = new RequestAuthorizationEventArgs("config");
+                // Load collection.
+                if (!eduJSON.Parser.GetValue(obj, "profile_list", out List<object> obj2))
+                    throw new eduJSON.InvalidParameterTypeException(nameof(obj2), typeof(Dictionary<string, object>), obj.GetType());
 
-                retry:
-                // Request authentication token.
-                OnRequestAuthorization(authenticatingServer, e);
-
-                try
+                // Parse all items listed. Don't do it in parallel to preserve the sort order.
+                var profileList = new ObservableCollection<Profile>();
+                foreach (var el in obj2)
                 {
-                    // Parse JSON string and get inner key/value dictionary.
-                    Trace.TraceInformation("Loading info {0}", api.Info);
-                    var obj = eduJSON.Parser.GetValue<Dictionary<string, object>>(
-                        (Dictionary<string, object>)eduJSON.Parser.Parse(Xml.Response.Get(
-                            uri: api.Info,
-                            token: e.AccessToken,
-                            ct: ct).Value, ct),
-                        "info");
+                    var profile = new Profile(this);
+                    profile.Load(el);
 
-                    // Load collection.
-                    if (!eduJSON.Parser.GetValue(obj, "profile_list", out List<object> obj2))
-                        throw new eduJSON.InvalidParameterTypeException(nameof(obj2), typeof(Dictionary<string, object>), obj.GetType());
+                    // Attach to RequestAuthorization profile events.
+                    profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => OnRequestAuthorization(authenticatingServer, e_profile);
 
-                    // Parse all items listed. Don't do it in parallel to preserve the sort order.
-                    var profileList = new ObservableCollection<Profile>();
-                    foreach (var el in obj2)
-                    {
-                        var profile = new Profile(this);
-                        profile.Load(el);
-
-                        // Attach to RequestAuthorization profile events.
-                        profile.RequestAuthorization += (object sender_profile, RequestAuthorizationEventArgs e_profile) => OnRequestAuthorization(authenticatingServer, e_profile);
-
-                        profileList.Add(profile);
-                    }
-                    return Profiles = profileList;
+                    profileList.Add(profile);
                 }
-                catch (OperationCanceledException) { throw; }
-                catch (WebException ex)
-                {
-                    if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        // Access token was rejected (401 Unauthorized).
-                        if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
-                        {
-                            // Access token loaded from the settings was rejected.
-                            // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
-                            // Or the token was revoked on the server side.
-                            // Retry with forced access token refresh.
-                            e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
-                            goto retry;
-                        }
-                    }
-                    if (ex is WebExceptionEx exEx && ex.Response.ContentType == "application/json")
-                    {
-                        var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(exEx.ResponseText, ct);
-                        throw new AggregateException(Resources.Strings.ErrorProfileListLoad + "\n" + eduJSON.Parser.GetValue<string>(obj, "error"), ex);
-                    }
-                    throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex);
-                }
-                catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
+                return profileList;
             }
+            catch (OperationCanceledException) { throw; }
+            catch (WebException ex)
+            {
+                if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Access token was rejected (401 Unauthorized).
+                    if (e.TokenOrigin == RequestAuthorizationEventArgs.TokenOriginType.Saved)
+                    {
+                        // Access token loaded from the settings was rejected.
+                        // This might happen when ill-clocked client thinks the token is still valid, but the server expired it already.
+                        // Or the token was revoked on the server side.
+                        // Retry with forced access token refresh.
+                        e.SourcePolicy = RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization;
+                        goto retry;
+                    }
+                }
+                if (ex is WebExceptionEx exEx && ex.Response.ContentType == "application/json")
+                {
+                    var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(exEx.ResponseText, ct);
+                    throw new AggregateException(Resources.Strings.ErrorProfileListLoad + "\n" + eduJSON.Parser.GetValue<string>(obj, "error"), ex);
+                }
+                throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex);
+            }
+            catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorProfileListLoad, ex); }
         }
 
         /// <summary>
@@ -274,12 +265,6 @@ namespace eduVPN.Models
         /// </summary>
         public void Forget()
         {
-            lock (ProfilesLock)
-            {
-                // Remove profile list from cache.
-                Profiles = null;
-            }
-
             // Ask authorization provider to forget our authorization token.
             ForgetAuthorization?.Invoke(this, new ForgetAuthorizationEventArgs("config"));
         }
@@ -339,7 +324,7 @@ namespace eduVPN.Models
 
             // Set base URI.
             Endpoints = null;
-            Profiles = null;
+            EndpointsExpires = DateTimeOffset.MinValue;
             Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_url"));
 
             // Set support contact URLs.

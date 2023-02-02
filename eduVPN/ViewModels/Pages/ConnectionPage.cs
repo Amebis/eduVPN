@@ -189,6 +189,39 @@ namespace eduVPN.ViewModels.Pages
                     RaisePropertyChanged(nameof(IsSessionActive));
                     RaisePropertyChanged(nameof(CanSessionToggle));
                     _NavigateBack?.RaiseCanExecuteChanged();
+
+                    if (ActiveSession == null)
+                    {
+                        ProfilesRefreshInProgress?.Cancel();
+                        ProfilesRefreshInProgress = new CancellationTokenSource();
+                        var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
+                        new Thread(new ThreadStart(
+                            () =>
+                            {
+                                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                                try
+                                {
+                                    var list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
+                                    //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+                                    //list = new ObservableCollection<Profile>(); // Mock an empty list of profiles for testing.
+                                    ct.ThrowIfCancellationRequested();
+                                    Wizard.TryInvoke((Action)(() =>
+                                    {
+                                        if (ct.IsCancellationRequested) return;
+                                        Profiles = list;
+
+                                        if (SelectedProfile != null)
+                                        {
+                                            var profileId = SelectedProfile.Id;
+                                            SelectedProfile = list.FirstOrDefault(p => p.Id == profileId);
+                                        }
+                                    }));
+                                }
+                                catch (OperationCanceledException) { }
+                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                            })).Start();
+                    }
                 }
             }
         }

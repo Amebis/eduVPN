@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.6...HEAD)
 
-- Fixes: #214
+- Fixes: #214, #217
 
 
 ## [3.3.6](https://github.com/Amebis/eduVPN/compare/3.3.5...3.3.6) (2022-11-23)
