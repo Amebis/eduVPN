@@ -7,12 +7,15 @@
 
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -23,6 +26,15 @@ namespace eduVPN.ViewModels.VPN
     /// </summary>
     public class Session : BindableBase
     {
+        #region Constants
+
+        /// <summary>
+        /// List of hardware IDs specific to network adapters used for VPN and tunneling
+        /// </summary>
+        private static readonly string[] VPNHardwareIds = new string[]{ "WireGuard", "Wintun", "root\\tap0901", "tap0901", "ovpn-dco" };
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -286,6 +298,38 @@ namespace eduVPN.ViewModels.VPN
             }));
             try
             {
+                // Is the default gateway a VPN already?
+                using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                {
+                    using (var networkKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}", false))
+                    {
+                        foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                            .Where(n =>
+                                n.OperationalStatus == OperationalStatus.Up &&
+                                n.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                                n.GetIPProperties()?.GatewayAddresses.Count > 0))
+                        {
+                            try
+                            {
+                                using (var connectionKey = networkKey.OpenSubKey(iface.Id + "\\Connection", false))
+                                {
+                                    var pnpInstanceId = connectionKey.GetValue("PnPInstanceId").ToString();
+                                    using (var deviceKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Enum\\" + pnpInstanceId, false))
+                                    {
+                                        var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
+                                        if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
+                                            Wizard.TryInvoke((Action)(() => throw new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                    }
+                                }
+                            }
+                            catch (OperationCanceledException) { throw; }
+                            catch
+                            {
+                                // Detecting default gateway VPN is advisory-only. Not the end of the world if the test fails.
+                            }
+                        }
+                    }
+                }
                 var propertyUpdater = new DispatcherTimer(
                     new TimeSpan(0, 0, 0, 1),
                     DispatcherPriority.Normal,

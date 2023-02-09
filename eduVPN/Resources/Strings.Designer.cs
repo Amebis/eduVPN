@@ -19,7 +19,7 @@ namespace eduVPN.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Strings {
@@ -426,6 +426,15 @@ namespace eduVPN.Resources {
         internal static string OpenVPNStateTypeWaiting {
             get {
                 return ResourceManager.GetString("OpenVPNStateTypeWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work..
+        /// </summary>
+        internal static string WarningDefaultGatewayIsVPN {
+            get {
+                return ResourceManager.GetString("WarningDefaultGatewayIsVPN", resourceCulture);
             }
         }
     }
