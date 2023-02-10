@@ -7,6 +7,7 @@
 
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Xml;
 
@@ -27,6 +29,11 @@ namespace eduVPN.ViewModels.Pages
     public class SelfUpdateProgressPage : ConnectWizardPopupPage
     {
         #region Fields
+
+        /// <summary>
+        /// Self-update cancellation token
+        /// </summary>
+        private CancellationTokenSource SelfUpdateInProgress;
 
         /// <summary>
         /// Update file SHA-256 hash
@@ -53,6 +60,26 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         public Range<int> Progress { get; } = new Range<int>(0, 100);
 
+        /// <inheritdoc/>
+        public override DelegateCommand NavigateBack
+        {
+            get
+            {
+                if (_NavigateBack == null)
+                    _NavigateBack = new DelegateCommand(
+                        () =>
+                        {
+                            SelfUpdateInProgress?.Cancel();
+                            if (base.NavigateBack.CanExecute())
+                                base.NavigateBack.Execute();
+                        });
+                return _NavigateBack;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _NavigateBack;
+
         #endregion
 
         #region Constructors
@@ -73,9 +100,13 @@ namespace eduVPN.ViewModels.Pages
         /// <inheritdoc/>
         public override void OnActivate()
         {
+            SelfUpdateInProgress?.Cancel();
+
             base.OnActivate();
 
             // Setup self-update.
+            SelfUpdateInProgress = new CancellationTokenSource();
+            var ct = CancellationTokenSource.CreateLinkedTokenSource(SelfUpdateInProgress.Token, Window.Abort.Token).Token;
             var selfUpdate = new BackgroundWorker() { WorkerReportsProgress = true };
             selfUpdate.DoWork += (object sender, DoWorkEventArgs e) =>
             {
@@ -92,7 +123,7 @@ namespace eduVPN.ViewModels.Pages
                     // Download installer.
                     while (DownloadUris.Count > 0)
                     {
-                        Window.Abort.Token.ThrowIfCancellationRequested();
+                        ct.ThrowIfCancellationRequested();
                         var uriIndex = random.Next(DownloadUris.Count);
                         try
                         {
@@ -137,14 +168,14 @@ namespace eduVPN.ViewModels.Pages
                                         for (; ; )
                                         {
                                             // Wait for the data to arrive.
-                                            Window.Abort.Token.ThrowIfCancellationRequested();
+                                            ct.ThrowIfCancellationRequested();
                                             var bufferLength = stream.Read(buffer, 0, buffer.Length);
                                             if (bufferLength == 0)
                                                 break;
-                                            //Window.Abort.Token.WaitHandle.WaitOne(100); // Mock a slow link for testing.
+                                            //ct.WaitHandle.WaitOne(100); // Mock a slow link for testing.
 
                                             // Append it to the file and hash it.
-                                            Window.Abort.Token.ThrowIfCancellationRequested();
+                                            ct.ThrowIfCancellationRequested();
                                             installerFile.Write(buffer, 0, bufferLength);
                                             hash.TransformBlock(buffer, 0, bufferLength, buffer, 0);
 
@@ -301,7 +332,7 @@ namespace eduVPN.ViewModels.Pages
                     // Self-updating successfuly launched. Quit to release open files.
                     Wizard.OnQuitApplication(this);
                 }
-                else
+                else if (!(e.Error is OperationCanceledException))
                     Wizard.Error = e.Error;
 
                 // Self-dispose.
