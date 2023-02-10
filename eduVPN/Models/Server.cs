@@ -267,6 +267,8 @@ namespace eduVPN.Models
         {
             // Ask authorization provider to forget our authorization token.
             ForgetAuthorization?.Invoke(this, new ForgetAuthorizationEventArgs("config"));
+
+            Properties.Settings.Default.LastSelectedProfile.Remove(Base.AbsoluteUri);
         }
 
         /// <summary>
