@@ -109,6 +109,7 @@ namespace eduVPN.ViewModels.Pages
         {
             if (!(sender is Server authenticatingServer))
                 return;
+            var key = authenticatingServer.Base.AbsoluteUri;
 
             e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.None;
             e.AccessToken = null;
@@ -117,7 +118,6 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (e.SourcePolicy != RequestAuthorizationEventArgs.SourcePolicyType.ForceAuthorization)
                 {
-                    var key = authenticatingServer.Base.AbsoluteUri;
                     if (Properties.Settings.Default.AccessTokenCache.TryGetValue(key, out var accessToken))
                     {
                         if (!e.ForceRefresh && DateTimeOffset.Now < accessToken.Expires)
@@ -274,7 +274,7 @@ namespace eduVPN.ViewModels.Pages
 
                         // Save access token to the cache.
                         e.TokenOrigin = RequestAuthorizationEventArgs.TokenOriginType.Authorized;
-                        Properties.Settings.Default.AccessTokenCache[authenticatingServer.Base.AbsoluteUri] = e.AccessToken;
+                        Properties.Settings.Default.AccessTokenCache[key] = e.AccessToken;
                     }
                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                 }
