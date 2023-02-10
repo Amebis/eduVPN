@@ -241,15 +241,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saving of profile&apos;s OpenVPN configuration to &quot;{0}&quot; failed..
-        /// </summary>
-        internal static string ErrorSavingProfileConfiguration {
-            get {
-                return ResourceManager.GetString("ErrorSavingProfileConfiguration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Detecting self-update failed..
         /// </summary>
         internal static string ErrorSelfUpdateDetection {

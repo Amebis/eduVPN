@@ -104,11 +104,6 @@ namespace eduVPN.ViewModels.VPN
         #region Properties
 
         /// <summary>
-        /// OpenVPN profile configuration file path
-        /// </summary>
-        private string ConfigurationPath => Path.Combine(WorkingFolder, ConnectionId + ".ovpn.dpapi");
-
-        /// <summary>
         /// OpenVPN connection log
         /// </summary>
         private string LogPath => Path.Combine(WorkingFolder, ConnectionId + ".txt");
@@ -236,155 +231,151 @@ namespace eduVPN.ViewModels.VPN
                         byte[] ovpn;
                         var mgmtEndpoint = mgmtServer.LocalEndpoint as IPEndPoint;
                         var mgmtPassword = Membership.GeneratePassword(16, 6);
-                        try
-                        {
-                            // Prepare OpenVPN configuration.
-                            var fs = new MemoryStream();
-                            using (fs)
-                            using (var sw = new StreamWriter(fs))
-                            {
-                                if (Properties.SettingsEx.Default.OpenVPNRemoveOptions is StringCollection openVPNRemoveOptions)
-                                {
-                                    // Remove options on the OpenVPNRemoveOptions list on the fly.
-                                    using (var sr = new StringReader(ProfileConfig.Value))
-                                    {
-                                        string inlineTerm = null;
-                                        var inlineRemove = false;
-                                        for (; ; )
-                                        {
-                                            var line = sr.ReadLine();
-                                            if (line == null)
-                                                break;
 
-                                            var trimmedLine = line.Trim();
-                                            if (!string.IsNullOrEmpty(trimmedLine))
+                        // Prepare OpenVPN configuration.
+                        var fs = new MemoryStream();
+                        using (fs)
+                        using (var sw = new StreamWriter(fs))
+                        {
+                            if (Properties.SettingsEx.Default.OpenVPNRemoveOptions is StringCollection openVPNRemoveOptions)
+                            {
+                                // Remove options on the OpenVPNRemoveOptions list on the fly.
+                                using (var sr = new StringReader(ProfileConfig.Value))
+                                {
+                                    string inlineTerm = null;
+                                    var inlineRemove = false;
+                                    for (; ; )
+                                    {
+                                        var line = sr.ReadLine();
+                                        if (line == null)
+                                            break;
+
+                                        var trimmedLine = line.Trim();
+                                        if (!string.IsNullOrEmpty(trimmedLine))
+                                        {
+                                            // Not an empty line.
+                                            if (inlineTerm == null)
                                             {
-                                                // Not an empty line.
-                                                if (inlineTerm == null)
+                                                // Not inside an inline option block = Regular parsing mode.
+                                                if (!trimmedLine.StartsWith("#") &&
+                                                    !trimmedLine.StartsWith(";"))
                                                 {
-                                                    // Not inside an inline option block = Regular parsing mode.
-                                                    if (!trimmedLine.StartsWith("#") &&
-                                                        !trimmedLine.StartsWith(";"))
+                                                    // Not a comment.
+                                                    var option = Configuration.ParseParams(trimmedLine);
+                                                    if (option.Count > 0)
                                                     {
-                                                        // Not a comment.
-                                                        var option = Configuration.ParseParams(trimmedLine);
-                                                        if (option.Count > 0)
+                                                        if (option[0].StartsWith("<") && !option[0].StartsWith("</") && option[0].EndsWith(">"))
                                                         {
-                                                            if (option[0].StartsWith("<") && !option[0].StartsWith("</") && option[0].EndsWith(">"))
-                                                            {
-                                                                // Start of an inline option.
-                                                                var o = option[0].Substring(1, option[0].Length - 2);
-                                                                inlineTerm = "</" + o + ">";
-                                                                inlineRemove = openVPNRemoveOptions.Contains(o);
-                                                                if (inlineRemove)
-                                                                {
-                                                                    sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
-                                                                    line = "# " + line;
-                                                                }
-                                                            }
-                                                            else if (openVPNRemoveOptions.Contains(option[0]))
+                                                            // Start of an inline option.
+                                                            var o = option[0].Substring(1, option[0].Length - 2);
+                                                            inlineTerm = "</" + o + ">";
+                                                            inlineRemove = openVPNRemoveOptions.Contains(o);
+                                                            if (inlineRemove)
                                                             {
                                                                 sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
                                                                 line = "# " + line;
                                                             }
                                                         }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    // Inside an inline option block.
-                                                    if (inlineRemove)
-                                                    {
-                                                        // Remove the inline option content.
-                                                        line = "# " + line;
-                                                    }
-
-                                                    if (trimmedLine == inlineTerm)
-                                                    {
-                                                        // Inline option terminator found. Returning to regular parsing mode.
-                                                        inlineTerm = null;
+                                                        else if (openVPNRemoveOptions.Contains(option[0]))
+                                                        {
+                                                            sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
+                                                            line = "# " + line;
+                                                        }
                                                     }
                                                 }
                                             }
+                                            else
+                                            {
+                                                // Inside an inline option block.
+                                                if (inlineRemove)
+                                                {
+                                                    // Remove the inline option content.
+                                                    line = "# " + line;
+                                                }
 
-                                            sw.WriteLine(line);
+                                                if (trimmedLine == inlineTerm)
+                                                {
+                                                    // Inline option terminator found. Returning to regular parsing mode.
+                                                    inlineTerm = null;
+                                                }
+                                            }
                                         }
+
+                                        sw.WriteLine(line);
                                     }
                                 }
-                                else
-                                    sw.Write(ProfileConfig.Value);
+                            }
+                            else
+                                sw.Write(ProfileConfig.Value);
 
-                                // Append eduVPN Client specific configuration directives.
-                                sw.WriteLine();
-                                sw.WriteLine();
-                                sw.WriteLine("# eduVPN Client for Windows");
+                            // Append eduVPN Client specific configuration directives.
+                            sw.WriteLine();
+                            sw.WriteLine();
+                            sw.WriteLine("# eduVPN Client for Windows");
 
-                                // Introduce ourself (to OpenVPN server).
-                                var assembly = Assembly.GetExecutingAssembly();
-                                var assemblyTitleAttribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
-                                var assemblyVersion = assembly?.GetName()?.Version;
-                                sw.WriteLine("setenv IV_GUI_VER " + Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
+                            // Introduce ourself (to OpenVPN server).
+                            var assembly = Assembly.GetExecutingAssembly();
+                            var assemblyTitleAttribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
+                            var assemblyVersion = assembly?.GetName()?.Version;
+                            sw.WriteLine("setenv IV_GUI_VER " + Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
 
-                                // Configure log file (relative to WorkingFolder).
-                                sw.WriteLine("log-append " + Configuration.EscapeParamValue(ConnectionId + ".txt"));
+                            // Configure log file (relative to WorkingFolder).
+                            sw.WriteLine("log-append " + Configuration.EscapeParamValue(ConnectionId + ".txt"));
 
-                                // Configure interaction between us and openvpn.exe.
-                                sw.WriteLine("management " + Configuration.EscapeParamValue(mgmtEndpoint.Address.ToString()) + " " + Configuration.EscapeParamValue(mgmtEndpoint.Port.ToString()));
-                                sw.WriteLine("<management-client-pass>");
-                                sw.WriteLine(mgmtPassword);
-                                sw.WriteLine("</management-client-pass>");
-                                sw.WriteLine("management-client"); // Instruct openvpn.exe to contact us.
-                                sw.WriteLine("management-hold"); // Wait for our signal to start connecting.
-                                sw.WriteLine("management-query-passwords");
+                            // Configure interaction between us and openvpn.exe.
+                            sw.WriteLine("management " + Configuration.EscapeParamValue(mgmtEndpoint.Address.ToString()) + " " + Configuration.EscapeParamValue(mgmtEndpoint.Port.ToString()));
+                            sw.WriteLine("<management-client-pass>");
+                            sw.WriteLine(mgmtPassword);
+                            sw.WriteLine("</management-client-pass>");
+                            sw.WriteLine("management-client"); // Instruct openvpn.exe to contact us.
+                            sw.WriteLine("management-hold"); // Wait for our signal to start connecting.
+                            sw.WriteLine("management-query-passwords");
 
-                                // Ask when username/password is denied.
-                                sw.WriteLine("auth-retry interact");
-                                sw.WriteLine("auth-nocache");
+                            // Ask when username/password is denied.
+                            sw.WriteLine("auth-retry interact");
+                            sw.WriteLine("auth-nocache");
 
-                                // Set Wintun interface to be used.
-                                sw.Write("windows-driver wintun\n");
-                                var hash = new SHA1CryptoServiceProvider(); // https://datatracker.ietf.org/doc/html/rfc4122#section-4.3
-                                byte[] bufferPrefix = { 0x6b, 0xa7, 0xb8, 0x11, 0x9d, 0xad, 0x11, 0xd1, 0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8 }; // https://datatracker.ietf.org/doc/html/rfc4122#appendix-C in network byte order
-                                hash.TransformBlock(bufferPrefix, 0, bufferPrefix.Length, bufferPrefix, 0);
-                                var bufferUri = Encoding.UTF8.GetBytes(new Uri(ConnectingProfile.Server.Base, ConnectingProfile.Id).AbsoluteUri);
-                                hash.TransformFinalBlock(bufferUri, 0, bufferUri.Length);
-                                var guid = new Guid(
-                                    ((uint)hash.Hash[0] << 24) | ((uint)hash.Hash[1] << 16) | ((uint)hash.Hash[2] << 8) | hash.Hash[3], // time_low
-                                    (ushort)(((uint)hash.Hash[4] << 8) | hash.Hash[5]), // time_mid
-                                    (ushort)(((((uint)hash.Hash[6] << 8) | hash.Hash[7]) & 0x0fff) | 0x5000), // time_hi_and_version
-                                    (byte)(((uint)hash.Hash[8] & 0x3f) | 0x80), // clock_seq_hi_and_reserved
-                                    hash.Hash[9], // clock_seq_low
-                                    hash.Hash[10], hash.Hash[11], hash.Hash[12], hash.Hash[13], hash.Hash[14], hash.Hash[15]); // node[0-5]
-                                sw.Write("dev-node {" + guid + "}\n");
+                            // Set Wintun interface to be used.
+                            sw.Write("windows-driver wintun\n");
+                            var hash = new SHA1CryptoServiceProvider(); // https://datatracker.ietf.org/doc/html/rfc4122#section-4.3
+                            byte[] bufferPrefix = { 0x6b, 0xa7, 0xb8, 0x11, 0x9d, 0xad, 0x11, 0xd1, 0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8 }; // https://datatracker.ietf.org/doc/html/rfc4122#appendix-C in network byte order
+                            hash.TransformBlock(bufferPrefix, 0, bufferPrefix.Length, bufferPrefix, 0);
+                            var bufferUri = Encoding.UTF8.GetBytes(new Uri(ConnectingProfile.Server.Base, ConnectingProfile.Id).AbsoluteUri);
+                            hash.TransformFinalBlock(bufferUri, 0, bufferUri.Length);
+                            var guid = new Guid(
+                                ((uint)hash.Hash[0] << 24) | ((uint)hash.Hash[1] << 16) | ((uint)hash.Hash[2] << 8) | hash.Hash[3], // time_low
+                                (ushort)(((uint)hash.Hash[4] << 8) | hash.Hash[5]), // time_mid
+                                (ushort)(((((uint)hash.Hash[6] << 8) | hash.Hash[7]) & 0x0fff) | 0x5000), // time_hi_and_version
+                                (byte)(((uint)hash.Hash[8] & 0x3f) | 0x80), // clock_seq_hi_and_reserved
+                                hash.Hash[9], // clock_seq_low
+                                hash.Hash[10], hash.Hash[11], hash.Hash[12], hash.Hash[13], hash.Hash[14], hash.Hash[15]); // node[0-5]
+                            sw.Write("dev-node {" + guid + "}\n");
 
 #if DEBUG
-                                // Renegotiate data channel every 5 minutes in debug versions.
-                                sw.WriteLine("reneg-sec 300");
+                            // Renegotiate data channel every 5 minutes in debug versions.
+                            sw.WriteLine("reneg-sec 300");
 #endif
 
-                                if (Environment.OSVersion.Version < new Version(6, 2))
-                                {
-                                    // Windows 7 is using tiny 8kB send/receive socket buffers by default.
-                                    // Increase to 64kB which is default from Windows 8 on.
-                                    sw.WriteLine("sndbuf 65536");
-                                    sw.WriteLine("rcvbuf 65536");
-                                }
-
-                                sw.WriteLine("script-security 1");
-
-                                var openVPNAddOptions = Properties.SettingsEx.Default.OpenVPNAddOptions;
-                                if (!string.IsNullOrWhiteSpace(openVPNAddOptions))
-                                {
-                                    sw.WriteLine();
-                                    sw.WriteLine();
-                                    sw.WriteLine("# Added by OpenVPNAddOptions setting:");
-                                    sw.WriteLine(openVPNAddOptions);
-                                }
+                            if (Environment.OSVersion.Version < new Version(6, 2))
+                            {
+                                // Windows 7 is using tiny 8kB send/receive socket buffers by default.
+                                // Increase to 64kB which is default from Windows 8 on.
+                                sw.WriteLine("sndbuf 65536");
+                                sw.WriteLine("rcvbuf 65536");
                             }
-                            ovpn = fs.ToArray();
+
+                            sw.WriteLine("script-security 1");
+
+                            var openVPNAddOptions = Properties.SettingsEx.Default.OpenVPNAddOptions;
+                            if (!string.IsNullOrWhiteSpace(openVPNAddOptions))
+                            {
+                                sw.WriteLine();
+                                sw.WriteLine();
+                                sw.WriteLine("# Added by OpenVPNAddOptions setting:");
+                                sw.WriteLine(openVPNAddOptions);
+                            }
                         }
-                        catch (OperationCanceledException) { throw; }
-                        catch (Exception ex) { throw new AggregateException(string.Format(Resources.Strings.ErrorSavingProfileConfiguration, ConfigurationPath), ex); }
+                        ovpn = fs.ToArray();
 
                         retry:
                         // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
