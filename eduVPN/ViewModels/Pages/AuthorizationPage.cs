@@ -144,7 +144,7 @@ namespace eduVPN.ViewModels.Pages
                             var request = Xml.Response.CreateRequest(api.TokenEndpoint);
                             try
                             {
-                                accessToken = accessToken.RefreshToken(request, null, Window.Abort.Token);
+                                accessToken = accessToken.RefreshToken(request, Properties.Settings.Default.ClientId + ".windows", null, Window.Abort.Token);
 
                                 // Update access token cache.
                                 Properties.Settings.Default.AccessTokenCache[key] = accessToken;

@@ -3,7 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.3.6...HEAD)
 
 - Detection of foreign default gateway VPN
-- Fixes: #214, #217
+- Fixes: #214, #217, #218
 
 
 ## [3.3.6](https://github.com/Amebis/eduVPN/compare/3.3.5...3.3.6) (2022-11-23)
