@@ -127,7 +127,7 @@ namespace eduVPN.ViewModels.Pages
                             return;
                         }
 
-                        // Token refresh was explicitly requested or the token expired. Refresh it.
+                        Trace.TraceInformation("Refresh was explicitly requested or {0} access token expired", key);
                         if (accessToken is InvalidToken)
                         {
                             // Invalid token is not refreshable.
@@ -140,7 +140,7 @@ namespace eduVPN.ViewModels.Pages
 
                             var RetryTokenRefreshCount = 5;
                         RetryTokenRefresh:
-                            // Prepare web request.
+                            Trace.TraceInformation("Refreshing {0} access token {1}", key, api.TokenEndpoint);
                             var request = Xml.Response.CreateRequest(api.TokenEndpoint);
                             try
                             {
@@ -167,7 +167,7 @@ namespace eduVPN.ViewModels.Pages
                             {
                                 if (ex.ErrorCode == AccessTokenException.ErrorCodeType.InvalidGrant)
                                 {
-                                    // The grant has been revoked. Drop the access token.
+                                    Trace.TraceWarning("Grant revoked. Dropping {0} access token", key);
                                     Properties.Settings.Default.AccessTokenCache.Remove(key);
                                 }
                                 else
@@ -230,7 +230,7 @@ namespace eduVPN.ViewModels.Pages
                                     .Replace("@ORG_ID@", HttpUtility.UrlEncode(srv.OrganizationId)));
                             }
 
-                            // Trigger authorization.
+                            Trace.TraceInformation("Authorizing {0}", key);
                             Process.Start(authorizationUri.ToString());
 
                             // Wait for a change: either callback is invoked, either user cancels.
@@ -251,7 +251,7 @@ namespace eduVPN.ViewModels.Pages
 
                         var RetryTokenGetCount = 5;
                     RetryTokenGet:
-                        // Get access token from authorization grant.
+                        Trace.TraceInformation("Loading {0} access token {1}", key, api.TokenEndpoint);
                         var request = Xml.Response.CreateRequest(api.TokenEndpoint);
                         try
                         {
