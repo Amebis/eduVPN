@@ -181,7 +181,7 @@ namespace eduVPN.ViewModels.Pages
                     Wizard.TryInvoke((Action)(() =>
                     {
                         Wizard.TaskCount++;
-                        Wizard.CurrentPopupPage = this;
+                        Wizard.NavigateTo.Execute(this);
                     }));
                     try
                     {
