@@ -22,14 +22,9 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Authorization wizard page
     /// </summary>
-    public class AuthorizationPage : ConnectWizardStandardPage
+    public class AuthorizationPage : ConnectWizardPopupPage
     {
         #region Fields
-
-        /// <summary>
-        /// Page to return to after authorization is complete (or cancelled)
-        /// </summary>
-        private ConnectWizardStandardPage ReturnPage;
 
         /// <summary>
         /// Authorization cancellation token
@@ -40,9 +35,11 @@ namespace eduVPN.ViewModels.Pages
 
         #region Properties
 
-        /// <summary>
-        /// Cancel authorization
-        /// </summary>
+        // Hide NavigateBack button, as Cancel handles this.
+        /// <inheritdoc/>
+        public override DelegateCommand NavigateBack { get; } = new DelegateCommand(() => { }, () => false);
+
+        /// <inheritdoc/>
         public DelegateCommand Cancel
         {
             get
@@ -52,7 +49,8 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             AuthorizationInProgress?.Cancel();
-                            Wizard.CurrentPage = ReturnPage;
+                            if (base.NavigateBack.CanExecute())
+                                base.NavigateBack.Execute();
                         });
                 return _Cancel;
             }
@@ -183,8 +181,7 @@ namespace eduVPN.ViewModels.Pages
                     Wizard.TryInvoke((Action)(() =>
                     {
                         Wizard.TaskCount++;
-                        ReturnPage = Wizard.CurrentPage;
-                        Wizard.CurrentPage = this;
+                        Wizard.CurrentPopupPage = this;
                     }));
                     try
                     {
@@ -199,7 +196,11 @@ namespace eduVPN.ViewModels.Pages
                         {
                             callbackUri = eHTTPCallback.Uri;
                             AuthorizationInProgress.Cancel();
-                            Wizard.TryInvoke((Action)(() => Wizard.CurrentPage = ReturnPage));
+                            Wizard.TryInvoke((Action)(() =>
+                            {
+                                if (base.NavigateBack.CanExecute())
+                                    base.NavigateBack.Execute();
+                            }));
                         };
                         httpListener.HttpRequest += (object _, HttpRequestEventArgs eHTTPRequest) =>
                         {
