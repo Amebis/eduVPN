@@ -573,33 +573,7 @@ namespace eduVPN.ViewModels.VPN
 
             if (e.State == OpenVPNStateType.Reconnecting)
             {
-                switch (e.Message)
-                {
-                    case "connection-reset": // Connection was reset.
-                        if (ValidTo <= DateTimeOffset.Now)
-                        {
-                            // Client certificate expired. Try with a new client certificate then.
-                            goto case "tls-error";
-                        }
-                        goto default;
-
-                    case "auth-failure": // Client certificate was deleted/revoked on the server side, or the user is disabled.
-                    case "tls-error": // Client certificate is not compliant with this eduVPN server. Was eduVPN server reinstalled?
-                        // Refresh configuration.
-                        var config = ConnectingProfile.Connect(
-                            Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
-                            true,
-                            ProfileConfig.ContentType,
-                            SessionAndWindowInProgress.Token);
-                        Wizard.TryInvoke((Action)(() => ProfileConfig = config));
-                        IgnoreHoldHint = true;
-                        break;
-
-                    default:
-                        IgnoreHoldHint = false;
-                        break;
-                }
-
+                IgnoreHoldHint = false;
                 ManagementSession.QueueReleaseHold(SessionAndWindowInProgress.Token);
             }
         }
