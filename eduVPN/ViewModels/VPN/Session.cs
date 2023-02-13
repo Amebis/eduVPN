@@ -61,8 +61,6 @@ namespace eduVPN.ViewModels.VPN
                     RaisePropertyChanged(nameof(ValidTo));
                     RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ExpiresTime));
-                    RaisePropertyChanged(nameof(OfferRenewal));
-                    RaisePropertyChanged(nameof(SuggestRenewal));
                 }
             }
         }
@@ -206,41 +204,6 @@ namespace eduVPN.ViewModels.VPN
         }
 
         /// <summary>
-        /// Should UI offer session renewal?
-        /// </summary>
-        public bool OfferRenewal
-        {
-            get
-            {
-                DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
-                return
-                    from != DateTimeOffset.MinValue && to != DateTimeOffset.MaxValue &&
-#if DEBUG
-                    (now - from).TotalMinutes > 1;
-#else
-                    (now - from).TotalMinutes > 30 &&
-                    (to - now).TotalHours < 24 &&
-                    (now - from).Ticks > 0.75 * (to - from).Ticks;
-#endif
-            }
-        }
-
-        /// <summary>
-        /// Should UI suggest session renewal?
-        /// </summary>
-        public bool SuggestRenewal
-        {
-            get
-            {
-                DateTimeOffset from = ValidFrom, now = DateTimeOffset.Now, to = ValidTo;
-                return
-                    from != DateTimeOffset.MinValue && to != DateTimeOffset.MaxValue &&
-                    (now - from).TotalMinutes > 30 &&
-                    (to - now).TotalMinutes < 60;
-            }
-        }
-
-        /// <summary>
         /// Renews and restarts the session
         /// </summary>
         public virtual DelegateCommand Renew { get; } = new DelegateCommand(() => { }, () => false);
@@ -338,8 +301,6 @@ namespace eduVPN.ViewModels.VPN
                         RaisePropertyChanged(nameof(ConnectedTime));
                         RaisePropertyChanged(nameof(Expired));
                         RaisePropertyChanged(nameof(ExpiresTime));
-                        RaisePropertyChanged(nameof(OfferRenewal));
-                        RaisePropertyChanged(nameof(SuggestRenewal));
                     },
                     Wizard.Dispatcher);
                 propertyUpdater.Start();

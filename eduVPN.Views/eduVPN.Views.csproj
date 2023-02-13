@@ -49,6 +49,7 @@
     <Compile Include="Converters\EmptySearchResultRowHeightConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
+    <Compile Include="Converters\ExpiresTimeVisibilityConverter.cs" />
     <Compile Include="Converters\ExpiredNotificationVisibilityConverter.cs" />
     <Compile Include="Converters\FlowDirectionConverter.cs" />
     <Compile Include="Converters\HomePageOwnServerLabelConverter.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Converters\InvertableConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberToHumanReadableConverter.cs" />
+    <Compile Include="Converters\RenewVisibilityConverter.cs" />
     <Compile Include="Converters\SessionTypeConverter.cs" />
     <Compile Include="Localization\CardinalPluralFormatProvider.cs" />
     <Compile Include="Converters\ProfileSelectionVisibilityConverter.cs" />

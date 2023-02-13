@@ -23,6 +23,7 @@
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
     <conv:ExpiredNotificationVisibilityConverter x:Key="ExpiredNotificationVisibilityConverter"/>
+    <conv:ExpiresTimeVisibilityConverter x:Key="ExpiresTimeVisibilityConverter"/>
     <conv:FlowDirectionConverter x:Key="FlowDirectionConverter"/>
     <conv:HomePageOwnServerLabelConverter x:Key="HomePageOwnServerLabelConverter"/>
     <conv:IntegerVisibilityConverter x:Key="IntegerInverseVisibilityConverter">
@@ -44,6 +45,7 @@
     </conv:NumberToHumanReadableConverter>
     <conv:ProfileSelectionVisibilityConverter x:Key="ProfileSelectionVisibilityConverter"/>
     <conv:RemoveAccessKeyConverter x:Key="RemoveAccessKeyConverter"/>
+    <conv:RenewVisibilityConverter x:Key="RenewVisibilityConverter"/>
     <conv:StringVisibilityConverter x:Key="StringInverseVisibilityConverter">
         <conv:StringVisibilityConverter.Invert>
             <sys:Boolean>True</sys:Boolean>

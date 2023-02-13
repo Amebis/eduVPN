@@ -160,7 +160,7 @@
                 Grid.Row="1"
                 Margin="0,-2,0,0"
                 HorizontalAlignment="Center"
-                Visibility="{Binding ActiveSession.Expired, Converter={StaticResource BooleanInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                Visibility="{Binding ActiveSession.ExpiresTime, Converter={StaticResource ExpiresTimeVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
                 <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanToHumanReadableConverter}}" Style="{StaticResource ImportantStyle}"/>
             </TextBlock>
@@ -187,8 +187,17 @@
                 Margin="0,5,0,0"
                 HorizontalAlignment="Center"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectionPageSessionRenew}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                Visibility="{Binding ActiveSession.OfferRenewal, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
                 Command="{Binding ActiveSession.Renew}">
+                <Button.Visibility>
+                    <MultiBinding
+                        Converter="{StaticResource RenewVisibilityConverter}"
+                        Mode="OneWay"
+                        FallbackValue="{x:Static Visibility.Collapsed}">
+                        <Binding Path="ActiveSession.ConnectedTime"/>
+                        <Binding Path="ActiveSession.ValidFrom"/>
+                        <Binding Path="ActiveSession.ValidTo"/>
+                    </MultiBinding>
+                </Button.Visibility>
                 <AccessText Text="{x:Static res:Strings.ConnectionPageSessionRenew}"/>
             </Button>
         </Grid>

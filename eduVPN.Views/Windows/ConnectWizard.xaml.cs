@@ -31,6 +31,11 @@ namespace eduVPN.Views.Windows
 
         private const int WM_WININICHANGE = 0x001A;
 
+        /// <summary>
+        /// Milestone minutes to display system tray notification about imminent session expiration
+        /// </summary>
+        private static readonly double[] SessionExpirationWarningMilestoneMinutes = new double[] { 4 * 60, 2 * 60, 60 };
+
         #endregion
 
         #region Fields
@@ -41,9 +46,9 @@ namespace eduVPN.Views.Windows
         private SessionStatusType SessionState;
 
         /// <summary>
-        /// Was user notified about imminent session expiration?
+        /// How many minutes before expiration was user notified?
         /// </summary>
-        private bool WasSessionExpirationWarned = false;
+        private double SessionExpirationWarningMinutes = double.MaxValue;
 
         /// <summary>
         /// Icon on the notification tray
@@ -203,7 +208,7 @@ namespace eduVPN.Views.Windows
                     {
                         // Initialize VPN session state.
                         SessionState = viewModel.ConnectionPage.ActiveSession.State;
-                        WasSessionExpirationWarned = false;
+                        SessionExpirationWarningMinutes = double.MaxValue;
 
                         // Bind to the session for property changes.
                         viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object sender3, PropertyChangedEventArgs e3) =>
@@ -252,22 +257,26 @@ namespace eduVPN.Views.Windows
                                     break;
 
                                 case nameof(viewModel.ConnectionPage.ActiveSession.Expired):
-                                case nameof(viewModel.ConnectionPage.ActiveSession.SuggestRenewal):
-                                    if (!viewModel.ConnectionPage.ActiveSession.Expired &&
-                                        viewModel.ConnectionPage.ActiveSession.SuggestRenewal)
+                                case nameof(viewModel.ConnectionPage.ActiveSession.ExpiresTime):
+                                    if (viewModel.ConnectionPage.ActiveSession.Expired)
                                     {
-                                        if (!WasSessionExpirationWarned)
+                                        SessionExpirationWarningMinutes = double.MaxValue;
+                                        break;
+                                    }
+                                    double remainingMinutes = viewModel.ConnectionPage.ActiveSession.ExpiresTime.TotalMinutes;
+                                    foreach (var milestoneMinutes in SessionExpirationWarningMilestoneMinutes)
+                                    {
+                                        if (remainingMinutes <= milestoneMinutes && SessionExpirationWarningMinutes > milestoneMinutes)
                                         {
                                             NotifyIcon.ShowBalloonTip(
                                                 1000 * 60 * 5,
                                                 string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile.Server),
                                                 string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
                                                 System.Windows.Forms.ToolTipIcon.Info);
-                                            WasSessionExpirationWarned = true;
+                                            SessionExpirationWarningMinutes = remainingMinutes;
+                                            break;
                                         }
                                     }
-                                    else
-                                        WasSessionExpirationWarned = false;
                                     break;
                             }
                         };
