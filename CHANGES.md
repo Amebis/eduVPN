@@ -8,6 +8,8 @@
 - "Renew Session" button and session expiration notification timings revised
 - OpenVPN updated to 2.5.8-20230214
     - openvpn 2.5.8 1d81df042eae416a4e83e6a433ae2b937c5a10a4
+- libsodium updated to 1.0.18-20230214
+    - libsodium 1.0.18 39b4300cf2b80161034a21e69f8ad66335e22864
 
 
 ## [3.3.6](https://github.com/Amebis/eduVPN/compare/3.3.5...3.3.6) (2022-11-23)
