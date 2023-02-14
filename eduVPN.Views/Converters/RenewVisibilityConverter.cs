@@ -38,13 +38,9 @@ namespace eduVPN.Converters
             return
                 values[1] is DateTimeOffset from && from != DateTimeOffset.MinValue &&
                 values[2] is DateTimeOffset to && to != DateTimeOffset.MaxValue &&
-#if DEBUG
-                (now - from).TotalMinutes > 1
-#else
                 (now - from).TotalMinutes > 30 &&
-                (to - now).TotalHours < 24
-#endif
-                ? Visibility.Visible : Visibility.Collapsed;
+                (to - now).TotalHours < 24 ?
+                Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
