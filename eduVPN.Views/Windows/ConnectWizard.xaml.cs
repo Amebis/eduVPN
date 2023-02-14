@@ -208,7 +208,7 @@ namespace eduVPN.Views.Windows
                     {
                         // Initialize VPN session state.
                         SessionState = viewModel.ConnectionPage.ActiveSession.State;
-                        SessionExpirationWarningMinutes = double.MaxValue;
+                        SessionExpirationWarningMinutes = viewModel.ConnectionPage.ActiveSession.ExpiresTime.TotalMinutes;
 
                         // Bind to the session for property changes.
                         viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object sender3, PropertyChangedEventArgs e3) =>
