@@ -80,7 +80,7 @@ Clean ::
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi"
 	move /y << "$(@:"=).tmp" > NUL
 # Created using eduVPN build system
-# yaml-language-server: $$schema=https://aka.ms/winget-manifest.installer.1.2.0.schema.json
+# yaml-language-server: $$schema=https://aka.ms/winget-manifest.installer.1.4.0.schema.json
 
 PackageIdentifier: SURF.$(CLIENT_TARGET)Client
 PackageVersion: $(VERSION)
@@ -119,7 +119,7 @@ Installers:
     DisplayName: $(CLIENT_TITLE) Client $(VERSION) x86
     UpgradeCode: '$(CLIENT_UPGRADE_GUID_32)'
 ManifestType: installer
-ManifestVersion: 1.2.0
+ManifestVersion: 1.4.0
 
 <<NOKEEP
 	move /y "$(@:"=).tmp" $@ > NUL
@@ -127,7 +127,7 @@ ManifestVersion: 1.2.0
 "bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" :
 	move /y << "$(@:"=).tmp" > NUL
 # Created using eduVPN build system
-# yaml-language-server: $$schema=https://aka.ms/winget-manifest.defaultLocale.1.2.0.schema.json
+# yaml-language-server: $$schema=https://aka.ms/winget-manifest.defaultLocale.1.4.0.schema.json
 
 PackageIdentifier: SURF.$(CLIENT_TARGET)Client
 PackageVersion: $(VERSION)
@@ -142,7 +142,7 @@ Tags:
 - eduvpn
 ReleaseNotesUrl: https://github.com/Amebis/eduVPN/releases/tag/$(VERSION)
 ManifestType: defaultLocale
-ManifestVersion: 1.2.0
+ManifestVersion: 1.4.0
 
 <<NOKEEP
 	move /y "$(@:"=).tmp" $@ > NUL
@@ -150,13 +150,13 @@ ManifestVersion: 1.2.0
 "bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml" :
 	move /y << "$(@:"=).tmp" > NUL
 # Created using eduVPN build system
-# yaml-language-server: $$schema=https://aka.ms/winget-manifest.version.1.2.0.schema.json
+# yaml-language-server: $$schema=https://aka.ms/winget-manifest.version.1.4.0.schema.json
 
 PackageIdentifier: SURF.$(CLIENT_TARGET)Client
 PackageVersion: $(VERSION)
 DefaultLocale: en-US
 ManifestType: version
-ManifestVersion: 1.2.0
+ManifestVersion: 1.4.0
 
 <<NOKEEP
 	move /y "$(@:"=).tmp" $@ > NUL
