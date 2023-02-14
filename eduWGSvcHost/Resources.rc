@@ -15,8 +15,8 @@
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 VS_VERSION_INFO VERSIONINFO
-	FILEVERSION 3,3,7,0
-	PRODUCTVERSION 3,3,7,0
+	FILEVERSION 3,3,8,0
+	PRODUCTVERSION 3,3,8,0
 	FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
 #ifdef _DEBUG
 	FILEFLAGS VS_FF_DEBUG
@@ -33,11 +33,11 @@ BEGIN
 		BEGIN
 			VALUE "CompanyName",      "SURF"
 			VALUE "FileDescription",  "WireGuard Service Host for eduVPN Client"
-			VALUE "FileVersion",      "3.3.7"
+			VALUE "FileVersion",      "3.3.8"
 			VALUE "LegalCopyright",   "Copyright © 2022-2023 The Commons Conservancy"
 			VALUE "OriginalFilename", "eduWGSvcHost.exe"
 			VALUE "ProductName",      "eduVPN"
-			VALUE "ProductVersion",   "3.3.7"
+			VALUE "ProductVersion",   "3.3.8"
 		END
 	END
 	BLOCK "VarFileInfo"
