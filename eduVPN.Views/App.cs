@@ -13,8 +13,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Timers;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace eduVPN.Views
 {
@@ -80,6 +82,21 @@ namespace eduVPN.Views
 
             RenderOptions.ProcessRenderMode = Views.Properties.SettingsEx.Default.ProcessRenderMode;
 
+            foreach (var settings in new ApplicationSettingsBase[] { eduVPN.Properties.Settings.Default, Views.Properties.Settings.Default })
+            {
+                var timer = new Timer(5 * 1000) { AutoReset = false };
+                timer.Elapsed += (object sender, ElapsedEventArgs e2) =>
+                {
+                    if (!Dispatcher.HasShutdownStarted)
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => settings.Save()));
+                };
+                settings.PropertyChanged += (object sender, System.ComponentModel.PropertyChangedEventArgs e2) =>
+                {
+                    timer.Stop();
+                    timer.Start();
+                };
+            }
+
             base.OnStartup(e);
         }
 
@@ -102,10 +119,8 @@ namespace eduVPN.Views
 
             base.OnSessionEnding(e);
 
-            // Save view settings on logout.
+            // Save settings on logout.
             Views.Properties.Settings.Default.Save();
-
-            // Save view model settings on logout.
             eduVPN.Properties.Settings.Default.Save();
         }
 
