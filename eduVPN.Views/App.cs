@@ -76,6 +76,8 @@ namespace eduVPN.Views
             eduVPN.Properties.Settings.Initialize();
             Views.Properties.Settings.Initialize();
 
+            Engine.Register();
+
             eduVPN.Properties.Settings.Default.IsSignon = e.Args.Any(param => param.Equals("/signon", StringComparison.OrdinalIgnoreCase));
             if (eduVPN.Properties.Settings.Default.IsSignon && !Views.Properties.Settings.Default.StartOnSignon)
                 Shutdown(0);
@@ -122,6 +124,8 @@ namespace eduVPN.Views
             // Save settings on logout.
             Views.Properties.Settings.Default.Save();
             eduVPN.Properties.Settings.Default.Save();
+
+            Engine.Deregister();
         }
 
         /// <inheritdoc/>
@@ -129,11 +133,11 @@ namespace eduVPN.Views
         {
             base.OnExit(e);
 
-            // Save view settings on exit.
+            // Save settings on exit.
             Views.Properties.Settings.Default.Save();
-
-            // Save view model settings on exit.
             eduVPN.Properties.Settings.Default.Save();
+
+            Engine.Deregister();
         }
 
         #endregion

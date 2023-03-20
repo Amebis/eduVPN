@@ -12,12 +12,10 @@ using Microsoft.Win32;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -34,34 +32,6 @@ namespace eduVPN.ViewModels.Windows
         /// Stack of displayed popup pages
         /// </summary>
         private readonly List<ConnectWizardPopupPage> PopupPages = new List<ConnectWizardPopupPage>();
-
-        /// <summary>
-        /// Dictionary of discovered servers
-        /// </summary>
-        private ServerDictionary DiscoveredServers;
-
-        /// <summary>
-        /// Dictionary of discovered organizations
-        /// </summary>
-        private OrganizationDictionary DiscoveredOrganizations;
-
-        /// <summary>
-        /// Search index of discovered institute access servers
-        /// </summary>
-        private Dictionary<string, HashSet<InstituteAccessServer>> DiscoveredInstituteServerIndex;
-
-        /// <summary>
-        /// Search index of discovered organizations
-        /// </summary>
-        private Dictionary<string, HashSet<Organization>> DiscoveredOrganizationIndex;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly object DiscoveredListLock = new object();
-
-        /// <summary>
-        /// Is auto-reconnect in progress?
-        /// </summary>
-        private bool IsAutoReconnectInProgress = false;
 
         #endregion
 
@@ -231,18 +201,6 @@ namespace eduVPN.ViewModels.Windows
         private DelegateCommand<ConnectWizardPopupPage> _NavigateBack;
 
         /// <summary>
-        /// Occurs when discovered server list is refreshed.
-        /// </summary>
-        /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
-        public event EventHandler DiscoveredServersChanged;
-
-        /// <summary>
-        /// Occurs when discovered organization list is refreshed.
-        /// </summary>
-        /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
-        public event EventHandler DiscoveredOrganizationsChanged;
-
-        /// <summary>
         /// Occurs when auto-reconnection failed.
         /// </summary>
         /// <remarks>Sender is the connection wizard <see cref="ConnectWizard"/>.</remarks>
@@ -284,7 +242,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Page to add another server
         /// </summary>
-        public ConnectWizardStandardPage AddAnotherPage => Properties.SettingsEx.Default.ServersDiscovery?.Uri != null ? (ConnectWizardStandardPage)SearchPage : SelectOwnServerPage;
+        public ConnectWizardStandardPage AddAnotherPage => Properties.Settings.Default.Discovery ? (ConnectWizardStandardPage)SearchPage : SelectOwnServerPage;
 
         /// <summary>
         /// The first page of the wizard
@@ -293,17 +251,9 @@ namespace eduVPN.ViewModels.Windows
         {
             get
             {
-                var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
-                if (precfgList != null && precfgList.Count != 0)
-                    return HomePage;
-
-                var precfgOrgId = Properties.SettingsEx.Default.SecureInternetOrganization;
-                if (!string.IsNullOrEmpty(precfgOrgId))
-                    return HomePage;
-
-                if (Properties.Settings.Default.InstituteAccessServers.Count != 0 ||
-                    precfgOrgId == null && !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) ||
-                    Properties.Settings.Default.OwnServers.Count != 0)
+                if (HomePage.InstituteAccessServers.Count != 0 ||
+                    HomePage.SecureInternetServers.Count != 0 ||
+                    HomePage.OwnServers.Count != 0)
                     return HomePage;
 
                 return AddAnotherPage;
@@ -377,18 +327,18 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Select secure internet connecting server wizard page
         /// </summary>
-        public SelectSecureInternetServerPage SelectSecureInternetServerPage
+        public SelectSecureInternetCountryPage SelectSecureInternetCountryPage
         {
             get
             {
-                if (_SelectSecureInternetServerPage == null)
-                    _SelectSecureInternetServerPage = new SelectSecureInternetServerPage(this);
-                return _SelectSecureInternetServerPage;
+                if (_SelectSecureInternetCountryPage == null)
+                    _SelectSecureInternetCountryPage = new SelectSecureInternetCountryPage(this);
+                return _SelectSecureInternetCountryPage;
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SelectSecureInternetServerPage _SelectSecureInternetServerPage;
+        private SelectSecureInternetCountryPage _SelectSecureInternetCountryPage;
 
         /// <summary>
         /// Status wizard page
@@ -481,6 +431,8 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public ConnectWizard()
         {
+            Engine.Callback += Engine_Callback;
+
             var actions = new List<KeyValuePair<Action, int>>();
 
             actions.Add(new KeyValuePair<Action, int>(
@@ -492,30 +444,16 @@ namespace eduVPN.ViewModels.Windows
                 },
                 24 * 60 * 60 * 1000)); // Repeat every 24 hours
 
-            if (Properties.SettingsEx.Default.ServersDiscovery?.Uri != null)
-            {
-                InitServers();
-                actions.Add(new KeyValuePair<Action, int>(
-                    DiscoverServers,
-                    6 * 60 * 60 * 1000)); // Repeat every 6 hours
-            }
-            else
-            {
-                Properties.Settings.Default.InstituteAccessServers.Clear();
-                Properties.Settings.Default.SecureInternetConnectingServer = null;
-                Properties.Settings.Default.SecureInternetOrganization = null;
-            }
-
-            if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri != null)
-            {
-                if (!InitOrganizations())
-                    actions.Add(new KeyValuePair<Action, int>(DiscoverOrganizations, 0));
-            }
-            else
-            {
-                Properties.Settings.Default.SecureInternetConnectingServer = null;
-                Properties.Settings.Default.SecureInternetOrganization = null;
-            }
+            // TODO: Migrate eduVPN settings to eduvpn-common.
+            // TODO: Support preconfigured Institute Access and Secure Internet to eduvpn-common.
+            //var str = Engine.ServerList();
+            //foreach (var srv in Properties.Settings.Default.InstituteAccessServers)
+            //    Engine.AddInstituteAccessServer(srv);
+            //if (!string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization))
+            //    Engine.AddSecureInternetHomeServer(Properties.Settings.Default.SecureInternetOrganization);
+            //foreach (var srv in Properties.Settings.Default.OwnServers)
+            //    Engine.AddOwnServer(srv);
+            //str = Engine.ServerList();
 
             if (Properties.SettingsEx.Default.SelfUpdateDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
@@ -553,279 +491,34 @@ namespace eduVPN.ViewModels.Windows
 
         #region Methods
 
-        private void UpdateServers(Dictionary<string, object> obj)
+        private void Engine_Callback(object sender, Engine.CallbackEventArgs e)
         {
-            var dict = new ServerDictionary();
-            dict.Load(obj);
-            //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-            //throw new Exception("Server list download failed"); // Mock download failure.
-            var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
-            foreach (var el in dict)
+            switch (e.NewState)
             {
-                Abort.Token.ThrowIfCancellationRequested();
-                el.Value.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
-                el.Value.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
-                if (el.Value is InstituteAccessServer srv)
-                    idx.Index(srv);
-            }
-            lock (DiscoveredListLock)
-            {
-                DiscoveredServers = dict;
-                DiscoveredInstituteServerIndex = idx;
-            }
-            TryInvoke((Action)(() =>
-            {
-                var instituteAccessServers = new Xml.UriList();
-                var ownServers = new Xml.UriList();
-                var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
-                if (precfgList != null)
-                {
-                    foreach (var baseUri in precfgList)
-                        if (!instituteAccessServers.Contains(baseUri))
-                            instituteAccessServers.Add(baseUri);
-                }
-                // Migrate non-discovered institute access servers to own servers.
-                foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
-                    if (!instituteAccessServers.Contains(baseUri))
+                case Engine.State.NoServer:
+                    TryInvoke((Action)(() =>
                     {
-                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) == null)
-                        {
-                            if (!ownServers.Contains(baseUri))
-                                ownServers.Add(baseUri);
-                        }
-                        else
-                            instituteAccessServers.Add(baseUri);
-                    }
-                // Migrate discovered own servers to institute access servers.
-                foreach (var baseUri in Properties.Settings.Default.OwnServers)
-                    if (!instituteAccessServers.Contains(baseUri))
+                        HomePage.LoadServers();
+                        CurrentPage = StartingPage;
+                    }));
+                    e.Handled = true;
+                    break;
+
+                case Engine.State.AskLocation:
+                    var countries = eduJSON.Parser.Parse(e.Data, Abort.Token) as List<object>;
+                    TryInvoke((Action)(() =>
                     {
-                        if (GetDiscoveredServer<InstituteAccessServer>(baseUri) != null)
-                            instituteAccessServers.Add(baseUri);
-                        else if (!ownServers.Contains(baseUri))
-                            ownServers.Add(baseUri);
-                    }
-                Properties.Settings.Default.InstituteAccessServers = instituteAccessServers;
-                Properties.Settings.Default.OwnServers = ownServers;
+                        SelectSecureInternetCountryPage.SetSecureInternetCountries(countries);
+                        CurrentPage = SelectSecureInternetCountryPage;
+                    }));
+                    e.Handled = true;
+                    break;
 
-                DiscoveredServersChanged?.Invoke(this, EventArgs.Empty);
-                AutoReconnect();
-            }));
-        }
-
-        private bool InitServers()
-        {
-            var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.ServersDiscovery);
-            if (response != null)
-            {
-                Trace.TraceInformation("Populating servers from cache");
-                UpdateServers((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
-                return true;
-            }
-            return false;
-        }
-
-        private void DiscoverServers()
-        {
-            Trace.TraceInformation("Updating servers {0}", Properties.SettingsEx.Default.ServersDiscovery.Uri.AbsoluteUri);
-            UpdateServers(Properties.Settings.Default.ResponseCache.GetSeq(
-                Properties.SettingsEx.Default.ServersDiscovery,
-                Abort.Token));
-        }
-
-        /// <summary>
-        /// Returns available institute access server with given base URI
-        /// </summary>
-        /// <param name="baseUri">Server base URI</param>
-        /// <returns>Server if found; null otherwise</returns>
-        public T GetDiscoveredServer<T>(Uri baseUri) where T : Server
-        {
-            lock (DiscoveredListLock)
-                return
-                    baseUri != null &&
-                    DiscoveredServers != null &&
-                    DiscoveredServers.TryGetValue(baseUri, out var srv) &&
-                    srv is T srvT ? srvT : null;
-        }
-
-        private void UpdateOrganizations(Dictionary<string, object> obj)
-        {
-            var dict = new OrganizationDictionary();
-            dict.Load(obj);
-            //Abort.Token.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-            //throw new Exception("Organization list download failed"); // Mock download failure.
-            var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
-            foreach (var el in dict)
-            {
-                Abort.Token.ThrowIfCancellationRequested();
-                idx.Index(el.Value);
-            }
-            lock (DiscoveredListLock)
-            {
-                DiscoveredOrganizations = dict;
-                DiscoveredOrganizationIndex = idx;
-            }
-            TryInvoke((Action)(() =>
-            {
-                DiscoveredOrganizationsChanged?.Invoke(this, EventArgs.Empty);
-                AutoReconnect();
-            }));
-        }
-
-        private bool InitOrganizations()
-        {
-            var response = Properties.Settings.Default.ResponseCache.GetSeqFromCache(Properties.SettingsEx.Default.OrganizationsDiscovery);
-            if (response != null)
-            {
-                Trace.TraceInformation("Populating organizations from cache");
-                UpdateOrganizations((Dictionary<string, object>)eduJSON.Parser.Parse(response.Value, Abort.Token));
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Triggers background organization discovery
-        /// </summary>
-        public void DiscoverOrganizations()
-        {
-            if (Properties.SettingsEx.Default.OrganizationsDiscovery?.Uri == null)
-                return;
-
-            var w = new BackgroundWorker();
-            w.DoWork += (object sender, DoWorkEventArgs e) =>
-            {
-                TryInvoke((Action)(() => TaskCount++));
-                try
-                {
-                    Trace.TraceInformation("Updating organizations {0}", Properties.SettingsEx.Default.OrganizationsDiscovery.Uri.AbsoluteUri);
-                    UpdateOrganizations(Properties.Settings.Default.ResponseCache.GetSeq(
-                        Properties.SettingsEx.Default.OrganizationsDiscovery,
-                        Abort.Token));
-                }
-                catch (OperationCanceledException) { }
-                catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
-                finally { TryInvoke((Action)(() => TaskCount--)); }
-            };
-            w.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) => (sender as BackgroundWorker)?.Dispose();
-            w.RunWorkerAsync();
-        }
-
-        /// <summary>
-        /// Returns discovered organization with given identifier
-        /// </summary>
-        /// <param name="id">Organization identifier</param>
-        /// <returns>Organization if found; null otherwise</returns>
-        public Organization GetDiscoveredOrganization(string id)
-        {
-            lock (DiscoveredListLock)
-                return
-                    !string.IsNullOrEmpty(id) &&
-                    DiscoveredOrganizations != null &&
-                    DiscoveredOrganizations.TryGetValue(id, out var org) ? org : null;
-        }
-
-        /// <summary>
-        /// Returns discovered institute access servers matching keywords ordered by relevance
-        /// </summary>
-        /// <param name="keywords">List of keywords</param>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>List of servers</returns>
-        public ObservableCollection<InstituteAccessServer> GetDiscoveredInstituteAccessServers(IEnumerable<string> keywords, CancellationToken ct = default)
-        {
-            lock (DiscoveredListLock)
-            {
-                if (DiscoveredInstituteServerIndex == null)
-                    return null;
-
-                var serverHits = new Dictionary<InstituteAccessServer, int>();
-                foreach (var keyword in keywords)
-                {
-                    ct.ThrowIfCancellationRequested();
-                    if (DiscoveredInstituteServerIndex.TryGetValue(keyword, out var hits))
-                        foreach (var hit in hits)
-                        {
-                            ct.ThrowIfCancellationRequested();
-                            if (serverHits.ContainsKey(hit))
-                                serverHits[hit]++;
-                            else
-                                serverHits.Add(hit, 1);
-                        }
-                }
-                var coll = new ObservableCollection<InstituteAccessServer>();
-                foreach (var srv in serverHits.OrderByDescending(el =>
-                    {
-                        ct.ThrowIfCancellationRequested();
-                        return el.Value;
-                    }))
-                {
-                    ct.ThrowIfCancellationRequested();
-                    coll.Add(srv.Key);
-                }
-                return coll;
-            }
-        }
-
-        /// <summary>
-        /// Returns discovered secure internet servers
-        /// </summary>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>List of servers</returns>
-        public ObservableCollection<SecureInternetServer> GetDiscoveredSecureInternetServers(CancellationToken ct = default)
-        {
-            lock (DiscoveredListLock)
-            {
-                if (DiscoveredServers == null)
-                    return null;
-
-                var serverHits = new ObservableCollection<SecureInternetServer>();
-                foreach (var entry in DiscoveredServers)
-                {
-                    ct.ThrowIfCancellationRequested();
-                    if (entry.Value is SecureInternetServer srv2)
-                        serverHits.Add(srv2);
-                }
-                return serverHits;
-            }
-        }
-
-        /// <summary>
-        /// Returns discovered organizations matching keywords ordered by relevance
-        /// </summary>
-        /// <param name="ct">The token to monitor for cancellation requests</param>
-        /// <returns>List of organizations</returns>
-        public ObservableCollection<Organization> GetDiscoveredOrganizations(IEnumerable<string> keywords, CancellationToken ct = default)
-        {
-            lock (DiscoveredListLock)
-            {
-                if (DiscoveredOrganizationIndex == null)
-                    return null;
-
-                var organizationHits = new Dictionary<Organization, int>();
-                foreach (var keyword in keywords)
-                {
-                    ct.ThrowIfCancellationRequested();
-                    if (DiscoveredOrganizationIndex.TryGetValue(keyword, out var hits))
-                        foreach (var hit in hits)
-                        {
-                            ct.ThrowIfCancellationRequested();
-                            if (organizationHits.ContainsKey(hit))
-                                organizationHits[hit]++;
-                            else
-                                organizationHits.Add(hit, 1);
-                        }
-                }
-                var coll = new ObservableCollection<Organization>();
-                foreach (var org in organizationHits.OrderByDescending(el =>
-                    {
-                        ct.ThrowIfCancellationRequested();
-                        return el.Value;
-                    }))
-                {
-                    ct.ThrowIfCancellationRequested();
-                    coll.Add(org.Key);
-                }
-                return coll;
+                case Engine.State.OAuthStarted:
+                    Process.Start(e.Data);
+                    TryInvoke((Action)(() => CurrentPage = AuthorizationPage));
+                    e.Handled = true;
+                    break;
             }
         }
 
@@ -834,72 +527,10 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         /// <param name="connectingServer">Connecting server</param>
         /// <returns>Authenticating server</returns>
+        [Obsolete]
         public Server GetAuthenticatingServer(Server connectingServer)
         {
-            if (connectingServer is SecureInternetServer)
-            {
-                var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
-                if (orgId != "")
-                {
-                    if (orgId == null)
-                        orgId = Properties.Settings.Default.SecureInternetOrganization;
-                    var org = GetDiscoveredOrganization(orgId);
-                    if (org != null)
-                    {
-                        var srv = GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                        if (srv != null)
-                            srv.OrganizationId = orgId;
-                        return srv;
-                    }
-                }
-            }
-            return connectingServer;
-        }
-
-        /// <summary>
-        /// Auto-reconnects last connected server/profile.
-        /// </summary>
-        private async void AutoReconnect()
-        {
-            if (Properties.Settings.Default.LastSelectedServer == null ||
-                IsAutoReconnectInProgress)
-                return;
-
-            // Select connecting and authenticating server. Or make one.
-            Server connectingServer = null, authenticatingServer = null;
-            if (DiscoveredServers != null)
-            {
-                connectingServer = GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.LastSelectedServer);
-                if (connectingServer != null)
-                {
-                    if (DiscoveredOrganizations == null)
-                        return;
-                    authenticatingServer = HomePage.AuthenticatingSecureInternetServer;
-                    if (authenticatingServer == null)
-                        return;
-                }
-                else
-                    connectingServer = authenticatingServer = GetDiscoveredServer<InstituteAccessServer>(Properties.Settings.Default.LastSelectedServer);
-            }
-            if (connectingServer == null)
-            {
-                connectingServer = authenticatingServer = new Server(Properties.Settings.Default.LastSelectedServer);
-                connectingServer.RequestAuthorization += AuthorizationPage.OnRequestAuthorization;
-                connectingServer.ForgetAuthorization += AuthorizationPage.OnForgetAuthorization;
-            }
-
-            // Authorize and start connecting.
-            IsAutoReconnectInProgress = true;
-            if (await AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer, false) != null)
-            {
-                ConnectionPage.ConnectingServer = connectingServer;
-                CurrentPage = ConnectionPage;
-            }
-            else
-            {
-                Properties.Settings.Default.LastSelectedServer = null;
-                AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(authenticatingServer, connectingServer));
-            }
+            throw new NotImplementedException();
         }
 
         private void DiscoverVersions()

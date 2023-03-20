@@ -12,7 +12,7 @@ namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -128,93 +128,6 @@ namespace eduVPN.Properties {
         public string OpenVPNAddOptions {
             get {
                 return ((string)(this["OpenVPNAddOptions"]));
-            }
-        }
-        
-        /// <summary>
-        /// User&apos;s home organization for secure internet use
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("User\'s home organization for secure internet use")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SecureInternetOrganization {
-            get {
-                return ((string)(this["SecureInternetOrganization"]));
-            }
-            set {
-                this["SecureInternetOrganization"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Last connecting server for secure internet use
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Last connecting server for secure internet use")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Uri SecureInternetConnectingServer {
-            get {
-                return ((global::System.Uri)(this["SecureInternetConnectingServer"]));
-            }
-            set {
-                this["SecureInternetConnectingServer"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// List of institute access servers user connects to
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("List of institute access servers user connects to")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<UriList/>")]
-        public global::eduVPN.Xml.UriList InstituteAccessServers {
-            get {
-                return ((global::eduVPN.Xml.UriList)(this["InstituteAccessServers"]));
-            }
-            set {
-                this["InstituteAccessServers"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// List of own servers user connects to
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("List of own servers user connects to")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<UriList/>")]
-        public global::eduVPN.Xml.UriList OwnServers {
-            get {
-                return ((global::eduVPN.Xml.UriList)(this["OwnServers"]));
-            }
-            set {
-                this["OwnServers"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Server list discovery URI
-        /// </summary>
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Server list discovery URI")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.Xml.ResourceRef ServersDiscovery {
-            get {
-                return ((global::eduVPN.Xml.ResourceRef)(this["ServersDiscovery"]));
-            }
-        }
-        
-        /// <summary>
-        /// Organization list discovery URI
-        /// </summary>
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Organization list discovery URI")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::eduVPN.Xml.ResourceRef OrganizationsDiscovery {
-            get {
-                return ((global::eduVPN.Xml.ResourceRef)(this["OrganizationsDiscovery"]));
             }
         }
         
@@ -391,6 +304,19 @@ namespace eduVPN.Properties {
         public global::System.Uri ClientAboutUri {
             get {
                 return ((global::System.Uri)(this["ClientAboutUri"]));
+            }
+        }
+        
+        /// <summary>
+        /// Supports server and organization discovery.
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Supports server and organization discovery.")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Discovery {
+            get {
+                return ((bool)(this["Discovery"]));
             }
         }
     }

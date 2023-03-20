@@ -11,16 +11,16 @@ using System.Windows.Input;
 namespace eduVPN.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for SelectSecureInternetServerPage.xaml
+    /// Interaction logic for SelectSecureInternetCountryPage.xaml
     /// </summary>
-    public partial class SelectSecureInternetServerPage : Page
+    public partial class SelectSecureInternetCountryPage : Page
     {
         #region Constructors
 
         /// <summary>
         /// Constructs a page.
         /// </summary>
-        public SelectSecureInternetServerPage()
+        public SelectSecureInternetCountryPage()
         {
             InitializeComponent();
         }
@@ -34,13 +34,13 @@ namespace eduVPN.Views.Pages
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
-        protected void SecureInternetServers_SelectItem(object sender, InputEventArgs e)
+        protected void SecureInternetCountries_SelectItem(object sender, InputEventArgs e)
         {
-            if (DataContext is ViewModels.Pages.SelectSecureInternetServerPage viewModel)
+            if (DataContext is ViewModels.Pages.SelectSecureInternetCountryPage viewModel)
             {
                 // Confirm selected server.
-                if (viewModel.ConfirmSecureInternetServerSelection.CanExecute())
-                    viewModel.ConfirmSecureInternetServerSelection.Execute();
+                if (viewModel.ConfirmSecureInternetCountrySelection.CanExecute())
+                    viewModel.ConfirmSecureInternetCountrySelection.Execute();
 
                 e.Handled = true;
             }
@@ -51,11 +51,11 @@ namespace eduVPN.Views.Pages
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
-        protected void SecureInternetServers_PreviewKeyDown(object sender, KeyEventArgs e)
+        protected void SecureInternetCountries_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter ||
                 e.Key == Key.Space)
-                SecureInternetServers_SelectItem(sender, e);
+                SecureInternetCountries_SelectItem(sender, e);
         }
 
         #endregion

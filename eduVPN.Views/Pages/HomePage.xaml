@@ -239,7 +239,7 @@
                 Margin="7,30,7,7"
                 VerticalAlignment="Center"
                 Style="{StaticResource SubHeadingStyle}"
-                Text="{Binding ServersDiscovery, Source={x:Static prop:Settings.Default}, Converter={StaticResource HomePageOwnServerLabelConverter}, FallbackValue={x:Static res:Strings.HomePageOwnServerLabel1}}"/>
+                Text="{Binding Discovery, Source={x:Static prop:Settings.Default}, Converter={StaticResource HomePageOwnServerLabelConverter}, FallbackValue={x:Static res:Strings.HomePageOwnServerLabel1}}"/>
 
             <ListBox
                 Grid.ColumnSpan="2"

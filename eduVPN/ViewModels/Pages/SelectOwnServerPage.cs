@@ -5,13 +5,13 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -51,13 +51,12 @@ namespace eduVPN.ViewModels.Pages
                         async () =>
                         {
                             TryParseUri(Hostname, out var uri);
-                            var srv = new Server(uri);
-                            srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                            srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(srv);
-                            Wizard.HomePage.AddOwnServer(srv);
-                            Wizard.ConnectionPage.ConnectingServer = srv;
-                            Wizard.CurrentPage = Wizard.ConnectionPage;
+                            try
+                            {
+                                await Task.Run(() => Engine.AddOwnServer(uri));
+                                Hostname = "";
+                            }
+                            catch (OperationCanceledException) { Wizard.CurrentPage = this; }
                         },
                         () => !string.IsNullOrEmpty(Hostname) && !HasErrors);
                 return _AddServer;

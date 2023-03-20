@@ -257,7 +257,7 @@
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Dodaj drug strežnik</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>Izberite lokacijo</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

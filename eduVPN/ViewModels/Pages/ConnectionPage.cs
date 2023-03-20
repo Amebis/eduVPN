@@ -398,9 +398,10 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_AuthenticateAndStartSession == null)
                     _AuthenticateAndStartSession = new DelegateCommand(
-                        async () =>
+                        () =>
                         {
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(Wizard.GetAuthenticatingServer(ConnectingServer));
+                            // TODO: Implement.
+                            // await Wizard.AuthorizationPage.TriggerAuthorizationAsync(Wizard.GetAuthenticatingServer(ConnectingServer));
                             StartSession.Execute();
                         },
                         () => StartSession.CanExecute());

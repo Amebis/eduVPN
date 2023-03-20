@@ -17,6 +17,9 @@ TEST_PLAT=x86
 !ENDIF
 SETUP_CFG=Release
 
+# Go and CGo building
+PATH=$(MAKEDIR)\bin\llvm-mingw-20220906-msvcrt-x86_64\bin;$(PATH)
+
 # Utility default flags
 REG_FLAGS=/f
 NUGET_FLAGS=-Verbosity quiet
@@ -38,6 +41,9 @@ MINISIGN_KEY_AVAILABLE=1
 !ENDIF
 !ENDIF
 
+CGO_CFLAGS=-O3 -Wall -Wno-unused-function -Wno-switch -std=gnu11 -DWINVER=0x0601
+CGO_LDFLAGS=-Wl,--dynamicbase -Wl,--nxcompat -Wl,--export-all-symbols
+
 
 ######################################################################
 # Default target
@@ -54,23 +60,47 @@ Build \
 SetupBuild :: \
 	"bin\$(TEST_CFG)\$(TEST_PLAT)"
 	bin\nuget.exe restore $(NUGET_FLAGS)
-	msbuild.exe "eduVPN.sln" /t:PrepopulateResponseCache /p:Configuration="$(TEST_CFG)" /p:Platform="$(TEST_PLAT)" $(MSBUILD_FLAGS)
-	"bin\$(TEST_CFG)\$(TEST_PLAT)\PrepopulateResponseCache.exe" "eduVPN.Client\app.config"
 
 BuildDeps :: \
 	BuildLibsodium \
 	BuildOpenVPN \
-	BuildWireGuard
+	BuildWireGuard \
+	BuildeduVPNCommon
 
 BuildWireGuard ::
 	cd "wireguard-windows\embeddable-dll-service"
 	build.bat
 	cd "$(MAKEDIR)"
 
+"bin\llvm-mingw-20220906-msvcrt-x86_64\bin\gcc.exe" :
+	cd "bin"
+	curl.exe --location --output "llvm-mingw-msvcrt.zip" "https://github.com/mstorsjo/llvm-mingw/releases/download/20220906/llvm-mingw-20220906-msvcrt-x86_64.zip"
+	for /f %%a in ('CertUtil -hashfile "llvm-mingw-msvcrt.zip" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do if not "%%a"=="1b63120c346ff78a4e3dba77101a535434a62122d3b44021438a77bdf1b4679a" exit /b 1
+	tar -xf "llvm-mingw-msvcrt.zip"
+	del /f /q "llvm-mingw-msvcrt.zip"
+	cd "$(MAKEDIR)"
+
+"eduvpn-common\internal\discovery\server_list.json" ::
+	curl.exe --location --output "$(@:"=).tmp" "https://disco.eduvpn.org/v2/server_list.json"
+!IFDEF MINISIGN_AVAILABLE
+	curl.exe --location --output "$(@:"=).tmp.minisig" "https://disco.eduvpn.org/v2/server_list.json.minisig"
+	minisign.exe -Vm "$(@:"=).tmp" -P RWRtBSX1alxyGX+Xn3LuZnWUT0w//B6EmTJvgaAxBMYzlQeI+jdrO6KF || minisign.exe -Vm "$(@:"=).tmp" -P "RWQKqtqvd0R7rUDp0rWzbtYPA3towPWcLDCl7eY9pBMMI/ohCmrS0WiM"
+!ENDIF
+	move /y "$(@:"=).tmp" $@ > NUL
+
+"eduvpn-common\internal\discovery\organization_list.json" ::
+	curl.exe --location --output "$(@:"=).tmp" "https://disco.eduvpn.org/v2/organization_list.json"
+!IFDEF MINISIGN_AVAILABLE
+	curl.exe --location --output "$(@:"=).tmp.minisig" "https://disco.eduvpn.org/v2/organization_list.json.minisig"
+	minisign.exe -Vm "$(@:"=).tmp" -P RWRtBSX1alxyGX+Xn3LuZnWUT0w//B6EmTJvgaAxBMYzlQeI+jdrO6KF || minisign.exe -Vm "$(@:"=).tmp" -P "RWQKqtqvd0R7rUDp0rWzbtYPA3towPWcLDCl7eY9pBMMI/ohCmrS0WiM"
+!ENDIF
+	move /y "$(@:"=).tmp" $@ > NUL
+
 CleanDeps :: \
 	CleanLibsodium \
 	CleanOpenVPN \
-	CleanWireGuard
+	CleanWireGuard \
+	CleaneduVPNCommon
 
 CleanWireGuard ::
 	-if exist "wireguard-windows\.deps"                        rd /q /s "wireguard-windows\.deps"
@@ -81,6 +111,13 @@ CleanWireGuard ::
 	-if exist "wireguard-windows\embeddable-dll-service\amd64" rd /q /s "wireguard-windows\embeddable-dll-service\amd64"
 	-if exist "wireguard-windows\embeddable-dll-service\arm64" rd /q /s "wireguard-windows\embeddable-dll-service\arm64"
 	-if exist "wireguard-windows\embeddable-dll-service\x86"   rd /q /s "wireguard-windows\embeddable-dll-service\x86"
+
+CleaneduVPNCommon ::
+	-if exist "bin\llvm-mingw-20220906-msvcrt-x86_64"                           rd /q /s "bin\llvm-mingw-20220906-msvcrt-x86_64"
+	-if exist "eduvpn-common\internal\discovery\server_list.json"               del /f /q "eduvpn-common\internal\discovery\server_list.json"
+	-if exist "eduvpn-common\internal\discovery\server_list.json.minisig"       del /f /q "eduvpn-common\internal\discovery\server_list.json.minisig"
+	-if exist "eduvpn-common\internal\discovery\organization_list.json"         del /f /q "eduvpn-common\internal\discovery\organization_list.json"
+	-if exist "eduvpn-common\internal\discovery\organization_list.json.minisig" del /f /q "eduvpn-common\internal\discovery\organization_list.json.minisig"
 
 Clean ::
 	-if exist "bin\Setup\PDB_*.zip" del /f /q "bin\Setup\PDB_*.zip"

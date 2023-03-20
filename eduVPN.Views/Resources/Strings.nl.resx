@@ -257,7 +257,7 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Andere server toevoegen</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>Selecteer een locatie</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

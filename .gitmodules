@@ -23,3 +23,6 @@
 [submodule "wireguard-windows"]
 	path = wireguard-windows
 	url = https://github.com/Amebis/wireguard-windows.git
+[submodule "eduvpn-common"]
+	path = eduvpn-common
+	url = https://github.com/Amebis/eduvpn-common.git

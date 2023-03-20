@@ -1049,10 +1049,10 @@
 
 
     <!--
-        Secure internet server
+        Country
     -->
 
-    <DataTemplate DataType="{x:Type models:SecureInternetServer}">
+    <DataTemplate DataType="{x:Type models:Country}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -1062,11 +1062,20 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 MaxWidth="20" MaxHeight="20"
-                Source="{Binding Path=Country.Code, Converter={StaticResource CountryCodeFlagConverter}}"/>
+                Source="{Binding Path=Code, Converter={StaticResource CountryCodeFlagConverter}}"/>
             <TextBlock
                 Grid.Column="1"
                 Margin="7,0,0,0"
                 Text="{Binding}"/>
         </Grid>
+    </DataTemplate>
+
+
+    <!--
+        Secure internet server
+    -->
+
+    <DataTemplate DataType="{x:Type models:SecureInternetServer}">
+        <ContentPresenter Content="{Binding Path=Country}"/>
     </DataTemplate>
 </ResourceDictionary>

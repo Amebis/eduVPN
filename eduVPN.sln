@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30104.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{62C4825F-1F58-4BA1-BD10-DABB139FCC47}"
 EndProject
@@ -49,8 +49,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduWGSvcHost", "eduWGSvcHost\eduWGSvcHost.vcxproj", "{B9D77CA1-CE61-4474-96B3-97675FA29A52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduWireGuard", "eduWireGuard\eduWireGuard\eduWireGuard.csproj", "{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrepopulateResponseCache", "PrepopulateResponseCache\PrepopulateResponseCache.csproj", "{867391FA-59AA-49FA-9281-746404B2D493}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -290,18 +288,6 @@ Global
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x64.Build.0 = Release|x64
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x86.ActiveCfg = Release|x86
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x86.Build.0 = Release|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|ARM64.ActiveCfg = Debug|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|ARM64.Build.0 = Debug|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x64.ActiveCfg = Debug|x64
-		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x64.Build.0 = Debug|x64
-		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x86.ActiveCfg = Debug|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Debug|x86.Build.0 = Debug|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Release|ARM64.ActiveCfg = Release|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Release|ARM64.Build.0 = Release|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x64.ActiveCfg = Release|x64
-		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x64.Build.0 = Release|x64
-		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x86.ActiveCfg = Release|x86
-		{867391FA-59AA-49FA-9281-746404B2D493}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

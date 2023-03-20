@@ -497,9 +497,9 @@ namespace eduVPN.Views.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Select a location.
         /// </summary>
-        public static string SelectSecureInternetServerPageTitle {
+        public static string SelectSecureInternetCountryPageTitle {
             get {
-                return ResourceManager.GetString("SelectSecureInternetServerPageTitle", resourceCulture);
+                return ResourceManager.GetString("SelectSecureInternetCountryPageTitle", resourceCulture);
             }
         }
         

@@ -257,7 +257,7 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Ajouter un autre serveur</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>Choisir un lieu</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

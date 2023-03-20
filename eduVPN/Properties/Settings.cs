@@ -58,6 +58,54 @@ namespace eduVPN.Properties
             set { throw new NotSupportedException("OpenVPNForceTCP is obsolete"); }
         }
 
+        /// <summary>
+        /// List of institute access servers user connects to
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public Xml.UriList InstituteAccessServers
+        {
+            get { return this["InstituteAccessServers"] as Xml.UriList; }
+            set { this["InstituteAccessServers"] = value; }
+        }
+
+        /// <summary>
+        /// Users' home organization for secure internet use
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public string SecureInternetOrganization
+        {
+            get { return this["SecureInternetOrganization"] as string; }
+            set { this["SecureInternetOrganization"] = value; }
+        }
+
+        /// <summary>
+        /// Last connecting server for secure internet use
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public Uri SecureInternetConnectingServer
+        {
+            get { return this["SecureInternetConnectingServer"] as Uri; }
+            set { this["SecureInternetConnectingServer"] = value; }
+        }
+
+        /// <summary>
+        /// List of own servers user connects to
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public Xml.UriList OwnServers
+        {
+            get { return this["OwnServers"] as Xml.UriList; }
+            set { this["OwnServers"] = value; }
+        }
+
         #endregion
 
         #region Methods

@@ -22,7 +22,7 @@ namespace eduVPN.ViewModels.Pages
     /// <summary>
     /// Authorization wizard page
     /// </summary>
-    public class AuthorizationPage : ConnectWizardPopupPage
+    public class AuthorizationPage : ConnectWizardStandardPage
     {
         #region Fields
 
@@ -35,23 +35,13 @@ namespace eduVPN.ViewModels.Pages
 
         #region Properties
 
-        // Hide NavigateBack button, as Cancel handles this.
-        /// <inheritdoc/>
-        public override DelegateCommand NavigateBack { get; } = new DelegateCommand(() => { }, () => false);
-
         /// <inheritdoc/>
         public DelegateCommand Cancel
         {
             get
             {
                 if (_Cancel == null)
-                    _Cancel = new DelegateCommand(
-                        () =>
-                        {
-                            AuthorizationInProgress?.Cancel();
-                            if (base.NavigateBack.CanExecute())
-                                base.NavigateBack.Execute();
-                        });
+                    _Cancel = new DelegateCommand(() => Engine.CancelOAuth());
                 return _Cancel;
             }
         }
@@ -181,7 +171,6 @@ namespace eduVPN.ViewModels.Pages
                     Wizard.TryInvoke((Action)(() =>
                     {
                         Wizard.TaskCount++;
-                        Wizard.NavigateTo.Execute(this);
                     }));
                     try
                     {

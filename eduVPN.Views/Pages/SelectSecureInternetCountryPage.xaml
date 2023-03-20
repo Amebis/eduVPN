@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <Page
-    x:Class="eduVPN.Views.Pages.SelectSecureInternetServerPage"
+    x:Class="eduVPN.Views.Pages.SelectSecureInternetCountryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -18,15 +18,15 @@
     Style="{StaticResource ConnectWizardPageStyle}">
 
     <Page.Resources>
-        <CollectionViewSource x:Key="SecureInternetServersView" Source="{Binding SecureInternetServers}">
+        <CollectionViewSource x:Key="SecureInternetCountriesView" Source="{Binding SecureInternetCountries}">
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Country"/>
+                <scm:SortDescription/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
-        <Style x:Key="SecureInternetServersStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
-            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SecureInternetServers_SelectItem"/>
-            <EventSetter Event="PreviewKeyDown" Handler="SecureInternetServers_PreviewKeyDown"/>
+        <Style x:Key="SecureInternetCountriesStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
+            <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SecureInternetCountries_SelectItem"/>
+            <EventSetter Event="PreviewKeyDown" Handler="SecureInternetCountries_PreviewKeyDown"/>
         </Style>
     </Page.Resources>
 
@@ -40,15 +40,15 @@
             Margin="7,30,7,5"
             HorizontalAlignment="Center"
             Style="{StaticResource MainHeadingStyle}"
-            Text="{x:Static res:Strings.SelectSecureInternetServerPageTitle}"/>
+            Text="{x:Static res:Strings.SelectSecureInternetCountryPageTitle}"/>
 
         <ListBox
-            x:Name="SecureInternetServers"
+            x:Name="SecureInternetCountries"
             Grid.Row="1"
             Margin="7"
-            ItemContainerStyle="{StaticResource SecureInternetServersStyle}"
-            ItemsSource="{Binding Source={StaticResource SecureInternetServersView}}"
-            SelectedItem="{Binding SelectedSecureInternetServer}"
+            ItemContainerStyle="{StaticResource SecureInternetCountriesStyle}"
+            ItemsSource="{Binding Source={StaticResource SecureInternetCountriesView}}"
+            SelectedItem="{Binding SelectedSecureInternetCountry}"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.LocationLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>
     </Grid>
 </Page>

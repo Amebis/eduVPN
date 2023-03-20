@@ -257,7 +257,7 @@ Se continuar, as suas configurações de utilizador serão reiniciadas para os v
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Adicionar outro servidor</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>Seleccione uma localização</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

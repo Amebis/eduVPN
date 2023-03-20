@@ -2,10 +2,13 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.4...HEAD)
 
+- eduvpn-common integration
 - OpenVPN updated to 2.5.9-20230427
     - openvpn 2.5.9 ea4ce681d9008f277706f4d90f2648ae043cbb2e
 - libsodium updated to 1.0.18-20230427
     - libsodium 1.0.18 adef28f318564a757da6c848f2b6a38fad2cd1fa
+- Fixes: #202
+- Breaks: #173, #222
 
 
 ## [3.4](https://github.com/Amebis/eduVPN/compare/3.3.8...3.4) (2023-04-25)

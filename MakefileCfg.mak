@@ -8,9 +8,11 @@
 !IF "$(CFG)" == "Debug"
 CFG_TARGET=D
 CFG_VCPKG=debug\\
+CFG_GOFLAGS=$(GOFLAGS)
 !ELSE
 CFG_TARGET=
 CFG_VCPKG=
+CFG_GOFLAGS=$(GOFLAGS) -tags=release -ldflags "-s -w"
 !ENDIF
 
 # WiX parameters

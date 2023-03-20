@@ -257,7 +257,7 @@ Si continúa, su configuración de usuario se restablecerá a la predeterminada.
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Agregar otro servidor</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>Selecciones una ubicación</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

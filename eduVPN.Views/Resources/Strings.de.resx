@@ -257,7 +257,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Anderen Server hinzufügen</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>Standort auswählen</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

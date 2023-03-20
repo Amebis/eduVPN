@@ -58,6 +58,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="EngineTests.cs" />
     <Compile Include="Models\CountryTests.cs" />
     <Compile Include="Models\ServerTests.cs" />
     <Compile Include="eduBase\MultiplatformDllLoader.cs" />

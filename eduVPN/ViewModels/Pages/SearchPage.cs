@@ -9,10 +9,12 @@ using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -22,6 +24,29 @@ namespace eduVPN.ViewModels.Pages
     public class SearchPage : ConnectWizardStandardPage
     {
         #region Fields
+
+        /// <summary>
+        /// Dictionary of discovered servers
+        /// </summary>
+        private ServerDictionary DiscoveredServers;
+
+        /// <summary>
+        /// Dictionary of discovered organizations
+        /// </summary>
+        private OrganizationDictionary DiscoveredOrganizations;
+
+        /// <summary>
+        /// Search index of discovered institute access servers
+        /// </summary>
+        private Dictionary<string, HashSet<InstituteAccessServer>> DiscoveredInstituteServerIndex;
+
+        /// <summary>
+        /// Search index of discovered organizations
+        /// </summary>
+        private Dictionary<string, HashSet<Organization>> DiscoveredOrganizationIndex;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly object DiscoveredListLock = new object();
 
         /// <summary>
         /// Search cancellation token
@@ -88,11 +113,12 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmInstituteAccessServerSelection = new DelegateCommand(
                         async () =>
                         {
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
-                            Wizard.HomePage.AddInstituteAccessServer(SelectedInstituteAccessServer);
-                            Wizard.ConnectionPage.ConnectingServer = SelectedInstituteAccessServer;
-                            Wizard.CurrentPage = Wizard.ConnectionPage;
-                            Query = "";
+                            try
+                            {
+                                await Task.Run(() => Engine.AddInstituteAccessServer(SelectedInstituteAccessServer.Base));
+                                Query = "";
+                            }
+                            catch (OperationCanceledException) { Wizard.CurrentPage = this; }
                         },
                         () => SelectedInstituteAccessServer != null);
                 return _ConfirmInstituteAccessServerSelection;
@@ -142,17 +168,14 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmOrganizationSelection = new DelegateCommand(
                         async () =>
                         {
-                            var authenticatingServer = Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase);
-                            authenticatingServer.OrganizationId = SelectedOrganization.Id;
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(authenticatingServer);
-                            Wizard.HomePage.SetSecureInternetOrganization(SelectedOrganization);
-                            Wizard.ConnectionPage.ConnectingServer = authenticatingServer;
-                            Wizard.CurrentPage = Wizard.ConnectionPage;
-                            Query = "";
+                            try
+                            {
+                                await Task.Run(() => Engine.AddSecureInternetHomeServer(SelectedOrganization.Id));
+                                Query = "";
+                            }
+                            catch (OperationCanceledException) { Wizard.CurrentPage = this; }
                         },
-                        () =>
-                            SelectedOrganization != null &&
-                            Wizard.GetDiscoveredServer<SecureInternetServer>(SelectedOrganization.SecureInternetBase) != null);
+                        () => SelectedOrganization != null);
                 return _ConfirmOrganizationSelection;
             }
         }
@@ -200,11 +223,12 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmOwnServerSelection = new DelegateCommand(
                         async () =>
                         {
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
-                            Wizard.HomePage.AddOwnServer(SelectedOwnServer);
-                            Wizard.ConnectionPage.ConnectingServer = SelectedOwnServer;
-                            Wizard.CurrentPage = Wizard.ConnectionPage;
-                            Query = "";
+                            try
+                            {
+                                await Task.Run(() => Engine.AddOwnServer(SelectedOwnServer.Base));
+                                Query = "";
+                            }
+                            catch (OperationCanceledException) { Wizard.CurrentPage = this; }
                         },
                         () => SelectedOwnServer != null);
                 return _ConfirmOwnServerSelection;
@@ -241,13 +265,6 @@ namespace eduVPN.ViewModels.Pages
         public SearchPage(ConnectWizard wizard) :
             base(wizard)
         {
-            Wizard.DiscoveredServersChanged += (object sender, EventArgs e) =>
-            {
-                _ConfirmOrganizationSelection?.RaiseCanExecuteChanged();
-                Search();
-            };
-
-            Wizard.DiscoveredOrganizationsChanged += (object sender, EventArgs e) => Search();
         }
 
         #endregion
@@ -258,13 +275,14 @@ namespace eduVPN.ViewModels.Pages
         public override void OnActivate()
         {
             base.OnActivate();
-            Wizard.DiscoverOrganizations();
+            DiscoverServers();
+            DiscoverOrganizations();
         }
 
         /// <summary>
         /// Trigger search
         /// </summary>
-        private void Search()
+        void Search()
         {
             SearchInProgress?.Cancel();
             SearchInProgress = new CancellationTokenSource();
@@ -276,21 +294,21 @@ namespace eduVPN.ViewModels.Pages
                     Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                     try
                     {
-                        var orderedServerHits = Wizard.GetDiscoveredInstituteAccessServers(keywords, ct);
+                        var orderedServerHits = GetDiscoveredInstituteAccessServers(keywords, ct);
                         ct.ThrowIfCancellationRequested();
                         Wizard.TryInvoke((Action)(() =>
                         {
                             if (ct.IsCancellationRequested) return;
                             var selected = SelectedInstituteAccessServer?.Base;
                             InstituteAccessServers = orderedServerHits;
-                            SelectedInstituteAccessServer = Wizard.GetDiscoveredServer<InstituteAccessServer>(selected);
+                            SelectedInstituteAccessServer = GetDiscoveredServer<InstituteAccessServer>(selected);
                         }));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                 })).Start();
-            if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
+            //if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
             {
                 new Thread(new ThreadStart(
                     () =>
@@ -298,14 +316,14 @@ namespace eduVPN.ViewModels.Pages
                         Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                         try
                         {
-                            var orderedOrganizationHits = Wizard.GetDiscoveredOrganizations(keywords, ct);
+                            var orderedOrganizationHits = GetDiscoveredOrganizations(keywords, ct);
                             ct.ThrowIfCancellationRequested();
                             Wizard.TryInvoke((Action)(() =>
                             {
                                 if (ct.IsCancellationRequested) return;
                                 var selected = SelectedOrganization?.Id;
                                 Organizations = orderedOrganizationHits;
-                                SelectedOrganization = Wizard.GetDiscoveredOrganization(selected);
+                                SelectedOrganization = GetDiscoveredOrganization(selected);
                             }));
                         }
                         catch (OperationCanceledException) { }
@@ -333,6 +351,176 @@ namespace eduVPN.ViewModels.Pages
             {
                 SelectedOwnServer = null;
                 OwnServers = null;
+            }
+        }
+
+        async void DiscoverServers()
+        {
+            try
+            {
+                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                Trace.TraceInformation("Discovering servers");
+                var dict = new ServerDictionary();
+                dict.Load(eduJSON.Parser.Parse(await Task.Run(() => Engine.DiscoServers()), Window.Abort.Token));
+                //await Task.Run(() => Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
+                //await Task.Run(() => throw new Exception("Server list download failed")); // Mock download failure.
+                var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
+                foreach (var el in dict)
+                {
+                    Window.Abort.Token.ThrowIfCancellationRequested();
+                    el.Value.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
+                    el.Value.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
+                    if (el.Value is InstituteAccessServer srv)
+                        idx.Index(srv);
+                }
+                lock (DiscoveredListLock)
+                {
+                    DiscoveredServers = dict;
+                    DiscoveredInstituteServerIndex = idx;
+                }
+                Wizard.TryInvoke((Action)(() => Search()));
+            }
+            catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
+            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+        }
+
+        /// <summary>
+        /// Returns available server with given base URI
+        /// </summary>
+        /// <param name="baseUri">Server base URI</param>
+        /// <returns>Server if found; null otherwise</returns>
+        T GetDiscoveredServer<T>(Uri baseUri) where T : Server
+        {
+            lock (DiscoveredListLock)
+                return
+                    baseUri != null &&
+                    DiscoveredServers != null &&
+                    DiscoveredServers.TryGetValue(baseUri, out var srv) &&
+                    srv is T srvT ? srvT : null;
+        }
+
+        /// <summary>
+        /// Returns discovered institute access servers matching keywords ordered by relevance
+        /// </summary>
+        /// <param name="keywords">List of keywords</param>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>List of servers</returns>
+        ObservableCollection<InstituteAccessServer> GetDiscoveredInstituteAccessServers(IEnumerable<string> keywords, CancellationToken ct = default)
+        {
+            lock (DiscoveredListLock)
+            {
+                if (DiscoveredInstituteServerIndex == null)
+                    return null;
+
+                var serverHits = new Dictionary<InstituteAccessServer, int>();
+                foreach (var keyword in keywords)
+                {
+                    ct.ThrowIfCancellationRequested();
+                    if (DiscoveredInstituteServerIndex.TryGetValue(keyword, out var hits))
+                        foreach (var hit in hits)
+                        {
+                            ct.ThrowIfCancellationRequested();
+                            if (serverHits.ContainsKey(hit))
+                                serverHits[hit]++;
+                            else
+                                serverHits.Add(hit, 1);
+                        }
+                }
+                var coll = new ObservableCollection<InstituteAccessServer>();
+                foreach (var srv in serverHits.OrderByDescending(el =>
+                {
+                    ct.ThrowIfCancellationRequested();
+                    return el.Value;
+                }))
+                {
+                    ct.ThrowIfCancellationRequested();
+                    coll.Add(srv.Key);
+                }
+                return coll;
+            }
+        }
+
+        /// <summary>
+        /// Triggers background organization discovery
+        /// </summary>
+        async void DiscoverOrganizations()
+        {
+            try
+            {
+                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                Trace.TraceInformation("Discovering organizations");
+                var dict = new OrganizationDictionary();
+                dict.Load(eduJSON.Parser.Parse(await Task.Run(() => Engine.DiscoOrganizations()), Window.Abort.Token));
+                //await Task.Run(() => Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
+                //await Task.Run(() => throw new Exception("Organization list download failed")); // Mock download failure.
+                var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
+                foreach (var el in dict)
+                {
+                    Window.Abort.Token.ThrowIfCancellationRequested();
+                    idx.Index(el.Value);
+                }
+                lock (DiscoveredListLock)
+                {
+                    DiscoveredOrganizations = dict;
+                    DiscoveredOrganizationIndex = idx;
+                }
+                Wizard.TryInvoke((Action)(() => Search()));
+            }
+            catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
+            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+        }
+
+        /// <summary>
+        /// Returns discovered organization with given identifier
+        /// </summary>
+        /// <param name="id">Organization identifier</param>
+        /// <returns>Organization if found; null otherwise</returns>
+        Organization GetDiscoveredOrganization(string id)
+        {
+            lock (DiscoveredListLock)
+                return
+                    !string.IsNullOrEmpty(id) &&
+                    DiscoveredOrganizations != null &&
+                    DiscoveredOrganizations.TryGetValue(id, out var org) ? org : null;
+        }
+
+        /// <summary>
+        /// Returns discovered organizations matching keywords ordered by relevance
+        /// </summary>
+        /// <param name="ct">The token to monitor for cancellation requests</param>
+        /// <returns>List of organizations</returns>
+        ObservableCollection<Organization> GetDiscoveredOrganizations(IEnumerable<string> keywords, CancellationToken ct = default)
+        {
+            lock (DiscoveredListLock)
+            {
+                if (DiscoveredOrganizationIndex == null)
+                    return null;
+
+                var organizationHits = new Dictionary<Organization, int>();
+                foreach (var keyword in keywords)
+                {
+                    ct.ThrowIfCancellationRequested();
+                    if (DiscoveredOrganizationIndex.TryGetValue(keyword, out var hits))
+                        foreach (var hit in hits)
+                        {
+                            ct.ThrowIfCancellationRequested();
+                            if (organizationHits.ContainsKey(hit))
+                                organizationHits[hit]++;
+                            else
+                                organizationHits.Add(hit, 1);
+                        }
+                }
+                var coll = new ObservableCollection<Organization>();
+                foreach (var org in organizationHits.OrderByDescending(el =>
+                {
+                    ct.ThrowIfCancellationRequested();
+                    return el.Value;
+                }))
+                {
+                    ct.ThrowIfCancellationRequested();
+                    coll.Add(org.Key);
+                }
+                return coll;
             }
         }
 

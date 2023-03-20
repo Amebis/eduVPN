@@ -324,10 +324,14 @@ namespace eduVPN.Models
             if (!(obj is Dictionary<string, object> obj2))
                 throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
 
-            // Set base URI.
             Endpoints = null;
             EndpointsExpires = DateTimeOffset.MinValue;
-            Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_url"));
+
+            // Set base URI.
+            if (obj2.TryGetValue("identifier", out var identifierObj) && identifierObj is string identifier)
+                Base = new Uri(identifier);
+            else
+                Base = new Uri(eduJSON.Parser.GetValue<string>(obj2, "base_url"));
 
             // Set support contact URLs.
             SupportContacts.Clear();

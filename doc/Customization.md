@@ -23,38 +23,6 @@ Computer-wide client settings may be overriden using the `HKEY_LOCAL_MACHINE\SOF
 To override specific setting, add a value described in this chapter to the `HKEY_LOCAL_MACHINE\SOFTWARE\SURF\eduVPN` registry key and set its content as required.
 
 
-### `ServersDiscovery` (`REG_SZ`)
-
-`ServersDiscovery` specifies server list discovery URI. The client downloads a [list of available servers](https://github.com/eduvpn/documentation/blob/v2/SERVER_DISCOVERY.md) from this URI. The server discovery is turned off by setting this value to a blank string (e.g. in Let's Connect! client).
-
-See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
-
-
-### `ServersDiscoveryPublicKeys` (`REG_MULTI_SZ`)
-
-`ServersDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `ServersDiscovery` URI content is expected to be signed with one of those. Add one `<Base64 encoded public key>[|<algorithm mask>]` per string/line. Should the sign check not be required (strongly discouraged), set `ServersDiscoveryPublicKeys` to an empty list.
-
-Ignored when server discovery is off.
-
-See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
-
-
-### `OrganizationsDiscovery` (`REG_SZ`)
-
-`OrganizationsDiscovery` specifies organization list discovery URI. The client downloads a [list of available organizations](https://github.com/eduvpn/documentation/blob/v2/SERVER_DISCOVERY.md) from this URI. The organization discovery is turned off by setting this value to a blank string (e.g. in Let's Connect! client).
-
-See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
-
-
-### `OrganizationsDiscoveryPublicKeys` (`REG_MULTI_SZ`)
-
-`OrganizationsDiscoveryPublicKeys` is a list of acceptable Minisign public keys. The `OrganizationsDiscovery` URI content is expected to be signed with one of those. Add one `<Base64 encoded public key>[|<algorithm mask>]` per string/line. Should the sign check not be required (strongly discouraged), set `OrganizationsDiscoveryPublicKeys` to an empty list.
-
-Ignored when server discovery is off.
-
-See [eduVPN_Dev_Discovery_On.reg](Customization/eduVPN_Dev_Discovery_On.reg) and [eduVPN_Dev_Discovery_Off.reg](Customization/eduVPN_Dev_Discovery_Off.reg) files for example.
-
-
 ### `InstituteAccessServers` (`REG_MULTI_SZ`)
 
 `InstituteAccessServers` allows preconfiguring the client with Institute Access server(s). May contain any number of eduVPN server base URLs (e.g. `https://demo.eduvpn.nl/`). The servers on this list are displayed first and cannot be modified by user. However, user may add additional Institute Access servers.

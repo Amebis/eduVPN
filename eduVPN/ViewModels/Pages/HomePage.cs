@@ -8,7 +8,8 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
-using System;
+using Prism.Common;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -55,11 +56,9 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmInstituteAccessServerSelection == null)
                     _ConfirmInstituteAccessServerSelection = new DelegateCommand(
-                        async () =>
+                        () =>
                         {
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedInstituteAccessServer);
-                            Wizard.ConnectionPage.ConnectingServer = SelectedInstituteAccessServer;
-                            Wizard.CurrentPage = Wizard.ConnectionPage;
+                            // TODO: Implement.
                         },
                         () => SelectedInstituteAccessServer != null);
                 return _ConfirmInstituteAccessServerSelection;
@@ -78,26 +77,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ForgetInstituteAccessServer == null)
                     _ForgetInstituteAccessServer = new DelegateCommand(
-                        () =>
-                        {
-                            Properties.Settings.Default.InstituteAccessServers.Remove(SelectedInstituteAccessServer.Base);
-                            SelectedInstituteAccessServer.Forget();
-                            InstituteAccessServers.Remove(SelectedInstituteAccessServer);
-                            SelectedInstituteAccessServer = null;
-
-                            // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                            if (Wizard.StartingPage != Wizard.CurrentPage)
-                                Wizard.CurrentPage = Wizard.StartingPage;
-                        },
-                        () =>
-                        {
-                            if (SelectedInstituteAccessServer == null)
-                                return false;
-                            var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
-                            if (precfgList != null && precfgList.Contains(SelectedInstituteAccessServer.Base))
-                                return false;
-                            return true;
-                        });
+                        () => Engine.RemoveInstituteAccessServer(SelectedInstituteAccessServer.Base),
+                        () => SelectedInstituteAccessServer != null);
                 return _ForgetInstituteAccessServer;
             }
         }
@@ -106,32 +87,9 @@ namespace eduVPN.ViewModels.Pages
         private DelegateCommand _ForgetInstituteAccessServer;
 
         /// <summary>
-        /// Secure internet authenticating server
-        /// </summary>
-        public SecureInternetServer AuthenticatingSecureInternetServer
-        {
-            get
-            {
-                var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
-                if (orgId == "")
-                    return null;
-                if (orgId == null)
-                    orgId = Properties.Settings.Default.SecureInternetOrganization;
-                var org = Wizard.GetDiscoveredOrganization(orgId);
-                if (org == null)
-                    return null;
-
-                var srv = Wizard.GetDiscoveredServer<SecureInternetServer>(org.SecureInternetBase);
-                if (srv == null)
-                    return null;
-
-                srv.OrganizationId = orgId;
-                return srv;
-            }
-        }
-
-        /// <summary>
         /// Secure internet server list
+        /// Actually, this is a list to ensure same GUI experience as Institute Access and Own Server.
+        /// However, there may only be 0 or 1 items in this list - the chosen server to connect to.
         /// </summary>
         public ObservableCollectionEx<SecureInternetServer> SecureInternetServers { get; } = new ObservableCollectionEx<SecureInternetServer>();
 
@@ -153,7 +111,7 @@ namespace eduVPN.ViewModels.Pages
         private SecureInternetServer _SelectedSecureInternetServer;
 
         /// <summary>
-        /// Confirms secure internet server selection
+        /// Confirms secure internet country selection
         /// </summary>
         public DelegateCommand ConfirmSecureInternetServerSelection
         {
@@ -161,13 +119,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmSecureInternetServerSelection == null)
                     _ConfirmSecureInternetServerSelection = new DelegateCommand(
-                        async () =>
+                        () =>
                         {
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(AuthenticatingSecureInternetServer);
-                            Wizard.ConnectionPage.ConnectingServer = SelectedSecureInternetServer;
-                            Wizard.CurrentPage = Wizard.ConnectionPage;
+                            // TODO: Implement.
                         },
-                        () => AuthenticatingSecureInternetServer != null && SelectedSecureInternetServer != null);
+                        () => SelectedSecureInternetServer != null);
                 return _ConfirmSecureInternetServerSelection;
             }
         }
@@ -184,24 +140,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ForgetSecureInternet == null)
                     _ForgetSecureInternet = new DelegateCommand(
-                        () =>
-                        {
-                            var authenticatingServer = AuthenticatingSecureInternetServer;
-                            authenticatingServer?.Forget();
-                            Properties.Settings.Default.SecureInternetOrganization = null;
-                            Properties.Settings.Default.SecureInternetConnectingServer = null;
-                            SecureInternetServers.Clear();
-                            SelectedSecureInternetServer = null;
-                            RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
-                            _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
-                            _ForgetSecureInternet?.RaiseCanExecuteChanged();
-                            _ChangeSecureInternetServer?.RaiseCanExecuteChanged();
-
-                            // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                            if (Wizard.StartingPage != Wizard.CurrentPage)
-                                Wizard.CurrentPage = Wizard.StartingPage;
-                        },
-                        () => !string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization) && Properties.SettingsEx.Default.SecureInternetOrganization == null);
+                        () => Engine.RemoveSecureInternetHomeServer(),
+                        () => SecureInternetServers.Count != 0);
                 return _ForgetSecureInternet;
             }
         }
@@ -218,16 +158,13 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ChangeSecureInternetServer == null)
                     _ChangeSecureInternetServer = new DelegateCommand(
-                        () => Wizard.CurrentPage = Wizard.SelectSecureInternetServerPage,
-                        () =>
+                        () => 
                         {
-                            var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
-                            if (orgId == "")
-                                return false;
-                            if (orgId == null)
-                                orgId = Properties.Settings.Default.SecureInternetOrganization;
-                            return !string.IsNullOrEmpty(orgId);
-                        });
+                            var countries = eduJSON.Parser.Parse(Engine.SecureInternetLocationList(), Window.Abort.Token) as List<object>;
+                            Wizard.SelectSecureInternetCountryPage.SetSecureInternetCountries(countries);
+                            Wizard.CurrentPage = Wizard.SelectSecureInternetCountryPage;
+                        },
+                        () => SecureInternetServers.Count != 0);
                 return _ChangeSecureInternetServer;
             }
         }
@@ -269,11 +206,9 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmOwnServerSelection == null)
                     _ConfirmOwnServerSelection = new DelegateCommand(
-                        async () =>
+                        () =>
                         {
-                            await Wizard.AuthorizationPage.TriggerAuthorizationAsync(SelectedOwnServer);
-                            Wizard.ConnectionPage.ConnectingServer = SelectedOwnServer;
-                            Wizard.CurrentPage = Wizard.ConnectionPage;
+                            // TODO: Implement.
                         },
                         () => SelectedOwnServer != null);
                 return _ConfirmOwnServerSelection;
@@ -292,17 +227,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ForgetOwnServer == null)
                     _ForgetOwnServer = new DelegateCommand(
-                        () =>
-                        {
-                            Properties.Settings.Default.OwnServers.Remove(SelectedOwnServer.Base);
-                            SelectedOwnServer.Forget();
-                            OwnServers.Remove(SelectedOwnServer);
-                            SelectedOwnServer = null;
-
-                            // Return to starting page. Should the abscence of configurations from history resolve in different starting page of course.
-                            if (Wizard.StartingPage != Wizard.CurrentPage)
-                                Wizard.CurrentPage = Wizard.StartingPage;
-                        },
+                        () => Engine.RemoveOwnServer(SelectedOwnServer.Base),
                         () => SelectedOwnServer != null);
                 return _ForgetOwnServer;
             }
@@ -338,17 +263,7 @@ namespace eduVPN.ViewModels.Pages
         public HomePage(ConnectWizard wizard) :
             base(wizard)
         {
-            RebuildInstituteAccessServers(this, null);
-            RebuildSecureInternetServers(this, null);
-            RebuildOwnServers(this, null);
-
-            Wizard.DiscoveredServersChanged += (object sender, EventArgs e) =>
-            {
-                RebuildInstituteAccessServers(sender, e);
-                RebuildSecureInternetServers(sender, e);
-                RebuildOwnServers(sender, e);
-            };
-            Wizard.DiscoveredOrganizationsChanged += RebuildSecureInternetServers;
+            LoadServers();
         }
 
         #endregion
@@ -356,159 +271,103 @@ namespace eduVPN.ViewModels.Pages
         #region Methods
 
         /// <summary>
-        /// Populates the server list
+        /// Gets server list from eduvpn-common
         /// </summary>
-        /// <param name="sender">The source of the event</param>
-        /// <param name="e">An object that contains no event data</param>
-        private void RebuildInstituteAccessServers(object sender, EventArgs e)
+        /// <returns></returns>
+        Dictionary<string, object> GetServerList()
+        {
+            return eduJSON.Parser.Parse(Engine.ServerList(), Window.Abort.Token) as Dictionary<string, object>;
+        }
+
+        /// <summary>
+        /// Populates lists of servers from eduvpn-common
+        /// </summary>
+        public void LoadServers()
+        {
+            var obj = GetServerList();
+            LoadInstituteAccessServers(obj);
+            LoadSecureInternetServer(obj);
+            LoadOwnServers(obj);
+        }
+
+        /// <summary>
+        /// Populates list of institute access servers
+        /// </summary>
+        /// <param name="obj">eduvpn-common provided server list</param>
+        void LoadInstituteAccessServers(Dictionary<string, object> obj)
         {
             var selected = SelectedInstituteAccessServer?.Base;
             var list = InstituteAccessServers.BeginUpdate();
             try
             {
                 list.Clear();
-                var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
-                if (precfgList != null)
-                {
-                    Trace.TraceInformation("Adding preconfigured Institute Access servers {0}", string.Join(", ", precfgList));
-                    foreach (var baseUri in precfgList)
+                if (obj.TryGetValue("institute_access_servers", out List<object> instituteAccessServers))
+                    foreach (var s in instituteAccessServers)
                     {
                         Window.Abort.Token.ThrowIfCancellationRequested();
-                        var srv = Wizard.GetDiscoveredServer<InstituteAccessServer>(baseUri);
-                        if (srv == null)
-                        {
-                            srv = new InstituteAccessServer(baseUri);
-                            srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                            srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                        }
+                        if (!(s is Dictionary<string, object> srvObj))
+                            continue;
+                        var srv = new InstituteAccessServer();
+                        srv.Load(srvObj);
+                        srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
+                        srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
                         list.Add(srv);
                     }
-                }
-                foreach (var baseUri in Properties.Settings.Default.InstituteAccessServers)
-                {
-                    Window.Abort.Token.ThrowIfCancellationRequested();
-                    if (precfgList != null && precfgList.Contains(baseUri))
-                        continue;
-                    var srv = Wizard.GetDiscoveredServer<InstituteAccessServer>(baseUri);
-                    if (srv != null)
-                        list.Add(srv);
-                }
             }
             finally { InstituteAccessServers.EndUpdate(); }
-            SelectedInstituteAccessServer = Wizard.GetDiscoveredServer<InstituteAccessServer>(selected);
+            SelectedInstituteAccessServer = selected != null ? InstituteAccessServers.FirstOrDefault(s => s.Base.AbsoluteUri == selected.AbsoluteUri) : null;
         }
 
         /// <summary>
-        /// Adds institute access server to the list
+        /// Populates secure internet server
         /// </summary>
-        /// <param name="srv">Server</param>
-        public void AddInstituteAccessServer(InstituteAccessServer srv)
-        {
-            var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
-            if (precfgList != null && precfgList.Contains(srv.Base) ||
-                Properties.Settings.Default.InstituteAccessServers.Contains(srv.Base))
-                return;
-            Properties.Settings.Default.InstituteAccessServers.Add(srv.Base);
-            srv = Wizard.GetDiscoveredServer<InstituteAccessServer>(srv.Base);
-            if (srv != null)
-                InstituteAccessServers.Add(srv);
-        }
-
-        /// <summary>
-        /// Populates the secure internet server list
-        /// </summary>
-        /// <param name="sender">The source of the event</param>
-        /// <param name="e">An object that contains no event data</param>
-        private void RebuildSecureInternetServers(object sender, EventArgs e)
+        /// <param name="obj">eduvpn-common provided server list</param>
+        void LoadSecureInternetServer(Dictionary<string, object> obj)
         {
             var selected = SelectedSecureInternetServer?.Base;
             var list = SecureInternetServers.BeginUpdate();
             try
             {
                 list.Clear();
-                var orgId = Properties.SettingsEx.Default.SecureInternetOrganization;
-                if (orgId != null)
-                    Trace.TraceInformation("Using preconfigured Secure Internet organization {0}", orgId);
-                if (orgId != "")
+                if (obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
                 {
-                    if (orgId == null)
-                        orgId = Properties.Settings.Default.SecureInternetOrganization;
-                    var org = Wizard.GetDiscoveredOrganization(orgId);
-                    if (org != null)
-                    {
-                        SecureInternetServer srv;
-                        if ((srv = Wizard.GetDiscoveredServer<SecureInternetServer>(Properties.Settings.Default.SecureInternetConnectingServer)) != null ||
-                            (srv = AuthenticatingSecureInternetServer) != null)
-                            list.Add(srv);
-                    }
+                    var srv = new SecureInternetServer();
+                    srv.Load(srvObj);
+                    list.Add(srv);
                 }
             }
             finally { SecureInternetServers.EndUpdate(); }
-            SelectedSecureInternetServer = Wizard.GetDiscoveredServer<SecureInternetServer>(selected);
-            RaisePropertyChanged(nameof(AuthenticatingSecureInternetServer));
-            _ConfirmSecureInternetServerSelection?.RaiseCanExecuteChanged();
-        }
-
-        /// <summary>
-        /// Sets secure internet organization
-        /// </summary>
-        /// <param name="org">Organization</param>
-        public void SetSecureInternetOrganization(Organization org)
-        {
-            if (Properties.SettingsEx.Default.SecureInternetOrganization != null)
-                return;
-            Properties.Settings.Default.SecureInternetOrganization = org.Id;
-            Properties.Settings.Default.SecureInternetConnectingServer = org.SecureInternetBase;
-            RebuildSecureInternetServers(this, null);
             _ForgetSecureInternet?.RaiseCanExecuteChanged();
             _ChangeSecureInternetServer?.RaiseCanExecuteChanged();
+            SelectedSecureInternetServer = selected != null ? SecureInternetServers.FirstOrDefault(s => s.Base.AbsoluteUri == selected.AbsoluteUri) : null;
         }
 
         /// <summary>
-        /// Sets secure internet connecting server
+        /// Populates list of own servers
         /// </summary>
-        /// <param name="srv">Server</param>
-        public void SetSecureInternetConnectingServer(SecureInternetServer srv)
-        {
-            Properties.Settings.Default.SecureInternetConnectingServer = srv.Base;
-            RebuildSecureInternetServers(this, null);
-        }
-
-        /// <summary>
-        /// Populates the own server list
-        /// </summary>
-        /// <param name="sender">The source of the event</param>
-        /// <param name="e">An object that contains no event data</param>
-        private void RebuildOwnServers(object sender, EventArgs e)
+        /// <param name="obj">eduvpn-common provided server list</param>
+        void LoadOwnServers(Dictionary<string, object> obj)
         {
             var selected = SelectedOwnServer?.Base;
             var list = OwnServers.BeginUpdate();
             try
             {
                 list.Clear();
-                foreach (var baseUri in Properties.Settings.Default.OwnServers)
-                {
-                    Window.Abort.Token.ThrowIfCancellationRequested();
-                    var srv = new Server(baseUri);
-                    srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                    srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                    list.Add(srv);
-                }
+                if (obj.TryGetValue("custom_servers", out List<object> ownServers))
+                    foreach (var s in ownServers)
+                    {
+                        Window.Abort.Token.ThrowIfCancellationRequested();
+                        if (!(s is Dictionary<string, object> srvObj))
+                            continue;
+                        var srv = new Server();
+                        srv.Load(srvObj);
+                        srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
+                        srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
+                        list.Add(srv);
+                    }
             }
             finally { OwnServers.EndUpdate(); }
             SelectedOwnServer = selected != null ? OwnServers.FirstOrDefault(srv => srv.Base.AbsoluteUri == selected.AbsoluteUri) : null;
-        }
-
-        /// <summary>
-        /// Adds own server to the list
-        /// </summary>
-        /// <param name="srv">Own server</param>
-        public void AddOwnServer(Server srv)
-        {
-            if (Properties.Settings.Default.OwnServers.Contains(srv.Base))
-                return;
-            Properties.Settings.Default.OwnServers.Add(srv.Base);
-            OwnServers.Add(srv);
         }
 
         #endregion

@@ -46,8 +46,8 @@
         <DataTemplate DataType="{x:Type vmpages:HomePage}">
             <pages:HomePage/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vmpages:SelectSecureInternetServerPage}">
-            <pages:SelectSecureInternetServerPage/>
+        <DataTemplate DataType="{x:Type vmpages:SelectSecureInternetCountryPage}">
+            <pages:SelectSecureInternetCountryPage/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vmpages:ConnectionPage}">
             <pages:ConnectionPage/>

@@ -17,6 +17,7 @@
 - _eduVPN.Client_: eduVPN client application (Shell)
 - _eduVPN.Resources_: Native resources for Windows MUI - localizable names and descriptions for Start Menu shortcuts
 - _eduVPN.Views_: Client UI (View)
+- _eduvpn-common_: eduvpn-common source code
 - _eduWGSvcHost_: WireGuard manager and tunnel services
 - _eduWireGuard_: WireGuard Tunnel Manager Service IPC for C#/.NET
 - _Install_: WiX installer additional files
@@ -42,9 +43,10 @@
       - SDKs, libraries, and frameworks
          - Windows 11 SDK
 2. Install [vcpkg](https://vcpkg.io/). Bootstrap it and run `vcpkg integrate install` to integrate it into MSBuild/Visual Studio.
-3. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
-4. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
-5. Install [WiX Toolset 3.14.0.5722 or compatible](https://wixtoolset.org/docs/wix3/#development-builds) (required for MSI and EXE installer packaging).
+3. Install [Go](https://go.dev/) 1.18 or later.
+4. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
+5. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
+6. Install [WiX Toolset 3.14.0.5722 or compatible](https://wixtoolset.org/docs/wix3/#development-builds) (required for MSI and EXE installer packaging).
 
 
 ### Code Signing and Minisign

@@ -75,8 +75,8 @@
     <Compile Include="Pages\SelectOwnServerPage.xaml.cs">
       <DependentUpon>SelectOwnServerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SelectSecureInternetServerPage.cs">
-      <DependentUpon>SelectSecureInternetServerPage.xaml</DependentUpon>
+    <Compile Include="Pages\SelectSecureInternetCountryPage.cs">
+      <DependentUpon>SelectSecureInternetCountryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -190,7 +190,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\SelectSecureInternetServerPage.xaml">
+    <Page Include="Pages\SelectSecureInternetCountryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

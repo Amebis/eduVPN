@@ -256,7 +256,7 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>Başka sunucu ekle</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>Bir konum seçin</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

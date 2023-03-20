@@ -257,7 +257,7 @@
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
     <value>إضافة خادم آخر</value>
   </data>
-  <data name="SelectSecureInternetServerPageTitle" xml:space="preserve">
+  <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
     <value>اختر موقعا</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">

@@ -13,16 +13,25 @@ PLAT_MSVC=x64
 PLAT_VCPKG=x64
 PLAT_CLIENT=x64
 PLAT_PROCESSOR_ARCHITECTURE=amd64
+GOARCH=amd64
+CC=x86_64-w64-mingw32-gcc.exe
+WINDRES=x86_64-w64-mingw32-windres.exe
 !ELSEIF "$(PLAT)" == "ARM64"
 PLAT_MSVC=ARM64
 PLAT_VCPKG=arm64
 PLAT_CLIENT=x86
 PLAT_PROCESSOR_ARCHITECTURE=arm64
+GOARCH=arm64
+CC=aarch64-w64-mingw32-gcc.exe
+WINDRES=aarch64-w64-mingw32-windres.exe
 !ELSE
 PLAT_MSVC=Win32
 PLAT_VCPKG=x86
 PLAT_CLIENT=x86
 PLAT_PROCESSOR_ARCHITECTURE=x86
+GOARCH=386
+CC=i686-w64-mingw32-gcc.exe
+WINDRES=i686-w64-mingw32-windres.exe
 !ENDIF
 
 # WiX parameters
@@ -70,6 +79,7 @@ Publish :: \
 	"bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"
@@ -87,6 +97,8 @@ Publish :: \
 "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduOAuth.dll"
 
 "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduOpenVPN.dll"
+
+"bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
 
 "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduVPN.dll"
 
@@ -116,6 +128,7 @@ Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"         del /f /q "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"       del /f /q "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis"    del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis"           del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"
@@ -192,6 +205,38 @@ BuildWireGuard :: \
 CleanWireGuard ::
 	-if exist "bin\$(CFG)\$(PLAT)\wireguard.dll" del /f /q "bin\$(CFG)\$(PLAT)\wireguard.dll"
 	-if exist "bin\$(CFG)\$(PLAT)\tunnel.dll"    del /f /q "bin\$(CFG)\$(PLAT)\tunnel.dll"
+
+BuildeduVPNCommon \
+BuildeduVPNCommon-$(CFG)-$(PLAT) :: \
+	"bin\llvm-mingw-20220906-msvcrt-x86_64\bin\gcc.exe" \
+	"eduvpn-common\internal\discovery\server_list.json" \
+	"eduvpn-common\internal\discovery\organization_list.json" \
+	"eduvpn-common\exports\resources_$(GOARCH).syso" \
+	"bin\$(CFG)\$(PLAT)" \
+	"bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
+
+"bin\$(CFG)\$(PLAT)\eduvpn_common.dll" ::
+	cd "eduvpn-common\exports"
+	set GOARCH=$(GOARCH)
+	set GOARM=7
+	set CGO_ENABLED=1
+	set CGO_CFLAGS=$(CGO_CFLAGS)
+	set CGO_LDFLAGS=$(CGO_LDFLAGS)
+	set CC=$(CC)
+	go.exe build $(CFG_GOFLAGS) -o "..\..\bin\$(CFG)\$(PLAT)\eduvpn_common.dll" -buildmode=c-shared .
+	cd "$(MAKEDIR)"
+
+CleaneduVPNCommon ::
+	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_common.dll" del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_common.h"   del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_common.h"
+
+!IF "$(CFG)" == "$(SETUP_CFG)"
+"eduvpn-common\exports\resources_$(GOARCH).syso" : "eduvpn-common\exports\resources.rc"
+	$(WINDRES) -DVERSION_ARRAY=$(VERSION:.=,) -DVERSION=$(VERSION) -i $** -o $@ -O coff -c 65001
+
+CleaneduVPNCommon ::
+	-if exist "eduvpn-common\exports\resources_$(GOARCH).syso" del /f /q "eduvpn-common\exports\resources_$(GOARCH).syso"
+!ENDIF
 
 Build-$(CFG)-$(PLAT) ::
 	bin\nuget.exe restore $(NUGET_FLAGS)

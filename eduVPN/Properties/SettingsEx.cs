@@ -67,28 +67,6 @@ namespace eduVPN.Properties
             }
         }
 
-        /// <see cref="Settings.ServersDiscovery"/>
-        public ResourceRef ServersDiscovery
-        {
-            get
-            {
-                if (GetValue(nameof(ServersDiscovery), out ResourceRef value))
-                    return value;
-                return Settings.Default.ServersDiscovery;
-            }
-        }
-
-        /// <see cref="Settings.OrganizationsDiscovery"/>
-        public ResourceRef OrganizationsDiscovery
-        {
-            get
-            {
-                if (GetValue(nameof(OrganizationsDiscovery), out ResourceRef value))
-                    return value;
-                return Settings.Default.OrganizationsDiscovery;
-            }
-        }
-
         /// <see cref="Settings.SelfUpdateDiscovery"/>
         public ResourceRef SelfUpdateDiscovery
         {
