@@ -31,6 +31,13 @@ WIX_CANDLE_FLAGS=-nologo \
 WIX_LIGHT_FLAGS=-nologo -dcl:high -spdb -sice:ICE03 -sice:ICE60 -sice:ICE61 -sice:ICE82 $(WIX_EXTENSIONS)
 WIX_INSIGNIA_FLAGS=-nologo
 
+!IF [minisign.exe -v > NUL] == 0
+MINISIGN_AVAILABLE=1
+!IF EXISTS("$(USERPROFILE)\.minisign\minisign.key")
+MINISIGN_KEY_AVAILABLE=1
+!ENDIF
+!ENDIF
+
 
 ######################################################################
 # Default target

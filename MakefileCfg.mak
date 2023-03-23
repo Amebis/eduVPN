@@ -65,7 +65,7 @@ PLAT=ARM64
 
 !IF "$(CFG)" == "$(SETUP_CFG)"
 Setup ::
-!IF EXISTS("$(USERPROFILE)\.minisign\minisign.key")
+!IFDEF MINISIGN_KEY_AVAILABLE
 	@echo Signing setup files
 	minisign.exe -Sm \
 		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET).exe" \
@@ -85,7 +85,7 @@ Clean ::
 
 !IF "$(CFG)" == "Release"
 Publish ::
-!IF EXISTS("$(USERPROFILE)\.minisign\minisign.key")
+!IFDEF MINISIGN_KEY_AVAILABLE
 	@echo Signing self-update discovery files
 	minisign.exe -Sm \
 		"bin\Setup\eduVPN.windows.json" \
