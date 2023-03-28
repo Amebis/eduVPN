@@ -101,7 +101,8 @@ namespace eduVPN.Models.Tests
                 catch (WebException ex)
                 {
                     if (ex.Response is HttpWebResponse response &&
-                        response.StatusCode == HttpStatusCode.NotFound) // 404 Not Found
+                        (response.StatusCode == HttpStatusCode.NotFound || // 404 Not Found
+                        response.StatusCode == HttpStatusCode.Forbidden)) // 403 Forbidden
                     {
                         // Ignore specific WebException(s), as some servers have issues.
                     }
