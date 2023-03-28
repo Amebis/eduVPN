@@ -331,7 +331,7 @@ namespace eduVPN.Models
 
             // Set support contact URLs.
             SupportContacts.Clear();
-            if (eduJSON.Parser.GetValue(obj2, "support_contact", out List<object> support_contact))
+            if (obj2.TryGetValue("support_contact", out var obj3) && obj3 is List<object> support_contact)
                 foreach (var c in support_contact)
                     if (c is string cStr)
                         SupportContacts.Add(new Uri(cStr));
