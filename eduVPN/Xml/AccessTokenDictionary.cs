@@ -18,7 +18,6 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable dictionary of OAuth access tokens
     /// </summary>
-    [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "DCS does not support IXmlSerializable types that are also marked as [Serializable]")]
     public class AccessTokenDictionary : System.Collections.Generic.Dictionary<string, AccessToken>, IXmlSerializable
     {
         #region IXmlSerializable Support

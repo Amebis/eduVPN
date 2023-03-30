@@ -27,9 +27,7 @@ namespace eduVPN.Views.Properties
                 Default.Upgrade();
                 Default.SettingsVersion = 1;
 
-#pragma warning disable 0612 // This section contains legacy settings conversion.
                 // TODO: Migrate legacy settings here.
-#pragma warning restore 0612
             }
         }
 

@@ -100,7 +100,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Tunnel deactivate token
         /// </summary>
-        private CancellationTokenSource SessionInProgress = new CancellationTokenSource();
+        private readonly CancellationTokenSource SessionInProgress = new CancellationTokenSource();
 
         /// <summary>
         /// Tunnel renew token

@@ -33,7 +33,7 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// Stack of displayed popup pages
         /// </summary>
-        private List<ConnectWizardPopupPage> PopupPages = new List<ConnectWizardPopupPage>();
+        private readonly List<ConnectWizardPopupPage> PopupPages = new List<ConnectWizardPopupPage>();
 
         /// <summary>
         /// Dictionary of discovered servers
