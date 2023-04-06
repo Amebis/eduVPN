@@ -61,15 +61,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloaded file {0} is corrupt..
-        /// </summary>
-        internal static string ErrorDownloadedFileCorrupt {
-            get {
-                return ResourceManager.GetString("ErrorDownloadedFileCorrupt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Downloading from web failed. Please check your internet connection..
         /// </summary>
         internal static string ErrorDownloading {
@@ -120,15 +111,6 @@ namespace eduVPN.Resources {
         internal static string ErrorHttpTooMayRedirects {
             get {
                 return ResourceManager.GetString("ErrorHttpTooMayRedirects", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Installer file not available. Updating aborted..
-        /// </summary>
-        internal static string ErrorInstallerFileUnavailable {
-            get {
-                return ResourceManager.GetString("ErrorInstallerFileUnavailable", resourceCulture);
             }
         }
         
@@ -210,15 +192,6 @@ namespace eduVPN.Resources {
         internal static string ErrorProfileListLoad {
             get {
                 return ResourceManager.GetString("ErrorProfileListLoad", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Detecting self-update failed..
-        /// </summary>
-        internal static string ErrorSelfUpdateDetection {
-            get {
-                return ResourceManager.GetString("ErrorSelfUpdateDetection", resourceCulture);
             }
         }
         
@@ -390,6 +363,16 @@ namespace eduVPN.Resources {
         internal static string WarningDefaultGatewayIsVPN {
             get {
                 return ResourceManager.GetString("WarningDefaultGatewayIsVPN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
+        ///Your organization might opt to prevent connections from insecure computers in the future..
+        /// </summary>
+        internal static string WarningWindowsUpdatesStalled {
+            get {
+                return ResourceManager.GetString("WarningWindowsUpdatesStalled", resourceCulture);
             }
         }
     }

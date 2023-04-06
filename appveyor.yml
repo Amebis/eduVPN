@@ -3,10 +3,10 @@ image: Visual Studio 2022
 before_build:
   - git submodule update -q --init --recursive
   - cmd: |
-      if /i %platform% equ x86   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_x86   && nmake "BuildLibsodium-%configuration%-%platform%" "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" /ls
-      if /i %platform% equ x64   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64       && nmake "BuildLibsodium-%configuration%-%platform%" "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" /ls
-      if /i %platform% equ ARM64 "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64 && nmake "BuildLibsodium-%configuration%-%platform%" "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" /ls
-      if /i %platform% equ ARM64 "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_x86   && nmake "BuildLibsodium-%configuration%-x86" "BuildeduVPNCommon-%configuration%-x86" /ls
+      if /i %platform% equ x86   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_x86   && nmake "BuildLibsodium-%configuration%-%platform%" "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" "BuildeduVPNWindows-%configuration%-%platform%" /ls
+      if /i %platform% equ x64   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64       && nmake "BuildLibsodium-%configuration%-%platform%" "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" "BuildeduVPNWindows-%configuration%-%platform%" /ls
+      if /i %platform% equ ARM64 "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64 && nmake "BuildLibsodium-%configuration%-%platform%" "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" "BuildeduVPNWindows-%configuration%-%platform%" /ls
+      if /i %platform% equ ARM64 "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_x86   && nmake "BuildLibsodium-%configuration%-x86" "BuildeduVPNCommon-%configuration%-x86" "BuildeduVPNWindows-%configuration%-x86" /ls
   - nuget restore -Verbosity quiet
 configuration:
   - Debug

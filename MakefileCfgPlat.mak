@@ -80,6 +80,7 @@ Publish :: \
 	"bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis" \
+	"bin\$(CFG)\$(PLAT)\eduvpn_windows.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"
@@ -99,6 +100,8 @@ Publish :: \
 "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduOpenVPN.dll"
 
 "bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
+
+"bin\$(CFG)\$(PLAT)\eduvpn_windows.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduvpn_windows.dll"
 
 "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduVPN.dll"
 
@@ -129,6 +132,7 @@ Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"         del /f /q "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"       del /f /q "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis"    del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis"
+	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_windows.vtanalysis"   del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_windows.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis"           del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"
@@ -236,6 +240,36 @@ CleaneduVPNCommon ::
 
 CleaneduVPNCommon ::
 	-if exist "eduvpn-common\exports\resources_$(GOARCH).syso" del /f /q "eduvpn-common\exports\resources_$(GOARCH).syso"
+!ENDIF
+
+BuildeduVPNWindows \
+BuildeduVPNWindows-$(CFG)-$(PLAT) :: \
+	"bin\llvm-mingw-20220906-msvcrt-x86_64\bin\gcc.exe" \
+	"eduvpn-windows\resources_$(GOARCH).syso" \
+	"bin\$(CFG)\$(PLAT)" \
+	"bin\$(CFG)\$(PLAT)\eduvpn_windows.dll"
+
+"bin\$(CFG)\$(PLAT)\eduvpn_windows.dll" ::
+	cd "eduvpn-windows"
+	set GOARCH=$(GOARCH)
+	set GOARM=7
+	set CGO_ENABLED=1
+	set CGO_CFLAGS=$(CGO_CFLAGS)
+	set CGO_LDFLAGS=$(CGO_LDFLAGS)
+	set CC=$(CC)
+	go.exe build $(CFG_GOFLAGS) -o "..\bin\$(CFG)\$(PLAT)\eduvpn_windows.dll" -buildmode=c-shared .
+	cd "$(MAKEDIR)"
+
+CleaneduVPNWindows ::
+	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_windows.dll" del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_windows.dll"
+	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_windows.h"   del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_windows.h"
+
+!IF "$(CFG)" == "$(SETUP_CFG)"
+"eduvpn-windows\resources_$(GOARCH).syso" : "eduvpn-windows\resources.rc"
+	$(WINDRES) -DVERSION_ARRAY=$(VERSION:.=,) -DVERSION=$(VERSION) -i $** -o $@ -O coff -c 65001
+
+CleaneduVPNWindows ::
+	-if exist "eduvpn-windows\resources_$(GOARCH).syso" del /f /q "eduvpn-windows\resources_$(GOARCH).syso"
 !ENDIF
 
 Build-$(CFG)-$(PLAT) ::

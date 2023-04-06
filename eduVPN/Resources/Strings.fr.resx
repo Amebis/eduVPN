@@ -243,4 +243,8 @@
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
     <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
   </data>
+  <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
+    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
+Your organization might opt to prevent connections from insecure computers in the future.</value>
+  </data>
 </root>

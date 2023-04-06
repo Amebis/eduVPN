@@ -65,7 +65,8 @@ BuildDeps :: \
 	BuildLibsodium \
 	BuildOpenVPN \
 	BuildWireGuard \
-	BuildeduVPNCommon
+	BuildeduVPNCommon \
+	BuildeduVPNWindows
 
 BuildWireGuard ::
 	cd "wireguard-windows\embeddable-dll-service"

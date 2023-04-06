@@ -62,7 +62,7 @@
             Margin="7"
             HorizontalAlignment="Center"
             Style="{StaticResource LinkButtonStyle}"
-            Command="{Binding Wizard.ShowChangelog}"
+            Command="{Binding Wizard.SelfUpdatePromptPage.ShowChangelog}"
             Content="{x:Static res:Strings.AboutPageChangelogTitle}"/>
 
         <Button
@@ -71,11 +71,11 @@
             Width="200" Height="Auto"
             Padding="3"
             Style="{StaticResource DiscreteButtonStyle}"
-            AutomationProperties.Name="{Binding Wizard.AvailableVersion, StringFormat={x:Static res:Strings.AboutPageUpdateTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-            Command="{Binding Wizard.StartUpdate}">
+            AutomationProperties.Name="{Binding Wizard.SelfUpdatePromptPage.AvailableVersion, StringFormat={x:Static res:Strings.AboutPageUpdateTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+            Command="{Binding Wizard.SelfUpdatePromptPage.StartUpdate}">
             <AccessText
                 TextAlignment="Center"
-                Text="{Binding Wizard.AvailableVersion, StringFormat={x:Static res:Strings.AboutPageUpdateTitle}}"/>
+                Text="{Binding Wizard.SelfUpdatePromptPage.AvailableVersion, StringFormat={x:Static res:Strings.AboutPageUpdateTitle}}"/>
         </Button>
     </Grid>
 </Page>

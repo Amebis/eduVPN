@@ -26,3 +26,6 @@
 [submodule "eduvpn-common"]
 	path = eduvpn-common
 	url = https://github.com/Amebis/eduvpn-common.git
+[submodule "lxn-win"]
+	path = lxn-win
+	url = https://github.com/Amebis/lxn-win.git

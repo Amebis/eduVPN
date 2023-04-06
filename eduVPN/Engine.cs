@@ -358,7 +358,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "ExpiryTimes", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPair _ExpiryTimes();
+        static extern CGoPtrPtr _ExpiryTimes();
 
         /// <summary>
         /// Returns the different Unix timestamps regarding expiry.
@@ -497,7 +497,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "CurrentServer", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPair _CurrentServer();
+        static extern CGoPtrPtr _CurrentServer();
 
         public static string CurrentServer()
         {
@@ -516,7 +516,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "ServerList", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPair _ServerList();
+        static extern CGoPtrPtr _ServerList();
 
         public static string ServerList()
         {
@@ -535,7 +535,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPair GetConfig(
+        static extern CGoPtrPtr GetConfig(
             /*[MarshalAs(UnmanagedType.I4)]*/ ServerType type,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string id,
             int pTCP,
@@ -649,7 +649,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "DiscoServers", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPair _DiscoServers();
+        static extern CGoPtrPtr _DiscoServers();
 
         /// <summary>
         /// Gets the servers list from the discovery server.
@@ -675,7 +675,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "DiscoOrganizations", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPair _DiscoOrganizations();
+        static extern CGoPtrPtr _DiscoOrganizations();
 
         /// <summary>
         /// Gets the organizations list from the discovery server.
@@ -750,7 +750,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "SecureLocationList", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPair _SecureLocationList();
+        static extern CGoPtrPtr _SecureLocationList();
 
         /// <summary>
         /// Returns all the available locations

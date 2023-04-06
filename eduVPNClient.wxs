@@ -427,6 +427,9 @@
             <Component Id="eduvpn_common.dll" Guid="{F6146737-4EAB-4FDD-8E$(var.ClientId)-AC4DE178C4E0}">
                 <File Source="$(var.TargetDirClient)eduvpn_common.dll"/>
             </Component>
+            <Component Id="eduvpn_windows.dll" Guid="{06AF60C6-26D5-4CAD-AA$(var.ClientId)-2E3E77FA84A8}">
+                <File Source="$(var.TargetDirClient)eduvpn_windows.dll"/>
+            </Component>
             <Component Id="eduVPN.dll" Guid="{0DC980F5-147E-408A-9E$(var.ClientId)-E3C02AE2FCBA}">
                 <File Source="$(var.TargetDirClient)eduVPN.dll"/>
             </Component>
@@ -549,6 +552,7 @@
             <ComponentRef Id="eduOpenVPN.dll"/>
             <ComponentRef Id="eduWireGuard.dll"/>
             <ComponentRef Id="eduvpn_common.dll"/>
+            <ComponentRef Id="eduvpn_windows.dll"/>
             <ComponentRef Id="eduVPN.dll"/>
             <ComponentRef Id="eduVPN.Views.dll"/>
             <ComponentRef Id="$(var.ClientTarget).Client.exe"/>

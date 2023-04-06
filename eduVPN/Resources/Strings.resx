@@ -170,10 +170,6 @@
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interactive Service failure.</value>
   </data>
-  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>Downloaded file {0} is corrupt.</value>
-    <comment>{0}=URI</comment>
-  </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Downloading from web failed. Please check your internet connection.</value>
   </data>
@@ -185,9 +181,6 @@
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
     <value>Connecting to TCP server...</value>
-  </data>
-  <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value>Installer file not available. Updating aborted.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Downloading web resource signature failed.</value>
@@ -213,9 +206,6 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Invalid hostname: hostnames contain letters, numbers, hyphens and dots.</value>
   </data>
-  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
-    <value>Detecting self-update failed.</value>
-  </data>
   <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
     <value>HTTP server redirected to an unsafe URI.</value>
   </data>
@@ -230,5 +220,9 @@
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
     <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+  </data>
+  <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
+    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
+Your organization might opt to prevent connections from insecure computers in the future.</value>
   </data>
 </root>

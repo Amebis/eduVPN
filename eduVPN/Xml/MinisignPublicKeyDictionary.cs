@@ -52,21 +52,11 @@ namespace eduVPN.Xml
         /// <param name="supportedAlgorithms">Bitwise mask of supported Minisign algorithms</param>
         public void Add(string public_key, MinisignPublicKey.AlgorithmMask supportedAlgorithms = MinisignPublicKey.AlgorithmMask.All)
         {
-            using (var s = new MemoryStream(Convert.FromBase64String(public_key), false))
-            using (var r = new BinaryReader(s))
-            {
-                if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
-                    throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
-                var keyId = r.ReadUInt64();
-                var key = new MinisignPublicKey();
-                key.Value = new byte[32];
-                if (r.Read(key.Value, 0, 32) != 32)
-                    throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
-                if (ContainsKey(keyId))
-                    throw new ArgumentException(string.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, keyId));
-                key.SupportedAlgorithms = supportedAlgorithms;
-                Add(keyId, key);
-            }
+            var key = new MinisignPublicKey(public_key, supportedAlgorithms);
+            var keyId = key.KeyId;
+            if (ContainsKey(keyId))
+                throw new ArgumentException(string.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, keyId));
+            Add(keyId, key);
         }
 
         #endregion

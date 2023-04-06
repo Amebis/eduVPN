@@ -14,7 +14,7 @@ namespace eduVPN
     /// A blittable struct to allow (*C.char, *C.char) CGo function return types
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    struct CGoPtrPair
+    struct CGoPtrPtr
     {
         public IntPtr r0;
         public IntPtr r1;
