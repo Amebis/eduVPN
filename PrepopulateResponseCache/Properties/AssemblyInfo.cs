@@ -27,4 +27,4 @@ using System.Runtime.InteropServices;
 //      Minor Version
 //      Build Number
 //      Revision
-[assembly: AssemblyVersion("3.3.8")]
+[assembly: AssemblyVersion("3.3.9")]
