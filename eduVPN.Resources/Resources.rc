@@ -7,14 +7,17 @@
 #include <winres.h>
 #undef APSTUDIO_READONLY_SYMBOLS
 
+#define STRINGIZE(x) #x
+#define EXPAND(x) STRINGIZE(x)
+
 /////////////////////////////////////////////////////////////////////////////
 // English (United States) resources
 
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 VS_VERSION_INFO VERSIONINFO
-	FILEVERSION 3,3,9,0
-	PRODUCTVERSION 3,3,9,0
+	FILEVERSION VERSION_ARRAY
+	PRODUCTVERSION VERSION_ARRAY
 	FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
 #ifdef _DEBUG
 	FILEFLAGS VS_FF_DEBUG
@@ -31,11 +34,11 @@ BEGIN
 		BEGIN
 			VALUE "CompanyName",      "SURF"
 			VALUE "FileDescription",  "eduVPN Native Resources"
-			VALUE "FileVersion",      "3.3.9"
+			VALUE "FileVersion",      EXPAND(VERSION)
 			VALUE "LegalCopyright",   "Copyright © 2017-2023 The Commons Conservancy"
 			VALUE "OriginalFilename", "eduVPN.Resources.dll"
 			VALUE "ProductName",      "eduVPN"
-			VALUE "ProductVersion",   "3.3.9"
+			VALUE "ProductVersion",   EXPAND(VERSION)
 		END
 	END
 	BLOCK "VarFileInfo"

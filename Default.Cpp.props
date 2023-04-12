@@ -19,7 +19,11 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <StringPooling>true</StringPooling>
+      <PreprocessorDefinitions>VERSION=3.3.9;VERSION_ARRAY=$([System.String]::Copy('3.3.9').Replace('.',','));%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>VERSION=3.3.9;VERSION_ARRAY=$([System.String]::Copy('3.3.9').Replace('.',','));%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
