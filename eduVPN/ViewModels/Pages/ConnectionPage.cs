@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx.System.Net;
 using eduVPN.Models;
 using eduVPN.ViewModels.VPN;
 using eduVPN.ViewModels.Windows;
@@ -14,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading;
 
 namespace eduVPN.ViewModels.Pages
@@ -201,7 +203,22 @@ namespace eduVPN.ViewModels.Pages
                                 Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                                 try
                                 {
-                                    var list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
+                                    ObservableCollection<Profile> list = null;
+                                    try
+                                    {
+                                        list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
+                                    }
+                                    catch (AggregateException ex)
+                                    {
+                                        // Session may be ended by expiration. Expired OAuth token will cause 401 error we can ignore and keep cached profile list in Profiles.
+                                        if (ex.InnerExceptions.FirstOrDefault(innerException =>
+                                            innerException is WebExceptionEx ex2 &&
+                                            ex2.Status == WebExceptionStatus.ProtocolError &&
+                                            ex2.Response is HttpWebResponse response &&
+                                            response.StatusCode == HttpStatusCode.Unauthorized) != null)
+                                            return;
+                                        throw;
+                                    }
                                     //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
                                     //list = new ObservableCollection<Profile>(); // Mock an empty list of profiles for testing.
                                     ct.ThrowIfCancellationRequested();
