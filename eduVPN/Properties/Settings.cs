@@ -22,40 +22,6 @@ namespace eduVPN.Properties
         /// </summary>
         public bool IsSignon { get; set; }
 
-        /// GUID of the installer EXE bundle
-        /// </summary>
-        [ApplicationScopedSetting()]
-        [SettingsDescription("GUID of the installer EXE bundle")]
-        public string SelfUpdateBundleId { get; set; }
-
-        /// <summary>
-        /// Client identifier
-        /// </summary>
-        [ApplicationScopedSetting()]
-        [SettingsDescription("Client identifier")]
-        public string ClientId { get; set; }
-
-        /// <summary>
-        /// Client Title
-        /// </summary>
-        [ApplicationScopedSetting()]
-        [SettingsDescription("Client Title")]
-        public string ClientTitle { get; set; }
-
-        /// <summary>
-        /// Client simple name (without spaces and limited punctuation)
-        /// </summary>
-        [ApplicationScopedSetting()]
-        [SettingsDescription("Client Title")]
-        public string ClientSimpleName { get; set; }
-
-        /// <summary>
-        /// Client URI
-        /// </summary>
-        [ApplicationScopedSetting()]
-        [SettingsDescription("Client URI")]
-        public Uri ClientAboutUri { get; set; }
-
         /// <summary>
         /// Institute access settings (v1)
         /// </summary>

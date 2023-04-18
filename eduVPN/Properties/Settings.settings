@@ -11,7 +11,7 @@
     <Setting Name="OpenVPNInteractiveServiceInstance" Description="Which OpenVPN interactive service instance client should use to manipulate openvpn.exe process:&#xD;&#xA; - &quot;$eduVPN&quot; - Use OpenVPN installation bundled with the client.&#xD;&#xA; - &quot;&quot; - Use original OpenVPN installation." Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OpenVPNPreferTCP" Description="Prefer connecting using TCP." Type="System.Boolean" Scope="User">
+    <Setting Name="OpenVPNPreferTCP" Description="Prefer connecting using TCP" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SettingsVersion" Description="A flag to trigger setting upgrade from the previous version" Type="System.Int32" Scope="User">
@@ -64,6 +64,21 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="WireGuardTunnelManagerServiceInstance" Description="Which WireGuard tunnel manager service instance client should use:&#xD;&#xA; - &quot;$eduVPN&quot; - Use WireGuard installation bundled with the eduVPN client.&#xD;&#xA; - &quot;$LetsConnect&quot; - Use WireGuard installation bundled with the Let's Connect! client." Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SelfUpdateBundleId" Description="GUID of the installer EXE bundle" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ClientId" Description="Client identifier" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ClientTitle" Description="Client Title" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ClientSimpleName" Description="Client simple name (without spaces and limited punctuation)" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ClientAboutUri" Description="Client URI" Type="System.Uri" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

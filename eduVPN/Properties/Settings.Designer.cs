@@ -72,10 +72,10 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Prefer connecting using TCP.
+        /// Prefer connecting using TCP
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Prefer connecting using TCP.")]
+        [global::System.Configuration.SettingsDescriptionAttribute("Prefer connecting using TCP")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool OpenVPNPreferTCP {
@@ -327,6 +327,70 @@ namespace eduVPN.Properties {
         public string WireGuardTunnelManagerServiceInstance {
             get {
                 return ((string)(this["WireGuardTunnelManagerServiceInstance"]));
+            }
+        }
+        
+        /// <summary>
+        /// GUID of the installer EXE bundle
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("GUID of the installer EXE bundle")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelfUpdateBundleId {
+            get {
+                return ((string)(this["SelfUpdateBundleId"]));
+            }
+        }
+        
+        /// <summary>
+        /// Client identifier
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client identifier")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientId {
+            get {
+                return ((string)(this["ClientId"]));
+            }
+        }
+        
+        /// <summary>
+        /// Client Title
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client Title")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientTitle {
+            get {
+                return ((string)(this["ClientTitle"]));
+            }
+        }
+        
+        /// <summary>
+        /// Client simple name (without spaces and limited punctuation)
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client simple name (without spaces and limited punctuation)")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientSimpleName {
+            get {
+                return ((string)(this["ClientSimpleName"]));
+            }
+        }
+        
+        /// <summary>
+        /// Client URI
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Client URI")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Uri ClientAboutUri {
+            get {
+                return ((global::System.Uri)(this["ClientAboutUri"]));
             }
         }
     }
