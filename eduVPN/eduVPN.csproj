@@ -51,14 +51,10 @@
     <Compile Include="Models\SecureInternetServer.cs" />
     <Compile Include="Properties\SettingsEx.cs" />
     <Compile Include="System\Collections\Generic\Extensions.cs" />
-    <Compile Include="JSON\APIErrorException.cs" />
     <Compile Include="JSON\ILoadableItem.cs" />
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\InvalidAccessTokenException.cs" />
-    <Compile Include="Models\Certificate.cs" />
-    <Compile Include="Models\CertificateCheck.cs" />
-    <Compile Include="Models\CertificateCheckException.cs" />
     <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
     <Compile Include="Models\ObservableCollectionEx.cs" />

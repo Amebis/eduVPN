@@ -120,17 +120,11 @@
   <data name="ErrorInvalidSignature" xml:space="preserve">
     <value>Verifying signature failed. Integrity of {0} is not valid.</value>
   </data>
-  <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value>API server replied with an error.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Loading of API endpoints failed.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Loading of the profile list failed.</value>
-  </data>
-  <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value>Loading of client certificate failed.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Loading of profile configuration failed.</value>
@@ -194,12 +188,6 @@
   </data>
   <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
     <value>Installer file not available. Updating aborted.</value>
-  </data>
-  <data name="ErrorCertificateDisabled" xml:space="preserve">
-    <value>The certificate was disabled by an administrator.</value>
-  </data>
-  <data name="ErrorUserDisabled" xml:space="preserve">
-    <value>The user account was disabled by an administrator.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Downloading web resource signature failed.</value>
