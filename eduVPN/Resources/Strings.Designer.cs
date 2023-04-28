@@ -97,24 +97,6 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HTTP server redirected to an unsafe URI..
-        /// </summary>
-        internal static string ErrorHttpRedirectToUnsafeUri {
-            get {
-                return ResourceManager.GetString("ErrorHttpRedirectToUnsafeUri", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Too many HTTP redirects..
-        /// </summary>
-        internal static string ErrorHttpTooMayRedirects {
-            get {
-                return ResourceManager.GetString("ErrorHttpTooMayRedirects", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Interactive Service failure..
         /// </summary>
         internal static string ErrorInteractiveService {
@@ -210,15 +192,6 @@ namespace eduVPN.Resources {
         internal static string ErrorUnsupportedMinisignSignature {
             get {
                 return ResourceManager.GetString("ErrorUnsupportedMinisignSignature", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Server does not support eduVPN APIv3..
-        /// </summary>
-        internal static string ErrorUnsupportedServerAPI {
-            get {
-                return ResourceManager.GetString("ErrorUnsupportedServerAPI", resourceCulture);
             }
         }
         

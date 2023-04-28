@@ -25,7 +25,7 @@ To override specific setting, add a value described in this chapter to the `HKEY
 
 ### `InstituteAccessServers` (`REG_MULTI_SZ`)
 
-`InstituteAccessServers` allows preconfiguring the client with Institute Access server(s). May contain any number of eduVPN server base URLs (e.g. `https://demo.eduvpn.nl/`). The servers on this list are displayed first and cannot be modified by user. However, user may add additional Institute Access servers.
+`InstituteAccessServers` allows preconfiguring the client with Institute Access server(s). May contain any number of eduVPN server base URLs (e.g. `https://demo.eduvpn.nl/`). The servers on this list cannot be removed by user. However, user may add additional Institute Access servers.
 
 
 ### `SecureInternetOrganization` (`REG_SZ`)
@@ -53,15 +53,6 @@ Example: [How to switch client to pre-release update channel?](FAQ.md#how-to-swi
 Ignored when self-updating is off.
 
 Example: [How to switch client to pre-release update channel?](FAQ.md#how-to-switch-client-to-pre-release-update-channel)
-
-
-### `AcceptProfileTypes` (`REG_MULTI_SZ`)
-
-Profile types client accepts. Allowed values are `application/x-openvpn-profile` and `application/x-wireguard-profile`. Specify one MIME type per string/line. If this value is not present, client defaults to `application/x-openvpn-profile` and `application/x-wireguard-profile`.
-
-This value targets testers and developers and is not intended for production use.
-
-See [eduVPN_Accept_all.reg](Customization/eduVPN_Accept_all.reg), [eduVPN_Accept_OpenVPN-only.reg](Customization/eduVPN_Accept_OpenVPN-only.reg) and [eduVPN_Accept_WireGuard-only.reg](Customization/eduVPN_Accept_WireGuard-only.reg) files for example.
 
 
 ### `OpenVPNInteractiveServiceInstance` (`REG_SZ`)

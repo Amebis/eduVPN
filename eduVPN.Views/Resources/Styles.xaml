@@ -1072,10 +1072,36 @@
 
 
     <!--
+        Institute access server
+    -->
+
+    <DataTemplate DataType="{x:Type models:InstituteAccessServer}">
+        <TextBlock
+            Opacity="{Binding Path=Delisted, Converter={StaticResource BooleanInverseOpacityConverter}}"
+            Text="{Binding}"/>
+    </DataTemplate>
+
+
+    <!--
         Secure internet server
     -->
 
     <DataTemplate DataType="{x:Type models:SecureInternetServer}">
-        <ContentPresenter Content="{Binding Path=Country}"/>
+        <Grid
+            Opacity="{Binding Path=Delisted, Converter={StaticResource BooleanInverseOpacityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                MaxWidth="20" MaxHeight="20"
+                Source="{Binding Path=Country.Code, Converter={StaticResource CountryCodeFlagConverter}}"/>
+            <TextBlock
+                Grid.Column="1"
+                Margin="7,0,0,0"
+                Text="{Binding Country}"/>
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>

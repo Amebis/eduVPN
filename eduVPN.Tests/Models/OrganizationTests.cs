@@ -27,8 +27,7 @@ namespace eduVPN.Models.Tests
 
             Organization org;
 
-            org = new Organization();
-            org.Load(new Dictionary<string, object>
+            org = new Organization(new Dictionary<string, object>
                 {
                     { "org_id", "https://idp.surfnet.nl" },
                     { "secure_internet_home", "https://nl.eduvpn.org/" },
@@ -37,8 +36,7 @@ namespace eduVPN.Models.Tests
             Assert.AreEqual(new Uri("https://nl.eduvpn.org/"), org.SecureInternetBase, "Secure internet home server base URI incorrect");
             Assert.AreEqual("https://idp.surfnet.nl", org.ToString(), "Display name incorrect");
 
-            org = new Organization();
-            org.Load(new Dictionary<string, object>
+            org = new Organization(new Dictionary<string, object>
                 {
                     { "org_id", "https://idp.surfnet.nl" },
                     { "secure_internet_home", "https://nl.eduvpn.org/" },
@@ -56,18 +54,10 @@ namespace eduVPN.Models.Tests
             Assert.AreEqual("SURFnet bv", org.ToString(), "Display name incorrect");
 
             // Test issues.
-            org = new Organization();
             Assert.ThrowsException<eduJSON.MissingParameterException>(() =>
-                org.Load(new Dictionary<string, object>
+                new Organization(new Dictionary<string, object>
                 {
                     { "secure_internet_home", "https://nl.eduvpn.org/" },
-                }));
-
-            org = new Organization();
-            Assert.ThrowsException<eduJSON.MissingParameterException>(() =>
-                org.Load(new Dictionary<string, object>
-                {
-                    { "org_id", "https://idp.surfnet.nl" },
                 }));
         }
 
@@ -83,8 +73,7 @@ namespace eduVPN.Models.Tests
             var list = new List<Organization>();
             var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
 
-            var el1 = new Organization();
-            el1.Load(new Dictionary<string, object>
+            var el1 = new Organization(new Dictionary<string, object>
                 {
                     { "org_id", "https://idp.surfnet.nl" },
                     { "secure_internet_home", "https://nl.eduvpn.org/" },
@@ -98,12 +87,12 @@ namespace eduVPN.Models.Tests
                     }}
                 });
             list.Add(el1);
-            idx.Index(el1);
+            idx.IndexName(el1);
+            idx.IndexKeywords(el1);
             Assert.AreEqual("SURFnet bv", el1.ToString());
             Assert.IsTrue(el1.LocalizedKeywordSets["nl"].Contains("surf"));
 
-            var el2 = new Organization();
-            el2.Load(new Dictionary<string, object>
+            var el2 = new Organization(new Dictionary<string, object>
                 {
                     { "org_id", "https://www.arnes.si" },
                     { "secure_internet_home", "https://si.eduvpn.org/" },
@@ -114,7 +103,8 @@ namespace eduVPN.Models.Tests
                     { "keyword_list", "ARNES" },
                 });
             list.Add(el2);
-            idx.Index(el2);
+            idx.IndexName(el2);
+            idx.IndexKeywords(el2);
             Assert.AreEqual("Academic and Research Network of Slovenia", el2.ToString());
             Assert.IsTrue(el2.LocalizedKeywordSets[""].Contains("ARNES"));
 

@@ -5,30 +5,20 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Timers;
+using System.Threading;
 
 namespace eduVPN.Tests
 {
     [TestClass()]
     public class EngineTests
     {
-        void InitSettings()
-        {
-            Properties.SettingsEx.Default.RegistryKeyPath = @"SOFTWARE\SURF\eduVPN";
-            Properties.Settings.Default.SelfUpdateBundleId = "{EF5D5806-B90B-4AA3-800A-2D7EA1592BA0}";
-            Properties.Settings.Default.ClientId = "org.eduvpn.app";
-            Properties.Settings.Default.ClientTitle = "eduVPN";
-            Properties.Settings.Default.ClientSimpleName = "eduVPN";
-            Properties.Settings.Default.ClientAboutUri = new Uri(@"https://www.eduvpn.org/");
-        }
-
         [TestMethod()]
         public void RegisterTest()
         {
-            InitSettings();
             int callbackCounter = 0;
             Engine.Callback += (object sender, Engine.CallbackEventArgs e) =>
             {
@@ -37,22 +27,17 @@ namespace eduVPN.Tests
                     case 0:
                         Assert.AreEqual(Engine.State.Deregistered, e.OldState);
                         Assert.AreEqual(Engine.State.NoServer, e.NewState);
-                        e.Handled = true;
                         break;
                 }
             };
             Engine.Register();
             Engine.Deregister();
             Assert.AreEqual(1, callbackCounter);
-
-            Properties.Settings.Default.ClientId = "net.bar.foo";
-            Assert.ThrowsException<Exception>(() => Engine.Register());
         }
 
         [TestMethod()]
         public void ExpiryTest()
         {
-            InitSettings();
             Engine.Register();
             try
             {
@@ -65,96 +50,73 @@ namespace eduVPN.Tests
         }
 
         [TestMethod()]
-        public void CancelOAuthTest()
-        {
-            InitSettings();
-            Engine.Register();
-            try
-            {
-                Assert.ThrowsException<Exception>(() => Engine.CancelOAuth());
-            }
-            finally
-            {
-                Engine.Deregister();
-            }
-        }
-
-        [TestMethod()]
         public void AddServerTest()
         {
-            InitSettings();
+            using (var cookie = new Engine.Cookie())
+                Assert.ThrowsException<Exception>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
             Engine.Register();
-            try
-            {
-                Assert.ThrowsException<Exception>(() => Engine.AddOwnServer(new Uri("https://vpn.tuxed.net")));
-                int callbackCounter = 0;
-                Engine.Callback += (object sender, Engine.CallbackEventArgs e) =>
+            using (var ct = new CancellationTokenSource())
+            using (var cookie = new Engine.CancellationTokenCookie(ct.Token))
+                try
                 {
-                    switch (callbackCounter++)
+                    Assert.ThrowsException<Exception>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
+                    int callbackCounter = 0;
+                    Engine.Callback += (object sender, Engine.CallbackEventArgs e) =>
                     {
-                        case 0:
-                            Assert.AreEqual(Engine.State.NoServer, e.OldState);
-                            Assert.AreEqual(Engine.State.LoadingServer, e.NewState);
-                            e.Handled = true;
-                            break;
-                        case 1:
-                            Assert.AreEqual(Engine.State.LoadingServer, e.OldState);
-                            Assert.AreEqual(Engine.State.ChosenServer, e.NewState);
-                            e.Handled = true;
-                            break;
-                        case 2:
-                            Assert.AreEqual(Engine.State.ChosenServer, e.OldState);
-                            Assert.AreEqual(Engine.State.OAuthStarted, e.NewState);
-                            Assert.IsNotNull(e.Data);
-                            var timer = new System.Timers.Timer(200) { AutoReset = false };
-                            timer.Elapsed += (object sender2, ElapsedEventArgs e2) => Engine.CancelOAuth();
-                            timer.Start();
-                            e.Handled = true;
-                            break;
-                        case 3:
-                            Assert.AreEqual(Engine.State.OAuthStarted, e.OldState);
-                            Assert.AreEqual(Engine.State.NoServer, e.NewState);
-                            break;
-                        case 4:
-                            Assert.AreEqual(Engine.State.NoServer, e.OldState);
-                            Assert.AreEqual(Engine.State.NoServer, e.NewState);
-                            break;
-                    }
-                };
-                Assert.ThrowsException<OperationCanceledException>(() => Engine.AddOwnServer(new Uri("https://vpn.tuxed.net")));
-                Assert.AreEqual(5, callbackCounter);
-            }
-            finally
-            {
-                Engine.Deregister();
-            }
+                        switch (callbackCounter++)
+                        {
+                            case 0:
+                                Assert.AreEqual(Engine.State.NoServer, e.OldState);
+                                Assert.AreEqual(Engine.State.LoadingServer, e.NewState);
+                                break;
+                            case 1:
+                                Assert.AreEqual(Engine.State.LoadingServer, e.OldState);
+                                Assert.AreEqual(Engine.State.ChosenServer, e.NewState);
+                                break;
+                            case 2:
+                                Assert.AreEqual(Engine.State.ChosenServer, e.OldState);
+                                Assert.AreEqual(Engine.State.OAuthStarted, e.NewState);
+                                Assert.IsNotNull(e.Data);
+                                ct.CancelAfter(200);
+                                break;
+                            case 3:
+                                Assert.AreEqual(Engine.State.OAuthStarted, e.OldState);
+                                Assert.AreEqual(Engine.State.NoServer, e.NewState);
+                                break;
+                        }
+                    };
+                    Assert.ThrowsException<OperationCanceledException>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
+                    Assert.AreEqual(4, callbackCounter);
+                }
+                finally
+                {
+                    Engine.Deregister();
+                }
         }
 
         [TestMethod()]
         public void RemoveServerTest()
         {
-            InitSettings();
             Engine.Register();
             try
             {
-                Engine.RemoveInstituteAccessServer(new Uri("https://vpn.tuxed.net"));
-                Engine.RemoveSecureInternetHomeServer();
-                Engine.RemoveOwnServer(new Uri("https://vpn.tuxed.net"));
+                Engine.RemoveServer(ServerType.InstituteAccess, "https://vpn.tuxed.net");
+                Assert.ThrowsException<Exception>(() => Engine.RemoveServer(ServerType.SecureInternet, "https://eva-saml-idp.eduroam.nl/simplesamlphp/saml2/idp/metadata.php"));
+                Engine.RemoveServer(ServerType.Own, "https://vpn.tuxed.net");
             }
             finally
             {
                 Engine.Deregister();
             }
 
-            Assert.ThrowsException<Exception>(() => Engine.RemoveInstituteAccessServer(new Uri("https://vpn.tuxed.net")));
-            Assert.ThrowsException<Exception>(() => Engine.RemoveSecureInternetHomeServer());
-            Assert.ThrowsException<Exception>(() => Engine.RemoveOwnServer(new Uri("https://vpn.tuxed.net")));
+            Assert.ThrowsException<Exception>(() => Engine.RemoveServer(ServerType.InstituteAccess, "https://vpn.tuxed.net"));
+            Assert.ThrowsException<Exception>(() => Engine.RemoveServer(ServerType.SecureInternet, "https://eva-saml-idp.eduroam.nl/simplesamlphp/saml2/idp/metadata.php"));
+            Assert.ThrowsException<Exception>(() => Engine.RemoveServer(ServerType.Own, "https://vpn.tuxed.net"));
         }
 
         [TestMethod()]
         public void CurrentServerTest()
         {
-            InitSettings();
             Engine.Register();
             try
             {
@@ -169,7 +131,6 @@ namespace eduVPN.Tests
         [TestMethod()]
         public void ServerListTest()
         {
-            InitSettings();
             Engine.Register();
             try
             {
@@ -186,7 +147,6 @@ namespace eduVPN.Tests
         [TestMethod()]
         public void SetProfileIdTest()
         {
-            InitSettings();
             Engine.Register();
             try
             {
@@ -201,130 +161,108 @@ namespace eduVPN.Tests
         [TestMethod()]
         public void SetSecureLocationTest()
         {
-            InitSettings();
             Engine.Register();
-            try
-            {
-                Assert.ThrowsException<Exception>(() => Engine.SetSecureInternetLocation("de"));
-            }
-            finally
-            {
-                Engine.Deregister();
-            }
+            using (var cookie = new Engine.Cookie())
+                try
+                {
+                    Assert.ThrowsException<Exception>(() => Engine.SetSecureInternetLocation(cookie, "de"));
+                }
+                finally
+                {
+                    Engine.Deregister();
+                }
         }
 
         [TestMethod()]
         public void DiscoveryTest()
         {
-            InitSettings();
-            Engine.Register();
-            try
+            using (var cookie = new Engine.Cookie())
             {
-                eduJSON.Parser.Parse(Engine.DiscoServers());
-                eduJSON.Parser.Parse(Engine.DiscoOrganizations());
-                eduJSON.Parser.Parse(Engine.SecureInternetLocationList());
-            }
-            finally
-            {
-                Engine.Deregister();
-            }
+                Engine.Register();
+                try
+                {
+                    eduJSON.Parser.Parse(Engine.DiscoServers(cookie));
+                    eduJSON.Parser.Parse(Engine.DiscoOrganizations(cookie));
+                }
+                finally
+                {
+                    Engine.Deregister();
+                }
 
-            Assert.ThrowsException<Exception>(() => Engine.DiscoServers());
-            Assert.ThrowsException<Exception>(() => Engine.DiscoOrganizations());
-            Assert.ThrowsException<Exception>(() => Engine.SecureInternetLocationList());
+                Assert.ThrowsException<Exception>(() => Engine.DiscoServers(cookie));
+                Assert.ThrowsException<Exception>(() => Engine.DiscoOrganizations(cookie));
+            }
         }
 
         [TestMethod()]
         public void CleanupTest()
         {
-            InitSettings();
             Engine.Register();
-            try
-            {
-                Assert.ThrowsException<Exception>(() => Engine.Cleanup("{}"));
-            }
-            finally
-            {
-                Engine.Deregister();
-            }
+            using (var cookie = new Engine.Cookie())
+                try
+                {
+                    Assert.ThrowsException<Exception>(() => Engine.Cleanup(cookie));
+                }
+                finally
+                {
+                    Engine.Deregister();
+                }
         }
 
         [TestMethod()]
         public void RenewSessionTest()
         {
-            InitSettings();
             Engine.Register();
-            try
-            {
-                Assert.ThrowsException<Exception>(() => Engine.RenewSession());
-            }
-            finally
-            {
-                Engine.Deregister();
-            }
-        }
-
-        [TestMethod()]
-        public void SetSupportWireGuardTest()
-        {
-            InitSettings();
-            Engine.Register();
-            try
-            {
-                Engine.SetSupportWireGuard(true);
-            }
-            finally
-            {
-                Engine.Deregister();
-            }
-
-            Assert.ThrowsException<Exception>(() => Engine.SetSupportWireGuard(true));
+            using (var cookie = new Engine.Cookie())
+                try
+                {
+                    Assert.ThrowsException<Exception>(() => Engine.RenewSession(cookie));
+                }
+                finally
+                {
+                    Engine.Deregister();
+                }
         }
 
         [TestMethod()]
         public void FailoverTest()
         {
-            InitSettings();
             Engine.Register();
-            try
-            {
-                // TODO: openvpn-common engine checks eduVPN server profile if it supports OpenVPN protocol
-                // and refuses to perform the failover test if not. If that check is commented, we can perform
-                // failover test on any network connection using code below:
-                //long rx = 0;
-                //long tx = 0;
-                //Engine.ReportTraffic += (object sender, Engine.ReportTrafficEventArgs e) =>
-                //{
-                //    e.RxBytes = rx;
-                //    e.TxBytes = tx;
-                //};
-                //bool dropped = false;
-                //Exception exception = null;
-                //var t = new Thread(() =>
-                //{
-                //    try { dropped = Engine.StartFailover("172.217.19.100", 1450); } catch (Exception ex) { exception = ex; }
-                //});
-                //t.Start();
-                //for (int i = 0; i < 50; i++)
-                //{
-                //    Thread.Sleep(50);
-                //    rx += 100;
-                //    tx += 100;
-                //}
-                //t.Join();
-                //Assert.AreEqual(null, exception);
-                //Assert.AreEqual(false, dropped);
-                //rx = tx = 0;
-                //t = new Thread(() =>
-                //{
-                //    try { dropped = Engine.StartFailover("172.217.19.100", 5000); } catch (Exception ex) { exception = ex; }
-                //});
-                //t.Start();
-                //t.Join();
-                //Assert.AreEqual(null, exception);
-                //Assert.AreEqual(true, dropped);
-
-                Assert.ThrowsException<Exception>(() => Engine.StartFailover("172.217.19.100", 1450));
+            using (var cookie = new Engine.Cookie())
+                try
+                {
+                    long rx = 0;
+                    long tx = 0;
+                    Engine.ReportTraffic += (object sender, Engine.ReportTrafficEventArgs e) =>
+                    {
+                        e.RxBytes = rx;
+                        e.TxBytes = tx;
+                    };
+                    bool dropped = false;
+                    Exception exception = null;
+                    var t = new Thread(() =>
+                    {
+                        try { dropped = Engine.StartFailover(cookie, "172.217.19.100", 1450); } catch (Exception ex) { exception = ex; }
+                    });
+                    t.Start();
+                    for (int i = 0; i < 50; i++)
+                    {
+                        Thread.Sleep(50);
+                        rx += 100;
+                        tx += 100;
+                    }
+                    t.Join();
+                    Assert.AreEqual(null, exception);
+                    Assert.AreEqual(false, dropped);
+                    rx = tx = 0;
+                    t = new Thread(() =>
+                    {
+                        try { dropped = Engine.StartFailover(cookie, "172.217.19.100", 5000); } catch (Exception ex) { exception = ex; }
+                    });
+                    t.Start();
+                    t.Join();
+                    Assert.AreEqual(null, exception);
+                    Assert.AreEqual(true, dropped);
             }
             finally
             {

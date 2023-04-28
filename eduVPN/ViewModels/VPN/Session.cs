@@ -31,7 +31,26 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// List of hardware IDs specific to network adapters used for VPN and tunneling
         /// </summary>
-        private static readonly string[] VPNHardwareIds = new string[]{ "WireGuard", "Wintun", "root\\tap0901", "tap0901", "ovpn-dco" };
+        private static readonly string[] VPNHardwareIds = new string[] { "WireGuard", "Wintun", "root\\tap0901", "tap0901", "ovpn-dco" };
+
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// Session renewal in progress
+        /// </summary>
+        protected volatile bool RenewInProgress;
+
+        /// <summary>
+        /// Session termination token
+        /// </summary>
+        protected readonly CancellationTokenSource SessionInProgress;
+
+        /// <summary>
+        /// Quit token
+        /// </summary>
+        protected readonly CancellationTokenSource SessionAndWindowInProgress;
 
         #endregion
 
@@ -43,30 +62,19 @@ namespace eduVPN.ViewModels.VPN
         public ConnectWizard Wizard { get; }
 
         /// <summary>
+        /// Connecting eduVPN server
+        /// </summary>
+        public Server Server { get; }
+
+        /// <summary>
         /// Connecting eduVPN server profile
         /// </summary>
-        public Profile ConnectingProfile { get; }
+        public Profile Profile { get => Server.Profiles.Current; }
 
         /// <summary>
         /// Profile configuration
         /// </summary>
-        protected Xml.Response ProfileConfig
-        {
-            get => _ProfileConfig;
-            set
-            {
-                if (SetProperty(ref _ProfileConfig, value))
-                {
-                    RaisePropertyChanged(nameof(ValidFrom));
-                    RaisePropertyChanged(nameof(ValidTo));
-                    RaisePropertyChanged(nameof(Expired));
-                    RaisePropertyChanged(nameof(ExpiresTime));
-                }
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Xml.Response _ProfileConfig;
+        protected string ProfileConfig { get; }
 
         /// <summary>
         /// VPN session worker
@@ -173,21 +181,59 @@ namespace eduVPN.ViewModels.VPN
         private ulong? _BytesOut;
 
         /// <summary>
+        /// Session expiry times
+        /// </summary>
+        protected Expiration Expiration
+        {
+            get => _Expiration;
+            set
+            {
+                if (SetProperty(ref _Expiration, value))
+                {
+                    RaisePropertyChanged(nameof(ValidFrom));
+                    RaisePropertyChanged(nameof(ValidTo));
+                    RaisePropertyChanged(nameof(Expired));
+                    RaisePropertyChanged(nameof(ShowExpiredTime));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(OfferRenewal));
+                }
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Expiration _Expiration;
+
+        /// <summary>
         /// Session valid from date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MinValue</c> when unknown or not available</remarks>
-        public DateTimeOffset ValidFrom => ProfileConfig != null ? ProfileConfig.Authorized : DateTimeOffset.MinValue;
+        public DateTimeOffset ValidFrom => Expiration.StartedAt;
 
         /// <summary>
         /// Session expiration date
         /// </summary>
         /// <remarks><c>DateTimeOffset.MaxValue</c> when unknown or not available</remarks>
-        public DateTimeOffset ValidTo => ProfileConfig != null ? ProfileConfig.Expires : DateTimeOffset.MaxValue;
+        public DateTimeOffset ValidTo => Expiration.EndAt;
 
         /// <summary>
         /// Is the session expired?
         /// </summary>
         public bool Expired => ValidTo <= DateTimeOffset.Now;
+
+        /// <summary>
+        /// Should expiration time be shown?
+        /// </summary>
+        public bool ShowExpiredTime
+        {
+            get
+            {
+                var now = DateTimeOffset.Now;
+                return
+                    Expiration != null &&
+                    Expiration.CountdownAt <= now &&
+                    now <= ValidTo;
+            }
+        }
 
         /// <summary>
         /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when session does not expire
@@ -204,14 +250,82 @@ namespace eduVPN.ViewModels.VPN
         }
 
         /// <summary>
+        /// Occurs when GUI should warn user about session expiration.
+        /// </summary>
+        public event EventHandler WarnExpiration;
+
+        /// <summary>
+        /// Should UI offer session renewal?
+        /// </summary>
+        public bool OfferRenewal
+        {
+            get
+            {
+                var now = DateTimeOffset.Now;
+#if DEBUG
+                DateTimeOffset from = ValidFrom, to = ValidTo;
+                return
+                    from != DateTimeOffset.MinValue && to != DateTimeOffset.MaxValue &&
+                    (now - from).TotalMinutes > 1;
+#else
+                return
+                    Expiration != null &&
+                    Expiration.ButtonAt <= DateTimeOffset.Now &&
+                    now <= ValidTo;
+#endif
+            }
+        }
+
+        /// <summary>
         /// Renews and restarts the session
         /// </summary>
-        public virtual DelegateCommand Renew { get; } = new DelegateCommand(() => { }, () => false);
+        public DelegateCommand Renew
+        {
+            get
+            {
+                if (_Renew == null)
+                {
+                    _Renew = new DelegateCommand(
+                        () =>
+                        {
+                            RenewInProgress = true;
+                            State = SessionStatusType.Disconnecting;
+                            SessionInProgress.Cancel();
+                            _Renew.RaiseCanExecuteChanged();
+                            _Disconnect.RaiseCanExecuteChanged();
+                        },
+                        () => !RenewInProgress && State == SessionStatusType.Connected);
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
+                }
+                return _Renew;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Renew;
 
         /// <summary>
         /// Disconnect command
         /// </summary>
-        public virtual DelegateCommand Disconnect { get; } = new DelegateCommand(() => { }, () => false);
+        public DelegateCommand Disconnect
+        {
+            get
+            {
+                if (_Disconnect == null)
+                    _Disconnect = new DelegateCommand(
+                        () =>
+                        {
+                            State = SessionStatusType.Disconnecting;
+                            SessionInProgress.Cancel();
+                            _Disconnect.RaiseCanExecuteChanged();
+                        },
+                        () => !SessionInProgress.IsCancellationRequested);
+                return _Disconnect;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Disconnect;
 
         /// <summary>
         /// Show log command
@@ -226,14 +340,19 @@ namespace eduVPN.ViewModels.VPN
         /// Creates a VPN session
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
-        /// <param name="connectingProfile">Connecting eduVPN profile</param>
+        /// <param name="server">Connecting eduVPN server</param>
         /// <param name="profileConfig">Initial profile configuration</param>
-        public Session(ConnectWizard wizard, Profile connectingProfile, Xml.Response profileConfig)
+        /// <param name="expiration">VPN expiry times</param>
+        public Session(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration)
         {
             Wizard = wizard;
-            ConnectingProfile = connectingProfile;
+            Server = server;
             ProfileConfig = profileConfig;
+            Expiration = expiration;
             Thread = Thread.CurrentThread;
+
+            SessionInProgress = new CancellationTokenSource();
+            SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
 
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
@@ -293,6 +412,7 @@ namespace eduVPN.ViewModels.VPN
                         }
                     }
                 }
+                var sessionExpirationWarning = DateTimeOffset.Now;
                 var propertyUpdater = new DispatcherTimer(
                     new TimeSpan(0, 0, 0, 1),
                     DispatcherPriority.Normal,
@@ -300,7 +420,17 @@ namespace eduVPN.ViewModels.VPN
                     {
                         RaisePropertyChanged(nameof(ConnectedTime));
                         RaisePropertyChanged(nameof(Expired));
+                        RaisePropertyChanged(nameof(ShowExpiredTime));
                         RaisePropertyChanged(nameof(ExpiresTime));
+                        RaisePropertyChanged(nameof(OfferRenewal));
+                        var now = DateTimeOffset.Now;
+                        var x = Expiration.NotificationAt.FirstOrDefault(t => sessionExpirationWarning < t && t <= now);
+                        if (x != default)
+                        {
+                            WarnExpiration?.Invoke(this, null);
+                            sessionExpirationWarning = x;
+                            Expiration.NotificationAt.Remove(x);
+                        }
                     },
                     Wizard.Dispatcher);
                 propertyUpdater.Start();
@@ -314,6 +444,14 @@ namespace eduVPN.ViewModels.VPN
                     // Cleanup status properties.
                     State = SessionStatusType.Disconnected;
                     StateDescription = "";
+
+                    if (!Window.Abort.IsCancellationRequested)
+                    {
+                        if (RenewInProgress)
+                            Wizard.RenewAndConnect(Server);
+                        else if (!SessionInProgress.IsCancellationRequested)
+                            Wizard.Connect(Server);
+                    }
                 }));
             }
         }

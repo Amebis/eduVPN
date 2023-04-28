@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.Windows;
 using System;
 using System.Configuration;
 
@@ -106,6 +107,21 @@ namespace eduVPN.Properties
             set { this["OwnServers"] = value; }
         }
 
+        /// <summary>
+        /// Access token cache
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public Xml.AccessTokenDictionary AccessTokenCache
+        {
+            get
+            {
+                return (Xml.AccessTokenDictionary)this["AccessTokenCache"];
+            }
+            set { this["AccessTokenCache"] = value; }
+        }
+
         #endregion
 
         #region Methods
@@ -115,11 +131,11 @@ namespace eduVPN.Properties
         /// </summary>
         public static void Initialize()
         {
-            if (Default.SettingsVersion == 0)
+            if ((Default.SettingsVersion & 0x1) == 0)
             {
                 // Migrate settings from previous version.
                 Default.Upgrade();
-                Default.SettingsVersion = 1;
+                Default.SettingsVersion |= 0x1;
 
 #pragma warning disable 0612 // This section contains legacy settings conversion.
 
@@ -129,10 +145,14 @@ namespace eduVPN.Properties
                 {
                     foreach (var srv in instituteAccessSourceSettings.ConnectingInstanceList)
                     {
-                        if (!Default.InstituteAccessServers.Contains(srv.Base))
-                            Default.InstituteAccessServers.Add(srv.Base);
-                        if (!Default.OwnServers.Contains(srv.Base))
-                            Default.OwnServers.Add(srv.Base);
+                        try
+                        {
+                            if (!Default.InstituteAccessServers.Contains(srv.Base))
+                                Default.InstituteAccessServers.Add(srv.Base);
+                            if (!Default.OwnServers.Contains(srv.Base))
+                                Default.OwnServers.Add(srv.Base);
+                        }
+                        catch { }
                     }
                 }
 
@@ -144,6 +164,17 @@ namespace eduVPN.Properties
                 // Migrate OpenVPNForceTCP setting.
                 if (Default.GetPreviousVersion(nameof(OpenVPNForceTCP)) is bool openVPNForceTCP)
                     Default.OpenVPNPreferTCP = openVPNForceTCP;
+
+                // Migrate OAuth tokens
+                if (Default.GetPreviousVersion(nameof(AccessTokenCache)) is Xml.AccessTokenDictionary accessTokenCache)
+                    foreach (var token in accessTokenCache)
+                        try
+                        {
+                            ConnectWizard.Engine_SetToken(null, new Engine.SetTokenEventArgs(
+                                new Uri(token.Key),
+                                token.Value.ToJSON()));
+                        }
+                        catch { }
 
 #pragma warning restore 0612
             }

@@ -204,7 +204,7 @@ namespace eduVPN
         /// <summary>
         /// Available self-update description
         /// </summary>
-        public class SelfUpdatePackage : JSON.ILoadableItem
+        public class SelfUpdatePackage
         {
             #region Fields
 
@@ -248,24 +248,16 @@ namespace eduVPN
                 BaseUri = baseUri;
             }
 
-            #endregion
-
-            #region ILoadableItem Support
-
             /// <summary>
-            /// Loads self-update description from a dictionary object (provided by JSON)
+            /// Constructs self-update description
             /// </summary>
-            /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
-            public void Load(object obj)
+            public SelfUpdatePackage(Uri baseUri, IReadOnlyDictionary<string, object> obj) : this(baseUri)
             {
-                if (!(obj is Dictionary<string, object> obj2))
-                    throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
-
-                Arguments = eduJSON.Parser.GetValue(obj2, "arguments", out string arguments) ? arguments : null;
-                Uris = new List<Uri>(((List<object>)obj2["uri"]).Select(u => u is string uStr ? new Uri(BaseUri, uStr) : null));
-                Version = new Version((string)obj2["version"]);
-                Changelog = eduJSON.Parser.GetValue(obj2, "changelog_uri", out string changelogUri) ? new Uri(BaseUri, changelogUri) : null;
-                Hash = ((string)obj2["hash-sha256"]).FromHexToBin();
+                Arguments = eduJSON.Parser.GetValue(obj, "arguments", out string arguments) ? arguments : null;
+                Uris = new List<Uri>(((List<object>)obj["uri"]).Select(u => u is string uStr ? new Uri(BaseUri, uStr) : null));
+                Version = new Version((string)obj["version"]);
+                Changelog = eduJSON.Parser.GetValue(obj, "changelog_uri", out string changelogUri) && changelogUri != null ? new Uri(BaseUri, changelogUri) : null;
+                Hash = ((string)obj["hash-sha256"]).FromHexToBin();
             }
 
             #endregion
@@ -307,17 +299,15 @@ namespace eduVPN
                         discovery.PublicKeys.Select(
                             k => string.Format(
                                 "{0}|{1}",
-                                Convert.ToBase64String(k.Value.Data),
-                                (int)k.Value.SupportedAlgorithms)).ToArray()) + "\0",
+                                Convert.ToBase64String(k.Data),
+                                (int)k.SupportedAlgorithms)).ToArray()) + "\0",
                     productId,
                     ctx.Handle);
                 try
                 {
                     if (r.r1 != IntPtr.Zero)
                         throw new Exception((string)m.MarshalNativeToManaged(r.r1));
-                    var p = new SelfUpdatePackage(discovery.Uri);
-                    p.Load(eduJSON.Parser.Parse((string)m.MarshalNativeToManaged(r.r0), ct));
-                    return p;
+                    return new SelfUpdatePackage(discovery.Uri, eduJSON.Parser.Parse((string)m.MarshalNativeToManaged(r.r0), ct) as IReadOnlyDictionary<string, object>);
                 }
                 catch (Exception ex)
                 {

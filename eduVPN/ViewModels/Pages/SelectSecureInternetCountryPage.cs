@@ -11,6 +11,7 @@ using Prism.Commands;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -52,7 +53,31 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmSecureInternetCountrySelection == null)
                     _ConfirmSecureInternetCountrySelection = new DelegateCommand(
-                        () => Engine.SetSecureInternetLocation(SelectedSecureInternetCountry.Code),
+                        async () =>
+                        {
+                            if (Wizard.OperationInProgress != null)
+                            {
+                                // Country selection was triggered implicitly when adding Secure Internet.
+                                Wizard.OperationInProgress.Reply(SelectedSecureInternetCountry.Code);
+                            }
+                            else
+                            {
+                                // Country selection was triggered explicitly by user on the Home page.
+                                Wizard.TaskCount++;
+                                try
+                                {
+                                    using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
+                                        await Task.Run(() => Engine.SetSecureInternetLocation(cookie, SelectedSecureInternetCountry.Code));
+                                    //await Task.Run(() => Window.Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
+
+                                    // eduvpn-common does not do callback on country change. Do the bookkeeping manually.
+                                    foreach (var srv in Wizard.HomePage.SecureInternetServers)
+                                        srv.Country = SelectedSecureInternetCountry;
+                                    Wizard.CurrentPage = Wizard.StartingPage;
+                                }
+                                finally { Wizard.TaskCount--; }
+                            }
+                        },
                         () => SelectedSecureInternetCountry != null);
                 return _ConfirmSecureInternetCountrySelection;
             }
@@ -67,7 +92,11 @@ namespace eduVPN.ViewModels.Pages
             get
             {
                 if (_NavigateBack == null)
-                    _NavigateBack = new DelegateCommand(() => Wizard.CurrentPage = Wizard.HomePage);
+                    _NavigateBack = new DelegateCommand(() =>
+                    {
+                        Wizard.OperationInProgress?.Cancel();
+                        Wizard.CurrentPage = Wizard.HomePage;
+                    });
                 return _NavigateBack;
             }
         }
@@ -96,22 +125,18 @@ namespace eduVPN.ViewModels.Pages
         /// Populates Secure Internet available country list
         /// </summary>
         /// <param name="obj">eduvpn-common provided country list</param>
-        public void SetSecureInternetCountries(List<object> obj)
+        /// <param name="country">Country that should be initially selected</param>
+        public void SetSecureInternetCountries(IEnumerable<Country> obj, Country country = null)
         {
-            var selected = SelectedSecureInternetCountry?.Code;
             var list = SecureInternetCountries.BeginUpdate();
             try
             {
                 list.Clear();
-                foreach (var i in obj)
-                {
-                    if (!(i is string countryCode))
-                        continue;
-                    list.Add(new Country(countryCode));
-                }
+                foreach (var c in obj)
+                    list.Add(c);
             }
             finally { SecureInternetCountries.EndUpdate(); }
-            SelectedSecureInternetCountry = selected != null ? SecureInternetCountries.FirstOrDefault(c => c.Code == selected) : null;
+            SelectedSecureInternetCountry = country != null ? SecureInternetCountries.FirstOrDefault(c => c.Equals(country)) : null;
         }
 
         #endregion

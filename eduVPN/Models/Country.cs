@@ -21,7 +21,7 @@ namespace eduVPN.Models
         /// <summary>
         /// All known countries with English and local names
         /// </summary>
-        public static readonly Dictionary<string, Dictionary<string, string>> Countries = new Dictionary<string, Dictionary<string, string>>()
+        public static readonly IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Countries = new Dictionary<string, IReadOnlyDictionary<string, string>>()
         {
             { "AD", new Dictionary<string, string>() {
                 { "ca", "Andorra" },
@@ -1083,12 +1083,6 @@ namespace eduVPN.Models
             return Code.GetHashCode();
         }
 
-        /// <inheritdoc/>
-        public int CompareTo(object obj)
-        {
-            return ToString().CompareTo(obj.ToString());
-        }
-
         public static bool operator ==(Country left, Country right)
         {
             if (left is null)
@@ -1119,6 +1113,16 @@ namespace eduVPN.Models
         public static bool operator >=(Country left, Country right)
         {
             return left is null ? right is null : left.CompareTo(right) >= 0;
+        }
+
+        #endregion
+
+        #region IComparable Support
+
+        /// <inheritdoc/>
+        public int CompareTo(object obj)
+        {
+            return ToString().CompareTo(obj.ToString());
         }
 
         #endregion

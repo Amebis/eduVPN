@@ -12,26 +12,21 @@ namespace eduVPN.Models
     /// <summary>
     /// Dictionary of organizations
     /// </summary>
-    public class OrganizationDictionary : Dictionary<string, Organization>, JSON.ILoadableItem
+    public class OrganizationDictionary : Dictionary<string, Organization>
     {
-        #region ILoadableItem Support
+        #region Constructors
 
         /// <summary>
-        /// Loads organization list from a dictionary object (provided by JSON)
+        /// Creates organization list
         /// </summary>
         /// <param name="obj">Key/value dictionary with <c>organization_list</c> and other optional elements</param>
-        /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
-        public virtual void Load(object obj)
+        public OrganizationDictionary(Dictionary<string, object> obj)
         {
-            if (!(obj is Dictionary<string, object> obj2))
-                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
-
-            // Parse all servers listed.
-            Clear();
-            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj2, "organization_list"))
+            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj, "organization_list"))
             {
-                var entry = new Organization();
-                entry.Load(el);
+                if (!(el is Dictionary<string, object> obj2))
+                    continue;
+                var entry = new Organization(obj2);
                 Add(entry.Id, entry);
             }
         }

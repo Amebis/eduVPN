@@ -8,7 +8,6 @@
 
 using eduOAuth;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -18,6 +17,7 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable dictionary of OAuth access tokens
     /// </summary>
+    [Obsolete]
     public class AccessTokenDictionary : System.Collections.Generic.Dictionary<string, AccessToken>, IXmlSerializable
     {
         #region IXmlSerializable Support

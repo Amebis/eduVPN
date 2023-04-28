@@ -19,16 +19,14 @@ namespace eduVPN.Models.Tests
         {
             Server srv;
 
-            srv = new InstituteAccessServer();
-            srv.Load(new Dictionary<string, object>
+            srv = new InstituteAccessServer(new Dictionary<string, object>
                 {
                     { "base_url", "https://surf.eduvpn.nl/" }
                 });
             Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), srv.Base, "Base URI incorrect");
             Assert.AreEqual("surf.eduvpn.nl", srv.ToString(), "Display name incorrect");
 
-            srv = new InstituteAccessServer();
-            srv.Load(new Dictionary<string, object>
+            srv = new InstituteAccessServer(new Dictionary<string, object>
                 {
                     { "base_url", "https://surf.eduvpn.nl/" },
                     { "display_name", "SURF" }
@@ -36,8 +34,7 @@ namespace eduVPN.Models.Tests
             Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), srv.Base, "Base URI incorrect");
             Assert.AreEqual("SURF", srv.ToString(), "Display name incorrect");
 
-            srv = new SecureInternetServer();
-            srv.Load(new Dictionary<string, object>
+            srv = new SecureInternetServer(new Dictionary<string, object>
                 {
                     { "base_url", "https://surf.eduvpn.nl/" },
                     { "country_code", "NL" },
@@ -50,16 +47,14 @@ namespace eduVPN.Models.Tests
             // Test issues.
             Assert.ThrowsException<eduJSON.MissingParameterException>(() =>
             {
-                srv = new InstituteAccessServer();
-                srv.Load(new Dictionary<string, object>
+                srv = new InstituteAccessServer(new Dictionary<string, object>
                     {
                         { "display_name", "SURF" },
                     });
             });
             Assert.ThrowsException<eduJSON.MissingParameterException>(() =>
             {
-                srv = new SecureInternetServer();
-                srv.Load(new Dictionary<string, object>
+                srv = new SecureInternetServer(new Dictionary<string, object>
                     {
                         { "display_name", "SURF" },
                     });

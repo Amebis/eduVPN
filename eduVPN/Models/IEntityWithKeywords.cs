@@ -10,13 +10,13 @@ using System.Collections.Generic;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// An entitiy with localized display names
+    /// An entitiy with localized display names and keyword sets
     /// </summary>
-    public interface INamedEntity
+    public interface IEntityWithKeywords
     {
         /// <summary>
-        /// Localized display names
+        /// Localized keyword sets
         /// </summary>
-        Dictionary<string, string> LocalizedDisplayNames { get; }
+        Dictionary<string, HashSet<string>> LocalizedKeywordSets { get; }
     }
 }

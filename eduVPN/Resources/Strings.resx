@@ -206,15 +206,6 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Invalid hostname: hostnames contain letters, numbers, hyphens and dots.</value>
   </data>
-  <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
-    <value>HTTP server redirected to an unsafe URI.</value>
-  </data>
-  <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
-    <value>Too many HTTP redirects.</value>
-  </data>
-  <data name="ErrorUnsupportedServerAPI" xml:space="preserve">
-    <value>Server does not support eduVPN APIv3.</value>
-  </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
     <value>Tunnel Manager Service failure.</value>
   </data>

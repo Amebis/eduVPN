@@ -145,73 +145,6 @@ namespace eduVPN.Properties {
         }
         
         /// <summary>
-        /// Profile types client accepts. Allowed values are `application/x-openvpn-profile` and `application/x-wireguard-profile`. Specify one MIME type per string/line. This value targets testers and developers and is not intended for production use.
-        /// </summary>
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Profile types client accepts. Allowed values are `application/x-openvpn-profile` " +
-            "and `application/x-wireguard-profile`. Specify one MIME type per string/line. Th" +
-            "is value targets testers and developers and is not intended for production use.")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
-  <string>application/x-openvpn-profile</string>
-  <string>application/x-wireguard-profile</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection AcceptProfileTypes {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["AcceptProfileTypes"]));
-            }
-        }
-        
-        /// <summary>
-        /// Cache of sequenced JSON responses
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Cache of sequenced JSON responses")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<JSONResponseDictionary/>")]
-        public global::eduVPN.Xml.JSONResponseDictionary ResponseCache {
-            get {
-                return ((global::eduVPN.Xml.JSONResponseDictionary)(this["ResponseCache"]));
-            }
-            set {
-                this["ResponseCache"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Access token cache
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Access token cache")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<AccessTokenDictionary/>")]
-        public global::eduVPN.Xml.AccessTokenDictionary AccessTokenCache {
-            get {
-                return ((global::eduVPN.Xml.AccessTokenDictionary)(this["AccessTokenCache"]));
-            }
-            set {
-                this["AccessTokenCache"] = value;
-            }
-        }
-        
-        /// <summary>
-        /// Which profile of the server user selected last
-        /// </summary>
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Which profile of the server user selected last")]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<SerializableStringDictionary/>")]
-        public global::eduVPN.Xml.SerializableStringDictionary LastSelectedProfile {
-            get {
-                return ((global::eduVPN.Xml.SerializableStringDictionary)(this["LastSelectedProfile"]));
-            }
-            set {
-                this["LastSelectedProfile"] = value;
-            }
-        }
-        
-        /// <summary>
         /// Which server user selected last
         /// </summary>
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -317,6 +250,22 @@ namespace eduVPN.Properties {
         public bool Discovery {
             get {
                 return ((bool)(this["Discovery"]));
+            }
+        }
+        
+        /// <summary>
+        /// Access token cache
+        /// </summary>
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("Access token cache")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<SerializableStringDictionary />")]
+        public global::eduVPN.Xml.SerializableStringDictionary AccessTokenCache2 {
+            get {
+                return ((global::eduVPN.Xml.SerializableStringDictionary)(this["AccessTokenCache2"]));
+            }
+            set {
+                this["AccessTokenCache2"] = value;
             }
         }
     }

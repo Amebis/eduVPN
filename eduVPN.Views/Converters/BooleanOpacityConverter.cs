@@ -7,15 +7,14 @@
 
 using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="Visibility.Visible"/> if session expiration time should be displayed; or <see cref="Visibility.Collapsed"/> otherwise.
+    /// Returns <see cref="1.0"/> if the value is <c>true</c> (<c>0.25</c> when Invert is true); or <see cref="0.25"/> otherwise.
     /// </summary>
-    public class ExpiresTimeVisibilityConverter : IValueConverter
+    public class BooleanOpacityConverter : InvertableConverter, IValueConverter
     {
         #region Methods
 
@@ -29,10 +28,7 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return
-                value is TimeSpan expiresTime && expiresTime != TimeSpan.MaxValue &&
-                expiresTime.TotalHours < 24 ?
-                Visibility.Visible : Visibility.Collapsed;
+            return value is bool b && !Invert == b ? 1.0 : 0.25;
         }
 
         /// <summary>

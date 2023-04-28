@@ -19,7 +19,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <param name="idx">Index</param>
         /// <param name="el">Element</param>
-        public static void Index<T>(this Dictionary<string, HashSet<T>> idx, T el) where T : INamedEntity
+        public static void IndexName<T>(this Dictionary<string, HashSet<T>> idx, T el) where T : INamedEntity
         {
             // Index element's ToString() (e.g. DisplayName).
             foreach (var word in el.ToString().Split())
@@ -29,7 +29,15 @@ namespace System.Collections.Generic
             foreach (var displayName in el.LocalizedDisplayNames)
                 foreach (var word in displayName.Value.Split())
                     idx.Index(word, el);
+        }
 
+        /// <summary>
+        /// Adds element to index
+        /// </summary>
+        /// <param name="idx">Index</param>
+        /// <param name="el">Element</param>
+        public static void IndexKeywords<T>(this Dictionary<string, HashSet<T>> idx, T el) where T : IEntityWithKeywords
+        {
             // Index localized keywords.
             foreach (var keywordSet in el.LocalizedKeywordSets)
                 foreach (var keyword in keywordSet.Value)

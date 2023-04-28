@@ -6,7 +6,6 @@
 */
 
 using System;
-using System.IO;
 
 namespace eduVPN.Xml
 {
@@ -50,46 +49,6 @@ namespace eduVPN.Xml
         public byte[] Data { get; }
 
         /// <summary>
-        /// Public key ID
-        /// </summary>
-        public ulong KeyId
-        {
-            get
-            {
-                using (var s = new MemoryStream(Data, false))
-                using (var r = new BinaryReader(s))
-                {
-                    if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
-                        throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
-                    return r.ReadUInt64();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Public key
-        /// </summary>
-        public byte[] Value
-        {
-            get
-            {
-                {
-                    using (var s = new MemoryStream(Data, false))
-                    using (var r = new BinaryReader(s))
-                    {
-                        if (r.ReadChar() != 'E' || r.ReadChar() != 'd')
-                            throw new ArgumentException(Resources.Strings.ErrorUnsupportedMinisignPublicKey);
-                        r.ReadUInt64();
-                        var value = new byte[32];
-                        if (r.Read(value, 0, 32) != 32)
-                            throw new ArgumentException(Resources.Strings.ErrorInvalidMinisignPublicKey);
-                        return value;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Which signature algorithms are supported
         /// </summary>
         public AlgorithmMask SupportedAlgorithms { get; }
@@ -117,6 +76,32 @@ namespace eduVPN.Xml
         public MinisignPublicKey(string base64, AlgorithmMask supportedAlgorithms = MinisignPublicKey.AlgorithmMask.All) :
             this(Convert.FromBase64String(base64), supportedAlgorithms)
         {}
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
+                return true;
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = obj as MinisignPublicKey;
+            if (Data.Length != other.Data.Length ||
+                !((ReadOnlySpan<byte>)Data).SequenceEqual((ReadOnlySpan<byte>)other.Data))
+                return false;
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return Data.GetHashCode();
+        }
 
         #endregion
     }

@@ -12,6 +12,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     mc:Ignorable="d"
     d:DesignWidth="319"
     d:DesignHeight="459"
@@ -90,6 +91,17 @@
     </Page.Template>
 
     <Page.Resources>
+        <CollectionViewSource x:Key="InstituteAccessServersView" Source="{Binding InstituteAccessServers}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <CollectionViewSource x:Key="OwnServersView" Source="{Binding OwnServers}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
         <Style x:Key="InstituteAccessServersStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstituteAccessServers_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="InstituteAccessServers_PreviewKeyDown"/>
@@ -141,7 +153,7 @@
                 x:Name="InstituteAccessServers"
                 Margin="7"
                 ItemContainerStyle="{StaticResource InstituteAccessServersStyle}"
-                ItemsSource="{Binding InstituteAccessServers}"
+                ItemsSource="{Binding Source={StaticResource InstituteAccessServersView}}"
                 SelectedItem="{Binding SelectedInstituteAccessServer}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.SearchPageInstituteAccessServersLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
                 <ListBox.ContextMenu>
@@ -247,7 +259,7 @@
                 x:Name="OwnServers"
                 Margin="7"
                 ItemContainerStyle="{StaticResource OwnServersStyle}"
-                ItemsSource="{Binding OwnServers}"
+                ItemsSource="{Binding Source={StaticResource OwnServersView}}"
                 SelectedItem="{Binding SelectedOwnServer}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.SearchPageOwnServersLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
                 <ListBox.ContextMenu>

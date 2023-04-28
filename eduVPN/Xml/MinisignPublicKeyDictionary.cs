@@ -9,7 +9,6 @@ using eduVPN.Properties;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Schema;
@@ -21,7 +20,7 @@ namespace eduVPN.Xml
     /// Serializable Minisign public key list
     /// </summary>
     [Serializable]
-    public class MinisignPublicKeyDictionary : Dictionary<ulong, MinisignPublicKey>, IXmlSerializable, IRegistrySerializable
+    public class MinisignPublicKeyDictionary : HashSet<MinisignPublicKey>, IXmlSerializable, IRegistrySerializable
     {
         #region Constructors
 
@@ -36,7 +35,7 @@ namespace eduVPN.Xml
         /// Constructs a dictionary
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new dictionary</param>
-        public MinisignPublicKeyDictionary(IDictionary<ulong, MinisignPublicKey> collection) :
+        public MinisignPublicKeyDictionary(IEnumerable<MinisignPublicKey> collection) :
             base(collection)
         {
         }
@@ -52,11 +51,7 @@ namespace eduVPN.Xml
         /// <param name="supportedAlgorithms">Bitwise mask of supported Minisign algorithms</param>
         public void Add(string public_key, MinisignPublicKey.AlgorithmMask supportedAlgorithms = MinisignPublicKey.AlgorithmMask.All)
         {
-            var key = new MinisignPublicKey(public_key, supportedAlgorithms);
-            var keyId = key.KeyId;
-            if (ContainsKey(keyId))
-                throw new ArgumentException(string.Format(Resources.Strings.ErrorDuplicateMinisignPublicKey, keyId));
-            Add(keyId, key);
+            Add(new MinisignPublicKey(public_key, supportedAlgorithms));
         }
 
         #endregion
@@ -105,18 +100,9 @@ namespace eduVPN.Xml
             foreach (var el in this)
             {
                 writer.WriteStartElement("PublicKey");
-                writer.WriteAttributeString("SupportedAlgorithms", ((int)el.Value.SupportedAlgorithms).ToString());
-                using (var s = new MemoryStream(42))
-                {
-                    using (var w = new BinaryWriter(s))
-                    {
-                        w.Write('E');
-                        w.Write('d');
-                        w.Write(el.Key);
-                        w.Write(el.Value.Value);
-                    }
-                    writer.WriteBase64(s.GetBuffer(), 0, (int)s.Length);
-                }
+                writer.WriteAttributeString("SupportedAlgorithms", ((int)el.SupportedAlgorithms).ToString());
+                var data = el.Data;
+                writer.WriteBase64(data, 0, data.Length);
                 writer.WriteEndElement();
             }
         }

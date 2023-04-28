@@ -8,12 +8,16 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Pages;
 using Prism.Commands;
+using Prism.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.Windows
@@ -21,7 +25,7 @@ namespace eduVPN.ViewModels.Windows
     /// <summary>
     /// Connect wizard
     /// </summary>
-    public class ConnectWizard : Window
+    public class ConnectWizard : Window, IDisposable
     {
         #region Fields
 
@@ -29,6 +33,20 @@ namespace eduVPN.ViewModels.Windows
         /// Stack of displayed popup pages
         /// </summary>
         private readonly List<ConnectWizardPopupPage> PopupPages = new List<ConnectWizardPopupPage>();
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private static readonly byte[] Entropy =
+        {
+            0x55, 0x03, 0xde, 0x6b, 0x8a, 0x6a, 0xf9, 0x28, 0xd5, 0xdd, 0xaf, 0xf8, 0x3a, 0x89, 0xf9, 0xf3,
+            0x5e, 0x1c, 0xe6, 0x7d, 0x8b, 0x70, 0x2c, 0xb8, 0x64, 0xf4, 0x1e, 0xf0, 0x3f, 0x33, 0x52, 0x91,
+            0x3d, 0x9e, 0x63, 0x4e, 0x7e, 0xd5, 0x07, 0x7b, 0x24, 0x91, 0x2a, 0x3d, 0x0c, 0x6a, 0x43, 0x47,
+            0xe6, 0xdb, 0xc7, 0xad, 0x1a, 0x94, 0x93, 0x04, 0x3b, 0xf0, 0xa7, 0x48, 0xe2, 0x55, 0x28, 0x3a,
+        };
+
+        /// <summary>
+        /// eduvpn-common cookie of operation in progress
+        /// </summary>
+        public Engine.Cookie OperationInProgress;
 
         #endregion
 
@@ -341,46 +359,159 @@ namespace eduVPN.ViewModels.Windows
         public ConnectWizard()
         {
             Engine.Callback += Engine_Callback;
+            Engine.SetToken += Engine_SetToken;
+            Engine.GetToken += Engine_GetToken;
+            Engine.Register();
 
-            var actions = new List<KeyValuePair<Action, int>>();
+            bool migrate = (Properties.Settings.Default.SettingsVersion & 0x2) == 0;
 
-            actions.Add(new KeyValuePair<Action, int>(
+            ICollection<Uri> iaSrvList = new Xml.UriList();
+            string siOrgId = null;
+
+            if (Properties.Settings.Default.Discovery)
+            {
+                iaSrvList = Properties.SettingsEx.Default.InstituteAccessServers;
+                if (iaSrvList != null)
+                    Trace.TraceInformation("Adding preconfigured Institute Access servers {0}", string.Join(", ", iaSrvList));
+                else
+                    iaSrvList = new Xml.UriList();
+                if (migrate && Properties.Settings.Default.GetPreviousVersion("InstituteAccessServers") is Xml.UriList instituteAccessServers)
+                {
+                    Trace.TraceInformation("Migrating Institute Access servers {0}", string.Join(", ", instituteAccessServers));
+                    foreach (var srv in instituteAccessServers)
+                        iaSrvList.Add(srv);
+                }
+
+                siOrgId = Properties.SettingsEx.Default.SecureInternetOrganization;
+                if (siOrgId != null)
+                    Trace.TraceInformation("Using preconfigured Secure Internet organization {0}", siOrgId);
+                else if (migrate && Properties.Settings.Default.GetPreviousVersion("SecureInternetOrganization") is string secureInternetOrganization)
+                {
+                    Trace.TraceInformation("Migrating Secure Internet organization {0}", secureInternetOrganization);
+                    siOrgId = secureInternetOrganization;
+                }
+            }
+
+            var ownSrvList = new Xml.UriList();
+            if (migrate && Properties.Settings.Default.GetPreviousVersion("OwnServers") is Xml.UriList ownServers)
+            {
+                Trace.TraceInformation("Migrating own servers {0}", string.Join(", ", ownServers));
+                foreach (var srv in ownServers)
+                    ownSrvList.Add(srv);
+            }
+
+            if (iaSrvList.Count > 0 ||
+                siOrgId != null ||
+                ownSrvList.Count > 0)
+            {
+                var w = new BackgroundWorker();
+                w.DoWork += async (object sender, DoWorkEventArgs e) =>
+                {
+                    TryInvoke((Action)(() => TaskCount++));
+                    try
+                    {
+                        using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
+                        {
+                            List<object> serverList = null;
+                            if (iaSrvList.Count > 0 || siOrgId != "" && siOrgId != null)
+                                serverList = await Task.Run(() =>
+                                    eduJSON.Parser.GetValue<List<object>>(
+                                        eduJSON.Parser.Parse(
+                                            Engine.DiscoServers(cookie),
+                                            Abort.Token) as Dictionary<string, object>,
+                                        "server_list"));
+
+                            if (iaSrvList.Count > 0)
+                                foreach (var srv in iaSrvList)
+                                    try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, true); } catch { }
+
+                            if (siOrgId == "")
+                            {
+                                if (eduJSON.Parser.Parse(Engine.ServerList(), Abort.Token) is Dictionary<string, object> obj &&
+                                    obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
+                                {
+                                    var srv = new SecureInternetServer(srvObj);
+                                    try { Engine.RemoveServer(ServerType.SecureInternet, srv.Base.AbsoluteUri); } catch { }
+                                }
+                            }
+                            else if (siOrgId != null)
+                            {
+                                var orgList = await Task.Run(() =>
+                                    eduJSON.Parser.GetValue<List<object>>(
+                                        eduJSON.Parser.Parse(
+                                            Engine.DiscoOrganizations(cookie),
+                                            Abort.Token) as Dictionary<string, object>,
+                                        "organization_list"));
+                                try
+                                {
+                                    Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, true);
+                                    if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
+                                    {
+                                        if (serverList.FirstOrDefault(obj =>
+                                                obj is Dictionary<string, object> obj2 && obj2.TryGetValue("base_url", out string base_url) && new Uri(base_url).Equals(uri)) is Dictionary<string, object> obj3 &&
+                                            obj3.TryGetValue("country_code", out string country_code))
+                                            Engine.SetSecureInternetLocation(cookie, country_code);
+                                    }
+
+                                    // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
+                                    lock (Properties.Settings.Default.AccessTokenCache2)
+                                    {
+                                        foreach (var obj in orgList.Select(item => item as Dictionary<string, object>))
+                                        {
+                                            Abort.Token.ThrowIfCancellationRequested();
+                                            if (eduJSON.Parser.GetValue(obj, "org_id", out string org_id) && Uri.TryCreate(org_id, UriKind.Absolute, out var orgId) && orgId.AbsoluteUri == siOrgId &&
+                                                eduJSON.Parser.GetValue(obj, "secure_internet_home", out string secure_internet_home) && Uri.TryCreate(secure_internet_home, UriKind.Absolute, out var serverId) &&
+                                                Properties.Settings.Default.AccessTokenCache2.TryGetValue(serverId.AbsoluteUri, out var value))
+                                            {
+                                                Properties.Settings.Default.AccessTokenCache2[orgId.AbsoluteUri] = value;
+                                                Properties.Settings.Default.AccessTokenCache2.Remove(serverId.AbsoluteUri);
+                                            }
+                                        }
+                                    }
+                                }
+                                catch { }
+                            }
+
+                            foreach (var srv in ownSrvList)
+                                try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, true); } catch { }
+                        }
+
+                        Properties.Settings.Default.SettingsVersion |= 0x2;
+
+                        // eduvpn-common does not do callback after servers are added. Do the bookkeeping manually.
+                        Engine_Callback(this, new Engine.CallbackEventArgs(Engine.State.Deregistered, Engine.State.NoServer, null));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
+                    finally { TryInvoke((Action)(() => TaskCount--)); }
+                };
+                w.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) => (sender as BackgroundWorker)?.Dispose();
+                w.RunWorkerAsync();
+            }
+
+            var actions = new List<KeyValuePair<Action, int>>
+            {
+                new KeyValuePair<Action, int>(
                 () =>
                 {
-                    try { Properties.Settings.Default.ResponseCache.PurgeOldCacheEntries(); } catch { }
                     try { VPN.OpenVPNSession.PurgeOldLogs(); } catch { }
                     try { VPN.WireGuardSession.PurgeOldLogs(); } catch { }
                 },
-                24 * 60 * 60 * 1000)); // Repeat every 24 hours
+                24 * 60 * 60 * 1000), // Repeat every 24 hours
 
-            actions.Add(new KeyValuePair<Action, int>(
+                new KeyValuePair<Action, int>(
                 () =>
                 {
                     var ts = CGo.GetLastUpdateTimestamp(Abort.Token);
                     if (DateTimeOffset.UtcNow - ts > TimeSpan.FromDays(60))
                         throw new Exception(Resources.Strings.WarningWindowsUpdatesStalled);
                 },
-                24 * 60 * 60 * 1000)); // Repeat every 24 hours
-
-            // TODO: Migrate eduVPN settings to eduvpn-common.
-            // TODO: Support preconfigured Institute Access and Secure Internet to eduvpn-common.
-            //var str = Engine.ServerList();
-            //foreach (var srv in Properties.Settings.Default.InstituteAccessServers)
-            //    Engine.AddInstituteAccessServer(srv);
-            //if (!string.IsNullOrEmpty(Properties.Settings.Default.SecureInternetOrganization))
-            //    Engine.AddSecureInternetHomeServer(Properties.Settings.Default.SecureInternetOrganization);
-            //foreach (var srv in Properties.Settings.Default.OwnServers)
-            //    Engine.AddOwnServer(srv);
-            //str = Engine.ServerList();
-
+                24 * 60 * 60 * 1000) // Repeat every 24 hours
+            };
             if (Properties.SettingsEx.Default.SelfUpdateDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     SelfUpdatePromptPage.DiscoverVersions,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
-
-            // Show Starting wizard page.
-            CurrentPage = StartingPage;
-
             foreach (var action in actions)
             {
                 var w = new BackgroundWorker();
@@ -411,6 +542,7 @@ namespace eduVPN.ViewModels.Windows
 
         private void Engine_Callback(object sender, Engine.CallbackEventArgs e)
         {
+            Trace.TraceInformation("eduvpn-common state {0}", e.NewState);
             switch (e.NewState)
             {
                 case Engine.State.NoServer:
@@ -418,37 +550,230 @@ namespace eduVPN.ViewModels.Windows
                     {
                         HomePage.LoadServers();
                         CurrentPage = StartingPage;
+                        if (ConnectionPage.Server == null)
+                        {
+                            var uri = Properties.Settings.Default.LastSelectedServer;
+                            Server srv =
+                                HomePage.InstituteAccessServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
+                                HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
+                                HomePage.OwnServers.FirstOrDefault(s => s.Base == uri);
+                            if (srv != null)
+                                Connect(srv);
+                        }
                     }));
                     e.Handled = true;
                     break;
 
                 case Engine.State.AskLocation:
-                    var countries = eduJSON.Parser.Parse(e.Data, Abort.Token) as List<object>;
-                    TryInvoke((Action)(() =>
                     {
-                        SelectSecureInternetCountryPage.SetSecureInternetCountries(countries);
-                        CurrentPage = SelectSecureInternetCountryPage;
-                    }));
-                    e.Handled = true;
+                        if (eduJSON.Parser.Parse(e.Data, Abort.Token) is Dictionary<string, object> obj)
+                        {
+                            var data = new AskLocationTransition(obj);
+                            TryInvoke((Action)(() =>
+                            {
+                                SelectSecureInternetCountryPage.SetSecureInternetCountries(data.Countries);
+                                CurrentPage = SelectSecureInternetCountryPage;
+                            }));
+                            e.Handled = true;
+                        }
+                    }
                     break;
 
                 case Engine.State.OAuthStarted:
+                    if (Properties.Settings.Default.LastSelectedServer == ConnectionPage.Server.Base)
+                    {
+                        // Auto-reconnect should not rise OAuth authorization.
+                        break;
+                    }
                     Process.Start(e.Data);
                     TryInvoke((Action)(() => CurrentPage = AuthorizationPage));
+                    e.Handled = true;
+                    break;
+
+                case Engine.State.AskProfile:
+                    {
+                        if (eduJSON.Parser.Parse(e.Data, Abort.Token) is Dictionary<string, object> obj)
+                        {
+                            var data = new AskProfileTransition(obj);
+                            TryInvoke((Action)(() =>
+                            {
+                                ConnectionPage.SetProfiles(data.Profiles);
+                                CurrentPage = ConnectionPage;
+                            }));
+                            e.Handled = true;
+                        }
+                    }
+                    break;
+
+                case Engine.State.GotConfig:
+                    TryInvoke((Action)(() => CurrentPage = ConnectionPage));
+                    e.Handled = true;
+                    break;
+
+                default:
+                    // Silence "WARNING - transition not completed..." in the log.
                     e.Handled = true;
                     break;
             }
         }
 
-        /// <summary>
-        /// Returns authenticating server for the given connecting server
-        /// </summary>
-        /// <param name="connectingServer">Connecting server</param>
-        /// <returns>Authenticating server</returns>
-        [Obsolete]
-        public Server GetAuthenticatingServer(Server connectingServer)
+        static private void Engine_GetToken(object sender, Engine.GetTokenEventArgs e)
         {
-            throw new NotImplementedException();
+            lock (Properties.Settings.Default.AccessTokenCache2)
+                if (Properties.Settings.Default.AccessTokenCache2.TryGetValue(e.Base.AbsoluteUri, out var value))
+                    e.Token = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(value), Entropy, DataProtectionScope.CurrentUser));
+        }
+
+        static public void Engine_SetToken(object sender, Engine.SetTokenEventArgs e)
+        {
+            lock (Properties.Settings.Default.AccessTokenCache2)
+                if (e.Token != null)
+                    Properties.Settings.Default.AccessTokenCache2[e.Base.AbsoluteUri] =
+                        Convert.ToBase64String(ProtectedData.Protect(Encoding.UTF8.GetBytes(e.Token), Entropy, DataProtectionScope.CurrentUser));
+                else
+                    Properties.Settings.Default.AccessTokenCache2.Remove(e.Base.AbsoluteUri);
+        }
+
+        /// <summary>
+        /// Connect to given server
+        /// </summary>
+        /// <param name="server">Server</param>
+        public async void Connect(Server server)
+        {
+            // We have to set this to display server name on the connection page when/if user is presented with
+            // a list of profiles to select one. It will be replaced by true server info provided by
+            // Engine.CurrentServer() later.
+            ConnectionPage.Server = server;
+
+            Configuration config;
+            Expiration expiration;
+            try
+            {
+                using (OperationInProgress = new Engine.CancellationTokenCookie(Abort.Token))
+                    (server, config, expiration) = await Task.Run(() =>
+                    {
+                        var cfg = new Configuration(eduJSON.Parser.Parse(
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, Properties.Settings.Default.OpenVPNPreferTCP),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var srv = Server.Load(eduJSON.Parser.Parse(
+                            Engine.CurrentServer(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var exp = new Expiration(eduJSON.Parser.Parse(
+                            Engine.ExpiryTimes(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        return (srv, cfg, exp);
+                    });
+            }
+            catch
+            {
+                if (Properties.Settings.Default.LastSelectedServer == server.Base)
+                {
+                    AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(server, server));
+                    Properties.Settings.Default.LastSelectedServer = null;
+                    ConnectionPage.Server = null;
+                    return;
+                }
+                else
+                    throw;
+            }
+            finally { OperationInProgress = null; }
+            ConnectionPage.Server = server;
+            ConnectionPage.ActivateSession(config, expiration);
+            CurrentPage = ConnectionPage;
+        }
+
+        /// <summary>
+        /// Add and connect to given server
+        /// </summary>
+        /// <param name="server">Server</param>
+        public async void AddAndConnect(Server server)
+        {
+            // We have to set this to display server name on the connection page when/if user is presented with
+            // a list of profiles to select one. It will be replaced by true server info provided by
+            // Engine.CurrentServer() later.
+            ConnectionPage.Server = server;
+
+            Configuration config;
+            Expiration expiration;
+            try
+            {
+                using (OperationInProgress = new Engine.CancellationTokenCookie(Abort.Token))
+                    (server, config, expiration) = await Task.Run(() =>
+                    {
+                        Engine.AddServer(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, false);
+
+                        var cfg = new Configuration(eduJSON.Parser.Parse(
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, Properties.Settings.Default.OpenVPNPreferTCP),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var srv = Server.Load(eduJSON.Parser.Parse(
+                            Engine.CurrentServer(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var exp = new Expiration(eduJSON.Parser.Parse(
+                            Engine.ExpiryTimes(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        return (srv, cfg, exp);
+                    });
+            }
+            finally { OperationInProgress = null; }
+            ConnectionPage.Server = server;
+            ConnectionPage.ActivateSession(config, expiration);
+            CurrentPage = ConnectionPage;
+        }
+
+        /// <summary>
+        /// Add and connect to Secure Internet home server of organization
+        /// </summary>
+        /// <param name="org">Organization</param>
+        public void AddAndConnect(Organization org)
+        {
+            AddAndConnect(new SecureInternetServer(org));
+        }
+
+        /// <summary>
+        /// Renew and connect to given server
+        /// </summary>
+        /// <param name="server">Server</param>
+        public async void RenewAndConnect(Server server)
+        {
+            // We have to set this to display server name on the connection page when/if user is presented with
+            // a list of profiles to select one. It will be replaced by true server info provided by
+            // Engine.CurrentServer() later.
+            ConnectionPage.Server = server;
+
+            Configuration config;
+            Expiration expiration;
+            try
+            {
+                using (OperationInProgress = new Engine.CancellationTokenCookie(Abort.Token))
+                    (server, config, expiration) = await Task.Run(() =>
+                    {
+                        Engine.RenewSession(OperationInProgress);
+
+                        var cfg = new Configuration(eduJSON.Parser.Parse(
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, Properties.Settings.Default.OpenVPNPreferTCP),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var srv = Server.Load(eduJSON.Parser.Parse(
+                            Engine.CurrentServer(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var exp = new Expiration(eduJSON.Parser.Parse(
+                            Engine.ExpiryTimes(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        return (srv, cfg, exp);
+                    });
+            }
+            finally { OperationInProgress = null; }
+            ConnectionPage.Server = server;
+            ConnectionPage.ActivateSession(config, expiration);
+            CurrentPage = ConnectionPage;
         }
 
         /// <summary>
@@ -473,6 +798,51 @@ namespace eduVPN.ViewModels.Windows
             return Dispatcher.Invoke(DispatcherPriority.Normal, method);
         }
 
+        #endregion
+
+        #region IDisposable Support
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    Engine.Deregister();
+                    Engine.Callback -= Engine_Callback;
+                    Engine.SetToken -= Engine_SetToken;
+                    Engine.GetToken -= Engine_GetToken;
+                }
+                disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
         #endregion
     }
 }

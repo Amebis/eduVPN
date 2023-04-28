@@ -5,31 +5,66 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace eduVPN.Models
 {
     /// <summary>
     /// Secure internet server
     /// </summary>
-    public class SecureInternetServer : Server
+    public class SecureInternetServer : DiscoverableServer
     {
         #region Properties
 
-        /// <summary>
-        /// Server country
-        /// </summary>
-        public Country Country { get; private set; }
+        /// <inheritdoc/>
+        public override ServerType ServerType { get => ServerType.SecureInternet; }
 
         /// <summary>
-        /// Server authentication URI template
+        /// Currently configured location
         /// </summary>
-        public string AuthenticationUriTemplate { get; private set; }
+        public Country Country
+        {
+            get => _Country;
+            set => SetProperty(ref _Country, value);
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Country _Country;
 
         /// <summary>
-        /// Organization identifier
+        /// List of available secure internet locations
         /// </summary>
-        public string OrganizationId { get; set; }
+        public HashSet<Country> Locations { get; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates secure internet server
+        /// </summary>
+        /// <param name="org">Organization</param>
+        public SecureInternetServer(Organization org) : base(new Uri(org.Id))
+        {
+        }
+
+        /// <summary>
+        /// Creates secure internet server
+        /// </summary>
+        /// <param name="obj">Key/value dictionary with <c>identifier</c>, <c>display_name</c>, <c>profiles</c>, <c>country_code</c>, <c>locations</c>, <c>delisted</c> elements.</param>
+        public SecureInternetServer(Dictionary<string, object> obj) : base(obj)
+        {
+            Country = eduJSON.Parser.GetValue(obj, "country_code", out string countryCode) && countryCode != null ? new Country(countryCode) : null;
+            if (eduJSON.Parser.GetValue(obj, "locations", out List<object> locations) && locations != null)
+            {
+                Locations = new HashSet<Country>();
+                foreach (var e in locations)
+                    if (e is string s)
+                        Locations.Add(new Country(s));
+            }
+        }
 
         #endregion
 
@@ -38,30 +73,7 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override string ToString()
         {
-            return Country != null ? Country.ToString() : Base.Host;
-        }
-
-        #endregion
-
-        #region ILoadableItem Support
-
-        /// <summary>
-        /// Loads institute access server from a dictionary object (provided by JSON)
-        /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>display_name</c>, <c>keyword_list</c> and other elements.</param>
-        /// <exception cref="eduJSON.InvalidParameterTypeException"><paramref name="obj"/> type is not <c>Dictionary&lt;string, object&gt;</c></exception>
-        public override void Load(object obj)
-        {
-            if (!(obj is Dictionary<string, object> obj2))
-                throw new eduJSON.InvalidParameterTypeException(nameof(obj), typeof(Dictionary<string, object>), obj.GetType());
-
-            base.Load(obj);
-
-            // Set authentication URI template.
-            AuthenticationUriTemplate = eduJSON.Parser.GetValue(obj2, "authentication_url_template", out string authenticationUriTemplate) ? authenticationUriTemplate : null;
-
-            // Set country.
-            Country = eduJSON.Parser.GetValue(obj2, "country_code", out string countryCode) ? new Country(countryCode) : null;
+            return Country != null ? Country.ToString() : base.ToString();
         }
 
         #endregion

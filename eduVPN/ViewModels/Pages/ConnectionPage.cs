@@ -5,17 +5,14 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduEx.System.Net;
 using eduVPN.Models;
 using eduVPN.ViewModels.VPN;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Threading;
 
 namespace eduVPN.ViewModels.Pages
@@ -55,15 +52,6 @@ namespace eduVPN.ViewModels.Pages
 
         #endregion
 
-        #region Fields
-
-        /// <summary>
-        /// Profiles refresh cancellation token
-        /// </summary>
-        private CancellationTokenSource ProfilesRefreshInProgress;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -78,7 +66,6 @@ namespace eduVPN.ViewModels.Pages
                 {
                     RaisePropertyChanged(nameof(CanSessionToggle));
                     _StartSession?.RaiseCanExecuteChanged();
-                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
                     _SessionInfo?.RaiseCanExecuteChanged();
                 }
             }
@@ -91,69 +78,28 @@ namespace eduVPN.ViewModels.Pages
         /// Connecting server
         /// </summary>
         /// <remarks><c>null</c> if none selected.</remarks>
-        public Server ConnectingServer
+        public Server Server
         {
-            get => _ConnectingServer;
+            get => _Server;
             set
             {
-                ProfilesRefreshInProgress?.Cancel();
-
-                SetProperty(ref _ConnectingServer, value);
-                SelectedProfile = null;
-                Profiles = null;
-                if (ConnectingServer == null)
-                    return;
-
-                ProfilesRefreshInProgress = new CancellationTokenSource();
-                var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
-                new Thread(new ThreadStart(
-                    () =>
-                    {
-                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                        try
-                        {
-                            var list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
-                            //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-                            //list = new ObservableCollection<Profile>(); // Mock an empty list of profiles for testing.
-                            ct.ThrowIfCancellationRequested();
-                            Wizard.TryInvoke((Action)(() =>
-                            {
-                                if (ct.IsCancellationRequested) return;
-                                Profiles = list;
-
-                                Profile profile = null;
-                                if (Properties.Settings.Default.LastSelectedProfile.TryGetValue(ConnectingServer.Base.AbsoluteUri, out var profileId))
-                                    profile = list.FirstOrDefault(p => p.Id == profileId);
-                                if (profile == null && list.Count > 0)
-                                    profile = list[0];
-                                SelectedProfile = profile;
-
-                                // Auto-connect when connected previously or there is exactly one profile.
-                                if ((Properties.Settings.Default.LastSelectedServer == ConnectingServer.Base || list.Count == 1) && StartSession.CanExecute())
-                                    StartSession.Execute();
-                            }));
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
-                        finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
-                    })).Start();
+                // Always overwrite server value: in the process of profile selection and connecting, we
+                // set server using discovery/cached info first, and again, once we get the server profile
+                // selection. Since the both Server objects represent the "same" server (base URI are the
+                // same, i.e. _Server.Equals(value)), using SetProperty() would not make a required change.
+                _Server = value;
+                RaisePropertyChanged(nameof(Server));
+                SetProfiles(_Server?.Profiles);
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Server _ConnectingServer;
+        private Server _Server;
 
         /// <summary>
         /// List of available profiles
         /// </summary>
-        public ObservableCollection<Profile> Profiles
-        {
-            get => _Profiles;
-            private set => SetProperty(ref _Profiles, value);
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ObservableCollection<Profile> _Profiles;
+        public ObservableCollectionEx<Profile> Profiles { get; } = new ObservableCollectionEx<Profile>();
 
         /// <summary>
         /// Selected profile
@@ -167,10 +113,7 @@ namespace eduVPN.ViewModels.Pages
                 if (SetProperty(ref _SelectedProfile, value))
                 {
                     RaisePropertyChanged(nameof(CanSessionToggle));
-                    if (ConnectingServer != null && SelectedProfile != null)
-                        Properties.Settings.Default.LastSelectedProfile[ConnectingServer.Base.AbsoluteUri] = SelectedProfile.Id;
                     _StartSession?.RaiseCanExecuteChanged();
-                    _AuthenticateAndStartSession?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -191,54 +134,6 @@ namespace eduVPN.ViewModels.Pages
                     RaisePropertyChanged(nameof(IsSessionActive));
                     RaisePropertyChanged(nameof(CanSessionToggle));
                     _NavigateBack?.RaiseCanExecuteChanged();
-
-                    if (ActiveSession == null)
-                    {
-                        ProfilesRefreshInProgress?.Cancel();
-                        ProfilesRefreshInProgress = new CancellationTokenSource();
-                        var ct = CancellationTokenSource.CreateLinkedTokenSource(ProfilesRefreshInProgress.Token, Window.Abort.Token).Token;
-                        new Thread(new ThreadStart(
-                            () =>
-                            {
-                                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                                try
-                                {
-                                    ObservableCollection<Profile> list = null;
-                                    try
-                                    {
-                                        list = ConnectingServer.GetProfileList(Wizard.GetAuthenticatingServer(ConnectingServer), ct);
-                                    }
-                                    catch (AggregateException ex)
-                                    {
-                                        // Session may be ended by expiration. Expired OAuth token will cause 401 error we can ignore and keep cached profile list in Profiles.
-                                        if (ex.InnerExceptions.FirstOrDefault(innerException =>
-                                            innerException is WebExceptionEx ex2 &&
-                                            ex2.Status == WebExceptionStatus.ProtocolError &&
-                                            ex2.Response is HttpWebResponse response &&
-                                            response.StatusCode == HttpStatusCode.Unauthorized) != null)
-                                            return;
-                                        throw;
-                                    }
-                                    //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
-                                    //list = new ObservableCollection<Profile>(); // Mock an empty list of profiles for testing.
-                                    ct.ThrowIfCancellationRequested();
-                                    Wizard.TryInvoke((Action)(() =>
-                                    {
-                                        if (ct.IsCancellationRequested) return;
-                                        Profiles = list;
-
-                                        if (SelectedProfile != null)
-                                        {
-                                            var profileId = SelectedProfile.Id;
-                                            SelectedProfile = list.FirstOrDefault(p => p.Id == profileId);
-                                        }
-                                    }));
-                                }
-                                catch (OperationCanceledException) { }
-                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
-                                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
-                            })).Start();
-                    }
                 }
             }
         }
@@ -254,8 +149,8 @@ namespace eduVPN.ViewModels.Pages
             get => ActiveSession != null;
             set
             {
-                if (value && AuthenticateAndStartSession.CanExecute())
-                    AuthenticateAndStartSession.Execute();
+                if (value && StartSession.CanExecute())
+                    StartSession.Execute();
                 else if (!value && ActiveSession != null && ActiveSession.Disconnect.CanExecute())
                 {
                     ActiveSession.Disconnect.Execute();
@@ -272,7 +167,7 @@ namespace eduVPN.ViewModels.Pages
         public bool CanSessionToggle
         {
             get =>
-                AuthenticateAndStartSession.CanExecute() ||
+                StartSession.CanExecute() ||
                 ActiveSession != null && ActiveSession.Disconnect.CanExecute();
         }
 
@@ -289,96 +184,22 @@ namespace eduVPN.ViewModels.Pages
                         {
                             if (SelectedProfile == null || State != StateType.Inactive && State != StateType.Expired)
                                 return;
-                            State = StateType.Initializing;
-                            try
+                            if (Wizard.OperationInProgress != null)
                             {
-                                var connectingProfile = SelectedProfile;
-                                new Thread(new ThreadStart(
-                                    () =>
-                                    {
-                                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                                        try
-                                        {
-                                            // Get session profile.
-                                            var authenticatingServer = Wizard.GetAuthenticatingServer(connectingProfile.Server);
-                                            var profileConfig = connectingProfile.Connect(
-                                                authenticatingServer: authenticatingServer,
-                                                responseType: string.Join(", ", Properties.SettingsEx.Default.AcceptProfileTypes.Cast<string>()),
-                                                ct: Window.Abort.Token);
-                                            Session session;
-                                            try
-                                            {
-                                                // Initialize session.
-                                                switch (profileConfig.ContentType.ToLowerInvariant())
-                                                {
-                                                    case "application/x-openvpn-profile":
-                                                        session = new OpenVPNSession(Wizard, connectingProfile, profileConfig);
-                                                        break;
-                                                    case "application/x-wireguard-profile":
-                                                        session = new WireGuardSession(Wizard, connectingProfile, profileConfig);
-                                                        break;
-                                                    default:
-                                                        throw new ArgumentOutOfRangeException(nameof(profileConfig.ContentType), profileConfig.ContentType, null);
-                                                }
-                                                session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
-                                                {
-                                                    // Update connection page when session disconnects.
-                                                    if (e.PropertyName == nameof(session.State))
-                                                        switch (session.State)
-                                                        {
-                                                            case SessionStatusType.Disconnected:
-                                                                ActiveSession = null;
-                                                                State = session.Expired ? StateType.Expired : StateType.Inactive;
-                                                                break;
-                                                        }
-                                                };
-                                                session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
-
-                                                // Activate session.
-                                                Wizard.TryInvoke((Action)(() =>
-                                                {
-                                                    ActiveSession = session;
-                                                    State = StateType.Active;
-
-                                                    // Set server/profile to auto-start on next launch.
-                                                    Properties.Settings.Default.LastSelectedServer = connectingProfile.Server.Base;
-
-                                                    Wizard.TaskCount--;
-                                                }));
-                                                try { session.Execute(); }
-                                                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
-                                            }
-                                            finally
-                                            {
-                                                try { connectingProfile.Server.Disconnect(authenticatingServer); } catch { }
-                                            }
-                                        }
-                                        catch (OperationCanceledException) { }
-                                        catch (Exception ex)
-                                        {
-                                            Wizard.TryInvoke((Action)(() =>
-                                            {
-                                                // Clear failing server/profile to auto-start on next launch.
-                                                Properties.Settings.Default.LastSelectedServer = null;
-                                                throw ex;
-                                            }));
-                                        }
-                                        finally
-                                        {
-                                            Wizard.TryInvoke((Action)(() =>
-                                            {
-                                                ActiveSession = null;
-                                                if (State != StateType.Expired)
-                                                    State = StateType.Inactive;
-                                                Wizard.TaskCount--;
-                                            }));
-                                        }
-                                    })).Start();
+                                // Profile selection is in process.
+                                State = StateType.Initializing;
+                                try { Wizard.OperationInProgress.Reply(SelectedProfile.Id); }
+                                catch (Exception ex)
+                                {
+                                    State = StateType.Inactive;
+                                    throw ex;
+                                }
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                State = StateType.Inactive;
-                                throw ex;
+                                // User attempted to reconnect.
+                                Engine.SetProfileId(SelectedProfile.Id);
+                                Wizard.Connect(Server);
                             }
                         },
                         () => SelectedProfile != null && (State == StateType.Inactive || State == StateType.Expired));
@@ -388,29 +209,6 @@ namespace eduVPN.ViewModels.Pages
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _StartSession;
-
-        /// <summary>
-        /// Starts VPN session
-        /// </summary>
-        public DelegateCommand AuthenticateAndStartSession
-        {
-            get
-            {
-                if (_AuthenticateAndStartSession == null)
-                    _AuthenticateAndStartSession = new DelegateCommand(
-                        () =>
-                        {
-                            // TODO: Implement.
-                            // await Wizard.AuthorizationPage.TriggerAuthorizationAsync(Wizard.GetAuthenticatingServer(ConnectingServer));
-                            StartSession.Execute();
-                        },
-                        () => StartSession.CanExecute());
-                return _AuthenticateAndStartSession;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _AuthenticateAndStartSession;
 
         /// <summary>
         /// Connection info command
@@ -437,7 +235,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_NavigateBack == null)
                     _NavigateBack = new DelegateCommand(
-                        () => Wizard.CurrentPage = Wizard.HomePage,
+                        () =>
+                        {
+                            Wizard.OperationInProgress?.Cancel();
+                            Wizard.CurrentPage = Wizard.HomePage;
+                        },
                         () => ActiveSession == null);
                 return _NavigateBack;
             }
@@ -457,6 +259,92 @@ namespace eduVPN.ViewModels.Pages
         public ConnectionPage(ConnectWizard wizard) :
             base(wizard)
         {
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Populates profile list
+        /// </summary>
+        /// <param name="profiles">eduvpn-common provided profile list</param>
+        public void SetProfiles(ProfileDictionary profiles)
+        {
+            var list = Profiles.BeginUpdate();
+            try
+            {
+                list.Clear();
+                if (profiles != null)
+                    foreach (var item in profiles)
+                        list.Add(item.Value);
+            }
+            finally { Profiles.EndUpdate(); }
+            SelectedProfile = profiles != null ? profiles.Current ?? profiles.FirstOrDefault().Value : null;
+        }
+
+        /// <summary>
+        /// Activates VPN session
+        /// </summary>
+        /// <param name="config">VPN configuration</param>
+        /// <param name="expiration">VPN expiry times</param>
+        /// <exception cref="ArgumentOutOfRangeException">Unsupported VPN configuration</exception>
+        public void ActivateSession(Configuration config, Expiration expiration)
+        {
+            var server = Server;
+            new Thread(new ThreadStart(() =>
+            {
+                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                try
+                {
+                    var session =
+                        config.Protocol == VPNProtocol.WireGuard ? (Session)new WireGuardSession(Wizard, server, config.VPNConfig, expiration) :
+                        config.Protocol == VPNProtocol.OpenVPN ? new OpenVPNSession(Wizard, server, config.VPNConfig, expiration) :
+                            throw new ArgumentOutOfRangeException(nameof(config.Protocol), config.Protocol, null);
+                    session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                    {
+                        // Update connection page when session disconnects.
+                        if (e.PropertyName == nameof(session.State))
+                            switch (session.State)
+                            {
+                                case SessionStatusType.Disconnected:
+                                    ActiveSession = null;
+                                    State = session.Expired ? StateType.Expired : StateType.Inactive;
+                                    break;
+                            }
+                    };
+                    session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
+
+                    // Activate session.
+                    Wizard.TryInvoke((Action)(() =>
+                    {
+                        ActiveSession = session;
+                        State = StateType.Active;
+
+                        // Set server/profile to auto-start on next launch.
+                        Properties.Settings.Default.LastSelectedServer = server.Base;
+
+                        Wizard.TaskCount--;
+                    }));
+                    try { session.Execute(); }
+                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                }
+                finally
+                {
+                    Wizard.TryInvoke((Action)(() =>
+                    {
+                        // Do not use Wizard.OperationInProgress, not to interfere with session renewal.
+                        // The cleanup should not raise any callbacks, therefore its cookie is not important
+                        // to other pages.
+                        using (var operationInProgress = new Engine.CancellationTokenCookie(Window.Abort.Token))
+                            try { Engine.Cleanup(operationInProgress); } catch { }
+                        ActiveSession = null;
+                        if (State != StateType.Expired)
+                            State = StateType.Inactive;
+                        Wizard.TaskCount--;
+                    }));
+                }
+            })).Start();
         }
 
         #endregion

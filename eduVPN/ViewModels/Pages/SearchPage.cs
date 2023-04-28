@@ -111,11 +111,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmInstituteAccessServerSelection == null)
                     _ConfirmInstituteAccessServerSelection = new DelegateCommand(
-                        async () =>
+                        () =>
                         {
                             try
                             {
-                                await Task.Run(() => Engine.AddInstituteAccessServer(SelectedInstituteAccessServer.Base));
+                                Wizard.AddAndConnect(SelectedInstituteAccessServer);
                                 Query = "";
                             }
                             catch (OperationCanceledException) { Wizard.CurrentPage = this; }
@@ -166,11 +166,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmOrganizationSelection == null)
                     _ConfirmOrganizationSelection = new DelegateCommand(
-                        async () =>
+                        () =>
                         {
                             try
                             {
-                                await Task.Run(() => Engine.AddSecureInternetHomeServer(SelectedOrganization.Id));
+                                Wizard.AddAndConnect(SelectedOrganization);
                                 Query = "";
                             }
                             catch (OperationCanceledException) { Wizard.CurrentPage = this; }
@@ -221,11 +221,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmOwnServerSelection == null)
                     _ConfirmOwnServerSelection = new DelegateCommand(
-                        async () =>
+                        () =>
                         {
                             try
                             {
-                                await Task.Run(() => Engine.AddOwnServer(SelectedOwnServer.Base));
+                                Wizard.AddAndConnect(SelectedOwnServer);
                                 Query = "";
                             }
                             catch (OperationCanceledException) { Wizard.CurrentPage = this; }
@@ -308,7 +308,7 @@ namespace eduVPN.ViewModels.Pages
                     catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                 })).Start();
-            //if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
+            if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
             {
                 new Thread(new ThreadStart(
                     () =>
@@ -338,8 +338,6 @@ namespace eduVPN.ViewModels.Pages
                 try
                 {
                     var srv = new Server(new UriBuilder("https", keywords[0]).Uri);
-                    srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                    srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
                     ownServers.Add(srv);
                 }
                 catch { }
@@ -356,22 +354,27 @@ namespace eduVPN.ViewModels.Pages
 
         async void DiscoverServers()
         {
+            Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
             try
             {
-                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                 Trace.TraceInformation("Discovering servers");
-                var dict = new ServerDictionary();
-                dict.Load(eduJSON.Parser.Parse(await Task.Run(() => Engine.DiscoServers()), Window.Abort.Token));
+                ServerDictionary dict;
+                using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
+                    dict = new ServerDictionary(
+                        eduJSON.Parser.Parse(
+                            await Task.Run(() => Engine.DiscoServers(cookie)),
+                            Window.Abort.Token) as Dictionary<string, object>);
                 //await Task.Run(() => Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
                 //await Task.Run(() => throw new Exception("Server list download failed")); // Mock download failure.
                 var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
                 foreach (var el in dict)
                 {
                     Window.Abort.Token.ThrowIfCancellationRequested();
-                    el.Value.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                    el.Value.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
                     if (el.Value is InstituteAccessServer srv)
-                        idx.Index(srv);
+                    {
+                        idx.IndexName(srv);
+                        idx.IndexKeywords(srv);
+                    }
                 }
                 lock (DiscoveredListLock)
                 {
@@ -445,19 +448,24 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         async void DiscoverOrganizations()
         {
+            Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
             try
             {
-                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                 Trace.TraceInformation("Discovering organizations");
-                var dict = new OrganizationDictionary();
-                dict.Load(eduJSON.Parser.Parse(await Task.Run(() => Engine.DiscoOrganizations()), Window.Abort.Token));
+                OrganizationDictionary dict;
+                using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
+                    dict = new OrganizationDictionary(
+                        eduJSON.Parser.Parse(
+                            await Task.Run(() => Engine.DiscoOrganizations(cookie)),
+                            Window.Abort.Token) as Dictionary<string, object>);
                 //await Task.Run(() => Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
                 //await Task.Run(() => throw new Exception("Organization list download failed")); // Mock download failure.
                 var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
                 foreach (var el in dict)
                 {
                     Window.Abort.Token.ThrowIfCancellationRequested();
-                    idx.Index(el.Value);
+                    idx.IndexName(el.Value);
+                    idx.IndexKeywords(el.Value);
                 }
                 lock (DiscoveredListLock)
                 {

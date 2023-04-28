@@ -26,22 +26,6 @@
     <Setting Name="SelfUpdateDiscovery" Description="Self-updating feature base URI&#xD;&#xA; Set to empty to disable self-updating." Type="eduVPN.Xml.ResourceRef" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AcceptProfileTypes" Description="Profile types client accepts. Allowed values are `application/x-openvpn-profile` and `application/x-wireguard-profile`. Specify one MIME type per string/line. This value targets testers and developers and is not intended for production use." Type="System.Collections.Specialized.StringCollection" Scope="Application">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;string&gt;application/x-openvpn-profile&lt;/string&gt;
-  &lt;string&gt;application/x-wireguard-profile&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="ResponseCache" Description="Cache of sequenced JSON responses" Type="eduVPN.Xml.JSONResponseDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;JSONResponseDictionary/&gt;</Value>
-    </Setting>
-    <Setting Name="AccessTokenCache" Description="Access token cache" Type="eduVPN.Xml.AccessTokenDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;AccessTokenDictionary/&gt;</Value>
-    </Setting>
-    <Setting Name="LastSelectedProfile" Description="Which profile of the server user selected last" Type="eduVPN.Xml.SerializableStringDictionary" Scope="User">
-      <Value Profile="(Default)">&lt;SerializableStringDictionary/&gt;</Value>
-    </Setting>
     <Setting Name="LastSelectedServer" Description="Which server user selected last" Type="System.Uri" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -65,6 +49,10 @@
     </Setting>
     <Setting Name="Discovery" Description="Supports server and organization discovery." Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AccessTokenCache2" Description="Access token cache" Type="eduVPN.Xml.SerializableStringDictionary" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableStringDictionary /&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

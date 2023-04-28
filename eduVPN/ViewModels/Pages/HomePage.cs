@@ -56,11 +56,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmInstituteAccessServerSelection == null)
                     _ConfirmInstituteAccessServerSelection = new DelegateCommand(
-                        () =>
-                        {
-                            // TODO: Implement.
-                        },
-                        () => SelectedInstituteAccessServer != null);
+                        () => Wizard.Connect(SelectedInstituteAccessServer),
+                        () => SelectedInstituteAccessServer != null && !SelectedInstituteAccessServer.Delisted);
                 return _ConfirmInstituteAccessServerSelection;
             }
         }
@@ -77,8 +74,25 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ForgetInstituteAccessServer == null)
                     _ForgetInstituteAccessServer = new DelegateCommand(
-                        () => Engine.RemoveInstituteAccessServer(SelectedInstituteAccessServer.Base),
-                        () => SelectedInstituteAccessServer != null);
+                        () =>
+                        {
+                            Engine.RemoveServer(ServerType.InstituteAccess, SelectedInstituteAccessServer.Base.AbsoluteUri);
+                            SelectedInstituteAccessServer.Forget();
+
+                            // eduvpn-common does not do callback after servers are removed. Do the bookkeeping manually.
+                            InstituteAccessServers.Remove(SelectedInstituteAccessServer);
+                            SelectedInstituteAccessServer = null;
+                            Wizard.CurrentPage = Wizard.StartingPage;
+                        },
+                        () =>
+                        {
+                            if (SelectedInstituteAccessServer == null)
+                                return false;
+                            var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
+                            if (precfgList != null && precfgList.Contains(SelectedInstituteAccessServer.Base))
+                                return false;
+                            return true;
+                        });
                 return _ForgetInstituteAccessServer;
             }
         }
@@ -119,11 +133,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmSecureInternetServerSelection == null)
                     _ConfirmSecureInternetServerSelection = new DelegateCommand(
-                        () =>
-                        {
-                            // TODO: Implement.
-                        },
-                        () => SelectedSecureInternetServer != null);
+                        () => Wizard.Connect(SelectedSecureInternetServer),
+                        () => SelectedSecureInternetServer != null && !SelectedSecureInternetServer.Delisted);
                 return _ConfirmSecureInternetServerSelection;
             }
         }
@@ -140,8 +151,20 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ForgetSecureInternet == null)
                     _ForgetSecureInternet = new DelegateCommand(
-                        () => Engine.RemoveSecureInternetHomeServer(),
-                        () => SecureInternetServers.Count != 0);
+                        () =>
+                        {
+                            foreach (var srv in SecureInternetServers)
+                            {
+                                Engine.RemoveServer(ServerType.SecureInternet, srv.Base.AbsoluteUri);
+                                srv.Forget();
+                            }
+
+                            // eduvpn-common does not do callback after servers are removed. Do the bookkeeping manually.
+                            SecureInternetServers.Clear();
+                            SelectedSecureInternetServer = null;
+                            Wizard.CurrentPage = Wizard.StartingPage;
+                        },
+                        () => SecureInternetServers.Count != 0 && Properties.SettingsEx.Default.SecureInternetOrganization == null);
                 return _ForgetSecureInternet;
             }
         }
@@ -158,11 +181,16 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ChangeSecureInternetServer == null)
                     _ChangeSecureInternetServer = new DelegateCommand(
-                        () => 
+                        () =>
                         {
-                            var countries = eduJSON.Parser.Parse(Engine.SecureInternetLocationList(), Window.Abort.Token) as List<object>;
-                            Wizard.SelectSecureInternetCountryPage.SetSecureInternetCountries(countries);
-                            Wizard.CurrentPage = Wizard.SelectSecureInternetCountryPage;
+                            foreach (var srv in SecureInternetServers)
+                            {
+                                Wizard.SelectSecureInternetCountryPage.SetSecureInternetCountries(
+                                    srv.Locations,
+                                    srv.Country);
+                                Wizard.CurrentPage = Wizard.SelectSecureInternetCountryPage;
+                                break;
+                            }
                         },
                         () => SecureInternetServers.Count != 0);
                 return _ChangeSecureInternetServer;
@@ -206,10 +234,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmOwnServerSelection == null)
                     _ConfirmOwnServerSelection = new DelegateCommand(
-                        () =>
-                        {
-                            // TODO: Implement.
-                        },
+                        () => Wizard.Connect(SelectedOwnServer),
                         () => SelectedOwnServer != null);
                 return _ConfirmOwnServerSelection;
             }
@@ -227,7 +252,16 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ForgetOwnServer == null)
                     _ForgetOwnServer = new DelegateCommand(
-                        () => Engine.RemoveOwnServer(SelectedOwnServer.Base),
+                        () =>
+                        {
+                            Engine.RemoveServer(ServerType.Own, SelectedOwnServer.Base.AbsoluteUri);
+                            SelectedOwnServer.Forget();
+
+                            // eduvpn-common does not do callback after servers are removed. Do the bookkeeping manually.
+                            OwnServers.Remove(SelectedOwnServer);
+                            SelectedOwnServer = null;
+                            Wizard.CurrentPage = Wizard.StartingPage;
+                        },
                         () => SelectedOwnServer != null);
                 return _ForgetOwnServer;
             }
@@ -263,7 +297,6 @@ namespace eduVPN.ViewModels.Pages
         public HomePage(ConnectWizard wizard) :
             base(wizard)
         {
-            LoadServers();
         }
 
         #endregion
@@ -271,20 +304,11 @@ namespace eduVPN.ViewModels.Pages
         #region Methods
 
         /// <summary>
-        /// Gets server list from eduvpn-common
-        /// </summary>
-        /// <returns></returns>
-        Dictionary<string, object> GetServerList()
-        {
-            return eduJSON.Parser.Parse(Engine.ServerList(), Window.Abort.Token) as Dictionary<string, object>;
-        }
-
-        /// <summary>
         /// Populates lists of servers from eduvpn-common
         /// </summary>
         public void LoadServers()
         {
-            var obj = GetServerList();
+            var obj = eduJSON.Parser.Parse(Engine.ServerList(), Window.Abort.Token) as Dictionary<string, object>;
             LoadInstituteAccessServers(obj);
             LoadSecureInternetServer(obj);
             LoadOwnServers(obj);
@@ -307,11 +331,7 @@ namespace eduVPN.ViewModels.Pages
                         Window.Abort.Token.ThrowIfCancellationRequested();
                         if (!(s is Dictionary<string, object> srvObj))
                             continue;
-                        var srv = new InstituteAccessServer();
-                        srv.Load(srvObj);
-                        srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                        srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                        list.Add(srv);
+                        list.Add(new InstituteAccessServer(srvObj));
                     }
             }
             finally { InstituteAccessServers.EndUpdate(); }
@@ -330,11 +350,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 list.Clear();
                 if (obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
-                {
-                    var srv = new SecureInternetServer();
-                    srv.Load(srvObj);
-                    list.Add(srv);
-                }
+                    list.Add(new SecureInternetServer(srvObj));
             }
             finally { SecureInternetServers.EndUpdate(); }
             _ForgetSecureInternet?.RaiseCanExecuteChanged();
@@ -359,11 +375,7 @@ namespace eduVPN.ViewModels.Pages
                         Window.Abort.Token.ThrowIfCancellationRequested();
                         if (!(s is Dictionary<string, object> srvObj))
                             continue;
-                        var srv = new Server();
-                        srv.Load(srvObj);
-                        srv.RequestAuthorization += Wizard.AuthorizationPage.OnRequestAuthorization;
-                        srv.ForgetAuthorization += Wizard.AuthorizationPage.OnForgetAuthorization;
-                        list.Add(srv);
+                        list.Add(new Server(srvObj));
                     }
             }
             finally { OwnServers.EndUpdate(); }

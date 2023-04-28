@@ -8,13 +8,14 @@
 namespace eduVPN.Models
 {
     /// <summary>
-    /// Known VPN protocols
+    /// The type/role of eduVPN server
     /// </summary>
-    /// <see cref="eduvpn-common/types/protocol/protocol.go"/>
-    public enum VPNProtocol
+    /// <see cref="eduvpn-common/types/server/server.go"/>
+    public enum ServerType
     {
         Unknown,
-        OpenVPN,
-        WireGuard
+        InstituteAccess,
+        SecureInternet,
+        Own,
     }
 }

@@ -21,11 +21,11 @@ namespace eduVPN.Views.Properties
         /// </summary>
         public static void Initialize()
         {
-            if (Default.SettingsVersion == 0)
+            if ((Default.SettingsVersion & 0x1) == 0)
             {
                 // Migrate settings from previous version.
                 Default.Upgrade();
-                Default.SettingsVersion = 1;
+                Default.SettingsVersion |= 0x1;
 
                 // TODO: Migrate legacy settings here.
             }

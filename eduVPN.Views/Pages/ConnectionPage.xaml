@@ -97,14 +97,14 @@
         <TextBlock
             Margin="7,30,7,7"
             HorizontalAlignment="Center"
-            Text="{Binding ConnectingServer}"
+            Text="{Binding Server}"
             Style="{StaticResource MainHeadingStyle}"/>
 
         <Grid
             Grid.Row="1"
             Margin="7,-9,7,7"
             HorizontalAlignment="Center"
-            Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+            Visibility="{Binding Server.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -119,7 +119,7 @@
             <ItemsControl
                 Grid.Column="1"
                 Margin="1,0"
-                ItemsSource="{Binding ConnectingServer.SupportContacts}"
+                ItemsSource="{Binding Server.SupportContacts}"
                 IsTabStop="False">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -160,7 +160,7 @@
                 Grid.Row="1"
                 Margin="0,-2,0,0"
                 HorizontalAlignment="Center"
-                Visibility="{Binding ActiveSession.ExpiresTime, Converter={StaticResource ExpiresTimeVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                Visibility="{Binding ActiveSession.ShowExpiredTime, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <Run Text="{x:Static res:Strings.ConnectionPageOAuthValidLabel}"/>
                 <Run Text="{Binding ActiveSession.ExpiresTime, Mode=OneWay, Converter={StaticResource TimeSpanToHumanReadableConverter}}" Style="{StaticResource ImportantStyle}"/>
             </TextBlock>
@@ -187,17 +187,8 @@
                 Margin="0,5,0,0"
                 HorizontalAlignment="Center"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectionPageSessionRenew}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                Command="{Binding ActiveSession.Renew}">
-                <Button.Visibility>
-                    <MultiBinding
-                        Converter="{StaticResource RenewVisibilityConverter}"
-                        Mode="OneWay"
-                        FallbackValue="{x:Static Visibility.Collapsed}">
-                        <Binding Path="ActiveSession.ConnectedTime"/>
-                        <Binding Path="ActiveSession.ValidFrom"/>
-                        <Binding Path="ActiveSession.ValidTo"/>
-                    </MultiBinding>
-                </Button.Visibility>
+                Command="{Binding ActiveSession.Renew}"
+                Visibility="{Binding ActiveSession.OfferRenewal, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <AccessText Text="{x:Static res:Strings.ConnectionPageSessionRenew}"/>
             </Button>
         </Grid>
@@ -226,12 +217,12 @@
                 TextAlignment="Center"
                 Text="{x:Static res:Strings.ConnectionPageProfilesEmptyWithSupportText}"
                 Style="{StaticResource NoteStyle}"
-                Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+                Visibility="{Binding Server.SupportContacts.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
             <TextBlock
                 TextAlignment="Center"
                 Text="{x:Static res:Strings.ConnectionPageProfilesEmptyWithoutSupportText}"
                 Style="{StaticResource NoteStyle}"
-                Visibility="{Binding ConnectingServer.SupportContacts.Count, Converter={StaticResource IntegerInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+                Visibility="{Binding Server.SupportContacts.Count, Converter={StaticResource IntegerInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
         </StackPanel>
 
         <ToggleButton
@@ -369,7 +360,7 @@
 
                     <TextBlock
                         Style="{StaticResource ConnectionInfoValueStyle}"
-                        Text="{Binding ActiveSession.ConnectingProfile}"/>
+                        Text="{Binding ActiveSession.Profile}"/>
 
                     <TextBlock
                         Grid.Row="1"

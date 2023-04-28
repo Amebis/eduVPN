@@ -82,20 +82,18 @@ BuildWireGuard ::
 	cd "$(MAKEDIR)"
 
 "eduvpn-common\internal\discovery\server_list.json" ::
-	curl.exe --location --output "$(@:"=).tmp" "https://disco.eduvpn.org/v2/server_list.json"
+	curl.exe --location --output $@ "https://disco.eduvpn.org/v2/server_list.json"
 !IFDEF MINISIGN_AVAILABLE
-	curl.exe --location --output "$(@:"=).tmp.minisig" "https://disco.eduvpn.org/v2/server_list.json.minisig"
-	minisign.exe -Vm "$(@:"=).tmp" -P RWRtBSX1alxyGX+Xn3LuZnWUT0w//B6EmTJvgaAxBMYzlQeI+jdrO6KF || minisign.exe -Vm "$(@:"=).tmp" -P "RWQKqtqvd0R7rUDp0rWzbtYPA3towPWcLDCl7eY9pBMMI/ohCmrS0WiM"
+	curl.exe --location --output "$(@:"=).minisig" "https://disco.eduvpn.org/v2/server_list.json.minisig"
+	minisign.exe -Vm $@ -P RWRtBSX1alxyGX+Xn3LuZnWUT0w//B6EmTJvgaAxBMYzlQeI+jdrO6KF || minisign.exe -Vm $@ -P "RWQKqtqvd0R7rUDp0rWzbtYPA3towPWcLDCl7eY9pBMMI/ohCmrS0WiM"
 !ENDIF
-	move /y "$(@:"=).tmp" $@ > NUL
 
 "eduvpn-common\internal\discovery\organization_list.json" ::
-	curl.exe --location --output "$(@:"=).tmp" "https://disco.eduvpn.org/v2/organization_list.json"
+	curl.exe --location --output $@ "https://disco.eduvpn.org/v2/organization_list.json"
 !IFDEF MINISIGN_AVAILABLE
-	curl.exe --location --output "$(@:"=).tmp.minisig" "https://disco.eduvpn.org/v2/organization_list.json.minisig"
-	minisign.exe -Vm "$(@:"=).tmp" -P RWRtBSX1alxyGX+Xn3LuZnWUT0w//B6EmTJvgaAxBMYzlQeI+jdrO6KF || minisign.exe -Vm "$(@:"=).tmp" -P "RWQKqtqvd0R7rUDp0rWzbtYPA3towPWcLDCl7eY9pBMMI/ohCmrS0WiM"
+	curl.exe --location --output "$(@:"=).minisig" "https://disco.eduvpn.org/v2/organization_list.json.minisig"
+	minisign.exe -Vm $@ -P RWRtBSX1alxyGX+Xn3LuZnWUT0w//B6EmTJvgaAxBMYzlQeI+jdrO6KF || minisign.exe -Vm $@ -P "RWQKqtqvd0R7rUDp0rWzbtYPA3towPWcLDCl7eY9pBMMI/ohCmrS0WiM"
 !ENDIF
-	move /y "$(@:"=).tmp" $@ > NUL
 
 CleanDeps :: \
 	CleanLibsodium \

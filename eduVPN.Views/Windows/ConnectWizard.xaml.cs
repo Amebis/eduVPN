@@ -31,11 +31,6 @@ namespace eduVPN.Views.Windows
 
         private const int WM_WININICHANGE = 0x001A;
 
-        /// <summary>
-        /// Milestone minutes to display system tray notification about imminent session expiration
-        /// </summary>
-        private static readonly double[] SessionExpirationWarningMilestoneMinutes = new double[] { 4 * 60, 2 * 60, 60 };
-
         #endregion
 
         #region Fields
@@ -44,11 +39,6 @@ namespace eduVPN.Views.Windows
         /// VPN session state
         /// </summary>
         private SessionStatusType SessionState;
-
-        /// <summary>
-        /// How many minutes before expiration was user notified?
-        /// </summary>
-        private double SessionExpirationWarningMinutes = double.MaxValue;
 
         /// <summary>
         /// Icon on the notification tray
@@ -80,8 +70,8 @@ namespace eduVPN.Views.Windows
                 return
                     (viewModel != null && viewModel.ConnectionPage.ActiveSession != null ?
                         string.Format("{0} - {1}\r\n{2}",
-                            viewModel.ConnectionPage.ActiveSession.ConnectingProfile?.Server,
-                            viewModel.ConnectionPage.ActiveSession.ConnectingProfile,
+                            viewModel.ConnectionPage.ActiveSession.Server,
+                            viewModel.ConnectionPage.ActiveSession.Profile,
                             viewModel.ConnectionPage.ActiveSession.StateDescription) :
                         eduVPN.Properties.Settings.Default.ClientTitle).Left(63);
             }
@@ -133,6 +123,27 @@ namespace eduVPN.Views.Windows
         /// </summary>
         public ConnectWizard()
         {
+            // As eduVPN.ViewModels.Windows.ConnectWizard is IDisposable, special care needs to be taken.
+            // The view itself does not dispose the view model it is using.
+            void SetViewModel()
+            {
+                if (DataContext == null)
+                    DataContext = new ViewModels.Windows.ConnectWizard();
+            }
+            SetViewModel();
+            Loaded += (object sender, RoutedEventArgs e) => SetViewModel();
+
+            void DisposeViewModel()
+            {
+                if (DataContext is IDisposable viewModel)
+                {
+                    DataContext = null;
+                    viewModel.Dispose();
+                }
+            }
+            Unloaded += (object sender, RoutedEventArgs e) => DisposeViewModel();
+            Dispatcher.ShutdownStarted += (object sender, EventArgs e) => DisposeViewModel();
+
             RefreshUseDarkTheme();
             InitializeComponent();
         }
@@ -208,7 +219,15 @@ namespace eduVPN.Views.Windows
                     {
                         // Initialize VPN session state.
                         SessionState = viewModel.ConnectionPage.ActiveSession.State;
-                        SessionExpirationWarningMinutes = viewModel.ConnectionPage.ActiveSession.ExpiresTime.TotalMinutes;
+
+                        viewModel.ConnectionPage.ActiveSession.WarnExpiration += (object sender2, EventArgs e3) =>
+                        {
+                            NotifyIcon.ShowBalloonTip(
+                                1000 * 60 * 5,
+                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.Server),
+                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
+                                System.Windows.Forms.ToolTipIcon.Info);
+                        };
 
                         // Bind to the session for property changes.
                         viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object sender3, PropertyChangedEventArgs e3) =>
@@ -218,7 +237,7 @@ namespace eduVPN.Views.Windows
 
                             switch (e3.PropertyName)
                             {
-                                case nameof(viewModel.ConnectionPage.ActiveSession.ConnectingProfile):
+                                case nameof(viewModel.ConnectionPage.ActiveSession.Profile):
                                 case nameof(viewModel.ConnectionPage.ActiveSession.StateDescription):
                                     NotifyIcon.Text = TrayIconToolTipText;
                                     break;
@@ -233,7 +252,7 @@ namespace eduVPN.Views.Windows
                                                 // Client connected. Popup the balloon message.
                                                 NotifyIcon.ShowBalloonTip(
                                                     1000 * 5,
-                                                    string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile),
+                                                    string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.Profile),
                                                     string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
                                                     System.Windows.Forms.ToolTipIcon.Info);
                                                 break;
@@ -255,29 +274,6 @@ namespace eduVPN.Views.Windows
                                         SessionState = viewModel.ConnectionPage.ActiveSession.State;
                                     }
                                     break;
-
-                                case nameof(viewModel.ConnectionPage.ActiveSession.Expired):
-                                case nameof(viewModel.ConnectionPage.ActiveSession.ExpiresTime):
-                                    if (viewModel.ConnectionPage.ActiveSession.Expired)
-                                    {
-                                        SessionExpirationWarningMinutes = double.MaxValue;
-                                        break;
-                                    }
-                                    double remainingMinutes = viewModel.ConnectionPage.ActiveSession.ExpiresTime.TotalMinutes;
-                                    foreach (var milestoneMinutes in SessionExpirationWarningMilestoneMinutes)
-                                    {
-                                        if (remainingMinutes <= milestoneMinutes && SessionExpirationWarningMinutes > milestoneMinutes)
-                                        {
-                                            NotifyIcon.ShowBalloonTip(
-                                                1000 * 60 * 5,
-                                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.ConnectingProfile.Server),
-                                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
-                                                System.Windows.Forms.ToolTipIcon.Info);
-                                            SessionExpirationWarningMinutes = remainingMinutes;
-                                            break;
-                                        }
-                                    }
-                                    break;
                             }
                         };
                     }
@@ -288,7 +284,6 @@ namespace eduVPN.Views.Windows
 
             viewModel.AutoReconnectFailed += (object sender, AutoReconnectFailedEventArgs e2) =>
             {
-                // Auto-reconnecting failed. Popup the balloon message.
                 NotifyIcon.ShowBalloonTip(
                     1000 * 60 * 5,
                     string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedTitle, e2.ConnectingServer),

@@ -12,7 +12,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:vmpages="clr-namespace:eduVPN.ViewModels.Pages;assembly=eduVPN"
-    xmlns:vmwindows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
     mc:Ignorable="d"
@@ -21,10 +20,6 @@
     MinHeight="494" d:DesignHeight="494"
     Icon="{Binding ConnectionPage.ActiveSession.State, Converter={StaticResource SessionStatusTypeWindowIconConverter}, FallbackValue={StaticResource AppWindowIcon}}"
     Style="{StaticResource ConnectWizardWindowStyle}">
-
-    <Window.DataContext>
-        <vmwindows:ConnectWizard/>
-    </Window.DataContext>
 
     <Window.Resources>
         <Style x:Key="ErrorBarButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AuxButtonStyle}">
