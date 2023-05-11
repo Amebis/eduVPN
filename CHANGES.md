@@ -5,6 +5,7 @@
 - eduvpn-common integration
 - Self-update migrated to Go
 - Warn users if Windows not updated for longer than two months
+- VPN connectivity detection
 - Support for AcceptProfileTypes tweak discontinued
 - OpenVPN updated to 2.5.9-20230427
     - openvpn 2.5.9 ea4ce681d9008f277706f4d90f2648ae043cbb2e

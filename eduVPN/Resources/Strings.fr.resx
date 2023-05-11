@@ -247,4 +247,7 @@
     <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
 Your organization might opt to prevent connections from insecure computers in the future.</value>
   </data>
+  <data name="WarningNoTrafficDetected" xml:space="preserve">
+    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
+  </data>
 </root>

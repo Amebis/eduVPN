@@ -580,7 +580,8 @@ namespace eduVPN.ViewModels.Windows
                     break;
 
                 case Engine.State.OAuthStarted:
-                    if (Properties.Settings.Default.LastSelectedServer == ConnectionPage.Server.Base)
+                    if (Properties.Settings.Default.LastSelectedServer != null &&
+                        Properties.Settings.Default.LastSelectedServer == ConnectionPage.Server.Base)
                     {
                         // Auto-reconnect should not rise OAuth authorization.
                         break;

@@ -297,37 +297,51 @@ namespace eduVPN.ViewModels.Pages
                 Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                 try
                 {
-                    var session =
+                    using (var session =
                         config.Protocol == VPNProtocol.WireGuard ? (Session)new WireGuardSession(Wizard, server, config.VPNConfig, expiration) :
                         config.Protocol == VPNProtocol.OpenVPN ? new OpenVPNSession(Wizard, server, config.VPNConfig, expiration) :
-                            throw new ArgumentOutOfRangeException(nameof(config.Protocol), config.Protocol, null);
-                    session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                            throw new ArgumentOutOfRangeException(nameof(config.Protocol), config.Protocol, null))
                     {
-                        // Update connection page when session disconnects.
-                        if (e.PropertyName == nameof(session.State))
-                            switch (session.State)
+                        void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+                        {
+                            // Update connection page when session disconnects.
+                            if (e.PropertyName == nameof(session.State))
+                                switch (session.State)
+                                {
+                                    case SessionStatusType.Disconnected:
+                                        ActiveSession = null;
+                                        State = session.Expired ? StateType.Expired : StateType.Inactive;
+                                        break;
+                                }
+                        }
+                        session.PropertyChanged += OnPropertyChanged;
+
+                        void OnDisconnectCanExecuteChanged(object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
+                        session.Disconnect.CanExecuteChanged += OnDisconnectCanExecuteChanged;
+
+                        // Activate session.
+                        try
+                        {
+                            Wizard.TryInvoke((Action)(() =>
                             {
-                                case SessionStatusType.Disconnected:
-                                    ActiveSession = null;
-                                    State = session.Expired ? StateType.Expired : StateType.Inactive;
-                                    break;
-                            }
-                    };
-                    session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
+                                ActiveSession = session;
+                                State = StateType.Active;
 
-                    // Activate session.
-                    Wizard.TryInvoke((Action)(() =>
-                    {
-                        ActiveSession = session;
-                        State = StateType.Active;
+                                // Set server/profile to auto-start on next launch.
+                                Properties.Settings.Default.LastSelectedServer = server.Base;
 
-                        // Set server/profile to auto-start on next launch.
-                        Properties.Settings.Default.LastSelectedServer = server.Base;
-
-                        Wizard.TaskCount--;
-                    }));
-                    try { session.Execute(); }
-                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                                Wizard.TaskCount--;
+                            }));
+                            try { session.Execute(); }
+                            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                        }
+                        finally
+                        {
+                            Wizard.TryInvoke((Action)(() => ActiveSession = null));
+                            session.PropertyChanged -= OnPropertyChanged;
+                            session.Disconnect.CanExecuteChanged -= OnDisconnectCanExecuteChanged;
+                        }
+                    }
                 }
                 finally
                 {
@@ -338,7 +352,6 @@ namespace eduVPN.ViewModels.Pages
                         // to other pages.
                         using (var operationInProgress = new Engine.CancellationTokenCookie(Window.Abort.Token))
                             try { Engine.Cleanup(operationInProgress); } catch { }
-                        ActiveSession = null;
                         if (State != StateType.Expired)
                             State = StateType.Inactive;
                         Wizard.TaskCount--;

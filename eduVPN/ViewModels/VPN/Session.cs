@@ -16,7 +16,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading;
+using System.Timers;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.VPN
@@ -24,7 +26,7 @@ namespace eduVPN.ViewModels.VPN
     /// <summary>
     /// VPN session base class
     /// </summary>
-    public class Session : BindableBase
+    public class Session : BindableBase, IDisposable
     {
         #region Constants
 
@@ -51,6 +53,11 @@ namespace eduVPN.ViewModels.VPN
         /// Quit token
         /// </summary>
         protected readonly CancellationTokenSource SessionAndWindowInProgress;
+
+        /// <summary>
+        /// Timer to defer failover test
+        /// </summary>
+        protected System.Timers.Timer TunnelFailoverTest;
 
         #endregion
 
@@ -112,7 +119,14 @@ namespace eduVPN.ViewModels.VPN
         public IPAddress TunnelAddress
         {
             get => _TunnelAddress;
-            protected set => SetProperty(ref _TunnelAddress, value);
+            protected set
+            {
+                if (SetProperty(ref _TunnelAddress, value) && value != null)
+                {
+                    TunnelFailoverTest.Stop();
+                    TunnelFailoverTest.Start();
+                }
+            }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -363,21 +377,72 @@ namespace eduVPN.ViewModels.VPN
                     Disconnect.CanExecute())
                     Disconnect.Execute();
             };
+
+            // First, OpenVPN and WireGuard sessions report the traffic once every 5 seconds.
+            // Second, OpenVPN takes some more time to configure networking and may report failed tunnel if
+            // we probe too early in the connection process.
+            // Third, upon connect, OpenVPN session sets TunnelAddress once. Than resets it. Then sets it again.
+            // We shouldn't react to every TunnelAddress setting.
+            // Therefore, the tunnel failover test must be delayable and cancelable.
+            TunnelFailoverTest = new System.Timers.Timer(5 * 1000) { AutoReset = false };
+            TunnelFailoverTest.Elapsed += (object sender, ElapsedEventArgs e2) =>
+            {
+                var tunnelAddress = TunnelAddress;
+                if (tunnelAddress == null)
+                    return;
+                foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                    .Where(n =>
+                        n.OperationalStatus == OperationalStatus.Up &&
+                        n.NetworkInterfaceType != NetworkInterfaceType.Loopback))
+                {
+                    var props = iface.GetIPProperties();
+                    var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress));
+                    if (unicast != null)
+                    {
+                        var gw = props.GatewayAddresses.FirstOrDefault(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork);
+                        string gateway;
+                        if (gw != null && !gw.Address.Equals(IPAddress.Any))
+                            gateway = gw.Address.ToString();
+                        else
+                        {
+                            // The eduVPN server is always the first usable IP in the subnet by convention.
+#pragma warning disable CS0618 // Type or member is obsolete
+                            gateway = new IPAddress((int)tunnelAddress.Address & (int)unicast.IPv4Mask.Address | IPAddress.HostToNetworkOrder(1)).ToString();
+#pragma warning restore CS0618
+                        }
+                        using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
+                            try
+                            {
+                                //throw new Exception("test"); // Mock traffic failure for testing.
+                                Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu);
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw new Exception(Resources.Strings.WarningNoTrafficDetected, ex))); }
+                    }
+                }
+            };
+
+            Engine.ReportTraffic += Engine_ReportTraffic;
         }
 
         #endregion
 
         #region Methods
 
+        private void Engine_ReportTraffic(object sender, Engine.ReportTrafficEventArgs e)
+        {
+            if (RxBytes != null)
+                e.RxBytes += (long)RxBytes;
+            if (TxBytes != null)
+                e.TxBytes += (long)TxBytes;
+        }
+
         /// <summary>
         /// Executes the session
         /// </summary>
         public void Execute()
         {
-            Wizard.TryInvoke((Action)(() =>
-            {
-                State = SessionStatusType.Initializing;
-            }));
+            Wizard.TryInvoke((Action)(() => State = SessionStatusType.Initializing));
             try
             {
                 // Is the default gateway a VPN already?
@@ -464,6 +529,57 @@ namespace eduVPN.ViewModels.VPN
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region IDisposable Support
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    Engine.ReportTraffic -= Engine_ReportTraffic;
+
+                    SessionInProgress.Cancel();
+                    SessionInProgress.Dispose();
+
+                    SessionAndWindowInProgress.Cancel();
+                    SessionAndWindowInProgress.Dispose();
+
+                    TunnelFailoverTest.Stop();
+                    TunnelFailoverTest.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
         #endregion
     }
 }

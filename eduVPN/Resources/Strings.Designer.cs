@@ -340,6 +340,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP..
+        /// </summary>
+        internal static string WarningNoTrafficDetected {
+            get {
+                return ResourceManager.GetString("WarningNoTrafficDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
         ///Your organization might opt to prevent connections from insecure computers in the future..
         /// </summary>
