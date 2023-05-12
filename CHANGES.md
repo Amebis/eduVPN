@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.4...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255...HEAD)
+
+
+## [3.255](https://github.com/Amebis/eduVPN/compare/3.4...3.255)  (2023-05-15)
 
 - eduvpn-common integration
 - Self-update migrated to Go
