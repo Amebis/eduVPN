@@ -446,8 +446,8 @@ namespace eduVPN.ViewModels.VPN
                                     TunnelAddress = null;
                                     IPv6TunnelAddress = null;
                                     ConnectedAt = null;
-                                    BytesIn = null;
-                                    BytesOut = null;
+                                    RxBytes = null;
+                                    TxBytes = null;
                                 }));
 
                                 // Wait for openvpn.exe to finish. Maximum 30s.
@@ -467,8 +467,8 @@ namespace eduVPN.ViewModels.VPN
         {
             Wizard.TryInvoke((Action)(() =>
             {
-                BytesIn = e.BytesIn;
-                BytesOut = e.BytesOut;
+                RxBytes = e.RxBytes;
+                TxBytes = e.TxBytes;
             }));
         }
 

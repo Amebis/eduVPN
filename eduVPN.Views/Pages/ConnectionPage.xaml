@@ -339,7 +339,7 @@
                     <TextBlock
                         Grid.Column="1"
                         Style="{StaticResource ConnectionInfoValueStyle}"
-                        Text="{Binding ActiveSession.BytesIn, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                        Text="{Binding ActiveSession.RxBytes, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
 
                     <TextBlock
                         Grid.Row="1"
@@ -351,7 +351,7 @@
                         Grid.Column="1"
                         Grid.Row="1"
                         Style="{StaticResource ConnectionInfoValueStyle}"
-                        Text="{Binding ActiveSession.BytesOut, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
+                        Text="{Binding ActiveSession.TxBytes, Converter={StaticResource Byte1024ToHumanReadableConverter}}"/>
                 </Grid>
 
                 <TextBlock

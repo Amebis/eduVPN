@@ -280,8 +280,8 @@ namespace eduVPN.ViewModels.VPN
                                 {
                                     if (ConnectedAt == null && lastHandshake != DateTimeOffset.MinValue)
                                         ConnectedAt = lastHandshake;
-                                    BytesIn = rxBytes;
-                                    BytesOut = txBytes;
+                                    RxBytes = rxBytes;
+                                    TxBytes = txBytes;
                                 }));
                             }
                             catch
@@ -317,8 +317,8 @@ namespace eduVPN.ViewModels.VPN
                         TunnelAddress = null;
                         IPv6TunnelAddress = null;
                         ConnectedAt = null;
-                        BytesIn = null;
-                        BytesOut = null;
+                        RxBytes = null;
+                        TxBytes = null;
                     }));
 
                     propertyUpdater.Stop();

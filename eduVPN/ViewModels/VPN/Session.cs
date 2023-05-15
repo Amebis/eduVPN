@@ -150,7 +150,7 @@ namespace eduVPN.ViewModels.VPN
         /// Number of bytes that have been received from the server
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public ulong? BytesIn
+        public ulong? RxBytes
         {
             get => _BytesIn;
             protected set => SetProperty(ref _BytesIn, value);
@@ -163,7 +163,7 @@ namespace eduVPN.ViewModels.VPN
         /// Number of bytes that have been sent to the server
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public ulong? BytesOut
+        public ulong? TxBytes
         {
             get => _BytesOut;
             protected set => SetProperty(ref _BytesOut, value);
