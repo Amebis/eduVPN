@@ -87,6 +87,7 @@
     <Compile Include="ViewModels\Pages\AuthorizationPage.cs" />
     <Compile Include="ViewModels\Pages\ConnectWizardPage.cs" />
     <Compile Include="ViewModels\Pages\HomePage.cs" />
+    <Compile Include="ViewModels\Pages\PleaseWaitPage.cs" />
     <Compile Include="ViewModels\Pages\SearchPage.cs" />
     <Compile Include="ViewModels\Pages\SelectOwnServerPage.cs" />
     <Compile Include="ViewModels\Pages\SelectSecureInternetCountryPage.cs" />

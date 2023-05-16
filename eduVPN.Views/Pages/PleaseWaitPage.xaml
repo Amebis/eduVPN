@@ -1,0 +1,31 @@
+﻿<!--
+    eduVPN - VPN for education and research
+
+    Copyright: 2017-2023 The Commons Conservancy
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Page
+    x:Class="eduVPN.Views.Pages.PleaseWaitPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    mc:Ignorable="d"
+    d:DesignWidth="319"
+    d:DesignHeight="459"
+    Style="{StaticResource ConnectWizardPageStyle}">
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="22,100,22,7"
+            TextAlignment="Center"
+            Style="{StaticResource SubHeadingStyle}"
+            Text="{x:Static res:Strings.PleaseWaitPageTitle}"/>
+    </Grid>
+</Page>

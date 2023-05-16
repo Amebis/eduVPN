@@ -17,6 +17,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -347,6 +348,22 @@ namespace eduVPN.ViewModels.Windows
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private SelfUpdateProgressPage _SelfUpdateProgressPage;
 
+        /// <summary>
+        /// Please wait wizard page
+        /// </summary>
+        public PleaseWaitPage PleaseWaitPage
+        {
+            get
+            {
+                if (_PleaseWaitPage == null)
+                    _PleaseWaitPage = new PleaseWaitPage(this);
+                return _PleaseWaitPage;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private PleaseWaitPage _PleaseWaitPage;
+
         #endregion
 
         #endregion
@@ -404,26 +421,50 @@ namespace eduVPN.ViewModels.Windows
                 siOrgId != null ||
                 ownSrvList.Count > 0)
             {
-                var w = new BackgroundWorker();
-                w.DoWork += async (object sender, DoWorkEventArgs e) =>
+                CurrentPage = PleaseWaitPage;
+                new Thread(() =>
                 {
                     TryInvoke((Action)(() => TaskCount++));
                     try
                     {
                         using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
                         {
-                            List<object> serverList = null;
+                            Task<List<object>> serverDiscovery = null;
                             if (iaSrvList.Count > 0 || siOrgId != "" && siOrgId != null)
-                                serverList = await Task.Run(() =>
-                                    eduJSON.Parser.GetValue<List<object>>(
-                                        eduJSON.Parser.Parse(
-                                            Engine.DiscoServers(cookie),
-                                            Abort.Token) as Dictionary<string, object>,
-                                        "server_list"));
+                                serverDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
+                                    eduJSON.Parser.Parse(
+                                        Engine.DiscoServers(cookie),
+                                        Abort.Token) as Dictionary<string, object>,
+                                    "server_list"));
+                            Task<List<object>> orgDiscovery = null;
+                            if (siOrgId != "" && siOrgId != null)
+                                orgDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
+                                    eduJSON.Parser.Parse(
+                                        Engine.DiscoOrganizations(cookie),
+                                        Abort.Token) as Dictionary<string, object>,
+                                    "organization_list"));
+
+                            //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow settings import
+
+                            List<object> serverList = null;
+                            if (serverDiscovery != null)
+                            {
+                                serverDiscovery.Wait(Abort.Token);
+                                serverList = serverDiscovery.Result;
+                            }
+                            List<object> orgList = null;
+                            if (orgDiscovery != null)
+                            {
+                                orgDiscovery.Wait(Abort.Token);
+                                orgList = orgDiscovery.Result;
+                            }
 
                             if (iaSrvList.Count > 0)
                                 foreach (var srv in iaSrvList)
+                                {
+                                    Abort.Token.ThrowIfCancellationRequested();
                                     try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, true); } catch { }
+                                }
 
                             if (siOrgId == "")
                             {
@@ -436,12 +477,6 @@ namespace eduVPN.ViewModels.Windows
                             }
                             else if (siOrgId != null)
                             {
-                                var orgList = await Task.Run(() =>
-                                    eduJSON.Parser.GetValue<List<object>>(
-                                        eduJSON.Parser.Parse(
-                                            Engine.DiscoOrganizations(cookie),
-                                            Abort.Token) as Dictionary<string, object>,
-                                        "organization_list"));
                                 try
                                 {
                                     Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, true);
@@ -473,7 +508,10 @@ namespace eduVPN.ViewModels.Windows
                             }
 
                             foreach (var srv in ownSrvList)
+                            {
+                                Abort.Token.ThrowIfCancellationRequested();
                                 try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, true); } catch { }
+                            }
                         }
 
                         Properties.Settings.Default.SettingsVersion |= 0x2;
@@ -484,9 +522,7 @@ namespace eduVPN.ViewModels.Windows
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
                     finally { TryInvoke((Action)(() => TaskCount--)); }
-                };
-                w.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) => (sender as BackgroundWorker)?.Dispose();
-                w.RunWorkerAsync();
+                }).Start();
             }
 
             var actions = new List<KeyValuePair<Action, int>>
@@ -546,22 +582,25 @@ namespace eduVPN.ViewModels.Windows
             switch (e.NewState)
             {
                 case Engine.State.NoServer:
-                    TryInvoke((Action)(() =>
                     {
-                        HomePage.LoadServers();
-                        CurrentPage = StartingPage;
-                        if (ConnectionPage.Server == null)
+                        var obj = eduJSON.Parser.Parse(Engine.ServerList(), Abort.Token) as Dictionary<string, object>;
+                        TryInvoke((Action)(() =>
                         {
-                            var uri = Properties.Settings.Default.LastSelectedServer;
-                            Server srv =
-                                HomePage.InstituteAccessServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
-                                HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
-                                HomePage.OwnServers.FirstOrDefault(s => s.Base == uri);
-                            if (srv != null)
-                                Connect(srv);
-                        }
-                    }));
-                    e.Handled = true;
+                            HomePage.LoadServers(obj);
+                            CurrentPage = StartingPage;
+                            if (ConnectionPage.Server == null)
+                            {
+                                var uri = Properties.Settings.Default.LastSelectedServer;
+                                Server srv =
+                                    HomePage.InstituteAccessServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
+                                    HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
+                                    HomePage.OwnServers.FirstOrDefault(s => s.Base == uri);
+                                if (srv != null)
+                                    Connect(srv);
+                            }
+                        }));
+                        e.Handled = true;
+                    }
                     break;
 
                 case Engine.State.AskLocation:

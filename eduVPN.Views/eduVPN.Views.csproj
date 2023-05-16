@@ -71,6 +71,9 @@
     <Compile Include="Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PleaseWaitPage.xaml.cs">
+      <DependentUpon>PleaseWaitPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SelectOwnServerPage.xaml.cs">
       <DependentUpon>SelectOwnServerPage.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Pages\AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PleaseWaitPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

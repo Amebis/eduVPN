@@ -306,9 +306,9 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Populates lists of servers from eduvpn-common
         /// </summary>
-        public void LoadServers()
+        /// <param name="obj">eduvpn-common provided server list</param>
+        public void LoadServers(Dictionary<string, object> obj)
         {
-            var obj = eduJSON.Parser.Parse(Engine.ServerList(), Window.Abort.Token) as Dictionary<string, object>;
             LoadInstituteAccessServers(obj);
             LoadSecureInternetServer(obj);
             LoadOwnServers(obj);
