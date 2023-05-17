@@ -1,5 +1,5 @@
 {"arguments": "/install",
-"uri": [ "https://github.com/Amebis/eduVPN/releases/download/3.255/LetsConnectClient_3.255.exe" ],
-"version": "3.255",
+"uri": [ "https://github.com/Amebis/eduVPN/releases/download/3.255.1/LetsConnectClient_3.255.1.exe" ],
+"version": "3.255.1",
 "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
-"hash-sha256": "1b294e6ba7bdb43a7a35787a361620414d5aaf216600abceb90643cf68241a66"}
+"hash-sha256": "3b07473f44332dec09b275e21c1cad5251c4d4ed921ca44e32d87b528668bc55"}
