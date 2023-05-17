@@ -159,7 +159,7 @@ namespace eduVPN.Properties
                 // Migrate auto-reconnect settings.
                 if (Default.GetPreviousVersion(nameof(AutoStartProfile)) is Xml.StartSessionParams autoStartProfile &&
                     autoStartProfile.ConnectingServer is Uri connectingServerBase)
-                    Default.LastSelectedServer = connectingServerBase;
+                    Default.LastSelectedServer = connectingServerBase.AbsoluteUri;
 
                 // Migrate OpenVPNForceTCP setting.
                 if (Default.GetPreviousVersion(nameof(OpenVPNForceTCP)) is bool openVPNForceTCP)
@@ -171,7 +171,7 @@ namespace eduVPN.Properties
                         try
                         {
                             ConnectWizard.Engine_SetToken(null, new Engine.SetTokenEventArgs(
-                                new Uri(token.Key),
+                                token.Key,
                                 token.Value.ToJSON()));
                         }
                         catch { }

@@ -53,7 +53,7 @@ namespace eduVPN.ViewModels.Pages
                             TryParseUri(Hostname, out var uri);
                             try
                             {
-                                Wizard.AddAndConnect(new Server(uri));
+                                Wizard.AddAndConnect(new Server(uri.AbsoluteUri));
                                 Hostname = "";
                             }
                             catch (OperationCanceledException) { Wizard.CurrentPage = this; }

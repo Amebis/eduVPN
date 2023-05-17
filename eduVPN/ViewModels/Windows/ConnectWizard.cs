@@ -472,7 +472,7 @@ namespace eduVPN.ViewModels.Windows
                                     obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
                                 {
                                     var srv = new SecureInternetServer(srvObj);
-                                    try { Engine.RemoveServer(ServerType.SecureInternet, srv.Base.AbsoluteUri); } catch { }
+                                    try { Engine.RemoveServer(ServerType.SecureInternet, srv.Id); } catch { }
                                 }
                             }
                             else if (siOrgId != null)
@@ -485,7 +485,11 @@ namespace eduVPN.ViewModels.Windows
                                         if (serverList.FirstOrDefault(obj =>
                                                 obj is Dictionary<string, object> obj2 && obj2.TryGetValue("base_url", out string base_url) && new Uri(base_url).Equals(uri)) is Dictionary<string, object> obj3 &&
                                             obj3.TryGetValue("country_code", out string country_code))
+                                        {
                                             Engine.SetSecureInternetLocation(cookie, country_code);
+                                            if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
+                                                Properties.Settings.Default.LastSelectedServer = siOrgId;
+                                        }
                                     }
 
                                     // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
@@ -590,11 +594,11 @@ namespace eduVPN.ViewModels.Windows
                             CurrentPage = StartingPage;
                             if (ConnectionPage.Server == null)
                             {
-                                var uri = Properties.Settings.Default.LastSelectedServer;
+                                var id = Properties.Settings.Default.LastSelectedServer;
                                 Server srv =
-                                    HomePage.InstituteAccessServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
-                                    HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Base == uri) ??
-                                    HomePage.OwnServers.FirstOrDefault(s => s.Base == uri);
+                                    HomePage.InstituteAccessServers.FirstOrDefault(s => !s.Delisted && s.Id == id) ??
+                                    HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Id == id) ??
+                                    HomePage.OwnServers.FirstOrDefault(s => s.Id == id);
                                 if (srv != null)
                                     Connect(srv);
                             }
@@ -619,8 +623,8 @@ namespace eduVPN.ViewModels.Windows
                     break;
 
                 case Engine.State.OAuthStarted:
-                    if (Properties.Settings.Default.LastSelectedServer != null &&
-                        Properties.Settings.Default.LastSelectedServer == ConnectionPage.Server.Base)
+                    if (!string.IsNullOrEmpty(Properties.Settings.Default.LastSelectedServer) &&
+                        Properties.Settings.Default.LastSelectedServer == ConnectionPage.Server.Id)
                     {
                         // Auto-reconnect should not rise OAuth authorization.
                         break;
@@ -660,7 +664,7 @@ namespace eduVPN.ViewModels.Windows
         static private void Engine_GetToken(object sender, Engine.GetTokenEventArgs e)
         {
             lock (Properties.Settings.Default.AccessTokenCache2)
-                if (Properties.Settings.Default.AccessTokenCache2.TryGetValue(e.Base.AbsoluteUri, out var value))
+                if (Properties.Settings.Default.AccessTokenCache2.TryGetValue(e.Id, out var value))
                     e.Token = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(value), Entropy, DataProtectionScope.CurrentUser));
         }
 
@@ -668,10 +672,10 @@ namespace eduVPN.ViewModels.Windows
         {
             lock (Properties.Settings.Default.AccessTokenCache2)
                 if (e.Token != null)
-                    Properties.Settings.Default.AccessTokenCache2[e.Base.AbsoluteUri] =
+                    Properties.Settings.Default.AccessTokenCache2[e.Id] =
                         Convert.ToBase64String(ProtectedData.Protect(Encoding.UTF8.GetBytes(e.Token), Entropy, DataProtectionScope.CurrentUser));
                 else
-                    Properties.Settings.Default.AccessTokenCache2.Remove(e.Base.AbsoluteUri);
+                    Properties.Settings.Default.AccessTokenCache2.Remove(e.Id);
         }
 
         /// <summary>
@@ -693,7 +697,7 @@ namespace eduVPN.ViewModels.Windows
                     (server, config, expiration) = await Task.Run(() =>
                     {
                         var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, Properties.Settings.Default.OpenVPNPreferTCP),
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.OpenVPNPreferTCP),
                             Abort.Token) as Dictionary<string, object>);
 
                         var srv = Server.Load(eduJSON.Parser.Parse(
@@ -709,7 +713,7 @@ namespace eduVPN.ViewModels.Windows
             }
             catch
             {
-                if (Properties.Settings.Default.LastSelectedServer == server.Base)
+                if (Properties.Settings.Default.LastSelectedServer == server.Id)
                 {
                     AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(server, server));
                     Properties.Settings.Default.LastSelectedServer = null;
@@ -743,10 +747,10 @@ namespace eduVPN.ViewModels.Windows
                 using (OperationInProgress = new Engine.CancellationTokenCookie(Abort.Token))
                     (server, config, expiration) = await Task.Run(() =>
                     {
-                        Engine.AddServer(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, false);
+                        Engine.AddServer(OperationInProgress, server.ServerType, server.Id, false);
 
                         var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, Properties.Settings.Default.OpenVPNPreferTCP),
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.OpenVPNPreferTCP),
                             Abort.Token) as Dictionary<string, object>);
 
                         var srv = Server.Load(eduJSON.Parser.Parse(
@@ -796,7 +800,7 @@ namespace eduVPN.ViewModels.Windows
                         Engine.RenewSession(OperationInProgress);
 
                         var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Base.AbsoluteUri, Properties.Settings.Default.OpenVPNPreferTCP),
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.OpenVPNPreferTCP),
                             Abort.Token) as Dictionary<string, object>);
 
                         var srv = Server.Load(eduJSON.Parser.Parse(

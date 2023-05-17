@@ -84,6 +84,7 @@ namespace eduVPN.Tests
                                 Assert.AreEqual(Engine.State.NoServer, e.NewState);
                                 break;
                         }
+                        e.Handled = true;
                     };
                     Assert.ThrowsException<OperationCanceledException>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
                     Assert.AreEqual(4, callbackCounter);

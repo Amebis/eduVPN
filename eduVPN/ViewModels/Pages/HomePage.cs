@@ -9,6 +9,7 @@ using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using Prism.Common;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -76,7 +77,7 @@ namespace eduVPN.ViewModels.Pages
                     _ForgetInstituteAccessServer = new DelegateCommand(
                         () =>
                         {
-                            Engine.RemoveServer(ServerType.InstituteAccess, SelectedInstituteAccessServer.Base.AbsoluteUri);
+                            Engine.RemoveServer(ServerType.InstituteAccess, SelectedInstituteAccessServer.Id);
                             SelectedInstituteAccessServer.Forget();
 
                             // eduvpn-common does not do callback after servers are removed. Do the bookkeeping manually.
@@ -89,7 +90,7 @@ namespace eduVPN.ViewModels.Pages
                             if (SelectedInstituteAccessServer == null)
                                 return false;
                             var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
-                            if (precfgList != null && precfgList.Contains(SelectedInstituteAccessServer.Base))
+                            if (precfgList != null && precfgList.Contains(new Uri(SelectedInstituteAccessServer.Id)))
                                 return false;
                             return true;
                         });
@@ -155,7 +156,7 @@ namespace eduVPN.ViewModels.Pages
                         {
                             foreach (var srv in SecureInternetServers)
                             {
-                                Engine.RemoveServer(ServerType.SecureInternet, srv.Base.AbsoluteUri);
+                                Engine.RemoveServer(ServerType.SecureInternet, srv.Id);
                                 srv.Forget();
                             }
 
@@ -254,7 +255,7 @@ namespace eduVPN.ViewModels.Pages
                     _ForgetOwnServer = new DelegateCommand(
                         () =>
                         {
-                            Engine.RemoveServer(ServerType.Own, SelectedOwnServer.Base.AbsoluteUri);
+                            Engine.RemoveServer(ServerType.Own, SelectedOwnServer.Id);
                             SelectedOwnServer.Forget();
 
                             // eduvpn-common does not do callback after servers are removed. Do the bookkeeping manually.
@@ -320,7 +321,7 @@ namespace eduVPN.ViewModels.Pages
         /// <param name="obj">eduvpn-common provided server list</param>
         void LoadInstituteAccessServers(Dictionary<string, object> obj)
         {
-            var selected = SelectedInstituteAccessServer?.Base;
+            var selected = SelectedInstituteAccessServer?.Id;
             var list = InstituteAccessServers.BeginUpdate();
             try
             {
@@ -335,7 +336,7 @@ namespace eduVPN.ViewModels.Pages
                     }
             }
             finally { InstituteAccessServers.EndUpdate(); }
-            SelectedInstituteAccessServer = selected != null ? InstituteAccessServers.FirstOrDefault(s => s.Base.AbsoluteUri == selected.AbsoluteUri) : null;
+            SelectedInstituteAccessServer = selected != null ? InstituteAccessServers.FirstOrDefault(s => s.Id == selected) : null;
         }
 
         /// <summary>
@@ -344,7 +345,7 @@ namespace eduVPN.ViewModels.Pages
         /// <param name="obj">eduvpn-common provided server list</param>
         void LoadSecureInternetServer(Dictionary<string, object> obj)
         {
-            var selected = SelectedSecureInternetServer?.Base;
+            var selected = SelectedSecureInternetServer?.Id;
             var list = SecureInternetServers.BeginUpdate();
             try
             {
@@ -355,7 +356,7 @@ namespace eduVPN.ViewModels.Pages
             finally { SecureInternetServers.EndUpdate(); }
             _ForgetSecureInternet?.RaiseCanExecuteChanged();
             _ChangeSecureInternetServer?.RaiseCanExecuteChanged();
-            SelectedSecureInternetServer = selected != null ? SecureInternetServers.FirstOrDefault(s => s.Base.AbsoluteUri == selected.AbsoluteUri) : null;
+            SelectedSecureInternetServer = selected != null ? SecureInternetServers.FirstOrDefault(s => s.Id == selected) : null;
         }
 
         /// <summary>
@@ -364,7 +365,7 @@ namespace eduVPN.ViewModels.Pages
         /// <param name="obj">eduvpn-common provided server list</param>
         void LoadOwnServers(Dictionary<string, object> obj)
         {
-            var selected = SelectedOwnServer?.Base;
+            var selected = SelectedOwnServer?.Id;
             var list = OwnServers.BeginUpdate();
             try
             {
@@ -379,7 +380,7 @@ namespace eduVPN.ViewModels.Pages
                     }
             }
             finally { OwnServers.EndUpdate(); }
-            SelectedOwnServer = selected != null ? OwnServers.FirstOrDefault(srv => srv.Base.AbsoluteUri == selected.AbsoluteUri) : null;
+            SelectedOwnServer = selected != null ? OwnServers.FirstOrDefault(srv => srv.Id == selected) : null;
         }
 
         #endregion

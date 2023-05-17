@@ -257,10 +257,22 @@ namespace eduVPN.ViewModels.VPN
                             // Set Wintun interface to be used.
                             sw.Write("windows-driver wintun\n");
                             var hash = new SHA1CryptoServiceProvider(); // https://datatracker.ietf.org/doc/html/rfc4122#section-4.3
-                            byte[] bufferPrefix = { 0x6b, 0xa7, 0xb8, 0x11, 0x9d, 0xad, 0x11, 0xd1, 0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8 }; // https://datatracker.ietf.org/doc/html/rfc4122#appendix-C in network byte order
-                            hash.TransformBlock(bufferPrefix, 0, bufferPrefix.Length, bufferPrefix, 0);
-                            var bufferUri = Encoding.UTF8.GetBytes(new Uri(Server.Base, Profile.Id).AbsoluteUri);
-                            hash.TransformFinalBlock(bufferUri, 0, bufferUri.Length);
+                            if (Uri.TryCreate(Server.Id, UriKind.Absolute, out var uri))
+                            {
+                                byte[] bufferPrefix = { 0x6b, 0xa7, 0xb8, 0x11, 0x9d, 0xad, 0x11, 0xd1, 0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8 }; // https://datatracker.ietf.org/doc/html/rfc4122#appendix-C in network byte order
+                                hash.TransformBlock(bufferPrefix, 0, bufferPrefix.Length, bufferPrefix, 0);
+                                var bufferUri = Encoding.UTF8.GetBytes(new Uri(uri, Profile.Id).AbsoluteUri);
+                                hash.TransformFinalBlock(bufferUri, 0, bufferUri.Length);
+                            }
+                            else
+                            {
+                                byte[] data = { 0xbc, 0xda, 0x95, 0x5d, 0xaf, 0x29, 0xd1, 0x24, 0x2a, 0x48, 0x67, 0x9f, 0x08, 0xa4, 0x52, 0x5e };
+                                hash.TransformBlock(data, 0, data.Length, data, 0);
+                                data = Encoding.UTF8.GetBytes(Server.Id);
+                                hash.TransformBlock(data, 0, data.Length, data, 0);
+                                data = Encoding.UTF8.GetBytes(Profile.Id);
+                                hash.TransformFinalBlock(data, 0, data.Length);
+                            }
                             var guid = new Guid(
                                 ((uint)hash.Hash[0] << 24) | ((uint)hash.Hash[1] << 16) | ((uint)hash.Hash[2] << 8) | hash.Hash[3], // time_low
                                 (ushort)(((uint)hash.Hash[4] << 8) | hash.Hash[5]), // time_mid

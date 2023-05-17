@@ -23,7 +23,7 @@ namespace eduVPN.Models.Tests
                 {
                     { "base_url", "https://surf.eduvpn.nl/" }
                 });
-            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), srv.Base, "Base URI incorrect");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/").AbsoluteUri, srv.Id, "Base URI incorrect");
             Assert.AreEqual("surf.eduvpn.nl", srv.ToString(), "Display name incorrect");
 
             srv = new InstituteAccessServer(new Dictionary<string, object>
@@ -31,7 +31,7 @@ namespace eduVPN.Models.Tests
                     { "base_url", "https://surf.eduvpn.nl/" },
                     { "display_name", "SURF" }
                 });
-            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), srv.Base, "Base URI incorrect");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/").AbsoluteUri, srv.Id, "Base URI incorrect");
             Assert.AreEqual("SURF", srv.ToString(), "Display name incorrect");
 
             srv = new SecureInternetServer(new Dictionary<string, object>
@@ -40,7 +40,7 @@ namespace eduVPN.Models.Tests
                     { "country_code", "NL" },
                     { "support_contact", new List<object>(){ "mailto:info@surf.nl" } },
                 });
-            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/"), srv.Base, "Base URI incorrect");
+            Assert.AreEqual(new Uri("https://surf.eduvpn.nl/").AbsoluteUri, srv.Id, "Base URI incorrect");
             Assert.AreEqual(new Country("NL").ToString(), srv.ToString(), "Display name incorrect");
             Assert.AreEqual("NL", ((SecureInternetServer)srv).Country.Code, "Country code incorrect");
 

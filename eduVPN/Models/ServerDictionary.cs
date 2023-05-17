@@ -13,7 +13,7 @@ namespace eduVPN.Models
     /// <summary>
     /// List of eduVPN servers
     /// </summary>
-    public class ServerDictionary : Dictionary<Uri, Server>
+    public class ServerDictionary : Dictionary<string, Server>
     {
         #region Constructors
 
@@ -37,7 +37,7 @@ namespace eduVPN.Models
                     case "secure_internet": entry = new SecureInternetServer(obj2); break;
                     default: throw new ArgumentOutOfRangeException("server_type");
                 }
-                Add(entry.Base, entry);
+                Add(entry.Id, entry);
             }
         }
 

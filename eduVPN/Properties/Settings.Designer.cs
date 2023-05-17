@@ -150,9 +150,9 @@ namespace eduVPN.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("Which server user selected last")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Uri LastSelectedServer {
+        public string LastSelectedServer {
             get {
-                return ((global::System.Uri)(this["LastSelectedServer"]));
+                return ((string)(this["LastSelectedServer"]));
             }
             set {
                 this["LastSelectedServer"] = value;

@@ -25,9 +25,9 @@ namespace eduVPN.Models
         public virtual ServerType ServerType { get => ServerType.Own; }
 
         /// <summary>
-        /// Server base URI
+        /// Server/organization identifier as used by eduvpn-common
         /// </summary>
-        public Uri Base { get; }
+        public string Id { get; }
 
         /// <summary>
         /// Localized display names
@@ -58,10 +58,10 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs a custom server
         /// </summary>
-        /// <param name="b">Server base URI</param>
-        public Server(Uri b)
+        /// <param name="id">Server/organization identifier as used by eduvpn-common</param>
+        public Server(string id)
         {
-            Base = b;
+            Id = id;
             LocalizedDisplayNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             SupportContacts = new ObservableCollectionEx<Uri>();
         }
@@ -72,8 +72,8 @@ namespace eduVPN.Models
         /// <param name="obj">Key/value dictionary with <c>identifier</c>, <c>display_name</c>, <c>profiles</c> elements.</param>
         public Server(IReadOnlyDictionary<string, object> obj) :
             this(
-                eduJSON.Parser.GetValue(obj, "identifier", out string identifier) && identifier != null ? new Uri(identifier) :
-                eduJSON.Parser.GetValue(obj, "base_url", out string baseUrl) && baseUrl != null ? new Uri(baseUrl) :
+                eduJSON.Parser.GetValue(obj, "base_url", out string baseUrl) && baseUrl != null ? new Uri(baseUrl).AbsoluteUri :
+                eduJSON.Parser.GetValue(obj, "identifier", out string identifier) && identifier != null ? identifier :
                 throw new eduJSON.MissingParameterException("identifier/base_url"))
         {
             eduJSON.Parser.GetDictionary(obj, "display_name", LocalizedDisplayNames);
@@ -92,7 +92,10 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override string ToString()
         {
-            return LocalizedDisplayNames.Count > 0 ? LocalizedDisplayNames.GetLocalized() : Base.Host;
+            return
+                LocalizedDisplayNames.Count > 0 ? LocalizedDisplayNames.GetLocalized() :
+                Uri.TryCreate(Id, UriKind.Absolute, out var uri) ? uri.Host :
+                Id;
         }
 
         /// <inheritdoc/>
@@ -104,7 +107,7 @@ namespace eduVPN.Models
                 return false;
 
             var other = obj as Server;
-            if (!Base.Equals(other.Base))
+            if (!Id.Equals(other.Id))
                 return false;
 
             return true;
@@ -113,7 +116,7 @@ namespace eduVPN.Models
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return Base.GetHashCode();
+            return Id.GetHashCode();
         }
 
         /// <summary>
@@ -122,7 +125,7 @@ namespace eduVPN.Models
         public void Forget()
         {
             lock (Properties.Settings.Default.AccessTokenCache2)
-                Properties.Settings.Default.AccessTokenCache2.Remove(Base.AbsoluteUri);
+                Properties.Settings.Default.AccessTokenCache2.Remove(Id);
         }
 
         /// <summary>

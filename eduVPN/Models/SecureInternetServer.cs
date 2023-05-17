@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -46,9 +45,8 @@ namespace eduVPN.Models
         /// Creates secure internet server
         /// </summary>
         /// <param name="org">Organization</param>
-        public SecureInternetServer(Organization org) : base(new Uri(org.Id))
-        {
-        }
+        public SecureInternetServer(Organization org) : base(org.Id)
+        { }
 
         /// <summary>
         /// Creates secure internet server

@@ -13,6 +13,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -135,7 +136,9 @@ namespace eduVPN.ViewModels.VPN
         public WireGuardSession(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration) :
             base(wizard, server, profileConfig, expiration)
         {
-            TunnelName = server.Base.Host;
+            TunnelName =
+                Uri.TryCreate(server.Id, UriKind.Absolute, out var uri) ? uri.Host :
+                new string(server.Id.Where(c => c == '_' || c == '=' || c == '+' || c == '.' || c == '-' || char.IsLetter(c) || char.IsNumber(c)).ToArray());
             if (TunnelName.Length > 32)
                 TunnelName = TunnelName.Substring(0, 32);
         }

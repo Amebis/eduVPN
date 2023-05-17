@@ -34,10 +34,9 @@ namespace eduVPN.Models
         /// <summary>
         /// Constructs a secure internet/institute access server
         /// </summary>
-        /// <param name="b">Server base URI</param>
-        public DiscoverableServer(Uri b) : base(b)
-        {
-        }
+        /// <param name="id">Server/organization identifier as used by eduvpn-common</param>
+        protected DiscoverableServer(string id) : base(id)
+        { }
 
         /// <summary>
         /// Creates a secure internet/institute access server

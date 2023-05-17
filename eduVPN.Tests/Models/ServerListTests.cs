@@ -39,8 +39,8 @@ namespace eduVPN.Models.Tests
 }";
             var server_list_list_ia = new ServerDictionary(eduJSON.Parser.Parse(server_list_list_json) as Dictionary<string, object>);
 
-            Assert.IsInstanceOfType(server_list_list_ia[new Uri("https://sunset.nuonet.fr/")], typeof(InstituteAccessServer));
-            Assert.IsInstanceOfType(server_list_list_ia[new Uri("https://eduvpn.rash.al/")], typeof(SecureInternetServer));
+            Assert.IsInstanceOfType(server_list_list_ia[new Uri("https://sunset.nuonet.fr/").AbsoluteUri], typeof(InstituteAccessServer));
+            Assert.IsInstanceOfType(server_list_list_ia[new Uri("https://eduvpn.rash.al/").AbsoluteUri], typeof(SecureInternetServer));
         }
     }
 }

@@ -253,7 +253,7 @@ namespace eduVPN
             /// <summary>
             /// Server URI/Organization ID
             /// </summary>
-            public readonly Uri Base;
+            public readonly string Id;
 
             /// <summary>
             /// Must be set to token value on return
@@ -267,10 +267,10 @@ namespace eduVPN
             /// <summary>
             /// Constructs an event arguments
             /// </summary>
-            /// <param name="_base">Server URI or Organization ID</param>
-            public GetTokenEventArgs(Uri _base)
+            /// <param name="id">Server URI or Organization ID</param>
+            public GetTokenEventArgs(string id)
             {
-                Base = _base;
+                Id = id;
             }
 
             #endregion
@@ -291,7 +291,7 @@ namespace eduVPN
             /// <summary>
             /// Server URI/Organization ID
             /// </summary>
-            public readonly Uri Base;
+            public readonly string Id;
 
             /// <summary>
             /// Token value
@@ -305,11 +305,11 @@ namespace eduVPN
             /// <summary>
             /// Constructs an event arguments
             /// </summary>
-            /// <param name="_base">Server URI or Organization ID</param>
+            /// <param name="id">Server URI or Organization ID</param>
             /// <param name="token">Token</param>
-            public SetTokenEventArgs(Uri _base, string token)
+            public SetTokenEventArgs(string id, string token)
             {
-                Base = _base;
+                Id = id;
                 Token = token;
             }
 
@@ -548,7 +548,7 @@ namespace eduVPN
             if (eduJSON.Parser.Parse(server) is IReadOnlyDictionary<string, object> obj)
             {
                 var srv = Server.Load(obj);
-                var args = new GetTokenEventArgs(srv.Base);
+                var args = new GetTokenEventArgs(srv.Id);
                 GetToken?.Invoke(null, args);
                 if (args.Token != null)
                 {
@@ -572,7 +572,7 @@ namespace eduVPN
             if (eduJSON.Parser.Parse(server) is IReadOnlyDictionary<string, object> obj)
             {
                 var srv = Server.Load(obj);
-                SetToken?.Invoke(null, new SetTokenEventArgs(srv.Base, token));
+                SetToken?.Invoke(null, new SetTokenEventArgs(srv.Id, token));
             }
         });
 

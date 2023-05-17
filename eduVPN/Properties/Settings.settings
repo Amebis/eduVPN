@@ -26,7 +26,7 @@
     <Setting Name="SelfUpdateDiscovery" Description="Self-updating feature base URI&#xD;&#xA; Set to empty to disable self-updating." Type="eduVPN.Xml.ResourceRef" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LastSelectedServer" Description="Which server user selected last" Type="System.Uri" Scope="User">
+    <Setting Name="LastSelectedServer" Description="Which server user selected last" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="WireGuardTunnelManagerServiceInstance" Description="Which WireGuard tunnel manager service instance client should use:&#xD;&#xA; - &quot;$eduVPN&quot; - Use WireGuard installation bundled with the eduVPN client.&#xD;&#xA; - &quot;$LetsConnect&quot; - Use WireGuard installation bundled with the Let's Connect! client." Type="System.String" Scope="Application">

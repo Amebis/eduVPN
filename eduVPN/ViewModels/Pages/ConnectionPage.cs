@@ -328,7 +328,7 @@ namespace eduVPN.ViewModels.Pages
                                 State = StateType.Active;
 
                                 // Set server/profile to auto-start on next launch.
-                                Properties.Settings.Default.LastSelectedServer = server.Base;
+                                Properties.Settings.Default.LastSelectedServer = server.Id;
 
                                 Wizard.TaskCount--;
                             }));

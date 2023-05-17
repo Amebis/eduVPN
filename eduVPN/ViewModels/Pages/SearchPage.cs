@@ -299,7 +299,7 @@ namespace eduVPN.ViewModels.Pages
                         Wizard.TryInvoke((Action)(() =>
                         {
                             if (ct.IsCancellationRequested) return;
-                            var selected = SelectedInstituteAccessServer?.Base;
+                            var selected = SelectedInstituteAccessServer?.Id;
                             InstituteAccessServers = orderedServerHits;
                             SelectedInstituteAccessServer = GetDiscoveredServer<InstituteAccessServer>(selected);
                         }));
@@ -337,13 +337,13 @@ namespace eduVPN.ViewModels.Pages
                 var ownServers = new ObservableCollection<Server>();
                 try
                 {
-                    var srv = new Server(new UriBuilder("https", keywords[0]).Uri);
+                    var srv = new Server(new UriBuilder("https", keywords[0]).Uri.AbsoluteUri);
                     ownServers.Add(srv);
                 }
                 catch { }
-                var selected = SelectedOwnServer?.Base;
+                var selected = SelectedOwnServer?.Id;
                 OwnServers = ownServers;
-                SelectedOwnServer = ownServers.FirstOrDefault(srv => selected == srv.Base);
+                SelectedOwnServer = ownServers.FirstOrDefault(srv => selected == srv.Id);
             }
             else
             {
@@ -390,15 +390,15 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Returns available server with given base URI
         /// </summary>
-        /// <param name="baseUri">Server base URI</param>
+        /// <param name="id">Server identifier</param>
         /// <returns>Server if found; null otherwise</returns>
-        T GetDiscoveredServer<T>(Uri baseUri) where T : Server
+        T GetDiscoveredServer<T>(string id) where T : Server
         {
             lock (DiscoveredListLock)
                 return
-                    baseUri != null &&
+                    id != null &&
                     DiscoveredServers != null &&
-                    DiscoveredServers.TryGetValue(baseUri, out var srv) &&
+                    DiscoveredServers.TryGetValue(id, out var srv) &&
                     srv is T srvT ? srvT : null;
         }
 
