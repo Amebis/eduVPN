@@ -20,6 +20,22 @@ namespace eduVPN.ViewModels.Pages
         #region Properties
 
         /// <summary>
+        /// Installed product version
+        /// </summary>
+        public Version InstalledVersion
+        {
+            get => _InstalledVersion;
+            private set
+            {
+                if (SetProperty(ref _InstalledVersion, value))
+                    _SkipUpdate?.RaiseCanExecuteChanged();
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Version _InstalledVersion;
+
+        /// <summary>
         /// Available product version
         /// </summary>
         public Version AvailableVersion
@@ -86,7 +102,7 @@ namespace eduVPN.ViewModels.Pages
                             if (Wizard.NavigateTo.CanExecute(Wizard.SelfUpdateProgressPage))
                                 Wizard.NavigateTo.Execute(Wizard.SelfUpdateProgressPage);
                         },
-                        () => AvailableVersion != null);
+                        () => AvailableVersion != null && InstalledVersion != null && AvailableVersion > InstalledVersion);
                 return _StartUpdate;
             }
         }
@@ -142,19 +158,19 @@ namespace eduVPN.ViewModels.Pages
             Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
             try
             {
-                var package = CGo.CheckSelfUpdate(
+                var r = CGo.CheckSelfUpdate(
                     Properties.SettingsEx.Default.SelfUpdateDiscovery,
                     Properties.Settings.Default.SelfUpdateBundleId,
                     Window.Abort.Token);
                 Wizard.TryInvoke((Action)(() =>
                 {
-                    if (package != null)
+                    if (r.Item1 != null)
                     {
-                        AvailableVersion = package.Version;
-                        Changelog = package.Changelog;
-                        Wizard.SelfUpdateProgressPage.DownloadUris = package.Uris;
-                        Wizard.SelfUpdateProgressPage.Hash = package.Hash;
-                        Wizard.SelfUpdateProgressPage.Arguments = package.Arguments;
+                        AvailableVersion = r.Item1.Version;
+                        Changelog = r.Item1.Changelog;
+                        Wizard.SelfUpdateProgressPage.DownloadUris = r.Item1.Uris;
+                        Wizard.SelfUpdateProgressPage.Hash = r.Item1.Hash;
+                        Wizard.SelfUpdateProgressPage.Arguments = r.Item1.Arguments;
                     }
                     else
                     {
@@ -164,13 +180,14 @@ namespace eduVPN.ViewModels.Pages
                         Wizard.SelfUpdateProgressPage.Hash = null;
                         Wizard.SelfUpdateProgressPage.Arguments = null;
                     }
+
+                    InstalledVersion = r.Item2 ?? null;
                 }));
-                if (package == null)
-                    return;
             }
             finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
 
             //// Mock the values for testing.
+            //InstalledVersion = new Version(1, 0);
             //Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MinValue;
 
             try
@@ -187,6 +204,20 @@ namespace eduVPN.ViewModels.Pages
                 }
             }
             catch { }
+
+            if (InstalledVersion == null)
+            {
+                // Nothing to update.
+                Trace.TraceInformation("Product not installed or version could not be determined");
+                return; // Quit self-updating.
+            }
+
+            if (AvailableVersion <= InstalledVersion)
+            {
+                // Product already up-to-date.
+                Trace.TraceInformation("Update not required");
+                return;
+            }
 
             // We're in the background thread - raise the prompt event via dispatcher.
             Wizard.TryInvoke((Action)(() =>

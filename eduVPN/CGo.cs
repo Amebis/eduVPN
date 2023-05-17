@@ -281,13 +281,13 @@ namespace eduVPN
         #region Methods
 
         [DllImport("eduvpn_windows.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPtr check_selfupdate(
+        static extern CGoPtrPtrPtr check_selfupdate(
             [MarshalAs(UnmanagedType.LPUTF8Str)] string url,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string allowedSigners,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string productId,
             IntPtr ctx);
 
-        public static SelfUpdatePackage CheckSelfUpdate(ResourceRef discovery, string productId, CancellationToken ct = default)
+        public static Tuple<SelfUpdatePackage, Version> CheckSelfUpdate(ResourceRef discovery, string productId, CancellationToken ct = default)
         {
             using (var ctx = new CGoContext(ct))
             {
@@ -305,28 +305,17 @@ namespace eduVPN
                     ctx.Handle);
                 try
                 {
-                    if (r.r1 != IntPtr.Zero)
-                        throw new Exception((string)m.MarshalNativeToManaged(r.r1));
-                    return new SelfUpdatePackage(discovery.Uri, eduJSON.Parser.Parse((string)m.MarshalNativeToManaged(r.r0), ct) as IReadOnlyDictionary<string, object>);
-                }
-                catch (Exception ex)
-                {
-                    switch (ex.Message)
-                    {
-                        case "product not installed or version could not be determined":
-                            Trace.TraceInformation("Product not installed or version could not be determined");
-                            return null;
-
-                        case "update not required":
-                            Trace.TraceInformation("Update not required");
-                            return null;
-                    }
-                    throw;
+                    if (r.r2 != IntPtr.Zero)
+                        throw new Exception((string)m.MarshalNativeToManaged(r.r2));
+                    return Tuple.Create(
+                        eduJSON.Parser.Parse((string)m.MarshalNativeToManaged(r.r0), ct) is IReadOnlyDictionary<string, object> p ? new SelfUpdatePackage(discovery.Uri, p) : null,
+                        eduJSON.Parser.Parse((string)m.MarshalNativeToManaged(r.r1), ct) is string v ? new Version(v) : null);
                 }
                 finally
                 {
                     m.CleanUpNativeData(r.r0);
                     m.CleanUpNativeData(r.r1);
+                    m.CleanUpNativeData(r.r2);
                 }
             }
         }

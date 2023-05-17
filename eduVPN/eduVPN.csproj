@@ -57,6 +57,7 @@
     <Compile Include="CGoInt64Ptr.cs" />
     <Compile Include="CGoIntPtr.cs" />
     <Compile Include="CGoPtrPtr.cs" />
+    <Compile Include="CGoPtrPtrPtr.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Models\AskLocationTransition.cs" />
     <Compile Include="Models\AskProfileTransition.cs" />

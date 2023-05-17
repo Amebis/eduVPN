@@ -28,9 +28,8 @@ import (
 	"github.com/Amebis/eduVPN/eduvpn-windows/progress"
 )
 
-// Check compares latest version available from url discovery resource against version of the product installed.
-// When there is a newer version available, the self-update package description is returned.
-func Check(url string, allowedSigners []TrustedSigner, productId string, ctx context.Context) (pkg *Package, err error) {
+// Check locates latest version available from url discovery resource and version of the product installed.
+func Check(url string, allowedSigners []TrustedSigner, productId string, ctx context.Context) (pkg *Package, ver *Version, err error) {
 	type resultDiscovery struct {
 		pkg *Package
 		err error
@@ -56,23 +55,14 @@ func Check(url string, allowedSigners []TrustedSigner, productId string, ctx con
 
 	discovered := <-discovery
 	if discovered.err != nil {
-		return nil, discovered.err
+		return nil, nil, discovered.err
 	}
 	evaluated := <-evaluation
 	if evaluated.err != nil {
-		return nil, evaluated.err
+		return nil, nil, evaluated.err
 	}
 
-	// // Mock the values for testing.
-	// evaluated = resultEvaluation{ver: &Version{1, 0, 0, 0}}
-
-	if evaluated.ver == nil {
-		return nil, fmt.Errorf("product not installed or version could not be determined")
-	}
-	if discovered.pkg.Version.IsOlderOrEqual(evaluated.ver) {
-		return nil, fmt.Errorf("update not required")
-	}
-	return discovered.pkg, nil
+	return discovered.pkg, evaluated.ver, nil
 }
 
 type mywriter struct {

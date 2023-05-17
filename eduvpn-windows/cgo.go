@@ -87,20 +87,20 @@ func cError(err error) *C.char {
 }
 
 //export check_selfupdate
-func check_selfupdate(url *C.char, allowedSigners *C.char, productId *C.char, ctx C.uintptr_t) (pkg *C.char, err *C.char) {
+func check_selfupdate(url *C.char, allowedSigners *C.char, productId *C.char, ctx C.uintptr_t) (pkg *C.char, ver *C.char, err *C.char) {
 	_allowedSigners := goStringZ(allowedSigners)
 	signers := make([]selfupdate.TrustedSigner, 0, len(_allowedSigners))
 	for _, str := range _allowedSigners {
 		v := strings.Split(str, "|")
 		k, err := minisign.NewPublicKey(v[0])
 		if err != nil {
-			return nil, cError(err)
+			return nil, nil, cError(err)
 		}
 		s := selfupdate.TrustedSigner{PublicKey: k}
 		if len(v) > 1 {
 			x, err := strconv.Atoi(v[1])
 			if err != nil {
-				return nil, cError(err)
+				return nil, nil, cError(err)
 			}
 			s.AlgorithmMask = selfupdate.AlgorithmMask(x)
 		} else {
@@ -108,15 +108,19 @@ func check_selfupdate(url *C.char, allowedSigners *C.char, productId *C.char, ct
 		}
 		signers = append(signers, s)
 	}
-	p, err2 := selfupdate.Check(C.GoString(url), signers, C.GoString(productId), goContext(ctx))
+	p, v, err2 := selfupdate.Check(C.GoString(url), signers, C.GoString(productId), goContext(ctx))
 	if err2 != nil {
-		return nil, cError(err2)
+		return nil, nil, cError(err2)
 	}
 	pStr, err2 := json.Marshal(p)
 	if err2 != nil {
-		return nil, cError(fmt.Errorf("failed converting to JSON: %w", err2))
+		return nil, nil, cError(fmt.Errorf("failed converting package to JSON: %w", err2))
 	}
-	return C.CString(string(pStr)), nil
+	vStr, err2 := json.Marshal(v)
+	if err2 != nil {
+		return nil, nil, cError(fmt.Errorf("failed converting version to JSON: %w", err2))
+	}
+	return C.CString(string(pStr)), C.CString(string(vStr)), nil
 }
 
 type progressIndicator struct {
