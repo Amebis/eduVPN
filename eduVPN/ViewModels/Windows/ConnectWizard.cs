@@ -398,6 +398,9 @@ namespace eduVPN.ViewModels.Windows
                     foreach (var srv in instituteAccessServers)
                         iaSrvList.Add(srv);
                 }
+                // Skip servers that are already on our Institute Access list. Maybe server discovery won't be required at all.
+                foreach (var u in iaSrvList.Where(uri => HomePage.InstituteAccessServers.FirstOrDefault(srv => srv.Id == uri.AbsoluteUri) != null).ToList())
+                    iaSrvList.Remove(u);
 
                 siOrgId = Properties.SettingsEx.Default.SecureInternetOrganization;
                 if (siOrgId != null)
@@ -407,6 +410,10 @@ namespace eduVPN.ViewModels.Windows
                     Trace.TraceInformation("Migrating Secure Internet organization {0}", secureInternetOrganization);
                     siOrgId = secureInternetOrganization;
                 }
+                // Skip organization that is already set for Secure Internet. Maybe organization discovery won't be required at all.
+                if (HomePage.SecureInternetServers.FirstOrDefault(srv => srv.Id == siOrgId) != null ||
+                    siOrgId == "" && HomePage.SecureInternetServers.Count == 0)
+                    siOrgId = null;
             }
 
             var ownSrvList = new Xml.UriList();
@@ -416,6 +423,8 @@ namespace eduVPN.ViewModels.Windows
                 foreach (var srv in ownServers)
                     ownSrvList.Add(srv);
             }
+            foreach (var u in ownSrvList.Where(uri => HomePage.OwnServers.FirstOrDefault(srv => srv.Id == uri.AbsoluteUri) != null).ToList())
+                ownSrvList.Remove(u);
 
             if (iaSrvList.Count > 0 ||
                 siOrgId != null ||
