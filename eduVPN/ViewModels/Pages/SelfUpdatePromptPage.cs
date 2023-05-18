@@ -155,36 +155,31 @@ namespace eduVPN.ViewModels.Pages
 
         public void DiscoverVersions()
         {
-            Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-            try
+            var r = CGo.CheckSelfUpdate(
+                Properties.SettingsEx.Default.SelfUpdateDiscovery,
+                Properties.Settings.Default.SelfUpdateBundleId,
+                Window.Abort.Token);
+            Wizard.TryInvoke((Action)(() =>
             {
-                var r = CGo.CheckSelfUpdate(
-                    Properties.SettingsEx.Default.SelfUpdateDiscovery,
-                    Properties.Settings.Default.SelfUpdateBundleId,
-                    Window.Abort.Token);
-                Wizard.TryInvoke((Action)(() =>
+                if (r.Item1 != null)
                 {
-                    if (r.Item1 != null)
-                    {
-                        AvailableVersion = r.Item1.Version;
-                        Changelog = r.Item1.Changelog;
-                        Wizard.SelfUpdateProgressPage.DownloadUris = r.Item1.Uris;
-                        Wizard.SelfUpdateProgressPage.Hash = r.Item1.Hash;
-                        Wizard.SelfUpdateProgressPage.Arguments = r.Item1.Arguments;
-                    }
-                    else
-                    {
-                        AvailableVersion = null;
-                        Changelog = null;
-                        Wizard.SelfUpdateProgressPage.DownloadUris = null;
-                        Wizard.SelfUpdateProgressPage.Hash = null;
-                        Wizard.SelfUpdateProgressPage.Arguments = null;
-                    }
+                    AvailableVersion = r.Item1.Version;
+                    Changelog = r.Item1.Changelog;
+                    Wizard.SelfUpdateProgressPage.DownloadUris = r.Item1.Uris;
+                    Wizard.SelfUpdateProgressPage.Hash = r.Item1.Hash;
+                    Wizard.SelfUpdateProgressPage.Arguments = r.Item1.Arguments;
+                }
+                else
+                {
+                    AvailableVersion = null;
+                    Changelog = null;
+                    Wizard.SelfUpdateProgressPage.DownloadUris = null;
+                    Wizard.SelfUpdateProgressPage.Hash = null;
+                    Wizard.SelfUpdateProgressPage.Arguments = null;
+                }
 
-                    InstalledVersion = r.Item2 ?? null;
-                }));
-            }
-            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                InstalledVersion = r.Item2 ?? null;
+            }));
 
             //// Mock the values for testing.
             //InstalledVersion = new Version(1, 0);
