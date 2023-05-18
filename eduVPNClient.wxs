@@ -406,9 +406,6 @@
             <Component Id="VCRUNTIME140.dll" Guid="{6B7E12B7-C8CB-4E94-A0$(var.ClientId)-F3FC616FC7D3}">
                 <File Source="$(var.VCRedistDir)VCRUNTIME140$(var.VCRedistSuffix).dll"/>
             </Component>
-            <Component Id="eduLibsodium.dll" Guid="{2A7020F2-83EF-4197-94$(var.ClientId)-484E64F85962}">
-                <File Source="$(var.TargetDirClient)eduLibsodium.dll"/>
-            </Component>
             <Component Id="eduEx.dll" Guid="{36A66334-6B59-48A1-8B$(var.ClientId)-512FE8F3EE6A}">
                 <File Source="$(var.TargetDirClient)eduEx.dll"/>
             </Component>
@@ -494,9 +491,6 @@
         <?foreach Language in $(var.LanguageList)?>
         <?include Install\$(var.Language)\defs.wxi?>
         <DirectoryRef Id="RESOURCEDIR$(var.LanguageId)">
-            <Component Id="eduLibsodium.resources.dll.$(var.LanguageId)" Guid="{EFCFA402-FD73-$(var.LanguageId)-82$(var.ClientId)-D7C9C7575BD6}">
-                <File Id="eduLibsodium.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduLibsodium.resources.dll"/>
-            </Component>
             <Component Id="eduJSON.resources.dll.$(var.LanguageId)" Guid="{82195943-3982-$(var.LanguageId)-BE$(var.ClientId)-24616577F555}">
                 <File Id="eduJSON.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduJSON.resources.dll"/>
             </Component>
@@ -545,7 +539,6 @@
 
             <ComponentRef Id="Prism.dll"/>
             <ComponentRef Id="VCRUNTIME140.dll"/>
-            <ComponentRef Id="eduLibsodium.dll"/>
             <ComponentRef Id="eduEx.dll"/>
             <ComponentRef Id="eduJSON.dll"/>
             <ComponentRef Id="eduOAuth.dll"/>
@@ -565,7 +558,6 @@
 
             <?foreach Language in $(var.LanguageList)?>
             <?include Install\$(var.Language)\defs.wxi?>
-            <ComponentRef Id="eduLibsodium.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduJSON.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOAuth.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOpenVPN.resources.dll.$(var.LanguageId)"/>

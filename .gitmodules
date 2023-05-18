@@ -1,9 +1,6 @@
 [submodule "eduJSON"]
 	path = eduJSON
 	url = https://github.com/Amebis/eduJSON.git
-[submodule "eduLibsodium"]
-	path = eduLibsodium
-	url = https://github.com/Amebis/eduLibsodium.git
 [submodule "eduOAuth"]
 	path = eduOAuth
 	url = https://github.com/Amebis/eduOAuth.git

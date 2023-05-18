@@ -62,7 +62,6 @@ SetupBuild :: \
 	bin\nuget.exe restore $(NUGET_FLAGS)
 
 BuildDeps :: \
-	BuildLibsodium \
 	BuildOpenVPN \
 	BuildWireGuard \
 	BuildeduVPNCommon \
@@ -96,7 +95,6 @@ BuildWireGuard ::
 !ENDIF
 
 CleanDeps :: \
-	CleanLibsodium \
 	CleanOpenVPN \
 	CleanWireGuard \
 	CleaneduVPNCommon
@@ -164,10 +162,6 @@ CFG=Release
 
 TRANSIFEX_ORG=amebis
 TRANSIFEX_PROJ=eduvpn
-
-RESOURCE_DIR=$(MAKEDIR)\eduLibsodium\eduLibsodium
-TRANSIFEX_RES=edulibsodium
-!INCLUDE "MakefileTransifex.mak"
 
 RESOURCE_DIR=$(MAKEDIR)\eduJSON\eduJSON\Resources
 TRANSIFEX_RES=edujson

@@ -76,7 +76,6 @@ Publish :: \
 !IF "$(PLAT)" != "ARM64"
 	"bin\$(CFG)\$(PLAT)\eduEx.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis" \
-	"bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis" \
@@ -90,8 +89,6 @@ Publish :: \
 "bin\$(CFG)\$(PLAT)\eduEx.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduEx.dll"
 
 "bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduJSON.dll"
-
-"bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduLibsodium.dll"
 
 "bin\$(CFG)\$(PLAT)\eduMSICA.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduMSICA.dll"
 
@@ -128,7 +125,6 @@ Clean ::
 	-if exist "bin\$(CFG)\$(PLAT)\tunnel.vtanalysis"           del /f /q "bin\$(CFG)\$(PLAT)\tunnel.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduEx.vtanalysis"            del /f /q "bin\$(CFG)\$(PLAT)\eduEx.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis"          del /f /q "bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis"
-	-if exist "bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis"     del /f /q "bin\$(CFG)\$(PLAT)\eduLibsodium.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"         del /f /q "bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"       del /f /q "bin\$(CFG)\$(PLAT)\eduOpenVPN.vtanalysis"
 	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis"    del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_common.vtanalysis"
@@ -153,14 +149,6 @@ Clean ::
 SetupBuild :: \
 	Build-$(CFG)-$(PLAT)
 !ENDIF
-
-BuildLibsodium \
-BuildLibsodium-$(CFG)-$(PLAT) ::
-	msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
-
-CleanLibsodium \
-CleanLibsodium-$(CFG)-$(PLAT) ::
-	-msbuild.exe "eduLibsodium\libsodium\libsodium.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 
 BuildOpenVPN \
 BuildOpenVPN-$(CFG)-$(PLAT) ::
@@ -286,7 +274,6 @@ Clean ::
 !IF "$(CFG)" == "$(SETUP_CFG)"
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \
 	bin\$(CFG)\$(PLAT)\*.pdb \
-	"eduLibsodium\libsodium\Build\$(CFG)\$(PLAT_MSVC)\libsodium.pdb" \
 !IF "$(CFG)" != "Debug" && "$(PLAT)" != "ARM64"
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\compat.pdb" \
 !ENDIF

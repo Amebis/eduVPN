@@ -9,7 +9,6 @@
    - _OpenVPN_: OpenVPN upstream binaries
    - _Setup_: MSI packages and EXE installer
 - _eduJSON_: Lightweight JSON parser
-- _eduLibsodium_: libsodium wrapper providing crypto support to C#/.NET
 - _eduMSICA_: MSI custom actions
 - _eduOAuth_: OAuth 2.0 library
 - _eduOpenVPN_: OpenVPN IPC for C#/.NET
@@ -32,7 +31,7 @@
 1. Install [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/community/). A minimum set of required features is:
    - Workloads
       - .NET desktop development
-      - Desktop development with C++ (required by eduLibsodium and OpenVPN submodules and eduVPN.Resources resource projects)
+      - Desktop development with C++
    - Individual components
       - Code tools
          - Git for Windows (if not installed by other means)
