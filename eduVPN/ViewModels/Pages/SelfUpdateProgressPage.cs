@@ -9,7 +9,6 @@ using eduVPN.ViewModels.Windows;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
@@ -97,38 +96,22 @@ namespace eduVPN.ViewModels.Pages
             base.OnActivate();
 
             // Setup self-update.
+            Progress.Value = 0;
             SelfUpdateInProgress = new CancellationTokenSource();
             var ct = CancellationTokenSource.CreateLinkedTokenSource(SelfUpdateInProgress.Token, Window.Abort.Token).Token;
-            var selfUpdate = new BackgroundWorker() { WorkerReportsProgress = true };
-            selfUpdate.DoWork += (object sender, DoWorkEventArgs e) =>
+            new Thread(() =>
             {
-                selfUpdate.ReportProgress(0);
-                CGo.DownloadAndInstallSelfUpdate(DownloadUris, Hash, Arguments, ct,
-                    new CGo.SetProgress((float value) => selfUpdate.ReportProgress((int)Math.Floor(value * 100))));
-            };
-
-            // Self-update progress.
-            selfUpdate.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
-            {
-                Progress.Value = e.ProgressPercentage;
-            };
-
-            // Self-update completition.
-            selfUpdate.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
-            {
-                if (e.Error == null)
+                try
                 {
-                    // Self-updating successfuly launched. Quit to release open files.
-                    Wizard.OnQuitApplication(this);
+                    CGo.DownloadAndInstallSelfUpdate(DownloadUris, Hash, Arguments, ct,
+                        new CGo.SetProgress((float value) => Wizard.TryInvoke((Action)(() => Progress.Value = (int)Math.Floor(value * 100)))));
+
+                    // Quit to release open files.
+                    Wizard.TryInvoke((Action)(() => Wizard.OnQuitApplication(this)));
                 }
-                else if (!(e.Error is OperationCanceledException))
-                    Wizard.Error = e.Error;
-
-                // Self-dispose.
-                (sender as BackgroundWorker)?.Dispose();
-            };
-
-            selfUpdate.RunWorkerAsync();
+                catch (OperationCanceledException) { }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+            }).Start();
         }
 
         #endregion

@@ -11,7 +11,6 @@ using Prism.Commands;
 using Prism.Common;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -563,8 +562,7 @@ namespace eduVPN.ViewModels.Windows
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
             foreach (var action in actions)
             {
-                var w = new BackgroundWorker();
-                w.DoWork += (object sender, DoWorkEventArgs e) =>
+                new Thread(() =>
                 {
                     var random = new Random();
                     do
@@ -577,9 +575,7 @@ namespace eduVPN.ViewModels.Windows
                     }
                     // Sleep for given time±10%, then retry.
                     while (action.Value != 0 && !Abort.Token.WaitHandle.WaitOne(random.Next(action.Value * 9 / 10, action.Value * 11 / 10)));
-                };
-                w.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) => (sender as BackgroundWorker)?.Dispose();
-                w.RunWorkerAsync();
+                }).Start();
             }
 
             //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow wizard initialization
