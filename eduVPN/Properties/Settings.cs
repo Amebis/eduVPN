@@ -173,6 +173,7 @@ namespace eduVPN.Properties
                             ConnectWizard.Engine_SetToken(null, new Engine.SetTokenEventArgs(
                                 token.Key,
                                 token.Value.ToJSON()));
+                            token.Value.Dispose();
                         }
                         catch { }
 

@@ -167,10 +167,6 @@ RESOURCE_DIR=$(MAKEDIR)\eduJSON\eduJSON\Resources
 TRANSIFEX_RES=edujson
 !INCLUDE "MakefileTransifex.mak"
 
-RESOURCE_DIR=$(MAKEDIR)\eduOAuth\eduOAuth\Resources
-TRANSIFEX_RES=eduoauth
-!INCLUDE "MakefileTransifex.mak"
-
 RESOURCE_DIR=$(MAKEDIR)\eduOpenVPN\eduOpenVPN\Resources
 TRANSIFEX_RES=eduopenvpn
 !INCLUDE "MakefileTransifex.mak"

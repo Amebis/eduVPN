@@ -494,9 +494,6 @@
             <Component Id="eduJSON.resources.dll.$(var.LanguageId)" Guid="{82195943-3982-$(var.LanguageId)-BE$(var.ClientId)-24616577F555}">
                 <File Id="eduJSON.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduJSON.resources.dll"/>
             </Component>
-            <Component Id="eduOAuth.resources.dll.$(var.LanguageId)" Guid="{742587D9-B9B9-$(var.LanguageId)-A7$(var.ClientId)-266F1B6FF16C}">
-                <File Id="eduOAuth.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduOAuth.resources.dll"/>
-            </Component>
             <Component Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Guid="{F8C05323-1B02-$(var.LanguageId)-A3$(var.ClientId)-84B11ABE904D}">
                 <File Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduOpenVPN.resources.dll"/>
             </Component>
@@ -559,7 +556,6 @@
             <?foreach Language in $(var.LanguageList)?>
             <?include Install\$(var.Language)\defs.wxi?>
             <ComponentRef Id="eduJSON.resources.dll.$(var.LanguageId)"/>
-            <ComponentRef Id="eduOAuth.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOpenVPN.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduWireGuard.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduVPN.resources.dll.$(var.LanguageId)"/>

@@ -10,7 +10,7 @@
    - _Setup_: MSI packages and EXE installer
 - _eduJSON_: Lightweight JSON parser
 - _eduMSICA_: MSI custom actions
-- _eduOAuth_: OAuth 2.0 library
+- _eduOAuth_: OAuth 2.0 library (for importing legacy OAuth tokens)
 - _eduOpenVPN_: OpenVPN IPC for C#/.NET
 - _eduVPN_: Client logic (Model and View Model)
 - _eduVPN.Client_: eduVPN client application (Shell)

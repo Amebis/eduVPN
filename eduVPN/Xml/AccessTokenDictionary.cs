@@ -5,9 +5,9 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-
 using eduOAuth;
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -18,7 +18,7 @@ namespace eduVPN.Xml
     /// Serializable dictionary of OAuth access tokens
     /// </summary>
     [Obsolete]
-    public class AccessTokenDictionary : System.Collections.Generic.Dictionary<string, AccessToken>, IXmlSerializable
+    public class AccessTokenDictionary : Dictionary<string, AccessToken>, IXmlSerializable
     {
         #region IXmlSerializable Support
 
