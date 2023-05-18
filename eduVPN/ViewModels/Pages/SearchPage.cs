@@ -288,48 +288,46 @@ namespace eduVPN.ViewModels.Pages
             SearchInProgress = new CancellationTokenSource();
             var ct = CancellationTokenSource.CreateLinkedTokenSource(SearchInProgress.Token, Window.Abort.Token).Token;
             var keywords = Query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            new Thread(new ThreadStart(
-                () =>
+            new Thread(() =>
+            {
+                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                try
+                {
+                    var orderedServerHits = GetDiscoveredInstituteAccessServers(keywords, ct);
+                    ct.ThrowIfCancellationRequested();
+                    Wizard.TryInvoke((Action)(() =>
+                    {
+                        if (ct.IsCancellationRequested) return;
+                        var selected = SelectedInstituteAccessServer?.Id;
+                        InstituteAccessServers = orderedServerHits;
+                        SelectedInstituteAccessServer = GetDiscoveredServer<InstituteAccessServer>(selected);
+                    }));
+                }
+                catch (OperationCanceledException) { }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+            }).Start();
+            if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
+            {
+                new Thread(() =>
                 {
                     Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                     try
                     {
-                        var orderedServerHits = GetDiscoveredInstituteAccessServers(keywords, ct);
+                        var orderedOrganizationHits = GetDiscoveredOrganizations(keywords, ct);
                         ct.ThrowIfCancellationRequested();
                         Wizard.TryInvoke((Action)(() =>
                         {
                             if (ct.IsCancellationRequested) return;
-                            var selected = SelectedInstituteAccessServer?.Id;
-                            InstituteAccessServers = orderedServerHits;
-                            SelectedInstituteAccessServer = GetDiscoveredServer<InstituteAccessServer>(selected);
+                            var selected = SelectedOrganization?.Id;
+                            Organizations = orderedOrganizationHits;
+                            SelectedOrganization = GetDiscoveredOrganization(selected);
                         }));
                     }
                     catch (OperationCanceledException) { }
                     catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
-                })).Start();
-            if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
-            {
-                new Thread(new ThreadStart(
-                    () =>
-                    {
-                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                        try
-                        {
-                            var orderedOrganizationHits = GetDiscoveredOrganizations(keywords, ct);
-                            ct.ThrowIfCancellationRequested();
-                            Wizard.TryInvoke((Action)(() =>
-                            {
-                                if (ct.IsCancellationRequested) return;
-                                var selected = SelectedOrganization?.Id;
-                                Organizations = orderedOrganizationHits;
-                                SelectedOrganization = GetDiscoveredOrganization(selected);
-                            }));
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
-                        finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
-                    })).Start();
+                }).Start();
             }
 
             if (keywords.Length == 1 && keywords[0].Split('.').Length >= 3)

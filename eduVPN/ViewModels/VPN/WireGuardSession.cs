@@ -239,6 +239,7 @@ namespace eduVPN.ViewModels.VPN
                 }
                 finally
                 {
+                    propertyUpdater.Stop();
                     Wizard.TryInvoke((Action)(() =>
                     {
                         // Cleanup status properties.
@@ -248,8 +249,6 @@ namespace eduVPN.ViewModels.VPN
                         RxBytes = null;
                         TxBytes = null;
                     }));
-
-                    propertyUpdater.Stop();
                 }
             }
             finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }

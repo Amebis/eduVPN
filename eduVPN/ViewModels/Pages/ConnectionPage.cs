@@ -292,7 +292,7 @@ namespace eduVPN.ViewModels.Pages
         public void ActivateSession(Configuration config, Expiration expiration)
         {
             var server = Server;
-            new Thread(new ThreadStart(() =>
+            new Thread(() =>
             {
                 Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                 try
@@ -343,6 +343,8 @@ namespace eduVPN.ViewModels.Pages
                         }
                     }
                 }
+                catch (OperationCanceledException) { }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
                 finally
                 {
                     Wizard.TryInvoke((Action)(() =>
@@ -357,7 +359,7 @@ namespace eduVPN.ViewModels.Pages
                         Wizard.TaskCount--;
                     }));
                 }
-            })).Start();
+            }).Start();
         }
 
         #endregion
