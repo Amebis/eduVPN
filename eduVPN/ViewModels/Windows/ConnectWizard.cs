@@ -379,6 +379,24 @@ namespace eduVPN.ViewModels.Windows
             Engine.GetToken += Engine_GetToken;
             Engine.Register();
 
+            var actions = new List<KeyValuePair<Action, int>>
+            {
+                new KeyValuePair<Action, int>(() =>
+                    {
+                        try { VPN.OpenVPNSession.PurgeOldLogs(); } catch { }
+                        try { VPN.WireGuardSession.PurgeOldLogs(); } catch { }
+                    },
+                    24 * 60 * 60 * 1000), // Repeat every 24 hours
+
+                new KeyValuePair<Action, int>(() =>
+                    {
+                        var ts = CGo.GetLastUpdateTimestamp(Abort.Token);
+                        if (DateTimeOffset.UtcNow - ts > TimeSpan.FromDays(60))
+                            throw new Exception(Resources.Strings.WarningWindowsUpdatesStalled);
+                    },
+                    24 * 60 * 60 * 1000) // Repeat every 24 hours
+            };
+
             bool migrate = (Properties.Settings.Default.SettingsVersion & 0x2) == 0;
 
             ICollection<Uri> iaSrvList = new Xml.UriList();
@@ -430,10 +448,7 @@ namespace eduVPN.ViewModels.Windows
                 ownSrvList.Count > 0)
             {
                 CurrentPage = PleaseWaitPage;
-                new Thread(() =>
-                {
-                    TryInvoke((Action)(() => TaskCount++));
-                    try
+                actions.Add(new KeyValuePair<Action, int>(() =>
                     {
                         using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
                         {
@@ -471,7 +486,9 @@ namespace eduVPN.ViewModels.Windows
                                 foreach (var srv in iaSrvList)
                                 {
                                     Abort.Token.ThrowIfCancellationRequested();
-                                    try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, true); } catch { }
+                                    try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, true); }
+                                    catch (OperationCanceledException) { throw; }
+                                    catch { }
                                 }
 
                             if (siOrgId == "")
@@ -480,7 +497,9 @@ namespace eduVPN.ViewModels.Windows
                                     obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
                                 {
                                     var srv = new SecureInternetServer(srvObj);
-                                    try { Engine.RemoveServer(ServerType.SecureInternet, srv.Id); } catch { }
+                                    try { Engine.RemoveServer(ServerType.SecureInternet, srv.Id); }
+                                    catch (OperationCanceledException) { throw; }
+                                    catch { }
                                 }
                             }
                             else if (siOrgId != null)
@@ -516,50 +535,33 @@ namespace eduVPN.ViewModels.Windows
                                         }
                                     }
                                 }
+                                catch (OperationCanceledException) { throw; }
                                 catch { }
                             }
 
                             foreach (var srv in ownSrvList)
                             {
                                 Abort.Token.ThrowIfCancellationRequested();
-                                try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, true); } catch { }
+                                try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, true); }
+                                catch (OperationCanceledException) { throw; }
+                                catch { }
                             }
                         }
 
+                        // Don't set SettingsVersion flag if user cancelled and we missed it somehow.
+                        Abort.Token.ThrowIfCancellationRequested();
                         Properties.Settings.Default.SettingsVersion |= 0x2;
 
                         // eduvpn-common does not do callback after servers are added. Do the bookkeeping manually.
                         Engine_Callback(this, new Engine.CallbackEventArgs(Engine.State.Deregistered, Engine.State.NoServer, null));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
-                    finally { TryInvoke((Action)(() => TaskCount--)); }
-                }).Start();
+                    }, 0)); // No repeat
             }
 
-            var actions = new List<KeyValuePair<Action, int>>
-            {
-                new KeyValuePair<Action, int>(
-                () =>
-                {
-                    try { VPN.OpenVPNSession.PurgeOldLogs(); } catch { }
-                    try { VPN.WireGuardSession.PurgeOldLogs(); } catch { }
-                },
-                24 * 60 * 60 * 1000), // Repeat every 24 hours
-
-                new KeyValuePair<Action, int>(
-                () =>
-                {
-                    var ts = CGo.GetLastUpdateTimestamp(Abort.Token);
-                    if (DateTimeOffset.UtcNow - ts > TimeSpan.FromDays(60))
-                        throw new Exception(Resources.Strings.WarningWindowsUpdatesStalled);
-                },
-                24 * 60 * 60 * 1000) // Repeat every 24 hours
-            };
             if (Properties.SettingsEx.Default.SelfUpdateDiscovery?.Uri != null)
                 actions.Add(new KeyValuePair<Action, int>(
                     SelfUpdatePromptPage.DiscoverVersions,
                     24 * 60 * 60 * 1000)); // Repeat every 24 hours
+
             foreach (var action in actions)
             {
                 new Thread(() =>
@@ -569,7 +571,7 @@ namespace eduVPN.ViewModels.Windows
                     {
                         TryInvoke((Action)(() => TaskCount++));
                         try { action.Key(); }
-                        catch (OperationCanceledException) { }
+                        catch (OperationCanceledException) { break; }
                         catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
                         finally { TryInvoke((Action)(() => TaskCount--)); }
                     }
