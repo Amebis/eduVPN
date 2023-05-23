@@ -727,8 +727,7 @@ namespace eduVPN.ViewModels.Windows
                     ConnectionPage.Server = null;
                     return;
                 }
-                else
-                    throw;
+                throw;
             }
             finally { OperationInProgress = null; }
             ConnectionPage.Server = server;
@@ -797,6 +796,9 @@ namespace eduVPN.ViewModels.Windows
             // Engine.CurrentServer() later.
             ConnectionPage.Server = server;
 
+            // Not auto-reconnecting. Just reconnecting.
+            Properties.Settings.Default.LastSelectedServer = null;
+
             Configuration config;
             Expiration expiration;
             try
@@ -820,6 +822,56 @@ namespace eduVPN.ViewModels.Windows
 
                         return (srv, cfg, exp);
                     });
+            }
+            finally { OperationInProgress = null; }
+            ConnectionPage.Server = server;
+            ConnectionPage.ActivateSession(config, expiration);
+            CurrentPage = ConnectionPage;
+        }
+
+        /// <summary>
+        /// Reconnect
+        /// </summary>
+        /// <param name="server">Server</param>
+        public async void Reconnect()
+        {
+            var server = ConnectionPage.Server;
+
+            // Not auto-reconnecting. Just reconnecting.
+            Properties.Settings.Default.LastSelectedServer = null;
+
+            Configuration config;
+            Expiration expiration;
+            try
+            {
+                using (OperationInProgress = new Engine.CancellationTokenCookie(Abort.Token))
+                    (server, config, expiration) = await Task.Run(() =>
+                    {
+                        var cfg = new Configuration(eduJSON.Parser.Parse(
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.OpenVPNPreferTCP),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var srv = Server.Load(eduJSON.Parser.Parse(
+                            Engine.CurrentServer(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        var exp = new Expiration(eduJSON.Parser.Parse(
+                            Engine.ExpiryTimes(),
+                            Abort.Token) as Dictionary<string, object>);
+
+                        return (srv, cfg, exp);
+                    });
+            }
+            catch
+            {
+                if (Properties.Settings.Default.LastSelectedServer == server.Id)
+                {
+                    AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(server, server));
+                    Properties.Settings.Default.LastSelectedServer = null;
+                    ConnectionPage.Server = null;
+                    return;
+                }
+                throw;
             }
             finally { OperationInProgress = null; }
             ConnectionPage.Server = server;
