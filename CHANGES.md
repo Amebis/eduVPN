@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.4...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.4.1...HEAD)
+
+
+## [3.4.1](https://github.com/Amebis/eduVPN/compare/3.4...3.4.1) (2023-05-23)
 
 - Session Renewal fixed
 - OpenVPN updated to 2.5.9-20230427
