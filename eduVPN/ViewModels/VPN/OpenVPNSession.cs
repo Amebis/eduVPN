@@ -125,13 +125,16 @@ namespace eduVPN.ViewModels.VPN
                                 {
                                     try
                                     {
+                                        ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
+
+                                        var authenticatingServer = Wizard.GetAuthenticatingServer(ConnectingProfile.Server);
+                                        Wizard.AuthorizationPage.OnForgetAuthorization(authenticatingServer, null);
                                         var config = ConnectingProfile.Connect(
-                                            Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                                            authenticatingServer,
                                             true,
                                             ProfileConfig.ContentType,
                                             SessionAndWindowInProgress.Token);
                                         Wizard.TryInvoke((Action)(() => ProfileConfig = config));
-                                        ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
                                     }
                                     catch (OperationCanceledException) { }
                                     catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }

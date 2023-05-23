@@ -80,7 +80,7 @@ namespace eduVPN.Models
         /// Forget authorization event
         /// </summary>
         /// <remarks>Sender is the authenticating server <see cref="Server"/>.</remarks>
-        public event EventHandler<ForgetAuthorizationEventArgs> ForgetAuthorization;
+        public event EventHandler ForgetAuthorization;
 
         #endregion
 
@@ -266,7 +266,7 @@ namespace eduVPN.Models
         public void Forget()
         {
             // Ask authorization provider to forget our authorization token.
-            ForgetAuthorization?.Invoke(this, new ForgetAuthorizationEventArgs("config"));
+            ForgetAuthorization?.Invoke(this, null);
 
             Properties.Settings.Default.LastSelectedProfile.Remove(Base.AbsoluteUri);
         }

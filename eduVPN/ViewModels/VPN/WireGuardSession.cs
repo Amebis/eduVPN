@@ -212,7 +212,7 @@ namespace eduVPN.ViewModels.VPN
                 propertyUpdater.Start();
                 try
                 {
-                    retry:
+                retry:
                     // Connect to WireGuard Tunnel Manager Service to activate the tunnel.
                     using (var managerSession = new eduWireGuard.ManagerService.Session())
                     {
@@ -299,10 +299,14 @@ namespace eduVPN.ViewModels.VPN
                             return;
                     }
 
+                    var authenticatingServer = Wizard.GetAuthenticatingServer(ConnectingProfile.Server);
+                    if (RenewInProgress.IsCancellationRequested)
+                        Wizard.AuthorizationPage.OnForgetAuthorization(authenticatingServer, null);
+
                     // Reapply for a profile config.
                     ConnectingProfile.Server.ResetKeypair();
                     var config = ConnectingProfile.Connect(
-                        Wizard.GetAuthenticatingServer(ConnectingProfile.Server),
+                        authenticatingServer,
                         true,
                         ProfileConfig.ContentType,
                         Window.Abort.Token);

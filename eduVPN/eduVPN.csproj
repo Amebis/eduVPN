@@ -55,7 +55,6 @@
     <Compile Include="JSON\Extensions.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\InvalidAccessTokenException.cs" />
-    <Compile Include="Models\ForgetAuthorizationEventArgs.cs" />
     <Compile Include="Models\InstallerFileUnavailableException.cs" />
     <Compile Include="Models\ObservableCollectionEx.cs" />
     <Compile Include="Models\Organization.cs" />

@@ -287,7 +287,7 @@ namespace eduVPN.ViewModels.Pages
         /// </summary>
         /// <param name="sender">Server of type <see cref="Server"/> requiring authorization</param>
         /// <param name="e">Authorization forget event arguments</param>
-        public void OnForgetAuthorization(object sender, ForgetAuthorizationEventArgs e)
+        public void OnForgetAuthorization(object sender, EventArgs e)
         {
             if (!(sender is Server authenticatingServer))
                 return;
