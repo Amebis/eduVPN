@@ -8,6 +8,7 @@
 package healthcheck
 
 import (
+	"context"
 	"testing"
 	"unsafe"
 
@@ -27,12 +28,13 @@ func TestHealthCheck(t *testing.T) {
 	}
 	defer session3.Release()
 
-	_, err := MostRecentUpdateTimestamp(session3)
+	ctx := context.Background()
+	_, err := MostRecentUpdateTimestamp(session3, ctx)
 	if err != nil {
 		t.Errorf("Failed to get last update timestamp: %#v", err)
 	}
 
-	history, err := UpdateHistory(session3)
+	history, err := UpdateHistory(session3, ctx)
 	if err != nil {
 		t.Errorf("Failed to enumerate update history: %#v", err)
 	}
