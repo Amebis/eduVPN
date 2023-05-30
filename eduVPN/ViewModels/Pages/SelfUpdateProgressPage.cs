@@ -110,7 +110,7 @@ namespace eduVPN.ViewModels.Pages
                     Wizard.TryInvoke((Action)(() => Wizard.OnQuitApplication(this)));
                 }
                 catch (OperationCanceledException) { }
-                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
             }).Start();
         }
 

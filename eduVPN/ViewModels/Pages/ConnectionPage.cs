@@ -344,7 +344,7 @@ namespace eduVPN.ViewModels.Pages
                     }
                 }
                 catch (OperationCanceledException) { }
-                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
                 finally
                 {
                     Wizard.TryInvoke((Action)(() =>

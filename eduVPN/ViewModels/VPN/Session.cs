@@ -418,7 +418,7 @@ namespace eduVPN.ViewModels.VPN
                                 Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu);
                             }
                             catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw new Exception(Resources.Strings.WarningNoTrafficDetected, ex))); }
+                            catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningNoTrafficDetected, ex))); }
                     }
                 }
             };
@@ -518,7 +518,7 @@ namespace eduVPN.ViewModels.VPN
                         {
                             // Other users are signed in. Wait for all of them to sign out or our session is cancelled (by user, by expiration, by quitting the client).
                             var ex = new Exception(Resources.Strings.WarningAnotherUserSession);
-                            Wizard.TryInvoke((Action)(() => throw ex));
+                            Wizard.TryInvoke((Action)(() => Wizard.Error = ex));
                             var ct = CancellationTokenSource.CreateLinkedTokenSource(SessionAndWindowInProgress.Token, waitingForForeignSessionSignOutInProgress.Token);
                             ct.Token.WaitHandle.WaitOne();
                             waitingForForeignSessionSignOutInProgress = null;
@@ -548,7 +548,7 @@ namespace eduVPN.ViewModels.VPN
                                             {
                                                 var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
                                                 if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
-                                                    Wizard.TryInvoke((Action)(() => throw new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                                    Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
                                             }
                                         }
                                     }

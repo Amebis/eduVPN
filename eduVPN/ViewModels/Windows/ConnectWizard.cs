@@ -572,7 +572,7 @@ namespace eduVPN.ViewModels.Windows
                         TryInvoke((Action)(() => TaskCount++));
                         try { action.Key(); }
                         catch (OperationCanceledException) { break; }
-                        catch (Exception ex) { TryInvoke((Action)(() => throw ex)); }
+                        catch (Exception ex) { TryInvoke((Action)(() => Error = ex)); }
                         finally { TryInvoke((Action)(() => TaskCount--)); }
                     }
                     // Sleep for given time±10%, then retry.
