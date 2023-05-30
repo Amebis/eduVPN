@@ -13,6 +13,9 @@ package main
 
 typedef void (*set_progress)(float current);
 static void call_set_progress(set_progress callback, float value) { callback(value); }
+
+typedef void (*on_wts_change)(uint32_t event, uint32_t session_id);
+static void call_on_wts_change(on_wts_change callback, uint32_t event, uint32_t session_id) { callback(event, session_id); }
 */
 import "C"
 
@@ -27,6 +30,7 @@ import (
 
 	"github.com/Amebis/eduVPN/eduvpn-windows/healthcheck"
 	"github.com/Amebis/eduVPN/eduvpn-windows/selfupdate"
+	"github.com/Amebis/eduVPN/eduvpn-windows/sessioncheck"
 	"github.com/jedisct1/go-minisign"
 	"github.com/lxn/win"
 )
@@ -61,7 +65,7 @@ func goContext(ctx C.uintptr_t) context.Context {
 //export cancel_context
 func cancel_context(ctx C.uintptr_t) {
 	if ctx != 0 {
-		cgo.Handle(ctx).Value().(mycontext).cancel()
+		cgo.Handle(ctx).Value().(*mycontext).cancel()
 	}
 }
 
@@ -161,4 +165,26 @@ func get_last_update_timestamp(ctx C.uintptr_t) (timestamp C.int64_t, err *C.cha
 		return 0, cError(err2)
 	}
 	return C.int64_t(t.Unix()), nil
+}
+
+func multisession_monitoring_callback(event sessioncheck.Event, sessionId uint32, data any) {
+	C.call_on_wts_change(data.(C.on_wts_change), C.uint32_t(event), C.uint32_t(sessionId))
+}
+
+//export start_multisession_monitoring
+func start_multisession_monitoring(onWTSChange C.on_wts_change) (handle C.uintptr_t, err *C.char) {
+	m, err2 := sessioncheck.InitMonitor(multisession_monitoring_callback, onWTSChange)
+	if err2 != nil {
+		return 0, cError(fmt.Errorf("failed to init session monitoring: %w", err2))
+	}
+	return C.uintptr_t(cgo.NewHandle(m)), nil
+}
+
+//export stop_multisession_monitoring
+func stop_multisession_monitoring(handle C.uintptr_t) {
+	if handle != 0 {
+		h := cgo.Handle(handle)
+		h.Value().(*sessioncheck.Monitor).Close()
+		h.Delete()
+	}
 }

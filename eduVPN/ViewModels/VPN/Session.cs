@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -306,7 +307,7 @@ namespace eduVPN.ViewModels.VPN
                             State = SessionStatusType.Disconnecting;
                             SessionInProgress.Cancel();
                             _Renew.RaiseCanExecuteChanged();
-                            _Disconnect.RaiseCanExecuteChanged();
+                            _Disconnect?.RaiseCanExecuteChanged();
                         },
                         () => !RenewInProgress && State == SessionStatusType.Connected);
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
@@ -372,7 +373,7 @@ namespace eduVPN.ViewModels.VPN
             {
                 // Disconnect session when expired.
                 if ((e.PropertyName == nameof(State) || e.PropertyName == nameof(Expired)) &&
-                    (State == SessionStatusType.Initializing || State == SessionStatusType.Connecting || State == SessionStatusType.Connected) &&
+                    (State == SessionStatusType.Waiting || State == SessionStatusType.Initializing || State == SessionStatusType.Connecting || State == SessionStatusType.Connected) &&
                     Expired &&
                     Disconnect.CanExecute())
                     Disconnect.Execute();
@@ -442,83 +443,150 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public void Execute()
         {
-            Wizard.TryInvoke((Action)(() => State = SessionStatusType.Initializing));
+            // It is important to start updating the timers, to allow session self-disconnection on expiration
+            // even if the session is waiting for other users to sign out.
+            var sessionExpirationWarning = DateTimeOffset.Now;
+            var propertyUpdater = new DispatcherTimer(
+                new TimeSpan(0, 0, 0, 1),
+                DispatcherPriority.Normal,
+                (object senderTimer, EventArgs eTimer) =>
+                {
+                    RaisePropertyChanged(nameof(ConnectedTime));
+                    RaisePropertyChanged(nameof(Expired));
+                    RaisePropertyChanged(nameof(ShowExpiredTime));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(OfferRenewal));
+                    var now = DateTimeOffset.Now;
+                    var x = Expiration.NotificationAt.FirstOrDefault(t => sessionExpirationWarning < t && t <= now);
+                    if (x != default)
+                    {
+                        WarnExpiration?.Invoke(this, null);
+                        sessionExpirationWarning = x;
+                        Expiration.NotificationAt.Remove(x);
+                    }
+                },
+                Wizard.Dispatcher);
+            propertyUpdater.Start();
             try
             {
-                // Is the default gateway a VPN already?
-                using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                CancellationTokenSource waitingForForeignSessionSignOutInProgress = null;
+                var foreignSessions = new List<uint>();
+                bool suspendToWait = false;
+                void onWTSChange(CGo.SessionMonitor.Event evnt, uint sessionId)
                 {
-                    using (var networkKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}", false))
+                    switch (evnt)
                     {
-                        foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
-                            .Where(n =>
-                                n.OperationalStatus == OperationalStatus.Up &&
-                                n.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                                n.GetIPProperties()?.GatewayAddresses.Count > 0))
-                        {
-                            try
+                        case CGo.SessionMonitor.Event.SessionReportLogon:
+                            // Other users are already signed-in and we will not start a VPN connection at all.
+                            Trace.TraceInformation("User session {0} is signed in", sessionId);
+                            foreignSessions.Add(sessionId);
+                            waitingForForeignSessionSignOutInProgress = new CancellationTokenSource();
+                            break;
+
+                        case CGo.SessionMonitor.Event.SessionLogon:
+                            // Another user signed in.
+                            Trace.TraceInformation("User session {0} is signing in", sessionId);
+                            lock (foreignSessions)
+                                foreignSessions.Add(sessionId);
+                            if (waitingForForeignSessionSignOutInProgress == null)
                             {
-                                using (var connectionKey = networkKey.OpenSubKey(iface.Id + "\\Connection", false))
+                                // Our session is connected (not waiting). Disconnect and spawn a new session waiting.
+                                suspendToWait = true;
+                                SessionInProgress.Cancel();
+                                Wizard.TryInvoke((Action)(() => _Disconnect?.RaiseCanExecuteChanged()));
+                            }
+                            break;
+
+                        case CGo.SessionMonitor.Event.SessionLogoff:
+                            // Other user signed out.
+                            Trace.TraceInformation("User session {0} is signing out", sessionId);
+                            lock (foreignSessions)
+                            {
+                                foreignSessions.Remove(sessionId);
+                                if (foreignSessions.Count == 0)
+                                    waitingForForeignSessionSignOutInProgress?.Cancel();
+                            }
+                            break;
+                    }
+                }
+                using (var wtsMonitor = new CGo.SessionMonitor(onWTSChange))
+                {
+                    Wizard.TryInvoke((Action)(() => State = SessionStatusType.Waiting));
+                    try
+                    {
+                        if (waitingForForeignSessionSignOutInProgress != null)
+                        {
+                            // Other users are signed in. Wait for all of them to sign out or our session is cancelled (by user, by expiration, by quitting the client).
+                            var ex = new Exception(Resources.Strings.WarningAnotherUserSession);
+                            Wizard.TryInvoke((Action)(() => throw ex));
+                            var ct = CancellationTokenSource.CreateLinkedTokenSource(SessionAndWindowInProgress.Token, waitingForForeignSessionSignOutInProgress.Token);
+                            ct.Token.WaitHandle.WaitOne();
+                            waitingForForeignSessionSignOutInProgress = null;
+                            Wizard.TryInvoke((Action)(() => { if (Wizard.Error == ex) Wizard.Error = null; }));
+                            if (SessionAndWindowInProgress.Token.IsCancellationRequested)
+                                throw new OperationCanceledException();
+                        }
+                        Wizard.TryInvoke((Action)(() => State = SessionStatusType.Initializing));
+
+                        // Is the default gateway a VPN already?
+                        using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                        {
+                            using (var networkKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}", false))
+                            {
+                                foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                                    .Where(n =>
+                                        n.OperationalStatus == OperationalStatus.Up &&
+                                        n.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                                        n.GetIPProperties()?.GatewayAddresses.Count > 0))
                                 {
-                                    var pnpInstanceId = connectionKey.GetValue("PnPInstanceId").ToString();
-                                    using (var deviceKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Enum\\" + pnpInstanceId, false))
+                                    try
                                     {
-                                        var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
-                                        if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
-                                            Wizard.TryInvoke((Action)(() => throw new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                        using (var connectionKey = networkKey.OpenSubKey(iface.Id + "\\Connection", false))
+                                        {
+                                            var pnpInstanceId = connectionKey.GetValue("PnPInstanceId").ToString();
+                                            using (var deviceKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Enum\\" + pnpInstanceId, false))
+                                            {
+                                                var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
+                                                if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
+                                                    Wizard.TryInvoke((Action)(() => throw new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                            }
+                                        }
+                                    }
+                                    catch (OperationCanceledException) { throw; }
+                                    catch
+                                    {
+                                        // Detecting default gateway VPN is advisory-only. Not the end of the world if the test fails.
                                     }
                                 }
                             }
-                            catch (OperationCanceledException) { throw; }
-                            catch
-                            {
-                                // Detecting default gateway VPN is advisory-only. Not the end of the world if the test fails.
-                            }
                         }
+
+                        // Finally!
+                        Run();
+                    }
+                    finally
+                    {
+                        Wizard.TryInvoke((Action)(() =>
+                        {
+                            // Cleanup status properties.
+                            State = SessionStatusType.Disconnected;
+                            StateDescription = "";
+
+                            if (!Window.Abort.IsCancellationRequested && !Expired)
+                            {
+                                // Client is not quitting and our session is not expired. Maybe we should (renew and) reconnect?
+                                if (RenewInProgress)
+                                    Wizard.RenewAndConnect(Server);
+                                else if (suspendToWait)
+                                    Wizard.Connect(Server);
+                                else if (!SessionInProgress.IsCancellationRequested)
+                                    Wizard.Connect(Server);
+                            }
+                        }));
                     }
                 }
-                var sessionExpirationWarning = DateTimeOffset.Now;
-                var propertyUpdater = new DispatcherTimer(
-                    new TimeSpan(0, 0, 0, 1),
-                    DispatcherPriority.Normal,
-                    (object senderTimer, EventArgs eTimer) =>
-                    {
-                        RaisePropertyChanged(nameof(ConnectedTime));
-                        RaisePropertyChanged(nameof(Expired));
-                        RaisePropertyChanged(nameof(ShowExpiredTime));
-                        RaisePropertyChanged(nameof(ExpiresTime));
-                        RaisePropertyChanged(nameof(OfferRenewal));
-                        var now = DateTimeOffset.Now;
-                        var x = Expiration.NotificationAt.FirstOrDefault(t => sessionExpirationWarning < t && t <= now);
-                        if (x != default)
-                        {
-                            WarnExpiration?.Invoke(this, null);
-                            sessionExpirationWarning = x;
-                            Expiration.NotificationAt.Remove(x);
-                        }
-                    },
-                    Wizard.Dispatcher);
-                propertyUpdater.Start();
-                try { Run(); }
-                finally { propertyUpdater.Stop(); }
             }
-            finally
-            {
-                Wizard.TryInvoke((Action)(() =>
-                {
-                    // Cleanup status properties.
-                    State = SessionStatusType.Disconnected;
-                    StateDescription = "";
-
-                    if (!Window.Abort.IsCancellationRequested)
-                    {
-                        if (RenewInProgress)
-                            Wizard.RenewAndConnect(Server);
-                        else if (!SessionInProgress.IsCancellationRequested)
-                            Wizard.Connect(Server);
-                    }
-                }));
-            }
+            finally { propertyUpdater.Stop(); }
         }
 
         /// <summary>

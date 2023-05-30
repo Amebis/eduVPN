@@ -17,8 +17,8 @@ func TestSession(t *testing.T) {
 		t.Errorf("Error enumerating sessions: %#v", err)
 	}
 	for _, session := range array {
-		if session.SessionName == "" {
-			t.Errorf("Invalid session name: %v", session.SessionName)
+		if session.SessionName == "" && session.UserName == "" {
+			t.Errorf("Invalid session/user name: %v/%v", session.SessionName, session.UserName)
 		}
 	}
 }

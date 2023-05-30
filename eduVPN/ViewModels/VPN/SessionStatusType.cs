@@ -18,6 +18,11 @@ namespace eduVPN.ViewModels.VPN
         Disconnected = 0,
 
         /// <summary>
+        /// Connection is waiting for other users to sign out.
+        /// </summary>
+        Waiting,
+
+        /// <summary>
         /// Connection is initializing.
         /// </summary>
         Initializing,

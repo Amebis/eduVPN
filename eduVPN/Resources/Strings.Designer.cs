@@ -331,6 +331,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first....
+        /// </summary>
+        internal static string WarningAnotherUserSession {
+            get {
+                return ResourceManager.GetString("WarningAnotherUserSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work..
         /// </summary>
         internal static string WarningDefaultGatewayIsVPN {

@@ -88,3 +88,92 @@ func EnumerateSessions(server windows.Handle) ([]Session, error) {
 	}
 	return result, nil
 }
+
+const WTS_CURRENT_SERVER windows.Handle = windows.Handle(0)
+
+const (
+	NOTIFY_FOR_ALL_SESSIONS uint32 = 1
+	NOTIFY_FOR_THIS_SESSION uint32 = 0
+)
+
+const WM_WTSSESSION_CHANGE uint32 = 0x02b1
+
+const (
+	WTS_CONSOLE_CONNECT        = 0x1
+	WTS_CONSOLE_DISCONNECT     = 0x2
+	WTS_REMOTE_CONNECT         = 0x3
+	WTS_REMOTE_DISCONNECT      = 0x4
+	WTS_SESSION_LOGON          = 0x5
+	WTS_SESSION_LOGOFF         = 0x6
+	WTS_SESSION_LOCK           = 0x7
+	WTS_SESSION_UNLOCK         = 0x8
+	WTS_SESSION_REMOTE_CONTROL = 0x9
+	WTS_SESSION_CREATE         = 0xa
+	WTS_SESSION_TERMINATE      = 0xb
+)
+
+//sys RegisterSessionNotification(server windows.Handle, hwnd windows.HWND, flags uint32) (err error) = wtsapi32.WTSRegisterSessionNotificationEx
+//sys UnregisterSessionNotification(server windows.Handle, hwnd windows.HWND) (err error) = wtsapi32.WTSUnRegisterSessionNotificationEx
+
+type WTS_INFO_CLASS uint32
+
+const (
+	WTSInitialProgram WTS_INFO_CLASS = iota
+	WTSApplicationName
+	WTSWorkingDirectory
+	WTSOEMId
+	WTSSessionId
+	WTSUserName
+	WTSWinStationName
+	WTSDomainName
+	WTSConnectState
+	WTSClientBuildNumber
+	WTSClientName
+	WTSClientDirectory
+	WTSClientProductId
+	WTSClientHardwareId
+	WTSClientAddress
+	WTSClientDisplay
+	WTSClientProtocolType
+	WTSIdleTime
+	WTSLogonTime
+	WTSIncomingBytes
+	WTSOutgoingBytes
+	WTSIncomingFrames
+	WTSOutgoingFrames
+	WTSClientInfo
+	WTSSessionInfo
+	WTSSessionInfoEx
+	WTSConfigInfo
+	WTSValidationInfo // Info Class value used to fetch Validation Information through the WTSQuerySessionInformation
+	WTSSessionAddressV4
+	WTSIsRemoteSession
+)
+
+const WTS_CURRENT_SESSION uint32 = 0xffffffff
+
+//sys wtsFreeMemory(pMemory uintptr) = wtsapi32.WTSFreeMemory
+//sys wtsQuerySessionInformation(hServer windows.Handle, SessionId uint32, WTSInfoClass WTS_INFO_CLASS, ppBuffer *uintptr, pBytesReturned *uint32) (err error) = wtsapi32.WTSQuerySessionInformationW
+
+func querySessionInformationULONG(server windows.Handle, sessionId uint32, infoClass WTS_INFO_CLASS) (uint32, error) {
+	var addr uintptr
+	var size uint32
+	err := wtsQuerySessionInformation(server, sessionId, infoClass, &addr, &size)
+	if err != nil {
+		return 0, err
+	}
+	defer wtsFreeMemory(addr)
+	return *(*uint32)(unsafe.Pointer(addr)), nil
+}
+
+func SessionId() (uint32, error) {
+	id, err := querySessionInformationULONG(WTS_CURRENT_SERVER, WTS_CURRENT_SESSION, WTSSessionId)
+	if err == nil {
+		return id, nil
+	}
+	err = windows.ProcessIdToSessionId(windows.GetCurrentProcessId(), &id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
+}

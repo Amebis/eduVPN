@@ -613,6 +613,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Waiting....
+        /// </summary>
+        public static string SessionStatusTypeWaiting {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} has detected that your user settings file {1} has become corrupted. This may be due to a crash.
         ///
         ///If you continue, your user settings will be reset to the default..

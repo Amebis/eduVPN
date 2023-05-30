@@ -266,6 +266,120 @@ namespace eduVPN
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void SetProgress([MarshalAs(UnmanagedType.R4)] float value);
 
+        /// <summary>
+        /// Terminal Services session monitor
+        /// </summary>
+        public class SessionMonitor : IDisposable
+        {
+            #region Data types
+
+            /// <summary>
+            /// Event type
+            /// </summary>
+            public enum Event : uint
+            {
+                ConsoleConnect       = 0x1 /*WTS_CONSOLE_CONNECT*/,
+                ConsoleDisconnect    = 0x2 /*WTS_CONSOLE_DISCONNECT*/,
+                RemoteConnect        = 0x3 /*WTS_REMOTE_CONNECT*/,
+                RemoteDisconnect     = 0x4 /*WTS_REMOTE_DISCONNECT*/,
+                SessionReportLogon   = 0x5 /*WTS_SESSION_LOGON */| 0x8000000,
+                SessionLogon         = 0x5 /*WTS_SESSION_LOGON*/,
+                SessionLogoff        = 0x6 /*WTS_SESSION_LOGOFF*/,
+                SessionLock          = 0x7 /*WTS_SESSION_LOCK*/,
+                SessionUnlock        = 0x8 /*WTS_SESSION_UNLOCK*/,
+                SessionRemoteControl = 0x9 /*WTS_SESSION_REMOTE_CONTROL*/,
+                SessionCreate        = 0xa /*WTS_SESSION_CREATE*/,
+                SessionTerminate     = 0xb /*WTS_SESSION_TERMINATE*/,
+            }
+
+            #endregion
+
+            #region Properties
+
+            /// <summary>
+            /// eduvpn-windows session monitor handle
+            /// </summary>
+            IntPtr Handle { get; }
+
+            #endregion
+
+            #region Constructors
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            delegate void OnWTSChange(Event evnt, uint sessionId);
+
+            readonly OnWTSChange Callback;
+
+            [DllImport("eduvpn_windows.dll", CallingConvention = CallingConvention.Cdecl)]
+            static extern CGoPtrPtr start_multisession_monitoring(OnWTSChange onWTSChange);
+
+            /// <summary>
+            /// Create new session monitor
+            /// </summary>
+            /// <param name="onWTSChange">Called on any session change</param>
+            public SessionMonitor(Action<Event, uint> onWTSChange)
+            {
+                Callback = new OnWTSChange((evnt, sessionId) => onWTSChange(evnt, sessionId));
+                var m = CGoToManagedStringMarshaller.GetInstance(null);
+                var r = start_multisession_monitoring(Callback);
+                try
+                {
+                    if (r.r1 != IntPtr.Zero)
+                        throw new Exception((string)m.MarshalNativeToManaged(r.r1));
+                    Handle = r.r0;
+                }
+                finally
+                {
+                    m.CleanUpNativeData(r.r1);
+                }
+            }
+
+            #endregion
+
+            #region IDisposable Support
+            /// <summary>
+            /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+            /// </summary>
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            bool disposedValue = false;
+
+            [DllImport("eduvpn_windows.dll", CallingConvention = CallingConvention.Cdecl)]
+            static extern void stop_multisession_monitoring(IntPtr handle);
+
+            /// <summary>
+            /// Called to dispose the object.
+            /// </summary>
+            /// <param name="disposing">Dispose managed objects</param>
+            /// <remarks>
+            /// To release resources for inherited classes, override this method.
+            /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+            /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+            /// </remarks>
+            protected virtual void Dispose(bool disposing)
+            {
+                if (!disposedValue)
+                {
+                    if (disposing)
+                        stop_multisession_monitoring(Handle);
+                    disposedValue = true;
+                }
+            }
+
+            /// <summary>
+            /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+            /// </summary>
+            /// <remarks>
+            /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+            /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+            /// </remarks>
+            public void Dispose()
+            {
+                // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+                Dispose(true);
+            }
+            #endregion
+        }
+
         #endregion
 
         #region Fields

@@ -395,4 +395,7 @@ Prosimo, počakajte ...</value>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
     <value>This will take a few seconds...</value>
   </data>
+  <data name="SessionStatusTypeWaiting" xml:space="preserve">
+    <value>Waiting...</value>
+  </data>
 </root>

@@ -40,8 +40,12 @@ func errnoErr(e syscall.Errno) error {
 var (
 	modwtsapi32 = windows.NewLazySystemDLL("wtsapi32.dll")
 
-	procWTSEnumerateSessionsExW = modwtsapi32.NewProc("WTSEnumerateSessionsExW")
-	procWTSFreeMemoryExW        = modwtsapi32.NewProc("WTSFreeMemoryExW")
+	procWTSEnumerateSessionsExW            = modwtsapi32.NewProc("WTSEnumerateSessionsExW")
+	procWTSFreeMemory                      = modwtsapi32.NewProc("WTSFreeMemory")
+	procWTSFreeMemoryExW                   = modwtsapi32.NewProc("WTSFreeMemoryExW")
+	procWTSQuerySessionInformationW        = modwtsapi32.NewProc("WTSQuerySessionInformationW")
+	procWTSRegisterSessionNotificationEx   = modwtsapi32.NewProc("WTSRegisterSessionNotificationEx")
+	procWTSUnRegisterSessionNotificationEx = modwtsapi32.NewProc("WTSUnRegisterSessionNotificationEx")
 )
 
 func wtsEnumerateSessionsExW(hServer windows.Handle, pLevel *uint32, Filter uint32, ppSessionInfo **WTS_SESSION_INFO_1W, pCount *uint32) (err error) {
@@ -52,8 +56,37 @@ func wtsEnumerateSessionsExW(hServer windows.Handle, pLevel *uint32, Filter uint
 	return
 }
 
+func wtsFreeMemory(pMemory uintptr) {
+	syscall.Syscall(procWTSFreeMemory.Addr(), 1, uintptr(pMemory), 0, 0)
+	return
+}
+
 func wtsFreeMemoryExW(WTSTypeClass WTS_TYPE_CLASS, pMemory uintptr, NumberOfEntries uint32) (err error) {
 	r1, _, e1 := syscall.Syscall(procWTSFreeMemoryExW.Addr(), 3, uintptr(WTSTypeClass), uintptr(pMemory), uintptr(NumberOfEntries))
+	if r1 == 0 {
+		err = errnoErr(e1)
+	}
+	return
+}
+
+func wtsQuerySessionInformation(hServer windows.Handle, SessionId uint32, WTSInfoClass WTS_INFO_CLASS, ppBuffer *uintptr, pBytesReturned *uint32) (err error) {
+	r1, _, e1 := syscall.Syscall6(procWTSQuerySessionInformationW.Addr(), 5, uintptr(hServer), uintptr(SessionId), uintptr(WTSInfoClass), uintptr(unsafe.Pointer(ppBuffer)), uintptr(unsafe.Pointer(pBytesReturned)), 0)
+	if r1 == 0 {
+		err = errnoErr(e1)
+	}
+	return
+}
+
+func RegisterSessionNotification(server windows.Handle, hwnd windows.HWND, flags uint32) (err error) {
+	r1, _, e1 := syscall.Syscall(procWTSRegisterSessionNotificationEx.Addr(), 3, uintptr(server), uintptr(hwnd), uintptr(flags))
+	if r1 == 0 {
+		err = errnoErr(e1)
+	}
+	return
+}
+
+func UnregisterSessionNotification(server windows.Handle, hwnd windows.HWND) (err error) {
+	r1, _, e1 := syscall.Syscall(procWTSUnRegisterSessionNotificationEx.Addr(), 2, uintptr(server), uintptr(hwnd), 0)
 	if r1 == 0 {
 		err = errnoErr(e1)
 	}
