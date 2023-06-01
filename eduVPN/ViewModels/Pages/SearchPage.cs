@@ -287,7 +287,7 @@ namespace eduVPN.ViewModels.Pages
                         }));
                     }
                     catch (OperationCanceledException) { }
-                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                 })).Start();
             if (Properties.SettingsEx.Default.SecureInternetOrganization == null)
@@ -309,7 +309,7 @@ namespace eduVPN.ViewModels.Pages
                             }));
                         }
                         catch (OperationCanceledException) { }
-                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
                         finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                     })).Start();
             }

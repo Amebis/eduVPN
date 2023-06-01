@@ -388,7 +388,7 @@ namespace eduVPN.ViewModels.VPN
                 State = SessionStatusType.Error;
                 var ex = new OpenVPNException(e.Message);
                 StateDescription = ex.ToString();
-                throw ex;
+                Wizard.Error = ex;
             }));
         }
 

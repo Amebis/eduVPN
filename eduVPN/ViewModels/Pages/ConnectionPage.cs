@@ -134,7 +134,7 @@ namespace eduVPN.ViewModels.Pages
                             }));
                         }
                         catch (OperationCanceledException) { }
-                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                        catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
                         finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                     })).Start();
             }
@@ -235,7 +235,7 @@ namespace eduVPN.ViewModels.Pages
                                     }));
                                 }
                                 catch (OperationCanceledException) { }
-                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
+                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
                                 finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                             })).Start();
                     }
@@ -363,7 +363,7 @@ namespace eduVPN.ViewModels.Pages
                                             {
                                                 // Clear failing server/profile to auto-start on next launch.
                                                 Properties.Settings.Default.LastSelectedServer = null;
-                                                throw ex;
+                                                Wizard.Error = ex;
                                             }));
                                         }
                                         finally
