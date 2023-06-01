@@ -24,14 +24,33 @@ namespace eduVPN.ViewModels.VPN
     /// <summary>
     /// VPN session base class
     /// </summary>
-    public class Session : BindableBase
+    public class Session : BindableBase, IDisposable
     {
         #region Constants
 
         /// <summary>
         /// List of hardware IDs specific to network adapters used for VPN and tunneling
         /// </summary>
-        private static readonly string[] VPNHardwareIds = new string[]{ "WireGuard", "Wintun", "root\\tap0901", "tap0901", "ovpn-dco" };
+        private static readonly string[] VPNHardwareIds = new string[] { "WireGuard", "Wintun", "root\\tap0901", "tap0901", "ovpn-dco" };
+
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// Session renewal in progress
+        /// </summary>
+        protected volatile bool RenewInProgress;
+
+        /// <summary>
+        /// Session termination token
+        /// </summary>
+        protected readonly CancellationTokenSource SessionInProgress;
+
+        /// <summary>
+        /// Quit token
+        /// </summary>
+        protected readonly CancellationTokenSource SessionAndWindowInProgress;
 
         #endregion
 
@@ -206,12 +225,53 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Renews and restarts the session
         /// </summary>
-        public virtual DelegateCommand Renew { get; } = new DelegateCommand(() => { }, () => false);
+        public DelegateCommand Renew
+        {
+            get
+            {
+                if (_Renew == null)
+                {
+                    _Renew = new DelegateCommand(
+                        () =>
+                        {
+                            RenewInProgress = true;
+                            State = SessionStatusType.Disconnecting;
+                            SessionInProgress.Cancel();
+                            _Renew.RaiseCanExecuteChanged();
+                            _Disconnect?.RaiseCanExecuteChanged();
+                        },
+                        () => !RenewInProgress && State == SessionStatusType.Connected);
+                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
+                }
+                return _Renew;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Renew;
 
         /// <summary>
         /// Disconnect command
         /// </summary>
-        public virtual DelegateCommand Disconnect { get; } = new DelegateCommand(() => { }, () => false);
+        public DelegateCommand Disconnect
+        {
+            get
+            {
+                if (_Disconnect == null)
+                    _Disconnect = new DelegateCommand(
+                        () =>
+                        {
+                            State = SessionStatusType.Disconnecting;
+                            SessionInProgress.Cancel();
+                            _Disconnect.RaiseCanExecuteChanged();
+                        },
+                        () => !SessionInProgress.IsCancellationRequested);
+                return _Disconnect;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Disconnect;
 
         /// <summary>
         /// Show log command
@@ -235,6 +295,9 @@ namespace eduVPN.ViewModels.VPN
             ProfileConfig = profileConfig;
             Thread = Thread.CurrentThread;
 
+            SessionInProgress = new CancellationTokenSource();
+            SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
+
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
                 // Disconnect session when expired.
@@ -255,67 +318,89 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         public void Execute()
         {
-            Wizard.TryInvoke((Action)(() =>
-            {
-                State = SessionStatusType.Initializing;
-            }));
+            // It is important to start updating the timers, to allow session self-disconnection on expiration
+            // even if the session is waiting for other users to sign out.
+            var sessionExpirationWarning = DateTimeOffset.Now;
+            var propertyUpdater = new DispatcherTimer(
+                new TimeSpan(0, 0, 0, 1),
+                DispatcherPriority.Normal,
+                (object senderTimer, EventArgs eTimer) =>
+                {
+                    RaisePropertyChanged(nameof(ConnectedTime));
+                    RaisePropertyChanged(nameof(Expired));
+                    RaisePropertyChanged(nameof(ExpiresTime));
+                },
+                Wizard.Dispatcher);
+            propertyUpdater.Start();
             try
             {
-                // Is the default gateway a VPN already?
-                using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                Wizard.TryInvoke((Action)(() => State = SessionStatusType.Initializing));
+                try
                 {
-                    using (var networkKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}", false))
+                    // Is the default gateway a VPN already?
+                    using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                     {
-                        foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
-                            .Where(n =>
-                                n.OperationalStatus == OperationalStatus.Up &&
-                                n.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                                n.GetIPProperties()?.GatewayAddresses.Count > 0))
+                        using (var networkKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}", false))
                         {
-                            try
+                            foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                                .Where(n =>
+                                    n.OperationalStatus == OperationalStatus.Up &&
+                                    n.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                                    n.GetIPProperties()?.GatewayAddresses.Count > 0))
                             {
-                                using (var connectionKey = networkKey.OpenSubKey(iface.Id + "\\Connection", false))
+                                try
                                 {
-                                    var pnpInstanceId = connectionKey.GetValue("PnPInstanceId").ToString();
-                                    using (var deviceKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Enum\\" + pnpInstanceId, false))
+                                    using (var connectionKey = networkKey.OpenSubKey(iface.Id + "\\Connection", false))
                                     {
-                                        var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
-                                        if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
-                                            Wizard.TryInvoke((Action)(() => throw new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                        var pnpInstanceId = connectionKey.GetValue("PnPInstanceId").ToString();
+                                        using (var deviceKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Enum\\" + pnpInstanceId, false))
+                                        {
+                                            var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
+                                            if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
+                                                Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                        }
                                     }
                                 }
-                            }
-                            catch (OperationCanceledException) { throw; }
-                            catch
-                            {
-                                // Detecting default gateway VPN is advisory-only. Not the end of the world if the test fails.
+                                catch (OperationCanceledException) { throw; }
+                                catch
+                                {
+                                    // Detecting default gateway VPN is advisory-only. Not the end of the world if the test fails.
+                                }
                             }
                         }
                     }
+
+                    // Finally!
+                    Run();
                 }
-                var propertyUpdater = new DispatcherTimer(
-                    new TimeSpan(0, 0, 0, 1),
-                    DispatcherPriority.Normal,
-                    (object senderTimer, EventArgs eTimer) =>
-                    {
-                        RaisePropertyChanged(nameof(ConnectedTime));
-                        RaisePropertyChanged(nameof(Expired));
-                        RaisePropertyChanged(nameof(ExpiresTime));
-                    },
-                    Wizard.Dispatcher);
-                propertyUpdater.Start();
-                try { Run(); }
-                finally { propertyUpdater.Stop(); }
-            }
-            finally
-            {
-                Wizard.TryInvoke((Action)(() =>
+                finally
                 {
-                    // Cleanup status properties.
-                    State = SessionStatusType.Disconnected;
-                    StateDescription = "";
-                }));
+                    Wizard.TryInvoke((Action)(
+                    async () =>
+                    {
+                        // Cleanup status properties.
+                        State = SessionStatusType.Disconnected;
+                        StateDescription = "";
+
+                        if (!Window.Abort.IsCancellationRequested && !Expired)
+                        {
+                            // Client is not quitting and our session is not expired. Maybe we should (renew and) reconnect?
+                            if (RenewInProgress)
+                            {
+                                var authenticatingServer = Wizard.GetAuthenticatingServer(ConnectingProfile.Server);
+                                Wizard.AuthorizationPage.OnForgetAuthorization(authenticatingServer, null);
+                            }
+                            if (RenewInProgress || !SessionInProgress.IsCancellationRequested)
+                                if (Wizard.ConnectionPage.StartSession.CanExecute())
+                                {
+                                    await Wizard.AuthorizationPage.TriggerAuthorizationAsync(ConnectingProfile.Server);
+                                    Wizard.ConnectionPage.StartSession.Execute();
+                                }
+                        }
+                    }));
+                }
             }
+            finally { propertyUpdater.Stop(); }
         }
 
         /// <summary>
@@ -326,6 +411,52 @@ namespace eduVPN.ViewModels.VPN
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region IDisposable Support
+        /// <summary>
+        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Called to dispose the object.
+        /// </summary>
+        /// <param name="disposing">Dispose managed objects</param>
+        /// <remarks>
+        /// To release resources for inherited classes, override this method.
+        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
+        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
+        /// </remarks>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    SessionInProgress.Cancel();
+                    SessionInProgress.Dispose();
+
+                    SessionAndWindowInProgress.Cancel();
+                    SessionAndWindowInProgress.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
+        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
+        /// </remarks>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
         #endregion
     }
 }

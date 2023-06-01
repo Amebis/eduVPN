@@ -320,33 +320,36 @@ namespace eduVPN.ViewModels.Pages
                                                     default:
                                                         throw new ArgumentOutOfRangeException(nameof(profileConfig.ContentType), profileConfig.ContentType, null);
                                                 }
-                                                session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                                                using (session)
                                                 {
-                                                    // Update connection page when session disconnects.
-                                                    if (e.PropertyName == nameof(session.State))
-                                                        switch (session.State)
-                                                        {
-                                                            case SessionStatusType.Disconnected:
-                                                                ActiveSession = null;
-                                                                State = session.Expired ? StateType.Expired : StateType.Inactive;
-                                                                break;
-                                                        }
-                                                };
-                                                session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
+                                                    session.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+                                                    {
+                                                        // Update connection page when session disconnects.
+                                                        if (e.PropertyName == nameof(session.State))
+                                                            switch (session.State)
+                                                            {
+                                                                case SessionStatusType.Disconnected:
+                                                                    ActiveSession = null;
+                                                                    State = session.Expired ? StateType.Expired : StateType.Inactive;
+                                                                    break;
+                                                            }
+                                                    };
+                                                    session.Disconnect.CanExecuteChanged += (object sender, EventArgs e) => RaisePropertyChanged(nameof(CanSessionToggle));
 
-                                                // Activate session.
-                                                Wizard.TryInvoke((Action)(() =>
-                                                {
-                                                    ActiveSession = session;
-                                                    State = StateType.Active;
+                                                    // Activate session.
+                                                    Wizard.TryInvoke((Action)(() =>
+                                                    {
+                                                        ActiveSession = session;
+                                                        State = StateType.Active;
 
-                                                    // Set server/profile to auto-start on next launch.
-                                                    Properties.Settings.Default.LastSelectedServer = connectingProfile.Server.Base;
+                                                        // Set server/profile to auto-start on next launch.
+                                                        Properties.Settings.Default.LastSelectedServer = connectingProfile.Server.Base;
 
-                                                    Wizard.TaskCount--;
-                                                }));
-                                                try { session.Execute(); }
-                                                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                                                        Wizard.TaskCount--;
+                                                    }));
+                                                    try { session.Execute(); }
+                                                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                                                }
                                             }
                                             finally
                                             {

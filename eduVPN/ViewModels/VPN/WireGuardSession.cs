@@ -13,10 +13,10 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.VPN
@@ -97,16 +97,6 @@ namespace eduVPN.ViewModels.VPN
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly object WorkingFolderLock = new object();
 
-        /// <summary>
-        /// Tunnel deactivate token
-        /// </summary>
-        private readonly CancellationTokenSource SessionInProgress = new CancellationTokenSource();
-
-        /// <summary>
-        /// Tunnel renew token
-        /// </summary>
-        private CancellationTokenSource RenewInProgress;
-
         #endregion
 
         #region Properties
@@ -115,50 +105,6 @@ namespace eduVPN.ViewModels.VPN
         /// WireGuard tunnel log
         /// </summary>
         private string LogPath => Path.Combine(WorkingFolder, TunnelName + ".txt");
-
-        /// <inheritdoc/>
-        public override DelegateCommand Renew
-        {
-            get
-            {
-                if (_Renew == null)
-                {
-                    _Renew = new DelegateCommand(
-                        () =>
-                        {
-                            RenewInProgress.Cancel();
-                            _Renew.RaiseCanExecuteChanged();
-                        },
-                        () => RenewInProgress != null && !RenewInProgress.IsCancellationRequested && State == SessionStatusType.Connected);
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
-                }
-                return _Renew;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _Renew;
-
-        /// <inheritdoc/>
-        public override DelegateCommand Disconnect
-        {
-            get
-            {
-                if (_Disconnect == null)
-                    _Disconnect = new DelegateCommand(
-                        () =>
-                        {
-                            State = SessionStatusType.Disconnecting;
-                            SessionInProgress.Cancel();
-                            _Disconnect.RaiseCanExecuteChanged();
-                        },
-                        () => !SessionInProgress.IsCancellationRequested);
-                return _Disconnect;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _Disconnect;
 
         /// <inheritdoc/>
         public override DelegateCommand ShowLog
@@ -212,7 +158,6 @@ namespace eduVPN.ViewModels.VPN
                 propertyUpdater.Start();
                 try
                 {
-                retry:
                     // Connect to WireGuard Tunnel Manager Service to activate the tunnel.
                     using (var managerSession = new eduWireGuard.ManagerService.Session())
                     {
@@ -224,7 +169,7 @@ namespace eduVPN.ViewModels.VPN
                                 TunnelName,
                                 ProfileConfig.Value,
                                 3000,
-                                Window.Abort.Token);
+                                SessionAndWindowInProgress.Token);
                         }
                         catch (OperationCanceledException) { throw; }
                         catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorWireGuardTunnelManagerService, ex); }
@@ -245,11 +190,8 @@ namespace eduVPN.ViewModels.VPN
                                 }
                         }
 
-                        RenewInProgress = new CancellationTokenSource();
                         Wizard.TryInvoke((Action)(() =>
                         {
-                            _Renew?.RaiseCanExecuteChanged();
-                            _Disconnect?.RaiseCanExecuteChanged();
                             Wizard.TaskCount--;
                             TunnelAddress = tunnelAddress;
                             IPv6TunnelAddress = ipv6TunnelAddress;
@@ -257,16 +199,11 @@ namespace eduVPN.ViewModels.VPN
                         }));
 
                         // Wait for a change and update stats.
-                        var ct = CancellationTokenSource.CreateLinkedTokenSource(new CancellationToken[]{
-                            SessionInProgress.Token,
-                            RenewInProgress.Token,
-                            Window.Abort.Token
-                        });
                         do
                         {
                             try
                             {
-                                var cfg = managerSession.GetTunnelConfig(ct.Token);
+                                var cfg = managerSession.GetTunnelConfig(SessionAndWindowInProgress.Token);
                                 ulong rxBytes = 0, txBytes = 0;
                                 DateTimeOffset lastHandshake = DateTimeOffset.MinValue;
                                 foreach (var peer in cfg.Peers)
@@ -288,33 +225,18 @@ namespace eduVPN.ViewModels.VPN
                             {
                                 Wizard.TryInvoke((Action)(() => ConnectedAt = null));
                             }
-                        } while (!ct.Token.WaitHandle.WaitOne(5 * 1000));
+                        } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(5 * 1000));
                         Wizard.TryInvoke((Action)(() =>
                         {
                             Wizard.TaskCount++;
                             State = SessionStatusType.Disconnecting;
                         }));
                         managerSession.Deactivate();
-                        if (SessionInProgress.IsCancellationRequested || Window.Abort.IsCancellationRequested)
-                            return;
                     }
-
-                    var authenticatingServer = Wizard.GetAuthenticatingServer(ConnectingProfile.Server);
-                    if (RenewInProgress.IsCancellationRequested)
-                        Wizard.AuthorizationPage.OnForgetAuthorization(authenticatingServer, null);
-
-                    // Reapply for a profile config.
-                    ConnectingProfile.Server.ResetKeypair();
-                    var config = ConnectingProfile.Connect(
-                        authenticatingServer,
-                        true,
-                        ProfileConfig.ContentType,
-                        Window.Abort.Token);
-                    Wizard.TryInvoke((Action)(() => ProfileConfig = config));
-                    goto retry;
                 }
                 finally
                 {
+                    propertyUpdater.Stop();
                     Wizard.TryInvoke((Action)(() =>
                     {
                         // Cleanup status properties.
@@ -324,8 +246,6 @@ namespace eduVPN.ViewModels.VPN
                         RxBytes = null;
                         TxBytes = null;
                     }));
-
-                    propertyUpdater.Stop();
                 }
             }
             finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }

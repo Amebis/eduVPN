@@ -13,7 +13,6 @@ using Microsoft.Win32;
 using Prism.Commands;
 using System;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -22,7 +21,6 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Web.Security;
 using System.Windows.Threading;
 
@@ -31,7 +29,7 @@ namespace eduVPN.ViewModels.VPN
     /// <summary>
     /// OpenVPN session
     /// </summary>
-    public class OpenVPNSession : Session, IDisposable
+    public class OpenVPNSession : Session
     {
         #region Fields
 
@@ -84,21 +82,6 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         private eduOpenVPN.Management.Session ManagementSession;
 
-        /// <summary>
-        /// Session renewal in progress
-        /// </summary>
-        private volatile bool RenewInProgress;
-
-        /// <summary>
-        /// Session termination token
-        /// </summary>
-        private readonly CancellationTokenSource SessionInProgress = new CancellationTokenSource();
-
-        /// <summary>
-        /// Quit token
-        /// </summary>
-        protected CancellationTokenSource SessionAndWindowInProgress;
-
         #endregion
 
         #region Properties
@@ -107,73 +90,6 @@ namespace eduVPN.ViewModels.VPN
         /// OpenVPN connection log
         /// </summary>
         private string LogPath => Path.Combine(WorkingFolder, ConnectionId + ".txt");
-
-        /// <inheritdoc/>
-        public override DelegateCommand Renew
-        {
-            get
-            {
-                if (_Renew == null)
-                {
-                    _Renew = new DelegateCommand(
-                        () =>
-                        {
-                            RenewInProgress = true;
-                            _Renew.RaiseCanExecuteChanged();
-                            new Thread(new ThreadStart(
-                                () =>
-                                {
-                                    try
-                                    {
-                                        ManagementSession.SendSignal(SignalType.SIGHUP, SessionAndWindowInProgress.Token);
-
-                                        var authenticatingServer = Wizard.GetAuthenticatingServer(ConnectingProfile.Server);
-                                        Wizard.AuthorizationPage.OnForgetAuthorization(authenticatingServer, null);
-                                        var config = ConnectingProfile.Connect(
-                                            authenticatingServer,
-                                            true,
-                                            ProfileConfig.ContentType,
-                                            SessionAndWindowInProgress.Token);
-                                        Wizard.TryInvoke((Action)(() => ProfileConfig = config));
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (Exception ex) { Wizard.TryInvoke((Action)(() => throw ex)); }
-                                    finally
-                                    {
-                                        RenewInProgress = false;
-                                        Wizard.TryInvoke((Action)(() => _Renew.RaiseCanExecuteChanged()));
-                                    }
-                                })).Start();
-                        },
-                        () => !RenewInProgress && State == SessionStatusType.Connected && ManagementSession != null);
-                    PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
-                }
-                return _Renew;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _Renew;
-
-        /// <inheritdoc/>
-        public override DelegateCommand Disconnect
-        {
-            get
-            {
-                if (_Disconnect == null)
-                    _Disconnect = new DelegateCommand(
-                        () =>
-                        {
-                            SessionInProgress.Cancel();
-                            _Disconnect.RaiseCanExecuteChanged();
-                        },
-                        () => !SessionInProgress.IsCancellationRequested);
-                return _Disconnect;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _Disconnect;
 
         /// <inheritdoc/>
         public override DelegateCommand ShowLog
@@ -205,7 +121,6 @@ namespace eduVPN.ViewModels.VPN
             base(wizard, connectingProfile, profileConfig)
         {
             ConnectionId = Guid.NewGuid().ToString();
-            SessionAndWindowInProgress = CancellationTokenSource.CreateLinkedTokenSource(SessionInProgress.Token, Window.Abort.Token);
         }
 
         #endregion
@@ -264,7 +179,7 @@ namespace eduVPN.ViewModels.VPN
                                                     !trimmedLine.StartsWith(";"))
                                                 {
                                                     // Not a comment.
-                                                    var option = Configuration.ParseParams(trimmedLine);
+                                                    var option = eduOpenVPN.Configuration.ParseParams(trimmedLine);
                                                     if (option.Count > 0)
                                                     {
                                                         if (option[0].StartsWith("<") && !option[0].StartsWith("</") && option[0].EndsWith(">"))
@@ -320,13 +235,13 @@ namespace eduVPN.ViewModels.VPN
                             var assembly = Assembly.GetExecutingAssembly();
                             var assemblyTitleAttribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
                             var assemblyVersion = assembly?.GetName()?.Version;
-                            sw.WriteLine("setenv IV_GUI_VER " + Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
+                            sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
 
                             // Configure log file (relative to WorkingFolder).
-                            sw.WriteLine("log-append " + Configuration.EscapeParamValue(ConnectionId + ".txt"));
+                            sw.WriteLine("log-append " + eduOpenVPN.Configuration.EscapeParamValue(ConnectionId + ".txt"));
 
                             // Configure interaction between us and openvpn.exe.
-                            sw.WriteLine("management " + Configuration.EscapeParamValue(mgmtEndpoint.Address.ToString()) + " " + Configuration.EscapeParamValue(mgmtEndpoint.Port.ToString()));
+                            sw.WriteLine("management " + eduOpenVPN.Configuration.EscapeParamValue(mgmtEndpoint.Address.ToString()) + " " + eduOpenVPN.Configuration.EscapeParamValue(mgmtEndpoint.Port.ToString()));
                             sw.WriteLine("<management-client-pass>");
                             sw.WriteLine(mgmtPassword);
                             sw.WriteLine("</management-client-pass>");
@@ -380,7 +295,6 @@ namespace eduVPN.ViewModels.VPN
                         }
                         ovpn = fs.ToArray();
 
-                        retry:
                         // Connect to OpenVPN Interactive Service to launch the openvpn.exe.
                         using (var openvpnInteractiveServiceConnection = new eduOpenVPN.InteractiveService.Session())
                         {
@@ -423,18 +337,10 @@ namespace eduVPN.ViewModels.VPN
 
                                     Wizard.TryInvoke((Action)(() =>
                                     {
-                                        _Renew?.RaiseCanExecuteChanged();
+                                        Renew?.RaiseCanExecuteChanged();
                                         Wizard.TaskCount--;
                                     }));
-                                    try
-                                    {
-                                        // Wait for the session to end gracefully.
-                                        ManagementSession.Monitor.Join();
-                                        if (ManagementSession.Error != null && // Session terminated in an error.
-                                            !(ManagementSession.Error is OperationCanceledException) && // Session was not cancelled.
-                                            !(ManagementSession.Error is MonitorConnectionException)) // User is not signing out.
-                                            goto retry;
-                                    }
+                                    try { ManagementSession.Monitor.Join(); }
                                     finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
                                 }
                                 finally { mgmtClient.Close(); }
@@ -599,50 +505,6 @@ namespace eduVPN.ViewModels.VPN
             }
         }
 
-        #endregion
-
-        #region IDisposable Support
-        /// <summary>
-        /// Flag to detect redundant <see cref="Dispose(bool)"/> calls.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool disposedValue = false;
-
-        /// <summary>
-        /// Called to dispose the object.
-        /// </summary>
-        /// <param name="disposing">Dispose managed objects</param>
-        /// <remarks>
-        /// To release resources for inherited classes, override this method.
-        /// Call <c>base.Dispose(disposing)</c> within it to release parent class resources, and release child class resources if <paramref name="disposing"/> parameter is <c>true</c>.
-        /// This method can get called multiple times for the same object instance. When the child specific resources should be released only once, introduce a flag to detect redundant calls.
-        /// </remarks>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    SessionAndWindowInProgress?.Dispose();
-                    SessionInProgress?.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting resources.
-        /// </summary>
-        /// <remarks>
-        /// This method calls <see cref="Dispose(bool)"/> with <c>disposing</c> parameter set to <c>true</c>.
-        /// To implement resource releasing override the <see cref="Dispose(bool)"/> method.
-        /// </remarks>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
         #endregion
     }
 }
