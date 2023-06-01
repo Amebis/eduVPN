@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.4.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.4.2...HEAD)
+
+
+## [3.4.2](https://github.com/Amebis/eduVPN/compare/3.4.1...3.4.2) (2023-06-01)
 
 - Session Renewal really fixed
 
