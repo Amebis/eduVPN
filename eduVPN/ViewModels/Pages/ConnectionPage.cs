@@ -301,7 +301,7 @@ namespace eduVPN.ViewModels.Pages
                                         {
                                             // Get session profile.
                                             var authenticatingServer = Wizard.GetAuthenticatingServer(connectingProfile.Server);
-                                            var profileConfig = connectingProfile.Connect(
+                                            var (profileConfig, accessToken) = connectingProfile.Connect(
                                                 authenticatingServer: authenticatingServer,
                                                 responseType: string.Join(", ", Properties.SettingsEx.Default.AcceptProfileTypes.Cast<string>()),
                                                 ct: Window.Abort.Token);
@@ -353,7 +353,7 @@ namespace eduVPN.ViewModels.Pages
                                             }
                                             finally
                                             {
-                                                try { connectingProfile.Server.Disconnect(authenticatingServer); } catch { }
+                                                try { connectingProfile.Server.Disconnect(accessToken); } catch { }
                                             }
                                         }
                                         catch (OperationCanceledException) { }

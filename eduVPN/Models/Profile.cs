@@ -6,6 +6,7 @@
 */
 
 using eduEx.System.Net;
+using eduOAuth;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -107,7 +108,7 @@ namespace eduVPN.Models
         /// <param name="responseType">Comma delimited list of acceptable MIME types</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
         /// <returns>Profile configuration</returns>
-        public Xml.Response Connect(Server authenticatingServer, bool forceRefresh = false, string responseType = "*/*", CancellationToken ct = default)
+        public (Xml.Response, AccessToken) Connect(Server authenticatingServer, bool forceRefresh = false, string responseType = "*/*", CancellationToken ct = default)
         {
             // Get API endpoints.
             var api = Server.GetEndpoints(ct);
@@ -135,7 +136,7 @@ namespace eduVPN.Models
                     ct: ct);
                 if (profile.ContentType.ToLowerInvariant() == "application/x-wireguard-profile")
                     profile.Value = profile.Value.Replace("[Interface]", "[Interface]\nPrivateKey = " + Convert.ToBase64String(Server.GetPrivateKey())); // SECURITY: Securely convert profile string to a SecureString
-                return profile;
+                return (profile, e.AccessToken);
             }
             catch (OperationCanceledException) { throw; }
             catch (WebException ex)

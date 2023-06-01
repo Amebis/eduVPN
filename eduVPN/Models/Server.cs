@@ -240,20 +240,18 @@ namespace eduVPN.Models
         /// <summary>
         /// Notifies server to release resources related to our sessions
         /// </summary>
-        /// <param name="authenticatingServer">Authenticating server (can be same as this server)</param>
+        /// <param name="accessToken">Access token used with Profile.Connect()</param>
         /// <param name="ct">The token to monitor for cancellation requests</param>
-        public void Disconnect(Server authenticatingServer, CancellationToken ct = default)
+        public void Disconnect(AccessToken accessToken, CancellationToken ct = default)
         {
             var api = GetEndpoints(ct);
-            var e = new RequestAuthorizationEventArgs("config");
-            RequestAuthorization?.Invoke(authenticatingServer, e);
             try
             {
                 Trace.TraceInformation("Disconnecting {0}", api.Disconnect);
                 Xml.Response.Get(
                     uri: api.Disconnect,
                     param: new NameValueCollection(),
-                    token: e.AccessToken,
+                    token: accessToken,
                     ct: ct);
             }
             catch (OperationCanceledException) { throw; }
