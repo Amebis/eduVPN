@@ -572,6 +572,10 @@ namespace eduVPN.ViewModels.VPN
                             State = SessionStatusType.Disconnected;
                             StateDescription = "";
 
+                            // Cleanup session in eduvpn-common to have the /disconnect call *before* attempting to reconnect.
+                            using (var operationInProgress = new Engine.CancellationTokenCookie(Window.Abort.Token))
+                                try { Engine.Cleanup(operationInProgress); } catch { }
+
                             if (!Window.Abort.IsCancellationRequested && !Expired)
                             {
                                 // Client is not quitting and our session is not expired. Maybe we should (renew and) reconnect?

@@ -349,11 +349,6 @@ namespace eduVPN.ViewModels.Pages
                 {
                     Wizard.TryInvoke((Action)(() =>
                     {
-                        // Do not use Wizard.OperationInProgress, not to interfere with session renewal.
-                        // The cleanup should not raise any callbacks, therefore its cookie is not important
-                        // to other pages.
-                        using (var operationInProgress = new Engine.CancellationTokenCookie(Window.Abort.Token))
-                            try { Engine.Cleanup(operationInProgress); } catch { }
                         if (State != StateType.Expired)
                             State = StateType.Inactive;
                         Wizard.TaskCount--;
