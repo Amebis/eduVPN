@@ -518,6 +518,26 @@ namespace eduVPN
 
         #region Methods
 
+        static Exception ConvertException(string json)
+        {
+            var obj = eduJSON.Parser.Parse(json);
+            if (obj is Dictionary<string, object> obj2)
+            {
+                var message = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+                eduJSON.Parser.GetDictionary(obj2, "message", message);
+                if (message["en"].EndsWith(": context canceled"))
+                    throw new OperationCanceledException();
+                throw new Exception(message.GetLocalized(json));
+            }
+            throw new Exception(json);
+        }
+
+        static void ThrowOnError(string json)
+        {
+            if (json != null)
+                throw ConvertException(json);
+        }
+
         static readonly StateCB OnEngineStateChanged = new StateCB((State oldstate, State newstate, string data) =>
         {
             if (Callback != null)
@@ -586,7 +606,7 @@ namespace eduVPN
         /// <exception cref="Exception">Initialization failed, for example when discovery cannot be obtained and when there are no servers</exception>
         public static void Register()
         {
-            var e = Register(
+            ThrowOnError(Register(
                 Properties.Settings.Default.ClientId + ".windows",
                 Assembly.GetExecutingAssembly()?.GetName()?.Version.ToString(),
                 Path.GetDirectoryName(Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)),
@@ -596,15 +616,9 @@ namespace eduVPN
 #else
                 0
 #endif
-                );
-            if (e != null)
-                throw new Exception(e);
-            e = SetSupportWireguard(1);
-            if (e != null)
-                throw new Exception(e);
-            e = SetTokenHandler(OnGetToken, OnSetToken);
-            if (e != null)
-                throw new Exception(e);
+                ));
+            ThrowOnError(SetSupportWireguard(1));
+            ThrowOnError(SetTokenHandler(OnGetToken, OnSetToken));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "Deregister", CallingConvention = CallingConvention.Cdecl)]
@@ -617,10 +631,7 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static void Deregister()
         {
-            var e = _Deregister();
-            if (e == null)
-                return;
-            throw new Exception(e);
+            ThrowOnError(_Deregister());
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "ExpiryTimes", CallingConvention = CallingConvention.Cdecl)]
@@ -637,18 +648,19 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static string ExpiryTimes()
         {
-            var r = _ExpiryTimes();
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            if (r.r1 == IntPtr.Zero)
+            var r = _ExpiryTimes();
+            try
             {
-                var v = (string)m.MarshalNativeToManaged(r.r0);
-                m.CleanUpNativeData(r.r0);
-                return v;
+                if (r.r1 == IntPtr.Zero)
+                    return (string)m.MarshalNativeToManaged(r.r0);
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
             }
-            var e = (string)m.MarshalNativeToManaged(r.r1);
-            m.CleanUpNativeData(r.r0);
-            m.CleanUpNativeData(r.r1);
-            throw new Exception(e);
+            finally
+            {
+                m.CleanUpNativeData(r.r0);
+                m.CleanUpNativeData(r.r1);
+            }
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "AddServer", CallingConvention = CallingConvention.Cdecl)]
@@ -670,12 +682,7 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static void AddServer(Cookie cookie, ServerType type, string id, bool quiet)
         {
-            var e = _AddServer(cookie.Handle, type, id, quiet ? 1 : 0);
-            if (e == null)
-                return;
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            ThrowOnError(_AddServer(cookie.Handle, type, id, quiet ? 1 : 0));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "RemoveServer", CallingConvention = CallingConvention.Cdecl)]
@@ -693,9 +700,8 @@ namespace eduVPN
         public static void RemoveServer(ServerType type, string id)
         {
             var e = _RemoveServer(type, id);
-            if (e == null || e.EndsWith(", not found in list"))
-                return;
-            throw new Exception(e);
+            // TODO: If e is "not found in list", ignore it.
+            ThrowOnError(e);
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "CurrentServer", CallingConvention = CallingConvention.Cdecl)]
@@ -703,18 +709,19 @@ namespace eduVPN
 
         public static string CurrentServer()
         {
-            var r = _CurrentServer();
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            if (r.r1 == IntPtr.Zero)
+            var r = _CurrentServer();
+            try
             {
-                var v = (string)m.MarshalNativeToManaged(r.r0);
-                m.CleanUpNativeData(r.r0);
-                return v;
+                if (r.r1 == IntPtr.Zero)
+                    return (string)m.MarshalNativeToManaged(r.r0);
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
             }
-            var e = (string)m.MarshalNativeToManaged(r.r1);
-            m.CleanUpNativeData(r.r0);
-            m.CleanUpNativeData(r.r1);
-            throw new Exception(e);
+            finally
+            {
+                m.CleanUpNativeData(r.r0);
+                m.CleanUpNativeData(r.r1);
+            }
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "ServerList", CallingConvention = CallingConvention.Cdecl)]
@@ -722,18 +729,19 @@ namespace eduVPN
 
         public static string ServerList()
         {
-            var r = _ServerList();
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            if (r.r1 == IntPtr.Zero)
+            var r = _ServerList();
+            try
             {
-                var v = (string)m.MarshalNativeToManaged(r.r0);
-                m.CleanUpNativeData(r.r0);
-                return v;
+                if (r.r1 == IntPtr.Zero)
+                    return (string)m.MarshalNativeToManaged(r.r0);
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
             }
-            var e = (string)m.MarshalNativeToManaged(r.r1);
-            m.CleanUpNativeData(r.r0);
-            m.CleanUpNativeData(r.r1);
-            throw new Exception(e);
+            finally
+            {
+                m.CleanUpNativeData(r.r0);
+                m.CleanUpNativeData(r.r1);
+            }
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "GetConfig", CallingConvention = CallingConvention.Cdecl)]
@@ -756,20 +764,19 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static string GetConfig(Cookie cookie, ServerType type, string id, bool tcp)
         {
-            var r = _GetConfig(cookie.Handle, type, id, tcp ? 1 : 0);
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            if (r.r1 == IntPtr.Zero)
+            var r = _GetConfig(cookie.Handle, type, id, tcp ? 1 : 0);
+            try
             {
-                var v = (string)m.MarshalNativeToManaged(r.r0);
-                m.CleanUpNativeData(r.r0);
-                return v;
+                if (r.r1 == IntPtr.Zero)
+                    return (string)m.MarshalNativeToManaged(r.r0);
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
             }
-            var e = (string)m.MarshalNativeToManaged(r.r1);
-            m.CleanUpNativeData(r.r0);
-            m.CleanUpNativeData(r.r1);
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            finally
+            {
+                m.CleanUpNativeData(r.r0);
+                m.CleanUpNativeData(r.r1);
+            }
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "SetProfileID", CallingConvention = CallingConvention.Cdecl)]
@@ -783,10 +790,7 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static void SetProfileId(string profileId)
         {
-            var e = _SetProfileId(profileId);
-            if (e == null)
-                return;
-            throw new Exception(e);
+            ThrowOnError(_SetProfileId(profileId));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "SetSecureLocation", CallingConvention = CallingConvention.Cdecl)]
@@ -804,12 +808,7 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static void SetSecureInternetLocation(Cookie cookie, string countryCode)
         {
-            var e = _SetSecureLocation(cookie.Handle, countryCode);
-            if (e == null)
-                return;
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            ThrowOnError(_SetSecureLocation(cookie.Handle, countryCode));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "DiscoServers", CallingConvention = CallingConvention.Cdecl)]
@@ -826,20 +825,19 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static string DiscoServers(Cookie cookie)
         {
-            var r = _DiscoServers(cookie.Handle);
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            if (r.r1 == IntPtr.Zero)
+            var r = _DiscoServers(cookie.Handle);
+            try
             {
-                var v = (string)m.MarshalNativeToManaged(r.r0);
-                m.CleanUpNativeData(r.r0);
-                return v;
+                if (r.r1 == IntPtr.Zero)
+                    return (string)m.MarshalNativeToManaged(r.r0);
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
             }
-            var e = (string)m.MarshalNativeToManaged(r.r1);
-            m.CleanUpNativeData(r.r0);
-            m.CleanUpNativeData(r.r1);
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            finally
+            {
+                m.CleanUpNativeData(r.r0);
+                m.CleanUpNativeData(r.r1);
+            }
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "DiscoOrganizations", CallingConvention = CallingConvention.Cdecl)]
@@ -856,20 +854,19 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static string DiscoOrganizations(Cookie cookie)
         {
-            var r = _DiscoOrganizations(cookie.Handle);
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            if (r.r1 == IntPtr.Zero)
+            var r = _DiscoOrganizations(cookie.Handle);
+            try
             {
-                var v = (string)m.MarshalNativeToManaged(r.r0);
-                m.CleanUpNativeData(r.r0);
-                return v;
+                if (r.r1 == IntPtr.Zero)
+                    return (string)m.MarshalNativeToManaged(r.r0);
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
             }
-            var e = (string)m.MarshalNativeToManaged(r.r1);
-            m.CleanUpNativeData(r.r0);
-            m.CleanUpNativeData(r.r1);
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            finally
+            {
+                m.CleanUpNativeData(r.r0);
+                m.CleanUpNativeData(r.r1);
+            }
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "Cleanup", CallingConvention = CallingConvention.Cdecl)]
@@ -884,12 +881,7 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static void Cleanup(Cookie cookie)
         {
-            var e = _Cleanup(cookie.Handle);
-            if (e == null)
-                return;
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            ThrowOnError(_Cleanup(cookie.Handle));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "RenewSession", CallingConvention = CallingConvention.Cdecl)]
@@ -904,12 +896,7 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static void RenewSession(Cookie cookie)
         {
-            var e = _RenewSession(cookie.Handle);
-            if (e == null)
-                return;
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            ThrowOnError(_RenewSession(cookie.Handle));
         }
 
         static readonly ReadRxBytes OnRxBytesRead = new ReadRxBytes(() =>
@@ -941,15 +928,18 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static bool StartFailover(Cookie cookie, string gateway, int mtu)
         {
-            var r = _StartFailover(cookie.Handle, gateway, mtu, OnRxBytesRead);
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            if (r.r1 == IntPtr.Zero)
-                return r.r0 != 0;
-            var e = (string)m.MarshalNativeToManaged(r.r1);
-            m.CleanUpNativeData(r.r1);
-            if (e.EndsWith(": context canceled"))
-                throw new OperationCanceledException();
-            throw new Exception(e);
+            var r = _StartFailover(cookie.Handle, gateway, mtu, OnRxBytesRead);
+            try
+            {
+                if (r.r1 == IntPtr.Zero)
+                    return r.r0 != 0;
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+            }
+            finally
+            {
+                m.CleanUpNativeData(r.r1);
+            }
         }
 
         #endregion

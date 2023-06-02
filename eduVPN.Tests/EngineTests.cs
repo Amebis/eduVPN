@@ -28,11 +28,15 @@ namespace eduVPN.Tests
                         Assert.AreEqual(Engine.State.Deregistered, e.OldState);
                         Assert.AreEqual(Engine.State.NoServer, e.NewState);
                         break;
+                    case 1:
+                        Assert.AreEqual(Engine.State.NoServer, e.OldState);
+                        Assert.AreEqual(Engine.State.Deregistered, e.NewState);
+                        break;
                 }
             };
             Engine.Register();
             Engine.Deregister();
-            Assert.AreEqual(1, callbackCounter);
+            Assert.AreEqual(2, callbackCounter);
         }
 
         [TestMethod()]
@@ -102,7 +106,7 @@ namespace eduVPN.Tests
             try
             {
                 Engine.RemoveServer(ServerType.InstituteAccess, "https://vpn.tuxed.net");
-                Assert.ThrowsException<Exception>(() => Engine.RemoveServer(ServerType.SecureInternet, "https://eva-saml-idp.eduroam.nl/simplesamlphp/saml2/idp/metadata.php"));
+                Engine.RemoveServer(ServerType.SecureInternet, "https://eva-saml-idp.eduroam.nl/simplesamlphp/saml2/idp/metadata.php");
                 Engine.RemoveServer(ServerType.Own, "https://vpn.tuxed.net");
             }
             finally
