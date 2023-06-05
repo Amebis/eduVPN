@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.2...HEAD)
+
+
+## [3.255.2](https://github.com/Amebis/eduVPN/compare/3.255.1...3.255.2) (2023-06-05)
 
 - Prevent VPN connection when other users are signed in
 - eduLibsodium and eduOAuth removed
