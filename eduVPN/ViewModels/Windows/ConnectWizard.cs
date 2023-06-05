@@ -656,7 +656,7 @@ namespace eduVPN.ViewModels.Windows
                     }
                     break;
 
-                case Engine.State.GotConfig:
+                case Engine.State.Disconnected:
                     TryInvoke((Action)(() => CurrentPage = ConnectionPage));
                     e.Handled = true;
                     break;

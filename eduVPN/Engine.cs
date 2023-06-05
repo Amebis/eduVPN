@@ -124,64 +124,79 @@ namespace eduVPN
         public enum State
         {
             /// <summary>
-            /// StateDeregistered means the app is not registered with the wrapper.
+            /// App is not registered with the wrapper
             /// </summary>
             Deregistered,
 
             /// <summary>
-            /// StateNoServer means the user has not chosen a server yet.
+            /// User has not chosen a server yet
             /// </summary>
             NoServer,
 
             /// <summary>
-            /// StateAskLocation means the user selected a Secure Internet server but needs to choose a location.
+            /// User selected a Secure Internet server but needs to choose a location
             /// </summary>
             AskLocation,
 
             /// <summary>
-            /// StateChosenLocation means the user has selected a Secure Internet location
+            /// User has selected a Secure Internet location
             /// </summary>
             ChosenLocation,
 
             /// <summary>
-            /// StateLoadingServer means we are loading the server details.
+            /// We are loading the server details
             /// </summary>
             LoadingServer,
 
             /// <summary>
-            /// StateChosenServer means the user has chosen a server to connect to and the server is initialized.
+            /// User has chosen a server to connect to and the server is initialized
             /// </summary>
             ChosenServer,
 
             /// <summary>
-            /// StateOAuthStarted means the OAuth process has started.
+            /// OAuth process has started
             /// </summary>
             OAuthStarted,
 
             /// <summary>
-            /// StateAuthorized means the OAuth process has finished and the user is now authorized with the server.
+            /// OAuth process has finished and the user is now authorized with the server
             /// </summary>
             Authorized,
 
             /// <summary>
-            /// StateRequestConfig means the user has requested a config for connecting.
+            /// User has requested a config for connecting
             /// </summary>
             RequestConfig,
 
             /// <summary>
-            /// StateAskProfile means the go code is asking for a profile selection from the UI.
+            /// Go code is asking for a profile selection from the UI
             /// </summary>
             AskProfile,
 
             /// <summary>
-            /// StateChosenProfile means a profile has been chosen
+            /// Profile has been chosen
             /// </summary>
             ChosenProfile,
 
             /// <summary>
-            /// StateGotConfig means a VPN configuration has been obtained
+            /// VPN configuration has been obtained
             /// </summary>
-            GotConfig,
+            Disconnected,
+
+            /// <summary>
+            /// VPN is connecting
+            /// </summary>
+            Connecting,
+
+            /// <summary>
+            /// VPN is disconnecting
+            /// </summary>
+            Disconnecting,
+
+            /// <summary>
+            /// VPN is connected
+            /// </summary>
+            Connected,
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -930,6 +945,48 @@ namespace eduVPN
         {
             var m = CGoToManagedStringMarshaller.GetInstance(null);
             var r = _StartFailover(cookie.Handle, gateway, mtu, OnRxBytesRead);
+            try
+            {
+                if (r.r1 == IntPtr.Zero)
+                    return r.r0 != 0;
+                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+            }
+            finally
+            {
+                m.CleanUpNativeData(r.r1);
+            }
+        }
+
+        [DllImport("eduvpn_common.dll", EntryPoint = "SetState", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
+        static extern string _SetState(
+            /*[MarshalAs(UnmanagedType.I4)]*/ State state);
+
+        /// <summary>
+        /// Sets the state of the statemachine
+        /// </summary>
+        /// <param name="state">New state</param>
+        /// <remarks>Note that this transitions the FSM into the new state without passing any data to it</remarks>
+        /// <exception cref="Exception">Call failed</exception>
+        public static void SetState(State state)
+        {
+            ThrowOnError(_SetState(state));
+        }
+
+        [DllImport("eduvpn_common.dll", EntryPoint = "InState", CallingConvention = CallingConvention.Cdecl)]
+        static extern CGoIntPtr _InState(
+            /*[MarshalAs(UnmanagedType.I4)]*/ State state);
+
+        /// <summary>
+        /// Checks if the state of the statemachine is in the given state
+        /// </summary>
+        /// <param name="state">State</param>
+        /// <returns>true if state matches; false otherwise</returns>
+        /// <exception cref="Exception">Call failed</exception>
+        public static bool InState(State state)
+        {
+            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var r = _InState(state);
             try
             {
                 if (r.r1 == IntPtr.Zero)

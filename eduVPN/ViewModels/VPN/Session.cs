@@ -527,6 +527,7 @@ namespace eduVPN.ViewModels.VPN
                                 throw new OperationCanceledException();
                         }
                         Wizard.TryInvoke((Action)(() => State = SessionStatusType.Initializing));
+                        Engine.SetState(Engine.State.Connecting);
 
                         // Is the default gateway a VPN already?
                         using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
@@ -562,19 +563,22 @@ namespace eduVPN.ViewModels.VPN
                         }
 
                         // Finally!
+                        Engine.SetState(Engine.State.Connected);
                         Run();
+                        Engine.SetState(Engine.State.Disconnecting);
                     }
                     finally
                     {
+                        // Cleanup session in eduvpn-common to have the /disconnect call *before* attempting to reconnect.
+                        Engine.SetState(Engine.State.Disconnected);
+                        using (var operationInProgress = new Engine.CancellationTokenCookie(Window.Abort.Token))
+                            try { Engine.Cleanup(operationInProgress); } catch { }
+
                         Wizard.TryInvoke((Action)(() =>
                         {
                             // Cleanup status properties.
                             State = SessionStatusType.Disconnected;
                             StateDescription = "";
-
-                            // Cleanup session in eduvpn-common to have the /disconnect call *before* attempting to reconnect.
-                            using (var operationInProgress = new Engine.CancellationTokenCookie(Window.Abort.Token))
-                                try { Engine.Cleanup(operationInProgress); } catch { }
 
                             if (!Window.Abort.IsCancellationRequested && !Expired)
                             {
