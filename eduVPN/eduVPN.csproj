@@ -68,6 +68,7 @@
     <Compile Include="Models\IEntityWithKeywords.cs" />
     <Compile Include="Models\INamedEntity.cs" />
     <Compile Include="Models\InstituteAccessServer.cs" />
+    <Compile Include="Models\ObservableDictionary.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\ProfileDictionary.cs" />
     <Compile Include="Models\RequiredAskTransition.cs" />

@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -16,7 +17,7 @@ namespace eduVPN.Xml
     /// <summary>
     /// Serializable server reference dictionary
     /// </summary>
-    public class UriList : List<Uri>, IXmlSerializable
+    public class UriList : ObservableCollectionEx<Uri>, IXmlSerializable
     {
         #region Constructors
 

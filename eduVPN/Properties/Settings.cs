@@ -7,6 +7,7 @@
 
 using eduVPN.ViewModels.Windows;
 using System;
+using System.ComponentModel;
 using System.Configuration;
 
 namespace eduVPN.Properties
@@ -131,6 +132,13 @@ namespace eduVPN.Properties
         /// </summary>
         public static void Initialize()
         {
+            // Changes to AccessTokenCache2 do not propagate to Settings class failing to notice settings need to be persisted.
+            Default.AccessTokenCache2.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                if (e.PropertyName == nameof(Default.AccessTokenCache2.Values))
+                    Default.OnPropertyChanged(sender, new PropertyChangedEventArgs(nameof(Default.AccessTokenCache2)));
+            };
+
             if ((Default.SettingsVersion & 0x1) == 0)
             {
                 // Migrate settings from previous version.
