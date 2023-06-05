@@ -4,6 +4,8 @@
 
 - Prevent VPN connection when other users are signed in
 - eduLibsodium and eduOAuth removed
+- OpenVPN updated to 2.5.9-20230605
+    - openvpn 2.5.9 4a89a55b8a9d6193957711bef74228796a185179
 - Fixes: #132, #222
 
 
