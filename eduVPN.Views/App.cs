@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Timers;
 using System.Windows;
@@ -30,12 +29,6 @@ namespace eduVPN.Views
         /// <inheritdoc/>
         protected override void OnStartup(StartupEventArgs e)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
-
-            // Client is using parallelism in web data retrieval.
-            // The default maximum concurrent connections set to 2 is a bottleneck.
-            ServicePointManager.DefaultConnectionLimit = 5;
-
             //// Set language preference.
             //var culture = new System.Globalization.CultureInfo("sl-SI");
             //var culture = new System.Globalization.CultureInfo("ar-MA");
