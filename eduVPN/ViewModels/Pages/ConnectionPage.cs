@@ -310,7 +310,12 @@ namespace eduVPN.ViewModels.Pages
                                 {
                                     case SessionStatusType.Disconnected:
                                         ActiveSession = null;
-                                        State = session.Expired ? StateType.Expired : StateType.Inactive;
+                                        if (session.Expired) {
+                                            State = StateType.Expired;
+                                            Properties.Settings.Default.LastSelectedServer = null;
+                                        }
+                                        else
+                                            State = StateType.Inactive;
                                         break;
                                 }
                         }
