@@ -238,6 +238,7 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             Wizard.OperationInProgress?.Cancel();
+                            Engine.SetState(Engine.State.NoServer);
                             Wizard.CurrentPage = Wizard.HomePage;
                         },
                         () => ActiveSession == null);
