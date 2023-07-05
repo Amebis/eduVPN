@@ -219,7 +219,14 @@ namespace eduVPN.ViewModels.Pages
                         () =>
                         {
                             Wizard.OperationInProgress?.Cancel();
-                            Engine.SetState(Engine.State.NoServer);
+                            new Thread(() =>
+                            {
+                                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                                try { Engine.SetState(Engine.State.NoServer); }
+                                catch (OperationCanceledException) { }
+                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
+                                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                            }).Start();
                             Wizard.CurrentPage = Wizard.HomePage;
                         },
                         () => ActiveSession == null);
