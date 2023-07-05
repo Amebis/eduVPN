@@ -199,9 +199,6 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Valg...</value>
   </data>
-  <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Tilkoblings_status...</value>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>

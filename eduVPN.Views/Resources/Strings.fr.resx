@@ -199,9 +199,6 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Préférences... </value>
   </data>
-  <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Info_connexion...</value>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>

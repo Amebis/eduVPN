@@ -634,6 +634,7 @@ namespace eduVPN.ViewModels.Windows
                         Properties.Settings.Default.LastSelectedServer == ConnectionPage.Server.Id)
                     {
                         // Auto-reconnect should not rise OAuth authorization.
+                        Trace.TraceWarning("Session is auto-reconnecting: OAuth denied");
                         break;
                     }
                     Process.Start(e.Data);

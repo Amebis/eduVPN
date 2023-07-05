@@ -199,9 +199,6 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Settings...</value>
   </data>
-  <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Connection _info...</value>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>

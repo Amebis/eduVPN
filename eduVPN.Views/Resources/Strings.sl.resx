@@ -199,9 +199,6 @@
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>Na_stavitve ...</value>
   </data>
-  <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Podatk_i povezave ...</value>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>

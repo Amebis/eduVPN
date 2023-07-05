@@ -66,7 +66,6 @@ namespace eduVPN.ViewModels.Pages
                 {
                     RaisePropertyChanged(nameof(CanSessionToggle));
                     _StartSession?.RaiseCanExecuteChanged();
-                    _SessionInfo?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -209,24 +208,6 @@ namespace eduVPN.ViewModels.Pages
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _StartSession;
-
-        /// <summary>
-        /// Connection info command
-        /// </summary>
-        public DelegateCommand SessionInfo
-        {
-            get
-            {
-                if (_SessionInfo == null)
-                    _SessionInfo = new DelegateCommand(
-                        () => Wizard.CurrentPage = this,
-                        () => State != StateType.Inactive);
-                return _SessionInfo;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _SessionInfo;
 
         /// <inheritdoc/>
         public override DelegateCommand NavigateBack

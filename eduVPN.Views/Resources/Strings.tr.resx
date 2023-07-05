@@ -198,9 +198,6 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Ayarlar..</value>
   </data>
-  <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Bağlantı _bilgisi..</value>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>

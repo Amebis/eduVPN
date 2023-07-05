@@ -131,7 +131,7 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (!(e.Exception is OperationCanceledException))
                 {
-                    Trace.TraceWarning("Error: {0}", e.Exception.ToString());
+                    Trace.TraceError("Error: {0}", e.Exception.ToString());
                     Error = e.Exception;
                 }
                 e.Handled = true;

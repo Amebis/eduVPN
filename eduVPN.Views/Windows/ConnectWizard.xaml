@@ -68,10 +68,6 @@
                 Header="{x:Static res:Strings.SystemTrayMenuOpen}"
                 Click="Open_Click"
                 FontWeight="Bold"/>
-            <MenuItem
-                Header="{x:Static res:Strings.SystemTrayMenuStatus}"
-                Command="{Binding ConnectionPage.SessionInfo}"
-                Click="Open_Click"/>
             <Separator/>
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuSettings}"

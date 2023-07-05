@@ -199,9 +199,6 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>_Instellingen...</value>
   </data>
-  <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>Verbindings_info...</value>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>

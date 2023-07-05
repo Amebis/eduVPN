@@ -795,15 +795,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection _info....
-        /// </summary>
-        public static string SystemTrayMenuStatus {
-            get {
-                return ResourceManager.GetString("SystemTrayMenuStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {0:day|days} and {1:hour|hours}.
         /// </summary>
         public static string TimeSpanDaysAndHours {

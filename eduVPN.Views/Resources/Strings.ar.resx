@@ -199,9 +199,6 @@
   <data name="SystemTrayMenuSettings" xml:space="preserve">
     <value>إع_دادات...</value>
   </data>
-  <data name="SystemTrayMenuStatus" xml:space="preserve">
-    <value>م_علومات عن الاتصال...</value>
-  </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>RTL</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
