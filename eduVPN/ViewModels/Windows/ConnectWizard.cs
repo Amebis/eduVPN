@@ -422,7 +422,8 @@ namespace eduVPN.ViewModels.Windows
                 siOrgId = Properties.SettingsEx.Default.SecureInternetOrganization;
                 if (siOrgId != null)
                     Trace.TraceInformation("Using preconfigured Secure Internet organization {0}", siOrgId);
-                else if (migrate && Properties.Settings.Default.GetPreviousVersion("SecureInternetOrganization") is string secureInternetOrganization)
+                else if (migrate && Properties.Settings.Default.GetPreviousVersion("SecureInternetOrganization") is string secureInternetOrganization &&
+                    !string.IsNullOrEmpty(secureInternetOrganization))
                 {
                     Trace.TraceInformation("Migrating Secure Internet organization {0}", secureInternetOrganization);
                     siOrgId = secureInternetOrganization;
