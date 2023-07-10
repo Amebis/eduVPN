@@ -200,6 +200,7 @@ namespace eduVPN.ViewModels.VPN
                             IPv6TunnelAddress = ipv6TunnelAddress;
                             State = SessionStatusType.Connected;
                         }));
+                        Engine.SetState(Engine.State.Connected);
 
                         // Wait for a change and update stats.
                         do
@@ -229,6 +230,8 @@ namespace eduVPN.ViewModels.VPN
                                 Wizard.TryInvoke((Action)(() => ConnectedAt = null));
                             }
                         } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(5 * 1000));
+
+                        Engine.SetState(Engine.State.Disconnecting);
                         Wizard.TryInvoke((Action)(() =>
                         {
                             Wizard.TaskCount++;

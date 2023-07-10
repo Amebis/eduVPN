@@ -563,9 +563,7 @@ namespace eduVPN.ViewModels.VPN
                         }
 
                         // Finally!
-                        Engine.SetState(Engine.State.Connected);
                         Run();
-                        Engine.SetState(Engine.State.Disconnecting);
                     }
                     finally
                     {

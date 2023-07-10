@@ -353,8 +353,14 @@ namespace eduVPN.ViewModels.VPN
                                         Renew?.RaiseCanExecuteChanged();
                                         Wizard.TaskCount--;
                                     }));
-                                    try { ManagementSession.Monitor.Join(); }
-                                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
+                                    try {
+                                        Engine.SetState(Engine.State.Connected);
+                                        ManagementSession.Monitor.Join();
+                                    }
+                                    finally {
+                                        Engine.SetState(Engine.State.Disconnecting);
+                                        Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                                    }
                                 }
                                 finally { mgmtClient.Close(); }
                             }
