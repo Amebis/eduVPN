@@ -8,6 +8,7 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -55,10 +56,11 @@ namespace eduVPN.ViewModels.Pages
                     _ConfirmSecureInternetCountrySelection = new DelegateCommand(
                         async () =>
                         {
-                            if (Wizard.OperationInProgress != null)
+                            var operation = Wizard.OperationInProgress;
+                            if (operation != null)
                             {
                                 // Country selection was triggered implicitly when adding Secure Internet.
-                                Wizard.OperationInProgress.Reply(SelectedSecureInternetCountry.Code);
+                                await Task.Run(() => operation.Reply(SelectedSecureInternetCountry.Code));
                             }
                             else
                             {

@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -179,25 +180,26 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_StartSession == null)
                     _StartSession = new DelegateCommand(
-                        () =>
+                        async () =>
                         {
                             if (SelectedProfile == null || State != StateType.Inactive && State != StateType.Expired)
                                 return;
-                            if (Wizard.OperationInProgress != null)
+                            var operation = Wizard.OperationInProgress;
+                            if (operation != null)
                             {
                                 // Profile selection is in process.
                                 State = StateType.Initializing;
-                                try { Wizard.OperationInProgress.Reply(SelectedProfile.Id); }
-                                catch (Exception ex)
+                                try { await Task.Run(() => operation.Reply(SelectedProfile.Id)); }
+                                catch
                                 {
                                     State = StateType.Inactive;
-                                    throw ex;
+                                    throw;
                                 }
                             }
                             else
                             {
                                 // User attempted to reconnect.
-                                Engine.SetProfileId(SelectedProfile.Id);
+                                await Task.Run(() => Engine.SetProfileId(SelectedProfile.Id));
                                 Wizard.Connect(Server);
                             }
                         },
@@ -299,7 +301,8 @@ namespace eduVPN.ViewModels.Pages
                                 {
                                     case SessionStatusType.Disconnected:
                                         ActiveSession = null;
-                                        if (session.Expired) {
+                                        if (session.Expired)
+                                        {
                                             State = StateType.Expired;
                                             Properties.Settings.Default.LastSelectedServer = null;
                                         }
