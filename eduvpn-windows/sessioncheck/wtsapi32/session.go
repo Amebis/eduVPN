@@ -64,7 +64,7 @@ type Session struct {
 
 //sys	wtsEnumerateSessionsExW(hServer windows.Handle, pLevel *uint32, Filter uint32, ppSessionInfo **WTS_SESSION_INFO_1W, pCount *uint32) (err error) = wtsapi32.WTSEnumerateSessionsExW
 
-func EnumerateSessions(server windows.Handle) ([]Session, error) {
+func EnumerateSessions(server windows.Handle) (map[uint32]Session, error) {
 	pLevel := uint32(1)
 	var sessionsPointer *WTS_SESSION_INFO_1W
 	var count uint32
@@ -73,9 +73,9 @@ func EnumerateSessions(server windows.Handle) ([]Session, error) {
 		return nil, err
 	}
 	defer wtsFreeMemoryExW(WTSTypeSessionInfoLevel1, uintptr(unsafe.Pointer(sessionsPointer)), count)
-	result := make([]Session, 0, count)
+	result := make(map[uint32]Session)
 	for _, session := range unsafe.Slice(sessionsPointer, count) {
-		result = append(result, Session{
+		result[session.SessionId] = Session{
 			ExecEnvId:   session.ExecEnvId,
 			State:       session.State,
 			SessionId:   session.SessionId,
@@ -84,7 +84,7 @@ func EnumerateSessions(server windows.Handle) ([]Session, error) {
 			UserName:    windows.UTF16PtrToString(session.pUserName),
 			DomainName:  windows.UTF16PtrToString(session.pDomainName),
 			FarmName:    windows.UTF16PtrToString(session.pFarmName),
-		})
+		}
 	}
 	return result, nil
 }
@@ -166,6 +166,18 @@ func querySessionInformationULONG(server windows.Handle, sessionId uint32, infoC
 	return *(*uint32)(unsafe.Pointer(addr)), nil
 }
 
+func querySessionInformationString(server windows.Handle, sessionId uint32, infoClass WTS_INFO_CLASS) (string, error) {
+	var addr uintptr
+	var size uint32
+	err := wtsQuerySessionInformation(server, sessionId, infoClass, &addr, &size)
+	if err != nil {
+		return "", err
+	}
+	defer wtsFreeMemory(addr)
+	return windows.UTF16PtrToString((*uint16)(unsafe.Pointer(addr))), nil
+}
+
+// SessionId returns local server current session ID.
 func SessionId() (uint32, error) {
 	id, err := querySessionInformationULONG(WTS_CURRENT_SERVER, WTS_CURRENT_SESSION, WTSSessionId)
 	if err == nil {
@@ -176,4 +188,17 @@ func SessionId() (uint32, error) {
 		return 0, err
 	}
 	return id, nil
+}
+
+// SessionUsername returns domain\username for specified session.
+func SessionUsername(server windows.Handle, sessionId uint32) (username string, domain string, err error) {
+	username, err = querySessionInformationString(server, sessionId, WTSUserName)
+	if err != nil {
+		return "", "", err
+	}
+	domain, err = querySessionInformationString(server, sessionId, WTSDomainName)
+	if err != nil {
+		return "", "", err
+	}
+	return username, domain, nil
 }
