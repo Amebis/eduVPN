@@ -124,7 +124,7 @@ const (
 	WTSOEMId
 	WTSSessionId
 	WTSUserName
-	WTSWinStationName
+	WTSWinStationName // Despite its name, specifying this type does not return the window station name. Rather, it returns the name of the Remote Desktop Services session.
 	WTSDomainName
 	WTSConnectState
 	WTSClientBuildNumber
@@ -188,6 +188,15 @@ func SessionId() (uint32, error) {
 		return 0, err
 	}
 	return id, nil
+}
+
+// SessionName returns session name for specified session.
+func SessionName(server windows.Handle, sessionId uint32) (string, error) {
+	name, err := querySessionInformationString(server, sessionId, WTSWinStationName)
+	if err != nil {
+		return "", err
+	}
+	return name, nil
 }
 
 // SessionUsername returns domain\username for specified session.

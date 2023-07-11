@@ -28,6 +28,10 @@ func TestQuerySessionInfo(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error querying session ID: %#v", err)
 	}
+	_, err = SessionName(WTS_CURRENT_SERVER, sessionId)
+	if err != nil {
+		t.Errorf("Error querying session name: %#v", err)
+	}
 	_, _, err = SessionUsername(WTS_CURRENT_SERVER, sessionId)
 	if err != nil {
 		t.Errorf("Error querying session domain\\username: %#v", err)

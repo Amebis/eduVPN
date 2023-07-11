@@ -50,7 +50,11 @@ type Monitor struct {
 	sessionDomain   string   // Current session user domain
 }
 
-const wndClassName = "SESSION_MONITOR"
+const (
+	wndClassName        = "SESSION_MONITOR"
+	servicesSessionName = "Services"
+	consoleSessionName  = "Console"
+)
 
 var wndClassAtom win.ATOM
 
@@ -98,7 +102,11 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 				case wtsapi32.WM_WTSSESSION_CHANGE:
 					m := (*Monitor)(unsafe.Pointer(win.GetWindowLongPtr(hwnd, win.GWLP_USERDATA)))
 					sessionId := uint32(lp)
-					if sessionId == 0 || sessionId == m.sessionId {
+					if sessionId == m.sessionId {
+						return 0
+					}
+					sessionName, err := wtsapi32.SessionName(wtsapi32.WTS_CURRENT_SERVER, sessionId)
+					if err == nil && strings.EqualFold(sessionName, servicesSessionName) && strings.EqualFold(sessionName, consoleSessionName) {
 						return 0
 					}
 					sessionUsername, sessionDomain, err := wtsapi32.SessionUsername(wtsapi32.WTS_CURRENT_SERVER, sessionId)
@@ -167,7 +175,8 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 		}
 		currentSession := sessions[sessionId]
 		for _, session := range sessions {
-			if session.SessionId == 0 || session.SessionId == sessionId ||
+			if session.SessionId == sessionId ||
+				strings.EqualFold(session.SessionName, servicesSessionName) || strings.EqualFold(session.SessionName, consoleSessionName) ||
 				strings.EqualFold(session.UserName, currentSession.UserName) && strings.EqualFold(session.DomainName, currentSession.DomainName) {
 				continue
 			}
