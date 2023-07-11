@@ -1,5 +1,5 @@
 {"arguments": "/install",
-"uri": [ "https://github.com/Amebis/eduVPN/releases/download/3.255.3/eduVPNClient_3.255.3.exe" ],
-"version": "3.255.3",
+"uri": [ "https://github.com/Amebis/eduVPN/releases/download/3.255.4/eduVPNClient_3.255.4.exe" ],
+"version": "3.255.4",
 "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
-"hash-sha256": "59bad318828d78cf06eb23358535e2edea404d84b211a3b14be41e0aad4a760a"}
+"hash-sha256": "d2d58c06395da30b8f7e56fc9fa715569e2da722ce7db0dc5daa98f2feeaa330"}
