@@ -1,6 +1,11 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.3...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.4...HEAD)
+
+
+## [3.255.4](https://github.com/Amebis/eduVPN/compare/3.255.3...3.255.4) (2023-07-11)
+
+- Fixes
 
 
 ## [3.255.3](https://github.com/Amebis/eduVPN/compare/3.255.2...3.255.3) (2023-07-05)
