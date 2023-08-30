@@ -15,7 +15,7 @@ namespace eduVPN.Converters
     /// <summary>
     /// Returns country flag according to status state.
     /// </summary>
-    public class CountryCodeFlagConverter : IValueConverter
+    public class CountryFlagConverter : IValueConverter
     {
         #region Methods
 
@@ -29,9 +29,9 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string code)
+            if (value is Models.Country country)
             {
-                var resourceName = string.Format("{0}DrawingImage", code.ToUpperInvariant());
+                var resourceName = string.Format("{0}DrawingImage", country.Code.ToUpperInvariant());
                 if (Application.Current != null && Application.Current.Resources.Contains(resourceName))
                     return Application.Current.Resources[resourceName];
             }

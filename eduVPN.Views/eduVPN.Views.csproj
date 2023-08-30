@@ -46,7 +46,7 @@
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\CountRowHeightAutoConverter.cs" />
     <Compile Include="Converters\CountRowHeightOneStarConverter.cs" />
-    <Compile Include="Converters\CountryCodeFlagConverter.cs" />
+    <Compile Include="Converters\CountryFlagConverter.cs" />
     <Compile Include="Converters\EmptySearchResultRowHeightConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />

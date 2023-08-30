@@ -24,7 +24,7 @@
     <conv:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
     <conv:CountRowHeightAutoConverter x:Key="CountRowHeightAutoConverter"/>
     <conv:CountRowHeightOneStarConverter x:Key="CountRowHeightOneStarConverter"/>
-    <conv:CountryCodeFlagConverter x:Key="CountryCodeFlagConverter"/>
+    <conv:CountryFlagConverter x:Key="CountryFlagConverter"/>
     <conv:EmptySearchResultRowHeightConverter x:Key="EmptySearchResultRowHeightConverter"/>
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>

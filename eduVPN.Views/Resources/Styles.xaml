@@ -1062,7 +1062,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 MaxWidth="20" MaxHeight="20"
-                Source="{Binding Path=Code, Converter={StaticResource CountryCodeFlagConverter}}"/>
+                Source="{Binding Converter={StaticResource CountryFlagConverter}}"/>
             <TextBlock
                 Grid.Column="1"
                 Margin="7,0,0,0"
@@ -1097,7 +1097,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 MaxWidth="20" MaxHeight="20"
-                Source="{Binding Path=Country.Code, Converter={StaticResource CountryCodeFlagConverter}}"/>
+                Source="{Binding Path=Country, Converter={StaticResource CountryFlagConverter}}"/>
             <TextBlock
                 Grid.Column="1"
                 Margin="7,0,0,0"
