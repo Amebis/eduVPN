@@ -764,7 +764,8 @@ namespace eduVPN
             IntPtr c,
             /*[MarshalAs(UnmanagedType.I4)]*/ ServerType type,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string id,
-            int pTCP);
+            int pTCP,
+            int startup);
 
         /// <summary>
         /// Gets a configuration for a server
@@ -774,13 +775,14 @@ namespace eduVPN
         /// <param name="type">Server type</param>
         /// <param name="id">Server base URL/ID</param>
         /// <param name="tcp">indicates that the client wants to use TCP (through OpenVPN) to establish the VPN tunnel</param>
+        /// <param name="startup">indicates that the client is auto-starting connection (unattended)</param>
         /// <returns>JSON string</returns>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static string GetConfig(Cookie cookie, ServerType type, string id, bool tcp)
+        public static string GetConfig(Cookie cookie, ServerType type, string id, bool tcp, bool startup)
         {
             var m = CGoToManagedStringMarshaller.GetInstance(null);
-            var r = _GetConfig(cookie.Handle, type, id, tcp ? 1 : 0);
+            var r = _GetConfig(cookie.Handle, type, id, tcp ? 1 : 0, startup ? 1 : 0);
             try
             {
                 if (r.r1 == IntPtr.Zero)
