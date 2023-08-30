@@ -8,7 +8,6 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -68,14 +67,20 @@ namespace eduVPN.ViewModels.Pages
                                 Wizard.TaskCount++;
                                 try
                                 {
-                                    using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
-                                        await Task.Run(() => Engine.SetSecureInternetLocation(cookie, SelectedSecureInternetCountry.Code));
-                                    //await Task.Run(() => Window.Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
+                                    var country = SelectedSecureInternetCountry;
+                                    Wizard.CurrentPage = Wizard.PleaseWaitPage;
+                                    try
+                                    {
+                                        using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
+                                            await Task.Run(() => Engine.SetSecureInternetLocation(cookie, country.Code));
+                                        //await Task.Run(() => Window.Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
 
-                                    // eduvpn-common does not do callback on country change. Do the bookkeeping manually.
-                                    foreach (var srv in Wizard.HomePage.SecureInternetServers)
-                                        srv.Country = SelectedSecureInternetCountry;
-                                    Wizard.CurrentPage = Wizard.StartingPage;
+                                        // eduvpn-common does not do callback on country change. Do the bookkeeping manually.
+                                        foreach (var srv in Wizard.HomePage.SecureInternetServers)
+                                            srv.Country = country;
+                                        Wizard.CurrentPage = Wizard.StartingPage;
+                                    }
+                                    catch { Wizard.CurrentPage = this; throw; }
                                 }
                                 finally { Wizard.TaskCount--; }
                             }

@@ -656,6 +656,15 @@ namespace eduVPN.ViewModels.Windows
                     e.Handled = true;
                     break;
 
+                case Engine.State.ChosenLocation:
+                case Engine.State.LoadingServer:
+                case Engine.State.ChosenServer:
+                case Engine.State.RequestConfig:
+                case Engine.State.ChosenProfile:
+                    TryInvoke((Action)(() => CurrentPage = PleaseWaitPage));
+                    e.Handled = true;
+                    break;
+
                 default:
                     // Silence "WARNING - transition not completed..." in the log.
                     e.Handled = true;
