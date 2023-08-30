@@ -1,6 +1,6 @@
-# Localization of eduVPN and Let's Connect! Clients for Windows
+# Localization of eduVPN Clients for Windows
 
-eduVPN and Let's Connect! clients are the same client targeted for a different audience. They share the code base and string resources. Therefore, the remainder of this document will reference "eduVPN" only for readability.
+eduVPN, Let's Connect! and govVPN clients are the same client targeted for a different audience. They share the code base and string resources. Therefore, the remainder of this document will reference "eduVPN" only for readability.
 
 1. [eduVPN at Transifex](https://www.transifex.com/amebis/eduvpn/)
 

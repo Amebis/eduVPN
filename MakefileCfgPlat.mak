@@ -286,8 +286,17 @@ Clean ::
 # Client-specific rules
 ######################################################################
 
+!IF $(BUILD_EDUVPN)
 !INCLUDE "eduVPN.mak"
 !INCLUDE "MakefileCfgPlatClient.mak"
+!ENDIF
 
+!IF $(BUILD_LETSCONNECT)
 !INCLUDE "LetsConnect.mak"
 !INCLUDE "MakefileCfgPlatClient.mak"
+!ENDIF
+
+!IF $(BUILD_GOVVPN)
+!INCLUDE "govVPN.mak"
+!INCLUDE "MakefileCfgPlatClient.mak"
+!ENDIF

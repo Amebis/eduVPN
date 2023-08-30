@@ -15,6 +15,9 @@
     <String Id="LetsConnect.Name">Cliente Let's Connect!</String>
     <String Id="LetsConnect.OpenVPNName">Cliente Let's Connect!, Componentes OpenVPN</String>
 
+    <String Id="govVPN.Name">Cliente govVPN</String>
+    <String Id="govVPN.OpenVPNName">Cliente govVPN, Componentes OpenVPN</String>
+
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">10</String>
     <String Id="SummaryCodepage">1252</String>

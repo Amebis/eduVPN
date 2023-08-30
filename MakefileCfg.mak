@@ -54,30 +54,61 @@ PLAT=ARM64
 # Client-specific rules
 ######################################################################
 
+!IF $(BUILD_EDUVPN)
 !INCLUDE "eduVPN.mak"
 !INCLUDE "MakefileCfgClient.mak"
+!ENDIF
 
+!IF $(BUILD_LETSCONNECT)
 !INCLUDE "LetsConnect.mak"
 !INCLUDE "MakefileCfgClient.mak"
+!ENDIF
+
+!IF $(BUILD_GOVVPN)
+!INCLUDE "govVPN.mak"
+!INCLUDE "MakefileCfgClient.mak"
+!ENDIF
 
 
 ######################################################################
 # Signing
 ######################################################################
 
+MINISIGN_SETUP_FILES=
+MINISIGN_SELFUPDATE_FILES=
+!IF $(BUILD_EDUVPN)
+MINISIGN_SETUP_FILES=$(MINISIGN_SETUP_FILES) \
+	"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET).exe" \
+	"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
+	"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
+	"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_x86.msi"
+MINISIGN_SELFUPDATE_FILES=$(MINISIGN_SELFUPDATE_FILES) \
+	"bin\Setup\eduVPN.windows.json"
+!ENDIF
+!IF $(BUILD_LETSCONNECT)
+MINISIGN_SETUP_FILES=$(MINISIGN_SETUP_FILES) \
+	"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET).exe" \
+	"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
+	"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
+	"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x86.msi"
+MINISIGN_SELFUPDATE_FILES=$(MINISIGN_SELFUPDATE_FILES) \
+	"bin\Setup\LetsConnect.windows.json"
+!ENDIF
+!IF $(BUILD_GOVVPN)
+MINISIGN_SETUP_FILES=$(MINISIGN_SETUP_FILES) \
+	"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET).exe" \
+	"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
+	"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
+	"bin\Setup\govVPNClient_$(VERSION)$(CFG_TARGET)_x86.msi"
+MINISIGN_SELFUPDATE_FILES=$(MINISIGN_SELFUPDATE_FILES) \
+	"bin\Setup\govVPN.windows.json"
+!ENDIF
+
 !IF "$(CFG)" == "$(SETUP_CFG)"
 Setup ::
 !IFDEF MINISIGN_KEY_AVAILABLE
 	@echo Signing setup files
-	minisign.exe -Sm \
-		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET).exe" \
-		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET).exe" \
-		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
-		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
-		"bin\Setup\eduVPNClient_$(VERSION)$(CFG_TARGET)_x86.msi" \
-		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_ARM64.msi" \
-		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x64.msi" \
-		"bin\Setup\LetsConnectClient_$(VERSION)$(CFG_TARGET)_x86.msi"
+	minisign.exe -Sm $(MINISIGN_SETUP_FILES)
 !ENDIF
 
 Clean ::
@@ -89,8 +120,6 @@ Clean ::
 Publish ::
 !IFDEF MINISIGN_KEY_AVAILABLE
 	@echo Signing self-update discovery files
-	minisign.exe -Sm \
-		"bin\Setup\eduVPN.windows.json" \
-		"bin\Setup\LetsConnect.windows.json"
+	minisign.exe -Sm $(MINISIGN_SELFUPDATE_FILES)
 !ENDIF
 !ENDIF

@@ -60,6 +60,11 @@ BEGIN
 	IDS_LETSCONNECT_MGR_SERVICE_DESCRIPTION "WireGuard tunnel manager for Let's Connect! client. If stopped or disabled, Let's Connect! client will not function."
 	IDS_LETSCONNECT_TUN_SERVICE_TITLE       "WireGuard Tunnel Service (Let's Connect!): %s"
 	IDS_LETSCONNECT_TUN_SERVICE_DESCRIPTION "WireGuard tunnel service for Let's Connect! client. This service is managed by the WireGuard Manager Service (Let's Connect!)."
+
+	IDS_GOVVPN_MGR_SERVICE_TITLE            "WireGuard Manager Service (govVPN)"
+	IDS_GOVVPN_MGR_SERVICE_DESCRIPTION      "WireGuard tunnel manager for govVPN client. If stopped or disabled, govVPN client will not function."
+	IDS_GOVVPN_TUN_SERVICE_TITLE            "WireGuard Tunnel Service (govVPN): %s"
+	IDS_GOVVPN_TUN_SERVICE_DESCRIPTION      "WireGuard tunnel service for govVPN client. This service is managed by the WireGuard Manager Service (govVPN)."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -80,4 +85,9 @@ BEGIN
 	IDS_LETSCONNECT_MGR_SERVICE_DESCRIPTION "Upravnik tunelov WireGuard za odjemalca Let's Connect!. Če je ta storitev zaustavljena ali onemogočena, odjemalec Let's Connect! ne bo deloval."
 	IDS_LETSCONNECT_TUN_SERVICE_TITLE       "Storitev tunela WireGuard (Let's Connect!): %s"
 	IDS_LETSCONNECT_TUN_SERVICE_DESCRIPTION "Tunel WireGuard za odjemalca Let's Connect!. To storitev upravlja Storitev upravnika tunelov WireGuard (Let's Connect!)."
+
+	IDS_GOVVPN_MGR_SERVICE_TITLE            "Storitev upravnika tunelov WireGuard (govVPN)"
+	IDS_GOVVPN_MGR_SERVICE_DESCRIPTION      "Upravnik tunelov WireGuard za odjemalca govVPN. Če je ta storitev zaustavljena ali onemogočena, odjemalec govVPN ne bo deloval."
+	IDS_GOVVPN_TUN_SERVICE_TITLE            "Storitev tunela WireGuard (govVPN): %s"
+	IDS_GOVVPN_TUN_SERVICE_DESCRIPTION      "Tunel WireGuard za odjemalca govVPN. To storitev upravlja Storitev upravnika tunelov WireGuard (govVPN)."
 END

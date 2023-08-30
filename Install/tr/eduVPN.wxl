@@ -15,6 +15,9 @@
     <String Id="LetsConnect.Name">Let's Connect! İstemci</String>
     <String Id="LetsConnect.OpenVPNName">Let's Connect! İstemci OpenVPN Bileşenleri</String>
 
+    <String Id="govVPN.Name">govVPN İstemci</String>
+    <String Id="govVPN.OpenVPNName">govVPN İstemci OpenVPN Bileşenleri</String>
+
     <String Id="ManufacturerName">SURF</String>
     <String Id="ProductLanguage">1055</String>
     <String Id="SummaryCodepage">1254</String>

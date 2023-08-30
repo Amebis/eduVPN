@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.4...HEAD)
 
+- govVPN introduced
+
 
 ## [3.255.4](https://github.com/Amebis/eduVPN/compare/3.255.3...3.255.4) (2023-07-11)
 

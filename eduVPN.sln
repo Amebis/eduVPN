@@ -46,6 +46,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduWGSvcHost", "eduWGSvcHos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduWireGuard", "eduWireGuard\eduWireGuard\eduWireGuard.csproj", "{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "govVPN.Client", "govVPN.Client\govVPN.Client.csproj", "{92372D59-4BCA-4647-859C-FE3C035A4E7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -260,6 +262,18 @@ Global
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x64.Build.0 = Release|x64
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x86.ActiveCfg = Release|x86
 		{E9506F49-B222-4FF3-AD1B-B5FA33035BEF}.Release|x86.Build.0 = Release|x86
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Debug|x64.ActiveCfg = Debug|x64
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Debug|x64.Build.0 = Debug|x64
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Debug|x86.ActiveCfg = Debug|x86
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Debug|x86.Build.0 = Debug|x86
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Release|ARM64.Build.0 = Release|Any CPU
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Release|x64.ActiveCfg = Release|x64
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Release|x64.Build.0 = Release|x64
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Release|x86.ActiveCfg = Release|x86
+		{92372D59-4BCA-4647-859C-FE3C035A4E7A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

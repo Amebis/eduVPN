@@ -205,6 +205,7 @@ EvaluateComponents(_In_ MSIHANDLE hInstall)
 	static const LPCTSTR szClientFilenames[] = {
 		TEXT("eduVPN.Client.exe"),
 		TEXT("LetsConnect.Client.exe"),
+		TEXT("govVPN.Client.exe"),
 	};
 	for (size_t i = 0; i < _countof(szClientFilenames); ++i) {
 		// Get the client component state.

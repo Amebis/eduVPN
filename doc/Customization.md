@@ -1,9 +1,9 @@
-# Customization of eduVPN and Let's Connect! Clients for Windows
+# Customization of eduVPN Clients for Windows
 
 
-This document describes customization of the eduVPN and Let's Connect! Clients for Windows only. For eduVPN server setup see [eduVPN Documentation](https://github.com/eduvpn/documentation).
+This document describes customization of the eduVPN, Let's Connect! and govVPN Clients for Windows only. For eduVPN server setup see [eduVPN Documentation](https://github.com/eduvpn/documentation).
 
-eduVPN and Let's Connect! clients are the same client targeted for a different audience. While their UI is different, the customization is mostly identical. Therefore, the remainder of this document will reference "eduVPN" only for readability. For Let's Connect! use case, the "eduVPN" in paths and filenames translates to "LetsConnect".
+eduVPN, Let's Connect! and govVPN clients are the same client targeted for a different audience. While their UI is different, the customization is mostly identical. Therefore, the remainder of this document will reference "eduVPN" only for readability. For Let's Connect! and govVPN use case, the "eduVPN" in paths and filenames translates to "LetsConnect" and "govVPN" respectively.
 
 
 ## Default values
@@ -12,6 +12,7 @@ Some properties of the client are customizable. The default values of customizab
 
 - [eduVPN.Client.exe.config](../eduVPN.Client/app.config)
 - [LetsConnect.Client.exe.config](../LetsConnect.Client/app.config)
+- [govVPN.Client.exe.config](../govVPN.Client/app.config)
 
 As the .config files evolve over time and are overwritten on client updates, they should not be used for client customization.
 
@@ -57,7 +58,7 @@ Example: [How to switch client to pre-release update channel?](FAQ.md#how-to-swi
 
 ### `OpenVPNInteractiveServiceInstance` (`REG_SZ`)
 
-`OpenVPNInteractiveServiceInstance` specifies the OpenVPN instance ID when more than one instance of the OpenVPN is installed. Defaults to "$eduVPN" or "$LetsConnect". Set to blank string to use default OpenVPN installed instance.
+`OpenVPNInteractiveServiceInstance` specifies the OpenVPN instance ID when more than one instance of the OpenVPN is installed. Defaults to "$eduVPN", "$LetsConnect" or "$govVPN". Set to blank string to use default OpenVPN installed instance.
 
 
 ### `OpenVPNRemoveOptions` (`REG_MULTI_SZ`)

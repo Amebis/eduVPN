@@ -29,7 +29,7 @@
     <Setting Name="LastSelectedServer" Description="Which server user selected last" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="WireGuardTunnelManagerServiceInstance" Description="Which WireGuard tunnel manager service instance client should use:&#xD;&#xA; - &quot;$eduVPN&quot; - Use WireGuard installation bundled with the eduVPN client.&#xD;&#xA; - &quot;$LetsConnect&quot; - Use WireGuard installation bundled with the Let's Connect! client." Type="System.String" Scope="Application">
+    <Setting Name="WireGuardTunnelManagerServiceInstance" Description="Which WireGuard tunnel manager service instance client should use:&#xD;&#xA; - &quot;$eduVPN&quot; - Use WireGuard installation bundled with the eduVPN client.&#xD;&#xA; - &quot;$LetsConnect&quot; - Use WireGuard installation bundled with the Let's Connect! client.&#xD;&#xA; - &quot;$govVPN&quot; - Use WireGuard installation bundled with the govVPN client." Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SelfUpdateBundleId" Description="GUID of the installer EXE bundle" Type="System.String" Scope="Application">
