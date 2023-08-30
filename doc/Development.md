@@ -23,7 +23,6 @@
 - _Install_: WiX installer additional files
 - _LetsConnect.Client_: Let's Connect! client application (Shell)
 - _openvpn_: OpenVPN source code
-- _vcpkg_: vcpkg build system for building OpenVPN and its prerequisites
 - _WinStd_: Win32 Standard C++ helpers
 
 
@@ -42,7 +41,11 @@
          - Python 3 (required by openvpn submodule)
       - SDKs, libraries, and frameworks
          - Windows 11 SDK
-2. Install [vcpkg](https://vcpkg.io/). Bootstrap it and run `vcpkg integrate install` to integrate it into MSBuild/Visual Studio.
+2. Install [vcpkg](https://vcpkg.io/).
+   - `git clone https://github.com/Microsoft/vcpkg.git C:\ProgramData\SDK\vcpkg`
+      The path used is only an example. If filesystem permissions and system-wide setup is not your thing, vcpkg may be installed anywhere in your user home folder.
+   - Bootstrap with `C:\ProgramData\SDK\vcpkg\bootstrap-vcpkg -disableMetrics`
+   - Integrate into MSBuild/Visual Studio with `C:\ProgramData\SDK\vcpkg\vcpkg integrate install`
 3. Install [Go](https://go.dev/) 1.18 or later.
 4. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 5. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
