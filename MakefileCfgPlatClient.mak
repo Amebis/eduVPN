@@ -162,12 +162,11 @@ Clean ::
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_sl.mst" 1060  /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_tr.mst" 1055  /L
 	cscript.exe $(CSCRIPT_FLAGS) "bin\MSI.wsf" //Job:AddStorage "$(@:"=).tmp" "bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT)_uk.mst" 1058  /L
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
-!ENDIF
-	attrib.exe +r "$(@:"=).tmp"
-	if exist $@ attrib.exe -r $@
 	move /y "$(@:"=).tmp" $@ > NUL
+
+!IF "$(CFG)" == "$(SETUP_CFG)"
+SetupSignMSI : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi"
+!ENDIF
 
 
 ######################################################################

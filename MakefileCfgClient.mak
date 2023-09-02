@@ -25,16 +25,10 @@ SetupExe :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" : \
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	"bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" \
-	"bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
-	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ab "bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" "bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" -o "$(@:"=).tmp"
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
-	move /y "$(@:"=).tmp" $@ > NUL
-!ELSE
 	"bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 	copy /y $** $@ > NUL
-!ENDIF
+
+SetupSignExe : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 
 Clean ::
 	-if exist "bin\Setup\$(CLIENT_TARGET)Client_*.exe" del /f /q "bin\Setup\$(CLIENT_TARGET)Client_*.exe"
@@ -194,14 +188,3 @@ Clean ::
 
 Clean ::
 	-if exist "bin\$(CFG)\$(CLIENT_TARGET)Client_*.exe" del /f /q "bin\$(CFG)\$(CLIENT_TARGET)Client_*.exe"
-
-"bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" : \
-	"bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
-	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ib $** -o "$(@:"=).tmp"
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "$(CLIENT_TITLE) Client" /q "$(@:"=).tmp"
-!ENDIF
-	move /y "$(@:"=).tmp" $@ > NUL
-
-Clean ::
-	-if exist "bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_*.exe" del /f /q "bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_*.exe"

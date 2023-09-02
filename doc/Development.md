@@ -56,7 +56,7 @@
 
 In order to have the build process digitally sign the release output files, one should provide the following:
 
-1. A signing certificate installed in the building user’s certificate store.
+1. A signing certificate
 2. The following variables in the environment:
    - `ManifestCertificateThumbprint` - set the value to certificate’s SHA1 thumbprint (hexadecimal, without spaces, e.g. `bc0d8da45f9eeefcbe4e334e1fc262804df88d7e`).
    - `ManifestTimestampRFC3161Url` - set the value to URL used to perform timestamp signature (e.g. `http://sha256timestamp.ws.symantec.com/sha256/timestamp`, `http://timestamp.digicert.com` etc.). In order to perform the timestamp signing successfully, the computer running the build should be online and able to access this URL.

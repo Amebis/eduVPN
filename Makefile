@@ -75,7 +75,8 @@ BuildDeps :: \
 	BuildOpenVPN \
 	BuildWireGuard \
 	BuildeduVPNCommon \
-	BuildeduVPNWindows
+	BuildeduVPNWindows \
+	SignDeps
 
 BuildWireGuard ::
 	cd "wireguard-windows\embeddable-dll-service"
@@ -150,8 +151,11 @@ Clean ::
 
 Setup :: \
 	SetupBuild \
+	SetupSign \
 	SetupMSI \
+	SetupSignMSI \
 	SetupExe \
+	SetupSignExe \
 	SetupPDB
 
 
@@ -164,6 +168,34 @@ CFG=Debug
 
 CFG=Release
 !INCLUDE "MakefileCfg.mak"
+
+
+######################################################################
+# Signing
+######################################################################
+
+SignDeps \
+SignOpenVPN \
+SignWireGuard \
+SigneduVPNCommon \
+SigneduVPNWindows \
+Sign \
+SetupSign \
+SetupSignMSI \
+SetupSignExe :
+!IFDEF MANIFESTCERTIFICATETHUMBPRINT
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 $**
+!ENDIF
+
+BuildOpenVPN :: SignOpenVPN
+
+BuildWireGuard :: SignWireGuard
+
+BuildeduVPNCommon :: SigneduVPNCommon
+
+BuildeduVPNWindows :: SigneduVPNWindows
+
+Build :: Sign
 
 
 ######################################################################

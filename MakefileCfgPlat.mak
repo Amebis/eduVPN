@@ -165,16 +165,22 @@ BuildOpenVPN-$(CFG)-$(PLAT) :: \
 	copy /y $** $@ > NUL
 
 "bin\$(CFG)\$(PLAT)\openvpn.exe" : "openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpn.exe"
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN" /q $**
-!ENDIF
 	copy /y $** $@ > NUL
 
 "bin\$(CFG)\$(PLAT)\openvpnserv.exe" : "openvpn\$(PLAT_MSVC)-Output\$(CFG)\openvpnserv.exe"
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
-	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /as /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 /d "OpenVPN Interactive Service" /q $**
-!ENDIF
 	copy /y $** $@ > NUL
+
+SignDeps \
+SignOpenVPN : \
+	"bin\$(CFG)\$(PLAT)\openvpn.exe" \
+	"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+
+BuildOpenVPN-$(CFG)-$(PLAT) ::
+!IFDEF MANIFESTCERTIFICATETHUMBPRINT
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 \
+		"bin\$(CFG)\$(PLAT)\openvpn.exe" \
+		"bin\$(CFG)\$(PLAT)\openvpnserv.exe"
+!ENDIF
 
 CleanOpenVPN \
 CleanOpenVPN-$(CFG)-$(PLAT) ::
@@ -193,6 +199,11 @@ BuildWireGuard :: \
 
 "bin\$(CFG)\$(PLAT)\tunnel.dll" : "wireguard-windows\embeddable-dll-service\$(PLAT_PROCESSOR_ARCHITECTURE)\tunnel.dll"
 	copy /y $** $@ > NUL
+
+SignDeps \
+SignWireGuard : \
+	"bin\$(CFG)\$(PLAT)\wireguard.dll" \
+	"bin\$(CFG)\$(PLAT)\tunnel.dll"
 
 CleanWireGuard ::
 	-if exist "bin\$(CFG)\$(PLAT)\wireguard.dll" del /f /q "bin\$(CFG)\$(PLAT)\wireguard.dll"
@@ -217,6 +228,14 @@ BuildeduVPNCommon-$(CFG)-$(PLAT) :: \
 	set CC=$(CC)
 	go.exe build $(CFG_GOFLAGS) -o "..\..\bin\$(CFG)\$(PLAT)\eduvpn_common.dll" -buildmode=c-shared .
 	cd "$(MAKEDIR)"
+
+SignDeps \
+SigneduVPNCommon : "bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
+
+BuildeduVPNCommon-$(CFG)-$(PLAT) ::
+!IFDEF MANIFESTCERTIFICATETHUMBPRINT
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 "bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
+!ENDIF
 
 CleaneduVPNCommon ::
 	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_common.dll" del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
@@ -248,6 +267,14 @@ BuildeduVPNWindows-$(CFG)-$(PLAT) :: \
 	go.exe build $(CFG_GOFLAGS) -o "..\bin\$(CFG)\$(PLAT)\eduvpn_windows.dll" -buildmode=c-shared .
 	cd "$(MAKEDIR)"
 
+SignDeps \
+SigneduVPNWindows : "bin\$(CFG)\$(PLAT)\eduvpn_windows.dll"
+
+BuildeduVPNWindows-$(CFG)-$(PLAT) ::
+!IFDEF MANIFESTCERTIFICATETHUMBPRINT
+	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 "bin\$(CFG)\$(PLAT)\eduvpn_windows.dll"
+!ENDIF
+
 CleaneduVPNWindows ::
 	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_windows.dll" del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_windows.dll"
 	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_windows.h"   del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_windows.h"
@@ -267,6 +294,26 @@ Build \
 Build-$(CFG)-$(PLAT) :: \
 	"bin\$(CFG)\$(PLAT)"
 	msbuild.exe "eduVPN.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
+
+!IF "$(CFG)" == "$(SETUP_CFG)"
+SetupSign \
+!ENDIF
+Sign : \
+!IF "$(PLAT)" != "ARM64"
+	"bin\$(CFG)\$(PLAT)\eduEx.dll" \
+	"bin\$(CFG)\$(PLAT)\eduJSON.dll" \
+	"bin\$(CFG)\$(PLAT)\eduOAuth.dll" \
+	"bin\$(CFG)\$(PLAT)\eduOpenVPN.dll" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.dll" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Client.exe" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Views.dll" \
+	"bin\$(CFG)\$(PLAT)\eduWireGuard.dll" \
+	"bin\$(CFG)\$(PLAT)\govVPN.Client.exe" \
+	"bin\$(CFG)\$(PLAT)\LetsConnect.Client.exe" \
+!ENDIF
+	"bin\$(CFG)\$(PLAT)\eduMSICA.dll" \
+	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
+	"bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe"
 
 Clean ::
 	-msbuild.exe "eduVPN.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT)" $(MSBUILD_FLAGS)
@@ -300,3 +347,41 @@ Clean ::
 !INCLUDE "govVPN.mak"
 !INCLUDE "MakefileCfgPlatClient.mak"
 !ENDIF
+
+
+######################################################################
+# Locale-specific rules
+######################################################################
+
+LANG=ar
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=en
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=de
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=es
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=es-ES
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=fr
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=nl
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=pt-PT
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=sl
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=tr
+!INCLUDE "MakefileCfgPlatLang.mak"
+
+LANG=uk
+!INCLUDE "MakefileCfgPlatLang.mak"

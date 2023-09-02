@@ -6,19 +6,4 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--
-      Code signing
-  -->
-  <Target Name="Sign" Condition="'$(ManifestCertificateThumbprint)' != '' AND '$(Configuration)'=='Release'" AfterTargets="_Manifest" BeforeTargets="RegisterOutput" Inputs="$(OutDir)$(TargetName)$(TargetExt)" Outputs="$(IntDir)$(TargetName).sign">
-    <Exec Command="signtool.exe sign /sha1 &quot;$(ManifestCertificateThumbprint)&quot; /fd sha256 /tr &quot;$(ManifestTimestampRFC3161Url)&quot; /td sha256 /q &quot;$(TargetPath)&quot;" />
-    <Touch Files="$(OutDir)$(TargetName).sign" AlwaysCreate="true" />
-  </Target>
-
-  <PropertyGroup Condition="'$(ManifestCertificateThumbprint)' != '' AND '$(Configuration)' == 'Release'">
-    <CleanDependsOn>CleanSign;$(CleanDependsOn)</CleanDependsOn>
-  </PropertyGroup>
-
-  <Target Name="CleanSign">
-    <Delete Files="$(OutDir)$(TargetName).sign"/>
-  </Target>
 </Project>

@@ -16,23 +16,6 @@
     </ItemGroup>
   </Target>
 
-  <!--
-      Code signing
-  -->
-  <PropertyGroup Condition="'$(ManifestCertificateThumbprint)' != '' AND '$(Configuration)' == 'Release'">
-    <BuildDependsOn>$(BuildDependsOn);Sign</BuildDependsOn>
-    <CleanDependsOn>CleanSign;$(CleanDependsOn)</CleanDependsOn>
-  </PropertyGroup>
-
-  <Target Name="Sign" Inputs="$(OutDir)$(TargetName)$(TargetExt)" Outputs="$(OutDir)$(TargetName).sign">
-    <SignFile CertificateThumbprint="$(ManifestCertificateThumbprint)" TimestampUrl="$(ManifestTimestampRFC3161Url)" SigningTarget="$(TargetPath)" TargetFrameworkVersion="v4.5"/>
-    <Touch Files="$(OutDir)$(TargetName).sign" AlwaysCreate="true" />
-  </Target>
-
-  <Target Name="CleanSign">
-    <Delete Files="$(OutDir)$(TargetName).sign"/>
-  </Target>
-
   <PropertyGroup Condition="'$(Platform)' == 'x64'">
     <AlToolPath>$(TargetFrameworkSDKToolsDirectory)$(PlatformTarget)\</AlToolPath>
   </PropertyGroup>
