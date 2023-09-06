@@ -8,6 +8,8 @@
 package wtsapi32
 
 import (
+	"fmt"
+	"log"
 	"unsafe"
 
 	"golang.org/x/sys/windows"
@@ -163,6 +165,9 @@ func querySessionInformationULONG(server windows.Handle, sessionId uint32, infoC
 		return 0, err
 	}
 	defer wtsFreeMemory(addr)
+	if uintptr(size) < unsafe.Sizeof(uint32(0)) {
+		return 0, fmt.Errorf("WTSQuerySessionInformationW returned size %v, expected min %v", size, unsafe.Sizeof(uint32(0)))
+	}
 	return *(*uint32)(unsafe.Pointer(addr)), nil
 }
 
@@ -174,7 +179,7 @@ func querySessionInformationString(server windows.Handle, sessionId uint32, info
 		return "", err
 	}
 	defer wtsFreeMemory(addr)
-	return windows.UTF16PtrToString((*uint16)(unsafe.Pointer(addr))), nil
+	return windows.UTF16ToString(unsafe.Slice((*uint16)(unsafe.Pointer(addr)), uintptr(size)/unsafe.Sizeof(uint16(0)))), nil
 }
 
 // SessionId returns local server current session ID.
@@ -183,6 +188,7 @@ func SessionId() (uint32, error) {
 	if err == nil {
 		return id, nil
 	}
+	log.Printf("Reverting to ProcessIdToSessionId as WTSQuerySessionInformationW(WTS_CURRENT_SERVER, WTS_CURRENT_SESSION) failed: %v\n", err)
 	err = windows.ProcessIdToSessionId(windows.GetCurrentProcessId(), &id)
 	if err != nil {
 		return 0, err

@@ -10,7 +10,7 @@ package selfupdate
 import (
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
+	"errors"
 	"unsafe"
 )
 
@@ -28,7 +28,7 @@ func (h *Hash) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if hex.DecodedLen(len(realV)) != 32 {
-		return fmt.Errorf("invalid SHA256 hash")
+		return errors.New("invalid SHA256 hash")
 	}
 	_, err = hex.Decode(unsafe.Slice(&h[0], 32), []byte(realV))
 	if err != nil {

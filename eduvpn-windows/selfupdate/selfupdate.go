@@ -13,6 +13,7 @@ import (
 	"crypto/subtle"
 	"encoding/json"
 	"encoding/xml"
+	"errors"
 	"fmt"
 	"hash"
 	"io"
@@ -100,7 +101,7 @@ func downloadInstaller(folder string, urls []string, hash *Hash, ctx context.Con
 		default:
 		}
 
-		log.Printf("Downloading installer file %s", u)
+		log.Printf("Downloading installer file %s\n", u)
 
 		var req *http.Request
 		req, err = http.NewRequestWithContext(ctx, "GET", u, nil)
@@ -159,7 +160,7 @@ func downloadInstaller(folder string, urls []string, hash *Hash, ctx context.Con
 		return filename, file, nil
 	}
 	if err == nil {
-		err = fmt.Errorf("resource not available")
+		err = errors.New("resource not available")
 	}
 	return "", nil, err
 }

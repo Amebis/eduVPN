@@ -69,7 +69,7 @@ func evaluateInstalled(productId string, ctx context.Context, progress progress.
 						productVersion = displayVersion
 					}
 				}
-				log.Printf("Installed version: %v", productVersion)
+				log.Printf("Installed version: %v\n", productVersion)
 				break
 			}
 		}

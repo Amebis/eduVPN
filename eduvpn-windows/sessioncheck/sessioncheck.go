@@ -9,6 +9,7 @@ package sessioncheck
 
 import (
 	"fmt"
+	"log"
 	"runtime"
 	"strings"
 	"syscall"
@@ -63,15 +64,18 @@ var wndClassAtom win.ATOM
 func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 	sessionId, err2 := wtsapi32.SessionId()
 	if err2 != nil {
+		log.Printf("Failed to get session ID: %v\n", err2)
 		err = fmt.Errorf("failed to get session ID: %w", err2)
 		return
 	}
 	sessionUsername, sessionDomain, err2 := wtsapi32.SessionUsername(wtsapi32.WTS_CURRENT_SERVER, sessionId)
 	if err2 != nil {
+		log.Printf("Failed to get session domain\\username: %v\n", err2)
 		err = fmt.Errorf("failed to get session domain\\username: %w", err2)
 		return
 	}
 
+	log.Println("Starting session monitor")
 	ch := make(chan bool)
 	go func() {
 		defer func() {
@@ -83,6 +87,7 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 
 		classNameU16, err2 := syscall.UTF16PtrFromString(wndClassName)
 		if err2 != nil {
+			log.Printf("Failed to convert class name to UTF-16: %v\n", err2)
 			err = fmt.Errorf("failed to convert class name to UTF-16: %w", err2)
 			return
 		}
@@ -93,26 +98,33 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 			wc.LpfnWndProc = syscall.NewCallback(func(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
 				switch msg {
 				case win.WM_CREATE:
+					log.Println("Creating session monitor notification window")
 					cs := (*win.CREATESTRUCT)(unsafe.Pointer(lp))
 					m := (*Monitor)(unsafe.Pointer(cs.CreateParams))
 					win.SetWindowLongPtr(hwnd, win.GWLP_USERDATA, uintptr(unsafe.Pointer(m)))
 				case win.WM_DESTROY:
+					log.Println("Destroying session monitor notification window")
 					m := (*Monitor)(unsafe.Pointer(win.GetWindowLongPtr(hwnd, win.GWLP_USERDATA)))
 					win.GlobalFree(win.HGLOBAL(unsafe.Pointer(m)))
 				case wtsapi32.WM_WTSSESSION_CHANGE:
+					log.Printf("Session change event received: sessionId=%v, event=%v\n", uint32(lp), Event(wp))
 					m := (*Monitor)(unsafe.Pointer(win.GetWindowLongPtr(hwnd, win.GWLP_USERDATA)))
 					sessionId := uint32(lp)
 					if sessionId == m.sessionId {
+						log.Println("Ignoring own session by ID")
 						return 0
 					}
 					sessionName, err := wtsapi32.SessionName(wtsapi32.WTS_CURRENT_SERVER, sessionId)
 					if err == nil && strings.EqualFold(sessionName, servicesSessionName) && strings.EqualFold(sessionName, consoleSessionName) {
+						log.Println("Ignoring system/own session by name")
 						return 0
 					}
 					sessionUsername, sessionDomain, err := wtsapi32.SessionUsername(wtsapi32.WTS_CURRENT_SERVER, sessionId)
 					if err == nil && strings.EqualFold(sessionUsername, m.sessionUsername) && strings.EqualFold(sessionDomain, m.sessionDomain) {
+						log.Println("Ignoring own session by domain\\username")
 						return 0
 					}
+					log.Println("Notifying listener")
 					m.notify(Event(wp), sessionId, m.data)
 					return 0
 				}
@@ -121,7 +133,9 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 			wc.HInstance = hInstance
 			wc.LpszClassName = classNameU16
 			if wndClassAtom = win.RegisterClassEx(&wc); wndClassAtom == 0 {
-				err = fmt.Errorf("failed to register window class: %w", windows.Errno(win.GetLastError()))
+				err2 := windows.Errno(win.GetLastError())
+				log.Printf("Failed to register window class: %v\n", err2)
+				err = fmt.Errorf("failed to register window class: %w", err2)
 				return
 			}
 		}
@@ -142,9 +156,11 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 			hInstance,               // hInstance
 			unsafe.Pointer(monitor)) // lpParam
 		if hwnd == win.HWND(0) {
+			err = windows.Errno(win.GetLastError())
+			log.Printf("Failed to create window: %v\n", err)
 			win.GlobalFree(win.HGLOBAL(unsafe.Pointer(monitor)))
 			monitor = nil
-			err = fmt.Errorf("failed to create window: %w", windows.Errno(win.GetLastError()))
+			err = fmt.Errorf("failed to create window: %w", err)
 			return
 		}
 		defer func() {
@@ -155,10 +171,11 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 		}()
 		monitor.hwnd = hwnd
 
-		err = wtsapi32.RegisterSessionNotification(wtsapi32.WTS_CURRENT_SERVER, windows.HWND(hwnd), wtsapi32.NOTIFY_FOR_ALL_SESSIONS)
-		if err != nil {
+		err2 = wtsapi32.RegisterSessionNotification(wtsapi32.WTS_CURRENT_SERVER, windows.HWND(hwnd), wtsapi32.NOTIFY_FOR_ALL_SESSIONS)
+		if err2 != nil {
+			log.Printf("Failed to register session notification: %v\n", err2)
 			monitor = nil
-			err = fmt.Errorf("failed to register session notification: %w", err)
+			err = fmt.Errorf("failed to register session notification: %w", err2)
 			return
 		}
 		defer func() {
@@ -168,18 +185,23 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 			}
 		}()
 
+		log.Println("Enumerating existing sessions")
 		sessions, err2 := wtsapi32.EnumerateSessions(wtsapi32.WTS_CURRENT_SERVER)
 		if err2 != nil {
+			log.Printf("Failed to enumerate sessions: %v\n", err2)
 			err = fmt.Errorf("failed to enumerate sessions: %w", err2)
 			return
 		}
 		currentSession := sessions[sessionId]
 		for _, session := range sessions {
+			log.Printf("Session: %+v\n", session)
 			if session.SessionId == sessionId ||
 				strings.EqualFold(session.SessionName, servicesSessionName) || strings.EqualFold(session.SessionName, consoleSessionName) ||
 				strings.EqualFold(session.UserName, currentSession.UserName) && strings.EqualFold(session.DomainName, currentSession.DomainName) {
+				log.Println("Ignoring system/own session")
 				continue
 			}
+			log.Println("Notifying listener")
 			notify(SessionReportLogon, session.SessionId, data)
 		}
 
@@ -196,10 +218,8 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 }
 
 // Close destroys monitor
-func (m *Monitor) Close() error {
+func (m *Monitor) Close() {
+	log.Println("Closing session monitor")
 	wtsapi32.UnregisterSessionNotification(wtsapi32.WTS_CURRENT_SERVER, windows.HWND(m.hwnd))
-	if !win.DestroyWindow(m.hwnd) {
-		return fmt.Errorf("failed to destroy window: %w", windows.Errno(win.GetLastError()))
-	}
-	return nil
+	win.DestroyWindow(m.hwnd)
 }
