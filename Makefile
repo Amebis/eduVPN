@@ -154,6 +154,8 @@ Setup :: \
 	SetupSign \
 	SetupMSI \
 	SetupSignMSI \
+	SetupBoot \
+	SetupSignBoot \
 	SetupExe \
 	SetupSignExe \
 	SetupPDB
@@ -182,6 +184,7 @@ SigneduVPNWindows \
 Sign \
 SetupSign \
 SetupSignMSI \
+SetupSignBoot \
 SetupSignExe :
 !IFDEF MANIFESTCERTIFICATETHUMBPRINT
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 $**

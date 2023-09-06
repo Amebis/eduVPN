@@ -21,12 +21,25 @@ WIX_CANDLE_FLAGS_CFG_CLIENT=$(WIX_CANDLE_FLAGS_CFG) \
 ######################################################################
 
 !IF "$(CFG)" == "$(SETUP_CFG)"
+SetupBoot :: \
+	"bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
+
+"bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" : \
+	"bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
+	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ib $** -o $@
+
+SetupSignBoot : "bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
+
+Clean ::
+	-if exist "bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_*.exe" del /f /q "bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_*.exe"
+
 SetupExe :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" : \
-	"bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
-	copy /y $** $@ > NUL
+	"bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" \
+	"bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
+	"$(WIX)bin\insignia.exe" $(WIX_INSIGNIA_FLAGS) -ab "bin\$(CFG)\x86\Engine_$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" "bin\$(CFG)\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" -o $@
 
 SetupSignExe : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 
