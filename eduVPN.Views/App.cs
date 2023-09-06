@@ -24,6 +24,12 @@ namespace eduVPN.Views
     /// </summary>
     public class App : Application, ISingleInstanceApp
     {
+        #region Fields
+
+        StandardStreamTracer StandardOutputTracer;
+
+        #endregion
+
         #region Methods
 
         /// <inheritdoc/>
@@ -69,6 +75,8 @@ namespace eduVPN.Views
             eduVPN.Properties.Settings.Initialize();
             Views.Properties.Settings.Initialize();
 
+            StandardOutputTracer = new StandardStreamTracer();
+
             eduVPN.Properties.Settings.Default.IsSignon = e.Args.Any(param => param.Equals("/signon", StringComparison.OrdinalIgnoreCase));
             if (eduVPN.Properties.Settings.Default.IsSignon && !Views.Properties.Settings.Default.StartOnSignon)
                 Shutdown(0);
@@ -111,6 +119,8 @@ namespace eduVPN.Views
             // Save settings on logout.
             Views.Properties.Settings.Default.Save();
             eduVPN.Properties.Settings.Default.Save();
+
+            StandardOutputTracer.Dispose();
         }
 
         /// <inheritdoc/>
@@ -121,6 +131,8 @@ namespace eduVPN.Views
             // Save settings on exit.
             Views.Properties.Settings.Default.Save();
             eduVPN.Properties.Settings.Default.Save();
+
+            StandardOutputTracer.Dispose();
         }
 
         #endregion

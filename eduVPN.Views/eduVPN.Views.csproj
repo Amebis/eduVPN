@@ -115,6 +115,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Controls\TextBlock.cs" />
+    <Compile Include="StandardStreamTracer.cs" />
     <Compile Include="Windows\ConnectWizard.xaml.cs">
       <DependentUpon>ConnectWizard.xaml</DependentUpon>
     </Compile>
