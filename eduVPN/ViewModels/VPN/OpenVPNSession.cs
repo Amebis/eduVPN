@@ -492,7 +492,8 @@ namespace eduVPN.ViewModels.VPN
                 StateDescription = msg;
                 TunnelAddress = e.Tunnel;
                 IPv6TunnelAddress = e.IPv6Tunnel;
-                ConnectedAt = e.State == OpenVPNStateType.Connected ? (DateTimeOffset?)e.TimeStamp : null;
+                if (e.State == OpenVPNStateType.Connected)
+                    SetConnectedAt(e.TimeStamp);
 
                 // Set State property last, as the whole world is listening on this property to monitor connectivity changes.
                 // It is important that we have IP addresses and other info already set before rising PropertyChanged event for State.

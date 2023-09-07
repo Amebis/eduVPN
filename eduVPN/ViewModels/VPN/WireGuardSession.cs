@@ -220,7 +220,7 @@ namespace eduVPN.ViewModels.VPN
                                 Wizard.TryInvoke((Action)(() =>
                                 {
                                     if (ConnectedAt == null && lastHandshake != DateTimeOffset.MinValue)
-                                        ConnectedAt = lastHandshake;
+                                        SetConnectedAt(lastHandshake);
                                     RxBytes = rxBytes;
                                     TxBytes = txBytes;
                                 }));

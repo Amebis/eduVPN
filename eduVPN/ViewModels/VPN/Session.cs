@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Timers;
 using System.Windows.Threading;
@@ -35,6 +36,16 @@ namespace eduVPN.ViewModels.VPN
         /// List of hardware IDs specific to network adapters used for VPN and tunneling
         /// </summary>
         private static readonly string[] VPNHardwareIds = new string[] { "WireGuard", "Wintun", "root\\tap0901", "tap0901", "ovpn-dco" };
+
+        #endregion
+
+        #region PInvoke
+
+        [DllImport("kernel32.dll")]
+        protected static extern bool QueryPerformanceCounter(out long value);
+
+        [DllImport("kernel32.dll")]
+        protected static extern bool QueryPerformanceFrequency(out long value);
 
         #endregion
 
@@ -147,13 +158,13 @@ namespace eduVPN.ViewModels.VPN
         private IPAddress _IPv6TunnelAddress;
 
         /// <summary>
-        /// Time when connected state recorded
+        /// Time ticks in QueryPerformanceCounter when connected state recorded
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public DateTimeOffset? ConnectedAt
+        protected long? ConnectedAt
         {
             get => _ConnectedAt;
-            protected set
+            set
             {
                 if (SetProperty(ref _ConnectedAt, value))
                     RaisePropertyChanged(nameof(ConnectedTime));
@@ -161,13 +172,33 @@ namespace eduVPN.ViewModels.VPN
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTimeOffset? _ConnectedAt;
+        private long? _ConnectedAt;
+
+        protected void SetConnectedAt(DateTimeOffset time)
+        {
+            long n1 = (DateTimeOffset.UtcNow - time).Ticks;
+            QueryPerformanceCounter(out var now);
+            QueryPerformanceFrequency(out var frequency);
+            ConnectedAt = now - n1 * frequency / 10000000;
+        }
 
         /// <summary>
         /// Running time connected
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public TimeSpan? ConnectedTime => ConnectedAt != null ? DateTimeOffset.UtcNow - ConnectedAt : null;
+        public TimeSpan? ConnectedTime
+        {
+            get
+            {
+                if (ConnectedAt != null)
+                {
+                    QueryPerformanceCounter(out var now);
+                    QueryPerformanceFrequency(out var frequency);
+                    return new TimeSpan((now - ConnectedAt.Value) * 10000000 / frequency);
+                }
+                return null;
+            }
+        }
 
         /// <summary>
         /// Number of bytes that have been received from the server
