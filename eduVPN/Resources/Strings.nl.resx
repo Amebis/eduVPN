@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -120,17 +120,11 @@
   <data name="ErrorInvalidSignature" xml:space="preserve">
     <value>Controle van de handtekening is mislukt. Integriteit van {0} is niet geldig.</value>
   </data>
-  <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value>API-server antwoordde met een fout.</value>
-  </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Laden van API endpoints mislukt.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Het laden van de profiellijst is mislukt.</value>
-  </data>
-  <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value>Het laden van het clientcertificaat is mislukt.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Laden van de profielconfiguratie is mislukt.</value>
@@ -176,10 +170,6 @@
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interactieve Service fout.</value>
   </data>
-  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>Gedownload bestand {0} is corrupt.</value>
-    <comment>{0}=URI</comment>
-  </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Downloaden van het web is mislukt. Controleer a.u.b. jouw internetverbinding.</value>
   </data>
@@ -191,15 +181,6 @@
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
     <value>Verbinding maken met de TCP-server...</value>
-  </data>
-  <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value>Installatiebestand niet beschikbaar. Updaten afgebroken.</value>
-  </data>
-  <data name="ErrorCertificateDisabled" xml:space="preserve">
-    <value>Het certificaat is uitgeschakeld door een beheerder.</value>
-  </data>
-  <data name="ErrorUserDisabled" xml:space="preserve">
-    <value>Het gebruikersaccount is uitgeschakeld door een beheerder.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Downloaden web bron handtekening mislukt.</value>
@@ -224,18 +205,6 @@
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Ongeldige hostnaam: een hostnaam bevat letters, nummers, koppeltekens en punten.</value>
-  </data>
-  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
-    <value>Zelfupdate is mislukt. </value>
-  </data>
-  <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
-    <value>HTTP-server omgeleid naar een onveilige URI.</value>
-  </data>
-  <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
-    <value>Te veel HTTP-omleidingen. </value>
-  </data>
-  <data name="ErrorUnsupportedServerAPI" xml:space="preserve">
-    <value>Server ondersteunt geen eduVPN APIv3.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
     <value>Storing in de Tunnel Manager-service. </value>

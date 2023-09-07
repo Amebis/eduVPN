@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,19 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>Verifizierung der Signatur fehlgeschlagen. Die Integrität von {0} ist nicht valide.</value>
-  </data>
-  <data name="ErrorAPIServerReply" xml:space="preserve">
-    <value>API-Server antwortete mit einem Fehler.</value>
+    <value>Verifizierung der Signatur fehlgeschlagen. Die Integrität von {0} ist nicht gültig.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Das Laden der API-Endpunkte ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
     <value>Das Laden der Profilliste ist fehlgeschlagen.</value>
-  </data>
-  <data name="ErrorClientCertificateLoad" xml:space="preserve">
-    <value>Das Laden des Client-Zertifikats ist fehlgeschlagen.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
     <value>Das Laden der Profilkonfiguration ist fehlgeschlagen.</value>
@@ -146,7 +140,7 @@
     <value>Weise IP-Adresse der virtuellen Netzwerkschnittstelle zu...</value>
   </data>
   <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value>Authentifizieren mit Server...</value>
+    <value>Authentifiziere mit Server...</value>
   </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
     <value>Verbunden.</value>
@@ -155,10 +149,10 @@
     <value>Verbinde...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>Ein sanfter Exit ist im Gange...</value>
+    <value>Wird ordnungsgemäß beendet...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value>OpenVPN meldete einen fatalen Fehler.</value>
+    <value>OpenVPN meldete einen schwerwiegenden Fehler.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
     <value>Lade Konfigurationsoptionen vom Server...</value>
@@ -176,30 +170,17 @@
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>Interaktiver Dienst gescheitert.</value>
   </data>
-  <data name="ErrorDownloadedFileCorrupt" xml:space="preserve">
-    <value>Heruntergeladene Datei {0} ist beschädigt.</value>
-    <comment>{0}=URI</comment>
-  </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Der Download ist fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.</value>
   </data>
   <data name="ErrorUploading" xml:space="preserve">
-    <value>Der Upload ist fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung. </value>
+    <value>Der Upload ist fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.</value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
     <value>Server IP auflösen...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
     <value>Verbindung zum TCP-Server herstellen...</value>
-  </data>
-  <data name="ErrorInstallerFileUnavailable" xml:space="preserve">
-    <value>Installationsdatei nicht verfügbar. Aktualisierung abgebrochen.</value>
-  </data>
-  <data name="ErrorCertificateDisabled" xml:space="preserve">
-    <value>Das Zertifikat wurde vom Administrator deaktiviert.</value>
-  </data>
-  <data name="ErrorUserDisabled" xml:space="preserve">
-    <value>Das Benutzerkonto wurde vom Administrator deaktiviert.</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Herunterladen der Signatur der Web-Ressource fehlgeschlagen.</value>
@@ -208,7 +189,7 @@
     <value>Öffentlicher Minisign-Schlüssel ist ungültig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Der Minisign öffentliche Schlüssel mit Id {0:X} existiert bereits.</value>
+    <value>Der öffentliche Minisign-Schlüssel mit Id {0:X} existiert bereits.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign-Signatur wird nicht unterstützt.</value>
@@ -225,23 +206,11 @@
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Ungültiger Hostname: Hostnamen bestehen aus Buchstaben, Zahlen, Bindestrichen und Punkten.</value>
   </data>
-  <data name="ErrorSelfUpdateDetection" xml:space="preserve">
-    <value>Detecting self-update failed.</value>
-  </data>
-  <data name="ErrorHttpRedirectToUnsafeUri" xml:space="preserve">
-    <value>HTTP server redirected to an unsafe URI.</value>
-  </data>
-  <data name="ErrorHttpTooMayRedirects" xml:space="preserve">
-    <value>Too many HTTP redirects.</value>
-  </data>
-  <data name="ErrorUnsupportedServerAPI" xml:space="preserve">
-    <value>Server does not support eduVPN APIv3.</value>
-  </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
-    <value>Tunnel Manager Service failure.</value>
+    <value>Tunnel-Verwaltungsdienst gescheitert.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+    <value>Der Computer verwendet bereits einen VPN-Tunnel um den Standard-Datenverkehr abzuwickeln. Eine weitere VPN-Verbindung wird wahrscheinlich nicht funktionieren.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
     <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.

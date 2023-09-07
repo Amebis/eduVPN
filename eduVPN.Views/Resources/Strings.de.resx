@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -159,7 +159,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>Beschädigte Benutzereinstellungen</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>_TCP-Verbindung bevorzugen</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Heruntergeladen:</value>
@@ -197,14 +197,14 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>_Öffnen</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
-    <value>_Einstellungen</value>
+    <value>_Einstellungen...</value>
   </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Ihr Institut suchen...</value>
+    <value>Nach Organisation suchen...</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
     <value>_Organisation</value>
@@ -219,7 +219,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>_Server</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Finden Sie Ihr Institut</value>
+    <value>Wählen Sie Ihre Organisation</value>
   </data>
   <data name="LocationLabel" xml:space="preserve">
     <value>S_tandort</value>
@@ -243,7 +243,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
     <value>_Hinzufügen</value>
   </data>
   <data name="InstituteAccessLabel" xml:space="preserve">
-    <value>Zugang zum Institut</value>
+    <value>Organisations-Zugang</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
     <value>Andere Server</value>
@@ -316,7 +316,7 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
 Bitte warten...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>Keine Ergebnisse, bitte überprüfen Sie Ihren Suchbegriff oder versuchen Sie ein anderes Institut.</value>
+    <value>Keine Ergebnisse, bitte überprüfen Sie Ihren Suchbegriff oder versuchen Sie eine andere Organisation.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
     <value>(Nicht verfügbar)</value>
@@ -362,31 +362,31 @@ Bitte warten...</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>Bei der _Anmeldung starten</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} requires reauthorization.</value>
+    <value>{0} benötigt erneute Autorisierung.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>Verbindung zu {0} nicht wiederhergestellt</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
-    <value>There are no profiles available to connect.</value>
+    <value>Es sind keine Profile für die Verbindung verfügbar.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Please contact server operator.</value>
+    <value>Bitte setzen Sie sich mit dem Server-Betreiber in Verbindung.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Please contact support.</value>
+    <value>Bitte wenden Sie sich an den Support.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>Änderungsprotokoll...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>Jetzt {0} herunterladen und _updaten
+(Client wird neu gestartet)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
