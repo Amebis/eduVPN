@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.7...HEAD)
 
-- eduvpn-common updated to d9a11b78dea1086d6cf4ec6a3bcb0ba4f07ec5e8
+- eduvpn-common updated to f079081ade3ab6c279bb6e9d42626dcc061302da
 - OpenVPN updated to 2.5.9-20230922
     - openvpn 2.5.9 3d9b4ce394f9d1a66842a5391aa744f7310a48a6
 
