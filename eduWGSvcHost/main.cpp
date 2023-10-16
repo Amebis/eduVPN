@@ -41,15 +41,13 @@ static void log(_In_ const exception& e)
 		return;
 
 	wstring msg;
-	MultiByteToWideChar(CP_ACP, 0, e.what(), -1, msg);
+	MultiByteToWideChar(CP_UTF8, 0, e.what(), -1, msg);
 
 	auto e_win = dynamic_cast<const win_runtime_error*>(&e);
 	if (e_win) {
-		wstring
-			number = wstring_printf(L"%u", e_win->number()),
-			win_msg = e_win->msg();
-		LPCWSTR strings[] = { msg.c_str(), number.c_str(), win_msg.c_str() };
-		ReportEventW(service_log, EVENTLOG_ERROR_TYPE, 0, ERROR_WIN_RUNTIME_ERROR, NULL, _countof(strings), 0, strings, NULL);
+		wstring number = wstring_printf(L"%u", e_win->number());
+		LPCWSTR strings[] = { msg.c_str(), number.c_str() };
+		ReportEventW(service_log, EVENTLOG_ERROR_TYPE, 0, ERROR_WIN_RUNTIME_ERROR2, NULL, _countof(strings), 0, strings, NULL);
 	}
 	else
 	{

@@ -33,3 +33,14 @@ Language=sl_SI
 %1
 %nNapaka %2: %3
 .
+
+MessageId=2
+SymbolicName=ERROR_WIN_RUNTIME_ERROR2
+Language=en_US
+%1
+%nError %2
+.
+Language=sl_SI
+%1
+%nNapaka %2
+.

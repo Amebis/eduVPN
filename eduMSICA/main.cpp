@@ -290,13 +290,14 @@ ResetFileACL(_In_z_ LPCTSTR szPath, _In_ PACL pACL, _In_ PSID pOwner)
 		}
 	}
 	catch (win_runtime_error& e) {
-		PMSIHANDLE hRecord = MsiCreateRecord(5);
+		PMSIHANDLE hRecord = MsiCreateRecord(4);
 		if ((MSIHANDLE)hRecord) {
-			MsiRecordSetString(hRecord, 0, TEXT("Failed to reset \"[1]\" ACL: [2]: ([3]): [4]"));
+			MsiRecordSetString(hRecord, 0, TEXT("Failed to reset \"[1]\" ACL: [2] ([3])"));
 			MsiRecordSetString(hRecord, 1, szPath);
-			MsiRecordSetStringA(hRecord, 2, e.what());
+			wstring msg;
+			MultiByteToWideChar(CP_UTF8, 0, e.what(), -1, msg);
+			MsiRecordSetStringW(hRecord, 2, msg.c_str());
 			MsiRecordSetInteger(hRecord, 3, e.number());
-			MsiRecordSetString(hRecord, 4, e.msg().c_str());
 			MsiProcessMessage(INSTALLMESSAGE_INFO, hRecord);
 		}
 	}
@@ -305,7 +306,9 @@ ResetFileACL(_In_z_ LPCTSTR szPath, _In_ PACL pACL, _In_ PSID pOwner)
 		if ((MSIHANDLE)hRecord) {
 			MsiRecordSetString(hRecord, 0, TEXT("Failed to reset \"[1]\" ACL: [2]"));
 			MsiRecordSetString(hRecord, 1, szPath);
-			MsiRecordSetStringA(hRecord, 2, e.what());
+			wstring msg;
+			MultiByteToWideChar(CP_UTF8, 0, e.what(), -1, msg);
+			MsiRecordSetStringW(hRecord, 2, msg.c_str());
 			MsiProcessMessage(INSTALLMESSAGE_INFO, hRecord);
 		}
 	}
@@ -623,20 +626,23 @@ PurgeFolder(_In_z_ LPCTSTR szPath)
 		return ERROR_SUCCESS;
 	}
 	catch (win_runtime_error& e) {
-		PMSIHANDLE hRecord = MsiCreateRecord(4);
+		PMSIHANDLE hRecord = MsiCreateRecord(3);
 		if ((MSIHANDLE)hRecord) {
-			MsiRecordSetString(hRecord, 0, TEXT("Failed to spawn RunDll32 ResetACLAndPurgeFolder: [1]: ([2]): [3]"));
-			MsiRecordSetStringA(hRecord, 1, e.what());
+			MsiRecordSetString(hRecord, 0, TEXT("Failed to spawn RunDll32 ResetACLAndPurgeFolder: [1] ([2])"));
+			wstring msg;
+			MultiByteToWideChar(CP_UTF8, 0, e.what(), -1, msg);
+			MsiRecordSetStringW(hRecord, 1, msg.c_str());
 			MsiRecordSetInteger(hRecord, 2, e.number());
-			MsiRecordSetString(hRecord, 3, e.msg().c_str());
 			MsiProcessMessage(INSTALLMESSAGE_INFO, hRecord);
 		}
 	}
 	catch (com_runtime_error& e) {
 		PMSIHANDLE hRecord = MsiCreateRecord(3);
 		if ((MSIHANDLE)hRecord) {
-			MsiRecordSetString(hRecord, 0, TEXT("Failed to spawn RunDll32 ResetACLAndPurgeFolder: [1]: ([2])"));
-			MsiRecordSetStringA(hRecord, 1, e.what());
+			MsiRecordSetString(hRecord, 0, TEXT("Failed to spawn RunDll32 ResetACLAndPurgeFolder: [1] ([2])"));
+			wstring msg;
+			MultiByteToWideChar(CP_UTF8, 0, e.what(), -1, msg);
+			MsiRecordSetStringW(hRecord, 1, msg.c_str());
 			MsiRecordSetInteger(hRecord, 2, e.number());
 			MsiProcessMessage(INSTALLMESSAGE_INFO, hRecord);
 		}
@@ -645,7 +651,9 @@ PurgeFolder(_In_z_ LPCTSTR szPath)
 		PMSIHANDLE hRecord = MsiCreateRecord(2);
 		if ((MSIHANDLE)hRecord) {
 			MsiRecordSetString(hRecord, 0, TEXT("Failed to spawn RunDll32 ResetACLAndPurgeFolder: [1]"));
-			MsiRecordSetStringA(hRecord, 1, e.what());
+			wstring msg;
+			MultiByteToWideChar(CP_UTF8, 0, e.what(), -1, msg);
+			MsiRecordSetStringW(hRecord, 1, msg.c_str());
 			MsiProcessMessage(INSTALLMESSAGE_INFO, hRecord);
 		}
 	}
