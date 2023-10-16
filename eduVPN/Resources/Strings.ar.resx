@@ -180,7 +180,7 @@
     <value>جارٍ ترجمة عنوان نظام الشبكات للخادم ...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value>جارٍ الاتصال عبر خادم ميفاق التحكم بالنقل ...</value>
+    <value>جارٍ الاتصال عبر خادم ميثاق التحكم بالنقل ...</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>فشل تنزيل توقيع مورد الشبكة.</value>
@@ -210,16 +210,16 @@
     <value>فشل خدمة إدارة النفق.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+    <value>يستخدم حاسوبك مسبقا شبكة خاصة افتراضية لكل حركات مرور الشبكة. من المحتمل ألا يعمل اتصال شبكة خاصة افتراضية آخر.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
-Your organization might opt to prevent connections from insecure computers in the future.</value>
+    <value>لم يتم تنزيل تحديثات ويندوز منذ مدة. يرجى التحقق من حالة التحديث و/أو ترقية حاسوبك إلى إصدار أحدث ومدعوم من ويندوز.
+قد تختار مؤسستك منع الاتصال من حواسيب غير الآمنة في المستقبل.</value>
   </data>
   <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
+    <value>لا حركة مرور على الشبكة الخاصة الافتراضية. قد يكون اتصالك بالشبكة يحظر او يقيد ميثاق حزم بيانات المستخدم. جرب الاتصال عبر ميثاق التحكم بالنقل.</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
-    <value>There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first...</value>
+    <value>توجد جلسات مستخدمين أخرى على هذا الحاسوب. سيؤدي الاتصال بالشبكة الخاصة الافتراضية الآن إلى توفيرها لجميع المستخدمين الآخرين أيضا. سننتظر خروجهم أولاً اذا...</value>
   </data>
 </root>

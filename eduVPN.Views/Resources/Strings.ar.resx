@@ -159,7 +159,7 @@
     <value>تلف إعدادات المستخدم</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>تفضيل الاتصال عبر _ميفاق التحكم بالنقل</value>
+    <value>تفضيل الاتصال عبر _ميثاق التحكم بالنقل</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>تم تحميل:</value>
@@ -390,9 +390,9 @@
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
-    <value>This will take a few seconds...</value>
+    <value>سيأخذ هذا بعض الثواني...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>انتظار...</value>
   </data>
 </root>
