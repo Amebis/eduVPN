@@ -88,13 +88,13 @@ namespace eduVPN.Xml
                 return true;
             if (obj == null || GetType() != obj.GetType())
                 return false;
-
             var other = obj as MinisignPublicKey;
-            if (Data.Length != other.Data.Length ||
-                !((ReadOnlySpan<byte>)Data).SequenceEqual((ReadOnlySpan<byte>)other.Data))
+            if (Data.Length != other.Data.Length)
                 return false;
-
-            return true;
+            int diff = 0;
+            for (int i = 0; i < Data.Length; i++)
+                diff |= Data[i] ^ other.Data[i];
+            return diff == 0;
         }
 
         /// <inheritdoc/>
