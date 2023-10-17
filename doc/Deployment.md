@@ -63,4 +63,4 @@ The eduVPN Client for Windows will self-update on new releases by default.
 
 Should you prefer manual updating, self-updating can be turned off in the `HKEY_LOCAL_MACHINE\SOFTWARE\SURF\eduVPN` registry key by adding a blank `REG_SZ` value named `SelfUpdateDiscovery`.
 
-Updating eduVPN Client for Windows manually is installing a newer version over the previous one using the same deployment option again.
+Updating eduVPN Client for Windows manually is installing a newer version over the previous one using _the same_ deployment option again. Do not mix EXE installer and MSI packages on the same PC. Uninstall EXE installer first to switch to MSI package or vice versa.
