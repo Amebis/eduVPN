@@ -28,9 +28,7 @@ SetupMSI :: \
 !IFDEF VIRUSTOTALAPIKEY
 Publish :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).vtanalysis" \
-!IF "$(PLAT)" != "ARM64"
 	"bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.vtanalysis"
-!ENDIF
 !ENDIF
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).vtanalysis" : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi"

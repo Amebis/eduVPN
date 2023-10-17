@@ -130,6 +130,7 @@
                 UninstallCommand="/uninstall /q /norestart /ChainingPackage &quot;[WixBundleName]&quot; /log &quot;[NetFx48FullLog].html&quot;"
                 PerMachine="yes"
                 DetectCondition="NETFRAMEWORK45 &gt;= 528040"
+                InstallCondition="NOT VersionNT64 OR NativeMachine = 34404 OR VersionNT64 AND NOT NativeMachine"
                 Vital="yes"
                 Permanent="yes"
                 Protocol="netfx4"
@@ -144,6 +145,33 @@
                     ProductName="Microsoft .NET Framework 4.8"
                     Size="121307088"
                     Version="4.8.4115.0"/>
+            </ExePackage>
+
+            <!--
+                .NET Framework 4.8.1
+            -->
+            <ExePackage
+                Id="NetFx481Redist"
+                InstallCommand="/q /norestart /ChainingPackage &quot;[WixBundleName]&quot; /log &quot;[NetFx48FullLog].html&quot;"
+                RepairCommand="/q /norestart /repair /ChainingPackage &quot;[WixBundleName]&quot; /log &quot;[NetFx48FullLog].html&quot;"
+                UninstallCommand="/uninstall /q /norestart /ChainingPackage &quot;[WixBundleName]&quot; /log &quot;[NetFx48FullLog].html&quot;"
+                PerMachine="yes"
+                DetectCondition="NETFRAMEWORK45 &gt;= 533320"
+                InstallCondition="NativeMachine = 43620"
+                Vital="yes"
+                Permanent="yes"
+                Protocol="netfx4"
+                DownloadUrl="https://go.microsoft.com/fwlink/?LinkId=2203304"
+                Compressed="no"
+                Name="NDP481-Web.exe">
+                <RemotePayload
+                    CertificatePublicKey="51E8CCBFA002A22CB64E5CD25F42FE7BFAA920F6"
+                    CertificateThumbprint="72105B6D5F370B62FD5C82F1512F7AD7DEE5F2C0"
+                    Description="Microsoft .NET Framework 4.8.1 Setup"
+                    Hash="22C974F3865CCE3F0EC385DD9C0B291CA045BC2C"
+                    ProductName="Microsoft .NET Framework 4.8.1"
+                    Size="1466664"
+                    Version="4.8.9195.10" />
             </ExePackage>
 
             <!--

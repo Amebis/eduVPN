@@ -6,6 +6,7 @@
 - OpenVPN updated to 2.5.9-20230922
     - openvpn 2.5.9 3d9b4ce394f9d1a66842a5391aa744f7310a48a6
 - Arabic translations updated
+- All-native client on Windows 11 ARM64, Windows 10 ARM64 support discontinued
 
 
 ## [3.255.7](https://github.com/Amebis/eduVPN/compare/3.255.6...3.255.7) (2023-09-07)

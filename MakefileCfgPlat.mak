@@ -19,7 +19,7 @@ WINDRES=x86_64-w64-mingw32-windres.exe
 !ELSEIF "$(PLAT)" == "ARM64"
 PLAT_MSVC=ARM64
 PLAT_VCPKG=arm64
-PLAT_CLIENT=x86
+PLAT_CLIENT=ARM64
 PLAT_PROCESSOR_ARCHITECTURE=arm64
 GOARCH=arm64
 CC=aarch64-w64-mingw32-gcc.exe
@@ -73,7 +73,6 @@ Publish :: \
 	"bin\$(CFG)\$(PLAT)\openvpn.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\openvpnserv.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\tunnel.vtanalysis" \
-!IF "$(PLAT)" != "ARM64"
 	"bin\$(CFG)\$(PLAT)\eduEx.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduJSON.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduOAuth.vtanalysis" \
@@ -83,7 +82,6 @@ Publish :: \
 	"bin\$(CFG)\$(PLAT)\eduVPN.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.Views.vtanalysis" \
 	"bin\$(CFG)\$(PLAT)\eduWireGuard.vtanalysis"
-!ENDIF
 !ENDIF
 
 "bin\$(CFG)\$(PLAT)\eduEx.vtanalysis" : "bin\$(CFG)\$(PLAT)\eduEx.dll"
@@ -299,7 +297,6 @@ Build-$(CFG)-$(PLAT) :: \
 SetupSign \
 !ENDIF
 Sign : \
-!IF "$(PLAT)" != "ARM64"
 	"bin\$(CFG)\$(PLAT)\eduEx.dll" \
 	"bin\$(CFG)\$(PLAT)\eduJSON.dll" \
 	"bin\$(CFG)\$(PLAT)\eduOAuth.dll" \
@@ -310,7 +307,6 @@ Sign : \
 	"bin\$(CFG)\$(PLAT)\eduWireGuard.dll" \
 	"bin\$(CFG)\$(PLAT)\govVPN.Client.exe" \
 	"bin\$(CFG)\$(PLAT)\LetsConnect.Client.exe" \
-!ENDIF
 	"bin\$(CFG)\$(PLAT)\eduMSICA.dll" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll" \
 	"bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe"

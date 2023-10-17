@@ -38,5 +38,8 @@
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'ARM64' ">
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+  </PropertyGroup>
 
 </Project>
