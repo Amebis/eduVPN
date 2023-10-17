@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.7...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.8...HEAD)
+
+
+## [3.255.8](https://github.com/Amebis/eduVPN/compare/3.255.7...3.255.8) (2023-10-17)
 
 - eduvpn-common updated to 3718828fb0b75e95a250ea8d1df23ce25b3e9442
 - OpenVPN updated to 2.5.9-20230922
