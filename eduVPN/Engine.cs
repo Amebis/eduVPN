@@ -949,7 +949,8 @@ namespace eduVPN
             var r = _StartFailover(cookie.Handle, gateway, mtu, OnRxBytesRead);
             try
             {
-                if (r.r1 == IntPtr.Zero)
+                // Don't throw when at least some RX traffic detected.
+                if (r.r0 == 0 || r.r1 == IntPtr.Zero)
                     return r.r0 != 0;
                 throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
             }
