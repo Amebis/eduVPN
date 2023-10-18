@@ -7,23 +7,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{34019D9B-CB1A-4C13-B6F8-992DE8AB6F39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduJSON.Tests", "eduJSON\eduJSON.Tests\eduJSON.Tests.csproj", "{2C761E16-7CE7-4702-9BB9-C36C0903C8FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduJSON.Tests", "eduJSON.Tests\eduJSON.Tests.csproj", "{2C761E16-7CE7-4702-9BB9-C36C0903C8FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPN", "eduVPN\eduVPN.csproj", "{2E6427E4-0C1A-49B9-A80D-886035995CBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduJSON", "eduJSON\eduJSON\eduJSON.csproj", "{8F4C3F22-1988-4077-9220-ED2512FC0248}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduJSON", "eduJSON\eduJSON.csproj", "{8F4C3F22-1988-4077-9220-ED2512FC0248}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPN.Tests", "eduVPN.Tests\eduVPN.Tests.csproj", "{3EED260C-7C3C-4E52-93EC-0F0C3ED2F696}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOAuth", "eduOAuth\eduOAuth\eduOAuth.csproj", "{44EA054C-0C39-4AAC-9E40-253E919C1E2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOAuth", "eduOAuth\eduOAuth.csproj", "{44EA054C-0C39-4AAC-9E40-253E919C1E2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPN.Client", "eduVPN.Client\eduVPN.Client.csproj", "{F8DEF292-A494-49ED-B9AB-AFAD100481A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOAuth.Tests", "eduOAuth\eduOAuth.Tests\eduOAuth.Tests.csproj", "{76C596A7-D565-4000-95D5-C4ABC5B5EB32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOAuth.Tests", "eduOAuth.Tests\eduOAuth.Tests.csproj", "{76C596A7-D565-4000-95D5-C4ABC5B5EB32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOpenVPN", "eduOpenVPN\eduOpenVPN\eduOpenVPN.csproj", "{DDF40A25-1180-40B1-9BF1-8D3D66D734AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOpenVPN", "eduOpenVPN\eduOpenVPN.csproj", "{DDF40A25-1180-40B1-9BF1-8D3D66D734AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOpenVPN.Tests", "eduOpenVPN\eduOpenVPN.Tests\eduOpenVPN.Tests.csproj", "{EC9E752D-3228-47B1-AB68-9FCF0FAA3B8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduOpenVPN.Tests", "eduOpenVPN.Tests\eduOpenVPN.Tests.csproj", "{EC9E752D-3228-47B1-AB68-9FCF0FAA3B8A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eduVPN.Resources", "eduVPN.Resources\eduVPN.Resources.vcxproj", "{CA8A2358-F8BF-484E-AE07-1255630A52E2}"
 EndProject
@@ -31,9 +31,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduVPN.Views", "eduVPN.View
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetsConnect.Client", "LetsConnect.Client\LetsConnect.Client.csproj", "{C6003E42-C1B4-4DA1-9E93-D7AD3A9C12E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEx", "eduEx\eduEx\eduEx.csproj", "{0E2C74AC-C81C-4CC6-B88D-81192623A66D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEx", "eduEx\eduEx.csproj", "{0E2C74AC-C81C-4CC6-B88D-81192623A66D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEx.Tests", "eduEx\eduEx.Tests\eduEx.Tests.csproj", "{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eduEx.Tests", "eduEx.Tests\eduEx.Tests.csproj", "{30B8909A-8E1D-4E1F-B78F-2917EA0AF402}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DAC1B53B-C700-4492-A578-D0CAD20BDFB7}"
 	ProjectSection(SolutionItems) = preProject

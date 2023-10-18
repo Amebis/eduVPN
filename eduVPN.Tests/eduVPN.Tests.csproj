@@ -76,11 +76,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eduJSON\eduJSON\eduJSON.csproj">
+    <ProjectReference Include="..\eduJSON\eduJSON.csproj">
       <Project>{8f4c3f22-1988-4077-9220-ed2512fc0248}</Project>
       <Name>eduJSON</Name>
     </ProjectReference>
-    <ProjectReference Include="..\eduOAuth\eduOAuth\eduOAuth.csproj">
+    <ProjectReference Include="..\eduOAuth\eduOAuth.csproj">
       <Project>{44EA054C-0C39-4AAC-9E40-253E919C1E2F}</Project>
       <Name>eduOAuth</Name>
     </ProjectReference>
