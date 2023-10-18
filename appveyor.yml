@@ -6,7 +6,6 @@ before_build:
       if /i %platform% equ x86   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_x86   && nmake "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" "BuildeduVPNWindows-%configuration%-%platform%" /ls
       if /i %platform% equ x64   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64       && nmake "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" "BuildeduVPNWindows-%configuration%-%platform%" /ls
       if /i %platform% equ ARM64 "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64 && nmake "BuildOpenVPN-%configuration%-%platform%" BuildWireGuard "BuildeduVPNCommon-%configuration%-%platform%" "BuildeduVPNWindows-%configuration%-%platform%" /ls
-      if /i %platform% equ ARM64 "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64_x86   && nmake "BuildeduVPNCommon-%configuration%-x86" "BuildeduVPNWindows-%configuration%-x86" /ls
   - nuget restore -Verbosity quiet
 configuration:
   - Debug
