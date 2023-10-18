@@ -1,6 +1,3 @@
-[submodule "eduOAuth"]
-	path = eduOAuth
-	url = https://github.com/Amebis/eduOAuth.git
 [submodule "eduOpenVPN"]
 	path = eduOpenVPN
 	url = https://github.com/Amebis/eduOpenVPN.git
