@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    eduOpenVPN - OpenVPN Management Library for eduVPN (and beyond)
+
+    Copyright: 2017-2023 The Commons Conservancy
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DDF40A25-1180-40B1-9BF1-8D3D66D734AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>eduOpenVPN</RootNamespace>
+    <AssemblyName>eduOpenVPN</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'" />
+  <Import Project="$(SolutionDir)Default.CSharp.props" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ServiceProcess" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="InteractiveService\StatusProcessId.cs" />
+    <Compile Include="Management\AuthenticationEventArgs.cs" />
+    <Compile Include="Management\AuthenticationTokenReportedEventArgs.cs" />
+    <Compile Include="Management\ByteCountClientReportedEventArgs.cs" />
+    <Compile Include="Management\ByteCountReportedEventArgs.cs" />
+    <Compile Include="Management\CertificateRequestedEventArgs.cs" />
+    <Compile Include="Management\EchoReceivedEventArgs.cs" />
+    <Compile Include="Management\HoldReportedEventArgs.cs" />
+    <Compile Include="Management\LogReportedEventArgs.cs" />
+    <Compile Include="Management\MessageReportedEventArgs.cs" />
+    <Compile Include="Management\MonitorConnectionException.cs" />
+    <Compile Include="Management\MonitorTerminatedException.cs" />
+    <Compile Include="Management\PasswordAuthenticationRequestedEventArgs.cs" />
+    <Compile Include="Management\RemoteModAction.cs" />
+    <Compile Include="Management\RemoteAcceptAction.cs" />
+    <Compile Include="Management\RemoteAction.cs" />
+    <Compile Include="Management\RemoteReportedEventArgs.cs" />
+    <Compile Include="Management\RemoteSkipAction.cs" />
+    <Compile Include="Management\SignRequestedEventArgs.cs" />
+    <Compile Include="Management\SessionStateException.cs" />
+    <Compile Include="Management\StateReportedEventArgs.cs" />
+    <Compile Include="Management\TimestampedEventArgs.cs" />
+    <Compile Include="Management\UsernamePasswordAuthenticationRequestedEventArgs.cs" />
+    <Compile Include="SignAlgorithmType.cs" />
+    <Compile Include="ProtoType.cs" />
+    <Compile Include="AuthRetryType.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="InteractiveService\Session.cs" />
+    <Compile Include="InteractiveService\InteractiveServiceException.cs" />
+    <Compile Include="InteractiveService\Status.cs" />
+    <Compile Include="InteractiveService\StatusError.cs" />
+    <Compile Include="Management\CommandException.cs" />
+    <Compile Include="Management\LogMessageFlags.cs" />
+    <Compile Include="OpenVPNStateType.cs" />
+    <Compile Include="Management\ProtocolException.cs" />
+    <Compile Include="Management\Session.cs" />
+    <Compile Include="Management\UnexpectedReplyException.cs" />
+    <Compile Include="ParameterValueAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SignalType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.ar.resx" />
+    <EmbeddedResource Include="Resources\Strings.de.resx" />
+    <EmbeddedResource Include="Resources\Strings.es.resx" />
+    <EmbeddedResource Include="Resources\Strings.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Strings.nb.resx" />
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.fr.resx" />
+    <EmbeddedResource Include="Resources\Strings.nl.resx" />
+    <EmbeddedResource Include="Resources\Strings.pt-PT.resx" />
+    <EmbeddedResource Include="Resources\Strings.sl.resx" />
+    <EmbeddedResource Include="Resources\Strings.tr.resx" />
+    <EmbeddedResource Include="Resources\Strings.uk.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\eduEx\eduEx\eduEx.csproj">
+      <Project>{0e2c74ac-c81c-4cc6-b88d-81192623a66d}</Project>
+      <Name>eduEx</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)Default.targets" />
+</Project>
