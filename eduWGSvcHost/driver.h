@@ -54,7 +54,7 @@ namespace wg
 
 		class adapter : public winstd::handle<WIREGUARD_ADAPTER_HANDLE, NULL>
 		{
-			WINSTD_HANDLE_IMPL(adapter, NULL)
+			WINSTD_HANDLE_IMPL(adapter, WIREGUARD_ADAPTER_HANDLE, NULL)
 
 		public:
 			virtual ~adapter()
