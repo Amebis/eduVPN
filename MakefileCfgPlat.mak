@@ -213,10 +213,7 @@ BuildeduVPNCommon-$(CFG)-$(PLAT) :: \
 	"eduvpn-common\internal\discovery\server_list.json" \
 	"eduvpn-common\internal\discovery\organization_list.json" \
 	"eduvpn-common\exports\resources_$(GOARCH).syso" \
-	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\eduvpn_common.dll"
-
-"bin\$(CFG)\$(PLAT)\eduvpn_common.dll" ::
+	"bin\$(CFG)\$(PLAT)"
 	cd "eduvpn-common\exports"
 	set GOARCH=$(GOARCH)
 	set GOARM=7
@@ -251,10 +248,7 @@ BuildeduVPNWindows \
 BuildeduVPNWindows-$(CFG)-$(PLAT) :: \
 	"bin\llvm-mingw-20220906-msvcrt-x86_64\bin\gcc.exe" \
 	"eduvpn-windows\resources_$(GOARCH).syso" \
-	"bin\$(CFG)\$(PLAT)" \
-	"bin\$(CFG)\$(PLAT)\eduvpn_windows.dll"
-
-"bin\$(CFG)\$(PLAT)\eduvpn_windows.dll" ::
+	"bin\$(CFG)\$(PLAT)"
 	cd "eduvpn-windows"
 	set GOARCH=$(GOARCH)
 	set GOARM=7
