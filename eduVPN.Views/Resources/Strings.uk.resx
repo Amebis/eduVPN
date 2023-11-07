@@ -364,7 +364,7 @@
     <value>_Почати під час входу</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} requires reauthorization.</value>
+    <value>{0} вимагає повторної авторизації.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
@@ -381,17 +381,16 @@
     <value>Будь ласка, зверніться до служби підтримки.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>Журнал змін...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>Завантажте {0} і _оновіть зараз (клієнт буде перезапущено)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
-    <value>This will take a few seconds...</value>
+    <value>Це займе кілька секунд...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>Очікування...</value>
   </data>
 </root>

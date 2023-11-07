@@ -382,17 +382,16 @@ Even geduld aub... </value>
     <value>Neem contact op met uw helpdesk.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>Logboek...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>Download {0} en _update nu(Client zal herstarten)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
-    <value>This will take a few seconds...</value>
+    <value>Dit duurt enkele seconden ...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>Wachten...</value>
   </data>
 </root>

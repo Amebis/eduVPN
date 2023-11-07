@@ -159,7 +159,7 @@ Se continuar, as suas configurações de utilizador serão reiniciadas para os v
     <value>Configurações de Utilizador Corrompidas</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>Prefira conexão _TCP</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>Descarregado:</value>
@@ -362,37 +362,36 @@ Por favor aguarde...</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>_Iniciar no login</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} requires reauthorization.</value>
+    <value>{0} requer reautorização.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>Não reconectei {0}</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
-    <value>There are no profiles available to connect.</value>
+    <value>Não há perfis disponíveis para se conectar.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Please contact server operator.</value>
+    <value>Por favor, entre em contato com o operador do servidor.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Please contact support.</value>
+    <value>Por favor, contacte o apoio.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>Registro de alterações...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>Faça o download {0} e a atualização agora (O cliente será reiniciado)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
-    <value>This will take a few seconds...</value>
+    <value>Isso vai levar alguns segundos...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>A esperar...</value>
   </data>
 </root>

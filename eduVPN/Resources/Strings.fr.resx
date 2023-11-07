@@ -210,16 +210,16 @@
     <value>Échec du Service Tunnel Manager.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+    <value>Votre ordinateur utilise déjà un tunnel VPN pour le trafic de données par défaut. Il est peu probable qu'un seconde connexion VPN fonctionne.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
-Your organization might opt to prevent connections from insecure computers in the future.</value>
+    <value>Votre ordinateur n'a pas installé les mises à jour Windows récemment. Veuillez vérifier les mises à jour et/ou installer une version plus récente et supportée de Windows.
+Votre organisation peut décider à l'avenir d'interdire les connexions provenant d'ordinateurs non mis à jour.</value>
   </data>
   <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
+    <value>Aucun traffic de données VPN n'a été détecté. Il est possible que votre connexion Internet bloque ou limite le traffic UDP. Envisagez de passer au TCP.</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
-    <value>There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first...</value>
+    <value>Il y a d'autres sessions utilisateur sur cet ordinateur. L'établissement d'une connexion VPN à cet instant donnerait aussi accès au réseau aux autres utilisateurs. En attente de la déconnexion des autres utilisateurs...</value>
   </data>
 </root>

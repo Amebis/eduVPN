@@ -118,14 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorTunnelNameTooLong" xml:space="preserve">
-    <value>Tunnel name is too long. WireGuard allows tunnel names no longer than 32 characters.</value>
+    <value>O nome do túnel é muito longo. O WireGuard permite nomes de túneis não mais do que 32 caracteres.</value>
   </data>
   <data name="ErrorManagerService" xml:space="preserve">
-    <value>{1} (Error {0})</value>
+    <value>{1} (Erro {0})</value>
     <comment>{0} = Error number, {1} = Error description</comment>
   </data>
   <data name="ErrorManagerServiceConnect" xml:space="preserve">
-    <value>Connecting to the {0} tunnel manager service failed. Please, make sure the service is started.</value>
+    <value>Falha na conexão com o serviço do gerenciador de túneis {0}. Por favor, certifique-se de que o serviço foi iniciado.</value>
     <comment>{0} = Name of the pipe to connect to</comment>
   </data>
 </root>

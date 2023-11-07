@@ -159,19 +159,19 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Korrupterte brukerinnstillinger</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>Foretrekk _TCP-tilkobling</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
-    <value>Downloaded:</value>
+    <value>Lastet ned:</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
-    <value>Uploaded:</value>
+    <value>Lastet opp:</value>
   </data>
   <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Varighet</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
-    <value>Address</value>
+    <value>Adresse</value>
   </data>
   <data name="SystemTrayBalloonConnectedMessage" xml:space="preserve">
     <value>IP={0}, IPv6={1}</value>
@@ -204,70 +204,70 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <comment>LTR=Left-to-Right, RTL=Right-to-Left</comment>
   </data>
   <data name="SearchPageQueryLabel" xml:space="preserve">
-    <value>Search for your institute...</value>
+    <value>Søk etter instituttet ditt...</value>
   </data>
   <data name="SearchPageOrganizationsLabel" xml:space="preserve">
-    <value>_Organization</value>
+    <value>_Organisasjon</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Connect your own server</value>
+    <value>Koble til din egen server</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Own Se_rver</value>
+    <value>Egen se_rver</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
     <value>_Server</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
-    <value>Find your institute</value>
+    <value>Finn ditt institutt</value>
   </data>
   <data name="LocationLabel" xml:space="preserve">
-    <value>_Location</value>
+    <value>_Plassering</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization.</value>
+    <value>Denne appen trenger autorisasjon og har åpnet nettleseren din. Det vil fortsette når du har fullført autorisasjonen.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Authorization required</value>
+    <value>Autorisasjon kreves</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Avbryt</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Change Location</value>
+    <value>_Bytt sted</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
-    <value>A_bout</value>
+    <value>O_m</value>
   </data>
   <data name="HomePageAddTitle" xml:space="preserve">
-    <value>_Add</value>
+    <value>_Legg til</value>
   </data>
   <data name="InstituteAccessLabel" xml:space="preserve">
     <value>Instituttilgang</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Other Servers</value>
+    <value>Andre servere</value>
   </data>
   <data name="SecureInternetLabel" xml:space="preserve">
     <value>Sikker internett</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Add other server</value>
+    <value>Legg til en annen server</value>
   </data>
   <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
-    <value>Select a location</value>
+    <value>Velg et sted</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Valg</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
-    <value>Support:</value>
+    <value>Brukerstøtte:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Connection log</value>
+    <value>Tilkoblingslogg</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>View _log...</value>
+    <value>Se _Logg...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
     <value>Koblet til</value>
@@ -276,123 +276,121 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Kobler til…</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnecting...</value>
+    <value>Kobler fra ...</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
-    <value>Connection Error</value>
+    <value>Tilkoblingsfeil</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Configuring...</value>
+    <value>Konfigurerer...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
-    <value>_Profiles</value>
+    <value>_Profiler</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Connection _info</value>
+    <value>Tilkobling _info</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Valid for</value>
+    <value>Gyldig for</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Downloading update...</value>
+    <value>Laster ned oppdatering...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Forget</value>
+    <value>_Glemme</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server address</value>
+    <value>Server adresse</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
-    <value>Servers</value>
+    <value>Servere</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_dd server</value>
+    <value>L_egg til server</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Enter server address here</value>
+    <value>Skriv inn serveradressen her</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>List of available profiles is loading.
-Please wait...</value>
+    <value>Liste over tilgjengelige profiler lastes inn. Vennligst vent...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>No results, please check your search command or try another institute.</value>
+    <value>Ingen resultater, vennligst sjekk søkekommandoen din eller prøv et annet institutt.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
     <value>(Utilgjengelig)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
   </data>
   <data name="SessionStatusTypeDisconnected" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Ikke tilkoblet</value>
   </data>
   <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
-    <value>Data Transferred</value>
+    <value>Data overført</value>
   </data>
   <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
     <value>Profil</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>Denne økten er utløpt</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>Forny økten</value>
   </data>
   <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
-    <value>Renew before {0}</value>
+    <value>Forny før {0}</value>
     <comment>{0}=date and time</comment>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
-    <value>{0} is about to expire</value>
+    <value>{0} er i ferd med å utløpe</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="TimeSpanDaysAndHours" xml:space="preserve">
-    <value>{0:day|days} and {1:hour|hours}</value>
+    <value>{0:dag|dager} og {1:time|timer}</value>
     <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
   </data>
   <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
-    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <value>{0:time|timer} og {1:minutt|minutter}</value>
     <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
   </data>
   <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
-    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <value>{0:minutt|minutter} og {1:sekund|sekunder}</value>
     <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
   </data>
   <data name="TimeSpanSeconds" xml:space="preserve">
-    <value>{0:second|seconds}</value>
+    <value>{0:sekund|sekunder}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>_Start ved pålogging</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} requires reauthorization.</value>
+    <value>{0} krever reautorisering.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>Koblet ikke til {0} igjen</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
-    <value>There are no profiles available to connect.</value>
+    <value>Det er ingen profiler tilgjengelig for å koble til.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Please contact server operator.</value>
+    <value>Ta kontakt med serveroperatøren.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Please contact support.</value>
+    <value>Vennligst kontakt support.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>Endringslogg...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>Last ned {0} og oppdater nå (Klienten vil starte på nytt)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
-    <value>This will take a few seconds...</value>
+    <value>Dette vil ta noen sekunder...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>Venter...</value>
   </data>
 </root>

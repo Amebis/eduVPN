@@ -365,7 +365,7 @@ Veuillez patienter...</value>
     <value>_Exécuter au démarrage de la session</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} requires reauthorization.</value>
+    <value>{0}requiert une nouvelle autorisation.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
@@ -382,17 +382,17 @@ Veuillez patienter...</value>
     <value>Veuillez contacter le service d'assistance.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>Journal des modifications...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>Téléchargez {0} et _mettre à jour maintenant
+(Le client va redémarrer)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
-    <value>This will take a few seconds...</value>
+    <value>Cela va prendre quelques secondes...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>En attente...</value>
   </data>
 </root>

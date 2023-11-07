@@ -158,7 +158,7 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
     <value>Bozuk Kullanıcı Ayarları</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
-    <value>Prefer _TCP connection</value>
+    <value>_TCP bağlantısını tercih edin</value>
   </data>
   <data name="ConnectionPageConnectionInfoBytesIn2" xml:space="preserve">
     <value>İndirildi:</value>
@@ -281,7 +281,7 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
     <value>Bağlantı Hatası</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
-    <value>Configuring...</value>
+    <value> Yapılandırılıyor...</value>
   </data>
   <data name="ConnectionPageProfilesLabel" xml:space="preserve">
     <value>_Profiller</value>
@@ -325,73 +325,72 @@ Lütfen bekleyin...</value>
     <value>Bağlanmadı</value>
   </data>
   <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
-    <value>Data Transferred</value>
+    <value>Aktarılan Veriler</value>
   </data>
   <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
-    <value>Profile</value>
+    <value>Profil</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>This session is expired</value>
+    <value>Bu oturumun süresi doldu</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
-    <value>Renew Session</value>
+    <value>Oturumu Yenile</value>
   </data>
   <data name="SystemTrayBalloonRenewSessionMessage" xml:space="preserve">
-    <value>Renew before {0}</value>
+    <value>Daha önce yenile {0}</value>
     <comment>{0}=date and time</comment>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
-    <value>{0} is about to expire</value>
+    <value>{0} süresi dolmak üzere</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="TimeSpanDaysAndHours" xml:space="preserve">
-    <value>{0:day|days} and {1:hour|hours}</value>
+    <value>{0:gün|gün} ve {1:saat|saat}</value>
     <comment>{0}=pluralizable number of days, {1}=pluralizable number of hours</comment>
   </data>
   <data name="TimeSpanHoursAndMinutes" xml:space="preserve">
-    <value>{0:hour|hours} and {1:minute|minutes}</value>
+    <value>{0:saat|saat} ve {1:dakika|dakika}</value>
     <comment>{0}=pluralizable number of hours, {1}=pluralizable number of minutes</comment>
   </data>
   <data name="TimeSpanMinutesAndSeconds" xml:space="preserve">
-    <value>{0:minute|minutes} and {1:second|seconds}</value>
+    <value>{0:dakika|dakika} ve {1:saniye|saniye}</value>
     <comment>{0}=pluralizable number of minutes, {1}=pluralizable number of seconds</comment>
   </data>
   <data name="TimeSpanSeconds" xml:space="preserve">
-    <value>{0:second|seconds}</value>
+    <value>{0:saniye|saniye}</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Start on sign-on</value>
+    <value>_Oturum açıldığında başlat</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} requires reauthorization.</value>
+    <value>{0} yeniden yetkilendirme gerektirir.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Did not reconnect to {0}</value>
+    <value>Tekrar bağlanmadı {0}</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
-    <value>There are no profiles available to connect.</value>
+    <value>Bağlanabilecek profil yok.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Please contact server operator.</value>
+    <value>Lütfen sunucu operatörüyle iletişime geçin.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Please contact support.</value>
+    <value>Lütfen desteğe başvurun.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
-    <value>Changelog...</value>
+    <value>Değişiklikler...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Download {0} and _update now
-(Client will restart)</value>
+    <value>Şimdi indirin {0} ve _güncelleyin (İstemci yeniden başlatılacak)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">
-    <value>This will take a few seconds...</value>
+    <value>Bu birkaç saniye sürecektir...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>Beklemek...</value>
   </data>
 </root>

@@ -210,16 +210,15 @@
     <value>Помилка служби Tunnel Manager.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+    <value>Ваш комп'ютер використовує VPN-тунель для обробки трафіку за замовчуванням. Інший VPN-з'єднання, ймовірно, не спрацює.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
-Your organization might opt to prevent connections from insecure computers in the future.</value>
+    <value>На вашому комп’ютері певний час не встановлювалося оновлення Windows. Будь ласка, перевірте статус оновлення та/або оновіть свій комп’ютер до новішої та підтримуваної версії Windows. У майбутньому ваша організація може заборонити з’єднання з незахищених комп’ютерів.</value>
   </data>
   <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
+    <value>VPN-трафіку не виявлено. Можливо, ваше інтернет-з'єднання блокує або обмежує трафік UDP. Розглянемо можливість переходу на TCP (коли доступний)</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
-    <value>There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first...</value>
+    <value>На цьому комп’ютері є інші сеанси користувача. Встановлення VPN-з’єднання зараз забезпечить доступ до мережі й іншим користувачам. Очікування, поки інші користувачі першими вийдуть...</value>
   </data>
 </root>

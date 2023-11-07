@@ -118,42 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorDuplicateElement" xml:space="preserve">
-    <value>Duplicate element name "{0}" found.</value>
+    <value>Duplikatelementnavnet "{0}" funnet.</value>
   </data>
   <data name="ErrorExpectedReceived" xml:space="preserve">
-    <value>{0} (expected: {1}, received: {2})</value>
+    <value>{0} (forventet: {1} , mottatt: {2} )</value>
     <comment>{0}=A sentence explaining an error, {1}=expected value, {2}=received value</comment>
   </data>
   <data name="ErrorInvalidIdentifier" xml:space="preserve">
-    <value>Invalid element name found.</value>
+    <value>Ugyldig elementnavn funnet.</value>
   </data>
   <data name="ErrorInvalidParameterType" xml:space="preserve">
-    <value>Unexpected parameter type.</value>
+    <value>Uventet parametertype.</value>
   </data>
   <data name="ErrorJSONCode" xml:space="preserve">
     <value>{0} JSON: {1}</value>
     <comment>{0}=A sentence explaining an error, {1}=JSON source code</comment>
   </data>
   <data name="ErrorMissingClosingParenthesis" xml:space="preserve">
-    <value>Missing "{0}" parenthesis.</value>
+    <value>Mangler "{0}" parentes.</value>
   </data>
   <data name="ErrorMissingParameter" xml:space="preserve">
-    <value>A required parameter is missing.</value>
+    <value>En nødvendig parameter mangler.</value>
   </data>
   <data name="ErrorMissingSeparator" xml:space="preserve">
-    <value>Missing ":" separator.</value>
+    <value>Mangler ":"-skilletegn.</value>
   </data>
   <data name="ErrorMissingSeparatorOrClosingParenthesis" xml:space="preserve">
-    <value>Missing "," separator or "{0}" parenthesis.</value>
+    <value>Mangler "," skilletegn eller "{0}" parentes.</value>
   </data>
   <data name="ErrorParameter" xml:space="preserve">
-    <value>{0} (parameter name: {1})</value>
+    <value>{0} (parameternavn: {1} )</value>
     <comment>{0}=A sentence explaining an error, {1}=parameter name</comment>
   </data>
   <data name="ErrorTrailingData" xml:space="preserve">
-    <value>Unexpected trailing data found.</value>
+    <value>Uventede etterfølgende data funnet.</value>
   </data>
   <data name="ErrorUnknownValue" xml:space="preserve">
-    <value>Unknown value found.</value>
+    <value>Ukjent verdi funnet.</value>
   </data>
 </root>

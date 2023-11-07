@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.8...HEAD)
 
 - eduvpn-common updated to cad29dcc046163a944167bbaf2292b3e591e01c6
+- Translations updated
 
 
 ## [3.255.8](https://github.com/Amebis/eduVPN/compare/3.255.7...3.255.8) (2023-10-17)

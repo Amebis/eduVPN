@@ -133,7 +133,7 @@
     <comment>{0} = A sentence explaining an error, {1} = Response source code</comment>
   </data>
   <data name="ErrorMonitorConnection" xml:space="preserve">
-    <value>The OpenVPN Management connection failed.</value>
+    <value>La connexion de gestion d'OpenVPN a échoué.</value>
   </data>
   <data name="ErrorMonitorTerminated" xml:space="preserve">
     <value>Le moniteur de gestion d'OpenVPN n'est pas en cours d'exécution.</value>

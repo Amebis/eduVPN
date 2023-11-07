@@ -207,19 +207,19 @@
     <value>Nombre de host no válido: los nombres de host contienen letras, números, guiones y puntos.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
-    <value>Tunnel Manager Service failure.</value>
+    <value>Fallo del servicio Tunnel Manager.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+    <value>Su computadora ya está usando un túnel VPN para manejar el tráfico por defecto. Otra conexión VPN probablemente no funcionará.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
-Your organization might opt to prevent connections from insecure computers in the future.</value>
+    <value>Su computadora no ha instalado ninguna actualización de Windows durante un tiempo. Por favor, compruebe el estado de actualización y/o actualice su computadora a una versión más reciente y compatible de Windows.
+Su organización podría optar por evitar conexiones de computadoras inseguras en el futuro.</value>
   </data>
   <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
+    <value>No se detectó tráfico de VPN. Tal vez su conexión a Internet está bloqueando o limitando el tráfico de UDP. Considere cambiar a TCP.</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
-    <value>There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first...</value>
+    <value>Hay otras sesiones de usuario en este ordenador. Establecer una conexión VPN ahora también proporcionaría acceso a la red a otros usuarios. Esperando a que los demás usuarios cierren sesión primero...</value>
   </data>
 </root>

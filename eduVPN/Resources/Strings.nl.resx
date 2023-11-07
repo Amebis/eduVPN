@@ -210,16 +210,15 @@
     <value>Storing in de Tunnel Manager-service. </value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+    <value>Uw computer gebruikt een VPN -tunnel om het standaardverkeer al te verwerken. Een andere VPN -verbinding zal waarschijnlijk niet werken.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
-Your organization might opt to prevent connections from insecure computers in the future.</value>
+    <value>Uw computer heeft een tijdje geen Windows updates geïnstalleerd. Controleer de updatestatus en/of upgrade uw computer naar een nieuwere en ondersteunde release van Windows. Je organisatie kan ervoor kiezen dat VPN verbindingen in de toekomst van onveilige computers worden geblokkeerd.</value>
   </data>
   <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
+    <value>Er werd geen VPN -verkeer gedetecteerd. Misschien blokkeert uw internetverbinding UDP -verkeer. Overweeg om over te schakelen naar TCP (indien beschikbaar).</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
-    <value>There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first...</value>
+    <value>Er zijn andere gebruikerssessies op deze computer. Het tot stand brengen van een VPN -verbinding zou nu ook netwerktoegang voor deze andere gebruikers bieden. Wacht tot de andere gebruikers uitloggen..</value>
   </data>
 </root>

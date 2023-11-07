@@ -189,7 +189,7 @@
     <value>Minisign-fellesnøkkelen er ugyldig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign public key with Id {0:X} already exists.</value>
+    <value>Minisign-fellesnøkkelen med Id {0:X} finnes allerede.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign-signaturen støttes ikke.</value>
@@ -207,19 +207,19 @@
     <value>Ugyldig vertsnavn: vertsnavn kan inneholde bokstav, tall, bindestrek og punktum.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
-    <value>Tunnel Manager Service failure.</value>
+    <value>Tunnel manager tjeneste feil.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Your computer is using a VPN tunnel to handle the default traffic already. Another VPN connection will likely not work.</value>
+    <value>Din PC bruker allerede en VPN tunnel. En ny VPN forbindelse vil sannsynligvis ikke fungere.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
-Your organization might opt to prevent connections from insecure computers in the future.</value>
+    <value>Din PC har ikke fått installert Windows oppdateringer på en stund. Vennligst sjekk oppdateringstatus og/eller oppdater din PC til en nyere og supportert versjon av Windows
+Din organisasjon kan velge å hindre oppkobling fra usikrede PC'er i framtiden.  </value>
   </data>
   <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
+    <value>Ingen VPN trafikk ble detektert. Kanskje din internett leverandør blokkerer eller begrenser UDP trafikk. Vurder å bytte til TCP oppkobling.</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
-    <value>There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first...</value>
+    <value>Det finnes andre bruker sesjoner på denne maskinen. En etablering av VPN forbindelse vil gi nettverks aksess også til andre brukere. Venter på at andre brukere logger ut først...</value>
   </data>
 </root>
