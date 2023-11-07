@@ -15,6 +15,7 @@ ImportTranslations ::
 	move /y "$(TRANSIFEX_RES)_es_419.resx" "Strings.es.resx"     > NUL
 	copy /y "Strings.resx"                 "Strings.es-ES.resx"  > NUL
 	move /y "$(TRANSIFEX_RES)_fr.resx"     "Strings.fr.resx"     > NUL
+	move /y "$(TRANSIFEX_RES)_it.resx"     "Strings.it.resx"     > NUL
 	move /y "$(TRANSIFEX_RES)_nb.resx"     "Strings.nb.resx"     > NUL
 	move /y "$(TRANSIFEX_RES)_nl.resx"     "Strings.nl.resx"     > NUL
 	move /y "$(TRANSIFEX_RES)_pt_PT.resx"  "Strings.pt-PT.resx"  > NUL

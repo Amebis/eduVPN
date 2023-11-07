@@ -6,7 +6,7 @@
     SPDX-License-Identifier: GPL-3.0+
 -->
 
-<?define LanguageList=ar;de;es;es-ES;fr;nb;nl;pt-PT;sl;tr;uk?>
+<?define LanguageList=ar;de;es;es-ES;fr;it;nb;nl;pt-PT;sl;tr;uk?>
 
 <?define openvpnserv.exe.ComponentGUID = "{501E24B9-1EE1-4982-84$(var.ClientId)-52AD4697AF10}"?>
 <?define eduWGSvcHost.exe.ComponentGUID = "{ABCA5853-91AF-4ED3-90$(var.ClientId)-5C1142DFFEF1}"?>

@@ -95,6 +95,32 @@ BEGIN
 END
 
 /////////////////////////////////////////////////////////////////////////////
+// Italian resources
+
+LANGUAGE LANG_ITALIAN, SUBLANG_ENGLISH_US
+
+STRINGTABLE
+BEGIN
+	IDS_EDUVPN_CLIENT_TITLE                 "eduVPN Client"
+	IDS_EDUVPN_CLIENT_DESCRIPTION           "VPN for education and research"
+	IDS_EDUVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_EDUVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (eduVPN)"
+	IDS_EDUVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, eduVPN client will not function."
+
+	IDS_LETSCONNECT_CLIENT_TITLE            "Let's Connect! Client"
+	IDS_LETSCONNECT_CLIENT_DESCRIPTION      "The open source VPN"
+	IDS_LETSCONNECT_CLIENT_PUBLISHER        "SURF"
+	IDS_LETSCONNECT_INTERACTIVE_TITLE       "OpenVPN Interactive Service (Let's Connect!)"
+	IDS_LETSCONNECT_INTERACTIVE_DESCRIPTION "Enables OpenVPN connection network configuration management. If stopped or disabled, Let's Connect! client will not function."
+
+	IDS_GOVVPN_CLIENT_TITLE                 "govVPN Client"
+	IDS_GOVVPN_CLIENT_DESCRIPTION           "The open source VPN"
+	IDS_GOVVPN_CLIENT_PUBLISHER             "SURF"
+	IDS_GOVVPN_INTERACTIVE_TITLE            "OpenVPN Interactive Service (govVPN)"
+	IDS_GOVVPN_INTERACTIVE_DESCRIPTION      "Enables OpenVPN connection network configuration management. If stopped or disabled, govVPN client will not function."
+END
+
+/////////////////////////////////////////////////////////////////////////////
 // Dutch resources
 
 LANGUAGE LANG_DUTCH, SUBLANG_DEFAULT

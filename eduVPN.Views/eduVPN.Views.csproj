@@ -180,6 +180,7 @@
     <EmbeddedResource Include="Resources\Strings.fr.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.it.resx" />
     <EmbeddedResource Include="Resources\Strings.nl.resx" />
     <EmbeddedResource Include="Resources\Strings.pt-PT.resx" />
     <EmbeddedResource Include="Resources\Strings.sl.resx" />
