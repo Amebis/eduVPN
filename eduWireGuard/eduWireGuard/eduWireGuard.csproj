@@ -51,13 +51,13 @@
     <EmbeddedResource Include="Resources\Strings.de.resx" />
     <EmbeddedResource Include="Resources\Strings.es.resx" />
     <EmbeddedResource Include="Resources\Strings.es-ES.resx" />
-    <EmbeddedResource Include="Resources\Strings.nb.resx" />
     <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.fr.resx" />
     <EmbeddedResource Include="Resources\Strings.it.resx" />
+    <EmbeddedResource Include="Resources\Strings.nb.resx" />
     <EmbeddedResource Include="Resources\Strings.nl.resx" />
     <EmbeddedResource Include="Resources\Strings.pt-PT.resx" />
     <EmbeddedResource Include="Resources\Strings.sl.resx" />
