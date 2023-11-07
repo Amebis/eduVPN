@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.8...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.9...HEAD)
+
+
+## [3.255.9](https://github.com/Amebis/eduVPN/compare/3.255.8...3.255.9) (2023-11-07)
 
 - eduvpn-common updated to cad29dcc046163a944167bbaf2292b3e591e01c6
 - Translations updated
