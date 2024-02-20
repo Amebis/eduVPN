@@ -18,7 +18,7 @@ namespace wg
 	class ringlogger
 	{
 	private:
-		typedef std::unique_ptr<unsigned char[], winstd::UnmapViewOfFile_delete<unsigned char[]>> file_mapping_view;
+		typedef std::unique_ptr<unsigned char[], winstd::UnmapViewOfFile_delete> file_mapping_view;
 
 		class unix_timestamp
 		{
