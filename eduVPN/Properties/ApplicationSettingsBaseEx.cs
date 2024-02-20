@@ -78,6 +78,17 @@ namespace eduVPN.Properties
             return false;
         }
 
+        protected bool GetValue(string name, out bool value)
+        {
+            if (Key?.GetValue(name) is int v)
+            {
+                value = v != 0;
+                return true;
+            }
+            value = default;
+            return false;
+        }
+
         protected bool GetValue(string name, out string value)
         {
             if (Key?.GetValue(name) is string v)

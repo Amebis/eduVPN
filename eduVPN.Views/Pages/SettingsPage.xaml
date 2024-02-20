@@ -48,7 +48,8 @@
             <CheckBox
                 Margin="0,7"
                 VerticalContentAlignment="Center"
-                IsChecked="{Binding Source={x:Static propView:Settings.Default}, Path=StartOnSignon}"
+                IsEnabled="{Binding Source={x:Static propView:SettingsEx.Default}, Path=IsStartOnSignonModifiable}"
+                IsChecked="{Binding Source={x:Static propView:SettingsEx.Default}, Path=StartOnSignon}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.SettingsPageStartOnSignon}, Converter={StaticResource RemoveAccessKeyConverter}}">
                 <AccessText Text="{x:Static res:Strings.SettingsPageStartOnSignon}"/>
             </CheckBox>

@@ -78,7 +78,7 @@ namespace eduVPN.Views
             StandardOutputTracer = new StandardStreamTracer();
 
             eduVPN.Properties.Settings.Default.IsSignon = e.Args.Any(param => param.Equals("/signon", StringComparison.OrdinalIgnoreCase));
-            if (eduVPN.Properties.Settings.Default.IsSignon && !Views.Properties.Settings.Default.StartOnSignon)
+            if (eduVPN.Properties.Settings.Default.IsSignon && !Views.Properties.SettingsEx.Default.StartOnSignon)
                 Shutdown(0);
 
             RenderOptions.ProcessRenderMode = Views.Properties.SettingsEx.Default.ProcessRenderMode;

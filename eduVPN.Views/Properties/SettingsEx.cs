@@ -32,6 +32,32 @@ namespace eduVPN.Views.Properties
             }
         }
 
+        /// <summary>
+        /// Start application on user sign-on
+        /// </summary>
+        public bool StartOnSignon
+        {
+            get
+            {
+                if (GetValue(nameof(StartOnSignon), out bool value))
+                    return value;
+                return Settings.Default.StartOnSignon;
+            }
+            set
+            {
+                if (IsStartOnSignonModifiable)
+                    Settings.Default.StartOnSignon = value;
+            }
+        }
+
+        /// <summary>
+        /// May user change StartOnSignon?
+        /// </summary>
+        public bool IsStartOnSignonModifiable
+        {
+            get => !GetValue(nameof(StartOnSignon), out bool value);
+        }
+
         #endregion
     }
 }

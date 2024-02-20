@@ -82,3 +82,15 @@ Value | Algorithm
 1     | legacy
 2     | prehashed
 3     | any
+
+
+## User settings registry overrides
+
+User client settings may be overriden using the `HKEY_LOCAL_MACHINE\SOFTWARE\SURF\eduVPN\Views` registry key.
+
+To override specific setting, add a value described in this chapter to the `HKEY_LOCAL_MACHINE\SOFTWARE\SURF\eduVPN\Views` registry key and set its content as required.
+
+
+### `StartOnSignon` (`REG_DWORD`)
+
+`StartOnSignon` enforces or disables client startup on each user sign-on. Set to non-zero to enforce startup. Set to zero to disable startup. When this registry value is not present, users are allowed to configure startup in the client UI.

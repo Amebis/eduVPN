@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.9...HEAD)
 
+- Preconfigurable start on sign-on
+
 
 ## [3.255.9](https://github.com/Amebis/eduVPN/compare/3.255.8...3.255.9) (2023-11-07)
 
