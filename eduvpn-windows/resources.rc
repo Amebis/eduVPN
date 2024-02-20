@@ -1,7 +1,7 @@
 /*
 	eduVPN - VPN for education and research
 
-	Copyright: 2023 The Commons Conservancy
+	Copyright: 2023-2024 The Commons Conservancy
 	SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -28,7 +28,7 @@ BEGIN
       VALUE "FileDescription", "Windows-specific eduVPN client library"
       VALUE "FileVersion", EXPAND(VERSION)
       VALUE "InternalName", "eduvpn-windows"
-      VALUE "LegalCopyright", "Copyright © 2023 The Commons Conservancy"
+      VALUE "LegalCopyright", "Copyright © 2023-2024 The Commons Conservancy"
       VALUE "ProductName", "eduVPN"
       VALUE "ProductVersion", EXPAND(VERSION)
     END

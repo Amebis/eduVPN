@@ -1,7 +1,7 @@
 ﻿/*
     eduOAuth - OAuth 2.0 Library for eduVPN (and beyond)
 
-    Copyright: 2017-2023 The Commons Conservancy
+    Copyright: 2017-2024 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
 */
 
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("OAuth 2.0 Library")]
 [assembly: AssemblyCompany("SURF")]
 [assembly: AssemblyProduct("eduVPN")]
-[assembly: AssemblyCopyright("Copyright © 2017-2023 The Commons Conservancy")]
+[assembly: AssemblyCopyright("Copyright © 2017-2024 The Commons Conservancy")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
