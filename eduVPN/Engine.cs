@@ -124,79 +124,64 @@ namespace eduVPN
         public enum State
         {
             /// <summary>
-            /// App is not registered with the wrapper
+            /// We are deregistered
             /// </summary>
             Deregistered,
 
             /// <summary>
-            /// User has not chosen a server yet
+            /// The main state
             /// </summary>
-            NoServer,
+            Main,
 
             /// <summary>
-            /// User selected a Secure Internet server but needs to choose a location
+            /// A server is being added
             /// </summary>
-            AskLocation,
+            AddingServer,
 
             /// <summary>
-            /// User has selected a Secure Internet location
-            /// </summary>
-            ChosenLocation,
-
-            /// <summary>
-            /// We are loading the server details
-            /// </summary>
-            LoadingServer,
-
-            /// <summary>
-            /// User has chosen a server to connect to and the server is initialized
-            /// </summary>
-            ChosenServer,
-
-            /// <summary>
-            /// OAuth process has started
+            /// The OAuth procedure is triggered
             /// </summary>
             OAuthStarted,
 
             /// <summary>
-            /// OAuth process has finished and the user is now authorized with the server
+            /// A VPN config is being obtained
             /// </summary>
-            Authorized,
+            GettingConfig,
 
             /// <summary>
-            /// User has requested a config for connecting
+            /// A secure internet location is being asked
             /// </summary>
-            RequestConfig,
+            AskLocation,
 
             /// <summary>
-            /// Go code is asking for a profile selection from the UI
+            /// A profile is being asked for
             /// </summary>
             AskProfile,
 
             /// <summary>
-            /// Profile has been chosen
+            /// A config is obtained
             /// </summary>
-            ChosenProfile,
+            GotConfig,
 
             /// <summary>
-            /// VPN configuration has been obtained
-            /// </summary>
-            Disconnected,
-
-            /// <summary>
-            /// VPN is connecting
+            /// The VPN is connecting
             /// </summary>
             Connecting,
 
             /// <summary>
-            /// VPN is disconnecting
+            /// The VPN is connected
+            /// </summary>
+            Connected,
+
+            /// <summary>
+            /// The VPN is disconnecting
             /// </summary>
             Disconnecting,
 
             /// <summary>
-            /// VPN is connected
+            /// The VPN is disconnected
             /// </summary>
-            Connected,
+            Disconnected,
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -254,7 +239,8 @@ namespace eduVPN
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void TokenGetter(
-            [MarshalAs(UnmanagedType.LPUTF8Str)] string server,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string serverId,
+            ServerType serverType,
             IntPtr outBuf,
             UIntPtr len);
 
@@ -271,6 +257,11 @@ namespace eduVPN
             public readonly string Id;
 
             /// <summary>
+            /// Server type
+            /// </summary>
+            public readonly ServerType Type;
+
+            /// <summary>
             /// Must be set to token value on return
             /// </summary>
             public string Token;
@@ -283,9 +274,11 @@ namespace eduVPN
             /// Constructs an event arguments
             /// </summary>
             /// <param name="id">Server URI or Organization ID</param>
-            public GetTokenEventArgs(string id)
+            /// <param name="type">Server type</param>
+            public GetTokenEventArgs(string id, ServerType type)
             {
                 Id = id;
+                Type = type;
             }
 
             #endregion
@@ -293,7 +286,8 @@ namespace eduVPN
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void TokenSetter(
-            [MarshalAs(UnmanagedType.LPUTF8Str)] string server,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string serverId,
+            ServerType serverType,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string token);
 
         /// <summary>
@@ -309,6 +303,11 @@ namespace eduVPN
             public readonly string Id;
 
             /// <summary>
+            /// Server type
+            /// </summary>
+            public readonly ServerType Type;
+
+            /// <summary>
             /// Token value
             /// </summary>
             public readonly string Token;
@@ -321,10 +320,12 @@ namespace eduVPN
             /// Constructs an event arguments
             /// </summary>
             /// <param name="id">Server URI or Organization ID</param>
+            /// <param name="type">Server type</param>
             /// <param name="token">Token</param>
-            public SetTokenEventArgs(string id, string token)
+            public SetTokenEventArgs(string id, ServerType type, string token)
             {
                 Id = id;
+                Type = type;
                 Token = token;
             }
 
@@ -578,38 +579,28 @@ namespace eduVPN
         [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
         static extern string SetSupportWireguard(int support);
 
-        static readonly TokenGetter OnGetToken = new TokenGetter((string server, IntPtr outBuf, UIntPtr len) =>
+        static readonly TokenGetter OnGetToken = new TokenGetter((string serverId, ServerType serverType, IntPtr outBuf, UIntPtr len) =>
         {
-            if (eduJSON.Parser.Parse(server) is IReadOnlyDictionary<string, object> obj)
+            var args = new GetTokenEventArgs(serverId, serverType);
+            GetToken?.Invoke(null, args);
+            if (args.Token != null)
             {
-                var srv = Server.Load(obj);
-                var args = new GetTokenEventArgs(srv.Id);
-                GetToken?.Invoke(null, args);
-                if (args.Token != null)
+                var data = Encoding.UTF8.GetBytes(args.Token);
+                if (data.Length < (int)len)
                 {
-                    var data = Encoding.UTF8.GetBytes(args.Token);
-                    if (data.Length < (int)len)
-                    {
-                        Marshal.Copy(data, 0, outBuf, data.Length);
-                        Marshal.WriteByte(outBuf, data.Length, 0);
-                    }
-                    else
-                        Marshal.Copy(data, 0, outBuf, (int)len);
-                    return;
+                    Marshal.Copy(data, 0, outBuf, data.Length);
+                    Marshal.WriteByte(outBuf, data.Length, 0);
                 }
+                else
+                    Marshal.Copy(data, 0, outBuf, (int)len);
+                return;
             }
             if ((ulong)len > 0)
                 Marshal.WriteByte(outBuf, 0, 0);
         });
 
-        static readonly TokenSetter OnSetToken = new TokenSetter((string server, string token) =>
-        {
-            if (eduJSON.Parser.Parse(server) is IReadOnlyDictionary<string, object> obj)
-            {
-                var srv = Server.Load(obj);
-                SetToken?.Invoke(null, new SetTokenEventArgs(srv.Id, token));
-            }
-        });
+        static readonly TokenSetter OnSetToken = new TokenSetter((string serverId, ServerType serverType, string token) =>
+            SetToken?.Invoke(null, new SetTokenEventArgs(serverId, serverType, token)));
 
         [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
@@ -813,19 +804,19 @@ namespace eduVPN
         [DllImport("eduvpn_common.dll", EntryPoint = "SetSecureLocation", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
         static extern string _SetSecureLocation(
-            IntPtr c,
+            [MarshalAs(UnmanagedType.LPUTF8Str)] string orgID,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string countryCode);
 
         /// <summary>
         /// Sets the location for the current secure internet server. countryCode is the secure location to be chosen.
         /// </summary>
-        /// <param name="cookie">eduvpn-common operation cookie</param>
+        /// <param name="orgID">Organization ID</param>
         /// <param name="countryCode">The secure location to be chosen</param>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static void SetSecureInternetLocation(Cookie cookie, string countryCode)
+        public static void SetSecureInternetLocation(string orgID, string countryCode)
         {
-            ThrowOnError(_SetSecureLocation(cookie.Handle, countryCode));
+            ThrowOnError(_SetSecureLocation(orgID, countryCode));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "DiscoServers", CallingConvention = CallingConvention.Cdecl)]

@@ -97,7 +97,9 @@ namespace eduOAuth
             Authorized = authorized;
 
             // Get expiration date.
-            Expires = eduJSON.Parser.GetValue(obj, "expires_in", out long expiresIn) ? DateTimeOffset.Now.AddSeconds(expiresIn) : DateTimeOffset.MaxValue;
+            Expires =
+                eduJSON.Parser.GetValue(obj, "expires_at", out long expiresAt) ? DateTimeOffset.FromUnixTimeSeconds(expiresAt) :
+                eduJSON.Parser.GetValue(obj, "expires_in", out long expiresIn) ? DateTimeOffset.Now.AddSeconds(expiresIn) : DateTimeOffset.MaxValue;
 
             // Get refresh token.
             if (eduJSON.Parser.GetValue(obj, "refresh_token", out string refreshToken) && refreshToken != null)
@@ -247,7 +249,7 @@ namespace eduOAuth
         /// <returns>JSON string</returns>
         public string ToJSON()
         {
-            return string.Format("{{\"access_token\":\"{0}\",\"refresh_token\":\"{1}\",\"expires_in\":{2}}}",
+            return string.Format("{{\"access_token\":\"{0}\",\"refresh_token\":\"{1}\",\"expires_at\":{2}}}",
                 HttpUtility.JavaScriptStringEncode(new NetworkCredential("", Token).Password),
                 HttpUtility.JavaScriptStringEncode(new NetworkCredential("", Refresh).Password),
                 Expires.ToUnixTimeSeconds());

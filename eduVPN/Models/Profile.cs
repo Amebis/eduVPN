@@ -27,11 +27,6 @@ namespace eduVPN.Models
         /// </summary>
         public Dictionary<string, string> LocalizedDisplayNames { get; }
 
-        /// <summary>
-        /// List of supported VPN protocols
-        /// </summary>
-        public HashSet<VPNProtocol> SupportedProtocols { get; }
-
         #endregion
 
         #region Constructors
@@ -46,13 +41,6 @@ namespace eduVPN.Models
             Id = id;
             LocalizedDisplayNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             eduJSON.Parser.GetDictionary(obj, "display_name", LocalizedDisplayNames);
-            if (eduJSON.Parser.GetValue(obj, "supported_protocols", out List<object> vpnProtoList) && vpnProtoList != null)
-            {
-                SupportedProtocols = new HashSet<VPNProtocol>();
-                foreach (var e in vpnProtoList)
-                    if (e is long l)
-                        SupportedProtocols.Add((VPNProtocol)l);
-            }
         }
 
         #endregion

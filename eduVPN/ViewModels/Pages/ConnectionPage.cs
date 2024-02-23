@@ -224,7 +224,7 @@ namespace eduVPN.ViewModels.Pages
                             new Thread(() =>
                             {
                                 Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-                                try { Engine.SetState(Engine.State.NoServer); }
+                                try { Engine.SetState(Engine.State.Main); }
                                 catch (OperationCanceledException) { }
                                 catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
                                 finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
@@ -289,8 +289,8 @@ namespace eduVPN.ViewModels.Pages
                 try
                 {
                     using (var session =
-                        config.Protocol == VPNProtocol.WireGuard ? (Session)new WireGuardSession(Wizard, server, config.VPNConfig, expiration) :
-                        config.Protocol == VPNProtocol.OpenVPN ? new OpenVPNSession(Wizard, server, config.VPNConfig, expiration) :
+                        config.Protocol == VPNProtocol.WireGuard ? (Session)new WireGuardSession(Wizard, server, config.VPNConfig, expiration, config.ShouldFailover) :
+                        config.Protocol == VPNProtocol.OpenVPN ? new OpenVPNSession(Wizard, server, config.VPNConfig, expiration, config.ShouldFailover) :
                             throw new ArgumentOutOfRangeException(nameof(config.Protocol), config.Protocol, null))
                     {
                         void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

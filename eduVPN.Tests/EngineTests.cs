@@ -26,10 +26,10 @@ namespace eduVPN.Tests
                 {
                     case 0:
                         Assert.AreEqual(Engine.State.Deregistered, e.OldState);
-                        Assert.AreEqual(Engine.State.NoServer, e.NewState);
+                        Assert.AreEqual(Engine.State.Main, e.NewState);
                         break;
                     case 1:
-                        Assert.AreEqual(Engine.State.NoServer, e.OldState);
+                        Assert.AreEqual(Engine.State.Main, e.OldState);
                         Assert.AreEqual(Engine.State.Deregistered, e.NewState);
                         break;
                 }
@@ -70,28 +70,24 @@ namespace eduVPN.Tests
                         switch (callbackCounter++)
                         {
                             case 0:
-                                Assert.AreEqual(Engine.State.NoServer, e.OldState);
-                                Assert.AreEqual(Engine.State.LoadingServer, e.NewState);
+                                Assert.AreEqual(Engine.State.Main, e.OldState);
+                                Assert.AreEqual(Engine.State.AddingServer, e.NewState);
                                 break;
                             case 1:
-                                Assert.AreEqual(Engine.State.LoadingServer, e.OldState);
-                                Assert.AreEqual(Engine.State.ChosenServer, e.NewState);
-                                break;
-                            case 2:
-                                Assert.AreEqual(Engine.State.ChosenServer, e.OldState);
+                                Assert.AreEqual(Engine.State.AddingServer, e.OldState);
                                 Assert.AreEqual(Engine.State.OAuthStarted, e.NewState);
                                 Assert.IsNotNull(e.Data);
                                 ct.CancelAfter(200);
                                 break;
-                            case 3:
+                            case 2:
                                 Assert.AreEqual(Engine.State.OAuthStarted, e.OldState);
-                                Assert.AreEqual(Engine.State.NoServer, e.NewState);
+                                Assert.AreEqual(Engine.State.Main, e.NewState);
                                 break;
                         }
                         e.Handled = true;
                     };
                     Assert.ThrowsException<OperationCanceledException>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
-                    Assert.AreEqual(4, callbackCounter);
+                    Assert.AreEqual(3, callbackCounter);
                 }
                 finally
                 {
@@ -167,15 +163,14 @@ namespace eduVPN.Tests
         public void SetSecureLocationTest()
         {
             Engine.Register();
-            using (var cookie = new Engine.Cookie())
-                try
-                {
-                    Assert.ThrowsException<Exception>(() => Engine.SetSecureInternetLocation(cookie, "de"));
-                }
-                finally
-                {
-                    Engine.Deregister();
-                }
+            try
+            {
+                Assert.ThrowsException<Exception>(() => Engine.SetSecureInternetLocation("https://eva-saml-idp.eduroam.nl/simplesamlphp/saml2/idp/metadata.php", "de"));
+            }
+            finally
+            {
+                Engine.Deregister();
+            }
         }
 
         [TestMethod()]

@@ -133,8 +133,9 @@ namespace eduVPN.ViewModels.VPN
         /// <param name="server">Connecting eduVPN server</param>
         /// <param name="profileConfig">Initial profile configuration</param>
         /// <param name="expiration">VPN expiry times</param>
-        public WireGuardSession(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration) :
-            base(wizard, server, profileConfig, expiration)
+        /// <param name="shouldFailover">Should perform failover check</param>
+        public WireGuardSession(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration, bool shouldFailover) :
+            base(wizard, server, profileConfig, expiration, shouldFailover)
         {
             TunnelName =
                 Uri.TryCreate(server.Id, UriKind.Absolute, out var uri) ? uri.Host :

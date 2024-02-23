@@ -514,7 +514,7 @@ namespace eduVPN.ViewModels.Windows
                                                 obj is Dictionary<string, object> obj2 && obj2.TryGetValue("base_url", out string base_url) && new Uri(base_url).Equals(uri)) is Dictionary<string, object> obj3 &&
                                             obj3.TryGetValue("country_code", out string country_code))
                                         {
-                                            Engine.SetSecureInternetLocation(cookie, country_code);
+                                            Engine.SetSecureInternetLocation(siOrgId, country_code);
                                             if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
                                                 Properties.Settings.Default.LastSelectedServer = siOrgId;
                                         }
@@ -554,7 +554,7 @@ namespace eduVPN.ViewModels.Windows
                         Properties.Settings.Default.SettingsVersion |= 0x2;
 
                         // eduvpn-common does not do callback after servers are added. Do the bookkeeping manually.
-                        Engine_Callback(this, new Engine.CallbackEventArgs(Engine.State.Deregistered, Engine.State.NoServer, null));
+                        Engine_Callback(this, new Engine.CallbackEventArgs(Engine.State.Deregistered, Engine.State.Main, null));
                     }, 0)); // No repeat
             }
 
@@ -593,7 +593,7 @@ namespace eduVPN.ViewModels.Windows
             Trace.TraceInformation("eduvpn-common state {0}", e.NewState);
             switch (e.NewState)
             {
-                case Engine.State.NoServer:
+                case Engine.State.Main:
                     {
                         var obj = eduJSON.Parser.Parse(Engine.ServerList(), Abort.Token) as Dictionary<string, object>;
                         TryInvoke((Action)(() =>
@@ -656,11 +656,8 @@ namespace eduVPN.ViewModels.Windows
                     e.Handled = true;
                     break;
 
-                case Engine.State.ChosenLocation:
-                case Engine.State.LoadingServer:
-                case Engine.State.ChosenServer:
-                case Engine.State.RequestConfig:
-                case Engine.State.ChosenProfile:
+                case Engine.State.AddingServer:
+                case Engine.State.GettingConfig:
                     TryInvoke((Action)(() => CurrentPage = PleaseWaitPage));
                     e.Handled = true;
                     break;

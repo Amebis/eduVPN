@@ -68,19 +68,14 @@ namespace eduVPN.ViewModels.Pages
                                 try
                                 {
                                     var country = SelectedSecureInternetCountry;
-                                    Wizard.CurrentPage = Wizard.PleaseWaitPage;
-                                    try
+                                    foreach (var srv in Wizard.HomePage.SecureInternetServers)
                                     {
-                                        using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
-                                            await Task.Run(() => Engine.SetSecureInternetLocation(cookie, country.Code));
-                                        //await Task.Run(() => Window.Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
+                                        Engine.SetSecureInternetLocation(srv.Id, country.Code);
 
                                         // eduvpn-common does not do callback on country change. Do the bookkeeping manually.
-                                        foreach (var srv in Wizard.HomePage.SecureInternetServers)
-                                            srv.Country = country;
-                                        Wizard.CurrentPage = Wizard.StartingPage;
+                                        srv.Country = country;
                                     }
-                                    catch { Wizard.CurrentPage = this; throw; }
+                                    Wizard.CurrentPage = Wizard.StartingPage;
                                 }
                                 finally { Wizard.TaskCount--; }
                             }

@@ -133,7 +133,7 @@ namespace eduVPN.ViewModels.VPN
             get => _TunnelAddress;
             protected set
             {
-                if (SetProperty(ref _TunnelAddress, value) && value != null)
+                if (SetProperty(ref _TunnelAddress, value) && value != null && TunnelFailoverTest != null)
                 {
                     TunnelFailoverTest.Stop();
                     TunnelFailoverTest.Start();
@@ -389,7 +389,8 @@ namespace eduVPN.ViewModels.VPN
         /// <param name="server">Connecting eduVPN server</param>
         /// <param name="profileConfig">Initial profile configuration</param>
         /// <param name="expiration">VPN expiry times</param>
-        public Session(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration)
+        /// <param name="shouldFailover">Should perform failover check</param>
+        public Session(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration, bool shouldFailover)
         {
             Wizard = wizard;
             Server = server;
@@ -410,49 +411,52 @@ namespace eduVPN.ViewModels.VPN
                     Disconnect.Execute();
             };
 
-            // First, OpenVPN and WireGuard sessions report the traffic once every 5 seconds.
-            // Second, OpenVPN takes some more time to configure networking and may report failed tunnel if
-            // we probe too early in the connection process.
-            // Third, upon connect, OpenVPN session sets TunnelAddress once. Than resets it. Then sets it again.
-            // We shouldn't react to every TunnelAddress setting.
-            // Therefore, the tunnel failover test must be delayable and cancelable.
-            TunnelFailoverTest = new System.Timers.Timer(5 * 1000) { AutoReset = false };
-            TunnelFailoverTest.Elapsed += (object sender, ElapsedEventArgs e2) =>
+            if (shouldFailover)
             {
-                var tunnelAddress = TunnelAddress;
-                if (tunnelAddress == null)
-                    return;
-                foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
-                    .Where(n =>
-                        n.OperationalStatus == OperationalStatus.Up &&
-                        n.NetworkInterfaceType != NetworkInterfaceType.Loopback))
+                // First, OpenVPN and WireGuard sessions report the traffic once every 5 seconds.
+                // Second, OpenVPN takes some more time to configure networking and may report failed tunnel if
+                // we probe too early in the connection process.
+                // Third, upon connect, OpenVPN session sets TunnelAddress once. Than resets it. Then sets it again.
+                // We shouldn't react to every TunnelAddress setting.
+                // Therefore, the tunnel failover test must be delayable and cancelable.
+                TunnelFailoverTest = new System.Timers.Timer(5 * 1000) { AutoReset = false };
+                TunnelFailoverTest.Elapsed += (object sender, ElapsedEventArgs e2) =>
                 {
-                    var props = iface.GetIPProperties();
-                    var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress));
-                    if (unicast != null)
+                    var tunnelAddress = TunnelAddress;
+                    if (tunnelAddress == null)
+                        return;
+                    foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                        .Where(n =>
+                            n.OperationalStatus == OperationalStatus.Up &&
+                            n.NetworkInterfaceType != NetworkInterfaceType.Loopback))
                     {
-                        var gw = props.GatewayAddresses.FirstOrDefault(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork);
-                        string gateway;
-                        if (gw != null && !gw.Address.Equals(IPAddress.Any))
-                            gateway = gw.Address.ToString();
-                        else
+                        var props = iface.GetIPProperties();
+                        var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress));
+                        if (unicast != null)
                         {
-                            // The eduVPN server is always the first usable IP in the subnet by convention.
-#pragma warning disable CS0618 // Type or member is obsolete
-                            gateway = new IPAddress((int)tunnelAddress.Address & (int)unicast.IPv4Mask.Address | IPAddress.HostToNetworkOrder(1)).ToString();
-#pragma warning restore CS0618
-                        }
-                        using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
-                            try
+                            var gw = props.GatewayAddresses.FirstOrDefault(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork);
+                            string gateway;
+                            if (gw != null && !gw.Address.Equals(IPAddress.Any))
+                                gateway = gw.Address.ToString();
+                            else
                             {
-                                //throw new Exception("test"); // Mock traffic failure for testing.
-                                Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu);
+                                // The eduVPN server is always the first usable IP in the subnet by convention.
+#pragma warning disable CS0618 // Type or member is obsolete
+                                gateway = new IPAddress((int)tunnelAddress.Address & (int)unicast.IPv4Mask.Address | IPAddress.HostToNetworkOrder(1)).ToString();
+#pragma warning restore CS0618
                             }
-                            catch (OperationCanceledException) { }
-                            catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningNoTrafficDetected, ex))); }
+                            using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
+                                try
+                                {
+                                    //throw new Exception("test"); // Mock traffic failure for testing.
+                                    Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu);
+                                }
+                                catch (OperationCanceledException) { }
+                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningNoTrafficDetected, ex))); }
+                        }
                     }
-                }
-            };
+                };
+            }
 
             Engine.ReportTraffic += Engine_ReportTraffic;
         }
@@ -666,8 +670,11 @@ namespace eduVPN.ViewModels.VPN
                     SessionAndWindowInProgress.Cancel();
                     SessionAndWindowInProgress.Dispose();
 
-                    TunnelFailoverTest.Stop();
-                    TunnelFailoverTest.Dispose();
+                    if (TunnelFailoverTest != null)
+                    {
+                        TunnelFailoverTest.Stop();
+                        TunnelFailoverTest.Dispose();
+                    }
                 }
                 disposedValue = true;
             }

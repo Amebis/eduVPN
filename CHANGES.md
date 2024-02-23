@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.9...HEAD)
 
+- eduvpn-common updated to ecd4b03aa7d2902e954115a4e1b6648464c77796
 - Preconfigurable start on sign-on
 
 

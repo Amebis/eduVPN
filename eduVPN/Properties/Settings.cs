@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using System;
 using System.ComponentModel;
@@ -180,6 +181,7 @@ namespace eduVPN.Properties
                         {
                             ConnectWizard.Engine_SetToken(null, new Engine.SetTokenEventArgs(
                                 token.Key,
+                                ServerType.Unknown,
                                 token.Value.ToJSON()));
                             token.Value.Dispose();
                         }
