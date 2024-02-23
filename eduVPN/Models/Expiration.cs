@@ -50,7 +50,7 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates VPN configuration
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>config</c>, <c>protocol</c> and <c>default_gateway</c> elements.</param>
+        /// <param name="obj">Key/value dictionary with <c>start_time</c>, <c>end_time</c>, <c>button_time</c>, <c>countdown_time</c> and <c>notification_times</c> elements.</param>
         public Expiration(IReadOnlyDictionary<string, object> obj)
         {
             long startedAtUnix, endAtUnix;
