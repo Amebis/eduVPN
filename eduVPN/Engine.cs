@@ -542,10 +542,10 @@ namespace eduVPN
                 var message = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
                 eduJSON.Parser.GetDictionary(obj2, "message", message);
                 if (message["en"].EndsWith(": context canceled"))
-                    throw new OperationCanceledException();
-                throw new Exception(message.GetLocalized(json));
+                    return new OperationCanceledException();
+                return new Exception(message.GetLocalized(json));
             }
-            throw new Exception(json);
+            return new Exception(json);
         }
 
         static void ThrowOnError(string json)
@@ -706,8 +706,12 @@ namespace eduVPN
         public static void RemoveServer(ServerType type, string id)
         {
             var e = _RemoveServer(type, id);
-            // TODO: If e is "not found in list", ignore it.
-            ThrowOnError(e);
+            if (e != null)
+            {
+                var ex = ConvertException(e);
+                if (!ex.Message.EndsWith(": server does not exist"))
+                    throw ex;
+            }
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "CurrentServer", CallingConvention = CallingConvention.Cdecl)]

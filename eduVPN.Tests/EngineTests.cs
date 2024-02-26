@@ -25,7 +25,7 @@ namespace eduVPN.Tests
                 switch (callbackCounter++)
                 {
                     case 0:
-                        Assert.AreEqual(Engine.State.Deregistered, e.OldState);
+                        Assert.AreEqual(Engine.State.Main, e.OldState);
                         Assert.AreEqual(Engine.State.Main, e.NewState);
                         break;
                     case 1:
