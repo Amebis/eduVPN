@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Sockets;
 
 namespace eduWireGuard
 {
@@ -206,24 +207,22 @@ namespace eduWireGuard
                     switch (key)
                     {
                         case "privatekey":
-                            PrivateKey = new Key(val);
+                            PrivateKey = ParseKeyBase64(val);
                             break;
 
                         case "listenport":
-                            ListenPort = ushort.Parse(val);
+                            ListenPort = ParsePort(val);
                             break;
 
                         case "mtu":
-                            MTU = ushort.Parse(val);
-                            if (MTU < 576 || MTU > 65535)
-                                throw new ArgumentException("Invalid MTU: " + line);
+                            MTU = ParseMTU(val);
                             break;
 
                         case "address":
                             var addresses = SplitList(val);
                             Addresses = new List<IPPrefix>(addresses.Length);
                             for (var i = 0; i < addresses.Length; ++i)
-                                Addresses.Add(IPPrefix.Parse(addresses[i]));
+                                Addresses.Add(ParseIPCidr(addresses[i]));
                             break;
 
                         case "dns":
@@ -256,16 +255,7 @@ namespace eduWireGuard
                             break;
 
                         case "table":
-                            switch (val)
-                            {
-                                case "off": TableOff = true; break;
-                                case "auto":
-                                case "main": TableOff = false; break;
-                                default:
-                                    uint.Parse(val);
-                                    TableOff = false;
-                                    break;
-                            }
+                            TableOff = ParseTableOff(val);
                             break;
 
                         default:
@@ -277,27 +267,30 @@ namespace eduWireGuard
                     switch (key)
                     {
                         case "publickey":
-                            peer.PublicKey = new Key(val);
+                            peer.PublicKey = ParseKeyBase64(val);
                             break;
 
                         case "presharedkey":
-                            peer.PresharedKey = new Key(val);
+                            peer.PresharedKey = ParseKeyBase64(val);
                             break;
 
                         case "allowedips":
                             var addresses = SplitList(val);
                             peer.AllowedIPs = new List<IPPrefix>(addresses.Length);
                             for (var i = 0; i < addresses.Length; ++i)
-                                peer.AllowedIPs.Add(IPPrefix.Parse(addresses[i]));
+                                peer.AllowedIPs.Add(ParseIPCidr(addresses[i]));
                             break;
 
                         case "persistentkeepalive":
-                            peer.PersistentKeepalive = val == "off" ? (ushort)0 : ushort.Parse(val);
+                            peer.PersistentKeepalive = ParsePersistentKeepalive(val);
                             break;
 
                         case "endpoint":
-                            // TODO: Implement!
-                            //peer.Endpoint = ...
+                            peer.Endpoint = ParseEndpoint(val);
+                            break;
+
+                        case "proxyendpoint":
+                            peer.ProxyEndpoint = ParseURL(val);
                             break;
 
                         default:
@@ -313,6 +306,93 @@ namespace eduWireGuard
             foreach (var p in Peers)
                 if (p.PublicKey == null)
                     throw new ArgumentException("All peers must have public keys");
+        }
+
+        #endregion
+
+        #region Members
+
+        private static IPPrefix ParseIPCidr(string s)
+        {
+            return IPPrefix.Parse(s);
+        }
+
+        private static IPEndPoint ParseEndpoint(string s)
+        {
+            var i = s.LastIndexOf(':');
+            if (i < 0)
+                throw new ArgumentException("Missing port from endpoint: " + s);
+            var host = s.Substring(0, i);
+            var portStr = s.Substring(i + 1);
+            if (host.Length < 1)
+                throw new ArgumentException("Invalid endpoint host: " + host);
+            var port = ushort.Parse(portStr);
+            var hostColon = host.IndexOf(':');
+            if (host[0] == '[' || host[host.Length - 1] == ']' || hostColon > 0)
+            {
+                var err = new ArgumentException("Brackets must contain an IPv6 address: " + host);
+                if (host.Length > 3 && host[0] == '[' && host[host.Length - 1] == ']' && hostColon > 0)
+                {
+                    var end = host.Length - 1;
+                    i = host.LastIndexOf('%');
+                    if (i > 1)
+                        end = i;
+                    var maybeV6 = IPAddress.Parse(host.Substring(1, end - 1));
+                    if (maybeV6.AddressFamily != AddressFamily.InterNetworkV6)
+                        throw err;
+                }
+                else
+                    throw err;
+                host = host.Substring(1, host.Length - 2);
+            }
+            return new IPEndPoint(IPAddress.Parse(host), port);
+        }
+
+        private static ushort ParseMTU(string s) {
+            var m = long.Parse(s);
+            if (m < 576 || m > 65535)
+                throw new ArgumentException("Invalid MTU: " + s);
+            return (ushort)m;
+        }
+
+        private static ushort ParsePort(string s) {
+            var m = long.Parse(s);
+            if (m < 0 || m > 65535)
+                throw new ArgumentException("Invalid port: " + s);
+            return (ushort)m;
+        }
+
+        private static Uri ParseURL(string s)
+        {
+            return new Uri(s);
+        }
+
+        private static ushort ParsePersistentKeepalive(string s)
+        {
+            if (s == "off")
+                return 0;
+            var m = long.Parse(s);
+            if (m < 0 || m > 65535)
+                throw new ArgumentException("Invalid persistent keepalive: " + s);
+            return (ushort)m;
+        }
+
+        private static bool ParseTableOff(string s)
+        {
+            switch (s)
+            {
+                case "off": return true;
+                case "auto":
+                case "main": return false;
+                default:
+                    uint.Parse(s);
+                    return false;
+            }
+        }
+
+        private static Key ParseKeyBase64(string s)
+        {
+            return new Key(s);
         }
 
         private static string[] SplitList(string val)

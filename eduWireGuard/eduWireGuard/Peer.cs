@@ -106,6 +106,11 @@ namespace eduWireGuard
         /// </summary>
         public List<IPPrefix> AllowedIPs { get; set; }
 
+        /// <summary>
+        /// Proxyguard endpoint
+        /// </summary>
+        public Uri ProxyEndpoint { get; set; }
+
         #endregion
 
         #region Constructors

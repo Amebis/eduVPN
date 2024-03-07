@@ -73,6 +73,7 @@
     <Compile Include="Models\ObservableDictionary.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\ProfileDictionary.cs" />
+    <Compile Include="Models\ProxyguardConfiguration.cs" />
     <Compile Include="Models\RequiredAskTransition.cs" />
     <Compile Include="Models\SecureInternetServer.cs" />
     <Compile Include="Models\Server.cs" />

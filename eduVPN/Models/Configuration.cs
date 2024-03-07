@@ -6,6 +6,7 @@
 */
 
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace eduVPN.Models
 {
@@ -36,6 +37,11 @@ namespace eduVPN.Models
         /// </summary>
         public bool ShouldFailover { get; }
 
+        /// <summary>
+        /// Information for proxied VPN connections
+        /// </summary>
+        public ProxyguardConfiguration ProxyguardConfiguration { get; }
+
         #endregion
 
         #region Constructors
@@ -50,6 +56,18 @@ namespace eduVPN.Models
             Protocol = (VPNProtocol)eduJSON.Parser.GetValue<long>(obj, "protocol");
             IsDefaultGateway = eduJSON.Parser.GetValue<bool>(obj, "default_gateway");
             ShouldFailover = eduJSON.Parser.GetValue<bool>(obj, "should_failover");
+            if (eduJSON.Parser.GetValue<Dictionary<string, object>>(obj, "proxy", out var obj2))
+            {
+                ProxyguardConfiguration = new ProxyguardConfiguration(obj2);
+
+                // Locate "Endpoint = <ProxyguardConfiguration.Listen>" and append "\nProxyEndpoint = <ProxyguardConfiguration.Peer>" to it.
+                VPNConfig = Regex.Replace(VPNConfig, @"^\s*Endpoint\s*=\s*(.*)$", delegate (Match m)
+                {
+                    if (string.Compare(m.Groups[1].Value, ProxyguardConfiguration.Listen, true) == 0)
+                        return m.Value + "\nProxyEndpoint = " + ProxyguardConfiguration.Peer;
+                    return m.Value;
+                }, RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            }
         }
 
         #endregion

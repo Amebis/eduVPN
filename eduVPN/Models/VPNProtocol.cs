@@ -14,7 +14,20 @@ namespace eduVPN.Models
     public enum VPNProtocol
     {
         Unknown,
+
+        /// <summary>
+        /// OpenVPN
+        /// </summary>
         OpenVPN,
-        WireGuard
+
+        /// <summary>
+        /// WireGuard
+        /// </summary>
+        WireGuard,
+
+        /// <summary>
+        /// WireGuard with Proxyguard
+        /// </summary>
+        WireGuardProxy
     }
 }
