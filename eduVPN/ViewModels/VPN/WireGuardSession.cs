@@ -243,6 +243,7 @@ namespace eduVPN.ViewModels.VPN
                 }
                 finally
                 {
+                    Engine.SetState(Engine.State.Disconnecting);
                     propertyUpdater.Stop();
                     Wizard.TryInvoke((Action)(() =>
                     {
