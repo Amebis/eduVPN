@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.9...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.10...HEAD)
+
+
+## [3.255.10](https://github.com/Amebis/eduVPN/compare/3.255.9...3.255.10) (2024-03-08)
 
 - Support for WireGuard-over-TCP connections using Proxyguard
 - eduvpn-common updated to 987f2e3041e0b5d6e06cdc29657be99de9c1cd60
