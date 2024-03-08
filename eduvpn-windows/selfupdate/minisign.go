@@ -37,7 +37,7 @@ func verifySignature(
 	allowedSigners []TrustedSigner) error {
 	sig, err := minisign.DecodeSignature(signature)
 	if err != nil {
-		return fmt.Errorf("invalid signature format: %w", err)
+		return err
 	}
 	for i := range allowedSigners {
 		if sig.KeyId != allowedSigners[i].PublicKey.KeyId {
@@ -49,7 +49,7 @@ func verifySignature(
 		}
 		valid, err := allowedSigners[i].PublicKey.Verify(content, sig)
 		if !valid {
-			return fmt.Errorf("invalid signature: %w", err)
+			return err
 		}
 		return nil
 	}

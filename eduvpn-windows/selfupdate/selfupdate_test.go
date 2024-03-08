@@ -21,7 +21,7 @@ import (
 func getUpdate(ctx context.Context, progress progress.ProgressIndicator) (pkg *Package, err error) {
 	k, err := minisign.NewPublicKey("RWRPrtnepBgoU86pKtSnHJXBtmtJjv6T5wN2Q+P7vPgHPdr3v8kGme13")
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse key: %w", err)
+		return nil, err
 	}
 	signers := []TrustedSigner{{
 		PublicKey:     k,
