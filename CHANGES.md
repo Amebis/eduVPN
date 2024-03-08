@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.10...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.11...HEAD)
+
+
+## [3.255.11](https://github.com/Amebis/eduVPN/compare/3.255.10...3.255.11) (2024-03-08)
 
 - eduvpn-common updated to 9bc421138a2a4ecf5ee7dc46d9a4faa1af12c80e
 - Redirect self-update check failures to About page
