@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.10...HEAD)
 
+- eduvpn-common updated to 9bc421138a2a4ecf5ee7dc46d9a4faa1af12c80e
+
 
 ## [3.255.10](https://github.com/Amebis/eduVPN/compare/3.255.9...3.255.10) (2024-03-08)
 
