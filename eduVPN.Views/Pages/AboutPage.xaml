@@ -26,6 +26,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -77,5 +78,13 @@
                 TextAlignment="Center"
                 Text="{Binding Wizard.SelfUpdatePromptPage.AvailableVersion, StringFormat={x:Static res:Strings.AboutPageUpdateTitle}}"/>
         </Button>
+
+        <TextBlock
+            Grid.Row="6"
+            Margin="7"
+            TextAlignment="Center"
+            Style="{StaticResource NoteStyle}"
+            Visibility="{Binding Wizard.SelfUpdatePromptPage.ErrorMessage, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+            Text="{Binding Wizard.SelfUpdatePromptPage.ErrorMessage}"/>
     </Grid>
 </Page>

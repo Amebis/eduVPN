@@ -136,6 +136,18 @@ namespace eduVPN.ViewModels.Pages
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand _SkipUpdate;
 
+        /// <summary>
+        /// Last self-update issue
+        /// </summary>
+        public string ErrorMessage
+        {
+            get => _ErrorMessage;
+            private set => SetProperty(ref _ErrorMessage, value);
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string _ErrorMessage;
+
         #endregion
 
         #region Constructors
@@ -155,75 +167,101 @@ namespace eduVPN.ViewModels.Pages
 
         public void DiscoverVersions()
         {
-            var r = CGo.CheckSelfUpdate(
-                Properties.SettingsEx.Default.SelfUpdateDiscovery,
-                Properties.Settings.Default.SelfUpdateBundleId,
-                Window.Abort.Token);
-            Wizard.TryInvoke((Action)(() =>
+            for (int i = 0; i < 10; ++i)
             {
-                if (r.Item1 != null)
+                try
                 {
-                    AvailableVersion = r.Item1.Version;
-                    Changelog = r.Item1.Changelog;
-                    Wizard.SelfUpdateProgressPage.DownloadUris = r.Item1.Uris;
-                    Wizard.SelfUpdateProgressPage.Hash = r.Item1.Hash;
-                    Wizard.SelfUpdateProgressPage.Arguments = r.Item1.Arguments;
-                }
-                else
-                {
-                    AvailableVersion = null;
-                    Changelog = null;
-                    Wizard.SelfUpdateProgressPage.DownloadUris = null;
-                    Wizard.SelfUpdateProgressPage.Hash = null;
-                    Wizard.SelfUpdateProgressPage.Arguments = null;
-                }
+                    var r = CGo.CheckSelfUpdate(
+                        Properties.SettingsEx.Default.SelfUpdateDiscovery,
+                        Properties.Settings.Default.SelfUpdateBundleId,
+                        Window.Abort.Token);
+                    Wizard.TryInvoke((Action)(() =>
+                    {
+                        if (r.Item1 != null)
+                        {
+                            AvailableVersion = r.Item1.Version;
+                            Changelog = r.Item1.Changelog;
+                            Wizard.SelfUpdateProgressPage.DownloadUris = r.Item1.Uris;
+                            Wizard.SelfUpdateProgressPage.Hash = r.Item1.Hash;
+                            Wizard.SelfUpdateProgressPage.Arguments = r.Item1.Arguments;
+                        }
+                        else
+                        {
+                            AvailableVersion = null;
+                            Changelog = null;
+                            Wizard.SelfUpdateProgressPage.DownloadUris = null;
+                            Wizard.SelfUpdateProgressPage.Hash = null;
+                            Wizard.SelfUpdateProgressPage.Arguments = null;
+                        }
 
-                InstalledVersion = r.Item2 ?? null;
-            }));
+                        InstalledVersion = r.Item2 ?? null;
+                    }));
 
-            //// Mock the values for testing.
-            //InstalledVersion = new Version(1, 0);
-            //Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MinValue;
+                    //// Mock the values for testing.
+                    //InstalledVersion = new Version(1, 0);
+                    //Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.MinValue;
 
-            try
-            {
-                if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == AvailableVersion &&
-                    (Properties.Settings.Default.SelfUpdateLastReminder == DateTimeOffset.MaxValue ||
-                    (DateTimeOffset.Now - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
-                {
-                    // We already prompted user for this version.
-                    // Either user opted not to be reminded of this version update again,
-                    // or it has been less than three days since the last prompt.
-                    Trace.TraceInformation("Update deferred by user choice");
+                    try
+                    {
+                        if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == AvailableVersion &&
+                            (Properties.Settings.Default.SelfUpdateLastReminder == DateTimeOffset.MaxValue ||
+                            (DateTimeOffset.Now - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
+                        {
+                            // We already prompted user for this version.
+                            // Either user opted not to be reminded of this version update again,
+                            // or it has been less than three days since the last prompt.
+                            Trace.TraceInformation("Update deferred by user choice");
+                            return;
+                        }
+                    }
+                    catch { }
+
+                    if (InstalledVersion == null)
+                    {
+                        // Nothing to update.
+                        Trace.TraceInformation("Product not installed or version could not be determined");
+                        return; // Quit self-updating.
+                    }
+
+                    if (AvailableVersion <= InstalledVersion)
+                    {
+                        // Product already up-to-date.
+                        Trace.TraceInformation("Update not required");
+                        return;
+                    }
+
+                    // We're in the background thread - raise the prompt event via dispatcher.
+                    Wizard.TryInvoke((Action)(() =>
+                    {
+                        if (Wizard.NavigateTo.CanExecute(this))
+                        {
+                            Properties.Settings.Default.SelfUpdateLastVersion = AvailableVersion.ToString();
+                            Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.Now;
+                            Wizard.NavigateTo.Execute(this);
+                        }
+                        ErrorMessage = null;
+                    }));
+
                     return;
                 }
-            }
-            catch { }
-
-            if (InstalledVersion == null)
-            {
-                // Nothing to update.
-                Trace.TraceInformation("Product not installed or version could not be determined");
-                return; // Quit self-updating.
-            }
-
-            if (AvailableVersion <= InstalledVersion)
-            {
-                // Product already up-to-date.
-                Trace.TraceInformation("Update not required");
-                return;
-            }
-
-            // We're in the background thread - raise the prompt event via dispatcher.
-            Wizard.TryInvoke((Action)(() =>
-            {
-                if (Wizard.NavigateTo.CanExecute(this))
+                catch (OperationCanceledException) { throw; }
+                catch (Exception ex)
                 {
-                    Properties.Settings.Default.SelfUpdateLastVersion = AvailableVersion.ToString();
-                    Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.Now;
-                    Wizard.NavigateTo.Execute(this);
+                    // Don't report self-update issues to user.
+                    // Mostly they are connectivity issues on offline client startup or immediately after resume from sleep.
+                    Wizard.TryInvoke((Action)(() =>
+                    {
+                        ErrorMessage = ex.Message;
+                        Wizard.TaskCount--;
+                    }));
+                    try
+                    {
+                        if (Window.Abort.Token.WaitHandle.WaitOne(60000))
+                            throw new OperationCanceledException();
+                    }
+                    finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount++)); }
                 }
-            }));
+            }
         }
 
         #endregion
