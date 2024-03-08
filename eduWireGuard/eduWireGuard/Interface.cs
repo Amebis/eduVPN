@@ -317,7 +317,7 @@ namespace eduWireGuard
             return IPPrefix.Parse(s);
         }
 
-        private static IPEndPoint ParseEndpoint(string s)
+        private static Endpoint ParseEndpoint(string s)
         {
             var i = s.LastIndexOf(':');
             if (i < 0)
@@ -345,7 +345,7 @@ namespace eduWireGuard
                     throw err;
                 host = host.Substring(1, host.Length - 2);
             }
-            return new IPEndPoint(IPAddress.Parse(host), port);
+            return new Endpoint(host, port);
         }
 
         private static ushort ParseMTU(string s) {

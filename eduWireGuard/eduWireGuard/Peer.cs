@@ -84,7 +84,7 @@ namespace eduWireGuard
         /// <summary>
         /// Endpoint, with IP address and UDP port number
         /// </summary>
-        public IPEndPoint Endpoint { get; set; }
+        public Endpoint Endpoint { get; set; }
 
         /// <summary>
         /// Number of bytes transmitted
@@ -148,13 +148,13 @@ namespace eduWireGuard
                     case AddressFamily.InterNetwork:
                         var ip4 = reader.ReadBytes(4);
                         reader.ReadBytes(20);
-                        Endpoint = new IPEndPoint(new IPAddress(ip4), port);
+                        Endpoint = new Endpoint(new IPAddress(ip4), port);
                         break;
                     case AddressFamily.InterNetworkV6:
                         reader.ReadUInt32();
                         var ip6 = reader.ReadBytes(16);
                         var scopeId = reader.ReadUInt32();
-                        Endpoint = new IPEndPoint(new IPAddress(ip6, scopeId), port);
+                        Endpoint = new Endpoint(new IPAddress(ip6, scopeId), port);
                         break;
                     default:
                         throw new ArgumentException("Unknown endpoint address family");

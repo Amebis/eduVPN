@@ -31,6 +31,7 @@
     <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoint.cs" />
     <Compile Include="IPPrefix.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Key.cs" />
