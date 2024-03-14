@@ -451,110 +451,115 @@ namespace eduVPN.ViewModels.Windows
                 CurrentPage = PleaseWaitPage;
                 actions.Add(new KeyValuePair<Action, int>(() =>
                     {
-                        using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
+                        try
                         {
-                            Task<List<object>> serverDiscovery = null;
-                            if (iaSrvList.Count > 0 || siOrgId != "" && siOrgId != null)
-                                serverDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
-                                    eduJSON.Parser.Parse(
-                                        Engine.DiscoServers(cookie),
-                                        Abort.Token) as Dictionary<string, object>,
-                                    "server_list"));
-                            Task<List<object>> orgDiscovery = null;
-                            if (siOrgId != "" && siOrgId != null)
-                                orgDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
-                                    eduJSON.Parser.Parse(
-                                        Engine.DiscoOrganizations(cookie),
-                                        Abort.Token) as Dictionary<string, object>,
-                                    "organization_list"));
-
-                            //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow settings import
-
-                            List<object> serverList = null;
-                            if (serverDiscovery != null)
+                            using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
                             {
-                                serverDiscovery.Wait(Abort.Token);
-                                serverList = serverDiscovery.Result;
-                            }
-                            List<object> orgList = null;
-                            if (orgDiscovery != null)
-                            {
-                                orgDiscovery.Wait(Abort.Token);
-                                orgList = orgDiscovery.Result;
-                            }
+                                Task<List<object>> serverDiscovery = null;
+                                if (iaSrvList.Count > 0 || siOrgId != "" && siOrgId != null)
+                                    serverDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
+                                        eduJSON.Parser.Parse(
+                                            Engine.DiscoServers(cookie),
+                                            Abort.Token) as Dictionary<string, object>,
+                                        "server_list"));
+                                Task<List<object>> orgDiscovery = null;
+                                if (siOrgId != "" && siOrgId != null)
+                                    orgDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
+                                        eduJSON.Parser.Parse(
+                                            Engine.DiscoOrganizations(cookie),
+                                            Abort.Token) as Dictionary<string, object>,
+                                        "organization_list"));
 
-                            if (iaSrvList.Count > 0)
-                                foreach (var srv in iaSrvList)
+                                //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow settings import
+
+                                List<object> serverList = null;
+                                if (serverDiscovery != null)
                                 {
-                                    Abort.Token.ThrowIfCancellationRequested();
-                                    try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, true); }
-                                    catch (OperationCanceledException) { throw; }
-                                    catch { }
+                                    serverDiscovery.Wait(Abort.Token);
+                                    serverList = serverDiscovery.Result;
+                                }
+                                List<object> orgList = null;
+                                if (orgDiscovery != null)
+                                {
+                                    orgDiscovery.Wait(Abort.Token);
+                                    orgList = orgDiscovery.Result;
                                 }
 
-                            if (siOrgId == "")
-                            {
-                                if (eduJSON.Parser.Parse(Engine.ServerList(), Abort.Token) is Dictionary<string, object> obj &&
-                                    obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
-                                {
-                                    var srv = new SecureInternetServer(srvObj);
-                                    try { Engine.RemoveServer(ServerType.SecureInternet, srv.Id); }
-                                    catch (OperationCanceledException) { throw; }
-                                    catch { }
-                                }
-                            }
-                            else if (siOrgId != null)
-                            {
-                                try
-                                {
-                                    Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, true);
-                                    if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
+                                if (iaSrvList.Count > 0)
+                                    foreach (var srv in iaSrvList)
                                     {
-                                        if (serverList.FirstOrDefault(obj =>
-                                                obj is Dictionary<string, object> obj2 && obj2.TryGetValue("base_url", out string base_url) && new Uri(base_url).Equals(uri)) is Dictionary<string, object> obj3 &&
-                                            obj3.TryGetValue("country_code", out string country_code))
-                                        {
-                                            Engine.SetSecureInternetLocation(siOrgId, country_code);
-                                            if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
-                                                Properties.Settings.Default.LastSelectedServer = siOrgId;
-                                        }
+                                        Abort.Token.ThrowIfCancellationRequested();
+                                        try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, true); }
+                                        catch (OperationCanceledException) { throw; }
+                                        catch { }
                                     }
 
-                                    // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
-                                    lock (Properties.Settings.Default.AccessTokenCache2)
+                                if (siOrgId == "")
+                                {
+                                    if (eduJSON.Parser.Parse(Engine.ServerList(), Abort.Token) is Dictionary<string, object> obj &&
+                                        obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
                                     {
-                                        foreach (var obj in orgList.Select(item => item as Dictionary<string, object>))
+                                        var srv = new SecureInternetServer(srvObj);
+                                        try { Engine.RemoveServer(ServerType.SecureInternet, srv.Id); }
+                                        catch (OperationCanceledException) { throw; }
+                                        catch { }
+                                    }
+                                }
+                                else if (siOrgId != null)
+                                {
+                                    try
+                                    {
+                                        Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, true);
+                                        if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
                                         {
-                                            Abort.Token.ThrowIfCancellationRequested();
-                                            if (eduJSON.Parser.GetValue(obj, "org_id", out string org_id) && Uri.TryCreate(org_id, UriKind.Absolute, out var orgId) && orgId.AbsoluteUri == siOrgId &&
-                                                eduJSON.Parser.GetValue(obj, "secure_internet_home", out string secure_internet_home) && Uri.TryCreate(secure_internet_home, UriKind.Absolute, out var serverId) &&
-                                                Properties.Settings.Default.AccessTokenCache2.TryGetValue(serverId.AbsoluteUri, out var value))
+                                            if (serverList.FirstOrDefault(obj =>
+                                                    obj is Dictionary<string, object> obj2 && obj2.TryGetValue("base_url", out string base_url) && new Uri(base_url).Equals(uri)) is Dictionary<string, object> obj3 &&
+                                                obj3.TryGetValue("country_code", out string country_code))
                                             {
-                                                Properties.Settings.Default.AccessTokenCache2[orgId.AbsoluteUri] = value;
-                                                Properties.Settings.Default.AccessTokenCache2.Remove(serverId.AbsoluteUri);
+                                                Engine.SetSecureInternetLocation(siOrgId, country_code);
+                                                if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
+                                                    Properties.Settings.Default.LastSelectedServer = siOrgId;
+                                            }
+                                        }
+
+                                        // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
+                                        lock (Properties.Settings.Default.AccessTokenCache2)
+                                        {
+                                            foreach (var obj in orgList.Select(item => item as Dictionary<string, object>))
+                                            {
+                                                Abort.Token.ThrowIfCancellationRequested();
+                                                if (eduJSON.Parser.GetValue(obj, "org_id", out string org_id) && Uri.TryCreate(org_id, UriKind.Absolute, out var orgId) && orgId.AbsoluteUri == siOrgId &&
+                                                    eduJSON.Parser.GetValue(obj, "secure_internet_home", out string secure_internet_home) && Uri.TryCreate(secure_internet_home, UriKind.Absolute, out var serverId) &&
+                                                    Properties.Settings.Default.AccessTokenCache2.TryGetValue(serverId.AbsoluteUri, out var value))
+                                                {
+                                                    Properties.Settings.Default.AccessTokenCache2[orgId.AbsoluteUri] = value;
+                                                    Properties.Settings.Default.AccessTokenCache2.Remove(serverId.AbsoluteUri);
+                                                }
                                             }
                                         }
                                     }
+                                    catch (OperationCanceledException) { throw; }
+                                    catch { }
                                 }
-                                catch (OperationCanceledException) { throw; }
-                                catch { }
+
+                                foreach (var srv in ownSrvList)
+                                {
+                                    Abort.Token.ThrowIfCancellationRequested();
+                                    try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, true); }
+                                    catch (OperationCanceledException) { throw; }
+                                    catch { }
+                                }
                             }
 
-                            foreach (var srv in ownSrvList)
-                            {
-                                Abort.Token.ThrowIfCancellationRequested();
-                                try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, true); }
-                                catch (OperationCanceledException) { throw; }
-                                catch { }
-                            }
+                            // Don't set SettingsVersion flag if user cancelled and we missed it somehow.
+                            Abort.Token.ThrowIfCancellationRequested();
+                            Properties.Settings.Default.SettingsVersion |= 0x2;
                         }
-
-                        // Don't set SettingsVersion flag if user cancelled and we missed it somehow.
-                        Abort.Token.ThrowIfCancellationRequested();
-                        Properties.Settings.Default.SettingsVersion |= 0x2;
-
-                        // eduvpn-common does not do callback after servers are added. Do the bookkeeping manually.
-                        Engine_Callback(this, new Engine.CallbackEventArgs(Engine.State.Deregistered, Engine.State.Main, null));
+                        finally
+                        {
+                            // eduvpn-common does not do callback after servers are added. Do the bookkeeping manually.
+                            Engine_Callback(this, new Engine.CallbackEventArgs(Engine.State.Deregistered, Engine.State.Main, null));
+                        }
                     }, 0)); // No repeat
             }
 
