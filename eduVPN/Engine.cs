@@ -616,13 +616,7 @@ namespace eduVPN
                 Properties.Settings.Default.ClientId + ".windows",
                 Assembly.GetExecutingAssembly()?.GetName()?.Version.ToString(),
                 Path.GetDirectoryName(Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)),
-                OnEngineStateChanged,
-#if DEBUG
-                1
-#else
-                0
-#endif
-                ));
+                OnEngineStateChanged, 1));
             ThrowOnError(SetSupportWireguard(1));
             ThrowOnError(SetTokenHandler(OnGetToken, OnSetToken));
         }
