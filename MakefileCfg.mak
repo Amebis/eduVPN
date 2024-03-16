@@ -108,7 +108,7 @@ MINISIGN_SELFUPDATE_FILES=$(MINISIGN_SELFUPDATE_FILES) \
 Setup ::
 !IFDEF MINISIGN_KEY_AVAILABLE
 	@echo Signing setup files
-	minisign.exe -Sm $(MINISIGN_SETUP_FILES)
+	echo:$(MINISIGNKEYPASSWORD)| minisign.exe -Sm $(MINISIGN_SETUP_FILES)
 !ENDIF
 
 Clean ::
@@ -120,6 +120,6 @@ Clean ::
 Publish ::
 !IFDEF MINISIGN_KEY_AVAILABLE
 	@echo Signing self-update discovery files
-	minisign.exe -Sm $(MINISIGN_SELFUPDATE_FILES)
+	echo:$(MINISIGNKEYPASSWORD)| minisign.exe -Sm $(MINISIGN_SELFUPDATE_FILES)
 !ENDIF
 !ENDIF

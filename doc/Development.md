@@ -65,6 +65,7 @@ In order to have the build process produce `.minisig` files for publishing, one 
 
 1. Have `minisign.exe` in path.
 2. Have Minisign private key in `%USERPROFILE%\.minisign\minisign.key`. Run `minisign -G` to create a new keypair.
+3. Either set `MinisignKeyPassword` environment variable, or call `nmake <flags> <target> MINISIGNKEYPASSWORD=<password>` when building.
 
 
 ### VirusTotal Submissions
