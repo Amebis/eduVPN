@@ -66,7 +66,7 @@ namespace eduVPN.Views.Windows
         {
             get
             {
-                var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
+                var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
                 return
                     (viewModel != null && viewModel.ConnectionPage.ActiveSession != null ?
                         string.Format("{0} - {1}\r\n{2}",
@@ -84,7 +84,7 @@ namespace eduVPN.Views.Windows
         {
             get
             {
-                var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
+                var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
                 return Icons[viewModel != null && viewModel.ConnectionPage.ActiveSession != null ? viewModel.ConnectionPage.ActiveSession.State : SessionStatusType.Disconnected];
             }
         }
@@ -193,7 +193,7 @@ namespace eduVPN.Views.Windows
             }
 
             // Attach to view model events.
-            var viewModel = (ViewModels.Windows.ConnectWizard)DataContext;
+            var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
             viewModel.QuitApplication += Exit_Click;
 
             // Create notify icon, set default icon, and setup events.

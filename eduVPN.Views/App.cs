@@ -106,7 +106,7 @@ namespace eduVPN.Views
         {
             // If there is an active VPN session, do a standard app quit and deny session ending so we can do the /disconnect notification.
             var mainWindow = MainWindow as Windows.ConnectWizard;
-            var activeSession = ((ViewModels.Windows.ConnectWizard)mainWindow?.DataContext)?.ConnectionPage.ActiveSession;
+            var activeSession = (mainWindow?.DataContext as ViewModels.Windows.ConnectWizard)?.ConnectionPage.ActiveSession;
             if (activeSession != null)
             {
                 mainWindow.Exit_Click(this, null);
