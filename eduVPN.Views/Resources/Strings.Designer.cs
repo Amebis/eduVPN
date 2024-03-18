@@ -89,6 +89,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If your browser did not open for some reason, or you closed the website by accident, here is the URL you may copy&amp;paste into a trusted browser on this computer, and complete the client authorization there:.
+        /// </summary>
+        public static string AuthorizationPageNote {
+            get {
+                return ResourceManager.GetString("AuthorizationPageNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This app needs authorization and has opened your webbrowser. It will proceed when you have completed the authorization..
         /// </summary>
         public static string AuthorizationPageText {
@@ -139,6 +148,15 @@ namespace eduVPN.Views.Resources {
         public static string ButtonCopyErrorTitle {
             get {
                 return ResourceManager.GetString("ButtonCopyErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Copy URI.
+        /// </summary>
+        public static string ButtonCopyUriTitle {
+            get {
+                return ResourceManager.GetString("ButtonCopyUriTitle", resourceCulture);
             }
         }
         

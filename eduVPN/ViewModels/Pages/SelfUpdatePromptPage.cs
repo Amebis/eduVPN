@@ -79,7 +79,11 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ShowChangelog == null)
                     _ShowChangelog = new DelegateCommand(
-                        () => Process.Start(Changelog.ToString()),
+                        () =>
+                        {
+                            if (Process.Start(Changelog.AbsoluteUri) == null)
+                                throw new Exception(string.Format("Failed to spawn default browser on {0}", Changelog.AbsoluteUri));
+                        },
                         () => Changelog != null);
                 return _ShowChangelog;
             }

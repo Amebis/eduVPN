@@ -98,7 +98,11 @@ namespace eduVPN.ViewModels.VPN
             {
                 if (_ShowLog == null)
                     _ShowLog = new DelegateCommand(
-                        () => Process.Start(LogPath),
+                        () =>
+                        {
+                            if (Process.Start(LogPath) == null)
+                                throw new Exception(string.Format("Failed to open {0}", LogPath));
+                        },
                         () => File.Exists(LogPath));
                 return _ShowLog;
             }

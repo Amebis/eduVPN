@@ -637,7 +637,11 @@ namespace eduVPN.ViewModels.Windows
 
                 case Engine.State.OAuthStarted:
                     Process.Start(e.Data);
-                    TryInvoke((Action)(() => CurrentPage = AuthorizationPage));
+                    TryInvoke((Action)(() =>
+                    {
+                        AuthorizationPage.Uri = e.Data;
+                        CurrentPage = AuthorizationPage;
+                    }));
                     e.Handled = true;
                     break;
 

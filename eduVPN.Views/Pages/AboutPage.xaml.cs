@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +38,8 @@ namespace eduVPN.Views.Pages
         /// <param name="e">Event arguments</param>
         protected void Website_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(eduVPN.Properties.Settings.Default.ClientAboutUri.AbsoluteUri);
+            if (Process.Start(eduVPN.Properties.Settings.Default.ClientAboutUri.AbsoluteUri) == null)
+                throw new Exception(string.Format("Failed to spawn default browser on {0}", eduVPN.Properties.Settings.Default.ClientAboutUri.AbsoluteUri));
         }
 
         #endregion

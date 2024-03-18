@@ -40,7 +40,8 @@ namespace eduVPN.Views.Pages
         {
             if (sender is Button senderButton &&
                 senderButton.DataContext is Uri uri)
-                Process.Start(uri.AbsoluteUri);
+                if (Process.Start(uri.AbsoluteUri) == null)
+                    throw new Exception(string.Format("Failed to spawn default browser on {0}", uri.AbsoluteUri));
         }
 
         #endregion

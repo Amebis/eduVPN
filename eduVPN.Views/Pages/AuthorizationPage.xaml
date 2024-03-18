@@ -21,6 +21,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock
@@ -36,8 +38,42 @@
             Style="{StaticResource FineprintNoteStyle}"
             Text="{x:Static res:Strings.AuthorizationPageText}"/>
 
-        <Button
+        <TextBlock
             Grid.Row="2"
+            Margin="22,7"
+            TextAlignment="Center"
+            Style="{StaticResource FineprintNoteStyle}"
+            Text="{x:Static res:Strings.AuthorizationPageNote}"/>
+
+        <Grid
+            Grid.Row="3"
+            Margin="22,7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                x:Name="Uri"
+                Margin="0, 0, 5, 0"
+                Text="{Binding Uri, Mode=OneWay}"
+                IsReadOnly="True"/>
+
+            <Button
+                Grid.Column="1"
+                Margin="5, 0, 0, 0"
+                Style="{StaticResource AuxButtonStyle}"
+                ToolTip="{Binding Source={x:Static res:Strings.ButtonCopyUriTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopyUriTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                Command="{Binding CopyUri}">
+                <ContentControl
+                    ContentTemplate="{StaticResource CopyIcon}"
+                    IsTabStop="False"/>
+            </Button>
+        </Grid>
+
+        <Button
+            Grid.Row="4"
             Margin="22,7"
             HorizontalAlignment="Center"
             IsDefault="True"
