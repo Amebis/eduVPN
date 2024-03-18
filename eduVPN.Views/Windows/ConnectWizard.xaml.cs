@@ -407,13 +407,19 @@ namespace eduVPN.Views.Windows
             // (Re)activate window.
             if (WindowState == WindowState.Minimized)
                 WindowState = WindowState.Normal;
-            if (!IsActive)
-                Show();
             Topmost = true;
             try
             {
+                if (!IsActive)
+                    Show();
                 Activate();
                 Focus();
+            }
+            catch (ArgumentException ex) when ((uint)ex.HResult is 0x80070057)
+            {
+                // Window.Show method can cause ArgumentException when internally calling
+                // CompositionTarget.SetRootVisual method.
+                // Reference: https://github.com/emoacht/Monitorian/commit/861d43dc34ad47f1243f3770086d857fe83aeeec
             }
             finally
             {
