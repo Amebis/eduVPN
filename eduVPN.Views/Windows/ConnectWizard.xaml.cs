@@ -197,7 +197,7 @@ namespace eduVPN.Views.Windows
             viewModel.QuitApplication += Exit_Click;
 
             // Create notify icon, set default icon, and setup events.
-            // We need to do this programatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
+            // We need to do this programmatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
             NotifyIcon = new System.Windows.Forms.NotifyIcon()
             {
                 Text = TrayIconToolTipText,
@@ -387,7 +387,7 @@ namespace eduVPN.Views.Windows
         }
 
         /// <summary>
-        /// Performs operations when user clicked the baloon notification in the systray.
+        /// Performs operations when user clicked the balloon notification in the systray.
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
