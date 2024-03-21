@@ -139,11 +139,11 @@ SetupBuild :: \
 
 BuildLibsodium \
 BuildLibsodium-$(CFG)-$(PLAT) ::
-	msbuild.exe "eduLibsodium\libsodium\builds\msvc\vs2022\libsodium.sln" /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
+	msbuild.exe "eduLibsodium\libsodium\builds\msvc\vs2022\libsodium.sln" /p:Configuration="Ltcg$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 
 CleanLibsodium \
 CleanLibsodium-$(CFG)-$(PLAT) ::
-	-msbuild.exe "eduLibsodium\libsodium\builds\msvc\vs2022\libsodium.sln" /t:Clean /p:Configuration="$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
+	-msbuild.exe "eduLibsodium\libsodium\builds\msvc\vs2022\libsodium.sln" /t:Clean /p:Configuration="Ltcg$(CFG)" /p:Platform="$(PLAT_MSVC)" $(MSBUILD_FLAGS)
 
 BuildOpenVPN \
 BuildOpenVPN-$(CFG)-$(PLAT) ::
@@ -207,7 +207,7 @@ Clean ::
 !IF "$(CFG)" == "$(SETUP_CFG)"
 "bin\Setup\PDB_$(VERSION)$(CFG_TARGET).zip" : \
 	bin\$(CFG)\$(PLAT)\*.pdb \
-	"eduLibsodium\libsodium\bin\$(PLAT_MSVC)\$(CFG)\v143\libsodium.pdb" \
+	"eduLibsodium\libsodium\bin\$(PLAT_MSVC)\$(CFG)\v143\ltcg\libsodium.pdb" \
 !IF "$(CFG)" != "Debug" && "$(PLAT)" != "ARM64"
 	"openvpn\$(PLAT_MSVC)-Output\$(CFG)\compat.pdb" \
 !ENDIF
