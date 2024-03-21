@@ -1,4 +1,4 @@
-version: 3.4.2.{build}
+version: 3.4.3.{build}
 image: Visual Studio 2022
 before_build:
   - git submodule update -q --init --recursive
