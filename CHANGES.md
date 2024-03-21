@@ -4,6 +4,8 @@
 
 - OpenVPN updated to 2.5.9-20240321
     - openvpn 2.5.9 d29496cce2d91a74706e3d5e4c48773715b10812
+- libsodium updated to 1.0.19-20240321
+    - libsodium 1.0.18 74fd1d45841571457731bea5dc3ab17582efe06c
 
 
 ## [3.4.2](https://github.com/Amebis/eduVPN/compare/3.4.1...3.4.2) (2023-06-01)
