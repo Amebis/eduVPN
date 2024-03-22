@@ -244,8 +244,8 @@ namespace eduVPN.ViewModels.VPN
                 {
                     RaisePropertyChanged(nameof(ValidFrom));
                     RaisePropertyChanged(nameof(ValidTo));
-                    RaisePropertyChanged(nameof(ShowExpiredTime));
-                    RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(ShowExpirationTime));
+                    RaisePropertyChanged(nameof(ExpirationTime));
                     RaisePropertyChanged(nameof(OfferRenewal));
                 }
             }
@@ -269,7 +269,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Should expiration time be shown?
         /// </summary>
-        public bool ShowExpiredTime
+        public bool ShowExpirationTime
         {
             get
             {
@@ -284,7 +284,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Remaining time before the session expires; or <see cref="TimeSpan.MaxValue"/> when session does not expire
         /// </summary>
-        public TimeSpan ExpiresTime
+        public TimeSpan ExpirationTime
         {
             get
             {
@@ -404,7 +404,7 @@ namespace eduVPN.ViewModels.VPN
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
                 // Disconnect session when expired.
-                if ((e.PropertyName == nameof(State) || e.PropertyName == nameof(ExpiresTime)) &&
+                if ((e.PropertyName == nameof(State) || e.PropertyName == nameof(ExpirationTime)) &&
                     (State == SessionStatusType.Waiting || State == SessionStatusType.Initializing || State == SessionStatusType.Connecting || State == SessionStatusType.Connected) &&
                     ValidTo <= DateTimeOffset.Now)
                 {
@@ -498,8 +498,8 @@ namespace eduVPN.ViewModels.VPN
                 (object senderTimer, EventArgs eTimer) =>
                 {
                     RaisePropertyChanged(nameof(ConnectedTime));
-                    RaisePropertyChanged(nameof(ShowExpiredTime));
-                    RaisePropertyChanged(nameof(ExpiresTime));
+                    RaisePropertyChanged(nameof(ShowExpirationTime));
+                    RaisePropertyChanged(nameof(ExpirationTime));
                     RaisePropertyChanged(nameof(OfferRenewal));
                     var now = DateTimeOffset.Now;
                     var x = Expiration.NotificationAt.FirstOrDefault(t => sessionExpirationWarning < t && t <= now);
