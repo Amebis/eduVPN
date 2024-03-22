@@ -57,7 +57,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmInstituteAccessServerSelection == null)
                     _ConfirmInstituteAccessServerSelection = new DelegateCommand(
-                        () => Wizard.Connect(SelectedInstituteAccessServer),
+                        () => Wizard.Connect(SelectedInstituteAccessServer, Properties.Settings.Default.PreferTCP),
                         () => SelectedInstituteAccessServer != null && !SelectedInstituteAccessServer.Delisted);
                 return _ConfirmInstituteAccessServerSelection;
             }
@@ -134,7 +134,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmSecureInternetServerSelection == null)
                     _ConfirmSecureInternetServerSelection = new DelegateCommand(
-                        () => Wizard.Connect(SelectedSecureInternetServer),
+                        () => Wizard.Connect(SelectedSecureInternetServer, Properties.Settings.Default.PreferTCP),
                         () => SelectedSecureInternetServer != null && !SelectedSecureInternetServer.Delisted);
                 return _ConfirmSecureInternetServerSelection;
             }
@@ -235,7 +235,7 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_ConfirmOwnServerSelection == null)
                     _ConfirmOwnServerSelection = new DelegateCommand(
-                        () => Wizard.Connect(SelectedOwnServer),
+                        () => Wizard.Connect(SelectedOwnServer, Properties.Settings.Default.PreferTCP),
                         () => SelectedOwnServer != null);
                 return _ConfirmOwnServerSelection;
             }

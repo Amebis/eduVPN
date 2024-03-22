@@ -40,6 +40,20 @@ namespace eduVPN.ViewModels.VPN
         private readonly string ConnectionId;
 
         /// <summary>
+        /// Should HOLD hint on reconnect be ignored?
+        /// </summary>
+        private bool IgnoreHoldHint;
+
+        /// <summary>
+        /// Management Session
+        /// </summary>
+        private eduOpenVPN.Management.Session ManagementSession;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
         /// OpenVPN working folder
         /// </summary>
         public static string WorkingFolder
@@ -71,20 +85,6 @@ namespace eduVPN.ViewModels.VPN
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly object WorkingFolderLock = new object();
-
-        /// <summary>
-        /// Should HOLD hint on reconnect be ignored?
-        /// </summary>
-        private bool IgnoreHoldHint;
-
-        /// <summary>
-        /// Management Session
-        /// </summary>
-        private eduOpenVPN.Management.Session ManagementSession;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// OpenVPN connection log
@@ -378,7 +378,6 @@ namespace eduVPN.ViewModels.VPN
                                     StateDescription = Resources.Strings.OpenVPNStateTypeExiting;
                                     TunnelAddress = null;
                                     IPv6TunnelAddress = null;
-                                    ConnectedAt = null;
                                     RxBytes = null;
                                     TxBytes = null;
                                 }));
@@ -497,8 +496,6 @@ namespace eduVPN.ViewModels.VPN
                 StateDescription = msg;
                 TunnelAddress = e.Tunnel;
                 IPv6TunnelAddress = e.IPv6Tunnel;
-                if (e.State == OpenVPNStateType.Connected)
-                    SetConnectedAt(e.TimeStamp);
 
                 // Set State property last, as the whole world is listening on this property to monitor connectivity changes.
                 // It is important that we have IP addresses and other info already set before rising PropertyChanged event for State.

@@ -62,6 +62,18 @@ namespace eduVPN.Properties
         }
 
         /// <summary>
+        /// Prefer connecting using TCP.
+        /// </summary>
+        [UserScopedSetting()]
+        [Obsolete]
+        [NoSettingsVersionUpgrade]
+        public bool OpenVPNPreferTCP
+        {
+            get { throw new NotSupportedException("OpenVPNPreferTCP is obsolete"); }
+            set { throw new NotSupportedException("OpenVPNPreferTCP is obsolete"); }
+        }
+
+        /// <summary>
         /// List of institute access servers user connects to
         /// </summary>
         [UserScopedSetting()]
@@ -171,8 +183,10 @@ namespace eduVPN.Properties
                     Default.LastSelectedServer = connectingServerBase.AbsoluteUri;
 
                 // Migrate OpenVPNForceTCP setting.
-                if (Default.GetPreviousVersion(nameof(OpenVPNForceTCP)) is bool openVPNForceTCP)
-                    Default.OpenVPNPreferTCP = openVPNForceTCP;
+                if (Default.GetPreviousVersion(nameof(OpenVPNPreferTCP)) is bool openVPNpreferTCP)
+                    Default.PreferTCP = openVPNpreferTCP;
+                else if (Default.GetPreviousVersion(nameof(OpenVPNForceTCP)) is bool openVPNForceTCP)
+                    Default.PreferTCP = openVPNForceTCP;
 
                 // Migrate OAuth tokens
                 if (Default.GetPreviousVersion(nameof(AccessTokenCache)) is Xml.AccessTokenDictionary accessTokenCache)

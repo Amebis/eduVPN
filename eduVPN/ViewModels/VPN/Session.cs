@@ -52,11 +52,6 @@ namespace eduVPN.ViewModels.VPN
         #region Fields
 
         /// <summary>
-        /// Session renewal in progress
-        /// </summary>
-        protected volatile bool RenewInProgress;
-
-        /// <summary>
         /// Session termination token
         /// </summary>
         protected readonly CancellationTokenSource SessionInProgress;
@@ -70,6 +65,12 @@ namespace eduVPN.ViewModels.VPN
         /// Timer to defer failover test
         /// </summary>
         protected System.Timers.Timer TunnelFailoverTest;
+
+        /// <summary>
+        /// Time ticks in QueryPerformanceCounter when connected state recorded
+        /// </summary>
+        /// <remarks><c>null</c> when not connected</remarks>
+        protected long? ConnectedAt;
 
         #endregion
 
@@ -106,11 +107,50 @@ namespace eduVPN.ViewModels.VPN
         public SessionStatusType State
         {
             get => _State;
-            protected set => SetProperty(ref _State, value);
+            protected set
+            {
+                if (SetProperty(ref _State, value))
+                {
+                    switch (value)
+                    {
+                        case SessionStatusType.Connected:
+                            if (TunnelFailoverTest != null)
+                            {
+                                TunnelFailoverTest.Stop();
+                                TunnelFailoverTest.Start();
+                            }
+
+                            QueryPerformanceCounter(out var now);
+                            ConnectedAt = now;
+                            RaisePropertyChanged(nameof(ConnectedTime));
+                            break;
+
+                        default:
+                            ConnectedAt = null;
+                            RaisePropertyChanged(nameof(ConnectedTime));
+
+                            TunnelFailoverTest?.Stop();
+                            break;
+                    }
+                }
+
+            }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private SessionStatusType _State;
+
+        /// <summary>
+        /// The reason session was terminated
+        /// </summary>
+        public TerminationReason TerminationReason
+        {
+            get => _TerminationReason;
+            protected set => SetProperty(ref _TerminationReason, value);
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private TerminationReason _TerminationReason;
 
         /// <summary>
         /// Descriptive string (used mostly on <see cref="eduOpenVPN.OpenVPNStateType.Reconnecting"/> and <see cref="eduOpenVPN.OpenVPNStateType.Exiting"/> to show the reason for the disconnect)
@@ -131,14 +171,7 @@ namespace eduVPN.ViewModels.VPN
         public IPAddress TunnelAddress
         {
             get => _TunnelAddress;
-            protected set
-            {
-                if (SetProperty(ref _TunnelAddress, value) && value != null && TunnelFailoverTest != null)
-                {
-                    TunnelFailoverTest.Stop();
-                    TunnelFailoverTest.Start();
-                }
-            }
+            protected set => SetProperty(ref _TunnelAddress, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -158,31 +191,6 @@ namespace eduVPN.ViewModels.VPN
         private IPAddress _IPv6TunnelAddress;
 
         /// <summary>
-        /// Time ticks in QueryPerformanceCounter when connected state recorded
-        /// </summary>
-        /// <remarks><c>null</c> when not connected</remarks>
-        protected long? ConnectedAt
-        {
-            get => _ConnectedAt;
-            set
-            {
-                if (SetProperty(ref _ConnectedAt, value))
-                    RaisePropertyChanged(nameof(ConnectedTime));
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private long? _ConnectedAt;
-
-        protected void SetConnectedAt(DateTimeOffset time)
-        {
-            long n1 = (DateTimeOffset.UtcNow - time).Ticks;
-            QueryPerformanceCounter(out var now);
-            QueryPerformanceFrequency(out var frequency);
-            ConnectedAt = now - n1 * frequency / 10000000;
-        }
-
-        /// <summary>
         /// Running time connected
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
@@ -190,13 +198,11 @@ namespace eduVPN.ViewModels.VPN
         {
             get
             {
-                if (ConnectedAt != null)
-                {
-                    QueryPerformanceCounter(out var now);
-                    QueryPerformanceFrequency(out var frequency);
-                    return new TimeSpan((now - ConnectedAt.Value) * 10000000 / frequency);
-                }
-                return null;
+                if (ConnectedAt == null)
+                    return null;
+                QueryPerformanceCounter(out var now);
+                QueryPerformanceFrequency(out var frequency);
+                return new TimeSpan((now - ConnectedAt.Value) * 10000000 / frequency);
             }
         }
 
@@ -238,7 +244,6 @@ namespace eduVPN.ViewModels.VPN
                 {
                     RaisePropertyChanged(nameof(ValidFrom));
                     RaisePropertyChanged(nameof(ValidTo));
-                    RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ShowExpiredTime));
                     RaisePropertyChanged(nameof(ExpiresTime));
                     RaisePropertyChanged(nameof(OfferRenewal));
@@ -260,11 +265,6 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         /// <remarks><c>DateTimeOffset.MaxValue</c> when unknown or not available</remarks>
         public DateTimeOffset ValidTo => Expiration.EndAt;
-
-        /// <summary>
-        /// Is the session expired?
-        /// </summary>
-        public bool Expired => ValidTo <= DateTimeOffset.Now;
 
         /// <summary>
         /// Should expiration time be shown?
@@ -334,13 +334,13 @@ namespace eduVPN.ViewModels.VPN
                     _Renew = new DelegateCommand(
                         () =>
                         {
-                            RenewInProgress = true;
+                            TerminationReason = TerminationReason.Renew;
                             State = SessionStatusType.Disconnecting;
                             SessionInProgress.Cancel();
                             _Renew.RaiseCanExecuteChanged();
                             _Disconnect?.RaiseCanExecuteChanged();
                         },
-                        () => !RenewInProgress && State == SessionStatusType.Connected);
+                        () => TerminationReason != TerminationReason.Renew && State == SessionStatusType.Connected);
                     PropertyChanged += (object sender, PropertyChangedEventArgs e) => { if (e.PropertyName == nameof(State)) _Renew.RaiseCanExecuteChanged(); };
                 }
                 return _Renew;
@@ -404,11 +404,14 @@ namespace eduVPN.ViewModels.VPN
             PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
                 // Disconnect session when expired.
-                if ((e.PropertyName == nameof(State) || e.PropertyName == nameof(Expired)) &&
+                if ((e.PropertyName == nameof(State) || e.PropertyName == nameof(ExpiresTime)) &&
                     (State == SessionStatusType.Waiting || State == SessionStatusType.Initializing || State == SessionStatusType.Connecting || State == SessionStatusType.Connected) &&
-                    Expired &&
-                    Disconnect.CanExecute())
-                    Disconnect.Execute();
+                    ValidTo <= DateTimeOffset.Now)
+                {
+                    TerminationReason = TerminationReason.Expired;
+                    if (Disconnect.CanExecute())
+                        Disconnect.Execute();
+                }
             };
 
             if (shouldFailover)
@@ -452,7 +455,15 @@ namespace eduVPN.ViewModels.VPN
                                     Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu);
                                 }
                                 catch (OperationCanceledException) { }
-                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningNoTrafficDetected, ex))); }
+                                catch (Exception)
+                                {
+                                    Wizard.TryInvoke((Action)(() =>
+                                    {
+                                        TerminationReason = TerminationReason.TunnelFailover;
+                                        if (Disconnect.CanExecute())
+                                            Disconnect.Execute();
+                                    }));
+                                }
                         }
                     }
                 };
@@ -487,7 +498,6 @@ namespace eduVPN.ViewModels.VPN
                 (object senderTimer, EventArgs eTimer) =>
                 {
                     RaisePropertyChanged(nameof(ConnectedTime));
-                    RaisePropertyChanged(nameof(Expired));
                     RaisePropertyChanged(nameof(ShowExpiredTime));
                     RaisePropertyChanged(nameof(ExpiresTime));
                     RaisePropertyChanged(nameof(OfferRenewal));
@@ -506,10 +516,9 @@ namespace eduVPN.ViewModels.VPN
             {
                 CancellationTokenSource waitingForForeignSessionSignOutInProgress = null;
                 var foreignSessions = new List<uint>();
-                bool suspendToWait = false;
-                void onWTSChange(CGo.SessionMonitor.Event evnt, uint sessionId)
+                void onWTSChange(CGo.SessionMonitor.Event e, uint sessionId)
                 {
-                    switch (evnt)
+                    switch (e)
                     {
                         case CGo.SessionMonitor.Event.SessionReportLogon:
                             // Other users are already signed-in and we will not start a VPN connection at all.
@@ -526,9 +535,12 @@ namespace eduVPN.ViewModels.VPN
                             if (waitingForForeignSessionSignOutInProgress == null)
                             {
                                 // Our session is connected (not waiting). Disconnect and spawn a new session waiting.
-                                suspendToWait = true;
-                                SessionInProgress.Cancel();
-                                Wizard.TryInvoke((Action)(() => _Disconnect?.RaiseCanExecuteChanged()));
+                                Wizard.TryInvoke((Action)(() =>
+                                {
+                                    TerminationReason = TerminationReason.AnotherUser;
+                                    SessionInProgress.Cancel();
+                                    _Disconnect?.RaiseCanExecuteChanged();
+                                }));
                             }
                             break;
 
@@ -610,18 +622,31 @@ namespace eduVPN.ViewModels.VPN
                         Wizard.TryInvoke((Action)(() =>
                         {
                             // Cleanup status properties.
-                            State = SessionStatusType.Disconnected;
                             StateDescription = "";
+                            State = SessionStatusType.Disconnected;
 
-                            if (!Window.Abort.IsCancellationRequested && !Expired)
+                            if (!Window.Abort.IsCancellationRequested)
                             {
-                                // Client is not quitting and our session is not expired. Maybe we should (renew and) reconnect?
-                                if (RenewInProgress)
-                                    Wizard.RenewAndConnect(Server);
-                                else if (suspendToWait)
-                                    Wizard.Connect(Server);
-                                else if (!SessionInProgress.IsCancellationRequested)
-                                    Wizard.Connect(Server);
+                                // Client is not quitting.
+                                switch (TerminationReason)
+                                {
+                                    case TerminationReason.Expired:
+                                        break;
+                                    case TerminationReason.Renew:
+                                        Wizard.RenewAndConnect(Server);
+                                        break;
+                                    case TerminationReason.AnotherUser:
+                                        // Have the reconnect handle waiting for no more another users signed in.
+                                        Wizard.Connect(Server, Properties.Settings.Default.PreferTCP);
+                                        break;
+                                    case TerminationReason.TunnelFailover:
+                                        Wizard.Connect(Server, true, true);
+                                        break;
+                                    default:
+                                        if (!SessionInProgress.IsCancellationRequested)
+                                            Wizard.Connect(Server, Properties.Settings.Default.PreferTCP);
+                                        break;
+                                }
                             }
                         }));
                     }

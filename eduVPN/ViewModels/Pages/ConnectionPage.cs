@@ -200,7 +200,7 @@ namespace eduVPN.ViewModels.Pages
                             {
                                 // User attempted to reconnect.
                                 await Task.Run(() => Engine.SetProfileId(SelectedProfile.Id));
-                                Wizard.Connect(Server);
+                                Wizard.Connect(Server, Properties.Settings.Default.PreferTCP);
                             }
                         },
                         () => SelectedProfile != null && (State == StateType.Inactive || State == StateType.Expired));
@@ -301,7 +301,7 @@ namespace eduVPN.ViewModels.Pages
                                 {
                                     case SessionStatusType.Disconnected:
                                         ActiveSession = null;
-                                        if (session.Expired)
+                                        if (session.TerminationReason == TerminationReason.Expired)
                                         {
                                             State = StateType.Expired;
                                             Properties.Settings.Default.LastSelectedServer = null;

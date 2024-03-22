@@ -2,10 +2,11 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.12...HEAD)
 
+- Failover from UDP to TCP after failure to confirm initial VPN connectivity
 - eduvpn-common updated to 3e5437ba36e8e5ffad926806960e4f76d5799e37 (1.99.1)
 - OpenVPN updated to 2.5.9-20240321
     - openvpn 2.5.9 d29496cce2d91a74706e3d5e4c48773715b10812
-- Fixes: #232, #234
+- Fixes: #232, #233, #234
 
 
 ## [3.255.12](https://github.com/Amebis/eduVPN/compare/3.255.11...3.255.12) (2024-03-08)

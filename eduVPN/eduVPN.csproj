@@ -99,6 +99,7 @@
     <Compile Include="ViewModels\Pages\SelfUpdatePromptPage.cs" />
     <Compile Include="ViewModels\Pages\SelfUpdateProgressPage.cs" />
     <Compile Include="ViewModels\VPN\OpenVPNException.cs" />
+    <Compile Include="ViewModels\VPN\TerminationReason.cs" />
     <Compile Include="ViewModels\VPN\WireGuardSession.cs" />
     <Compile Include="Xml\AccessTokenDictionary.cs" />
     <Compile Include="Xml\InstanceRef.cs" />

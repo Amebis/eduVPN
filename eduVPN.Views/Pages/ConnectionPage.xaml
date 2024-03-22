@@ -175,7 +175,7 @@
                         Converter="{StaticResource ExpiredNotificationVisibilityConverter}"
                         Mode="OneWay"
                         FallbackValue="{x:Static Visibility.Collapsed}">
-                        <Binding Path="ActiveSession.Expired"/>
+                        <Binding Path="ActiveSession.TerminationReason"/>
                         <Binding Path="State"/>
                     </MultiBinding>
                 </TextBlock.Visibility>

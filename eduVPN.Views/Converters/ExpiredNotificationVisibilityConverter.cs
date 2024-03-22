@@ -6,6 +6,7 @@
 */
 
 using eduVPN.ViewModels.Pages;
+using eduVPN.ViewModels.VPN;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -36,7 +37,7 @@ namespace eduVPN.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             return
-                values[0] is bool sessionExpired && sessionExpired ||
+                values[0] is TerminationReason terminationReason && terminationReason == TerminationReason.Expired ||
                 values[1] is ConnectionPage.StateType state && state == ConnectionPage.StateType.Expired ?
                 Visibility.Visible : Visibility.Collapsed;
         }

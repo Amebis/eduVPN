@@ -62,7 +62,7 @@
             <CheckBox
                 Margin="0,7"
                 VerticalContentAlignment="Center"
-                IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=OpenVPNPreferTCP}"
+                IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=PreferTCP}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.SettingsPagePreferTCPLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
                 <AccessText Text="{x:Static res:Strings.SettingsPagePreferTCPLabel}"/>
             </CheckBox>

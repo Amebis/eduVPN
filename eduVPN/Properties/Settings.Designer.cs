@@ -12,7 +12,7 @@ namespace eduVPN.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -78,12 +78,12 @@ namespace eduVPN.Properties {
         [global::System.Configuration.SettingsDescriptionAttribute("Prefer connecting using TCP")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OpenVPNPreferTCP {
+        public bool PreferTCP {
             get {
-                return ((bool)(this["OpenVPNPreferTCP"]));
+                return ((bool)(this["PreferTCP"]));
             }
             set {
-                this["OpenVPNPreferTCP"] = value;
+                this["PreferTCP"] = value;
             }
         }
         
@@ -150,6 +150,7 @@ namespace eduVPN.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsDescriptionAttribute("Which server user selected last")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LastSelectedServer {
             get {
                 return ((string)(this["LastSelectedServer"]));
@@ -166,10 +167,10 @@ namespace eduVPN.Properties {
         /// - &quot;$govVPN&quot; - Use WireGuard installation bundled with the govVPN client.
         /// </summary>
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Configuration.SettingsDescriptionAttribute("Which WireGuard tunnel manager service instance client should use:\r\n - \"$eduVPN\" " +
-            "- Use WireGuard installation bundled with the eduVPN client.\r\n - \"$LetsConnect\" " +
-            "- Use WireGuard installation bundled with the Let\'s Connect! client.\r\n - \"$govVPN\" " +
-            "- Use WireGuard installation bundled with the govVPN client.")]
+        [global::System.Configuration.SettingsDescriptionAttribute(@"Which WireGuard tunnel manager service instance client should use:
+ - ""$eduVPN"" - Use WireGuard installation bundled with the eduVPN client.
+ - ""$LetsConnect"" - Use WireGuard installation bundled with the Let's Connect! client.
+ - ""$govVPN"" - Use WireGuard installation bundled with the govVPN client.")]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string WireGuardTunnelManagerServiceInstance {

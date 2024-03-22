@@ -613,7 +613,7 @@ namespace eduVPN.ViewModels.Windows
                                     HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Id == id) ??
                                     HomePage.OwnServers.FirstOrDefault(s => s.Id == id);
                                 if (srv != null)
-                                    Connect(srv, true);
+                                    Connect(srv, Properties.Settings.Default.PreferTCP, true);
                             }
                         }));
                         e.Handled = true;
@@ -699,8 +699,9 @@ namespace eduVPN.ViewModels.Windows
         /// Connect to given server
         /// </summary>
         /// <param name="server">Server</param>
-        /// <param name="startup">indicates that the client is auto-starting connection (unattended)</param>
-        public async void Connect(Server server, bool startup = false)
+        /// <param name="preferTCP">Prefer TCP rather than UDP protocol</param>
+        /// <param name="startup">Indicates that the client is auto-starting connection (unattended)</param>
+        public async void Connect(Server server, bool preferTCP, bool startup = false)
         {
             // We have to set this to display server name on the connection page when/if user is presented with
             // a list of profiles to select one. It will be replaced by true server info provided by
@@ -715,7 +716,7 @@ namespace eduVPN.ViewModels.Windows
                     (server, config, expiration) = await Task.Run(() =>
                     {
                         var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.OpenVPNPreferTCP, startup),
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, preferTCP, startup),
                             Abort.Token) as Dictionary<string, object>);
 
                         var srv = Server.Load(eduJSON.Parser.Parse(
@@ -767,7 +768,7 @@ namespace eduVPN.ViewModels.Windows
                         Engine.AddServer(OperationInProgress, server.ServerType, server.Id, false);
 
                         var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.OpenVPNPreferTCP, false),
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.PreferTCP, false),
                             Abort.Token) as Dictionary<string, object>);
 
                         var srv = Server.Load(eduJSON.Parser.Parse(
@@ -820,7 +821,7 @@ namespace eduVPN.ViewModels.Windows
                         Engine.RenewSession(OperationInProgress);
 
                         var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.OpenVPNPreferTCP, false),
+                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.PreferTCP, false),
                             Abort.Token) as Dictionary<string, object>);
 
                         var srv = Server.Load(eduJSON.Parser.Parse(

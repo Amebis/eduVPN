@@ -62,6 +62,10 @@ namespace eduVPN.ViewModels.VPN
         /// <remarks>Tunnel name determines .conf.dpapi and .log filenames.</remarks>
         private readonly string TunnelName;
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// WireGuard working folder
         /// </summary>
@@ -96,10 +100,6 @@ namespace eduVPN.ViewModels.VPN
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly object WorkingFolderLock = new object();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// WireGuard tunnel log
@@ -180,68 +180,64 @@ namespace eduVPN.ViewModels.VPN
                         }
                         catch (OperationCanceledException) { throw; }
                         catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorWireGuardTunnelManagerService, ex); }
-
-                        IPAddress tunnelAddress = null, ipv6TunnelAddress = null;
-                        using (var reader = new StringReader(ProfileConfig))
+                        try
                         {
-                            var iface = new eduWireGuard.Interface(reader);
-                            foreach (var a in iface.Addresses)
-                                switch (a.Address.AddressFamily)
-                                {
-                                    case AddressFamily.InterNetwork:
-                                        tunnelAddress = a.Address;
-                                        break;
-                                    case AddressFamily.InterNetworkV6:
-                                        ipv6TunnelAddress = a.Address;
-                                        break;
-                                }
-                        }
+                            IPAddress tunnelAddress = null, ipv6TunnelAddress = null;
+                            using (var reader = new StringReader(ProfileConfig))
+                            {
+                                var iface = new eduWireGuard.Interface(reader);
+                                foreach (var a in iface.Addresses)
+                                    switch (a.Address.AddressFamily)
+                                    {
+                                        case AddressFamily.InterNetwork:
+                                            tunnelAddress = a.Address;
+                                            break;
+                                        case AddressFamily.InterNetworkV6:
+                                            ipv6TunnelAddress = a.Address;
+                                            break;
+                                    }
+                            }
 
-                        Wizard.TryInvoke((Action)(() =>
-                        {
-                            Wizard.TaskCount--;
-                            TunnelAddress = tunnelAddress;
-                            IPv6TunnelAddress = ipv6TunnelAddress;
-                            State = SessionStatusType.Connected;
-                        }));
-                        Engine.SetState(Engine.State.Connected);
-
-                        // Wait for a change and update stats.
-                        do
-                        {
+                            Engine.SetState(Engine.State.Connected);
+                            Wizard.TryInvoke((Action)(() =>
+                            {
+                                TunnelAddress = tunnelAddress;
+                                IPv6TunnelAddress = ipv6TunnelAddress;
+                                State = SessionStatusType.Connected;
+                                Wizard.TaskCount--;
+                            }));
                             try
                             {
-                                var cfg = managerSession.GetTunnelConfig(SessionAndWindowInProgress.Token);
-                                ulong rxBytes = 0, txBytes = 0;
-                                DateTimeOffset lastHandshake = DateTimeOffset.MinValue;
-                                foreach (var peer in cfg.Peers)
+                                // Wait for a change and update stats.
+                                do
                                 {
-                                    rxBytes += peer.RxBytes;
-                                    txBytes += peer.TxBytes;
-                                    if (lastHandshake < peer.LastHandshake)
-                                        lastHandshake = peer.LastHandshake;
-                                }
+                                    var cfg = managerSession.GetTunnelConfig(SessionAndWindowInProgress.Token);
+                                    ulong rxBytes = 0, txBytes = 0;
+                                    DateTimeOffset lastHandshake = DateTimeOffset.MinValue;
+                                    foreach (var peer in cfg.Peers)
+                                    {
+                                        rxBytes += peer.RxBytes;
+                                        txBytes += peer.TxBytes;
+                                        if (lastHandshake < peer.LastHandshake)
+                                            lastHandshake = peer.LastHandshake;
+                                    }
+                                    Wizard.TryInvoke((Action)(() =>
+                                    {
+                                        RxBytes = rxBytes;
+                                        TxBytes = txBytes;
+                                    }));
+                                } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(5 * 1000));
+                            }
+                            finally {
                                 Wizard.TryInvoke((Action)(() =>
                                 {
-                                    if (ConnectedAt == null && lastHandshake != DateTimeOffset.MinValue)
-                                        SetConnectedAt(lastHandshake);
-                                    RxBytes = rxBytes;
-                                    TxBytes = txBytes;
+                                    Wizard.TaskCount++;
+                                    State = SessionStatusType.Disconnecting;
                                 }));
+                                Engine.SetState(Engine.State.Disconnecting);
                             }
-                            catch
-                            {
-                                Wizard.TryInvoke((Action)(() => ConnectedAt = null));
-                            }
-                        } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(5 * 1000));
-
-                        Engine.SetState(Engine.State.Disconnecting);
-                        Wizard.TryInvoke((Action)(() =>
-                        {
-                            Wizard.TaskCount++;
-                            State = SessionStatusType.Disconnecting;
-                        }));
-                        managerSession.Deactivate();
+                        }
+                        finally { managerSession.Deactivate(); }
                     }
                 }
                 finally
@@ -253,7 +249,6 @@ namespace eduVPN.ViewModels.VPN
                         // Cleanup status properties.
                         TunnelAddress = null;
                         IPv6TunnelAddress = null;
-                        ConnectedAt = null;
                         RxBytes = null;
                         TxBytes = null;
                     }));
