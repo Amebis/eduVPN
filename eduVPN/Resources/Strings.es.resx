@@ -216,9 +216,6 @@
     <value>Su computadora no ha instalado ninguna actualización de Windows durante un tiempo. Por favor, compruebe el estado de actualización y/o actualice su computadora a una versión más reciente y compatible de Windows.
 Su organización podría optar por evitar conexiones de computadoras inseguras en el futuro.</value>
   </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No se detectó tráfico de VPN. Tal vez su conexión a Internet está bloqueando o limitando el tráfico de UDP. Considere cambiar a TCP.</value>
-  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Hay otras sesiones de usuario en este ordenador. Establecer una conexión VPN ahora también proporcionaría acceso a la red a otros usuarios. Esperando a que los demás usuarios cierren sesión primero...</value>
   </data>

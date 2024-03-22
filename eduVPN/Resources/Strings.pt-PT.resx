@@ -215,9 +215,6 @@
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
     <value>Seu computador não instalou nenhuma atualização do Windows por um tempo. Por favor, verifique o status da atualização e/ou atualize seu computador para uma versão mais recente e suportada do Windows. Sua organização pode optar por prevenir conexões de computadores inseguros no futuro.</value>
   </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>Nenhum tráfego VPN foi detectado. Talvez sua conexão com a Internet esteja bloqueando ou limitando o tráfego UDP. Considere mudar para TCP (quando disponível).</value>
-  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Existem outras sessões de usuário neste computador. Estabelecer uma conexão VPN agora também forneceria acesso à rede para outros usuários. Esperando que os outros usuários saiam primeiro...</value>
   </data>

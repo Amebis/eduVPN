@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Uso del cattivo backslash (\): ricorda che i backslash sono trattati come scappature e se devi passare caratteri di backslash come parte di un nome di file di Windows, dovresti usare doppi backslash come "c:\\openvpn\\static.key".</value>
+    <value>Uso incorretto del backslash (\): ricorda che i backslash sono trattati come scappature e se devi passare caratteri di backslash come parte di un nome di file di Windows, dovresti usare doppi backslash come "c:\\openvpn\\static.key".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1} (Errore {0} )</value>
@@ -129,27 +129,27 @@
     <comment>{0} = Name of the pipe to connect to</comment>
   </data>
   <data name="ErrorManagementManagementResponse" xml:space="preserve">
-    <value>{0} La risposta: {1}</value>
+    <value>{0} Risposta: {1}</value>
     <comment>{0} = A sentence explaining an error, {1} = Response source code</comment>
   </data>
   <data name="ErrorMonitorConnection" xml:space="preserve">
-    <value>La connessione OpenVPN Management non è riuscita.</value>
+    <value>Il collegamento OpenVPN Management non è riuscita.</value>
   </data>
   <data name="ErrorMonitorTerminated" xml:space="preserve">
     <value>Il monitor di OpenVPN Management non è in esecuzione.</value>
   </data>
   <data name="ErrorNoClosingQuotation" xml:space="preserve">
-    <value>Nessuna citazione di chiusura (").</value>
+    <value>Doppie virgolette non chiuse (")</value>
   </data>
   <data name="ErrorNoClosingSingleQuotation" xml:space="preserve">
-    <value>Nessuna citazione unica di chiusura (').</value>
+    <value>Singole virgolette non chiuse (')</value>
   </data>
   <data name="ErrorParameterValueNotFound" xml:space="preserve">
-    <value>{0} = nome valore parametro, {1} = tipo di dati enum</value>
+    <value>Valore parametro {0} non trovato in {1} enum.</value>
     <comment>{0} = Parameter value name, {1} = Enum data type</comment>
   </data>
   <data name="ErrorResidualParseState" xml:space="preserve">
-    <value>Stato di analisi residuo ( {0} ).</value>
+    <value>Stato di analisi residuo ({0}).</value>
   </data>
   <data name="ErrorSessionState" xml:space="preserve">
     <value>La sessione di OpenVPN è in stato di errore.</value>

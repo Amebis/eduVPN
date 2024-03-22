@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>Verifica della firma fallita. L’integrità del {0} non è valida.</value>
+    <value>Verifica della firma fallita. L’integrità dello {0} non è valida.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
     <value>Il caricamento degli endpoint API non è riuscito.</value>
@@ -134,7 +134,7 @@
     <comment>{0}=Provider</comment>
   </data>
   <data name="OpenVPNStateTypeAddingRoutes" xml:space="preserve">
-    <value>Aggiungere percorsi al sistema...</value>
+    <value>Aggiunta delle rotte al sistema...</value>
   </data>
   <data name="OpenVPNStateTypeAssigningIP" xml:space="preserve">
     <value>Assegnazione di indirizzo IP all'interfaccia di rete virtuale...</value>
@@ -143,13 +143,13 @@
     <value>Autenticazione con il server...</value>
   </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
-    <value>Connesso collegato.</value>
+    <value>Collegato.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
-    <value>Connessione di connessione...</value>
+    <value>Collegamento in corso...</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>Un’uscita aggraziata è in corso...</value>
+    <value>Uscita non forzata in corso...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
     <value>OpenVPN ha segnalato un errore fatale.</value>
@@ -171,16 +171,16 @@
     <value>Errore di servizio interattivo.</value>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
-    <value>Scaricare dal web non riuscito. Controlla la tua connessione internet.</value>
+    <value>Download dal web non riuscito. Si prega di controllare la connessione internet.</value>
   </data>
   <data name="ErrorUploading" xml:space="preserve">
-    <value>Caricamento sul web non riuscito. Controlla la tua connessione internet.</value>
+    <value>Caricamento sul web non riuscito. Si prega di controllare la connessione internet.</value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value>Risolvere il server IP...</value>
+    <value>Risoluzione dell'IP del server</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
-    <value>Connessione a TCP server...</value>
+    <value>Collegamento al server TCP...</value>
   </data>
   <data name="ErrorDownloadingSignature" xml:space="preserve">
     <value>Il download della firma delle risorse web non è riuscito.</value>
@@ -189,19 +189,19 @@
     <value>La chiave pubblica di Minisign non è valida.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign chiave pubblica con Id {0:X} esiste già.</value>
+    <value>La chiave pubblica di Minisign con Id {0:X} esiste già.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
-    <value>La firma del minimo non è supportata.</value>
+    <value>La firma di Minisign non è supportata.</value>
   </data>
   <data name="ErrorInvalidMinisignSignature" xml:space="preserve">
-    <value>La firma del minimo non è valida.</value>
+    <value>La firma di Minisign non è valida.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
     <value>La chiave pubblica di Minisign non è supportata.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Non è affidabile la chiave pubblica di Minisign.</value>
+    <value>La chiave pubblica di Minisign non è affidabile.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
     <value>Nome host non valido: i nomi host contengono lettere, numeri, trattini e punti.</value>
@@ -210,14 +210,11 @@
     <value>Tunnel Manager Errore di servizio.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Il tuo computer utilizza un tunnel VPN per gestire già il traffico predefinito. Un’altra connessione VPN probabilmente non funzionerà.</value>
+    <value>Il tuo computer utilizza già un tunnel VPN per gestire il traffico predefinito. Un’altra connessione VPN potrebbe non funzionare.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Il computer non ha installato alcun aggiornamento di Windows per un po '. Controlla lo stato dell'aggiornamento e/o l'aggiornamento del computer a una versione più recente e supportata di Windows.
+    <value>Il computer non ha installato alcun aggiornamento di Windows per un po'. Controlla lo stato dell'aggiornamento e/o aggiorna il computer a una versione più recente e supportata di Windows.
 La tua organizzazione potrebbe scegliere di prevenire connessioni da computer non sicuri in futuro.</value>
-  </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP (when available).</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Ci sono altre sessioni utente su questo computer. Stabilire una connessione VPN ora fornirebbe anche l'accesso alla rete ad altri utenti. In attesa che gli altri utenti escano prima...</value>

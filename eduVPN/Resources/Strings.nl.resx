@@ -215,9 +215,6 @@
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
     <value>Uw computer heeft een tijdje geen Windows updates geïnstalleerd. Controleer de updatestatus en/of upgrade uw computer naar een nieuwere en ondersteunde release van Windows. Je organisatie kan ervoor kiezen dat VPN verbindingen in de toekomst van onveilige computers worden geblokkeerd.</value>
   </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>Er werd geen VPN -verkeer gedetecteerd. Misschien blokkeert uw internetverbinding UDP -verkeer. Overweeg om over te schakelen naar TCP (indien beschikbaar).</value>
-  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Er zijn andere gebruikerssessies op deze computer. Het tot stand brengen van een VPN -verbinding zou nu ook netwerktoegang voor deze andere gebruikers bieden. Wacht tot de andere gebruikers uitloggen..</value>
   </data>

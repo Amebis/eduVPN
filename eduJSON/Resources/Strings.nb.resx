@@ -141,10 +141,10 @@
     <value>En nødvendig parameter mangler.</value>
   </data>
   <data name="ErrorMissingSeparator" xml:space="preserve">
-    <value>Mangler ":"-skilletegn.</value>
+    <value>Mangler skilletegn ":".</value>
   </data>
   <data name="ErrorMissingSeparatorOrClosingParenthesis" xml:space="preserve">
-    <value>Mangler "," skilletegn eller "{0}" parentes.</value>
+    <value>Mangler skilletegn "," eller "{0}" parentes.</value>
   </data>
   <data name="ErrorParameter" xml:space="preserve">
     <value>{0} (parameternavn: {1} )</value>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorTunnelNameTooLong" xml:space="preserve">
-    <value>Il nome del tunnel è troppo lungo. WireGuard consente i nomi dei tunnel non più di 32 caratteri.</value>
+    <value>Il nome del tunnel è troppo lungo. WireGuard non consente nomi dei tunnel più lunghi di 32 caratteri.</value>
   </data>
   <data name="ErrorManagerService" xml:space="preserve">
     <value>{1} (Errore {0} )</value>

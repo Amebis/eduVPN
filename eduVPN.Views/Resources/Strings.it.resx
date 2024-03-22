@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutPageVersion" xml:space="preserve">
-    <value>La versione {0}</value>
+    <value>Versione {0}</value>
   </data>
   <data name="ButtonBackTitle" xml:space="preserve">
     <value>Indietro</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value>_Testo di errore di copia</value>
+    <value>_Copia il messaggio di errore</value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
     <value>_Ignora errore</value>
@@ -137,7 +137,7 @@
     <comment>{0}=number, {1}=prefix ("k", "M", "G", etc.), {2}=unit (m, B, V, A, etc.)</comment>
   </data>
   <data name="SelfUpdatePromptPageChangelogTitle" xml:space="preserve">
-    <value>Cosa c'e' di nuovo?</value>
+    <value>Cosa c'è di nuovo?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
     <value>È disponibile una versione più recente e migliorata del client. Rimani aggiornato!</value>
@@ -150,7 +150,8 @@
 (Il client si riavvierà)</value>
   </data>
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
-    <value>{0} ha rilevato che il file delle impostazioni utente {1} è danneggiato. Ciò potrebbe essere dovuto a un incidente. Se continui, le impostazioni utente verranno ripristinate ai valori predefiniti.</value>
+    <value>{0} ha rilevato che il tuo file delle impostazioni utente {1} è danneggiato. Ciò potrebbe essere dovuto a un incidente. 
+Se continui le impostazioni utente verranno ripristinate ai valori predefiniti.</value>
     <comment>{0}=application name, {1}=filename</comment>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
@@ -180,13 +181,13 @@
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
-    <value>Disconnesso</value>
+    <value>Scollegato</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>La finestra è stata ridotta al minimo qui.</value>
   </data>
   <data name="SystemTrayMenuAbout" xml:space="preserve">
-    <value>_A proposito di...</value>
+    <value>_Informazioni...</value>
   </data>
   <data name="SystemTrayMenuExit" xml:space="preserve">
     <value>U_scita</value>
@@ -211,7 +212,7 @@
     <value>Connetti il tuo server</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Il proprio Se_rver</value>
+    <value>Il tuo Se_rver</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
     <value>_Server</value>
@@ -229,7 +230,7 @@
     <value>Autorizzazione richiesta</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
-    <value>Annullare la</value>
+    <value>Annulla</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
     <value>_Cambio posizione</value>
@@ -244,7 +245,7 @@
     <value>Accesso all'istituto</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Gli altri server</value>
+    <value>Altri server</value>
   </data>
   <data name="SecureInternetLabel" xml:space="preserve">
     <value>Sicurezza di Internet</value>
@@ -259,25 +260,25 @@
     <value>Impostazioni</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
-    <value>Supporto:</value>
+    <value>Assistenza:</value>
   </data>
   <data name="SettingsPageViewLogButtonLabel" xml:space="preserve">
-    <value>Log di connessione</value>
+    <value>Log di collegamento</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
     <value>Vista del _registro...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Collegata</value>
+    <value>Collegato</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
-    <value>Connessione in corso...</value>
+    <value>Collegamento in corso...</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Disconnessione in corso...</value>
+    <value>Scollegamento in corso...</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
-    <value>Errore di Connessione</value>
+    <value>Errore di Collegamento</value>
   </data>
   <data name="SessionStatusTypeInitializing" xml:space="preserve">
     <value>Configurazione in corso...</value>
@@ -292,10 +293,10 @@
     <value>Valido per</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
-    <value>Scaricamento dell'aggiornamento...</value>
+    <value>Scaricamento dell'aggiornamento…</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Dimenticazione</value>
+    <value>_Dimentica</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
     <value>Indirizzo del server</value>
@@ -304,27 +305,27 @@
     <value>Server</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>A_ggiungi il server</value>
+    <value>A_ggiungi server</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
     <value>Inserisci qui l'indirizzo del server</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
     <value>L'elenco dei profili disponibili è in caricamento.
-Per favore, aspetta...</value>
+Per favore attendi...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
     <value>Nessun risultato, controlla il comando di ricerca o prova un altro istituto.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
-    <value>(non è disponibile)</value>
+    <value>(Non Disponibile)</value>
     <comment>Displayed when a time span (e.g. time to expiration) cannot be determined</comment>
   </data>
   <data name="SessionStatusTypeDisconnected" xml:space="preserve">
-    <value>Non è collegato</value>
+    <value>Non collegato</value>
   </data>
   <data name="ConnectionPageConnectionInfoDataTransferred" xml:space="preserve">
-    <value>Trasferimento dei dati</value>
+    <value>Trasferimento dati</value>
   </data>
   <data name="ConnectionPageConnectionInfoProfile" xml:space="preserve">
     <value>Profilo</value>
@@ -360,14 +361,14 @@ Per favore, aspetta...</value>
     <comment>{0}=pluralizable number of seconds</comment>
   </data>
   <data name="SettingsPageStartOnSignon" xml:space="preserve">
-    <value>_Inizia all'accesso</value>
+    <value>_Avvia all'accesso</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
     <value>{0} richiede la riautorizzazione.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
-    <value>Non si è riconnettersi a {0}</value>
+    <value>Non ci si è ricollegato a {0}</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="ConnectionPageProfilesEmptyText" xml:space="preserve">
@@ -391,7 +392,7 @@ Per favore, aspetta...</value>
     <value>Ci vorranno alcuni secondi...</value>
   </data>
   <data name="SessionStatusTypeWaiting" xml:space="preserve">
-    <value>In attesa...</value>
+    <value>In attesa…</value>
   </data>
   <data name="AuthorizationPageNote" xml:space="preserve">
     <value>If your browser did not open for some reason, or you closed the website by accident, here is the URL you may copy&amp;paste into a trusted browser on this computer, and complete the client authorization there:</value>

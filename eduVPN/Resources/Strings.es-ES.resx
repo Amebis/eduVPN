@@ -216,9 +216,6 @@
     <value>Your computer did not install any Windows Updates for a while. Please check the update status and/or upgrade your computer to a newer and supported release of Windows.
 Your organization might opt to prevent connections from insecure computers in the future.</value>
   </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP.</value>
-  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first...</value>
   </data>

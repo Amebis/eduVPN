@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -124,13 +124,13 @@
     <value>Tilbake</value>
   </data>
   <data name="ButtonCopyErrorTitle" xml:space="preserve">
-    <value>_Kopier Feilmelding</value>
+    <value>_Kopier feilmelding</value>
   </data>
   <data name="ButtonDismissErrorTitle" xml:space="preserve">
     <value>_Lukk feilmelding</value>
   </data>
   <data name="ButtonSettingsTitle" xml:space="preserve">
-    <value>_Valg</value>
+    <value>_Innstillinger</value>
   </data>
   <data name="NumberToHumanReadable" xml:space="preserve">
     <value>{0:G} {1} {2}</value>
@@ -140,7 +140,7 @@
     <value>Hva er nytt?</value>
   </data>
   <data name="SelfUpdatePromptPageText" xml:space="preserve">
-    <value>En ny forbedret versjon av klienten er tilgjengelig. Hold deg oppdatert!</value>
+    <value>En ny og forbedret versjon av klienten er tilgjengelig. Hold deg oppdatert!</value>
   </data>
   <data name="SelfUpdatePromptPageTitle" xml:space="preserve">
     <value>Oppdatering tilgjengelig</value>
@@ -152,11 +152,11 @@
   <data name="SettingsCorruptErrorMessage" xml:space="preserve">
     <value>{0} har oppdaget at brukerinnstillingsfila {1} har blitt korrupt. Dette kan skje etter en kræsj.
 
-Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
+Hvis du fortsetter vil brukerinnstillingene dine bli tilbakestilt til standardinnstillingene.</value>
     <comment>{0}=application name, {1}=filename</comment>
   </data>
   <data name="SettingsCorruptErrorTitle" xml:space="preserve">
-    <value>Korrupterte brukerinnstillinger</value>
+    <value>Korrupte brukerinnstillinger</value>
   </data>
   <data name="SettingsPagePreferTCPLabel" xml:space="preserve">
     <value>Foretrekk _TCP-tilkobling</value>
@@ -168,7 +168,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Lastet opp:</value>
   </data>
   <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
-    <value>Gyldig for</value>
+    <value>Gyldig i</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Adresse</value>
@@ -178,11 +178,11 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <comment>{0}=IP address, {1}=IPv6 address</comment>
   </data>
   <data name="SystemTrayBalloonConnectedTitle" xml:space="preserve">
-    <value>{0} Tilkoblet</value>
+    <value>{0} tilkoblet</value>
     <comment>{0}=Profile name</comment>
   </data>
   <data name="SystemTrayBalloonDisconnectedMessage" xml:space="preserve">
-    <value>Koblet fra</value>
+    <value>Frakoblet</value>
   </data>
   <data name="SystemTrayBalloonHiddenMessage" xml:space="preserve">
     <value>Vinduet har blitt minimert her.</value>
@@ -194,10 +194,10 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>_Avslutt</value>
   </data>
   <data name="SystemTrayMenuOpen" xml:space="preserve">
-    <value>_Åpen</value>
+    <value>_Åpne</value>
   </data>
   <data name="SystemTrayMenuSettings" xml:space="preserve">
-    <value>_Valg...</value>
+    <value>_Innstillinger...</value>
   </data>
   <data name="FlowDirection" xml:space="preserve">
     <value>LTR</value>
@@ -210,13 +210,13 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>_Organisasjon</value>
   </data>
   <data name="SearchPageOwnServerLabel" xml:space="preserve">
-    <value>Koble til din egen server</value>
+    <value>Koble til din egen tjener</value>
   </data>
   <data name="SearchPageOwnServersLabel" xml:space="preserve">
-    <value>Egen se_rver</value>
+    <value>Egen tj_ener</value>
   </data>
   <data name="SearchPageInstituteAccessServersLabel" xml:space="preserve">
-    <value>_Server</value>
+    <value>_Tjener</value>
   </data>
   <data name="SearchPageTitle" xml:space="preserve">
     <value>Finn ditt institutt</value>
@@ -225,16 +225,16 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>_Plassering</value>
   </data>
   <data name="AuthorizationPageText" xml:space="preserve">
-    <value>Denne appen trenger autorisasjon og har åpnet nettleseren din. Det vil fortsette når du har fullført autorisasjonen.</value>
+    <value>Appen trenger godkjenning og har åpnet nettleseren din. Den vil fortsette når du har godkjent den.</value>
   </data>
   <data name="AuthorizationPageTitle" xml:space="preserve">
-    <value>Autorisasjon kreves</value>
+    <value>Godkjenning kreves</value>
   </data>
   <data name="ButtonCancelTitle" xml:space="preserve">
     <value>Avbryt</value>
   </data>
   <data name="HomePageChangeSecureInternetServerTitle" xml:space="preserve">
-    <value>_Bytt sted</value>
+    <value>_Bytt plassering</value>
   </data>
   <data name="ButtonAboutTitle" xml:space="preserve">
     <value>O_m</value>
@@ -246,19 +246,19 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Instituttilgang</value>
   </data>
   <data name="HomePageOwnServerLabel1" xml:space="preserve">
-    <value>Andre servere</value>
+    <value>Andre tjenere</value>
   </data>
   <data name="SecureInternetLabel" xml:space="preserve">
-    <value>Sikker internett</value>
+    <value>Sikkert internett</value>
   </data>
   <data name="SearchPageOtherServerTitle" xml:space="preserve">
-    <value>Legg til en annen server</value>
+    <value>Legg til en annen tjener</value>
   </data>
   <data name="SelectSecureInternetCountryPageTitle" xml:space="preserve">
-    <value>Velg et sted</value>
+    <value>Velg en plassering</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Valg</value>
+    <value>Innstillinger</value>
   </data>
   <data name="ConnectionPageSupportContactsLabel" xml:space="preserve">
     <value>Brukerstøtte:</value>
@@ -267,16 +267,16 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Tilkoblingslogg</value>
   </data>
   <data name="SettingsPageViewLogTitle" xml:space="preserve">
-    <value>Se _Logg...</value>
+    <value>Se _loggen...</value>
   </data>
   <data name="SessionStatusTypeConnected" xml:space="preserve">
-    <value>Koblet til</value>
+    <value>Tilkoblet</value>
   </data>
   <data name="SessionStatusTypeConnecting" xml:space="preserve">
     <value>Kobler til…</value>
   </data>
   <data name="SessionStatusTypeDisconnecting" xml:space="preserve">
-    <value>Kobler fra ...</value>
+    <value>Kobler fra...</value>
   </data>
   <data name="SessionStatusTypeError" xml:space="preserve">
     <value>Tilkoblingsfeil</value>
@@ -288,34 +288,35 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>_Profiler</value>
   </data>
   <data name="ConnectionPageConnectionInfoLabel" xml:space="preserve">
-    <value>Tilkobling _info</value>
+    <value>Tilkoblings_info</value>
   </data>
   <data name="ConnectionPageOAuthValidLabel" xml:space="preserve">
-    <value>Gyldig for</value>
+    <value>Gyldig i</value>
   </data>
   <data name="SelfUpdateProgressPageTitle" xml:space="preserve">
     <value>Laster ned oppdatering...</value>
   </data>
   <data name="ForgetLabel" xml:space="preserve">
-    <value>_Glemme</value>
+    <value>_Glem</value>
   </data>
   <data name="SelectOwnServerPageTitle" xml:space="preserve">
-    <value>Server adresse</value>
+    <value>Tjeneradresse</value>
   </data>
   <data name="HomePageOwnServerLabel2" xml:space="preserve">
-    <value>Servere</value>
+    <value>Tjenere</value>
   </data>
   <data name="SelectOwnServerPageAddServerTitle" xml:space="preserve">
-    <value>L_egg til server</value>
+    <value>L_egg til tjener</value>
   </data>
   <data name="SelectOwnServerPageHostnameLabel" xml:space="preserve">
-    <value>Skriv inn serveradressen her</value>
+    <value>Skriv inn tjeneradressen her</value>
   </data>
   <data name="ConnectionPageProfilesLoadingText" xml:space="preserve">
-    <value>Liste over tilgjengelige profiler lastes inn. Vennligst vent...</value>
+    <value>Liste over tilgjengelige profiler lastes inn.
+Vennligst vent...</value>
   </data>
   <data name="SearchPageNoResultsText" xml:space="preserve">
-    <value>Ingen resultater, vennligst sjekk søkekommandoen din eller prøv et annet institutt.</value>
+    <value>Ingen resultater, sjekk søkekommandoen din eller prøv et annet institutt.</value>
   </data>
   <data name="TimeSpanNotAvailable" xml:space="preserve">
     <value>(Utilgjengelig)</value>
@@ -331,7 +332,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Profil</value>
   </data>
   <data name="ConnectionPageSessionExpired" xml:space="preserve">
-    <value>Denne økten er utløpt</value>
+    <value>Denne økten har løpt ut</value>
   </data>
   <data name="ConnectionPageSessionRenew" xml:space="preserve">
     <value>Forny økten</value>
@@ -341,7 +342,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <comment>{0}=date and time</comment>
   </data>
   <data name="SystemTrayBalloonRenewSessionTitle" xml:space="preserve">
-    <value>{0} er i ferd med å utløpe</value>
+    <value>{0} er i ferd med å løpe ut</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="TimeSpanDaysAndHours" xml:space="preserve">
@@ -364,7 +365,7 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>_Start ved pålogging</value>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedMessage2" xml:space="preserve">
-    <value>{0} krever reautorisering.</value>
+    <value>{0} krever ny godkjenning.</value>
     <comment>{0}=Server name</comment>
   </data>
   <data name="SystemTrayBalloonAutoReconnectFailedTitle" xml:space="preserve">
@@ -375,16 +376,17 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
     <value>Det er ingen profiler tilgjengelig for å koble til.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithoutSupportText" xml:space="preserve">
-    <value>Ta kontakt med serveroperatøren.</value>
+    <value>Ta kontakt med tjeneroperatøren.</value>
   </data>
   <data name="ConnectionPageProfilesEmptyWithSupportText" xml:space="preserve">
-    <value>Vennligst kontakt support.</value>
+    <value>Ta kontakt med brukerstøtte.</value>
   </data>
   <data name="AboutPageChangelogTitle" xml:space="preserve">
     <value>Endringslogg...</value>
   </data>
   <data name="AboutPageUpdateTitle" xml:space="preserve">
-    <value>Last ned {0} og oppdater nå (Klienten vil starte på nytt)</value>
+    <value>Last ned {0} og oppdater nå
+(Klienten vil starte på nytt)</value>
     <comment>{0}=version number</comment>
   </data>
   <data name="PleaseWaitPageTitle" xml:space="preserve">

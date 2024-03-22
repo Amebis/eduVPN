@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidSignature" xml:space="preserve">
-    <value>Signaturverifisering feilet. Integriteten av {0} kan ikke bekreftes.</value>
+    <value>Signaturverifisering feilet. Integriteten til {0} er ikke gyldig.</value>
   </data>
   <data name="ErrorEndpointsLoad" xml:space="preserve">
-    <value>Innlasting av API-endepunkt feilet.</value>
+    <value>Lasting av API-endepunktene feilet.</value>
   </data>
   <data name="ErrorProfileListLoad" xml:space="preserve">
-    <value>Profillista kunne ikke hentes.</value>
+    <value>Lasting av profillista feilet.</value>
   </data>
   <data name="ErrorProfileConfigLoad" xml:space="preserve">
-    <value>Innlasting av profilkonfigurasjon har feilet.</value>
+    <value>Lasting av profilkonfigurasjon feilet.</value>
   </data>
   <data name="ErrorInvalidAccessToken" xml:space="preserve">
     <value>Kunne ikke autorisere klienten til å bruke {0}.</value>
@@ -140,35 +140,35 @@
     <value>Knytter IP-adressen til det virtuelle nettverksgrensesnittet...</value>
   </data>
   <data name="OpenVPNStateTypeAuthenticating" xml:space="preserve">
-    <value>Logger inn på server...</value>
+    <value>Får godkjenning av tjeneren...</value>
   </data>
   <data name="OpenVPNStateTypeConnected" xml:space="preserve">
-    <value>Koblet til.</value>
+    <value>Tilkoblet.</value>
   </data>
   <data name="OpenVPNStateTypeConnecting" xml:space="preserve">
     <value>Kobler til…</value>
   </data>
   <data name="OpenVPNStateTypeExiting" xml:space="preserve">
-    <value>Kontrollert avslutning er i gang...</value>
+    <value>En kontrollert avslutning er i gang...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
     <value>OpenVPN rapporterte en alvorlig feil.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
-    <value>Laster ned konfigurasjonsopsjoner fra serveren...</value>
+    <value>Laster ned konfigurasjonsalternativer fra tjeneren...</value>
   </data>
   <data name="OpenVPNStateTypeReconnecting" xml:space="preserve">
-    <value>Det har vært en restart...</value>
+    <value>En omstart har skjedd...</value>
   </data>
   <data name="OpenVPNStateTypeWaiting" xml:space="preserve">
     <value>Venter på første svar fra tjeneren...</value>
   </data>
   <data name="ErrorInvalidPropertyName" xml:space="preserve">
-    <value>Navn på egenskap {0} er ugyldig.</value>
+    <value>Egenskapsnavnet {0} er ikke gyldig.</value>
     <comment>{0}=Property name</comment>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
-    <value>Interaktiv Tjeneste feil.</value>
+    <value>Interactive Service-feil.</value>
   </data>
   <data name="ErrorDownloading" xml:space="preserve">
     <value>Nedlasting fra internett feilet. Sjekk nettforbindelsen din.</value>
@@ -177,7 +177,7 @@
     <value>Opplasting til internett feilet. Sjekk nettforbindelsen din.</value>
   </data>
   <data name="OpenVPNStateTypeResolving" xml:space="preserve">
-    <value>Slår opp serverens IP-adresse…</value>
+    <value>Angir IP-adresse til tjeneren...</value>
   </data>
   <data name="OpenVPNStateTypeTcpConnecting" xml:space="preserve">
     <value>Kobler til TCP-tjeneren…</value>
@@ -186,10 +186,10 @@
     <value>Nedlasting av nettressursens signatur feilet.</value>
   </data>
   <data name="ErrorInvalidMinisignPublicKey" xml:space="preserve">
-    <value>Minisign-fellesnøkkelen er ugyldig.</value>
+    <value>Minisigns offentlige nøkkel er ugyldig.</value>
   </data>
   <data name="ErrorDuplicateMinisignPublicKey" xml:space="preserve">
-    <value>Minisign-fellesnøkkelen med Id {0:X} finnes allerede.</value>
+    <value>Minisigns offentlige nøkkel med ID {0:X} finnes allerede.</value>
   </data>
   <data name="ErrorUnsupportedMinisignSignature" xml:space="preserve">
     <value>Minisign-signaturen støttes ikke.</value>
@@ -198,28 +198,25 @@
     <value>Minisign-signaturen er ugyldig.</value>
   </data>
   <data name="ErrorUnsupportedMinisignPublicKey" xml:space="preserve">
-    <value>Minisign-fellesnøkkelen støttes ikke.</value>
+    <value>Minisigns offentlige nøkkel støttes ikke.</value>
   </data>
   <data name="ErrorUntrustedMinisignPublicKey" xml:space="preserve">
-    <value>Stoler ikke på minisign-fellesnøkkelen.</value>
+    <value>Minisigns offentlige nøkkel er ikke klarert.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Ugyldig vertsnavn: vertsnavn kan inneholde bokstav, tall, bindestrek og punktum.</value>
+    <value>Ugyldig vertsnavn: vertsnavn kan inneholde bokstaver, tall, bindestreker og punktum.</value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
-    <value>Tunnel manager tjeneste feil.</value>
+    <value>Tunnel Manager Service-feil.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Din PC bruker allerede en VPN tunnel. En ny VPN forbindelse vil sannsynligvis ikke fungere.</value>
+    <value>Din datamaskin bruker allerede en VPN-tunnel. En ny VPN-forbindelse vil sannsynligvis ikke fungere.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
-    <value>Din PC har ikke fått installert Windows oppdateringer på en stund. Vennligst sjekk oppdateringstatus og/eller oppdater din PC til en nyere og supportert versjon av Windows
-Din organisasjon kan velge å hindre oppkobling fra usikrede PC'er i framtiden.  </value>
-  </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>Ingen VPN trafikk ble detektert. Kanskje din internett leverandør blokkerer eller begrenser UDP trafikk. Vurder å bytte til TCP oppkobling.</value>
+    <value>Din datamaskin har ikke fått installert Windows-oppdateringer på en stund. Sjekk oppdateringstatus og/eller oppdater din datamaskin til en nyere og støttet versjon av Windows.
+Din organisasjon kan velge å hindre oppkobling fra usikrede datamaskiner i framtiden.</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
-    <value>Det finnes andre bruker sesjoner på denne maskinen. En etablering av VPN forbindelse vil gi nettverks aksess også til andre brukere. Venter på at andre brukere logger ut først...</value>
+    <value>Det finnes andre brukersesjoner på denne datamaskinen. Å opprette en VPN-forbindelse nå vil gi nettverkstilgang til andre brukere også. Venter på at andre brukere logger ut først...</value>
   </data>
 </root>

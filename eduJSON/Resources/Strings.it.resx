@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorDuplicateElement" xml:space="preserve">
-    <value>Trovato nome elemento duplicato "{0}".</value>
+    <value>Il nome dell'elemento "{0}" è duplicato</value>
   </data>
   <data name="ErrorExpectedReceived" xml:space="preserve">
-    <value>{0}(previsto: {1} , ricevuto: {2} )</value>
+    <value>{0}(previsto: {1}, ricevuto: {2} )</value>
     <comment>{0}=A sentence explaining an error, {1}=expected value, {2}=received value</comment>
   </data>
   <data name="ErrorInvalidIdentifier" xml:space="preserve">
-    <value>Nome dell'elemento non valido trovato.</value>
+    <value>Il nome dell'elemento è invalido</value>
   </data>
   <data name="ErrorInvalidParameterType" xml:space="preserve">
-    <value>Tipo di parametro inaspettato.</value>
+    <value>Il tipo di parametro è errato.</value>
   </data>
   <data name="ErrorJSONCode" xml:space="preserve">
     <value>{0}JSON: {1}</value>
     <comment>{0}=A sentence explaining an error, {1}=JSON source code</comment>
   </data>
   <data name="ErrorMissingClosingParenthesis" xml:space="preserve">
-    <value>Manca " {0}" parentesi.</value>
+    <value>Parentesi "{0}" mancante.</value>
   </data>
   <data name="ErrorMissingParameter" xml:space="preserve">
-    <value>Manca un parametro richiesto.</value>
+    <value>Un parametro richiesto è mancante.</value>
   </data>
   <data name="ErrorMissingSeparator" xml:space="preserve">
-    <value>Mancante ":" separatore.</value>
+    <value>Separatore ":" mancante.</value>
   </data>
   <data name="ErrorMissingSeparatorOrClosingParenthesis" xml:space="preserve">
-    <value>Mancare "," separatore o "{0}" parentesi.</value>
+    <value>Separatore "," o parentesi "{0}" mancante.</value>
   </data>
   <data name="ErrorParameter" xml:space="preserve">
     <value>{0} (nome del parametro: {1}  )</value>
@@ -154,6 +154,6 @@
     <value>Trovati dati finali inaspettati.</value>
   </data>
   <data name="ErrorUnknownValue" xml:space="preserve">
-    <value>Il valore sconosciuto trovato.</value>
+    <value>Trovato valore sconosciuto.</value>
   </data>
 </root>

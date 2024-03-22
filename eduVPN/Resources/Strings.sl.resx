@@ -216,9 +216,6 @@
     <value>Vaš računalnik že nekaj časa ni namestil posodobitev za Windows. Preverite stanje posodabljanja oz. nadgradite svoj računalnik na novejšo in podprto izdajo Windows.
 Vaša organizacija bi lahko v prihodnje izbrala prepoved povezav z nezavarovanih računalnikov.</value>
   </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>Ni zaznanega prometa VPN. Mogoče vaš spletni ponudnik blokira, ali omejuje promet UDP. Poskusite preklopiti na TCP.</value>
-  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Na tem računalniku so tudi seje drugih uporabnikov. Vzpostavitev povezave VPN zdaj bi omogočila omrežni dostop tudi drugim uporabnikom. Čakam, da se drugi uporabniki najprej odjavijo ...</value>
   </data>

@@ -216,9 +216,6 @@
     <value>Ihr Computer hat eine Zeit lang keine Windows-Updates installiert. Bitte überprüfen Sie den Update-Status und/oder aktualisieren Sie Ihren Computer auf eine neuere und unterstützte Version von Windows.
  Ihre Organisation könnte sich in Zukunft dafür entscheiden, Verbindungen von unsicheren Computern zu verhindern.</value>
   </data>
-  <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>Es wurde kein VPN-Verkehr erkannt. Möglicherweise blockiert oder begrenzt Ihre Internetverbindung den UDP-Verkehr. Erwägen Sie den Wechsel zu TCP (sofern verfügbar).</value>
-  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Auf diesem Computer gibt es andere Benutzersitzungen. Wenn jetzt eine VPN-Verbindung hergestellt würde, hätten auch andere Benutzer Netzwerkzugang. Warten Sie, bis die anderen Benutzer sich zuerst abgemeldet haben...</value>
   </data>

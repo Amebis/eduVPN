@@ -118,14 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Feil bruk av backslash (\): husk at backslash blir brukt som shell-escape og hvis du trenger disse som del av et filnavn må du skrive dobbel backslash som f.eks "c:\\openvpn\\static.key".</value>
+    <value>Feil bruk av bakstrek (\): husk at bakstrek blir brukt som shell-escape og hvis du trenger disse som del av et filnavn må du skrive dobbel bakstrek som f.eks. "c:\\openvpn\\static.key".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{0} (Feil {1})</value>
     <comment>{0} = Error number, {1} = The name of the function</comment>
   </data>
   <data name="ErrorInteractiveServiceConnect" xml:space="preserve">
-    <value>Kobling til {0} Interaktiv tjeneste feilet. Vennligst bekreft at tjenesten er startet.</value>
+    <value>Tilkobling til den {0} interaktive tjenesten feilet. Se til at tjenesten er startet.</value>
     <comment>{0} = Name of the pipe to connect to</comment>
   </data>
   <data name="ErrorManagementManagementResponse" xml:space="preserve">
@@ -133,28 +133,28 @@
     <comment>{0} = A sentence explaining an error, {1} = Response source code</comment>
   </data>
   <data name="ErrorMonitorConnection" xml:space="preserve">
-    <value>OpenVPN Management forbindelse ble ikke etablert.</value>
+    <value>OpenVPN Management-forbindelsen feilet.</value>
   </data>
   <data name="ErrorMonitorTerminated" xml:space="preserve">
-    <value>OpenVPN Management monitor kjører ikke.</value>
+    <value>OpenVPN Management-monitoren kjører ikke.</value>
   </data>
   <data name="ErrorNoClosingQuotation" xml:space="preserve">
     <value>Mangler avsluttende anførselstegn (").</value>
   </data>
   <data name="ErrorNoClosingSingleQuotation" xml:space="preserve">
-    <value>Mangler avsluttende anførselstegn (').</value>
+    <value>Mangler avsluttende apostrof (').</value>
   </data>
   <data name="ErrorParameterValueNotFound" xml:space="preserve">
-    <value>{0} parameterverdi ikke oppført i {1} enum.</value>
+    <value>{0} parameterverdi ikke funnet i {1} enum.</value>
     <comment>{0} = Parameter value name, {1} = Enum data type</comment>
   </data>
   <data name="ErrorResidualParseState" xml:space="preserve">
-    <value>Resterende parse status ({0}).</value>
+    <value>Resterende parsestatus ({0}).</value>
   </data>
   <data name="ErrorSessionState" xml:space="preserve">
-    <value>OpenVPN-sesjonen er i feiltilstand.</value>
+    <value>OpenVPN-sesjonen er i en feiltilstand.</value>
   </data>
   <data name="ErrorUnexpectedReply" xml:space="preserve">
-    <value>OpenVPN Management svarte på en uforventet måte.</value>
+    <value>OpenVPN Management-svaret var ikke forventet.</value>
   </data>
 </root>

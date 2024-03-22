@@ -125,7 +125,7 @@
     <comment>{0} = Error number, {1} = Error description</comment>
   </data>
   <data name="ErrorManagerServiceConnect" xml:space="preserve">
-    <value>Tilkobling til {0} tunnel manager tjenesten feilet. Vennligst forsikre deg om at tjenesten er startet.</value>
+    <value>Tilkobling til {0} tunnel manager tjenesten feilet. Se til at tjenesten er startet.</value>
     <comment>{0} = Name of the pipe to connect to</comment>
   </data>
 </root>
