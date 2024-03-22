@@ -167,8 +167,8 @@
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>تم رفع:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>المدة</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>صالح الى غاية</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>عنوان</value>

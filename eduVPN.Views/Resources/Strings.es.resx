@@ -167,8 +167,8 @@ Si continúa, su configuración de usuario se restablecerá a la predeterminada.
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Subido:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duración</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Válido por</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Dirección</value>

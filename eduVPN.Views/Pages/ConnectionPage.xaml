@@ -299,12 +299,12 @@
 
                 <TextBlock
                     Style="{StaticResource ConnectionInfoHeadingStyle}"
-                    Text="{x:Static res:Strings.ConnectionPageConnectionInfoDuration}"/>
+                    Text="{x:Static res:Strings.ConnectionPageConnectionInfoValidFor}"/>
 
                 <TextBlock
                     Grid.Row="1"
                     Style="{StaticResource ConnectionInfoValueStyle}"
-                    Text="{Binding ActiveSession.ConnectedTime, Converter={StaticResource TimeSpanToHumanReadableConverter}}"/>
+                    Text="{Binding ActiveSession.ExpirationTime, Mode=OneWay, Converter={StaticResource TimeSpanToHumanReadableConverter}}"/>
 
                 <TextBlock
                     Grid.Row="2"

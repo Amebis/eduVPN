@@ -166,8 +166,8 @@ Devam ederseniz, kullanıcı ayarlarınız varsayılana sıfırlanacak.</value>
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Yüklendi:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Süre</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Geçerli</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Adres</value>

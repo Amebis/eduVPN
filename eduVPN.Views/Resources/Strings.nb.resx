@@ -167,8 +167,8 @@ Hvis du fortsetter vil brukerinnstillingene tilbakestilt.</value>
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Lastet opp:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Varighet</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Gyldig for</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Adresse</value>

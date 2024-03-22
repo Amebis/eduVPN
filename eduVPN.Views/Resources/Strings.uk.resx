@@ -167,8 +167,8 @@
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Вивантажено:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Тривалість</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Дійсний до</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Адреса</value>

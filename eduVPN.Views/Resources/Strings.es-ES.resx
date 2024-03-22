@@ -167,8 +167,8 @@ If you continue, your user settings will be reset to the default.</value>
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Uploaded:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duration</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Valid for</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Address</value>

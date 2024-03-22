@@ -167,8 +167,8 @@ Se continuar, as suas configurações de utilizador serão reiniciadas para os v
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Carregado:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Duração</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Válido para</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Endereço</value>

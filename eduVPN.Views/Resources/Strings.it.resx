@@ -165,8 +165,8 @@
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Caricato:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>La durata</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Valido per</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Indirizzo</value>

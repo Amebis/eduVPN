@@ -167,8 +167,8 @@
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Gor:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Trajanje</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Veljavno za</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Naslov</value>

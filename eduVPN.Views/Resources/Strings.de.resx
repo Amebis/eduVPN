@@ -167,8 +167,8 @@ Wenn Sie fortfahren, werden Ihre Benutzereinstellungen auf die Standardeinstellu
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Hochgeladen:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Dauer</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Gültig für</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Adresse</value>

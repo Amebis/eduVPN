@@ -167,8 +167,8 @@ Als je doorgaat worden de gebruikersinstellingen naar hun standaardwaarden herst
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Geupload:</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Looptijd</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Geldig voor</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Adres</value>

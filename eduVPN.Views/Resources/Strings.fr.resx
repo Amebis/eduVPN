@@ -167,8 +167,8 @@ Si vous poursuivez, vos paramètres utilisateur seront réinitialisés à l'éta
   <data name="ConnectionPageConnectionInfoBytesOut2" xml:space="preserve">
     <value>Téléchargé (ascendant) :</value>
   </data>
-  <data name="ConnectionPageConnectionInfoDuration" xml:space="preserve">
-    <value>Durée :</value>
+  <data name="ConnectionPageConnectionInfoValidFor" xml:space="preserve">
+    <value>Valide pour une durée de</value>
   </data>
   <data name="ConnectionPageConnectionInfo" xml:space="preserve">
     <value>Adresse</value>

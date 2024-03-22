@@ -215,15 +215,6 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duration.
-        /// </summary>
-        public static string ConnectionPageConnectionInfoDuration {
-            get {
-                return ResourceManager.GetString("ConnectionPageConnectionInfoDuration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connection _info.
         /// </summary>
         public static string ConnectionPageConnectionInfoLabel {
@@ -238,6 +229,15 @@ namespace eduVPN.Views.Resources {
         public static string ConnectionPageConnectionInfoProfile {
             get {
                 return ResourceManager.GetString("ConnectionPageConnectionInfoProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid for.
+        /// </summary>
+        public static string ConnectionPageConnectionInfoValidFor {
+            get {
+                return ResourceManager.GetString("ConnectionPageConnectionInfoValidFor", resourceCulture);
             }
         }
         
