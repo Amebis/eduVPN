@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.12...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.13...HEAD)
+
+
+## [3.255.13](https://github.com/Amebis/eduVPN/compare/3.255.12...3.255.13) (2024-03-22)
 
 - Failover from UDP to TCP after failure to confirm initial VPN connectivity
 - eduvpn-common updated to 3e5437ba36e8e5ffad926806960e4f76d5799e37 (1.99.1)
