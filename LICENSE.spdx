@@ -5,7 +5,7 @@ DataFormat: SPDXRef-1
 PackageSupplier: Organization: The Commons Conservancy
 PackageHomePage: https://eduvpn.org
 PackageLicenseDeclared: GPL-3.0+
-PackageCopyrightText: 2017-2023 The Commons Conservancy
+PackageCopyrightText: 2017-2024 The Commons Conservancy
 PackageSummary: <text>EduVPN is designed to allow users to connect
     securely and encrypted to the Internet from any standard device.
     </text>

@@ -37,7 +37,7 @@ BEGIN
 			VALUE "CompanyName",      "SURF"
 			VALUE "FileDescription",  "WireGuard Service Host for eduVPN Client"
 			VALUE "FileVersion",      EXPAND(VERSION)
-			VALUE "LegalCopyright",   "Copyright © 2022-2023 The Commons Conservancy"
+			VALUE "LegalCopyright",   "Copyright © 2022-2024 The Commons Conservancy"
 			VALUE "OriginalFilename", "eduWGSvcHost.exe"
 			VALUE "ProductName",      "eduVPN"
 			VALUE "ProductVersion",   EXPAND(VERSION)
