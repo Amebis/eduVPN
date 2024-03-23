@@ -1,6 +1,7 @@
 [submodule "eduJSON"]
 	path = eduJSON
 	url = https://github.com/Amebis/eduJSON.git
+	branch = eduVPN/3.x
 [submodule "eduLibsodium"]
 	path = eduLibsodium
 	url = https://github.com/Amebis/eduLibsodium.git
