@@ -5,6 +5,7 @@
 [submodule "eduLibsodium"]
 	path = eduLibsodium
 	url = https://github.com/Amebis/eduLibsodium.git
+	branch = master
 [submodule "eduOAuth"]
 	path = eduOAuth
 	url = https://github.com/Amebis/eduOAuth.git
