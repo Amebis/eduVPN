@@ -8,14 +8,14 @@ eduVPN and Let's Connect! clients are the same client targeted for a different a
 
 2. WireGuard Service Host
 
-   - [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduWGSvcHost/Resources.rc)
-   - [Messages.mc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduWGSvcHost/Messages.mc)
+   - [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/ver/3.x/eduWGSvcHost/Resources.rc)
+   - [Messages.mc at GitHub](https://github.com/Amebis/eduVPN/blob/ver/3.x/eduWGSvcHost/Messages.mc)
 
 3. Setup
 
-   - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/eduVPN.wxl)
-   - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/master/Install/thm.wxl)
-   - Start menu shortcut and ARP texts, OpenVPN Interactive Service entries in SCM [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/master/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
+   - MSI packages [eduVPN.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/ver/3.x/Install/eduVPN.wxl)
+   - EXE bundle [thm.wxl at GitHub](https://github.com/Amebis/eduVPN/blob/ver/3.x/Install/thm.wxl)
+   - Start menu shortcut and ARP texts, OpenVPN Interactive Service entries in SCM [Resources.rc at GitHub](https://github.com/Amebis/eduVPN/blob/ver/3.x/eduVPN.Resources/Resources.rc) <sup>[1]</sup>
 
 
 ## General Guidelines

@@ -63,7 +63,7 @@ Clean ::
 {"arguments": "/install",
 "uri": [ "https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" ],
 "version": "$(VERSION)",
-"changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
+"changelog_uri": "https://github.com/Amebis/eduVPN/blob/ver/3.x/CHANGES.md",
 <<NOKEEP
 	for /f %%a in ('CertUtil.exe -hashfile $** SHA256 ^| findstr /r "^[0-9a-f]*$$"') do @echo "hash-sha256": "%%a"}>> "$(@:"=).tmp"
 	move /y "$(@:"=).tmp" $@ > NUL
