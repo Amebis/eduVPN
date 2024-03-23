@@ -9,6 +9,7 @@
 [submodule "eduOAuth"]
 	path = eduOAuth
 	url = https://github.com/Amebis/eduOAuth.git
+	branch = eduVPN/3.x
 [submodule "eduOpenVPN"]
 	path = eduOpenVPN
 	url = https://github.com/Amebis/eduOpenVPN.git
