@@ -13,6 +13,7 @@
 [submodule "eduEx"]
 	path = eduEx
 	url = https://github.com/Amebis/eduEx.git
+	branch = eduVPN/3.x
 [submodule "openvpn"]
 	path = openvpn
 	url = https://github.com/Amebis/openvpn.git
