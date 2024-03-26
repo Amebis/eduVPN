@@ -29,11 +29,6 @@ namespace eduVPN.ViewModels.Windows
     {
         #region Fields
 
-        /// <summary>
-        /// Stack of displayed popup pages
-        /// </summary>
-        private readonly List<ConnectWizardPopupPage> PopupPages = new List<ConnectWizardPopupPage>();
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly byte[] Entropy =
         {
@@ -87,45 +82,13 @@ namespace eduVPN.ViewModels.Windows
             get
             {
                 if (_NavigateTo == null)
-                    _NavigateTo = new DelegateCommand<ConnectWizardPopupPage>(
-                        page =>
-                        {
-                            var displayPagePrev = DisplayPage;
-                            var removed = PopupPages.Remove(page);
-                            PopupPages.Add(page);
-                            if (!removed) page.OnActivate();
-                            if (displayPagePrev != DisplayPage)
-                                RaisePropertyChanged(nameof(DisplayPage));
-                        });
+                    _NavigateTo = new DelegateCommand<ConnectWizardPopupPage>(page => PopupPage = page);
                 return _NavigateTo;
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DelegateCommand<ConnectWizardPopupPage> _NavigateTo;
-
-        /// <summary>
-        /// Navigate back from a pop-up page command
-        /// </summary>
-        public DelegateCommand<ConnectWizardPopupPage> NavigateBack
-        {
-            get
-            {
-                if (_NavigateBack == null)
-                    _NavigateBack = new DelegateCommand<ConnectWizardPopupPage>(
-                        page =>
-                        {
-                            var displayPagePrev = DisplayPage;
-                            PopupPages.Remove(page);
-                            if (displayPagePrev != DisplayPage)
-                                RaisePropertyChanged(nameof(DisplayPage));
-                        });
-                return _NavigateBack;
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand<ConnectWizardPopupPage> _NavigateBack;
 
         /// <summary>
         /// Occurs when auto-reconnection failed.
@@ -144,7 +107,27 @@ namespace eduVPN.ViewModels.Windows
         /// <summary>
         /// The page the wizard is currently displaying
         /// </summary>
-        public ConnectWizardPage DisplayPage => PopupPages.Count > 0 ? (ConnectWizardPage)PopupPages.Last() : _CurrentPage;
+        public ConnectWizardPage DisplayPage => (ConnectWizardPage)PopupPage ?? _CurrentPage;
+
+        /// <summary>
+        /// The popup page wizard is showing.
+        /// </summary>
+        public ConnectWizardPopupPage PopupPage
+        {
+            get => _PopupPage;
+            set
+            {
+                if (SetProperty(ref _PopupPage, value))
+                {
+                    if (_PopupPage != null)
+                        _PopupPage.OnActivate();
+                    RaisePropertyChanged(nameof(DisplayPage));
+                }
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ConnectWizardPopupPage _PopupPage;
 
         /// <summary>
         /// The page the wizard should be displaying (if no pop-up page)
@@ -156,9 +139,9 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (SetProperty(ref _CurrentPage, value))
                 {
-                    _CurrentPage.OnActivate();
-                    if (PopupPages.Count <= 0)
-                        RaisePropertyChanged(nameof(DisplayPage));
+                    if (_CurrentPage != null)
+                        _CurrentPage.OnActivate();
+                    RaisePropertyChanged(nameof(DisplayPage));
                 }
             }
         }

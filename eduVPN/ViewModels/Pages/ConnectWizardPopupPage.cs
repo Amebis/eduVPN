@@ -24,7 +24,7 @@ namespace eduVPN.ViewModels.Pages
             get
             {
                 if (_NavigateBack == null)
-                    _NavigateBack = new DelegateCommand(() => Wizard.NavigateBack.Execute(this));
+                    _NavigateBack = new DelegateCommand(() => Wizard.PopupPage = null);
                 return _NavigateBack;
             }
         }
