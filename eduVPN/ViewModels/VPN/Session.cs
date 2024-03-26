@@ -575,42 +575,48 @@ namespace eduVPN.ViewModels.VPN
                         }
                         Wizard.TryInvoke((Action)(() => State = SessionStatusType.Initializing));
                         Engine.SetState(Engine.State.Connecting);
-
-                        // Is the default gateway a VPN already?
-                        using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                        try
                         {
-                            using (var networkKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}", false))
+                            // Is the default gateway a VPN already?
+                            using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                             {
-                                foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
-                                    .Where(n =>
-                                        n.OperationalStatus == OperationalStatus.Up &&
-                                        n.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                                        n.GetIPProperties()?.GatewayAddresses.Count > 0))
+                                using (var networkKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}", false))
                                 {
-                                    try
+                                    foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                                        .Where(n =>
+                                            n.OperationalStatus == OperationalStatus.Up &&
+                                            n.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                                            n.GetIPProperties()?.GatewayAddresses.Count > 0))
                                     {
-                                        using (var connectionKey = networkKey.OpenSubKey(iface.Id + "\\Connection", false))
+                                        try
                                         {
-                                            var pnpInstanceId = connectionKey.GetValue("PnPInstanceId").ToString();
-                                            using (var deviceKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Enum\\" + pnpInstanceId, false))
+                                            using (var connectionKey = networkKey.OpenSubKey(iface.Id + "\\Connection", false))
                                             {
-                                                var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
-                                                if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
-                                                    Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                                var pnpInstanceId = connectionKey.GetValue("PnPInstanceId").ToString();
+                                                using (var deviceKey = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Enum\\" + pnpInstanceId, false))
+                                                {
+                                                    var hardwareIds = deviceKey.GetValue("HardwareID") as string[];
+                                                    if (hardwareIds.FirstOrDefault(hwid => VPNHardwareIds.Contains(hwid)) != null)
+                                                        Wizard.TryInvoke((Action)(() => Wizard.Error = new Exception(Resources.Strings.WarningDefaultGatewayIsVPN)));
+                                                }
                                             }
                                         }
-                                    }
-                                    catch (OperationCanceledException) { throw; }
-                                    catch
-                                    {
-                                        // Detecting default gateway VPN is advisory-only. Not the end of the world if the test fails.
+                                        catch (OperationCanceledException) { throw; }
+                                        catch
+                                        {
+                                            // Detecting default gateway VPN is advisory-only. Not the end of the world if the test fails.
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        // Finally!
-                        Run();
+                            // Finally!
+                            Run();
+                        }
+                        finally
+                        {
+                            Engine.SetState(Engine.State.Disconnecting);
+                        }
                     }
                     finally
                     {

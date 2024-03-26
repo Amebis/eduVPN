@@ -198,7 +198,6 @@ namespace eduVPN.ViewModels.VPN
                                     }
                             }
 
-                            Engine.SetState(Engine.State.Connected);
                             Wizard.TryInvoke((Action)(() =>
                             {
                                 TunnelAddress = tunnelAddress;
@@ -206,6 +205,7 @@ namespace eduVPN.ViewModels.VPN
                                 State = SessionStatusType.Connected;
                                 Wizard.TaskCount--;
                             }));
+                            Engine.SetState(Engine.State.Connected);
                             try
                             {
                                 // Wait for a change and update stats.
@@ -229,12 +229,12 @@ namespace eduVPN.ViewModels.VPN
                                 } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(5 * 1000));
                             }
                             finally {
+                                Engine.SetState(Engine.State.Disconnecting);
                                 Wizard.TryInvoke((Action)(() =>
                                 {
                                     Wizard.TaskCount++;
                                     State = SessionStatusType.Disconnecting;
                                 }));
-                                Engine.SetState(Engine.State.Disconnecting);
                             }
                         }
                         finally { managerSession.Deactivate(); }
@@ -242,7 +242,6 @@ namespace eduVPN.ViewModels.VPN
                 }
                 finally
                 {
-                    Engine.SetState(Engine.State.Disconnecting);
                     propertyUpdater.Stop();
                     Wizard.TryInvoke((Action)(() =>
                     {
