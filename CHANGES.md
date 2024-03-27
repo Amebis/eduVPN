@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.13...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.14...HEAD)
+
+
+## [3.255.14](https://github.com/Amebis/eduVPN/compare/3.255.13...3.255.14) (2024-03-27)
 
 - Failover from UDP to TCP upgraded to detect no traffic condition better
 - Fixes
