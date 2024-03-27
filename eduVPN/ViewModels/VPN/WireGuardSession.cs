@@ -211,6 +211,7 @@ namespace eduVPN.ViewModels.VPN
                                 // Wait for a change and update stats.
                                 do
                                 {
+                                    //throw new Exception("Test exception");
                                     var cfg = managerSession.GetTunnelConfig(SessionAndWindowInProgress.Token);
                                     ulong rxBytes = 0, txBytes = 0;
                                     DateTimeOffset lastHandshake = DateTimeOffset.MinValue;

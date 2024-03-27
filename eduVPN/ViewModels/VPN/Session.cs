@@ -650,8 +650,11 @@ namespace eduVPN.ViewModels.VPN
                                         Wizard.Connect(Server, true, true);
                                         break;
                                     default:
-                                        if (!SessionInProgress.IsCancellationRequested)
-                                            Wizard.Connect(Server, Properties.Settings.Default.PreferTCP);
+                                        // TODO: The code below immediately reconnected on any failures.
+                                        // Should a persistent failure occur on VPN connection setup,
+                                        // this leads to a crazy loop of reconnecting. Implement smarter!
+                                        //if (!SessionInProgress.IsCancellationRequested)
+                                        //    Wizard.Connect(Server, Properties.Settings.Default.PreferTCP);
                                         break;
                                 }
                             }
