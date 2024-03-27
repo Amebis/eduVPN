@@ -216,6 +216,9 @@
     <value>Votre ordinateur n'a pas installé les mises à jour Windows récemment. Veuillez vérifier les mises à jour et/ou installer une version plus récente et supportée de Windows.
 Votre organisation peut décider à l'avenir d'interdire les connexions provenant d'ordinateurs non mis à jour.</value>
   </data>
+  <data name="WarningNoTrafficDetected" xml:space="preserve">
+    <value>Aucun traffic de données VPN n'a été détecté. Il est possible que votre connexion Internet bloque ou limite le traffic UDP. Envisagez de passer au TCP.</value>
+  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Il y a d'autres sessions utilisateur sur cet ordinateur. L'établissement d'une connexion VPN à cet instant donnerait aussi accès au réseau aux autres utilisateurs. En attente de la déconnexion des autres utilisateurs...</value>
   </data>

@@ -216,6 +216,9 @@
     <value>Din datamaskin har ikke fått installert Windows-oppdateringer på en stund. Sjekk oppdateringstatus og/eller oppdater din datamaskin til en nyere og støttet versjon av Windows.
 Din organisasjon kan velge å hindre oppkobling fra usikrede datamaskiner i framtiden.</value>
   </data>
+  <data name="WarningNoTrafficDetected" xml:space="preserve">
+    <value>Ingen VPN trafikk ble detektert. Kanskje din internett leverandør blokkerer eller begrenser UDP trafikk. Vurder å bytte til TCP oppkobling.</value>
+  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Det finnes andre brukersesjoner på denne datamaskinen. Å opprette en VPN-forbindelse nå vil gi nettverkstilgang til andre brukere også. Venter på at andre brukere logger ut først...</value>
   </data>

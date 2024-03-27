@@ -33,7 +33,12 @@ namespace eduVPN.ViewModels.VPN
         Connecting,
 
         /// <summary>
-        /// Client is connected.
+        /// Client connection is setup, but connectivity is not yet confirmed.
+        /// </summary>
+        Testing,
+
+        /// <summary>
+        /// Client is connected, connectivity is confirmed.
         /// </summary>
         Connected,
 

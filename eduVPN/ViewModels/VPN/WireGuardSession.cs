@@ -202,7 +202,7 @@ namespace eduVPN.ViewModels.VPN
                             {
                                 TunnelAddress = tunnelAddress;
                                 IPv6TunnelAddress = ipv6TunnelAddress;
-                                State = SessionStatusType.Connected;
+                                State = SessionStatusType.Testing;
                                 Wizard.TaskCount--;
                             }));
                             Engine.SetState(Engine.State.Connected);

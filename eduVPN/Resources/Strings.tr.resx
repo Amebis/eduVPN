@@ -215,6 +215,9 @@
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
     <value>Bilgisayarınız bir süredir herhangi bir Windows Güncellemesi yüklemedi. Lütfen güncelleme durumunu kontrol edin ve/veya bilgisayarınızı daha yeni ve desteklenen bir Windows sürümüne yükseltin. Kuruluşunuz gelecekte güvenli olmayan bilgisayarlardan gelen bağlantıları engellemeyi tercih edebilir.</value>
   </data>
+  <data name="WarningNoTrafficDetected" xml:space="preserve">
+    <value> VPN trafiği algılanmadı. Belki de internet bağlantınız UDP trafiğini engelliyor veya sınırlıyor. TCP'ye geçmeyi düşünün (mümkün olduğunda).</value>
+  </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Bu bilgisayarda başka kullanıcı oturumları var. Şimdi bir VPN bağlantısı kurmak, diğer kullanıcılara da ağ erişimi sağlar. Önce diğer kullanıcıların oturumu kapatmasını bekliyor...</value>
   </data>

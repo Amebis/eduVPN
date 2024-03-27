@@ -631,6 +631,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Testing....
+        /// </summary>
+        public static string SessionStatusTypeTesting {
+            get {
+                return ResourceManager.GetString("SessionStatusTypeTesting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Waiting....
         /// </summary>
         public static string SessionStatusTypeWaiting {

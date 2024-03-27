@@ -163,6 +163,7 @@
     <Resource Include="Resources\SessionStatusTypeDisconnectingIcon.ico" />
     <Resource Include="Resources\SessionStatusTypeErrorIcon.ico" />
     <Resource Include="Resources\SessionStatusTypeInitializingIcon.ico" />
+    <Resource Include="Resources\SessionStatusTypeTestingIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.ar.resx">

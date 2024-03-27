@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.13...HEAD)
 
+- Failover from UDP to TCP upgraded to detect no traffic condition better
 - Fixes
 
 
