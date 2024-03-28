@@ -60,5 +60,4 @@
     <conv:SessionStatusTypeDescriptionConverter x:Key="SessionStatusTypeDescriptionConverter"/>
     <conv:SessionStatusTypeIconConverter x:Key="SessionStatusTypeIconConverter"/>
     <conv:SessionStatusTypeWindowIconConverter x:Key="SessionStatusTypeWindowIconConverter"/>
-    <conv:SessionTypeConverter x:Key="SessionTypeConverter"/>
 </ResourceDictionary>

@@ -93,7 +93,7 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Profile configuration
         /// </summary>
-        protected string ProfileConfig { get; }
+        protected Configuration Config { get; }
 
         /// <summary>
         /// VPN session worker
@@ -381,14 +381,13 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="server">Connecting eduVPN server</param>
-        /// <param name="profileConfig">Initial profile configuration</param>
+        /// <param name="config">Initial profile configuration</param>
         /// <param name="expiration">VPN expiry times</param>
-        /// <param name="shouldFailover">Should perform failover check</param>
-        public Session(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration, bool shouldFailover)
+        public Session(ConnectWizard wizard, Server server, Configuration config, Expiration expiration)
         {
             Wizard = wizard;
             Server = server;
-            ProfileConfig = profileConfig;
+            Config = config;
             Expiration = expiration;
             Thread = Thread.CurrentThread;
 
@@ -449,7 +448,7 @@ namespace eduVPN.ViewModels.VPN
                                 {
                                     Wizard.TryInvoke((Action)(() =>
                                     {
-                                        if (shouldFailover)
+                                        if (Config.ShouldFailover)
                                         {
                                             TerminationReason = TerminationReason.TunnelFailover;
                                             if (Disconnect.CanExecute())

@@ -120,11 +120,10 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="server">Connecting eduVPN server</param>
-        /// <param name="profileConfig">Initial profile configuration</param>
+        /// <param name="config">Initial profile configuration</param>
         /// <param name="expiration">VPN expiry times</param>
-        /// <param name="shouldFailover">Should perform failover check</param>
-        public OpenVPNSession(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration, bool shouldFailover) :
-            base(wizard, server, profileConfig, expiration, shouldFailover)
+        public OpenVPNSession(ConnectWizard wizard, Server server, Models.Configuration config, Expiration expiration) :
+            base(wizard, server, config, expiration)
         {
             ConnectionId = Guid.NewGuid().ToString();
         }
@@ -132,6 +131,13 @@ namespace eduVPN.ViewModels.VPN
         #endregion
 
         #region Methods
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return "OpenVPN";
+        }
+
 
         /// <inheritdoc/>
         protected override void Run()
@@ -164,7 +170,7 @@ namespace eduVPN.ViewModels.VPN
                             if (Properties.SettingsEx.Default.OpenVPNRemoveOptions is StringCollection openVPNRemoveOptions)
                             {
                                 // Remove options on the OpenVPNRemoveOptions list on the fly.
-                                using (var sr = new StringReader(ProfileConfig))
+                                using (var sr = new StringReader(Config.VPNConfig))
                                 {
                                     string inlineTerm = null;
                                     var inlineRemove = false;
@@ -230,7 +236,7 @@ namespace eduVPN.ViewModels.VPN
                                 }
                             }
                             else
-                                sw.Write(ProfileConfig);
+                                sw.Write(Config.VPNConfig);
 
                             // Append eduVPN Client specific configuration directives.
                             sw.WriteLine();

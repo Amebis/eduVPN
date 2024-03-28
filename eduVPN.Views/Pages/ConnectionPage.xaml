@@ -365,7 +365,7 @@
                     <TextBlock
                         Grid.Row="1"
                         Style="{StaticResource ConnectionInfoMinorValueStyle}"
-                        Text="{Binding ActiveSession, Converter={StaticResource SessionTypeConverter}}"/>
+                        Text="{Binding ActiveSession}"/>
                 </Grid>
 
                 <TextBlock

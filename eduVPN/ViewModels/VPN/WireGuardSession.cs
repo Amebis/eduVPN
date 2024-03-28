@@ -134,11 +134,10 @@ namespace eduVPN.ViewModels.VPN
         /// </summary>
         /// <param name="wizard">The connecting wizard</param>
         /// <param name="server">Connecting eduVPN server</param>
-        /// <param name="profileConfig">Initial profile configuration</param>
+        /// <param name="config">Initial profile configuration</param>
         /// <param name="expiration">VPN expiry times</param>
-        /// <param name="shouldFailover">Should perform failover check</param>
-        public WireGuardSession(ConnectWizard wizard, Server server, string profileConfig, Expiration expiration, bool shouldFailover) :
-            base(wizard, server, profileConfig, expiration, shouldFailover)
+        public WireGuardSession(ConnectWizard wizard, Server server, Configuration config, Expiration expiration) :
+            base(wizard, server, config, expiration)
         {
             TunnelName =
                 Uri.TryCreate(server.Id, UriKind.Absolute, out var uri) ? uri.Host :
@@ -150,6 +149,17 @@ namespace eduVPN.ViewModels.VPN
         #endregion
 
         #region Methods
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            switch (Config.Protocol)
+            {
+                case VPNProtocol.WireGuard: return "WireGuard";
+                case VPNProtocol.WireGuardProxy: return "WireGuard (TCP)";
+                default: throw new ArgumentOutOfRangeException(nameof(Config.Protocol));
+            }
+        }
 
         /// <inheritdoc/>
         protected override void Run()
@@ -174,7 +184,7 @@ namespace eduVPN.ViewModels.VPN
                             managerSession.Activate(
                                 "eduWGManager" + Properties.Settings.Default.WireGuardTunnelManagerServiceInstance,
                                 TunnelName,
-                                ProfileConfig,
+                                Config.VPNConfig,
                                 3000,
                                 SessionAndWindowInProgress.Token);
                         }
@@ -183,7 +193,7 @@ namespace eduVPN.ViewModels.VPN
                         try
                         {
                             IPAddress tunnelAddress = null, ipv6TunnelAddress = null;
-                            using (var reader = new StringReader(ProfileConfig))
+                            using (var reader = new StringReader(Config.VPNConfig))
                             {
                                 var iface = new eduWireGuard.Interface(reader);
                                 foreach (var a in iface.Addresses)
