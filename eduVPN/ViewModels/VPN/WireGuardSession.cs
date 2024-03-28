@@ -209,6 +209,7 @@ namespace eduVPN.ViewModels.VPN
                             try
                             {
                                 // Wait for a change and update stats.
+                                int millisecondTimeout = 100;
                                 do
                                 {
                                     //throw new Exception("Test exception");
@@ -235,7 +236,8 @@ namespace eduVPN.ViewModels.VPN
                                         // Ignore tunnel status update failures. Immediately after resume from sleep,
                                         // GetTunnelConfig() is sometimes throwing with ERROR_FILE_NOT_FOUND (2).
                                     }
-                                } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(5 * 1000));
+                                    millisecondTimeout = Math.Min(millisecondTimeout + 100, 5 * 1000);
+                                } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(millisecondTimeout));
                             }
                             finally {
                                 Engine.SetState(Engine.State.Disconnecting);
