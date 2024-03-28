@@ -19,10 +19,10 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <StringPooling>true</StringPooling>
-      <PreprocessorDefinitions>VERSION=3.255.15;VERSION_ARRAY=$([System.String]::Copy('3.255.15').Replace('.',','));%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VERSION=3.255.16;VERSION_ARRAY=$([System.String]::Copy('3.255.16').Replace('.',','));%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>VERSION=3.255.15;VERSION_ARRAY=$([System.String]::Copy('3.255.15').Replace('.',','));%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VERSION=3.255.16;VERSION_ARRAY=$([System.String]::Copy('3.255.16').Replace('.',','));%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
