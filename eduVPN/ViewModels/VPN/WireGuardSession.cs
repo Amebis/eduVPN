@@ -212,21 +212,29 @@ namespace eduVPN.ViewModels.VPN
                                 do
                                 {
                                     //throw new Exception("Test exception");
-                                    var cfg = managerSession.GetTunnelConfig(SessionAndWindowInProgress.Token);
-                                    ulong rxBytes = 0, txBytes = 0;
-                                    DateTimeOffset lastHandshake = DateTimeOffset.MinValue;
-                                    foreach (var peer in cfg.Peers)
+                                    try
                                     {
-                                        rxBytes += peer.RxBytes;
-                                        txBytes += peer.TxBytes;
-                                        if (lastHandshake < peer.LastHandshake)
-                                            lastHandshake = peer.LastHandshake;
+                                        var cfg = managerSession.GetTunnelConfig(SessionAndWindowInProgress.Token);
+                                        ulong rxBytes = 0, txBytes = 0;
+                                        DateTimeOffset lastHandshake = DateTimeOffset.MinValue;
+                                        foreach (var peer in cfg.Peers)
+                                        {
+                                            rxBytes += peer.RxBytes;
+                                            txBytes += peer.TxBytes;
+                                            if (lastHandshake < peer.LastHandshake)
+                                                lastHandshake = peer.LastHandshake;
+                                        }
+                                        Wizard.TryInvoke((Action)(() =>
+                                        {
+                                            RxBytes = rxBytes;
+                                            TxBytes = txBytes;
+                                        }));
                                     }
-                                    Wizard.TryInvoke((Action)(() =>
-                                    {
-                                        RxBytes = rxBytes;
-                                        TxBytes = txBytes;
-                                    }));
+                                    catch (OperationCanceledException) { throw; }
+                                    catch {
+                                        // Ignore tunnel status update failures. Immediately after resume from sleep,
+                                        // GetTunnelConfig() is sometimes throwing with ERROR_FILE_NOT_FOUND (2).
+                                    }
                                 } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(5 * 1000));
                             }
                             finally {

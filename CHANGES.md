@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.14...HEAD)
 
+- Fixes
+
+
 
 ## [3.255.14](https://github.com/Amebis/eduVPN/compare/3.255.13...3.255.14) (2024-03-27)
 
