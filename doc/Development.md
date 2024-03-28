@@ -46,7 +46,7 @@
       The path used is only an example. If filesystem permissions and system-wide setup is not your thing, vcpkg may be installed anywhere in your user home folder.
    - Bootstrap with `C:\ProgramData\SDK\vcpkg\bootstrap-vcpkg -disableMetrics`
    - Integrate into MSBuild/Visual Studio with `C:\ProgramData\SDK\vcpkg\vcpkg integrate install`
-3. Install [Go](https://go.dev/) 1.18 or later.
+3. Install [Go](https://go.dev/) 1.18 or later. The last Go version that produces Windows 7-compatible binaries is 1.20.x.
 4. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 5. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).
 6. Install [WiX Toolset 3.14.0.5722 or compatible (See _Development Builds_ section)](https://wixtoolset.org/docs/wix3/#development-builds) (required for MSI and EXE installer packaging). Currently, this project does not support WiX Toolset 4 yet, as v4 is not a snap-in replacement for v3.14.
