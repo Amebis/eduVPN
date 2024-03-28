@@ -217,7 +217,7 @@
 La tua organizzazione potrebbe scegliere di prevenire connessioni da computer non sicuri in futuro.</value>
   </data>
   <data name="WarningNoTrafficDetected" xml:space="preserve">
-    <value>No VPN traffic was detected. Maybe your internet connection is blocking or limiting UDP traffic. Consider switching to TCP (when available).</value>
+    <value>Non è stato rilevato traffico VPN. La tua connessione Internet potrebbe bloccare o limitare il traffico UDP. Valuta la possibilità di passare a TCP (se disponibile)</value>
   </data>
   <data name="WarningAnotherUserSession" xml:space="preserve">
     <value>Ci sono altre sessioni utente su questo computer. Stabilire una connessione VPN ora fornirebbe anche l'accesso alla rete ad altri utenti. In attesa che gli altri utenti escano prima...</value>
