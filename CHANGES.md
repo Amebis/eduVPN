@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.14...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.15...HEAD)
+
+
+## [3.255.15](https://github.com/Amebis/eduVPN/compare/3.255.14...3.255.15) (2024-03-29)
 
 - OpenVPN updated to 2.5.10-20240328
     - openvpn 2.5.10 fccae1fa71140bd66f4a57597ca3c7307ba05b30
