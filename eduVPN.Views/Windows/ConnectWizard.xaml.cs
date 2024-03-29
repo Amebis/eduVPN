@@ -291,6 +291,7 @@ namespace eduVPN.Views.Windows
                     System.Windows.Forms.ToolTipIcon.Warning);
             };
 
+            LocationChanged += Window_LocationChanged;
             Closing += Window_Closing;
 
             // Set context menu data context to allow bindings to work.
@@ -359,6 +360,17 @@ namespace eduVPN.Views.Windows
                     Properties.Settings.Default.SystemTrayMinimizedWarned = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// Saves window location.
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
+        /// <remarks>Occurs when the window's location changes.</remarks>
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Window_Save(sender, e);
         }
 
         /// <summary>
