@@ -119,8 +119,7 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (SetProperty(ref _PopupPage, value))
                 {
-                    if (_PopupPage != null)
-                        _PopupPage.OnActivate();
+                    _PopupPage?.OnActivate();
                     RaisePropertyChanged(nameof(DisplayPage));
                 }
             }
@@ -139,8 +138,7 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (SetProperty(ref _CurrentPage, value))
                 {
-                    if (_CurrentPage != null)
-                        _CurrentPage.OnActivate();
+                    _CurrentPage?.OnActivate();
                     RaisePropertyChanged(nameof(DisplayPage));
                 }
             }

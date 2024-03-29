@@ -127,7 +127,7 @@ namespace eduVPN.ViewModels.VPN
                             RaisePropertyChanged(nameof(ConnectedTime));
                             break;
                     }
-                    _Renew.RaiseCanExecuteChanged();
+                    _Renew?.RaiseCanExecuteChanged();
                 }
 
             }
