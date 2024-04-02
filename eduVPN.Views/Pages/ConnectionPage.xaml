@@ -22,51 +22,6 @@
             <Setter Property="FontSize" Value="16"/>
         </Style>
 
-        <Style x:Key="ConnectionInfoButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ActionControlStyle}">
-            <Setter Property="Background" Value="{StaticResource WindowBrush}"/>
-            <Setter Property="Foreground" Value="{StaticResource WindowTextBrush}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="3,5"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0,1,0,0">
-                            <Grid Margin="{TemplateBinding Padding}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ContentPresenter
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-
-                                <ContentControl
-                                    x:Name="Chevron"
-                                    Grid.Column="1"
-                                    Margin="5"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    ContentTemplate="{StaticResource ChevronDownIcon}"
-                                    IsTabStop="False"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Chevron" Property="ContentTemplate" Value="{StaticResource CloseIcon}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <Style x:Key="ConnectionInfoHeadingStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MicroHeadingStyle}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -278,7 +233,7 @@
 
             <ToggleButton
                 x:Name="ConnectionInfo"
-                Style="{StaticResource ConnectionInfoButtonStyle}">
+                Style="{StaticResource MoreInfoButtonStyle}">
                 <AccessText Text="{x:Static res:Strings.ConnectionPageConnectionInfoLabel}"/>
             </ToggleButton>
 

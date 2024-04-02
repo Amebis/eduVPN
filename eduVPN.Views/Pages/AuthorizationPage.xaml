@@ -16,12 +16,11 @@
     d:DesignHeight="459"
     Style="{StaticResource ConnectWizardPageStyle}">
 
-    <Grid VerticalAlignment="Top">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -38,48 +37,73 @@
             Style="{StaticResource FineprintNoteStyle}"
             Text="{x:Static res:Strings.AuthorizationPageText}"/>
 
-        <TextBlock
-            Grid.Row="2"
-            Margin="22,7,22,2"
-            TextAlignment="Center"
-            Style="{StaticResource FineprintNoteStyle}"
-            Text="{x:Static res:Strings.AuthorizationPageNote}"/>
-
-        <Grid
-            Grid.Row="3"
-            Margin="22,2,22,7">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBox
-                x:Name="Uri"
-                Margin="0, 0, 3, 0"
-                Text="{Binding Uri, Mode=OneWay}"
-                IsReadOnly="True"/>
-
-            <Button
-                Grid.Column="1"
-                Margin="3, 0, 0, 0"
-                Style="{StaticResource AuxButtonStyle}"
-                ToolTip="{Binding Source={x:Static res:Strings.ButtonCopyUriTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopyUriTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
-                Command="{Binding CopyUri}">
-                <ContentControl
-                    ContentTemplate="{StaticResource CopyIcon}"
-                    IsTabStop="False"/>
-            </Button>
-        </Grid>
-
         <Button
-            Grid.Row="4"
+            Grid.Row="2"
             Margin="22,7"
             HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             IsDefault="True"
             AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCancelTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
             Command="{Binding Cancel}">
             <AccessText Text="{x:Static res:Strings.ButtonCancelTitle}"/>
         </Button>
+
+        <Grid
+            Grid.Row="3"
+            Margin="7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ToggleButton
+                x:Name="MoreInfo"
+                Style="{StaticResource MoreInfoButtonStyle}">
+                <AccessText Text="{x:Static res:Strings.AuthorizationPageMoreInfoLabel}"/>
+            </ToggleButton>
+
+            <Grid
+                Grid.Row="1"
+                Margin="3,0,3,7"
+                Visibility="{Binding IsChecked, ElementName=MoreInfo, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Margin="0,5,0,2"
+                    TextAlignment="Justify"
+                    Style="{StaticResource FineprintNoteStyle}"
+                    Text="{x:Static res:Strings.AuthorizationPageNote}"/>
+
+                <Grid
+                    Grid.Row="1"
+                    Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        x:Name="Uri"
+                        Margin="0, 0, 3, 0"
+                        Text="{Binding Uri, Mode=OneWay}"
+                        IsReadOnly="True"/>
+
+                    <Button
+                        Grid.Column="1"
+                        Margin="3, 0, 0, 0"
+                        Style="{StaticResource AuxButtonStyle}"
+                        ToolTip="{Binding Source={x:Static res:Strings.ButtonCopyUriTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                        AutomationProperties.Name="{Binding Source={x:Static res:Strings.ButtonCopyUriTitle}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                        Command="{Binding CopyUri}">
+                        <ContentControl
+                            ContentTemplate="{StaticResource CopyIcon}"
+                            IsTabStop="False"/>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

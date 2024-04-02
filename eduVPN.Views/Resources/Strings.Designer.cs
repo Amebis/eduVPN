@@ -89,6 +89,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More _info.
+        /// </summary>
+        public static string AuthorizationPageMoreInfoLabel {
+            get {
+                return ResourceManager.GetString("AuthorizationPageMoreInfoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to If your browser did not open for some reason, or you closed the website by accident, here is the URL you may copy&amp;paste into a trusted browser on this computer, and complete the client authorization there:.
         /// </summary>
         public static string AuthorizationPageNote {
