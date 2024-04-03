@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.15...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.16...HEAD)
+
+
+## [3.255.16](https://github.com/Amebis/eduVPN/compare/3.255.15...3.255.16) (2024-04-03)
 
 - Registry value to allow overriding WireGuard kill-switch
 - GUI refinements
