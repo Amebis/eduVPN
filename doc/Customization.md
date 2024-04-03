@@ -75,6 +75,18 @@ Custom options to be added to provisioned OpenVPN profile configuration at run-t
 Use in combination with `OpenVPNRemoveOptions` setting to override the OpenVPN options provisioned by the VPN provider.
 
 
+### `WireGuardKillSwitch` (`REG_DWORD`)
+
+When used as the default gateway, WireGuard has optional firewall rules to block non-tunnel traffic (aka "kill-switch"). This registry setting allows preserving, enforcing or removing the kill-switch at run-time. When registry value is absent, the setting provided by eduVPN server is kept as-is.
+
+Value  | Behavior
+-------|----------
+0      | Keep the setting provided by eduVPN server (Default)
+1      | Enforce kill-switch on any default gateway profile
+2      | Remove kill-switch from any default gateway profile
+
+Note: Use with extreme caution as this might disable remote access, LAN resources, and other VPNs on user computer when enforced. Or, allow data leakage, unintended gateway to organization network, or other VPNs when WireGuard kill-switch is removed. This option allows administrators to balance between convenience and security.
+
 ### Minisign algorithm masks
 
 Value | Algorithm

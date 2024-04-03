@@ -56,6 +56,20 @@ namespace eduWireGuard
             return Convert.ToBase64String(_Bytes);
         }
 
+        /// <summary>
+        /// Tests if key equals all zeros in constant time.
+        /// </summary>
+        /// <returns>true if all zero; false otherwise</returns>
+        public bool IsZero()
+        {
+            if (Bytes == null)
+                return true;
+            byte val = 0;
+            for (int i = 0; i < Bytes.Length; ++i)
+                val |= Bytes[i];
+            return val == 0;
+        }
+
         #endregion
 
         #region IDisposable Support

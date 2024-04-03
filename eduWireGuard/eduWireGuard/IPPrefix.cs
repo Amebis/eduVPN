@@ -17,6 +17,40 @@ namespace eduWireGuard
     /// </summary>
     public class IPPrefix
     {
+        #region Fields
+
+        /// <summary>
+        /// 0.0.0.0/0
+        /// </summary>
+        public static readonly IPPrefix All = new IPPrefix(IPAddress.Any, 0);
+
+        /// <summary>
+        /// 0.0.0.0/1
+        /// </summary>
+        public static readonly IPPrefix LowerHalf = new IPPrefix(IPAddress.Any, 1);
+
+        /// <summary>
+        /// 128.0.0.0/1
+        /// </summary>
+        public static readonly IPPrefix UpperHalf = new IPPrefix(new IPAddress(128), 1);
+
+        /// <summary>
+        /// ::/0
+        /// </summary>
+        public static readonly IPPrefix IPv6All = new IPPrefix(IPAddress.IPv6Any, 0);
+
+        /// <summary>
+        /// ::/1
+        /// </summary>
+        public static readonly IPPrefix IPv6LowerHalf = new IPPrefix(IPAddress.IPv6Any, 1);
+
+        /// <summary>
+        /// 8000::/1
+        /// </summary>
+        public static readonly IPPrefix IPv6UpperHalf = new IPPrefix(new IPAddress(new byte[16]{ 0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0L), 1);
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -106,6 +140,17 @@ namespace eduWireGuard
             }
         }
 
+        /// <summary>
+        /// Constructs an object
+        /// </summary>
+        /// <param name="address">IP address</param>
+        /// <param name="cidr">CIDR</param>
+        public IPPrefix(IPAddress address, byte cidr)
+        {
+            Address = address;
+            CIDR = cidr;
+        }
+
         #endregion
 
         #region Methods
@@ -122,6 +167,41 @@ namespace eduWireGuard
                     return CIDR < 128 ? Address.ToString() + "/" + CIDR.ToString() : Address.ToString();
             }
             return Address.ToString() + "/" + CIDR.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = obj as IPPrefix;
+            if (CIDR != other.CIDR)
+                return false;
+            if (!Address.Equals(other.Address))
+                return false;
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return CIDR.GetHashCode() ^ Address.GetHashCode();
+        }
+
+        public static bool operator ==(IPPrefix left, IPPrefix right)
+        {
+            if (left is null)
+                return right is null;
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(IPPrefix left, IPPrefix right)
+        {
+            return !(left == right);
         }
 
         /// <summary>

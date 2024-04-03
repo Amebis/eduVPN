@@ -7,9 +7,11 @@
 
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
+using eduWireGuard;
 using Microsoft.Win32;
 using Prism.Commands;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -175,6 +177,57 @@ namespace eduVPN.ViewModels.VPN
                 propertyUpdater.Start();
                 try
                 {
+                    Interface iface;
+                    using (var reader = new StringReader(Config.VPNConfig))
+                        iface = new Interface(reader);
+                    switch (Properties.SettingsEx.Default.WireGuardKillSwitch)
+                    {
+                        case WireGuardKillSwitchMode.Enforce:
+                            foreach (var peer in iface.Peers)
+                            {
+                                IEnumerable<IPPrefix> allowedIPs = peer.AllowedIPs;
+                                if (allowedIPs.Any(addr => addr == IPPrefix.LowerHalf) &&
+                                    allowedIPs.Any(addr => addr == IPPrefix.UpperHalf))
+                                {
+                                    allowedIPs = allowedIPs
+                                        .Where(addr => addr != IPPrefix.LowerHalf && addr != IPPrefix.UpperHalf)
+                                        .Union(new IPPrefix[] { IPPrefix.All });
+                                }
+                                if (allowedIPs.Any(addr => addr == IPPrefix.IPv6LowerHalf) &&
+                                    allowedIPs.Any(addr => addr == IPPrefix.IPv6UpperHalf))
+                                {
+                                    allowedIPs = allowedIPs
+                                        .Where(addr => addr != IPPrefix.IPv6LowerHalf && addr != IPPrefix.IPv6UpperHalf)
+                                        .Union(new IPPrefix[] { IPPrefix.IPv6All });
+                                }
+                                peer.AllowedIPs = allowedIPs.ToList();
+                            }
+                            break;
+
+                        case WireGuardKillSwitchMode.Remove:
+                            foreach (var peer in iface.Peers)
+                            {
+                                var addr2 = new List<IPPrefix>();
+                                foreach (var addr in peer.AllowedIPs)
+                                {
+                                    if (addr == IPPrefix.All)
+                                    {
+                                        addr2.Add(IPPrefix.LowerHalf);
+                                        addr2.Add(IPPrefix.UpperHalf);
+                                    }
+                                    else if (addr == IPPrefix.IPv6All)
+                                    {
+                                        addr2.Add(IPPrefix.IPv6LowerHalf);
+                                        addr2.Add(IPPrefix.IPv6UpperHalf);
+                                    }
+                                    else
+                                        addr2.Add(addr);
+                                }
+                                peer.AllowedIPs = addr2;
+                            }
+                            break;
+                    }
+
                     // Connect to WireGuard Tunnel Manager Service to activate the tunnel.
                     using (var managerSession = new eduWireGuard.ManagerService.Session())
                     {
@@ -184,7 +237,7 @@ namespace eduVPN.ViewModels.VPN
                             managerSession.Activate(
                                 "eduWGManager" + Properties.Settings.Default.WireGuardTunnelManagerServiceInstance,
                                 TunnelName,
-                                Config.VPNConfig,
+                                iface.ToWgQuick(),
                                 3000,
                                 SessionAndWindowInProgress.Token);
                         }
@@ -193,20 +246,16 @@ namespace eduVPN.ViewModels.VPN
                         try
                         {
                             IPAddress tunnelAddress = null, ipv6TunnelAddress = null;
-                            using (var reader = new StringReader(Config.VPNConfig))
-                            {
-                                var iface = new eduWireGuard.Interface(reader);
-                                foreach (var a in iface.Addresses)
-                                    switch (a.Address.AddressFamily)
-                                    {
-                                        case AddressFamily.InterNetwork:
-                                            tunnelAddress = a.Address;
-                                            break;
-                                        case AddressFamily.InterNetworkV6:
-                                            ipv6TunnelAddress = a.Address;
-                                            break;
-                                    }
-                            }
+                            foreach (var a in iface.Addresses)
+                                switch (a.Address.AddressFamily)
+                                {
+                                    case AddressFamily.InterNetwork:
+                                        tunnelAddress = a.Address;
+                                        break;
+                                    case AddressFamily.InterNetworkV6:
+                                        ipv6TunnelAddress = a.Address;
+                                        break;
+                                }
 
                             Wizard.TryInvoke((Action)(() =>
                             {

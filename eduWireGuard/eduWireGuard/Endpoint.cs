@@ -53,5 +53,23 @@ namespace eduWireGuard
         }
 
         #endregion
-    }
+
+        #region Methods
+
+        public override string ToString()
+        {
+            return Host + ":" + Port;
+        }
+
+        /// <summary>
+        /// Checks if host is empty.
+        /// </summary>
+        /// <returns>true if host is null or empty; false otherwise</returns>
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(Host);
+        }
+
+        #endregion
+}
 }

@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.ViewModels.VPN;
 using eduVPN.Xml;
 using System;
 using System.Collections.Specialized;
@@ -53,6 +54,17 @@ namespace eduVPN.Properties
                 if (GetValue(nameof(OpenVPNAddOptions), out string[] value))
                     return string.Join(Environment.NewLine, value);
                 return Settings.Default.OpenVPNAddOptions;
+            }
+        }
+
+        /// <see cref="Settings.WireGuardKillSwitch"/>
+        public WireGuardKillSwitchMode WireGuardKillSwitch
+        {
+            get
+            {
+                if (GetValue(nameof(WireGuardKillSwitch), out uint value))
+                    return (WireGuardKillSwitchMode)value;
+                return Settings.Default.WireGuardKillSwitch;
             }
         }
 

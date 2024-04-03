@@ -271,5 +271,18 @@ namespace eduVPN.Properties {
                 this["AccessTokenCache2"] = value;
             }
         }
+        
+        /// <summary>
+        /// WireGuard kill-switch override
+        /// </summary>
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.SettingsDescriptionAttribute("WireGuard kill-switch override")]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Preserve")]
+        public global::eduVPN.ViewModels.VPN.WireGuardKillSwitchMode WireGuardKillSwitch {
+            get {
+                return ((global::eduVPN.ViewModels.VPN.WireGuardKillSwitchMode)(this["WireGuardKillSwitch"]));
+            }
+        }
     }
 }

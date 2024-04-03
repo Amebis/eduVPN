@@ -54,5 +54,8 @@
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableStringDictionary /&gt;</Value>
     </Setting>
+    <Setting Name="WireGuardKillSwitch" Description="WireGuard kill-switch override" Type="eduVPN.ViewModels.VPN.WireGuardKillSwitchMode" Scope="Application">
+      <Value Profile="(Default)">Preserve</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

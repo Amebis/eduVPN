@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 
@@ -227,8 +228,8 @@ namespace eduWireGuard
 
                         case "dns":
                             addresses = SplitList(val);
-                            var DNS = new List<IPAddress>();
-                            var DNSSearch = new List<string>();
+                            DNS = new List<IPAddress>();
+                            DNSSearch = new List<string>();
                             foreach (var a in addresses)
                             {
                                 if (IPAddress.TryParse(a, out var address))
@@ -406,6 +407,72 @@ namespace eduWireGuard
                 list[i] = trim;
             }
             return list;
+        }
+
+        /// <summary>
+        /// Converts interface configuration to wg-quick syntax
+        /// </summary>
+        /// <returns>wg-quick configuration</returns>
+        public string ToWgQuick()
+        {
+            using (var output = new StringWriter())
+            {
+                output.WriteLine("[Interface]");
+                output.WriteLine(string.Format("PrivateKey = {0}", PrivateKey.ToString()));
+
+                if (ListenPort > 0)
+                    output.WriteLine(string.Format("ListenPort = {0}", ListenPort));
+
+	            if (Addresses != null && Addresses.Count > 0)
+                    output.WriteLine(string.Format("Address = {0}", string.Join(", ", Addresses.Select(addr => addr.ToString()))));
+
+                if (DNS != null && DNS.Count > 0 || DNSSearch != null && DNSSearch.Count > 0)
+                {
+                    IEnumerable<string> addrStrings = null;
+                    if (DNS != null)
+                        addrStrings = DNS.Select(addr => addr.ToString());
+                    if (DNSSearch != null)
+                        addrStrings = addrStrings != null ? addrStrings.Concat(DNSSearch) : DNSSearch;
+                    output.WriteLine(string.Format("DNS = {0}", string.Join(", ", addrStrings)));
+                }
+
+	            if (MTU > 0)
+                    output.WriteLine(string.Format("MTU = {0}", MTU));
+
+                if (!string.IsNullOrEmpty(PreUp))
+                    output.WriteLine(string.Format("PreUp = {0}", PreUp));
+	            if (!string.IsNullOrEmpty(PostUp))
+                    output.WriteLine(string.Format("PostUp = {0}", PostUp));
+	            if (!string.IsNullOrEmpty(PreDown))
+                    output.WriteLine(string.Format("PreDown = {0}", PreDown));
+	            if (!string.IsNullOrEmpty(PostDown))
+                    output.WriteLine(string.Format("PostDown = {0}", PostDown));
+                if (TableOff)
+                    output.WriteLine("Table = off");
+
+	            foreach (var peer in Peers) {
+                    output.WriteLine("");
+                    output.WriteLine("[Peer]");
+
+                    output.WriteLine(string.Format("PublicKey = {0}", peer.PublicKey.ToString()));
+
+                    if (peer.PresharedKey != null && !peer.PresharedKey.IsZero())
+                        output.WriteLine(string.Format("PresharedKey = {0}", peer.PresharedKey.ToString()));
+
+		            if (peer.AllowedIPs != null && peer.AllowedIPs.Count > 0)
+                        output.WriteLine(string.Format("AllowedIPs = {0}", string.Join(", ", peer.AllowedIPs.Select(addr => addr.ToString()))));
+
+		            if (peer.Endpoint != null && !peer.Endpoint.IsEmpty())
+                        output.WriteLine(string.Format("Endpoint = {0}", peer.Endpoint.ToString()));
+
+		            if (peer.PersistentKeepalive > 0)
+                        output.WriteLine(string.Format("PersistentKeepalive = {0}", peer.PersistentKeepalive));
+
+                    if (peer.ProxyEndpoint != null)
+                        output.WriteLine(string.Format("ProxyEndpoint = {0}", peer.ProxyEndpoint.AbsoluteUri));
+	            }
+                return output.ToString();
+            }
         }
 
         #endregion
