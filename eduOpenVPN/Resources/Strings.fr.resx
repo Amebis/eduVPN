@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Mauvaise utilisation de l'antislash (\) : rappelez-vous que les antislashes sont traitées comme des échappements de shell, si vous voulez utiliser les antislashes dans le nom de fichier Windows, vous devez utiliser des antislashes doubles, telles que "c:\\openvpn\\static.key".</value>
+    <value>Mauvaise utilisation de l'antislash (\) : rappelez-vous que les antislashes sont traitées comme des échappements de shell, si vous voulez utiliser les antislashes dans le nom de fichier Windows, vous devez utiliser des antislashes doubles, telles que "c:\\folder\\file.txt".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1}(Erreur {0})</value>

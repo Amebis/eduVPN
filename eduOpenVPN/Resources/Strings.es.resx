@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Mal uso de barra invertida (\): recuerde que las barras invertidas se tratan como escapes de shell y si necesita pasar caracteres de barra invertida como parte de un nombre de archivo de Windows, debe usar barras invertidas dobles como "c:\\openvpn\\static.key".</value>
+    <value>Mal uso de barra invertida (\): recuerde que las barras invertidas se tratan como escapes de shell y si necesita pasar caracteres de barra invertida como parte de un nombre de archivo de Windows, debe usar barras invertidas dobles como "c:\\folder\\file.txt".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1} (Error {0})</value>

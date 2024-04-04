@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Hatalı ters eğik çizgi (\) kullanımı: ters eğik çizgilerin kabuk kaçışları olarak değerlendirildiğini ve bir Windows dosya adının bir parçası olarak ters eğik çizgi karakterlerini geçirmeniz gerekiyorsa, "c:\\openvpn\\static.key" gibi çift ters eğik çizgi kullanmalısınız. </value>
+    <value>Hatalı ters eğik çizgi (\) kullanımı: ters eğik çizgilerin kabuk kaçışları olarak değerlendirildiğini ve bir Windows dosya adının bir parçası olarak ters eğik çizgi karakterlerini geçirmeniz gerekiyorsa, "c:\\folder\\file.txt" gibi çift ters eğik çizgi kullanmalısınız. </value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1}(Hata {0})</value>

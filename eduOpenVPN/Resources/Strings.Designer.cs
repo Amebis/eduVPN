@@ -19,7 +19,7 @@ namespace eduOpenVPN.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Strings {
@@ -61,7 +61,7 @@ namespace eduOpenVPN.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bad backslash (\) usage: remember that backslashes are treated as shell-escapes and if you need to pass backslash characters as part of a Windows filename, you should use double backslashes such as &quot;c:\\openvpn\\static.key&quot;..
+        ///   Looks up a localized string similar to Bad backslash (\) usage: remember that backslashes are treated as shell-escapes and if you need to pass backslash characters as part of a Windows filename, you should use double backslashes such as &quot;c:\\folder\\file.txt&quot;..
         /// </summary>
         internal static string ErrorBadBackslash {
             get {

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>استخدام خاطئ للخط المائل العكسي (\): تذكر أن الخطوط المائلة العكسية يتم التعامل معها على أنها هروب من "ويندوز شل" ، وإذا كنت بحاجة إلى تمرير أحرف الخط المائل العكسي كجزء من اسم ملف ويندوز ، فيجب استخدام خطوط مائلة عكسية مزدوجة مثل "c:\\openvpn\\static.key".</value>
+    <value>استخدام خاطئ للخط المائل العكسي (\): تذكر أن الخطوط المائلة العكسية يتم التعامل معها على أنها هروب من "ويندوز شل" ، وإذا كنت بحاجة إلى تمرير أحرف الخط المائل العكسي كجزء من اسم ملف ويندوز ، فيجب استخدام خطوط مائلة عكسية مزدوجة مثل "c:\\folder\\file.txt".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1} (خطأ {0})</value>

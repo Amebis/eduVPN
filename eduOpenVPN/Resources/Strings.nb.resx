@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Feil bruk av bakstrek (\): husk at bakstrek blir brukt som shell-escape og hvis du trenger disse som del av et filnavn må du skrive dobbel bakstrek som f.eks. "c:\\openvpn\\static.key".</value>
+    <value>Feil bruk av bakstrek (\): husk at bakstrek blir brukt som shell-escape og hvis du trenger disse som del av et filnavn må du skrive dobbel bakstrek som f.eks. "c:\\folder\\file.txt".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{0} (Feil {1})</value>

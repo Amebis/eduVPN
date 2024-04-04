@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Napačna uporaba poševnice nazaj (\): Pomnite, da se poševnice nazaj uporabljajo kot ubežnice lupine in kadar morate ubežnico nazaj podati kot del imena datoteke Windows, uporabite dvojne ubežnice nazaj, kot na primer "c:\\openvpn\\static.key".</value>
+    <value>Napačna uporaba poševnice nazaj (\): Pomnite, da se poševnice nazaj uporabljajo kot ubežnice lupine in kadar morate ubežnico nazaj podati kot del imena datoteke Windows, uporabite dvojne ubežnice nazaj, kot na primer "c:\\folder\\file.txt".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1} (napaka {0})</value>

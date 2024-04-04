@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Verkeerd backslash (\) gebruik: vergeet niet dat backslashes worden behandeld als shell-escapes en als je backslash karakters moet doorgeven als onderdeel van een Windows bestandsnaam, moet je dubbele backslash gebruiken zoals "c:\\openvpn\\static.key".</value>
+    <value>Verkeerd backslash (\) gebruik: vergeet niet dat backslashes worden behandeld als shell-escapes en als je backslash karakters moet doorgeven als onderdeel van een Windows bestandsnaam, moet je dubbele backslash gebruiken zoals "c:\\folder\\file.txt".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1} (Fout {0})</value>

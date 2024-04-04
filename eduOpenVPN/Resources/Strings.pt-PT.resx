@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorBadBackslash" xml:space="preserve">
-    <value>Mau uso do caracter (\): lembre-se que as barras invertidas são tratadas como saídas da sessão remota e se tiver necessidade de passar esses caracteres como parte de um nome de ficheiro Windows, deverá usar duplamente a barra invertida, da seguinte forma "c:\\openvpn\\static.key".</value>
+    <value>Mau uso do caracter (\): lembre-se que as barras invertidas são tratadas como saídas da sessão remota e se tiver necessidade de passar esses caracteres como parte de um nome de ficheiro Windows, deverá usar duplamente a barra invertida, da seguinte forma "c:\\folder\\file.txt".</value>
   </data>
   <data name="ErrorInteractiveService" xml:space="preserve">
     <value>{1} (Erro {0})</value>
