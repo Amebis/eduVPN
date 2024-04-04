@@ -58,11 +58,11 @@ namespace eduVPN.Models
             EndAt = DateTimeOffset.FromUnixTimeSeconds(endAtUnix = eduJSON.Parser.GetValue<long>(obj, "end_time"));
             ButtonAt = DateTimeOffset.FromUnixTimeSeconds(eduJSON.Parser.GetValue<long>(obj, "button_time"));
             CountdownAt = DateTimeOffset.FromUnixTimeSeconds(eduJSON.Parser.GetValue<long>(obj, "countdown_time"));
-            NotificationAt =
-                eduJSON.Parser.GetValue<List<object>>(obj, "notification_times")
-                    .Where(value => value is long l && startedAtUnix <= l && l <= endAtUnix - 5)
-                    .Select(value => DateTimeOffset.FromUnixTimeSeconds((long)value))
-                    .ToList();
+            NotificationAt = eduJSON.Parser.GetValue<List<object>>(obj, "notification_times", out var notification_times) ? notification_times
+                .Where(value => value is long l && startedAtUnix <= l && l <= endAtUnix - 5)
+                .Select(value => DateTimeOffset.FromUnixTimeSeconds((long)value))
+                .ToList() :
+                new List<DateTimeOffset>();
         }
 
         #endregion
