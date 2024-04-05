@@ -1,0 +1,284 @@
+﻿<?xml version="1.0"?>
+<!--
+    VirusTotal - Helper script for VirusTotal interaction
+
+    Copyright: 2024 The Commons Conservancy
+    SPDX-License-Identifier: GPL-3.0+
+-->
+<package>
+	<job id="Analyze">
+		<runtime>
+			<description>Upload file for analysis</description>
+			<unnamed name="&lt;source&gt;" helpstring="Source file" required="true"/>
+			<unnamed name="&lt;response.json&gt;" helpstring="Response" required="false"/>
+		</runtime>
+		<reference object="ADODB.Stream"/>
+		<reference object="Microsoft.XMLHTTP"/>
+		<reference object="WScript.Shell"/>
+		<script language="JScript"><![CDATA[
+			if (WScript.Arguments.Unnamed.Length < 1) {
+				WScript.Arguments.ShowUsage();
+				WScript.Quit(1);
+			}
+
+			var parseJSON_stat = null;
+			function parseJSON(str)
+			{
+				if (!parseJSON_stat) {
+					parseJSON_stat = {
+						"re_space":  new RegExp("^(\\s|(\\/\\/[^\\n]*\\n|\\/\\*(\\*[^\\/]|[^\\*])*\\*\\/))*"),
+						"re_true":   new RegExp("^true\\b",  "i"),
+						"re_false":  new RegExp("^false\\b", "i"),
+						"re_null":   new RegExp("^null\\b",  "i"),
+						"re_number": new RegExp("^[\\-\\+]?\\d+(\\.\\d+)?([Ee][\\-\\+]?\\d+)?"),
+						"re_string": new RegExp("^(\\\"((\\\\\\\"|[^\\\"\\n])*)\\\"|\\\'((\\\\\\\'|[^\\\'\\n])*)\\\')"),
+						"re_ident":  new RegExp("^(\\w+|\\\"((\\\\\\\"|[^\\\"\\n])*)\\\"|\\\'((\\\\\\\'|[^\\\'\\n])*)\\\')"),
+						"re_escape": new RegExp("\\\\((u)([0-9A-Fa-f]{4,4})|[\\\\\\\\\"\\\'/bfnrt])", "g"),
+						"func_unescape" : function($0, $1, $2, $3)
+						{
+							if ($1 == "\\") return "\\";
+							if ($1 == "\"") return "\"";
+							if ($1 == "\'") return "\'";	// Tolerate escaped apostrophes \'
+							if ($1 == "/")  return "/";
+							if ($1 == "b")  return "\b";
+							if ($1 == "f")  return "\f";
+							if ($1 == "n")  return "\n";
+							if ($1 == "r")  return "\r";
+							if ($1 == "t")  return "\t";
+							if ($2 == "u")  return String.fromCharCode(parseInt($3, 16));
+							return $0;
+						}
+					};
+				}
+
+				function getCodeSection(str)
+				{
+					return str.length < 200 ? str : str.substring(0, 199) + "…";
+				}
+
+				function parse()
+				{
+					var m;
+
+					if (m = str.match(parseJSON_stat.re_true)) {
+						str = str.substring(m.lastIndex);
+						return true;
+					}
+
+					if (m = str.match(parseJSON_stat.re_false)) {
+						str = str.substring(m.lastIndex);
+						return false;
+					}
+
+					if (m = str.match(parseJSON_stat.re_null)) {
+						str = str.substring(m.lastIndex);
+						return null;
+					}
+
+					if (m = str.match(parseJSON_stat.re_number)) {
+						str = str.substring(m.lastIndex);
+						var x = new Number(m[0]).valueOf();
+						var x_32 = x | 0;
+						return x_32 == x ? x_32 : x;
+					}
+
+					if (m = str.match(parseJSON_stat.re_string)) {
+						str = str.substring(m.lastIndex);
+						return m[m[2].length ? 2 : 4].replace(parseJSON_stat.re_escape, parseJSON_stat.func_unescape);
+					}
+
+					var c = str.charAt(0);
+
+					if (c == "[") {
+						var str_tmp = getCodeSection(str);
+						var obj = new Array();
+						var is_empty = true;
+						var has_separator = false;
+						str = str.substring(1);
+						while (str.length) {
+							str = str.replace(parseJSON_stat.re_space, "");
+							if (str.charAt(0) == "]") {
+								str = str.substring(1);
+								return obj;
+							} else if (is_empty || has_separator) {
+								obj.push(parse());
+								is_empty = false;
+								str = str.replace(parseJSON_stat.re_space, "");
+								if (str.charAt(0) == ",") {
+									str = str.substring(1);
+									has_separator = true;
+								} else
+									has_separator = false;
+							} else
+								throw new Error(4, "JSON Syntax Error: Comma \",\" or right bracket \"]\" expected before \"" + getCodeSection(str) + "\"");
+						}
+						throw new Error(4, "JSON Syntax Error: No matching right bracket \"]\" in \"" + str_tmp + "\"");
+					}
+
+					if (c == "{") {
+						var str_tmp = getCodeSection(str);
+						var obj = new Object();
+						var is_empty = true;
+						var has_separator = false;
+						str = str.substring(1);
+						while (str.length) {
+							str = str.replace(parseJSON_stat.re_space, "");
+							if (str.charAt(0) == "}") {
+								str = str.substring(1);
+								return obj;
+							} else if (is_empty || has_separator) {
+								if (!(m = str.match(parseJSON_stat.re_ident)))
+									throw new Error(4, "JSON Syntax Error: Unknown element name \"" + getCodeSection(str) + "\"");
+								str = str.substring(m.lastIndex);
+								var name;
+								     if (m[2].length) name = m[2].replace(parseJSON_stat.re_escape, parseJSON_stat.func_unescape);
+								else if (m[4].length) name = m[4].replace(parseJSON_stat.re_escape, parseJSON_stat.func_unescape);
+								else                  name = m[1];
+								if (name in obj)
+									throw new Error(4, "JSON Syntax Error: Duplicate element name \"" + name + "\"");
+								str = str.replace(parseJSON_stat.re_space, "");
+								if (str.charAt(0) != ":")
+									throw new Error(4, "JSON Syntax Error: Missing semicolon \":\" before \"" + getCodeSection(str) + "\"");
+								str = str.substring(1);
+								str = str.replace(parseJSON_stat.re_space, "");
+								obj[name] = parse();
+								is_empty = false;
+								str = str.replace(parseJSON_stat.re_space, "");
+								if (str.charAt(0) == ",") {
+									str = str.substring(1);
+									has_separator = true;
+								} else
+									has_separator = false;
+							} else
+								throw new Error(4, "JSON Syntax Error: Comma \",\" or right bracket \"}\" expected before \"" + getCodeSection(str) + "\"");
+						}
+						throw new Error(4, "JSON Syntax Error: No matching right bracket \"}\" in \"" + str_tmp + "\"");
+					}
+
+					throw new Error(4, "JSON Syntax Error: Unknown value \"" + getCodeSection(str) + "\"");
+				}
+
+				str = str.replace(parseJSON_stat.re_space, "");
+				var obj = parse();
+				str = str.replace(parseJSON_stat.re_space, "");
+				if (str.length)
+					throw new Error(4, "JSON Syntax Error: Excessive trailing data \"" + getCodeSection(str) + "\"");
+				return obj;
+			}
+
+			var fso = WScript.CreateObject("Scripting.FileSystemObject");
+			var wsh = WScript.CreateObject("WScript.Shell");
+			var env = wsh.Environment("Process");
+			var source_filename = WScript.Arguments.Unnamed(0);
+			var response_filename = WScript.Arguments.Unnamed.Length >= 2 ? WScript.Arguments.Unnamed(1) : null;
+
+			try {
+				var upload_url = "https://www.virustotal.com/api/v3/files";
+				if (fso.GetFile(source_filename).Size > 32000) {
+					var xmlhttp = WScript.CreateObject("Microsoft.XMLHTTP");
+					xmlhttp.open("GET", "https://www.virustotal.com/api/v3/files/upload_url", false);
+					xmlhttp.setRequestHeader("Accept", "application/json");
+					xmlhttp.setRequestHeader("x-apikey", env("VirusTotalAPIKey"));
+					xmlhttp.send();
+					if (xmlhttp.status != 200)
+						throw new Error(xmlhttp.status, "HTTP request failed");
+					upload_url = parseJSON(xmlhttp.responseText).data
+				}
+
+				WScript.Echo(source_filename + ": Sending to VirusTotal...");
+				var exec = wsh.Exec("curl.exe --request POST --url \"" + upload_url + "\" " +
+					"--header \"Accept: application/json\" " +
+					"--header \"Content-Type: multipart/form-data\" " +
+					"--header \"x-apikey: " + env("VirusTotalAPIKey") + "\" " +
+					"--form \"file=@" + source_filename + "\"");
+				while (exec.Status === 0)
+					WScript.Sleep(100)
+				if (exec.Status != 1 || exec.ExitCode != 0)
+					throw new Error(3, source_filename + ": Failed to upload file to VirusTotal");
+				var response_text = exec.StdOut.ReadAll();
+
+				for (;;) {
+					if (response_filename) {
+						var fs = WScript.CreateObject("ADODB.Stream");
+						fs.Open();
+						try {
+							fs.Type = adTypeText;
+							fs.LineSeparator = adCRLF;
+							fs.Charset = "utf-8";
+							fs.WriteText(response_text);
+							fs.SaveToFile(response_filename, adSaveCreateOverWrite);
+						} finally {
+							fs.Close();
+						}
+					}
+					var analysis = parseJSON(response_text);
+					if (analysis.data.type !== "analysis")
+						throw new Error(1, source_filename + ": Response does not contain VirusTotal analysis data");
+					WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file-analysis/" + analysis.data.id);
+
+					if (("attributes" in analysis.data)) {
+						var clean = true;
+						var scan_finished = false;
+						switch (analysis.data.attributes.status) {
+							//case "queued":
+							//	for (var i in analysis.data.attributes.stats) {
+							//		var stat = analysis.data.attributes.stats[i];
+							//		if (stat != 0) {
+							//			WScript.Echo(source_filename + ": " + stat + " " + i);
+							//			clean = false;
+							//		}
+							//	}
+							//	scan_finished = true;
+							//	break;
+
+							case "completed":
+								for (var i in analysis.data.attributes.results) {
+									var result = analysis.data.attributes.results[i];
+									switch (result.category.toLowerCase()) {
+									case "undetected":
+									case "type-unsupported":
+									case "timeout":
+									case "confirmed-timeout":
+										break;
+									default:
+										WScript.Echo(source_filename + ": " + result.engine_name + ": " + result.category);
+										clean = false;
+									}
+								}
+								scan_finished = true;
+								break;
+						}
+						if (scan_finished) {
+							WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file/" + analysis.meta.file_info.sha256);
+							if (clean) {
+								WScript.Echo(source_filename + ": All engines tests were negative");
+								break;
+							}
+							throw new Error(2, source_filename + ": Some engines tests were not negative");
+						}
+					}
+
+					WScript.Sleep(2000);
+					var xmlhttp = WScript.CreateObject("Microsoft.XMLHTTP");
+					xmlhttp.open("GET", analysis.data.links.self, false);
+					xmlhttp.setRequestHeader("Accept", "application/json");
+					xmlhttp.setRequestHeader("x-apikey", env("VirusTotalAPIKey"));
+					xmlhttp.send();
+					if (xmlhttp.status != 200)
+						throw new Error(xmlhttp.status, "HTTP request failed");
+					response_text = xmlhttp.responseText;
+				}
+			} catch (err) {
+				if (response_filename) {
+					// In case of error, delete the output file.
+					if (fso.FileExists(response_filename))
+						fso.DeleteFile(response_filename);
+				}
+
+				throw err;
+			}
+
+			WScript.Quit(0);
+		]]></script>
+	</job>
+</package>
