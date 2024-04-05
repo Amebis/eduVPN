@@ -198,64 +198,45 @@
 				var response_text = exec.StdOut.ReadAll();
 
 				for (;;) {
-					if (response_filename) {
-						var fs = WScript.CreateObject("ADODB.Stream");
-						fs.Open();
-						try {
-							fs.Type = adTypeText;
-							fs.LineSeparator = adCRLF;
-							fs.Charset = "utf-8";
-							fs.WriteText(response_text);
-							fs.SaveToFile(response_filename, adSaveCreateOverWrite);
-						} finally {
-							fs.Close();
-						}
-					}
 					var analysis = parseJSON(response_text);
 					if (analysis.data.type !== "analysis")
 						throw new Error(1, source_filename + ": Response does not contain VirusTotal analysis data");
 					WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file-analysis/" + analysis.data.id);
 
-					if (("attributes" in analysis.data)) {
+					if (("attributes" in analysis.data) && analysis.data.attributes.status === "completed") {
 						var clean = true;
-						var scan_finished = false;
-						switch (analysis.data.attributes.status) {
-							//case "queued":
-							//	for (var i in analysis.data.attributes.stats) {
-							//		var stat = analysis.data.attributes.stats[i];
-							//		if (stat != 0) {
-							//			WScript.Echo(source_filename + ": " + stat + " " + i);
-							//			clean = false;
-							//		}
-							//	}
-							//	scan_finished = true;
-							//	break;
-
-							case "completed":
-								for (var i in analysis.data.attributes.results) {
-									var result = analysis.data.attributes.results[i];
-									switch (result.category.toLowerCase()) {
-									case "undetected":
-									case "type-unsupported":
-									case "timeout":
-									case "confirmed-timeout":
-										break;
-									default:
-										WScript.Echo(source_filename + ": " + result.engine_name + ": " + result.category);
-										clean = false;
-									}
-								}
-								scan_finished = true;
+						for (var i in analysis.data.attributes.results) {
+							var result = analysis.data.attributes.results[i];
+							switch (result.category.toLowerCase()) {
+							case "undetected":
+							case "type-unsupported":
+							case "timeout":
+							case "confirmed-timeout":
+							case "failure":
 								break;
-						}
-						if (scan_finished) {
-							WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file/" + analysis.meta.file_info.sha256);
-							if (clean) {
-								WScript.Echo(source_filename + ": All engines tests were negative");
-								break;
+							default:
+								WScript.Echo(source_filename + ": " + result.engine_name + ": " + result.category);
+								clean = false;
 							}
-							throw new Error(2, source_filename + ": Some engines tests were not negative");
 						}
+						WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file/" + analysis.meta.file_info.sha256);
+						if (!clean)
+							throw new Error(2, source_filename + ": Some engines tests were not negative");
+						WScript.Echo(source_filename + ": All engines tests were negative");
+						if (response_filename) {
+							var fs = WScript.CreateObject("ADODB.Stream");
+							fs.Open();
+							try {
+								fs.Type = adTypeText;
+								fs.LineSeparator = adCRLF;
+								fs.Charset = "utf-8";
+								fs.WriteText(response_text);
+								fs.SaveToFile(response_filename, adSaveCreateOverWrite);
+							} finally {
+								fs.Close();
+							}
+						}
+						break;
 					}
 
 					WScript.Sleep(2000);
