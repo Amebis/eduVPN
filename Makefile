@@ -86,7 +86,7 @@ BuildWireGuard ::
 "bin\llvm-mingw-20220906-msvcrt-x86_64\bin\gcc.exe" :
 	cd "bin"
 	curl.exe --location --output "llvm-mingw-msvcrt.zip" "https://github.com/mstorsjo/llvm-mingw/releases/download/20220906/llvm-mingw-20220906-msvcrt-x86_64.zip"
-	for /f %%a in ('CertUtil -hashfile "llvm-mingw-msvcrt.zip" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do if not "%%a"=="1b63120c346ff78a4e3dba77101a535434a62122d3b44021438a77bdf1b4679a" exit /b 1
+	for /f %%a in ('CertUtil.exe -hashfile "llvm-mingw-msvcrt.zip" SHA256 ^| findstr /r "^[0-9a-f]*$$"') do if not "%%a"=="1b63120c346ff78a4e3dba77101a535434a62122d3b44021438a77bdf1b4679a" exit /b 1
 	tar -xf "llvm-mingw-msvcrt.zip"
 	del /f /q "llvm-mingw-msvcrt.zip"
 	cd "$(MAKEDIR)"

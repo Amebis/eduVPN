@@ -72,7 +72,7 @@ Register :: \
 		start= auto
 	sc.exe description "eduWGManager$$$(CLIENT_TARGET)" "@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduWGSvcHost.exe,-$(IDS_CLIENT_PREFIX)2"
 	net.exe start "eduWGManager$$$(CLIENT_TARGET)"
-	cscript.exe "bin\MkLnk.wsf" //Nologo "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
+	cscript.exe $(CSCRIPT_FLAGS) "bin\MkLnk.wsf" "$(PROGRAMDATA)\Microsoft\Windows\Start Menu\Programs\$(CLIENT_TITLE) Client.lnk" "$(MAKEDIR)\bin\$(CFG)\$(PLAT)\$(CLIENT_TARGET).Client.exe" \
 		/F:"$(MAKEDIR)\bin\$(CFG)\$(PLAT)" \
 		/LN:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)1" \
 		/C:"@$(MAKEDIR)\bin\$(CFG)\$(PLAT)\eduVPN.Resources.dll,-$(IDS_CLIENT_PREFIX)2"
