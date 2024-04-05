@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.16...HEAD)
 
+- Proxyguard updated to 1.0.1
+
 
 ## [3.255.16](https://github.com/Amebis/eduVPN/compare/3.255.15...3.255.16) (2024-04-03)
 
