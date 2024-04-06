@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.17...HEAD)
 
+- govVPN switched to release self-update channel
+
 
 ## [3.255.17](https://github.com/Amebis/eduVPN/compare/3.255.16...3.255.17) (2024-04-05)
 
