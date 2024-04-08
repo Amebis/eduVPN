@@ -8,6 +8,7 @@
 using eduEx.System;
 using eduVPN.Models;
 using eduVPN.ViewModels.VPN;
+using eduVPN.Views.Resources;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -224,8 +225,8 @@ namespace eduVPN.Views.Windows
                         {
                             NotifyIcon.ShowBalloonTip(
                                 1000 * 60 * 5,
-                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.Server),
-                                string.Format(Views.Resources.Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
+                                string.Format(Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.Server),
+                                string.Format(Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
                                 System.Windows.Forms.ToolTipIcon.Info);
                         };
 
@@ -252,8 +253,8 @@ namespace eduVPN.Views.Windows
                                                 // Client connected. Popup the balloon message.
                                                 NotifyIcon.ShowBalloonTip(
                                                     1000 * 5,
-                                                    string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.Profile),
-                                                    string.Format(Views.Resources.Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
+                                                    string.Format(Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.Profile),
+                                                    string.Format(Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
                                                     System.Windows.Forms.ToolTipIcon.Info);
                                                 break;
 
@@ -264,7 +265,7 @@ namespace eduVPN.Views.Windows
                                                     NotifyIcon.ShowBalloonTip(
                                                         1000 * 5,
                                                         eduVPN.Properties.Settings.Default.ClientTitle,
-                                                        Views.Resources.Strings.SystemTrayBalloonDisconnectedMessage,
+                                                        Strings.SystemTrayBalloonDisconnectedMessage,
                                                         System.Windows.Forms.ToolTipIcon.Warning);
                                                 }
                                                 break;
@@ -286,8 +287,8 @@ namespace eduVPN.Views.Windows
             {
                 NotifyIcon.ShowBalloonTip(
                     1000 * 60 * 5,
-                    string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedTitle, e2.ConnectingServer),
-                    string.Format(Views.Resources.Strings.SystemTrayBalloonAutoReconnectFailedMessage2, e2.AuthenticatingServer),
+                    string.Format(Strings.SystemTrayBalloonAutoReconnectFailedTitle, e2.ConnectingServer),
+                    string.Format(Strings.SystemTrayBalloonAutoReconnectFailedMessage2, e2.AuthenticatingServer),
                     System.Windows.Forms.ToolTipIcon.Warning);
             };
 
@@ -354,7 +355,7 @@ namespace eduVPN.Views.Windows
                     NotifyIcon.ShowBalloonTip(
                         1000 * 5,
                         eduVPN.Properties.Settings.Default.ClientTitle,
-                        Views.Resources.Strings.SystemTrayBalloonHiddenMessage,
+                        Strings.SystemTrayBalloonHiddenMessage,
                         System.Windows.Forms.ToolTipIcon.Info);
 
                     Properties.Settings.Default.SystemTrayMinimizedWarned = true;
