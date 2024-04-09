@@ -151,13 +151,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (value && StartSession.CanExecute())
                     StartSession.Execute();
-                else if (!value && ActiveSession != null && ActiveSession.Disconnect.CanExecute())
-                {
-                    ActiveSession.Disconnect.Execute();
-
-                    // Clear server/profile to auto-start on next launch.
-                    Properties.Settings.Default.LastSelectedServer = null;
-                }
+                else if (!value && ActiveSession != null && ActiveSession.Disconnect.CanExecute(true))
+                    ActiveSession.Disconnect.Execute(true);
             }
         }
 
@@ -168,7 +163,7 @@ namespace eduVPN.ViewModels.Pages
         {
             get =>
                 StartSession.CanExecute() ||
-                ActiveSession != null && ActiveSession.Disconnect.CanExecute();
+                ActiveSession != null && ActiveSession.Disconnect.CanExecute(true);
         }
 
         /// <summary>

@@ -12,8 +12,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prop="clr-namespace:eduVPN.Properties;assembly=eduVPN"
     xmlns:vmpages="clr-namespace:eduVPN.ViewModels.Pages;assembly=eduVPN"
+    xmlns:windows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    d:DataContext="{d:DesignInstance Type=windows:ConnectWizard}"
     mc:Ignorable="d"
     Title="{Binding ClientTitle, Source={x:Static prop:Settings.Default}}"
     MinWidth="332" d:DesignWidth="332"
@@ -64,6 +67,120 @@
         </DataTemplate>
 
         <ContextMenu x:Key="SystemTrayMenu">
+            <!-- Active Session -->
+            <MenuItem
+                IsEnabled="False"
+                Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.Header>
+                    <TextBlock Text="{Binding ConnectionPage.ActiveSession.State, Mode=OneWay, Converter={StaticResource SessionStatusTypeDescriptionConverter}, FallbackValue={x:Static res:Strings.SessionStatusTypeDisconnected}}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                IsEnabled="False"
+                Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.Header>
+                    <TextBlock Text="{Binding ConnectionPage.ActiveSession.ExpirationTime, Mode=OneWay, Converter={StaticResource TimeSpanToHumanReadableConverter}}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                IsEnabled="False"
+                Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.Header>
+                    <TextBlock Text="{Binding ConnectionPage.ActiveSession.RxBytes, Mode=OneWay, Converter={StaticResource Byte1024ToHumanReadableConverter}, StringFormat={x:Static res:Strings.SystemTrayMenuConnectionInfoBytesIn}}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem   
+                IsEnabled="False"
+                Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.Header>
+                    <TextBlock Text="{Binding ConnectionPage.ActiveSession.TxBytes, Mode=OneWay, Converter={StaticResource Byte1024ToHumanReadableConverter}, StringFormat={x:Static res:Strings.SystemTrayMenuConnectionInfoBytesOut}}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem
+                IsChecked="True"
+                Header="{Binding ConnectionPage.ActiveSession.Profile, Converter={StaticResource EscapeAccessKeyConverter}}"
+                Command="{Binding ConnectionPage.ActiveSession.Disconnect}"
+                Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.CommandParameter>
+                    <sys:Boolean>True</sys:Boolean>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <Separator
+                Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+
+            <!-- Institute Access -->
+            <MenuItem
+                x:Name="InstituteAccess"
+                IsEnabled="False"
+                Visibility="{Binding HomePage.InstituteAccessServers.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.Icon>
+                    <ContentControl
+                        ContentTemplate="{StaticResource InstituteAccessIcon}"
+                        IsTabStop="False">
+                        <ContentControl.RenderTransform>
+                            <TransformGroup>
+                                <!-- Scale 22×22 to 16×16 -->
+                                <ScaleTransform ScaleX="0.7272727273" ScaleY="0.7272727273"/>
+                            </TransformGroup>
+                        </ContentControl.RenderTransform>
+                    </ContentControl>
+                </MenuItem.Icon>
+                <MenuItem.Header>
+                    <TextBlock Text="{x:Static res:Strings.InstituteAccessLabel}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <Separator
+                Visibility="{Binding HomePage.InstituteAccessServers.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+
+            <!-- Secure Internet -->
+            <MenuItem
+                x:Name="SecureInternet"
+                IsEnabled="False"
+                Visibility="{Binding HomePage.SecureInternetServers.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.Icon>
+                    <ContentControl
+                        ContentTemplate="{StaticResource SecureInternetIcon}"
+                        IsTabStop="False">
+                        <ContentControl.RenderTransform>
+                            <TransformGroup>
+                                <!-- Scale 22×22 to 16×16 -->
+                                <ScaleTransform ScaleX="0.7272727273" ScaleY="0.7272727273"/>
+                            </TransformGroup>
+                        </ContentControl.RenderTransform>
+                    </ContentControl>
+                </MenuItem.Icon>
+                <MenuItem.Header>
+                    <TextBlock Text="{x:Static res:Strings.SecureInternetLabel}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <Separator
+                Visibility="{Binding HomePage.SecureInternetServers.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+
+            <!-- Own Servers -->
+            <MenuItem
+                x:Name="OwnServers"
+                IsEnabled="False"
+                Visibility="{Binding HomePage.OwnServers.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <MenuItem.Icon>
+                    <ContentControl
+                        ContentTemplate="{StaticResource OwnServerIcon}"
+                        IsTabStop="False">
+                        <ContentControl.RenderTransform>
+                            <TransformGroup>
+                                <!-- Scale 22×22 to 16×16 -->
+                                <ScaleTransform ScaleX="0.7272727273" ScaleY="0.7272727273"/>
+                            </TransformGroup>
+                        </ContentControl.RenderTransform>
+                    </ContentControl>
+                </MenuItem.Icon>
+                <MenuItem.Header>
+                    <TextBlock Text="{Binding Discovery, Source={x:Static prop:Settings.Default}, Converter={StaticResource HomePageOwnServerLabelConverter}, FallbackValue={x:Static res:Strings.HomePageOwnServerLabel1}}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <Separator
+                Visibility="{Binding HomePage.OwnServers.Count, Converter={StaticResource IntegerVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>
+
+            <!-- General -->
             <MenuItem
                 Header="{x:Static res:Strings.SystemTrayMenuOpen}"
                 Click="Open_Click"

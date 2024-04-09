@@ -347,25 +347,29 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Disconnect command
         /// </summary>
-        public DelegateCommand Disconnect
+        public DelegateCommand<bool?> Disconnect
         {
             get
             {
                 if (_Disconnect == null)
-                    _Disconnect = new DelegateCommand(
-                        () =>
+                    _Disconnect = new DelegateCommand<bool?>(
+                        isInteractive =>
                         {
+                            // Clear server/profile to auto-start on next launch.
+                            if (isInteractive != null && isInteractive.Value)
+                                Properties.Settings.Default.LastSelectedServer = null;
+
                             State = SessionStatusType.Disconnecting;
                             SessionInProgress.Cancel();
                             _Disconnect.RaiseCanExecuteChanged();
                         },
-                        () => !SessionInProgress.IsCancellationRequested);
+                        isInteractive => !SessionInProgress.IsCancellationRequested);
                 return _Disconnect;
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DelegateCommand _Disconnect;
+        private DelegateCommand<bool?> _Disconnect;
 
         /// <summary>
         /// Show log command
@@ -402,8 +406,8 @@ namespace eduVPN.ViewModels.VPN
                     ValidTo <= DateTimeOffset.Now)
                 {
                     TerminationReason = TerminationReason.Expired;
-                    if (Disconnect.CanExecute())
-                        Disconnect.Execute();
+                    if (Disconnect.CanExecute(false))
+                        Disconnect.Execute(false);
                 }
             };
 
@@ -451,8 +455,8 @@ namespace eduVPN.ViewModels.VPN
                                         if (Config.ShouldFailover)
                                         {
                                             TerminationReason = TerminationReason.TunnelFailover;
-                                            if (Disconnect.CanExecute())
-                                                Disconnect.Execute();
+                                            if (Disconnect.CanExecute(false))
+                                                Disconnect.Execute(false);
                                         }
                                         else
                                             Wizard.Error = new Exception(Resources.Strings.WarningNoTrafficDetected);

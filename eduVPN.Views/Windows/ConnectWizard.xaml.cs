@@ -56,6 +56,11 @@ namespace eduVPN.Views.Windows
         /// </summary>
         private bool DoClose = false;
 
+        /// <summary>
+        /// Server to connect to next after done disconnecting.
+        /// </summary>
+        private Server PendingServerConnect = null;
+
         #endregion
 
         #region Properties
@@ -67,9 +72,8 @@ namespace eduVPN.Views.Windows
         {
             get
             {
-                var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
                 return
-                    (viewModel != null && viewModel.ConnectionPage.ActiveSession != null ?
+                    (DataContext is ViewModels.Windows.ConnectWizard viewModel && viewModel.ConnectionPage.ActiveSession != null ?
                         string.Format("{0} - {1}\r\n{2}",
                             viewModel.ConnectionPage.ActiveSession.Server,
                             viewModel.ConnectionPage.ActiveSession.Profile,
@@ -85,8 +89,9 @@ namespace eduVPN.Views.Windows
         {
             get
             {
-                var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
-                return Icons[viewModel != null && viewModel.ConnectionPage.ActiveSession != null ? viewModel.ConnectionPage.ActiveSession.State : SessionStatusType.Disconnected];
+                return Icons[
+                    DataContext is ViewModels.Windows.ConnectWizard viewModel &&
+                    viewModel.ConnectionPage.ActiveSession != null ? viewModel.ConnectionPage.ActiveSession.State : SessionStatusType.Disconnected];
             }
         }
 
@@ -197,6 +202,14 @@ namespace eduVPN.Views.Windows
             var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
             viewModel.QuitApplication += Exit_Click;
 
+            // Bind to HomePage changes to keep the sys-tray menu list of servers updated.
+            InstituteAccessServers_CollectionChanged(this, null);
+            viewModel.HomePage.InstituteAccessServers.CollectionChanged += InstituteAccessServers_CollectionChanged;
+            SecureInternetServers_CollectionChanged(this, null);
+            viewModel.HomePage.SecureInternetServers.CollectionChanged += SecureInternetServers_CollectionChanged;
+            OwnServers_CollectionChanged(this, null);
+            viewModel.HomePage.OwnServers.CollectionChanged += OwnServers_CollectionChanged;
+
             // Create notify icon, set default icon, and setup events.
             // We need to do this programmatically, since System.Windows.Forms.NotifyIcon is not WPF, but borrowed from WinForms.
             NotifyIcon = new System.Windows.Forms.NotifyIcon()
@@ -215,6 +228,17 @@ namespace eduVPN.Views.Windows
                     // Active session changed: sync the tray icon.
                     NotifyIcon.Text = TrayIconToolTipText;
                     NotifyIcon.Icon = TrayIcon;
+
+                    // Active session changed: sync the tray menu checkboxes.
+                    foreach (var item in (Resources["SystemTrayMenu"] as ContextMenu)?.Items)
+                        if (item is MenuItem menuItem && menuItem.DataContext is Server server)
+                            menuItem.IsChecked = viewModel.ConnectionPage.ActiveSession != null && viewModel.ConnectionPage.ActiveSession.Server.Equals(server);
+
+                    if (viewModel.ConnectionPage.ActiveSession == null && PendingServerConnect != null)
+                    {
+                        Servers_Connect(PendingServerConnect);
+                        PendingServerConnect = null;
+                    }
 
                     if (viewModel.ConnectionPage.ActiveSession != null)
                     {
@@ -393,7 +417,10 @@ namespace eduVPN.Views.Windows
                     case System.Windows.Forms.MouseButtons.Right:
                         // Pop-up context menu.
                         if (Resources["SystemTrayMenu"] is ContextMenu menu)
+                        {
                             menu.IsOpen = true;
+                            menu.Focus();
+                        }
                         break;
                 }
             }
@@ -466,6 +493,116 @@ namespace eduVPN.Views.Windows
                 Properties.Settings.Default.WindowLeft = Left;
                 Properties.Settings.Default.WindowHeight = Height;
                 Properties.Settings.Default.WindowWidth = Width;
+            }
+        }
+
+        /// <summary>
+        /// Updates Institute Access servers in the system-tray menu
+        /// </summary>
+        /// <param name="sender">Event sender (ignored)</param>
+        /// <param name="e">Event arguments (ignored)</param>
+        private void InstituteAccessServers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
+            Servers_CollectionChanged("InstituteAccess", viewModel.HomePage.InstituteAccessServers);
+        }
+
+        /// <summary>
+        /// Updates Secure Internet server in the system-tray menu
+        /// </summary>
+        /// <param name="sender">Event sender (ignored)</param>
+        /// <param name="e">Event arguments (ignored)</param>
+        private void SecureInternetServers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
+            Servers_CollectionChanged("SecureInternet", viewModel.HomePage.SecureInternetServers);
+        }
+
+        /// <summary>
+        /// Updates own servers in the system-tray menu
+        /// </summary>
+        /// <param name="sender">Event sender (ignored)</param>
+        /// <param name="e">Event arguments (ignored)</param>
+        private void OwnServers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
+            Servers_CollectionChanged("OwnServers", viewModel.HomePage.OwnServers);
+        }
+
+        /// <summary>
+        /// Updates system-tray menu available server list
+        /// </summary>
+        /// <param name="sectionName">x:Name of the MenuItem marking start of the server section</param>
+        /// <param name="servers">Collection of available servers</param>
+        private void Servers_CollectionChanged(string sectionName, IEnumerable<Server> servers)
+        {
+            var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
+            var menu = Resources["SystemTrayMenu"] as ContextMenu;
+            var inSection = false;
+            for (int i = 0; i < menu.Items.Count; ++i)
+            {
+                if (inSection)
+                {
+                    while (!(menu.Items[i] is Separator))
+                        menu.Items.RemoveAt(i);
+                    foreach (var menuItem in servers
+                        .OrderBy(server => server.ToString())
+                        .Select(server =>
+                        {
+                            var item = new MenuItem();
+                            item.DataContext = server;
+                            item.Header = server.ToString();
+                            item.IsChecked = viewModel.ConnectionPage.ActiveSession != null && viewModel.ConnectionPage.ActiveSession.Server.Equals(server);
+                            item.Click += (object sender, RoutedEventArgs e) =>
+                            {
+                                var activeSession = viewModel.ConnectionPage.ActiveSession;
+                                if (activeSession != null)
+                                {
+                                    var connect = !activeSession.Server.Equals(server);
+                                    if (activeSession.Disconnect.CanExecute(true))
+                                        activeSession.Disconnect.Execute(true);
+
+                                    // Defer connecting as we need to disconnect gracefully first.
+                                    if (connect)
+                                        PendingServerConnect = server;
+                                }
+                                else
+                                    Servers_Connect(server);
+                            };
+                            return item;
+                        }))
+                        menu.Items.Insert(i++, menuItem);
+                    break;
+                }
+                else if (menu.Items[i] is MenuItem menuItem && menuItem.Name == sectionName)
+                    inSection = true;
+            }
+        }
+
+        /// <summary>
+        /// Connects to given server
+        /// </summary>
+        /// <param name="server">Server to connect to</param>
+        private void Servers_Connect(Server server)
+        {
+            var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
+            if (server is InstituteAccessServer iaServer)
+            {
+                viewModel.HomePage.SelectedInstituteAccessServer = iaServer;
+                if (viewModel.HomePage.ConfirmInstituteAccessServerSelection.CanExecute())
+                    viewModel.HomePage.ConfirmInstituteAccessServerSelection.Execute();
+            }
+            else if (server is SecureInternetServer siServer)
+            {
+                viewModel.HomePage.SelectedSecureInternetServer = siServer;
+                if (viewModel.HomePage.ConfirmSecureInternetServerSelection.CanExecute())
+                    viewModel.HomePage.ConfirmSecureInternetServerSelection.Execute();
+            }
+            else
+            {
+                viewModel.HomePage.SelectedOwnServer = server;
+                if (viewModel.HomePage.ConfirmOwnServerSelection.CanExecute())
+                    viewModel.HomePage.ConfirmOwnServerSelection.Execute();
             }
         }
 

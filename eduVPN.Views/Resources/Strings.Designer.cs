@@ -804,6 +804,24 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloaded: {0}.
+        /// </summary>
+        public static string SystemTrayMenuConnectionInfoBytesIn {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuConnectionInfoBytesIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded: {0}.
+        /// </summary>
+        public static string SystemTrayMenuConnectionInfoBytesOut {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuConnectionInfoBytesOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E_xit.
         /// </summary>
         public static string SystemTrayMenuExit {

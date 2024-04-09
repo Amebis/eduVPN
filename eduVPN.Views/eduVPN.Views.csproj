@@ -50,6 +50,7 @@
     <Compile Include="Converters\CountRowHeightOneStarConverter.cs" />
     <Compile Include="Converters\CountryFlagConverter.cs" />
     <Compile Include="Converters\EmptySearchResultRowHeightConverter.cs" />
+    <Compile Include="Converters\EscapeAccessKeyConverter.cs" />
     <Compile Include="Converters\ExceptionMessageConverter.cs" />
     <Compile Include="Converters\ExceptionMessageVisibilityConverter.cs" />
     <Compile Include="Converters\ExpiredNotificationVisibilityConverter.cs" />

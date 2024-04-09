@@ -2,7 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.17...HEAD)
 
+- Sys-tray menu upgraded to show and manipulate connections
 - govVPN switched to release self-update channel
+- Fixes: #111, #240
 
 
 ## [3.255.17](https://github.com/Amebis/eduVPN/compare/3.255.16...3.255.17) (2024-04-05)
