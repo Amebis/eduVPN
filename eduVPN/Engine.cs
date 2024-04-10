@@ -575,10 +575,6 @@ namespace eduVPN
             StateCB stateCallback,
             int debug);
 
-        [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string SetSupportWireguard(int support);
-
         static readonly TokenGetter OnGetToken = new TokenGetter((string serverId, ServerType serverType, IntPtr outBuf, UIntPtr len) =>
         {
             var args = new GetTokenEventArgs(serverId, serverType);
@@ -617,7 +613,6 @@ namespace eduVPN
                 Assembly.GetExecutingAssembly()?.GetName()?.Version.ToString(),
                 Path.GetDirectoryName(Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)),
                 OnEngineStateChanged, 1));
-            ThrowOnError(SetSupportWireguard(1));
             ThrowOnError(SetTokenHandler(OnGetToken, OnSetToken));
         }
 

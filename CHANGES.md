@@ -5,6 +5,7 @@
 - Sys-tray menu upgraded to show and manipulate connections
 - Self-update simplified to avoid an A/V false positive chance
 - govVPN switched to release self-update channel
+- eduvpn-common updated to b0cfacfd6ebc5f6d2bafd974047b9b21d45d1108
 - Fixes: #111, #240
 
 
