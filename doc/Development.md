@@ -43,9 +43,16 @@
          - Windows 11 SDK
 2. Install [vcpkg](https://vcpkg.io/).
    - `git clone https://github.com/Microsoft/vcpkg.git C:\ProgramData\SDK\vcpkg`
-      The path used is only an example. If filesystem permissions and system-wide setup is not your thing, vcpkg may be installed anywhere in your user home folder.
+      The path used is only an example. If you decide to install to `C:\Program Files` or any other path that requires elevation to make folder modifications, you must grant user account, used to build eduVPN, read and write permissions to vcpkg folder. Otherwise, all build targets will require elevation too. vcpkg builds inside this folder and then copies .h/.lib/.dll files to your eduVPN working tree in the vcpkg_installed folders. To avoid vcpkg access-denied issues on building, it is easiest to install vcpkg somewhere in your user home folder.
    - Bootstrap with `C:\ProgramData\SDK\vcpkg\bootstrap-vcpkg -disableMetrics`
    - Integrate into MSBuild/Visual Studio with `C:\ProgramData\SDK\vcpkg\vcpkg integrate install`
+   - You must keep vcpkg up-to-date manually:
+     ```cmd
+     cd C:\ProgramData\SDK\vcpkg
+     git clean -fdx
+     git pull
+     bootstrap-vcpkg -disableMetrics
+     ```
 3. Install [Go](https://go.dev/) 1.18 or later. The last Go version that produces Windows 7-compatible binaries is 1.20.x.
 4. Clone the eduVPN project source code _including_ sub-modules from the [eduVPN GitHub repository](https://github.com/Amebis/eduVPN) using `git clone --recurse-submodules https://github.com/Amebis/eduVPN.git eduVPN` command.
 5. Install .NET Framework 3.5.x: can be installed from _Control Panel_ » _Programs and Features_ » _Turn Windows features on or off_ (required by WiX Toolset).

@@ -29,7 +29,7 @@ Although, 32-bit VPN client should run on 64-bit Windows fine, native 64-bit ver
 
 MSI Installer selects the locale according to the current user's Regional Settings set in Control Panel. Setup locale can be forced using the following command line:
 
-```
+```cmd
 msiexec /i <client brand>Client_<version>_<platform>.msi TRANSFORMS=:1060
 ```
 
