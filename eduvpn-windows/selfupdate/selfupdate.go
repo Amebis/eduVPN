@@ -11,8 +11,6 @@ import (
 	"context"
 	"crypto/sha256"
 	"crypto/subtle"
-	"encoding/json"
-	"encoding/xml"
 	"errors"
 	"fmt"
 	"hash"
@@ -23,7 +21,7 @@ import (
 	"net/url"
 	"os"
 	"path"
-	"strings"
+	"syscall"
 	"unsafe"
 
 	"github.com/Amebis/eduVPN/eduvpn-windows/progress"
@@ -126,10 +124,10 @@ func downloadInstaller(folder string, urls []string, hash *Hash, ctx context.Con
 				_, filename = path.Split(params["filename"])
 			}
 		}
-		filename = path.Join(folder, filename)
+		absoluteFilename := path.Join(folder, filename)
 
 		var fileW *os.File
-		fileW, err = os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0777)
+		fileW, err = os.OpenFile(absoluteFilename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777)
 		if err != nil {
 			continue
 		}
@@ -140,19 +138,19 @@ func downloadInstaller(folder string, urls []string, hash *Hash, ctx context.Con
 		}
 		if _, err = io.Copy(fileW, io.TeeReader(resp.Body, counter)); err != nil {
 			fileW.Close()
-			os.Remove(filename)
+			os.Remove(absoluteFilename)
 			continue
 		}
 		fileW.Truncate(counter.offset)
 		if subtle.ConstantTimeCompare(counter.hash.Sum(nil), unsafe.Slice(&hash[0], 32)) == 0 {
 			fileW.Close()
-			os.Remove(filename)
+			os.Remove(absoluteFilename)
 			err = fmt.Errorf("file content different than expected: %s", u)
 			continue
 		}
 
 		// Reopen file as read-only to allow execution of the file, but keep the file locked for writing.
-		file, err = os.OpenFile(filename, os.O_RDONLY, 0777)
+		file, err = os.OpenFile(absoluteFilename, os.O_RDONLY, 0777)
 		if err != nil {
 			continue
 		}
@@ -165,133 +163,43 @@ func downloadInstaller(folder string, urls []string, hash *Hash, ctx context.Con
 	return "", nil, err
 }
 
-// generateLauncherFile creates installer launch&cleanup script
-// After installer process is spawned, our process will end - to release files in use. But who is going to cleanup installer files then?
-// To launch the installer and do the cleanup, we use WScript, because:
-// 1. Less flicker: WScript as opposed to .bat or CScript does not open excessive terminal window.
-// 2. Cleanup: A separate script process can launch the installer, wait for it to finish and cleanup after - without keeping any relevant files in use.
-func generateLauncherFile(workingFolder, installerFilename, installerArguments string) (filename string, file *os.File, err error) {
-	filename = path.Join(workingFolder, "Setup.wsf")
-
-	type Reference struct {
-		XMLName xml.Name `xml:"reference"`
-		Object  string   `xml:"object,attr,omitempty"`
-	}
-	type Script struct {
-		XMLName  xml.Name `xml:"script"`
-		Language string   `xml:"language,attr,omitempty"`
-		Value    string   `xml:",chardata"`
-	}
-	type Job struct {
-		XMLName    xml.Name `xml:"job"`
-		References []Reference
-		Scripts    []Script
-	}
-	type Package struct {
-		XMLName xml.Name `xml:"package"`
-		Jobs    []Job
-	}
-
-	script := strings.Builder{}
-	script.WriteString("var wsh = WScript.CreateObject(\"WScript.Shell\");\n")
-	commandLine := "\"" + installerFilename + "\""
-	if installerArguments != "" {
-		commandLine = commandLine + " " + installerArguments
-	}
-	esc, err := json.Marshal(commandLine)
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to escape command line: %w", err)
-	}
-	script.WriteString("wsh.Run(" + string(esc) + ", 0, true);\n")
-	script.WriteString("var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");\n")
-	esc, err = json.Marshal(installerFilename)
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to escape installer filename: %w", err)
-	}
-	script.WriteString("try { fso.DeleteFile(" + string(esc) + ", true); } catch (err) {}\n")
-	esc, err = json.Marshal(filename)
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to escape updater filename: %w", err)
-	}
-	script.WriteString("try { fso.DeleteFile(" + string(esc) + ", true); } catch (err) {}\n")
-	script.WriteString("try { fso.DeleteFile(" + string(esc) + ", true); } catch (err) {}\n")
-	esc, err = json.Marshal(workingFolder)
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to escape working folder name: %w", err)
-	}
-	script.WriteString("try { fso.DeleteFolder(" + string(esc) + ", true); } catch (err) {}\n")
-	p := &Package{
-		Jobs: []Job{
-			{
-				References: []Reference{
-					{Object: "WScript.Shell"},
-					{Object: "Scripting.FileSystemObject"},
-				},
-				Scripts: []Script{
-					{
-						Language: "JScript",
-						Value:    script.String(),
-					},
-				},
-			},
-		},
-	}
-	xmlstring, err := xml.MarshalIndent(p, "", "\t")
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to generate launcher XML: %w", err)
-	}
-	xmlstring = []byte(xml.Header + string(xmlstring))
-
-	fileW, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0777)
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to create launcher: %w", err)
-	}
-	_, err = fileW.Write(xmlstring)
-	if err != nil {
-		fileW.Close()
-		os.Remove(filename)
-		return "", nil, fmt.Errorf("failed to write launcher: %w", err)
-	}
-	// Reopen file as read-only to allow execution of the file, but keep the file locked for writing.
-	file, err = os.OpenFile(filename, os.O_RDONLY, 0777)
-	if err != nil {
-		fileW.Close()
-		os.Remove(filename)
-		return "", nil, fmt.Errorf("failed to reopen launcher: %w", err)
-	}
-	fileW.Close()
-	return filename, file, nil
-}
-
 // DownloadAndInstall securely downloads installer file, prepares and launches installer
 func DownloadAndInstall(urls []string, hash *Hash, installerArguments string, ctx context.Context, progress progress.ProgressIndicator) error {
 	workingFolder, err := os.MkdirTemp(os.TempDir(), "SURF")
 	if err != nil {
 		return fmt.Errorf("failed to create temporary folder: %w", err)
 	}
+	defer os.RemoveAll(workingFolder)
 
 	installerFilename, installerFile, err := downloadInstaller(workingFolder, urls, hash, ctx, progress)
 	if err != nil {
 		return fmt.Errorf("error downloading installer: %w", err)
 	}
+	absoluteInstallerFilename := path.Join(workingFolder, installerFilename)
+	defer os.Remove(absoluteInstallerFilename)
 	defer installerFile.Close()
-	updaterFilename, updaterFile, err := generateLauncherFile(workingFolder, installerFilename, installerArguments)
-	if err != nil {
-		os.Remove(installerFilename)
-		return fmt.Errorf("error generating launcher: %w", err)
-	}
-	defer updaterFile.Close()
 
-	proc, err := os.StartProcess(
-		os.ExpandEnv("$WINDIR\\System32\\wscript.exe"),
-		[]string{"wscript.exe", updaterFilename},
-		&os.ProcAttr{
-			Dir:   workingFolder,
-			Files: []*os.File{nil, nil, nil},
-		})
+	workingFolderU16, err := syscall.UTF16PtrFromString(workingFolder)
 	if err != nil {
-		return fmt.Errorf("error executing updater: %w", err)
+		return fmt.Errorf("failed to convert working folder to UTF-16: %w", err)
 	}
-	proc.Release()
+	installerFilenameU16, err := syscall.UTF16PtrFromString(absoluteInstallerFilename)
+	if err != nil {
+		return fmt.Errorf("failed to convert installer filename to UTF-16: %w", err)
+	}
+	commandLineU16, err := syscall.UTF16PtrFromString("\"" + installerFilename + "\" " + installerArguments)
+	if err != nil {
+		return fmt.Errorf("failed to convert command line to UTF-16: %w", err)
+	}
+	si := syscall.StartupInfo{
+		Cb: uint32(unsafe.Sizeof(syscall.StartupInfo{})),
+	}
+	pi := syscall.ProcessInformation{}
+	err = syscall.CreateProcess(installerFilenameU16, commandLineU16, nil, nil, false, 0, nil, workingFolderU16, &si, &pi)
+	if err != nil {
+		return fmt.Errorf("error executing installer: %w", err)
+	}
+	defer syscall.CloseHandle(pi.Process)
+	defer syscall.CloseHandle(pi.Thread)
 	return nil
 }

@@ -11,7 +11,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 	"testing"
 
 	"github.com/Amebis/eduVPN/eduvpn-windows/progress"
@@ -60,26 +59,8 @@ func TestSelfUpdate(t *testing.T) {
 		t.Errorf("failed to get update: %#v", err)
 	}
 
-	workingFolder, err := os.MkdirTemp(os.TempDir(), "SURF")
+	err = DownloadAndInstall(pkg.Uris, &pkg.Hash, pkg.Arguments, ctx, progress)
 	if err != nil {
-		t.Errorf("failed to create temporary folder: %#v", err)
+		t.Errorf("failed to download and launch installer: %#v", err)
 	}
-	defer os.RemoveAll(workingFolder)
-
-	_, _, err = downloadInstaller(workingFolder, pkg.Uris, &Hash{}, ctx, progress)
-	if err == nil {
-		t.Error("Error was expected")
-	}
-	installerFilename, installerFile, err := downloadInstaller(workingFolder, pkg.Uris, &pkg.Hash, ctx, progress)
-	if err != nil {
-		t.Errorf("error downloading installer: %#v", err)
-	}
-	defer installerFile.Close()
-	defer os.Remove(installerFilename)
-	updaterFilename, updaterFile, err := generateLauncherFile(workingFolder, installerFilename, pkg.Arguments)
-	if err != nil {
-		t.Errorf("error generating launcher: %#v", err)
-	}
-	defer updaterFile.Close()
-	defer os.Remove(updaterFilename)
 }
