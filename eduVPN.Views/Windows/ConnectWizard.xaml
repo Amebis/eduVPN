@@ -15,7 +15,6 @@
     xmlns:windows="clr-namespace:eduVPN.ViewModels.Windows;assembly=eduVPN"
     xmlns:pages="clr-namespace:eduVPN.Views.Pages"
     xmlns:res="clr-namespace:eduVPN.Views.Resources"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     d:DataContext="{d:DesignInstance Type=windows:ConnectWizard}"
     mc:Ignorable="d"
     Title="{Binding ClientTitle, Source={x:Static prop:Settings.Default}}"
@@ -95,15 +94,6 @@
                 <MenuItem.Header>
                     <TextBlock Text="{Binding ConnectionPage.ActiveSession.TxBytes, Mode=OneWay, Converter={StaticResource Byte1024ToHumanReadableConverter}, StringFormat={x:Static res:Strings.SystemTrayMenuConnectionInfoBytesOut}}"/>
                 </MenuItem.Header>
-            </MenuItem>
-            <MenuItem
-                IsChecked="True"
-                Header="{Binding ConnectionPage.ActiveSession.Profile, Converter={StaticResource EscapeAccessKeyConverter}}"
-                Command="{Binding ConnectionPage.ActiveSession.Disconnect}"
-                Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
-                <MenuItem.CommandParameter>
-                    <sys:Boolean>True</sys:Boolean>
-                </MenuItem.CommandParameter>
             </MenuItem>
             <Separator
                 Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"/>

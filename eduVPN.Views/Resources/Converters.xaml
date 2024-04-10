@@ -26,7 +26,6 @@
     <conv:CountRowHeightOneStarConverter x:Key="CountRowHeightOneStarConverter"/>
     <conv:CountryFlagConverter x:Key="CountryFlagConverter"/>
     <conv:EmptySearchResultRowHeightConverter x:Key="EmptySearchResultRowHeightConverter"/>
-    <conv:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter"/>
     <conv:ExceptionMessageConverter x:Key="ExceptionMessageConverter"/>
     <conv:ExceptionMessageVisibilityConverter x:Key="ExceptionMessageVisibilityConverter"/>
     <conv:ExpiredNotificationVisibilityConverter x:Key="ExpiredNotificationVisibilityConverter"/>
