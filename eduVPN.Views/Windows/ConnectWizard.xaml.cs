@@ -202,6 +202,10 @@ namespace eduVPN.Views.Windows
             var viewModel = DataContext as ViewModels.Windows.ConnectWizard;
             viewModel.QuitApplication += Exit_Click;
 
+            // Set sys-tray menu data context to allow bindings to work.
+            if (Resources["SystemTrayMenu"] is ContextMenu menu)
+                menu.DataContext = viewModel;
+
             // Bind to HomePage changes to keep the sys-tray menu list of servers updated.
             InstituteAccessServers_CollectionChanged(this, null);
             viewModel.HomePage.InstituteAccessServers.CollectionChanged += InstituteAccessServers_CollectionChanged;
@@ -318,10 +322,6 @@ namespace eduVPN.Views.Windows
 
             LocationChanged += Window_LocationChanged;
             Closing += Window_Closing;
-
-            // Set context menu data context to allow bindings to work.
-            if (Resources["SystemTrayMenu"] is ContextMenu menu)
-                menu.DataContext = DataContext;
 
             NotifyIcon.Visible = true;
         }
