@@ -64,7 +64,7 @@ namespace eduOAuth.Tests
             var request_param = HttpUtility.ParseQueryString(Encoding.ASCII.GetString(request_buffer, 0, (int)request.Object.ContentLength));
             Assert.AreEqual("authorization_code", request_param["grant_type"]);
             Assert.IsNotNull(request_param["code"]);
-            Assert.AreEqual(ag.RedirectEndpoint, request_param["redirect_uri"]);
+            Assert.AreEqual(ag.RedirectEndpoint, new Uri(request_param["redirect_uri"]));
             Assert.AreEqual(ag.ClientId, request_param["client_id"]);
             Assert.IsNotNull(request_param["code_verifier"]);
             Assert.AreEqual(token1, token2);

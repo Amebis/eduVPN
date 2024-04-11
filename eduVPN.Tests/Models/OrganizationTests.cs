@@ -32,7 +32,7 @@ namespace eduVPN.Models.Tests
                     { "org_id", "https://idp.surfnet.nl" },
                     { "secure_internet_home", "https://nl.eduvpn.org/" },
                 });
-            Assert.AreEqual(new Uri("https://idp.surfnet.nl/"), org.Id, "Identifier URI incorrect");
+            Assert.AreEqual("https://idp.surfnet.nl", org.Id, "Identifier URI incorrect");
             Assert.AreEqual(new Uri("https://nl.eduvpn.org/"), org.SecureInternetBase, "Secure internet home server base URI incorrect");
             Assert.AreEqual("https://idp.surfnet.nl", org.ToString(), "Display name incorrect");
 
@@ -49,7 +49,7 @@ namespace eduVPN.Models.Tests
                         { "nl", "SURFnet bv SURF konijn powered by" },
                     }}
                 });
-            Assert.AreEqual(new Uri("https://idp.surfnet.nl/"), org.Id, "Identifier URI incorrect");
+            Assert.AreEqual("https://idp.surfnet.nl", org.Id, "Identifier URI incorrect");
             Assert.AreEqual(new Uri("https://nl.eduvpn.org/"), org.SecureInternetBase, "Secure internet home server base URI incorrect");
             Assert.AreEqual("SURFnet bv", org.ToString(), "Display name incorrect");
 
