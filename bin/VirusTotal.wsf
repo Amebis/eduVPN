@@ -203,43 +203,48 @@
 						throw new Error(1, source_filename + ": Response does not contain VirusTotal analysis data");
 					WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file-analysis/" + analysis.data.id);
 
-					if (("attributes" in analysis.data) && analysis.data.attributes.status === "completed") {
-						var clean = true;
-						for (var i in analysis.data.attributes.results) {
-							var result = analysis.data.attributes.results[i];
-							switch (result.category.toLowerCase()) {
-							case "undetected":
-							case "type-unsupported":
-							case "timeout":
-							case "confirmed-timeout":
-							case "failure":
-								break;
-							default:
-								WScript.Echo(source_filename + ": " + result.engine_name + ": " + result.category);
-								clean = false;
+					if (("attributes" in analysis.data)) {
+						if (analysis.data.attributes.status === "completed") {
+							var clean = true;
+							for (var i in analysis.data.attributes.results) {
+								var result = analysis.data.attributes.results[i];
+								switch (result.category.toLowerCase()) {
+								case "undetected":
+								case "type-unsupported":
+								case "timeout":
+								case "confirmed-timeout":
+								case "failure":
+									break;
+								default:
+									WScript.Echo(source_filename + ": " + result.engine_name + ": " + result.category);
+									clean = false;
+								}
 							}
-						}
-						WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file/" + analysis.meta.file_info.sha256);
-						if (!clean)
-							throw new Error(2, source_filename + ": Some engines tests were not negative");
-						WScript.Echo(source_filename + ": All engines tests were negative");
-						if (response_filename) {
-							var fs = WScript.CreateObject("ADODB.Stream");
-							fs.Open();
-							try {
-								fs.Type = adTypeText;
-								fs.LineSeparator = adCRLF;
-								fs.Charset = "utf-8";
-								fs.WriteText(response_text);
-								fs.SaveToFile(response_filename, adSaveCreateOverWrite);
-							} finally {
-								fs.Close();
+							WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file/" + analysis.meta.file_info.sha256);
+							if (!clean)
+								throw new Error(2, source_filename + ": Some engines tests were not negative");
+							WScript.Echo(source_filename + ": All engines tests were negative");
+							if (response_filename) {
+								var fs = WScript.CreateObject("ADODB.Stream");
+								fs.Open();
+								try {
+									fs.Type = adTypeText;
+									fs.LineSeparator = adCRLF;
+									fs.Charset = "utf-8";
+									fs.WriteText(response_text);
+									fs.SaveToFile(response_filename, adSaveCreateOverWrite);
+								} finally {
+									fs.Close();
+								}
 							}
-						}
-						break;
+							break;
+						} else if (analysis.data.attributes.status === "queued")
+							WScript.Sleep(45000);
+						else
+							throw new Error(5, "Unknown status: " + analysis.data.attributes.status);
 					}
 
-					WScript.Sleep(2000);
+					WScript.Sleep(15000);
 					var xmlhttp = WScript.CreateObject("Microsoft.XMLHTTP");
 					xmlhttp.open("GET", analysis.data.links.self, false);
 					xmlhttp.setRequestHeader("Accept", "application/json");
