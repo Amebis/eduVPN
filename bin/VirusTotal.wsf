@@ -174,7 +174,7 @@
 
 			try {
 				var upload_url = "https://www.virustotal.com/api/v3/files";
-				if (fso.GetFile(source_filename).Size > 32000) {
+				if (fso.GetFile(source_filename).Size > 32000000) {
 					var xmlhttp = WScript.CreateObject("Microsoft.XMLHTTP");
 					xmlhttp.open("GET", "https://www.virustotal.com/api/v3/files/upload_url", false);
 					xmlhttp.setRequestHeader("Accept", "application/json");
