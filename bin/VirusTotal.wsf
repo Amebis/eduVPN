@@ -176,13 +176,13 @@
 				var upload_url = "https://www.virustotal.com/api/v3/files";
 				if (fso.GetFile(source_filename).Size > 32000000) {
 					var xmlhttp = WScript.CreateObject("Microsoft.XMLHTTP");
-					xmlhttp.open("GET", "https://www.virustotal.com/api/v3/files/upload_url", false);
+					xmlhttp.open("GET", "https://www.virustotal.com/api/v3/files/upload_url?seq=" + Math.random(), false);
 					xmlhttp.setRequestHeader("Accept", "application/json");
 					xmlhttp.setRequestHeader("x-apikey", env("VirusTotalAPIKey"));
 					xmlhttp.send();
 					if (xmlhttp.status != 200)
 						throw new Error(xmlhttp.status, "HTTP request failed");
-					upload_url = parseJSON(xmlhttp.responseText).data
+					upload_url = parseJSON(xmlhttp.responseText).data;
 				}
 
 				WScript.Echo(source_filename + ": Sending to VirusTotal...");
@@ -197,11 +197,11 @@
 					throw new Error(3, source_filename + ": Failed to upload file to VirusTotal");
 				var response_text = exec.StdOut.ReadAll();
 
-				for (;;) {
+				for (var seq = 0;; seq++) {
 					var analysis = parseJSON(response_text);
 					if (analysis.data.type !== "analysis")
 						throw new Error(1, source_filename + ": Response does not contain VirusTotal analysis data");
-					WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file-analysis/" + analysis.data.id);
+					WScript.Echo(source_filename + ": https://www.virustotal.com/gui/file-analysis/" + analysis.data.id + (("attributes" in analysis.data) ? " " + analysis.data.attributes.status : ""));
 
 					if (("attributes" in analysis.data)) {
 						if (analysis.data.attributes.status === "completed") {
@@ -238,15 +238,15 @@
 								}
 							}
 							break;
-						} else if (analysis.data.attributes.status === "queued")
-							WScript.Sleep(45000);
-						else
+						} else if (analysis.data.attributes.status === "queued") {
+							// WScript.Sleep(55000);
+						} else
 							throw new Error(5, "Unknown status: " + analysis.data.attributes.status);
 					}
 
-					WScript.Sleep(15000);
+					WScript.Sleep(5000);
 					var xmlhttp = WScript.CreateObject("Microsoft.XMLHTTP");
-					xmlhttp.open("GET", analysis.data.links.self, false);
+					xmlhttp.open("GET", analysis.data.links.self + "?seq=" + seq, false);
 					xmlhttp.setRequestHeader("Accept", "application/json");
 					xmlhttp.setRequestHeader("x-apikey", env("VirusTotalAPIKey"));
 					xmlhttp.send();
