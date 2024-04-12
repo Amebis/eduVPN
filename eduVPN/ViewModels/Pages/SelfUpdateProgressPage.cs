@@ -16,10 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
-using System.Text;
 using System.Threading;
-using System.Web;
-using System.Xml;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -224,76 +221,17 @@ namespace eduVPN.ViewModels.Pages
 
                     try
                     {
-                        var updaterFilename = Path.GetFullPath(workingFolder + Properties.Settings.Default.ClientTitle + " Client Setup and Relaunch.wsf");
-                        var updaterFile = File.Open(updaterFilename, FileMode.CreateNew, FileAccess.Write, FileShare.Read | FileShare.Inheritable);
-                        try
-                        {
-                            // Prepare WSF file.
-                            var writer = new XmlTextWriter(updaterFile, null);
-                            writer.WriteStartDocument();
-                            writer.WriteStartElement("package");
-                            writer.WriteStartElement("job");
+                        Trace.TraceInformation("Launching installer file {0}", installerFilename);
+                        var process = new Process();
+                        process.StartInfo.FileName = installerFilename;
+                        if (!string.IsNullOrEmpty(Arguments))
+                            process.StartInfo.Arguments = Arguments;
+                        process.StartInfo.WorkingDirectory = workingFolder;
 
-                            writer.WriteStartElement("reference");
-                            writer.WriteAttributeString("object", "WScript.Shell");
-                            writer.WriteEndElement(); // reference
-
-                            writer.WriteStartElement("reference");
-                            writer.WriteAttributeString("object", "Scripting.FileSystemObject");
-                            writer.WriteEndElement(); // reference
-
-                            writer.WriteStartElement("script");
-                            writer.WriteAttributeString("language", "JScript");
-                            var installerArgumentsEsc = string.IsNullOrEmpty(Arguments) ? "" : " " + HttpUtility.JavaScriptStringEncode(Arguments);
-                            var argv = Environment.GetCommandLineArgs();
-                            var arguments = new StringBuilder();
-                            for (long i = 1, n = argv.LongLength; i < n; i++)
-                            {
-                                if (i > 1) arguments.Append(" ");
-                                arguments.Append("\"");
-                                arguments.Append(argv[i].Replace("\"", "\"\""));
-                                arguments.Append("\"");
-                            }
-                            var script = new StringBuilder();
-                            script.AppendLine("var wsh = WScript.CreateObject(\"WScript.Shell\");");
-                            script.AppendLine("wsh.Run(\"\\\"" + HttpUtility.JavaScriptStringEncode(installerFilename.Replace("\"", "\"\"")) + "\\\"" + installerArgumentsEsc + "\", 0, true);");
-                            script.AppendLine("var fso = WScript.CreateObject(\"Scripting.FileSystemObject\");");
-                            script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(installerFilename) + "\", true); } catch (err) {}");
-                            script.AppendLine("try { fso.DeleteFile(\"" + HttpUtility.JavaScriptStringEncode(updaterFilename) + "\", true); } catch (err) {}");
-                            script.AppendLine("try { fso.DeleteFolder(\"" + HttpUtility.JavaScriptStringEncode(workingFolder.TrimEnd(Path.DirectorySeparatorChar)) + "\", true); } catch (err) {}");
-                            writer.WriteCData(script.ToString());
-                            writer.WriteEndElement(); // script
-
-                            writer.WriteEndElement(); // job
-                            writer.WriteEndElement(); // package
-                            writer.WriteEndDocument();
-                            writer.Flush();
-
-                            // Prepare WSF launch parameters.
-                            Trace.TraceInformation("Launching update script file {0}", updaterFilename);
-                            var process = new Process();
-                            process.StartInfo.FileName = "wscript.exe";
-                            process.StartInfo.Arguments = "\"" + updaterFilename + "\"";
-                            process.StartInfo.WorkingDirectory = workingFolder;
-
-                            // Close WSF and installer files as late as possible to narrow the attack window.
-                            // If Windows supported executing files that are locked for writing, we could leave those files open.
-                            updaterFile.Close();
-                            installerFile.Close();
-                            process.Start();
-                        }
-                        catch
-                        {
-                            // Close WSF file.
-                            updaterFile.Close();
-
-                            // Delete WSF file. If possible.
-                            Trace.TraceInformation("Deleting file {0}", updaterFilename);
-                            try { File.Delete(updaterFilename); }
-                            catch (Exception ex2) { Trace.TraceWarning("Deleting {0} file failed: {1}", updaterFilename, ex2.ToString()); }
-
-                            throw;
-                        }
+                        // Close installer file as late as possible to narrow the attack window.
+                        // If Windows supported executing files that are locked for writing, we could leave those files open.
+                        installerFile.Close();
+                        process.Start();
                     }
                     catch
                     {
