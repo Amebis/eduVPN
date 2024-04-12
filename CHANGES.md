@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.17...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.18...HEAD)
+
+
+## [3.255.18](https://github.com/Amebis/eduVPN/compare/3.255.17...3.255.18) (2024-04-12)
 
 - Sys-tray menu upgraded to show and manipulate connections
 - Self-update simplified to avoid an A/V false positive chance
