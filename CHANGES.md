@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.6...ver/3.x)
 
 - Simplify self-update to avoid `eduVPN Client Setup and Relaunch.wsf` Windows Security false-positive
+- Switch to pre-release self-update channel
 
 
 ## [3.6](https://github.com/Amebis/eduVPN/compare/3.5...3.6) (2024-03-28)
