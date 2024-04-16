@@ -51,14 +51,19 @@ Clean ::
 !IF "$(CFG)" == "Release"
 Publish :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe" \
-!IFDEF VIRUSTOTALAPIKEY
-	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" \
-!ENDIF
 	"bin\Setup\$(CLIENT_TARGET).windows.json" \
 	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)" \
 	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.installer.yaml" \
 	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.locale.en-US.yaml" \
 	"bin\Setup\winget-manifests\s\SURF\$(CLIENT_TARGET)Client\$(VERSION)\SURF.$(CLIENT_TARGET)Client.yaml"
+
+!IFDEF VIRUSTOTALAPIKEY
+PublishVTUpload :: \
+	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis"
+
+PublishVTJoin ::
+	cscript.exe "bin\VirusTotal.wsf" $(CSCRIPT_FLAGS) //Job:JoinAnalysis "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis"
+!ENDIF
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).vtanalysis" : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET).exe"
 

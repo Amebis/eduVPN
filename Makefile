@@ -133,13 +133,13 @@ Clean ::
 .SUFFIXES : .exe .dll .msi
 
 .exe.vtanalysis :
-	cscript.exe $(CSCRIPT_FLAGS) bin\VirusTotal.wsf //Job:Analyze $** $@
+	cscript.exe $(CSCRIPT_FLAGS) bin\VirusTotal.wsf //Job:Upload $** $@
 
 .dll.vtanalysis :
-	cscript.exe $(CSCRIPT_FLAGS) bin\VirusTotal.wsf //Job:Analyze $** $@
+	cscript.exe $(CSCRIPT_FLAGS) bin\VirusTotal.wsf //Job:Upload $** $@
 
 .msi.vtanalysis :
-	cscript.exe $(CSCRIPT_FLAGS) bin\VirusTotal.wsf //Job:Analyze $** $@
+	cscript.exe $(CSCRIPT_FLAGS) bin\VirusTotal.wsf //Job:Upload $** $@
 
 
 ######################################################################
@@ -196,6 +196,15 @@ BuildeduVPNCommon :: SigneduVPNCommon
 BuildeduVPNWindows :: SigneduVPNWindows
 
 Build :: Sign
+
+
+######################################################################
+# Publishing
+######################################################################
+
+Publish :: \
+	PublishVTUpload \
+	PublishVTJoin
 
 
 ######################################################################

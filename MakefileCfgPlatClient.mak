@@ -26,8 +26,11 @@ SetupMSI :: \
 
 !IF "$(CFG)" == "Release"
 !IFDEF VIRUSTOTALAPIKEY
-Publish :: \
+PublishVTUpload :: \
 	"bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).vtanalysis"
+
+PublishVTJoin ::
+	cscript.exe "bin\VirusTotal.wsf" $(CSCRIPT_FLAGS) //Job:JoinAnalysis "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).vtanalysis"
 !ENDIF
 
 "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).vtanalysis" : "bin\Setup\$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_$(PLAT).msi"
