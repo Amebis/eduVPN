@@ -1,6 +1,10 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.6.1...ver/3.x)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.6.2...ver/3.x)
+
+## [3.6.2](https://github.com/Amebis/eduVPN/compare/3.6.1...3.6.2) (2024-04-17)
+
+- Version bumped
 
 
 ## [3.6.1](https://github.com/Amebis/eduVPN/compare/3.6...3.6.1) (2024-04-16)
