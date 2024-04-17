@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.6.2...ver/3.x)
 
+- Switch to release self-update channel
+
+
 ## [3.6.2](https://github.com/Amebis/eduVPN/compare/3.6.1...3.6.2) (2024-04-17)
 
 - Version bumped
