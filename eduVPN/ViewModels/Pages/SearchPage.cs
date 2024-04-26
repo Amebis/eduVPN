@@ -446,11 +446,7 @@ namespace eduVPN.ViewModels.Pages
                         }
                 }
                 var coll = new ObservableCollection<InstituteAccessServer>();
-                foreach (var srv in serverHits.OrderByDescending(el =>
-                {
-                    ct.ThrowIfCancellationRequested();
-                    return el.Value;
-                }))
+                foreach (var srv in serverHits.OrderByDescending(el => el.Value)/*.ThenBy(el => el.Key.ToString().ToLower())*/)
                 {
                     ct.ThrowIfCancellationRequested();
                     coll.Add(srv.Key);
@@ -541,11 +537,7 @@ namespace eduVPN.ViewModels.Pages
                         }
                 }
                 var coll = new ObservableCollection<Organization>();
-                foreach (var org in organizationHits.OrderByDescending(el =>
-                {
-                    ct.ThrowIfCancellationRequested();
-                    return el.Value;
-                }))
+                foreach (var org in organizationHits.OrderByDescending(el => el.Value)/*.ThenBy(el => el.Key.ToString().ToLower())*/)
                 {
                     ct.ThrowIfCancellationRequested();
                     coll.Add(org.Key);
