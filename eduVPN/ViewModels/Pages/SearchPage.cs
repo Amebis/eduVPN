@@ -14,7 +14,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace eduVPN.ViewModels.Pages
 {
@@ -47,6 +46,16 @@ namespace eduVPN.ViewModels.Pages
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly object DiscoveredListLock = new object();
+
+        /// <summary>
+        /// DiscoverServers cancellation token
+        /// </summary>
+        private CancellationTokenSource ServerDiscoveryInProgress;
+
+        /// <summary>
+        /// DiscoverOrganizations cancellation token
+        /// </summary>
+        private CancellationTokenSource OrganizationDiscoveryInProgress;
 
         /// <summary>
         /// Search cancellation token
@@ -350,39 +359,48 @@ namespace eduVPN.ViewModels.Pages
             }
         }
 
-        async void DiscoverServers()
+        /// <summary>
+        /// Triggers background server discovery
+        /// </summary>
+        void DiscoverServers()
         {
-            Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-            try
+            ServerDiscoveryInProgress?.Cancel();
+            ServerDiscoveryInProgress = new CancellationTokenSource();
+            var ct = CancellationTokenSource.CreateLinkedTokenSource(ServerDiscoveryInProgress.Token, Window.Abort.Token).Token;
+            new Thread(() =>
             {
-                Trace.TraceInformation("Discovering servers");
-                ServerDictionary dict;
-                using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
-                    dict = new ServerDictionary(
-                        eduJSON.Parser.Parse(
-                            await Task.Run(() => Engine.DiscoServers(cookie)),
-                            Window.Abort.Token) as Dictionary<string, object>);
-                //await Task.Run(() => Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
-                //await Task.Run(() => throw new Exception("Server list download failed")); // Mock download failure.
-                var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
-                foreach (var el in dict)
+                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                try
                 {
-                    Window.Abort.Token.ThrowIfCancellationRequested();
-                    if (el.Value is InstituteAccessServer srv)
+                    Trace.TraceInformation("Discovering servers");
+                    ServerDictionary dict;
+                    using (var cookie = new Engine.CancellationTokenCookie(ct))
+                        dict = new ServerDictionary(
+                            eduJSON.Parser.Parse(
+                                Engine.DiscoServers(cookie),
+                                ct) as Dictionary<string, object>);
+                    //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+                    //throw new Exception("Server list download failed"); // Mock download failure.
+                    var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
+                    foreach (var el in dict)
                     {
-                        idx.IndexName(srv);
-                        idx.IndexKeywords(srv);
+                        ct.ThrowIfCancellationRequested();
+                        if (el.Value is InstituteAccessServer srv)
+                        {
+                            idx.IndexName(srv);
+                            idx.IndexKeywords(srv);
+                        }
                     }
+                    lock (DiscoveredListLock)
+                    {
+                        DiscoveredServers = dict;
+                        DiscoveredInstituteServerIndex = idx;
+                    }
+                    Wizard.TryInvoke((Action)(() => Search()));
                 }
-                lock (DiscoveredListLock)
-                {
-                    DiscoveredServers = dict;
-                    DiscoveredInstituteServerIndex = idx;
-                }
-                Wizard.TryInvoke((Action)(() => Search()));
-            }
-            catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
-            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
+                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+            }).Start();
         }
 
         /// <summary>
@@ -444,36 +462,42 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Triggers background organization discovery
         /// </summary>
-        async void DiscoverOrganizations()
+        void DiscoverOrganizations()
         {
-            Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
-            try
+            OrganizationDiscoveryInProgress?.Cancel();
+            OrganizationDiscoveryInProgress = new CancellationTokenSource();
+            var ct = CancellationTokenSource.CreateLinkedTokenSource(OrganizationDiscoveryInProgress.Token, Window.Abort.Token).Token;
+            new Thread(() =>
             {
-                Trace.TraceInformation("Discovering organizations");
-                OrganizationDictionary dict;
-                using (var cookie = new Engine.CancellationTokenCookie(Window.Abort.Token))
-                    dict = new OrganizationDictionary(
-                        eduJSON.Parser.Parse(
-                            await Task.Run(() => Engine.DiscoOrganizations(cookie)),
-                            Window.Abort.Token) as Dictionary<string, object>);
-                //await Task.Run(() => Abort.Token.WaitHandle.WaitOne(10000)); // Mock a slow link for testing.
-                //await Task.Run(() => throw new Exception("Organization list download failed")); // Mock download failure.
-                var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
-                foreach (var el in dict)
+                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                try
                 {
-                    Window.Abort.Token.ThrowIfCancellationRequested();
-                    idx.IndexName(el.Value);
-                    idx.IndexKeywords(el.Value);
+                    Trace.TraceInformation("Discovering organizations");
+                    OrganizationDictionary dict;
+                    using (var cookie = new Engine.CancellationTokenCookie(ct))
+                        dict = new OrganizationDictionary(
+                            eduJSON.Parser.Parse(
+                                Engine.DiscoOrganizations(cookie),
+                                ct) as Dictionary<string, object>);
+                    //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
+                    //throw new Exception("Organization list download failed"); // Mock download failure.
+                    var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
+                    foreach (var el in dict)
+                    {
+                        ct.ThrowIfCancellationRequested();
+                        idx.IndexName(el.Value);
+                        idx.IndexKeywords(el.Value);
+                    }
+                    lock (DiscoveredListLock)
+                    {
+                        DiscoveredOrganizations = dict;
+                        DiscoveredOrganizationIndex = idx;
+                    }
+                    Wizard.TryInvoke((Action)(() => Search()));
                 }
-                lock (DiscoveredListLock)
-                {
-                    DiscoveredOrganizations = dict;
-                    DiscoveredOrganizationIndex = idx;
-                }
-                Wizard.TryInvoke((Action)(() => Search()));
-            }
-            catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
-            finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
+                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
+            }).Start();
         }
 
         /// <summary>
