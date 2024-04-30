@@ -66,25 +66,6 @@ namespace eduVPN.Models
             SupportContacts = new ObservableCollectionEx<Uri>();
         }
 
-        /// <summary>
-        /// Constructs a server
-        /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>identifier</c>, <c>display_name</c>, <c>profiles</c> elements.</param>
-        public Server(IReadOnlyDictionary<string, object> obj) :
-            this(
-                eduJSON.Parser.GetValue(obj, "base_url", out string baseUrl) && baseUrl != null ? new Uri(baseUrl).AbsoluteUri :
-                eduJSON.Parser.GetValue(obj, "identifier", out string identifier) && identifier != null ? identifier :
-                throw new eduJSON.MissingParameterException("identifier/base_url"))
-        {
-            eduJSON.Parser.GetDictionary(obj, "display_name", LocalizedDisplayNames);
-            if (eduJSON.Parser.GetValue(obj, "profiles", out Dictionary<string, object> profiles) && profiles != null)
-                _Profiles = new ProfileDictionary(profiles);
-            if (eduJSON.Parser.GetValue(obj, "support_contacts", out List<object> supportContacts) && supportContacts != null)
-                foreach (var c in supportContacts)
-                    if (c is string cStr && Uri.TryCreate(cStr, UriKind.Absolute, out var cUri))
-                        SupportContacts.Add(cUri);
-        }
-
         #endregion
 
         #region Methods
@@ -128,27 +109,6 @@ namespace eduVPN.Models
                 Properties.Settings.Default.AccessTokenCache2.Remove(Id);
         }
 
-        /// <summary>
-        /// Creates server from eduvpn-common JSON string
-        /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>identifier</c>, <c>display_name</c>, <c>profiles</c> elements.</param>
-        /// <returns></returns>
-        /// <exception cref="eduJSON.ParameterException">Unknown server type</exception>
-        public static Server Load(IReadOnlyDictionary<string, object> obj)
-        {
-            switch ((ServerType)eduJSON.Parser.GetValue<long>(obj, "server_type"))
-            {
-                case ServerType.InstituteAccess:
-                    return new InstituteAccessServer(eduJSON.Parser.GetValue<Dictionary<string, object>>(obj, "institute_access_server"));
-                case ServerType.SecureInternet:
-                    return new SecureInternetServer(eduJSON.Parser.GetValue<Dictionary<string, object>>(obj, "secure_internet_server"));
-                case ServerType.Own:
-                    return new Server(eduJSON.Parser.GetValue<Dictionary<string, object>>(obj, "custom_server"));
-                default:
-                    throw new eduJSON.ParameterException("Unknown server type", "server_type");
-            }
-        }
-
         #endregion
 
         #region IComparable Support
@@ -157,6 +117,77 @@ namespace eduVPN.Models
         public int CompareTo(object obj)
         {
             return ToString().CompareTo(obj.ToString());
+        }
+
+        #endregion
+
+        #region Utf8Json
+
+        public class Json
+        {
+            public string server_type { get; set; }
+            public Uri base_url { get; set; }
+            public string identifier { get; set; }
+            public object display_name { get; set; }
+            public ProfileDictionary.Json profiles { get; set; }
+            public List<Uri> support_contacts { get; set; }
+            public bool delisted { get; set; }
+            public object keyword_list { get; set; }
+            public string country_code { get; set; }
+            public List<string> locations { get; set; }
+        }
+
+        public class Json2
+        {
+            public long server_type { get; set; }
+            public Json institute_access_server { get; set; }
+            public Json secure_internet_server { get; set; }
+            public Json custom_server { get; set; }
+        }
+
+        public class JsonLists
+        {
+            public List<Json> institute_access_servers { get; set; }
+            public Json secure_internet_server { get; set; }
+            public List<Json> custom_servers { get; set; }
+        }
+
+        /// <summary>
+        /// Constructs a server
+        /// </summary>
+        /// <param name="json">JSON object</param>
+        public Server(Json json) :
+            this(json.base_url != null ? json.base_url.AbsoluteUri :
+                json.identifier != null ? json.identifier :
+                throw new ArgumentException())
+        {
+            LocalizedDisplayNames = json.display_name.ParseLocalized<string>();
+            if (json.profiles != null)
+                _Profiles = new ProfileDictionary(json.profiles);
+            if (json.support_contacts != null)
+                foreach (var c in json.support_contacts)
+                    SupportContacts.Add(c);
+        }
+
+        /// <summary>
+        /// Creates server from eduvpn-common JSON string
+        /// </summary>
+        /// <param name="json">JSON object</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Unknown server type</exception>
+        public static Server Load(Json2 json)
+        {
+            switch ((ServerType)json.server_type)
+            {
+                case ServerType.InstituteAccess:
+                    return new InstituteAccessServer(json.institute_access_server);
+                case ServerType.SecureInternet:
+                    return new SecureInternetServer(json.secure_internet_server);
+                case ServerType.Own:
+                    return new Server(json.custom_server);
+                default:
+                    throw new ArgumentException("Unknown server type", "server_type");
+            }
         }
 
         #endregion

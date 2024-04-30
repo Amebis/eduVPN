@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -31,22 +32,41 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
+        #region Utf8Json
+
+        public class Json
+        {
+            public string current { get; set; }
+            public Dictionary<string, Profile.Json> map { get; set; }
+            public List<Profile.Json> profile_list { get; set; }
+        }
 
         /// <summary>
-        /// Creates server list
+        /// Creates organization list
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>server_list</c> and other optional elements</param>
         public ProfileDictionary(Dictionary<string, object> obj)
         {
-            _Current = eduJSON.Parser.GetValue(obj, "current", out string current) ? current : null;
-            if (eduJSON.Parser.GetValue(obj, "map", out Dictionary<string, object> map) && map != null)
-                foreach (var el in map)
+            _Current = obj.TryGetValue("current", out var current) && current is string currentStr ? currentStr : null;
+            if (obj.TryGetValue("map", out var map) && map is Dictionary<string, object> dict)
+            {
+                foreach (var el in dict)
                 {
-                    if (!(el.Value is Dictionary<string, object> obj3))
-                        throw new eduJSON.InvalidParameterTypeException("map", typeof(Dictionary<string, object>), el.GetType());
-                    Add(el.Key, new Profile(el.Key, obj3));
+                    if (!(el.Value is Dictionary<string, object> obj2))
+                        throw new ArgumentException();
+                    Add(el.Key, new Profile(el.Key, obj2));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Creates organization list
+        /// </summary>
+        public ProfileDictionary(Json json)
+        {
+            _Current = json.current;
+            if (json.map != null)
+                foreach (var el in json.map)
+                    Add(el.Key, new Profile(el.Key, el.Value));
         }
 
         #endregion

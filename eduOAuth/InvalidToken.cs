@@ -6,7 +6,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace eduOAuth
@@ -23,14 +22,13 @@ namespace eduOAuth
         /// Creates an invalid access token
         /// </summary>
         public InvalidToken() :
-            base(new Dictionary<string, object>()
+            base(new Json
             {
-                { "access_token", "" },
-                { "expires_in", 10 },
+                access_token = "",
+                expires_in = 10,
             },
             DateTimeOffset.MinValue)
-        {
-        }
+        { }
 
         #endregion
 

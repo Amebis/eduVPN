@@ -73,11 +73,11 @@ namespace eduOAuth.Tests
             Assert.IsTrue(token2.Scope != null);
             Assert.IsTrue(token1.Scope.SetEquals(token2.Scope));
 
-            Assert.ThrowsException<eduJSON.MissingParameterException>(() => ag.ProcessResponse(new NameValueCollection() { { "code", "1234567890" } }, request.Object));
-            Assert.ThrowsException<eduJSON.MissingParameterException>(() => ag.ProcessResponse(new NameValueCollection() { { "state", query["state"] } }, request.Object));
+            Assert.ThrowsException<ArgumentException>(() => ag.ProcessResponse(new NameValueCollection() { { "code", "1234567890" } }, request.Object));
+            Assert.ThrowsException<ArgumentException>(() => ag.ProcessResponse(new NameValueCollection() { { "state", query["state"] } }, request.Object));
             Assert.ThrowsException<InvalidStateException>(() => ag.ProcessResponse(new NameValueCollection() { { "state", AuthorizationGrant.Base64UrlEncodeNoPadding(new byte[] { 0x01, 0x02, 0x03 }) }, { "code", "1234567890" } }, request.Object));
             Assert.ThrowsException<AuthorizationGrantException>(() => ag.ProcessResponse(new NameValueCollection() { { "state", query["state"] }, { "error", "error" }, { "code", "1234567890" } }, request.Object));
-            Assert.ThrowsException<eduJSON.MissingParameterException>(() => ag.ProcessResponse(new NameValueCollection() { { "state", query["state"] } }, request.Object));
+            Assert.ThrowsException<ArgumentException>(() => ag.ProcessResponse(new NameValueCollection() { { "state", query["state"] } }, request.Object));
         }
 
         [TestMethod()]

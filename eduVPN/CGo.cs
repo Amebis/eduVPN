@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 
@@ -25,7 +26,7 @@ namespace eduVPN
         /// <summary>
         /// Converts UTF-8 CGo char* to managed string
         /// </summary>
-        class CGoToManagedStringMarshaller : ICustomMarshaler
+        public class CGoToManagedStringMarshaller : ICustomMarshaler
         {
             #region Methods
 
@@ -97,9 +98,97 @@ namespace eduVPN
             /// <param name="ManagedObj">The managed object to be destroyed.</param>
             /// <exception cref="NotImplementedException">Not implemented</exception>
             public void CleanUpManagedData(object ManagedObj)
+            { }
+
+            /// <summary>
+            /// Returns the size of the native data to be marshaled.
+            /// </summary>
+            /// <returns>The size, in bytes, of the native data.</returns>
+            /// <exception cref="NotImplementedException">Not implemented</exception>
+            public int GetNativeDataSize()
             {
                 throw new NotImplementedException();
             }
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Converts UTF-8 CGo char* to byte[]
+        /// </summary>
+        public class CGoToManagedByteArrayMarshaller : ICustomMarshaler
+        {
+            #region Methods
+
+            /// <summary>
+            /// The one and only instance of marshaller.
+            /// This marshaller is stateless, thus it does not require a separate instance for each conversion.
+            /// </summary>
+            static CGoToManagedByteArrayMarshaller Default;
+
+            public static ICustomMarshaler GetInstance(string cookie)
+            {
+                if (Default != null)
+                    return Default;
+                return Default = new CGoToManagedByteArrayMarshaller();
+            }
+
+            #endregion
+
+            #region ICustomMarshaler Support
+
+            /// <summary>
+            /// Converts the unmanaged data to managed data.
+            /// </summary>
+            /// <param name="pNativeData">A pointer to the unmanaged data to be wrapped.</param>
+            /// <returns>An object that represents the managed view of the COM data.</returns>
+            public object MarshalNativeToManaged(IntPtr pNativeData)
+            {
+                if (pNativeData == IntPtr.Zero)
+                    return null;
+                using (var data = new MemoryStream(1024))
+                {
+                    using (var w = new BinaryWriter(data))
+                    {
+                        byte chr;
+                        for (int offset = 0; (chr = Marshal.ReadByte(pNativeData + offset)) != 0; ++offset)
+                            w.Write(chr);
+                    }
+                    return data.ToArray();
+                }
+            }
+
+            /// <summary>
+            /// Converts the managed data to unmanaged data.
+            /// </summary>
+            /// <param name="ManagedObj">The managed object to be converted.</param>
+            /// <returns>A pointer to the COM view of the managed object.</returns>
+            /// <exception cref="NotImplementedException">Not implemented</exception>
+            public IntPtr MarshalManagedToNative(object ManagedObj)
+            {
+                throw new NotImplementedException();
+            }
+
+            [DllImport("eduvpn_windows.dll", CallingConvention = CallingConvention.Cdecl)]
+            private static extern void free_string(IntPtr addr);
+
+            /// <summary>
+            /// Performs necessary cleanup of the unmanaged data when it is no longer needed.
+            /// </summary>
+            /// <param name="pNativeData">A pointer to the unmanaged data to be destroyed.</param>
+            public void CleanUpNativeData(IntPtr pNativeData)
+            {
+                if (pNativeData != IntPtr.Zero)
+                    free_string(pNativeData);
+            }
+
+            /// <summary>
+            /// Performs necessary cleanup of the managed data when it is no longer needed.
+            /// </summary>
+            /// <param name="ManagedObj">The managed object to be destroyed.</param>
+            /// <exception cref="NotImplementedException">Not implemented</exception>
+            public void CleanUpManagedData(object ManagedObj)
+            { }
 
             /// <summary>
             /// Returns the size of the native data to be marshaled.
@@ -248,16 +337,31 @@ namespace eduVPN
                 BaseUri = baseUri;
             }
 
+            #endregion
+
+            #region Utf8Json
+
+            public class Json
+            {
+                public string arguments { get; set; }
+                public List<string> uri { get; set; }
+                public string version { get; set; }
+                public string changelog_uri { get; set; }
+
+                [DataMember(Name = "hash-sha256")]
+                public string hash_sha256 { get; set; }
+            }
+
             /// <summary>
             /// Constructs self-update description
             /// </summary>
-            public SelfUpdatePackage(Uri baseUri, IReadOnlyDictionary<string, object> obj) : this(baseUri)
+            public SelfUpdatePackage(Uri baseUri, Json json) : this(baseUri)
             {
-                Arguments = eduJSON.Parser.GetValue(obj, "arguments", out string arguments) ? arguments : null;
-                Uris = new List<Uri>(((List<object>)obj["uri"]).Select(u => u is string uStr ? new Uri(BaseUri, uStr) : null));
-                Version = new Version((string)obj["version"]);
-                Changelog = eduJSON.Parser.GetValue(obj, "changelog_uri", out string changelogUri) && changelogUri != null ? new Uri(BaseUri, changelogUri) : null;
-                Hash = ((string)obj["hash-sha256"]).FromHexToBin();
+                Arguments = json.arguments;
+                Uris = json.uri.Select(u => new Uri(BaseUri, u)).ToList();
+                Version = new Version(json.version);
+                Changelog = json.changelog_uri != null ? new Uri(BaseUri, json.changelog_uri) : null;
+                Hash = json.hash_sha256.FromHexToBin();
             }
 
             #endregion
@@ -278,18 +382,18 @@ namespace eduVPN
             /// </summary>
             public enum Event : uint
             {
-                ConsoleConnect       = 0x1 /*WTS_CONSOLE_CONNECT*/,
-                ConsoleDisconnect    = 0x2 /*WTS_CONSOLE_DISCONNECT*/,
-                RemoteConnect        = 0x3 /*WTS_REMOTE_CONNECT*/,
-                RemoteDisconnect     = 0x4 /*WTS_REMOTE_DISCONNECT*/,
-                SessionReportLogon   = 0x5 /*WTS_SESSION_LOGON */| 0x8000000,
-                SessionLogon         = 0x5 /*WTS_SESSION_LOGON*/,
-                SessionLogoff        = 0x6 /*WTS_SESSION_LOGOFF*/,
-                SessionLock          = 0x7 /*WTS_SESSION_LOCK*/,
-                SessionUnlock        = 0x8 /*WTS_SESSION_UNLOCK*/,
+                ConsoleConnect = 0x1 /*WTS_CONSOLE_CONNECT*/,
+                ConsoleDisconnect = 0x2 /*WTS_CONSOLE_DISCONNECT*/,
+                RemoteConnect = 0x3 /*WTS_REMOTE_CONNECT*/,
+                RemoteDisconnect = 0x4 /*WTS_REMOTE_DISCONNECT*/,
+                SessionReportLogon = 0x5 /*WTS_SESSION_LOGON */| 0x8000000,
+                SessionLogon = 0x5 /*WTS_SESSION_LOGON*/,
+                SessionLogoff = 0x6 /*WTS_SESSION_LOGOFF*/,
+                SessionLock = 0x7 /*WTS_SESSION_LOCK*/,
+                SessionUnlock = 0x8 /*WTS_SESSION_UNLOCK*/,
                 SessionRemoteControl = 0x9 /*WTS_SESSION_REMOTE_CONTROL*/,
-                SessionCreate        = 0xa /*WTS_SESSION_CREATE*/,
-                SessionTerminate     = 0xb /*WTS_SESSION_TERMINATE*/,
+                SessionCreate = 0xa /*WTS_SESSION_CREATE*/,
+                SessionTerminate = 0xb /*WTS_SESSION_TERMINATE*/,
             }
 
             #endregion
@@ -405,7 +509,7 @@ namespace eduVPN
         {
             using (var ctx = new CGoContext(ct))
             {
-                var m = CGoToManagedStringMarshaller.GetInstance(null);
+                var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
                 var r = check_selfupdate(
                     discovery.Uri.AbsoluteUri,
                     string.Join(
@@ -420,10 +524,11 @@ namespace eduVPN
                 try
                 {
                     if (r.r2 != IntPtr.Zero)
-                        throw new Exception((string)m.MarshalNativeToManaged(r.r2));
+                        throw new Exception(Encoding.UTF8.GetString((byte[])m.MarshalNativeToManaged(r.r2)));
+                    var v = Utf8Json.JsonSerializer.Deserialize<string>((byte[])m.MarshalNativeToManaged(r.r1));
                     return Tuple.Create(
-                        eduJSON.Parser.Parse((string)m.MarshalNativeToManaged(r.r0), ct) is IReadOnlyDictionary<string, object> p ? new SelfUpdatePackage(discovery.Uri, p) : null,
-                        eduJSON.Parser.Parse((string)m.MarshalNativeToManaged(r.r1), ct) is string v ? new Version(v) : null);
+                        new SelfUpdatePackage(discovery.Uri, Utf8Json.JsonSerializer.Deserialize<SelfUpdatePackage.Json>((byte[])m.MarshalNativeToManaged(r.r0))),
+                        v != null ? new Version(v) : null);
                 }
                 finally
                 {

@@ -29,28 +29,45 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Creates profile
-        /// </summary>
-        /// <param name="id">Profile Id</param>
-        /// <param name="obj">Key/value dictionary with <c>display_name</c> and <c>profile_id</c> elements. <c>profile_id</c> is required. <c>display_name</c> and <c>profile_id</c> elements should be strings.</param>
-        public Profile(string id, Dictionary<string, object> obj)
-        {
-            Id = id;
-            LocalizedDisplayNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            eduJSON.Parser.GetDictionary(obj, "display_name", LocalizedDisplayNames);
-        }
-
-        #endregion
-
         #region Methods
 
         /// <inheritdoc/>
         public override string ToString()
         {
             return LocalizedDisplayNames.Count > 0 ? LocalizedDisplayNames.GetLocalized() : Id;
+        }
+
+        #endregion
+
+        #region Utf8Json
+
+        public class Json
+        {
+            public object display_name { get; set; }
+        }
+
+        /// <summary>
+        /// Creates profile
+        /// </summary>
+        /// <param name="id">Profile Id</param>
+        /// <param name="json">JSON object</param>
+        public Profile(string id, Dictionary<string, object> obj)
+        {
+            Id = id;
+            LocalizedDisplayNames = obj.TryGetValue("display_name", out var display_name) ?
+                display_name.ParseLocalized<string>() :
+                throw new ArgumentException();
+        }
+
+        /// <summary>
+        /// Creates profile
+        /// </summary>
+        /// <param name="id">Profile Id</param>
+        /// <param name="json">JSON object</param>
+        public Profile(string id, Json json)
+        {
+            Id = id;
+            LocalizedDisplayNames = json.display_name.ParseLocalized<string>();
         }
 
         #endregion

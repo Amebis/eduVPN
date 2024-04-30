@@ -27,37 +27,37 @@ namespace eduVPN.Models.Tests
 
             Organization org;
 
-            org = new Organization(new Dictionary<string, object>
-                {
-                    { "org_id", "https://idp.surfnet.nl" },
-                    { "secure_internet_home", "https://nl.eduvpn.org/" },
-                });
+            org = new Organization(new Organization.Json
+            {
+                org_id = "https://idp.surfnet.nl",
+                secure_internet_home = new Uri("https://nl.eduvpn.org/"),
+            });
             Assert.AreEqual("https://idp.surfnet.nl", org.Id, "Identifier URI incorrect");
             Assert.AreEqual(new Uri("https://nl.eduvpn.org/"), org.SecureInternetBase, "Secure internet home server base URI incorrect");
             Assert.AreEqual("https://idp.surfnet.nl", org.ToString(), "Display name incorrect");
 
-            org = new Organization(new Dictionary<string, object>
-                {
-                    { "org_id", "https://idp.surfnet.nl" },
-                    { "secure_internet_home", "https://nl.eduvpn.org/" },
-                    {  "display_name", new Dictionary<string, object>() {
-                        { "nl", "SURFnet bv" },
-                        { "en", "SURFnet bv" },
-                    }},
-                    { "keyword_list", new Dictionary<string, object>() {
-                        { "en", "SURFnet bv SURF konijn surf surfnet powered by" },
-                        { "nl", "SURFnet bv SURF konijn powered by" },
-                    }}
-                });
+            org = new Organization(new Organization.Json
+            {
+                org_id = "https://idp.surfnet.nl",
+                secure_internet_home = new Uri("https://nl.eduvpn.org/"),
+                display_name = new Dictionary<string, string>() {
+                    { "nl", "SURFnet bv" },
+                    { "en", "SURFnet bv" },
+                },
+                keyword_list = new Dictionary<string, string>() {
+                    { "en", "SURFnet bv SURF konijn surf surfnet powered by" },
+                    { "nl", "SURFnet bv SURF konijn powered by" },
+                },
+            });
             Assert.AreEqual("https://idp.surfnet.nl", org.Id, "Identifier URI incorrect");
             Assert.AreEqual(new Uri("https://nl.eduvpn.org/"), org.SecureInternetBase, "Secure internet home server base URI incorrect");
             Assert.AreEqual("SURFnet bv", org.ToString(), "Display name incorrect");
 
             // Test issues.
-            Assert.ThrowsException<eduJSON.MissingParameterException>(() =>
-                new Organization(new Dictionary<string, object>
+            Assert.ThrowsException<ArgumentException>(() =>
+                new Organization(new Organization.Json
                 {
-                    { "secure_internet_home", "https://nl.eduvpn.org/" },
+                    secure_internet_home = new Uri("https://nl.eduvpn.org/"),
                 }));
         }
 
@@ -73,35 +73,35 @@ namespace eduVPN.Models.Tests
             var list = new List<Organization>();
             var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
 
-            var el1 = new Organization(new Dictionary<string, object>
-                {
-                    { "org_id", "https://idp.surfnet.nl" },
-                    { "secure_internet_home", "https://nl.eduvpn.org/" },
-                    { "display_name", new Dictionary<string, object>() {
-                        { "nl", "SURFnet bv" },
-                        { "en", "SURFnet bv" },
-                    }},
-                    { "keyword_list", new Dictionary<string, object>() {
-                        { "en", "SURFnet bv SURF konijn surf surfnet powered by" },
-                        { "nl", "SURFnet bv SURF konijn powered by" },
-                    }}
-                });
+            var el1 = new Organization(new Organization.Json
+            {
+                org_id = "https://idp.surfnet.nl",
+                secure_internet_home = new Uri("https://nl.eduvpn.org/"),
+                display_name = new Dictionary<string, string>() {
+                    { "nl", "SURFnet bv" },
+                    { "en", "SURFnet bv" },
+                },
+                keyword_list = new Dictionary<string, string>() {
+                    { "en", "SURFnet bv SURF konijn surf surfnet powered by" },
+                    { "nl", "SURFnet bv SURF konijn powered by" },
+                },
+            });
             list.Add(el1);
             idx.IndexName(el1);
             idx.IndexKeywords(el1);
             Assert.AreEqual("SURFnet bv", el1.ToString());
             Assert.IsTrue(el1.LocalizedKeywordSets["nl"].Contains("surf"));
 
-            var el2 = new Organization(new Dictionary<string, object>
-                {
-                    { "org_id", "https://www.arnes.si" },
-                    { "secure_internet_home", "https://si.eduvpn.org/" },
-                    { "display_name", new Dictionary<string, object>() {
+            var el2 = new Organization(new Organization.Json
+            {
+                org_id = "https://www.arnes.si",
+                secure_internet_home = new Uri("https://si.eduvpn.org/"),
+                display_name = new Dictionary<string, string>() {
                         { "sl", "Akademska in raziskovalna mreža Slovenije" },
                         { "en", "Academic and Research Network of Slovenia" },
-                    }},
-                    { "keyword_list", "ARNES" },
-                });
+                    },
+                keyword_list = "ARNES",
+            });
             list.Add(el2);
             idx.IndexName(el2);
             idx.IndexKeywords(el2);

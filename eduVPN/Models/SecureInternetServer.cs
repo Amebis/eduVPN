@@ -48,22 +48,6 @@ namespace eduVPN.Models
         public SecureInternetServer(Organization org) : base(org.Id)
         { }
 
-        /// <summary>
-        /// Creates secure internet server
-        /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>identifier</c>, <c>display_name</c>, <c>profiles</c>, <c>country_code</c>, <c>locations</c>, <c>delisted</c> elements.</param>
-        public SecureInternetServer(Dictionary<string, object> obj) : base(obj)
-        {
-            Country = eduJSON.Parser.GetValue(obj, "country_code", out string countryCode) && countryCode != null ? new Country(countryCode) : null;
-            if (eduJSON.Parser.GetValue(obj, "locations", out List<object> locations) && locations != null)
-            {
-                Locations = new HashSet<Country>();
-                foreach (var e in locations)
-                    if (e is string s)
-                        Locations.Add(new Country(s));
-            }
-        }
-
         #endregion
 
         #region Methods
@@ -72,6 +56,25 @@ namespace eduVPN.Models
         public override string ToString()
         {
             return Country != null ? Country.ToString() : base.ToString();
+        }
+
+        #endregion
+
+        #region Utf8Json
+
+        /// <summary>
+        /// Creates secure internet server
+        /// </summary>
+        /// <param name="json">JSON object</param>
+        public SecureInternetServer(Json json) : base(json)
+        {
+            Country = json.country_code != null ? new Country(json.country_code) : null;
+            if (json.locations != null)
+            {
+                Locations = new HashSet<Country>();
+                foreach (var e in json.locations)
+                    Locations.Add(new Country(e));
+            }
         }
 
         #endregion

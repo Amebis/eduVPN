@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Common;
+using System;
 using System.Collections.Generic;
 
 namespace eduVPN.Models
@@ -24,16 +24,17 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
+        #region Utf8Json
 
         /// <summary>
         /// Creates transition
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>cookie</c> and <c>data</c> elements. <c>data</c> is required.</param>
-        public AskProfileTransition(IReadOnlyDictionary<string, object> obj) :
-            base(obj)
+        /// <param name="json">JSON object</param>
+        public AskProfileTransition(Json json) : base(json)
         {
-            Profiles = new ProfileDictionary(obj.GetValue<Dictionary<string, object>>("data"));
+            if (!(json.data is Dictionary<string, object> obj))
+                throw new ArgumentException();
+            Profiles = new ProfileDictionary(obj);
         }
 
         #endregion

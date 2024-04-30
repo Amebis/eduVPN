@@ -5,7 +5,6 @@
 SetupSign \
 !ENDIF
 Sign : \
-	"bin\$(CFG)\$(PLAT)\$(LANG)\eduJSON.resources.dll" \
 	"bin\$(CFG)\$(PLAT)\$(LANG)\eduOpenVPN.resources.dll" \
 	"bin\$(CFG)\$(PLAT)\$(LANG)\eduVPN.resources.dll" \
 	"bin\$(CFG)\$(PLAT)\$(LANG)\eduVPN.Views.resources.dll" \

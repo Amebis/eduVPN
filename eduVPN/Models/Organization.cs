@@ -39,32 +39,6 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Creates organization
-        /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>display_name</c>, <c>org_id</c>, <c>secure_internet_home</c>, and <c>keyword_list</c> elements.</param>
-        public Organization(IReadOnlyDictionary<string, object> obj)
-        {
-            Id = eduJSON.Parser.GetValue<string>(obj, "org_id");
-            SecureInternetBase = eduJSON.Parser.GetValue(obj, "secure_internet_home", out string secureInternetHome) && secureInternetHome != null ? new Uri(secureInternetHome) : null;
-            LocalizedDisplayNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            eduJSON.Parser.GetDictionary(obj, "display_name", LocalizedDisplayNames);
-            LocalizedKeywordSets = new Dictionary<string, HashSet<string>>(StringComparer.InvariantCultureIgnoreCase);
-            var keywordList = new Dictionary<string, string>();
-            if (eduJSON.Parser.GetDictionary(obj, "keyword_list", keywordList))
-                foreach (var keywords in keywordList)
-                {
-                    var hash = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-                    foreach (var keyword in keywords.Value.Split())
-                        hash.Add(keyword);
-                    LocalizedKeywordSets.Add(keywords.Key, hash);
-                }
-        }
-
-        #endregion
-
         #region Methods
 
         /// <inheritdoc/>
@@ -92,6 +66,39 @@ namespace eduVPN.Models
         public override int GetHashCode()
         {
             return Id.GetHashCode();
+        }
+
+        #endregion
+
+        #region Utf8Json
+
+        public class Json
+        {
+            public string org_id { get; set; }
+            public Uri secure_internet_home { get; set; }
+            public object display_name { get; set; }
+            public object keyword_list { get; set; }
+        }
+
+        /// <summary>
+        /// Creates organization
+        /// </summary>
+        /// <param name="json">JSON object</param>
+        public Organization(Json json)
+        {
+            if (json.org_id == null)
+                throw new ArgumentException();
+            Id = json.org_id;
+            SecureInternetBase = json.secure_internet_home;
+            LocalizedDisplayNames = json.display_name.ParseLocalized<string>();
+            LocalizedKeywordSets = new Dictionary<string, HashSet<string>>(StringComparer.InvariantCultureIgnoreCase);
+            foreach (var keywords in json.keyword_list.ParseLocalized<string>())
+            {
+                var hash = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+                foreach (var keyword in keywords.Value.Split())
+                    hash.Add(keyword);
+                LocalizedKeywordSets.Add(keywords.Key, hash);
+            }
         }
 
         #endregion

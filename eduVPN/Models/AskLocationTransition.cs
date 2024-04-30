@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Common;
+using System;
 using System.Collections.Generic;
 
 namespace eduVPN.Models
@@ -29,12 +29,13 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates transition
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>cookie</c> and <c>data</c> elements. <c>data</c> is required.</param>
-        public AskLocationTransition(IReadOnlyDictionary<string, object> obj) :
-            base(obj)
+        /// <param name="json">JSON object</param>
+        public AskLocationTransition(Json json) : base(json)
         {
             Countries = new HashSet<Country>();
-            foreach (var item in obj.GetValue<List<object>>("data"))
+            if (!(json.data is List<object> obj))
+                throw new ArgumentException();
+            foreach (var item in obj)
                 if (item is string s)
                     Countries.Add(new Country(s));
         }

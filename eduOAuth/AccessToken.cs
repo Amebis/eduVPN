@@ -78,43 +78,6 @@ namespace eduOAuth
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes generic access token from data returned by authentication server.
-        /// </summary>
-        /// <param name="obj">An object representing access token as returned by the authentication server</param>
-        /// <param name="authorized">Timestamp of the initial authorization</param>
-        /// <remarks>
-        /// <a href="https://tools.ietf.org/html/rfc6749#section-5.1">RFC6749 Section 5.1</a>
-        /// </remarks>
-        protected AccessToken(Dictionary<string, object> obj, DateTimeOffset authorized)
-        {
-            // Get access token.
-            Token = new NetworkCredential("", eduJSON.Parser.GetValue<string>(obj, "access_token")).SecurePassword;
-            Token.MakeReadOnly();
-
-            Authorized = authorized;
-
-            // Get expiration date.
-            Expires =
-                eduJSON.Parser.GetValue(obj, "expires_at", out long expiresAt) ? DateTimeOffset.FromUnixTimeSeconds(expiresAt) :
-                eduJSON.Parser.GetValue(obj, "expires_in", out long expiresIn) ? DateTimeOffset.Now.AddSeconds(expiresIn) : DateTimeOffset.MaxValue;
-
-            // Get refresh token.
-            if (eduJSON.Parser.GetValue(obj, "refresh_token", out string refreshToken) && refreshToken != null)
-            {
-                Refresh = new NetworkCredential("", refreshToken).SecurePassword;
-                Refresh.MakeReadOnly();
-            }
-
-            // Get scope.
-            if (eduJSON.Parser.GetValue(obj, "scope", out string scope) && scope != null)
-                Scope = new HashSet<string>(scope.Split(null));
-        }
-
-        #endregion
-
         #region Methods
 
         /// <inheritdoc/>
@@ -195,17 +158,17 @@ namespace eduOAuth
                     if (response is HttpWebResponse httpResponse && httpResponse.StatusCode != HttpStatusCode.OK)
                         throw new WebException("Response status code not 200", null, WebExceptionStatus.UnknownError, response);
                     using (var responseStream = response.GetResponseStream())
-                    using (var reader = new StreamReader(responseStream))
+                    using (var memstream = new MemoryStream())
                     {
-                        var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(reader.ReadToEnd(ct), ct);
+                        responseStream.CopyTo(memstream);
+                        var obj = Utf8Json.JsonSerializer.Deserialize<Json>(memstream.ToArray());
 
                         // Get token type and create the token based on the type.
-                        var tokenType = eduJSON.Parser.GetValue<string>(obj, "token_type");
                         AccessToken token = null;
-                        switch (tokenType.ToLowerInvariant())
+                        switch (obj.token_type.ToLowerInvariant())
                         {
                             case "bearer": token = new BearerToken(obj, authorized); break;
-                            default: throw new UnsupportedTokenTypeException(tokenType);
+                            default: throw new UnsupportedTokenTypeException(obj.token_type);
                         }
 
                         if (token.Scope == null && scope != null)
@@ -227,12 +190,11 @@ namespace eduOAuth
                     {
                         // Parse server error.
                         using (var responseStream = httpResponse.GetResponseStream())
-                        using (var reader = new StreamReader(responseStream))
+                        using (var memstream = new MemoryStream())
                         {
-                            var obj = (Dictionary<string, object>)eduJSON.Parser.Parse(reader.ReadToEnd(ct), ct);
-                            eduJSON.Parser.GetValue(obj, "error_description", out string errorDescription);
-                            eduJSON.Parser.GetValue(obj, "error_uri", out string errorUri);
-                            throw new AccessTokenException(eduJSON.Parser.GetValue<string>(obj, "error"), errorDescription, errorUri);
+                            responseStream.CopyTo(memstream);
+                            var obj = Utf8Json.JsonSerializer.Deserialize<JsonError>(memstream.ToArray());
+                            throw new AccessTokenException(obj.error, obj.error_description, obj.error_uri);
                         }
                     }
 
@@ -478,6 +440,60 @@ namespace eduOAuth
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
         }
+        #endregion
+
+        #region Utf8Json
+
+        public class Json
+        {
+            public string token_type { get; set; }
+            public string access_token { get; set; }
+            public long? expires_at { get; set; }
+            public long? expires_in { get; set; }
+            public string refresh_token { get; set; }
+            public string scope { get; set; }
+        }
+
+        public class JsonError
+        {
+            public string error {  get; set; }
+            public string error_description { get; set; }
+            public string error_uri { get; set; }
+        }
+
+        /// <summary>
+        /// Initializes generic access token from data returned by authentication server.
+        /// </summary>
+        /// <param name="json">JSON object</param>
+        /// <param name="authorized">Timestamp of the initial authorization</param>
+        /// <remarks>
+        /// <a href="https://tools.ietf.org/html/rfc6749#section-5.1">RFC6749 Section 5.1</a>
+        /// </remarks>
+        public AccessToken(Json json, DateTimeOffset authorized)
+        {
+            // Get access token.
+            Token = new NetworkCredential("", json.access_token).SecurePassword;
+            Token.MakeReadOnly();
+
+            Authorized = authorized;
+
+            // Get expiration date.
+            Expires =
+                json.expires_at.HasValue ? DateTimeOffset.FromUnixTimeSeconds(json.expires_at.Value) :
+                json.expires_in.HasValue ? DateTimeOffset.Now.AddSeconds(json.expires_in.Value) : DateTimeOffset.MaxValue;
+
+            // Get refresh token.
+            if (json.refresh_token != null)
+            {
+                Refresh = new NetworkCredential("", json.refresh_token).SecurePassword;
+                Refresh.MakeReadOnly();
+            }
+
+            // Get scope.
+            if (json.scope != null)
+                Scope = new HashSet<string>(json.scope.Split(null));
+        }
+
         #endregion
     }
 }

@@ -198,7 +198,7 @@ namespace eduVPN.ViewModels.Pages
                             Wizard.SelfUpdateProgressPage.Arguments = null;
                         }
 
-                        InstalledVersion = r.Item2 ?? null;
+                        InstalledVersion = r.Item2;
                     }));
 
                     //// Mock the values for testing.

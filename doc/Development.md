@@ -8,7 +8,6 @@
    - _Release_: Release binaries
    - _OpenVPN_: OpenVPN upstream binaries
    - _Setup_: MSI packages and EXE installer
-- _eduJSON_: Lightweight JSON parser
 - _eduMSICA_: MSI custom actions
 - _eduOAuth_: OAuth 2.0 library (for importing legacy OAuth tokens)
 - _eduOpenVPN_: OpenVPN IPC for C#/.NET

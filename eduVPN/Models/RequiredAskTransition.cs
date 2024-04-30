@@ -5,9 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using Prism.Common;
 using System;
-using System.Collections.Generic;
 
 namespace eduVPN.Models
 {
@@ -25,15 +23,21 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
+        #region Utf8Json
+
+        public class Json
+        {
+            public long? cookie { get; set; }
+            public object data { get; set; }
+        }
 
         /// <summary>
         /// Creates transition
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>cookie</c> and <c>data</c> elements. <c>data</c> is required.</param>
-        public RequiredAskTransition(IReadOnlyDictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        public RequiredAskTransition(Json json)
         {
-            Cookie = obj.TryGetValue("cookie", out long data) ? (IntPtr)data : IntPtr.Zero;
+            Cookie = json.cookie != null ? (IntPtr)json.cookie.Value : IntPtr.Zero;
         }
 
         #endregion

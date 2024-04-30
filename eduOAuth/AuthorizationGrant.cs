@@ -255,7 +255,7 @@ namespace eduOAuth
             // Verify state parameter to be present and matching.
             var responseState = redirectResponse["state"];
             if (responseState == null)
-                throw new eduJSON.MissingParameterException("state");
+                throw new ArgumentException("Missing value", "state");
             if (!new NetworkCredential("", responseState).SecurePassword.IsEqualTo(State))
                 throw new InvalidStateException();
 
@@ -267,7 +267,7 @@ namespace eduOAuth
             // Verify authorization code to be present.
             var authorizationCode = redirectResponse["code"]/*.Replace(' ', '+') <= IE11 sends URI unescaped causing + to get converted into space. The issue is avoided by switching to Base64UrlEncodeNoPadding encoding.*/;
             if (authorizationCode == null)
-                throw new eduJSON.MissingParameterException("code");
+                throw new ArgumentException("Missing value", "code");
 
             // Prepare token request body.
             var body =

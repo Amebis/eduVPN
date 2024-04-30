@@ -7,7 +7,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
+using System.Text;
+using Utf8Json;
 
 namespace eduVPN.Models.Tests
 {
@@ -37,7 +38,7 @@ namespace eduVPN.Models.Tests
     }
   ]
 }";
-            var server_list_list_ia = new ServerDictionary(eduJSON.Parser.Parse(server_list_list_json) as Dictionary<string, object>);
+            var server_list_list_ia = new ServerDictionary(JsonSerializer.Deserialize<ServerDictionary.Json>(Encoding.UTF8.GetBytes(server_list_list_json)));
 
             Assert.IsInstanceOfType(server_list_list_ia[new Uri("https://sunset.nuonet.fr/").AbsoluteUri], typeof(InstituteAccessServer));
             Assert.IsInstanceOfType(server_list_list_ia[new Uri("https://eduvpn.rash.al/").AbsoluteUri], typeof(SecureInternetServer));

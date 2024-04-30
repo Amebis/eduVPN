@@ -16,6 +16,45 @@ namespace System.Collections.Generic
     public static class Extensions
     {
         /// <summary>
+        /// Safely gets a named dictionary of values
+        /// </summary>
+        /// <typeparam name="T">Requested value type. Can be: <see cref="bool"/>, <see cref="long"/>, <see cref="double"/>, <see cref="string"/>, <c>Dictionary&lt;string, object&gt;</c>...</typeparam>
+        /// <param name="i">Dictionary</param>
+        /// <param name="value"></param>
+        /// <returns>The dictionary</returns>
+        /// <exception cref="ArgumentException">Value is not of type <typeparamref name="T"/> or <typeparamref name="Dictionary&lt;string, object&gt;"/></exception>
+        public static Dictionary<string, T> ParseLocalized<T>(this object i)
+        {
+            if (i == null)
+                return new Dictionary<string, T>(StringComparer.InvariantCultureIgnoreCase);
+
+            if (i is T t)
+                return new Dictionary<string, T>(StringComparer.InvariantCultureIgnoreCase) { { "", t } };
+
+            if (i is Dictionary<string, T> d1)
+            {
+                var dict = new Dictionary<string, T>(StringComparer.InvariantCultureIgnoreCase);
+                foreach (var k in d1)
+                    dict.Add(k.Key, k.Value);
+                return dict;
+            }
+
+            if (i is Dictionary<string, object> d2)
+            {
+                var dict = new Dictionary<string, T>(StringComparer.InvariantCultureIgnoreCase);
+                foreach (var k in d2)
+                {
+                    if (!(k.Value is T v))
+                        throw new ArgumentException();
+                    dict.Add(k.Key, v);
+                }
+                return dict;
+            }
+
+            throw new ArgumentException();
+        }
+
+        /// <summary>
         /// Gets a localized value from the dictionary
         /// </summary>
         /// <param name="i">Dictionary with locale name as keys</param>

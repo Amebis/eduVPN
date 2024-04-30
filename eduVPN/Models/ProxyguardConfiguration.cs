@@ -6,7 +6,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 
 namespace eduVPN.Models
 {
@@ -35,17 +34,24 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
+        #region Utf8Json
+
+        public class Json
+        {
+            public int source_port;
+            public string listen;
+            public string peer;
+        }
 
         /// <summary>
         /// Creates Proxyguard configuration
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>source_port</c>, <c>listen</c> and <c>peer</c> elements.</param>
-        public ProxyguardConfiguration(IReadOnlyDictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        public ProxyguardConfiguration(Json json)
         {
-            SourcePort = eduJSON.Parser.GetValue(obj, "source_port", out long source_port) && 0 <= source_port && source_port <= 0xffff ? (int)source_port : 0;
-            Listen = eduJSON.Parser.GetValue<string>(obj, "listen");
-            Peer = new Uri(eduJSON.Parser.GetValue<string>(obj, "peer"));
+            SourcePort = 0 <= json.source_port && json.source_port <= 0xffff ? json.source_port : 0;
+            Listen = json.listen;
+            Peer = new Uri(json.peer);
         }
 
         #endregion

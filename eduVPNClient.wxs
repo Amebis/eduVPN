@@ -404,14 +404,23 @@
             <Component Id="Prism.dll" Guid="{4A143204-1EBB-4BDE-BA$(var.ClientId)-B0770670ECC3}">
                 <File Source="$(var.TargetDirClient)Prism.dll"/>
             </Component>
+            <Component Id="Utf8Json.dll" Guid="{F0CE9BF2-1EB5-4841-BA$(var.ClientId)-7B88004889C9}">
+                <File Source="$(var.TargetDirClient)Utf8Json.dll"/>
+            </Component>
+            <Component Id="System.Runtime.CompilerServices.Unsafe.dll" Guid="{8C0AACE5-89B8-4B57-97$(var.ClientId)-C159063D118D}">
+                <File Source="$(var.TargetDirClient)System.Runtime.CompilerServices.Unsafe.dll"/>
+            </Component>
+            <Component Id="System.Threading.Tasks.Extensions.dll" Guid="{35AE212E-AC55-4FCF-AD$(var.ClientId)-399741745E78}">
+                <File Source="$(var.TargetDirClient)System.Threading.Tasks.Extensions.dll"/>
+            </Component>
+            <Component Id="System.ValueTuple.dll" Guid="{3E155270-E425-4CFA-BA$(var.ClientId)-7317A8C12339}">
+                <File Source="$(var.TargetDirClient)System.ValueTuple.dll"/>
+            </Component>
             <Component Id="VCRUNTIME140.dll" Guid="{6B7E12B7-C8CB-4E94-A0$(var.ClientId)-F3FC616FC7D3}">
                 <File Source="$(var.VCRedistDir)VCRUNTIME140$(var.VCRedistSuffix).dll"/>
             </Component>
             <Component Id="eduEx.dll" Guid="{36A66334-6B59-48A1-8B$(var.ClientId)-512FE8F3EE6A}">
                 <File Source="$(var.TargetDirClient)eduEx.dll"/>
-            </Component>
-            <Component Id="eduJSON.dll" Guid="{1949F863-03BA-48D6-9D$(var.ClientId)-843909694F00}">
-                <File Source="$(var.TargetDirClient)eduJSON.dll"/>
             </Component>
             <Component Id="eduOAuth.dll" Guid="{9DA24812-54AC-4D76-BB$(var.ClientId)-BBEF15776AE0}">
                 <File Source="$(var.TargetDirClient)eduOAuth.dll"/>
@@ -492,9 +501,6 @@
         <?foreach Language in $(var.LanguageList)?>
         <?include Install\$(var.Language)\defs.wxi?>
         <DirectoryRef Id="RESOURCEDIR$(var.LanguageId)">
-            <Component Id="eduJSON.resources.dll.$(var.LanguageId)" Guid="{82195943-3982-$(var.LanguageId)-BE$(var.ClientId)-24616577F555}">
-                <File Id="eduJSON.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduJSON.resources.dll"/>
-            </Component>
             <Component Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Guid="{F8C05323-1B02-$(var.LanguageId)-A3$(var.ClientId)-84B11ABE904D}">
                 <File Id="eduOpenVPN.resources.dll.$(var.LanguageId)" Source="$(var.TargetDirClient)$(var.Language)\eduOpenVPN.resources.dll"/>
             </Component>
@@ -536,9 +542,12 @@
             <ComponentRef Id="eduWGSvcHost.exe.reg1"/>
 
             <ComponentRef Id="Prism.dll"/>
+            <ComponentRef Id="Utf8Json.dll"/>
+            <ComponentRef Id="System.Runtime.CompilerServices.Unsafe.dll"/>
+            <ComponentRef Id="System.Threading.Tasks.Extensions.dll"/>
+            <ComponentRef Id="System.ValueTuple.dll"/>
             <ComponentRef Id="VCRUNTIME140.dll"/>
             <ComponentRef Id="eduEx.dll"/>
-            <ComponentRef Id="eduJSON.dll"/>
             <ComponentRef Id="eduOAuth.dll"/>
             <ComponentRef Id="eduOpenVPN.dll"/>
             <ComponentRef Id="eduWireGuard.dll"/>
@@ -556,7 +565,6 @@
 
             <?foreach Language in $(var.LanguageList)?>
             <?include Install\$(var.Language)\defs.wxi?>
-            <ComponentRef Id="eduJSON.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduOpenVPN.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduWireGuard.resources.dll.$(var.LanguageId)"/>
             <ComponentRef Id="eduVPN.resources.dll.$(var.LanguageId)"/>

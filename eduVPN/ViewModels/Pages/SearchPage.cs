@@ -375,10 +375,7 @@ namespace eduVPN.ViewModels.Pages
                     Trace.TraceInformation("Discovering servers");
                     ServerDictionary dict;
                     using (var cookie = new Engine.CancellationTokenCookie(ct))
-                        dict = new ServerDictionary(
-                            eduJSON.Parser.Parse(
-                                Engine.DiscoServers(cookie),
-                                ct) as Dictionary<string, object>);
+                        dict = Engine.DiscoServers(cookie);
                     //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
                     //throw new Exception("Server list download failed"); // Mock download failure.
                     var idx = new Dictionary<string, HashSet<InstituteAccessServer>>(StringComparer.InvariantCultureIgnoreCase);
@@ -471,10 +468,7 @@ namespace eduVPN.ViewModels.Pages
                     Trace.TraceInformation("Discovering organizations");
                     OrganizationDictionary dict;
                     using (var cookie = new Engine.CancellationTokenCookie(ct))
-                        dict = new OrganizationDictionary(
-                            eduJSON.Parser.Parse(
-                                Engine.DiscoOrganizations(cookie),
-                                ct) as Dictionary<string, object>);
+                        dict = Engine.DiscoOrganizations(cookie);
                     //ct.WaitHandle.WaitOne(10000); // Mock a slow link for testing.
                     //throw new Exception("Organization list download failed"); // Mock download failure.
                     var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);

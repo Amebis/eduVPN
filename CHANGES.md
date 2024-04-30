@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.18...HEAD)
 
+- JSON parser replaced
+
 
 ## [3.255.18](https://github.com/Amebis/eduVPN/compare/3.255.17...3.255.18) (2024-04-12)
 

@@ -7,7 +7,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace eduVPN.Models.Tests
 {
@@ -18,7 +17,7 @@ namespace eduVPN.Models.Tests
         [TestMethod()]
         public void OrganizationsTest()
         {
-            const string organizationListJson = @"{
+            byte[] organizationListJson = System.Text.Encoding.UTF8.GetBytes(@"{
   ""organization_list"": [
     {
       ""display_name"": {
@@ -33,8 +32,8 @@ namespace eduVPN.Models.Tests
       }
     }
   ]
-}";
-            var dict = new OrganizationDictionary(eduJSON.Parser.Parse(organizationListJson) as Dictionary<string, object>);
+}");
+            var dict = new OrganizationDictionary(Utf8Json.JsonSerializer.Deserialize<OrganizationDictionary.Json>(organizationListJson));
 
             var org = dict["https://idp.surfnet.nl"];
             Assert.AreEqual(new Uri("https://nl.eduvpn.org/"), org.SecureInternetBase, "Secure internet base incorrect");

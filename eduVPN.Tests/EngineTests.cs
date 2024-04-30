@@ -8,7 +8,6 @@
 using eduVPN.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace eduVPN.Tests
@@ -135,7 +134,10 @@ namespace eduVPN.Tests
             Engine.Register();
             try
             {
-                CollectionAssert.AreEqual(new Dictionary<string, object>(), (Dictionary<string, object>)eduJSON.Parser.Parse(Engine.ServerList()));
+                var json = Engine.ServerList();
+                Assert.AreEqual(null, json.institute_access_servers);
+                Assert.AreEqual(null, json.secure_internet_server);
+                Assert.AreEqual(null, json.custom_servers);
             }
             finally
             {
@@ -181,8 +183,8 @@ namespace eduVPN.Tests
                 Engine.Register();
                 try
                 {
-                    eduJSON.Parser.Parse(Engine.DiscoServers(cookie));
-                    eduJSON.Parser.Parse(Engine.DiscoOrganizations(cookie));
+                    Engine.DiscoServers(cookie);
+                    Engine.DiscoOrganizations(cookie);
                 }
                 finally
                 {

@@ -5,8 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Collections.Generic;
-
 namespace eduVPN.Models
 {
     /// <summary>
@@ -26,10 +24,9 @@ namespace eduVPN.Models
         /// <summary>
         /// Creates institute access server
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>identifier</c>, <c>display_name</c>, <c>profiles</c>, <c>delisted</c> elements.</param>
-        public InstituteAccessServer(IReadOnlyDictionary<string, object> obj) : base(obj)
-        {
-        }
+        /// <param name="json">JSON object</param>
+        public InstituteAccessServer(Json json) : base(json)
+        { }
 
         #endregion
     }

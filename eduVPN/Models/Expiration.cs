@@ -12,7 +12,7 @@ using System.Linq;
 namespace eduVPN.Models
 {
     /// <summary>
-    /// VPN expiry times
+    /// Session expiry times
     /// </summary>
     public class Expiration
     {
@@ -45,22 +45,30 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
+        #region Utf8Json
+
+        public class Json
+        {
+            public long start_time { get; set; }
+            public long end_time { get; set; }
+            public long button_time { get; set; }
+            public long countdown_time { get; set; }
+            public List<long> notification_times { get; set; }
+        }
 
         /// <summary>
-        /// Creates VPN configuration
+        /// Creates session expiry times
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>start_time</c>, <c>end_time</c>, <c>button_time</c>, <c>countdown_time</c> and <c>notification_times</c> elements.</param>
-        public Expiration(IReadOnlyDictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        public Expiration(Json json)
         {
-            long startedAtUnix, endAtUnix;
-            StartedAt = DateTimeOffset.FromUnixTimeSeconds(startedAtUnix = eduJSON.Parser.GetValue<long>(obj, "start_time"));
-            EndAt = DateTimeOffset.FromUnixTimeSeconds(endAtUnix = eduJSON.Parser.GetValue<long>(obj, "end_time"));
-            ButtonAt = DateTimeOffset.FromUnixTimeSeconds(eduJSON.Parser.GetValue<long>(obj, "button_time"));
-            CountdownAt = DateTimeOffset.FromUnixTimeSeconds(eduJSON.Parser.GetValue<long>(obj, "countdown_time"));
-            NotificationAt = eduJSON.Parser.GetValue<List<object>>(obj, "notification_times", out var notification_times) ? notification_times
-                .Where(value => value is long l && startedAtUnix <= l && l <= endAtUnix - 5)
-                .Select(value => DateTimeOffset.FromUnixTimeSeconds((long)value))
+            StartedAt = DateTimeOffset.FromUnixTimeSeconds(json.start_time);
+            EndAt = DateTimeOffset.FromUnixTimeSeconds(json.end_time);
+            ButtonAt = DateTimeOffset.FromUnixTimeSeconds(json.button_time);
+            CountdownAt = DateTimeOffset.FromUnixTimeSeconds(json.countdown_time);
+            NotificationAt = json.notification_times != null ? json.notification_times
+                .Where(value => json.start_time <= value && value <= json.end_time - 5)
+                .Select(value => DateTimeOffset.FromUnixTimeSeconds(value))
                 .ToList() :
                 new List<DateTimeOffset>();
         }

@@ -214,10 +214,6 @@ Publish :: \
 TRANSIFEX_ORG=amebis
 TRANSIFEX_PROJ=eduvpn
 
-RESOURCE_DIR=$(MAKEDIR)\eduJSON\Resources
-TRANSIFEX_RES=edujson
-!INCLUDE "MakefileTransifex.mak"
-
 RESOURCE_DIR=$(MAKEDIR)\eduOpenVPN\Resources
 TRANSIFEX_RES=eduopenvpn
 !INCLUDE "MakefileTransifex.mak"

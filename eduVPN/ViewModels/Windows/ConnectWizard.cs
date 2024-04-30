@@ -8,7 +8,6 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Pages;
 using Prism.Commands;
-using Prism.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,6 +18,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using Utf8Json;
 
 namespace eduVPN.ViewModels.Windows
 {
@@ -436,30 +436,22 @@ namespace eduVPN.ViewModels.Windows
                         {
                             using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
                             {
-                                Task<List<object>> serverDiscovery = null;
+                                Task<ServerDictionary> serverDiscovery = null;
                                 if (iaSrvList.Count > 0 || siOrgId != "" && siOrgId != null)
-                                    serverDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
-                                        eduJSON.Parser.Parse(
-                                            Engine.DiscoServers(cookie),
-                                            Abort.Token) as Dictionary<string, object>,
-                                        "server_list"));
-                                Task<List<object>> orgDiscovery = null;
+                                    serverDiscovery = Task.Run(() => Engine.DiscoServers(cookie));
+                                Task<OrganizationDictionary> orgDiscovery = null;
                                 if (siOrgId != "" && siOrgId != null)
-                                    orgDiscovery = Task.Run(() => eduJSON.Parser.GetValue<List<object>>(
-                                        eduJSON.Parser.Parse(
-                                            Engine.DiscoOrganizations(cookie),
-                                            Abort.Token) as Dictionary<string, object>,
-                                        "organization_list"));
+                                    orgDiscovery = Task.Run(() => Engine.DiscoOrganizations(cookie));
 
                                 //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow settings import
 
-                                List<object> serverList = null;
+                                ServerDictionary serverList = null;
                                 if (serverDiscovery != null)
                                 {
                                     serverDiscovery.Wait(Abort.Token);
                                     serverList = serverDiscovery.Result;
                                 }
-                                List<object> orgList = null;
+                                OrganizationDictionary orgList = null;
                                 if (orgDiscovery != null)
                                 {
                                     orgDiscovery.Wait(Abort.Token);
@@ -477,10 +469,10 @@ namespace eduVPN.ViewModels.Windows
 
                                 if (siOrgId == "")
                                 {
-                                    if (eduJSON.Parser.Parse(Engine.ServerList(), Abort.Token) is Dictionary<string, object> obj &&
-                                        obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
+                                    var json = Engine.ServerList();
+                                    if (json.secure_internet_server != null)
                                     {
-                                        var srv = new SecureInternetServer(srvObj);
+                                        var srv = new SecureInternetServer(json.secure_internet_server);
                                         try { Engine.RemoveServer(ServerType.SecureInternet, srv.Id); }
                                         catch (OperationCanceledException) { throw; }
                                         catch { }
@@ -493,11 +485,9 @@ namespace eduVPN.ViewModels.Windows
                                         Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, true);
                                         if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
                                         {
-                                            if (serverList.FirstOrDefault(obj =>
-                                                    obj is Dictionary<string, object> obj2 && obj2.TryGetValue("base_url", out string base_url) && new Uri(base_url).Equals(uri)) is Dictionary<string, object> obj3 &&
-                                                obj3.TryGetValue("country_code", out string country_code))
+                                            if (serverList.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(uri)).Value is SecureInternetServer srv)
                                             {
-                                                Engine.SetSecureInternetLocation(siOrgId, country_code);
+                                                Engine.SetSecureInternetLocation(siOrgId, srv.Country.Code);
                                                 if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
                                                     Properties.Settings.Default.LastSelectedServer = siOrgId;
                                             }
@@ -506,15 +496,15 @@ namespace eduVPN.ViewModels.Windows
                                         // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
                                         lock (Properties.Settings.Default.AccessTokenCache2)
                                         {
-                                            foreach (var obj in orgList.Select(item => item as Dictionary<string, object>))
+                                            foreach (var obj in orgList)
                                             {
                                                 Abort.Token.ThrowIfCancellationRequested();
-                                                if (eduJSON.Parser.GetValue(obj, "org_id", out string org_id) && Uri.TryCreate(org_id, UriKind.Absolute, out var orgId) && orgId.AbsoluteUri == siOrgId &&
-                                                    eduJSON.Parser.GetValue(obj, "secure_internet_home", out string secure_internet_home) && Uri.TryCreate(secure_internet_home, UriKind.Absolute, out var serverId) &&
-                                                    Properties.Settings.Default.AccessTokenCache2.TryGetValue(serverId.AbsoluteUri, out var value))
+                                                if (Uri.TryCreate(obj.Value.Id, UriKind.Absolute, out var orgId) && orgId.AbsoluteUri == siOrgId &&
+                                                    obj.Value.SecureInternetBase != null &&
+                                                    Properties.Settings.Default.AccessTokenCache2.TryGetValue(obj.Value.SecureInternetBase.AbsoluteUri, out var value))
                                                 {
                                                     Properties.Settings.Default.AccessTokenCache2[orgId.AbsoluteUri] = value;
-                                                    Properties.Settings.Default.AccessTokenCache2.Remove(serverId.AbsoluteUri);
+                                                    Properties.Settings.Default.AccessTokenCache2.Remove(obj.Value.SecureInternetBase.AbsoluteUri);
                                                 }
                                             }
                                         }
@@ -581,10 +571,10 @@ namespace eduVPN.ViewModels.Windows
             {
                 case Engine.State.Main:
                     {
-                        var obj = eduJSON.Parser.Parse(Engine.ServerList(), Abort.Token) as Dictionary<string, object>;
+                        var json = Engine.ServerList();
                         TryInvoke((Action)(() =>
                         {
-                            HomePage.LoadServers(obj);
+                            HomePage.LoadServers(json);
                             CurrentPage = StartingPage;
                             if (ConnectionPage.Server == null)
                             {
@@ -603,41 +593,38 @@ namespace eduVPN.ViewModels.Windows
 
                 case Engine.State.AskLocation:
                     {
-                        if (eduJSON.Parser.Parse(e.Data, Abort.Token) is Dictionary<string, object> obj)
+                        var data = new AskLocationTransition(JsonSerializer.Deserialize<AskLocationTransition.Json>(e.Data));
+                        TryInvoke((Action)(() =>
                         {
-                            var data = new AskLocationTransition(obj);
-                            TryInvoke((Action)(() =>
-                            {
-                                SelectSecureInternetCountryPage.SetSecureInternetCountries(data.Countries);
-                                CurrentPage = SelectSecureInternetCountryPage;
-                            }));
-                            e.Handled = true;
-                        }
+                            SelectSecureInternetCountryPage.SetSecureInternetCountries(data.Countries);
+                            CurrentPage = SelectSecureInternetCountryPage;
+                        }));
+                        e.Handled = true;
                     }
                     break;
 
                 case Engine.State.OAuthStarted:
-                    Process.Start(e.Data);
-                    TryInvoke((Action)(() =>
                     {
-                        AuthorizationPage.Uri = e.Data;
-                        CurrentPage = AuthorizationPage;
-                    }));
-                    e.Handled = true;
-                    break;
+                        var uri = Encoding.UTF8.GetString(e.Data);
+                        Process.Start(uri);
+                        TryInvoke((Action)(() =>
+                        {
+                            AuthorizationPage.Uri = uri;
+                            CurrentPage = AuthorizationPage;
+                        }));
+                        e.Handled = true;
+                        break;
+                    }
 
                 case Engine.State.AskProfile:
                     {
-                        if (eduJSON.Parser.Parse(e.Data, Abort.Token) is Dictionary<string, object> obj)
+                        var data = new AskProfileTransition(JsonSerializer.Deserialize<AskProfileTransition.Json>(e.Data));
+                        TryInvoke((Action)(() =>
                         {
-                            var data = new AskProfileTransition(obj);
-                            TryInvoke((Action)(() =>
-                            {
-                                ConnectionPage.SetProfiles(data.Profiles);
-                                CurrentPage = ConnectionPage;
-                            }));
-                            e.Handled = true;
-                        }
+                            ConnectionPage.SetProfiles(data.Profiles);
+                            CurrentPage = ConnectionPage;
+                        }));
+                        e.Handled = true;
                     }
                     break;
 
@@ -696,18 +683,9 @@ namespace eduVPN.ViewModels.Windows
                 using (OperationInProgress = new Engine.CancellationTokenCookie(Abort.Token))
                     (server, config, expiration) = await Task.Run(() =>
                     {
-                        var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, preferTCP, startup),
-                            Abort.Token) as Dictionary<string, object>);
-
-                        var srv = Server.Load(eduJSON.Parser.Parse(
-                            Engine.CurrentServer(),
-                            Abort.Token) as Dictionary<string, object>);
-
-                        var exp = new Expiration(eduJSON.Parser.Parse(
-                            Engine.ExpiryTimes(),
-                            Abort.Token) as Dictionary<string, object>);
-
+                        var cfg = Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, preferTCP, startup);
+                        var srv = Engine.CurrentServer();
+                        var exp = Engine.ExpiryTimes();
                         return (srv, cfg, exp);
                     });
             }
@@ -747,19 +725,9 @@ namespace eduVPN.ViewModels.Windows
                     (server, config, expiration) = await Task.Run(() =>
                     {
                         Engine.AddServer(OperationInProgress, server.ServerType, server.Id, false);
-
-                        var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.PreferTCP, false),
-                            Abort.Token) as Dictionary<string, object>);
-
-                        var srv = Server.Load(eduJSON.Parser.Parse(
-                            Engine.CurrentServer(),
-                            Abort.Token) as Dictionary<string, object>);
-
-                        var exp = new Expiration(eduJSON.Parser.Parse(
-                            Engine.ExpiryTimes(),
-                            Abort.Token) as Dictionary<string, object>);
-
+                        var cfg = Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.PreferTCP, false);
+                        var srv = Engine.CurrentServer();
+                        var exp = Engine.ExpiryTimes();
                         return (srv, cfg, exp);
                     });
             }
@@ -800,19 +768,9 @@ namespace eduVPN.ViewModels.Windows
                     (server, config, expiration) = await Task.Run(() =>
                     {
                         Engine.RenewSession(OperationInProgress);
-
-                        var cfg = new Configuration(eduJSON.Parser.Parse(
-                            Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.PreferTCP, false),
-                            Abort.Token) as Dictionary<string, object>);
-
-                        var srv = Server.Load(eduJSON.Parser.Parse(
-                            Engine.CurrentServer(),
-                            Abort.Token) as Dictionary<string, object>);
-
-                        var exp = new Expiration(eduJSON.Parser.Parse(
-                            Engine.ExpiryTimes(),
-                            Abort.Token) as Dictionary<string, object>);
-
+                        var cfg = Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.PreferTCP, false);
+                        var srv = Engine.CurrentServer();
+                        var exp = Engine.ExpiryTimes();
                         return (srv, cfg, exp);
                     });
             }

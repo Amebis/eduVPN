@@ -8,7 +8,6 @@
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
-using Prism.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -307,32 +306,30 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Populates lists of servers from eduvpn-common
         /// </summary>
-        /// <param name="obj">eduvpn-common provided server list</param>
-        public void LoadServers(Dictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        public void LoadServers(Server.JsonLists json)
         {
-            LoadInstituteAccessServers(obj);
-            LoadSecureInternetServer(obj);
-            LoadOwnServers(obj);
+            LoadInstituteAccessServers(json.institute_access_servers);
+            LoadSecureInternetServer(json.secure_internet_server);
+            LoadOwnServers(json.custom_servers);
         }
 
         /// <summary>
         /// Populates list of institute access servers
         /// </summary>
-        /// <param name="obj">eduvpn-common provided server list</param>
-        void LoadInstituteAccessServers(Dictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        void LoadInstituteAccessServers(List<Server.Json> json)
         {
             var selected = SelectedInstituteAccessServer?.Id;
             var list = InstituteAccessServers.BeginUpdate();
             try
             {
                 list.Clear();
-                if (obj.TryGetValue("institute_access_servers", out List<object> instituteAccessServers))
-                    foreach (var s in instituteAccessServers)
+                if (json != null)
+                    foreach (var s in json)
                     {
                         Window.Abort.Token.ThrowIfCancellationRequested();
-                        if (!(s is Dictionary<string, object> srvObj))
-                            continue;
-                        list.Add(new InstituteAccessServer(srvObj));
+                        list.Add(new InstituteAccessServer(s));
                     }
             }
             finally { InstituteAccessServers.EndUpdate(); }
@@ -342,16 +339,16 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Populates secure internet server
         /// </summary>
-        /// <param name="obj">eduvpn-common provided server list</param>
-        void LoadSecureInternetServer(Dictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        void LoadSecureInternetServer(Server.Json json)
         {
             var selected = SelectedSecureInternetServer?.Id;
             var list = SecureInternetServers.BeginUpdate();
             try
             {
                 list.Clear();
-                if (obj.TryGetValue("secure_internet_server", out Dictionary<string, object> srvObj))
-                    list.Add(new SecureInternetServer(srvObj));
+                if (json != null)
+                    list.Add(new SecureInternetServer(json));
             }
             finally { SecureInternetServers.EndUpdate(); }
             _ForgetSecureInternet?.RaiseCanExecuteChanged();
@@ -362,21 +359,19 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// Populates list of own servers
         /// </summary>
-        /// <param name="obj">eduvpn-common provided server list</param>
-        void LoadOwnServers(Dictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        void LoadOwnServers(List<Server.Json> json)
         {
             var selected = SelectedOwnServer?.Id;
             var list = OwnServers.BeginUpdate();
             try
             {
                 list.Clear();
-                if (obj.TryGetValue("custom_servers", out List<object> ownServers))
-                    foreach (var s in ownServers)
+                if (json != null)
+                    foreach (var s in json)
                     {
                         Window.Abort.Token.ThrowIfCancellationRequested();
-                        if (!(s is Dictionary<string, object> srvObj))
-                            continue;
-                        list.Add(new Server(srvObj));
+                        list.Add(new Server(s));
                     }
             }
             finally { OwnServers.EndUpdate(); }

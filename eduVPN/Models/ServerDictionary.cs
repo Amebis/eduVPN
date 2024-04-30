@@ -15,29 +15,34 @@ namespace eduVPN.Models
     /// </summary>
     public class ServerDictionary : Dictionary<string, Server>
     {
-        #region Constructors
+        #region Utf8Json
+
+        public class Json
+        {
+            public List<Server.Json> server_list { get; set; }
+        }
 
         /// <summary>
         /// Creates server list
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>server_list</c> and other optional elements</param>
-        public ServerDictionary(Dictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        public ServerDictionary(Json json)
         {
-            foreach (var el in eduJSON.Parser.GetValue<List<object>>(obj, "server_list"))
+            if (json.server_list != null)
             {
-                if (!(el is Dictionary<string, object> obj2))
-                    throw new eduJSON.InvalidParameterTypeException("server_list", typeof(Dictionary<string, object>), el.GetType());
-
-                if (!eduJSON.Parser.GetValue(obj2, "server_type", out string server_type) || server_type == null)
-                    throw new eduJSON.MissingParameterException("server_type");
-                Server entry;
-                switch (server_type.ToLower())
+                foreach (var el in json.server_list)
                 {
-                    case "institute_access": entry = new InstituteAccessServer(obj2); break;
-                    case "secure_internet": entry = new SecureInternetServer(obj2); break;
-                    default: throw new ArgumentOutOfRangeException("server_type");
+                    if (el.server_type == null)
+                        throw new ArgumentException();
+                    Server entry;
+                    switch (el.server_type.ToLower())
+                    {
+                        case "institute_access": entry = new InstituteAccessServer(el); break;
+                        case "secure_internet": entry = new SecureInternetServer(el); break;
+                        default: throw new ArgumentOutOfRangeException("server_type");
+                    }
+                    Add(entry.Id, entry);
                 }
-                Add(entry.Id, entry);
             }
         }
 

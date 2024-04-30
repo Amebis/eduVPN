@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using Utf8Json;
 
 namespace eduVPN
 {
@@ -26,9 +27,9 @@ namespace eduVPN
         #region Data types
 
         /// <summary>
-        /// Converts UTF-8 CGo char* to managed string
+        /// Converts UTF-8 CGo char* to byte[]
         /// </summary>
-        class CGoToManagedStringMarshaller : ICustomMarshaler
+        class CGoToManagedByteArrayMarshaller : ICustomMarshaler
         {
             #region Methods
 
@@ -36,13 +37,13 @@ namespace eduVPN
             /// The one and only instance of marshaller.
             /// This marshaller is stateless, thus it does not require a separate instance for each conversion.
             /// </summary>
-            static CGoToManagedStringMarshaller Default;
+            static CGoToManagedByteArrayMarshaller Default;
 
             public static ICustomMarshaler GetInstance(string cookie)
             {
                 if (Default != null)
                     return Default;
-                return Default = new CGoToManagedStringMarshaller();
+                return Default = new CGoToManagedByteArrayMarshaller();
             }
 
             #endregion
@@ -66,7 +67,7 @@ namespace eduVPN
                         for (int offset = 0; (chr = Marshal.ReadByte(pNativeData + offset)) != 0; ++offset)
                             w.Write(chr);
                     }
-                    return Encoding.UTF8.GetString(data.ToArray());
+                    return data.ToArray();
                 }
             }
 
@@ -100,9 +101,7 @@ namespace eduVPN
             /// <param name="ManagedObj">The managed object to be destroyed.</param>
             /// <exception cref="NotImplementedException">Not implemented</exception>
             public void CleanUpManagedData(object ManagedObj)
-            {
-                throw new NotImplementedException();
-            }
+            {}
 
             /// <summary>
             /// Returns the size of the native data to be marshaled.
@@ -188,7 +187,7 @@ namespace eduVPN
         delegate int StateCB(
             /*[MarshalAs(UnmanagedType.I4)]*/ State oldstate,
             /*[MarshalAs(UnmanagedType.I4)]*/ State newstate,
-            [MarshalAs(UnmanagedType.LPUTF8Str)] string data);
+            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))] byte[] data);
 
         /// <summary>
         /// Callback event arguments
@@ -210,7 +209,7 @@ namespace eduVPN
             /// <summary>
             /// Engine FSM state transition data
             /// </summary>
-            public readonly string Data;
+            public readonly byte[] Data;
 
             /// <summary>
             /// Must be set to <c>true</c> on return
@@ -227,7 +226,7 @@ namespace eduVPN
             /// <param name="oldState">Engine FSM old state</param>
             /// <param name="newState">Engine FSM new state</param>
             /// <param name="data">Engine FSM state transition data</param>
-            public CallbackEventArgs(State oldState, State newState, string data)
+            public CallbackEventArgs(State oldState, State newState, byte[] data)
             {
                 OldState = oldState;
                 NewState = newState;
@@ -384,8 +383,8 @@ namespace eduVPN
             #region Methods
 
             [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
-            [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-            static extern string CookieReply(
+            [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+            static extern byte[] CookieReply(
                 IntPtr ctx,
                 [MarshalAs(UnmanagedType.LPUTF8Str)] string value);
 
@@ -399,12 +398,12 @@ namespace eduVPN
                 var e = CookieReply(Handle, value);
                 if (e == null)
                     return;
-                throw new Exception(e);
+                throw ConvertException(e);
             }
 
             [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
-            [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-            static extern string CookieCancel(IntPtr ctx);
+            [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+            static extern byte[] CookieCancel(IntPtr ctx);
 
             /// <summary>
             /// Cancels operation represented by the cookie
@@ -415,7 +414,7 @@ namespace eduVPN
                 var e = CookieCancel(Handle);
                 if (e == null)
                     return;
-                throw new Exception(e);
+                throw ConvertException(e);
             }
 
             #endregion
@@ -428,8 +427,8 @@ namespace eduVPN
             bool disposedValue = false;
 
             [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
-            [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-            static extern string CookieDelete(IntPtr ctx);
+            [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+            static extern byte[] CookieDelete(IntPtr ctx);
 
             /// <summary>
             /// Called to dispose the object.
@@ -534,27 +533,26 @@ namespace eduVPN
 
         #region Methods
 
-        static Exception ConvertException(string json)
+        static Exception ConvertException(byte[] json)
         {
-            var obj = eduJSON.Parser.Parse(json);
-            if (obj is Dictionary<string, object> obj2)
+            var obj = JsonSerializer.Deserialize<object>(json);
+            if (obj is Dictionary<string, object> obj2 && obj2.TryGetValue("message", out var obj3))
             {
-                var message = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-                eduJSON.Parser.GetDictionary(obj2, "message", message);
+                var message = obj3.ParseLocalized<string>();
                 if (message["en"].EndsWith(": context canceled"))
                     return new OperationCanceledException();
-                return new Exception(message.GetLocalized(json));
+                return new Exception(message.GetLocalized(obj3 as string));
             }
-            return new Exception(json);
+            return new Exception(obj as string);
         }
 
-        static void ThrowOnError(string json)
+        static void ThrowOnError(byte[] json)
         {
             if (json != null)
                 throw ConvertException(json);
         }
 
-        static readonly StateCB OnEngineStateChanged = new StateCB((State oldstate, State newstate, string data) =>
+        static readonly StateCB OnEngineStateChanged = new StateCB((State oldstate, State newstate, byte[] data) =>
         {
             if (Callback != null)
             {
@@ -567,8 +565,8 @@ namespace eduVPN
         });
 
         [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string Register(
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] Register(
             [MarshalAs(UnmanagedType.LPUTF8Str)] string name,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string version,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string configDirectory,
@@ -599,8 +597,8 @@ namespace eduVPN
             SetToken?.Invoke(null, new SetTokenEventArgs(serverId, serverType, token)));
 
         [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string SetTokenHandler(TokenGetter getter, TokenSetter setter);
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] SetTokenHandler(TokenGetter getter, TokenSetter setter);
 
         /// <summary>
         /// Register initializes the client.
@@ -617,8 +615,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "Deregister", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _Deregister();
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _Deregister();
 
         /// <summary>
         /// Deregisters the client, meaning saving the log file and the config and emptying out the client struct.
@@ -639,17 +637,19 @@ namespace eduVPN
         /// - The list of times where notifications should be shown
         /// These times are reset when the VPN gets disconnected.
         /// </summary>
-        /// <returns>JSON string</returns>
+        /// <returns>Expiry times</returns>
         /// <exception cref="Exception">Call failed</exception>
-        public static string ExpiryTimes()
+        public static Expiration ExpiryTimes()
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _ExpiryTimes();
             try
             {
                 if (r.r1 == IntPtr.Zero)
-                    return (string)m.MarshalNativeToManaged(r.r0);
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                    return new Expiration(
+                        JsonSerializer.Deserialize<Expiration.Json>(
+                            (byte[])m.MarshalNativeToManaged(r.r0)));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {
@@ -659,8 +659,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "AddServer", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _AddServer(
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _AddServer(
             IntPtr c,
             /*[MarshalAs(UnmanagedType.I4)]*/ ServerType type,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string id,
@@ -681,8 +681,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "RemoveServer", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _RemoveServer(
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _RemoveServer(
             /*[MarshalAs(UnmanagedType.I4)]*/ ServerType type,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string id);
 
@@ -706,15 +706,22 @@ namespace eduVPN
         [DllImport("eduvpn_common.dll", EntryPoint = "CurrentServer", CallingConvention = CallingConvention.Cdecl)]
         static extern CGoPtrPtr _CurrentServer();
 
-        public static string CurrentServer()
+        /// <summary>
+        /// Returns the current server from eduvpn-common
+        /// </summary>
+        /// <returns>Server</returns>
+        /// <exception cref="Exception">Call failed</exception>
+        public static Server CurrentServer()
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _CurrentServer();
             try
             {
                 if (r.r1 == IntPtr.Zero)
-                    return (string)m.MarshalNativeToManaged(r.r0);
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                    return Server.Load(
+                        JsonSerializer.Deserialize<Server.Json2>(
+                            (byte[])m.MarshalNativeToManaged(r.r0)));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {
@@ -726,15 +733,21 @@ namespace eduVPN
         [DllImport("eduvpn_common.dll", EntryPoint = "ServerList", CallingConvention = CallingConvention.Cdecl)]
         static extern CGoPtrPtr _ServerList();
 
-        public static string ServerList()
+        /// <summary>
+        /// Returns the list of servers that are currently added
+        /// </summary>
+        /// <returns>Server lists</returns>
+        /// <exception cref="Exception">Call failed</exception>
+        public static Server.JsonLists ServerList()
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _ServerList();
             try
             {
                 if (r.r1 == IntPtr.Zero)
-                    return (string)m.MarshalNativeToManaged(r.r0);
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                    return JsonSerializer.Deserialize<Server.JsonLists>(
+                        (byte[])m.MarshalNativeToManaged(r.r0));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {
@@ -763,15 +776,17 @@ namespace eduVPN
         /// <returns>JSON string</returns>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static string GetConfig(Cookie cookie, ServerType type, string id, bool tcp, bool startup)
+        public static Models.Configuration GetConfig(Cookie cookie, ServerType type, string id, bool tcp, bool startup)
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _GetConfig(cookie.Handle, type, id, tcp ? 1 : 0, startup ? 1 : 0);
             try
             {
                 if (r.r1 == IntPtr.Zero)
-                    return (string)m.MarshalNativeToManaged(r.r0);
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                    return new Models.Configuration(
+                        JsonSerializer.Deserialize<Models.Configuration.Json>(
+                            (byte[])m.MarshalNativeToManaged(r.r0)));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {
@@ -781,8 +796,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "SetProfileID", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _SetProfileId([MarshalAs(UnmanagedType.LPUTF8Str)] string profileId);
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _SetProfileId([MarshalAs(UnmanagedType.LPUTF8Str)] string profileId);
 
         /// <summary>
         /// Sets a profile ID for the current server.
@@ -795,8 +810,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "SetSecureLocation", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _SetSecureLocation(
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _SetSecureLocation(
             [MarshalAs(UnmanagedType.LPUTF8Str)] string orgID,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string countryCode);
 
@@ -820,19 +835,21 @@ namespace eduVPN
         /// In case of error, a previous version of the list is returned if there is any.
         /// This takes into account the frequency of updates, see: https://github.com/eduvpn/documentation/blob/v3/SERVER_DISCOVERY.md#server-list.
         /// </summary>
-        /// <returns>JSON string</returns>
+        /// <returns>Server list</returns>
         /// <param name="cookie">eduvpn-common operation cookie</param>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static string DiscoServers(Cookie cookie)
+        public static ServerDictionary DiscoServers(Cookie cookie)
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _DiscoServers(cookie.Handle);
             try
             {
                 if (r.r1 == IntPtr.Zero)
-                    return (string)m.MarshalNativeToManaged(r.r0);
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                    return new ServerDictionary(
+                        JsonSerializer.Deserialize<ServerDictionary.Json>(
+                            (byte[])m.MarshalNativeToManaged(r.r0)));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {
@@ -850,18 +867,20 @@ namespace eduVPN
         /// This takes into account the frequency of updates, see: https://github.com/eduvpn/documentation/blob/v3/SERVER_DISCOVERY.md#organization-list.
         /// </summary>
         /// <param name="cookie">eduvpn-common operation cookie</param>
-        /// <returns>JSON string</returns>
+        /// <returns>JSON object</returns>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static string DiscoOrganizations(Cookie cookie)
+        public static OrganizationDictionary DiscoOrganizations(Cookie cookie)
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _DiscoOrganizations(cookie.Handle);
             try
             {
                 if (r.r1 == IntPtr.Zero)
-                    return (string)m.MarshalNativeToManaged(r.r0);
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                    return new OrganizationDictionary(
+                        JsonSerializer.Deserialize<OrganizationDictionary.Json>(
+                            (byte[])m.MarshalNativeToManaged(r.r0)));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {
@@ -871,8 +890,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "Cleanup", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _Cleanup(IntPtr c);
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _Cleanup(IntPtr c);
 
         /// <summary>
         /// Cleans up the VPN connection by sending a /disconnect to the server
@@ -886,8 +905,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "RenewSession", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _RenewSession(IntPtr c);
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _RenewSession(IntPtr c);
 
         /// <summary>
         /// Renews the session for the current VPN server.
@@ -929,14 +948,14 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static bool StartFailover(Cookie cookie, string gateway, int mtu)
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _StartFailover(cookie.Handle, gateway, mtu, OnRxBytesRead);
             try
             {
                 // Don't throw when at least some RX traffic detected.
                 if (r.r0 == 0 || r.r1 == IntPtr.Zero)
                     return r.r0 != 0;
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {
@@ -945,8 +964,8 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "SetState", CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedStringMarshaller))]
-        static extern string _SetState(
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] _SetState(
             /*[MarshalAs(UnmanagedType.I4)]*/ State state);
 
         /// <summary>
@@ -972,13 +991,13 @@ namespace eduVPN
         /// <exception cref="Exception">Call failed</exception>
         public static bool InState(State state)
         {
-            var m = CGoToManagedStringMarshaller.GetInstance(null);
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
             var r = _InState(state);
             try
             {
                 if (r.r1 == IntPtr.Zero)
                     return r.r0 != 0;
-                throw ConvertException((string)m.MarshalNativeToManaged(r.r1));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
             }
             finally
             {

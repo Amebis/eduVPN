@@ -44,21 +44,31 @@ namespace eduVPN.Models
 
         #endregion
 
-        #region Constructors
+        #region Utf8Json
+
+        public class Json
+        {
+            public string config { get; set; }
+            public long protocol { get; set; }
+            public bool default_gateway { get; set; }
+            public List<string> dns_search_domains { get; set; }
+            public bool should_failover { get; set; }
+            public ProxyguardConfiguration.Json proxy { get; set; }
+        }
 
         /// <summary>
         /// Creates VPN configuration
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>config</c>, <c>protocol</c>, <c>default_gateway</c> and <c>should_failover</c> elements.</param>
-        public Configuration(IReadOnlyDictionary<string, object> obj)
+        /// <param name="json">JSON object</param>
+        public Configuration(Json json)
         {
-            VPNConfig = eduJSON.Parser.GetValue<string>(obj, "config");
-            Protocol = (VPNProtocol)eduJSON.Parser.GetValue<long>(obj, "protocol");
-            IsDefaultGateway = eduJSON.Parser.GetValue<bool>(obj, "default_gateway");
-            ShouldFailover = eduJSON.Parser.GetValue<bool>(obj, "should_failover");
-            if (eduJSON.Parser.GetValue<Dictionary<string, object>>(obj, "proxy", out var obj2))
+            VPNConfig = json.config;
+            Protocol = (VPNProtocol)json.protocol;
+            IsDefaultGateway = json.default_gateway;
+            ShouldFailover = json.should_failover;
+            if (json.proxy != null)
             {
-                ProxyguardConfiguration = new ProxyguardConfiguration(obj2);
+                ProxyguardConfiguration = new ProxyguardConfiguration(json.proxy);
 
                 // Locate "Endpoint = <ProxyguardConfiguration.Listen>" and append "\nProxyEndpoint = <ProxyguardConfiguration.Peer>" to it.
                 VPNConfig = Regex.Replace(VPNConfig, @"^\s*Endpoint\s*=\s*(.*)$", delegate (Match m)

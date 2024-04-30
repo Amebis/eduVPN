@@ -14,7 +14,7 @@ namespace eduOAuth
     /// Response and request states are different.
     /// </summary>
     [Serializable]
-    public class InvalidStateException : eduJSON.ParameterException
+    public class InvalidStateException : ArgumentException
     {
         #region Constructors
 
@@ -31,7 +31,7 @@ namespace eduOAuth
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         public InvalidStateException(string message) :
-            base(message, null)
+            base(message, (string)null)
         {
         }
 

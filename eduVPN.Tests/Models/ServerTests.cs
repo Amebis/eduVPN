@@ -19,45 +19,45 @@ namespace eduVPN.Models.Tests
         {
             Server srv;
 
-            srv = new InstituteAccessServer(new Dictionary<string, object>
-                {
-                    { "base_url", "https://surf.eduvpn.nl/" }
-                });
+            srv = new InstituteAccessServer(new Server.Json
+            {
+                base_url = new Uri("https://surf.eduvpn.nl/")
+            });
             Assert.AreEqual(new Uri("https://surf.eduvpn.nl/").AbsoluteUri, srv.Id, "Base URI incorrect");
             Assert.AreEqual("surf.eduvpn.nl", srv.ToString(), "Display name incorrect");
 
-            srv = new InstituteAccessServer(new Dictionary<string, object>
-                {
-                    { "base_url", "https://surf.eduvpn.nl/" },
-                    { "display_name", "SURF" }
-                });
+            srv = new InstituteAccessServer(new Server.Json
+            {
+                base_url = new Uri("https://surf.eduvpn.nl/"),
+                display_name = "SURF",
+            });
             Assert.AreEqual(new Uri("https://surf.eduvpn.nl/").AbsoluteUri, srv.Id, "Base URI incorrect");
             Assert.AreEqual("SURF", srv.ToString(), "Display name incorrect");
 
-            srv = new SecureInternetServer(new Dictionary<string, object>
-                {
-                    { "base_url", "https://surf.eduvpn.nl/" },
-                    { "country_code", "NL" },
-                    { "support_contact", new List<object>(){ "mailto:info@surf.nl" } },
-                });
+            srv = new SecureInternetServer(new Server.Json
+            {
+                base_url = new Uri("https://surf.eduvpn.nl/"),
+                country_code = "NL",
+                support_contacts = new List<Uri>() { new Uri("mailto:info@surf.nl") },
+            });
             Assert.AreEqual(new Uri("https://surf.eduvpn.nl/").AbsoluteUri, srv.Id, "Base URI incorrect");
             Assert.AreEqual(new Country("NL").ToString(), srv.ToString(), "Display name incorrect");
             Assert.AreEqual("NL", ((SecureInternetServer)srv).Country.Code, "Country code incorrect");
 
             // Test issues.
-            Assert.ThrowsException<eduJSON.MissingParameterException>(() =>
+            Assert.ThrowsException<ArgumentException>(() =>
             {
-                srv = new InstituteAccessServer(new Dictionary<string, object>
-                    {
-                        { "display_name", "SURF" },
-                    });
+                srv = new InstituteAccessServer(new Server.Json
+                {
+                    display_name = "SURF",
+                });
             });
-            Assert.ThrowsException<eduJSON.MissingParameterException>(() =>
+            Assert.ThrowsException<ArgumentException>(() =>
             {
-                srv = new SecureInternetServer(new Dictionary<string, object>
-                    {
-                        { "display_name", "SURF" },
-                    });
+                srv = new SecureInternetServer(new Server.Json
+                {
+                    display_name = "SURF",
+                });
             });
         }
     }

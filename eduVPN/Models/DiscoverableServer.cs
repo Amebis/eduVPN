@@ -38,23 +38,25 @@ namespace eduVPN.Models
         protected DiscoverableServer(string id) : base(id)
         { }
 
+        #endregion
+
+        #region Utf8Json
+
         /// <summary>
-        /// Creates a secure internet/institute access server
+        /// Constructs a secure internet/institute access server
         /// </summary>
-        /// <param name="obj">Key/value dictionary with <c>identifier</c>, <c>display_name</c>, <c>profiles</c>, <c>delisted</c> elements.</param>
-        public DiscoverableServer(IReadOnlyDictionary<string, object> obj) : base(obj)
+        /// <param name="json">JSON object</param>
+        public DiscoverableServer(Json json) : base(json)
         {
-            Delisted = eduJSON.Parser.GetValue(obj, "delisted", out bool delisted) && delisted;
+            Delisted = json.delisted;
             LocalizedKeywordSets = new Dictionary<string, HashSet<string>>(StringComparer.InvariantCultureIgnoreCase);
-            var keywordList = new Dictionary<string, string>();
-            if (eduJSON.Parser.GetDictionary(obj, "keyword_list", keywordList))
-                foreach (var keywords in keywordList)
-                {
-                    var hash = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-                    foreach (var keyword in keywords.Value.Split())
-                        hash.Add(keyword);
-                    LocalizedKeywordSets.Add(keywords.Key, hash);
-                }
+            foreach (var keywords in json.keyword_list.ParseLocalized<string>())
+            {
+                var hash = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+                foreach (var keyword in keywords.Value.Split())
+                    hash.Add(keyword);
+                LocalizedKeywordSets.Add(keywords.Key, hash);
+            }
         }
 
         #endregion
