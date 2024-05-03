@@ -6,6 +6,7 @@
 - Search for Institute Access servers and Secure Internet organizations:
     - Keyword matching from OR to AND
     - Limit number of results to first 20 by alphabet
+- eduvpn-common updated to 1.99.2 32b81ae9ec90d8beccc101cf456841615216b793
 
 
 ## [3.255.18](https://github.com/Amebis/eduVPN/compare/3.255.17...3.255.18) (2024-04-12)
