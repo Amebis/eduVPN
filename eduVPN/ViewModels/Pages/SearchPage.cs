@@ -428,25 +428,30 @@ namespace eduVPN.ViewModels.Pages
                 if (DiscoveredInstituteServerIndex == null)
                     return null;
 
-                var serverHits = new Dictionary<InstituteAccessServer, int>();
+                HashSet<InstituteAccessServer> serverHits = null;
                 foreach (var keyword in keywords)
                 {
                     ct.ThrowIfCancellationRequested();
                     if (DiscoveredInstituteServerIndex.TryGetValue(keyword, out var hits))
-                        foreach (var hit in hits)
-                        {
-                            ct.ThrowIfCancellationRequested();
-                            if (serverHits.ContainsKey(hit))
-                                serverHits[hit]++;
-                            else
-                                serverHits.Add(hit, 1);
-                        }
+                    {
+                        if (serverHits != null)
+                            serverHits.IntersectWith(hits);
+                        else
+                            serverHits = new HashSet<InstituteAccessServer>(hits);
+                    }
+                    else
+                    {
+                        serverHits = new HashSet<InstituteAccessServer>();
+                        break;
+                    }
                 }
                 var coll = new ObservableCollection<InstituteAccessServer>();
-                foreach (var srv in serverHits.OrderByDescending(el => el.Value)/*.ThenBy(el => el.Key.ToString().ToLower())*/)
+                if (serverHits == null)
+                    return coll;
+                foreach (var srv in serverHits.OrderBy(el => el.ToString().ToLower()))
                 {
                     ct.ThrowIfCancellationRequested();
-                    coll.Add(srv.Key);
+                    coll.Add(srv);
                 }
                 return coll;
             }
@@ -516,25 +521,30 @@ namespace eduVPN.ViewModels.Pages
                 if (DiscoveredOrganizationIndex == null)
                     return null;
 
-                var organizationHits = new Dictionary<Organization, int>();
+                HashSet<Organization> organizationHits = null;
                 foreach (var keyword in keywords)
                 {
                     ct.ThrowIfCancellationRequested();
                     if (DiscoveredOrganizationIndex.TryGetValue(keyword, out var hits))
-                        foreach (var hit in hits)
-                        {
-                            ct.ThrowIfCancellationRequested();
-                            if (organizationHits.ContainsKey(hit))
-                                organizationHits[hit]++;
-                            else
-                                organizationHits.Add(hit, 1);
-                        }
+                    {
+                        if (organizationHits != null)
+                            organizationHits.IntersectWith(hits);
+                        else
+                            organizationHits = new HashSet<Organization>(hits);
+                    }
+                    else
+                    {
+                        organizationHits = new HashSet<Organization>();
+                        break;
+                    }
                 }
                 var coll = new ObservableCollection<Organization>();
-                foreach (var org in organizationHits.OrderByDescending(el => el.Value)/*.ThenBy(el => el.Key.ToString().ToLower())*/)
+                if (organizationHits == null)
+                    return coll;
+                foreach (var org in organizationHits.OrderBy(el => el.ToString().ToLower()))
                 {
                     ct.ThrowIfCancellationRequested();
-                    coll.Add(org.Key);
+                    coll.Add(org);
                 }
                 return coll;
             }
