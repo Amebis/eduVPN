@@ -41,6 +41,12 @@ namespace eduVPN.Models
 
         #region Methods
 
+        protected Organization() { }
+
+        #endregion
+
+        #region Methods
+
         /// <inheritdoc/>
         public override string ToString()
         {

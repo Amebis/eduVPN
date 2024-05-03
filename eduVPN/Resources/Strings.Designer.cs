@@ -331,6 +331,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ...and so on.
+        /// </summary>
+        internal static string TooManyResults {
+            get {
+                return ResourceManager.GetString("TooManyResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are other user sessions on this computer. Establishing a VPN connection now would provide network access to other users too. Waiting for the other users to sign out first....
         /// </summary>
         internal static string WarningAnotherUserSession {

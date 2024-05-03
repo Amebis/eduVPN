@@ -3,7 +3,9 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.18...HEAD)
 
 - JSON parser replaced
-- Search for Institute Access servers and Secure Internet organizations switched keyword matching from OR to AND
+- Search for Institute Access servers and Secure Internet organizations:
+    - Keyword matching from OR to AND
+    - Limit number of results to first 20 by alphabet
 
 
 ## [3.255.18](https://github.com/Amebis/eduVPN/compare/3.255.17...3.255.18) (2024-04-12)

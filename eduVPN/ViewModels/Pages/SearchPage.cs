@@ -451,6 +451,11 @@ namespace eduVPN.ViewModels.Pages
                 foreach (var srv in serverHits.OrderBy(el => el.ToString().ToLower()))
                 {
                     ct.ThrowIfCancellationRequested();
+                    if (coll.Count >= 20)
+                    {
+                        coll.Add(new MoreHitsInstituteAccessServer());
+                        break;
+                    }
                     coll.Add(srv);
                 }
                 return coll;
@@ -544,6 +549,11 @@ namespace eduVPN.ViewModels.Pages
                 foreach (var org in organizationHits.OrderBy(el => el.ToString().ToLower()))
                 {
                     ct.ThrowIfCancellationRequested();
+                    if (coll.Count >= 20)
+                    {
+                        coll.Add(new MoreHitsOrganization());
+                        break;
+                    }
                     coll.Add(org);
                 }
                 return coll;

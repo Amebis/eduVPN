@@ -253,7 +253,6 @@
                 Grid.Row="1"
                 x:Name="Organizations"
                 Margin="7"
-                ItemContainerStyle="{StaticResource OrganizationsStyle}"
                 ItemsSource="{Binding Organizations}"
                 SelectedItem="{Binding SelectedOrganization}"
                 AutomationProperties.Name="{Binding Source={x:Static res:Strings.SearchPageOrganizationsLabel}, Converter={StaticResource RemoveAccessKeyConverter}}"/>

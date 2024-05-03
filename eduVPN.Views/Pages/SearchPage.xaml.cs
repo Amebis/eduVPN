@@ -5,6 +5,9 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduVPN.Models;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -15,6 +18,31 @@ namespace eduVPN.Views.Pages
     /// </summary>
     public partial class SearchPage : Page
     {
+        #region Types
+
+        class TypedStyleSelector<T> : StyleSelector
+        {
+            #region Fields
+
+            static readonly ResourceDictionary resourceDictionary = Application.LoadComponent(new Uri("eduVPN.Views;component/Resources/Styles.xaml", UriKind.Relative)) as ResourceDictionary;
+            public Style DefaultStyle { get; set; }
+
+            #endregion
+
+            #region Methods
+
+            public override Style SelectStyle(object item, DependencyObject container)
+            {
+                if (item is T)
+                    return resourceDictionary["PassiveListBoxItemStyle"] as Style;
+                return DefaultStyle;
+            }
+
+            #endregion
+        }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -25,7 +53,21 @@ namespace eduVPN.Views.Pages
             InitializeComponent();
 
             // Set initial focus.
-            Loaded += (object sender, System.Windows.RoutedEventArgs e) => Query.Focus();
+            Loaded += (object sender, RoutedEventArgs e) =>
+            {
+                InstituteAccessServers.ItemContainerStyle = null;
+                InstituteAccessServers.ItemContainerStyleSelector = new TypedStyleSelector<MoreHitsInstituteAccessServer>
+                {
+                    DefaultStyle = Resources["InstituteAccessServersStyle"] as Style
+                };
+                Organizations.ItemContainerStyle = null;
+                Organizations.ItemContainerStyleSelector = new TypedStyleSelector<MoreHitsOrganization>
+                {
+                    DefaultStyle = Resources["OrganizationsStyle"] as Style
+                };
+
+                Query.Focus();
+            };
         }
 
         #endregion

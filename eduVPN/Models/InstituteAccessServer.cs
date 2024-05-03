@@ -21,6 +21,9 @@ namespace eduVPN.Models
 
         #region Constructors
 
+        protected InstituteAccessServer() : base((string)null) { }
+
+
         /// <summary>
         /// Creates institute access server
         /// </summary>
