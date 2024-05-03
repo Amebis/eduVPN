@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.18...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.19...HEAD)
+
+
+## [3.255.19](https://github.com/Amebis/eduVPN/compare/3.255.18...3.255.19) (2024-05-03)
 
 - JSON parser replaced
 - Search for Institute Access servers and Secure Internet organizations:
