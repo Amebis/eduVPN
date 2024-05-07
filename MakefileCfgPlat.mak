@@ -164,8 +164,8 @@ CleaneduVPNCommon ::
 	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_common.h"   del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_common.h"
 
 !IF "$(CFG)" == "$(SETUP_CFG)"
-"eduvpn-common\exports\resources_$(GOARCH).syso" : "eduvpn-common\exports\resources.rc"
-	$(WINDRES) -DVERSION_ARRAY=$(VERSION:.=,) -DVERSION=$(VERSION) -i $** -o $@ -O coff -c 65001
+"eduvpn-common\exports\resources_$(GOARCH).syso" : "eduvpn-common\exports\resources.rc" "Makefile"
+	$(WINDRES) -DVERSION_ARRAY=$(VERSION:.=,) -DVERSION=$(VERSION) -i "eduvpn-common\exports\resources.rc" -o $@ -O coff -c 65001
 
 CleaneduVPNCommon ::
 	-if exist "eduvpn-common\exports\resources_$(GOARCH).syso" del /f /q "eduvpn-common\exports\resources_$(GOARCH).syso"
@@ -199,8 +199,8 @@ CleaneduVPNWindows ::
 	-if exist "bin\$(CFG)\$(PLAT)\eduvpn_windows.h"   del /f /q "bin\$(CFG)\$(PLAT)\eduvpn_windows.h"
 
 !IF "$(CFG)" == "$(SETUP_CFG)"
-"eduvpn-windows\resources_$(GOARCH).syso" : "eduvpn-windows\resources.rc"
-	$(WINDRES) -DVERSION_ARRAY=$(VERSION:.=,) -DVERSION=$(VERSION) -i $** -o $@ -O coff -c 65001
+"eduvpn-windows\resources_$(GOARCH).syso" : "eduvpn-windows\resources.rc" "Makefile"
+	$(WINDRES) -DVERSION_ARRAY=$(VERSION:.=,) -DVERSION=$(VERSION) -i "eduvpn-windows\resources.rc" -o $@ -O coff -c 65001
 
 CleaneduVPNWindows ::
 	-if exist "eduvpn-windows\resources_$(GOARCH).syso" del /f /q "eduvpn-windows\resources_$(GOARCH).syso"
