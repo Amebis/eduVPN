@@ -312,7 +312,7 @@ namespace eduVPN.ViewModels.VPN
 #else
                 return
                     Expiration != null &&
-                    Expiration.ButtonAt <= DateTimeOffset.Now &&
+                    Expiration.ButtonAt <= now &&
                     now <= ValidTo;
 #endif
             }
