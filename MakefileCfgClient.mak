@@ -97,8 +97,7 @@ Clean ::
 PackageIdentifier: SURF.$(CLIENT_TARGET)Client
 PackageVersion: $(VERSION)
 Installers:
-- InstallerLocale: en-US
-  Architecture: arm64
+- Architecture: arm64
   InstallerType: wix
   InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_ARM64.msi
 <<NOKEEP
@@ -108,8 +107,7 @@ Installers:
   - ProductCode: '$(CLIENT_PRODUCT_CODE)'
     DisplayName: $(CLIENT_TITLE) Client $(VERSION) ARM64
     UpgradeCode: '$(CLIENT_UPGRADE_GUID_64)'
-- InstallerLocale: en-US
-  Architecture: x64
+- Architecture: x64
   InstallerType: wix
   InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x64.msi
 <<NOKEEP
@@ -119,8 +117,7 @@ Installers:
   - ProductCode: '$(CLIENT_PRODUCT_CODE)'
     DisplayName: $(CLIENT_TITLE) Client $(VERSION) x64
     UpgradeCode: '$(CLIENT_UPGRADE_GUID_64)'
-- InstallerLocale: en-US
-  Architecture: x86
+- Architecture: x86
   InstallerType: wix
   InstallerUrl: https://github.com/Amebis/eduVPN/releases/download/$(VERSION)/$(CLIENT_TARGET)Client_$(VERSION)$(CFG_TARGET)_x86.msi
 <<NOKEEP
