@@ -61,6 +61,11 @@ namespace eduVPN.Views.Windows
         /// </summary>
         private Server PendingServerConnect = null;
 
+        /// <summary>
+        /// Should window close after session is done disconnecting?
+        /// </summary>
+        private bool PendingClose = false;
+
         #endregion
 
         #region Properties
@@ -244,6 +249,9 @@ namespace eduVPN.Views.Windows
                         PendingServerConnect = null;
                     }
 
+                    if (viewModel.ConnectionPage.ActiveSession == null && PendingClose)
+                        Close();
+
                     if (viewModel.ConnectionPage.ActiveSession != null)
                     {
                         // Initialize VPN session state.
@@ -251,11 +259,12 @@ namespace eduVPN.Views.Windows
 
                         viewModel.ConnectionPage.ActiveSession.WarnExpiration += (object sender2, EventArgs e3) =>
                         {
-                            NotifyIcon.ShowBalloonTip(
-                                1000 * 60 * 5,
-                                string.Format(Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.Server),
-                                string.Format(Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
-                                System.Windows.Forms.ToolTipIcon.Info);
+                            if (!PendingClose)
+                                NotifyIcon.ShowBalloonTip(
+                                    1000 * 60 * 5,
+                                    string.Format(Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.Server),
+                                    string.Format(Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
+                                    System.Windows.Forms.ToolTipIcon.Info);
                         };
 
                         // Bind to the session for property changes.
@@ -287,7 +296,7 @@ namespace eduVPN.Views.Windows
                                                 break;
 
                                             default:
-                                                if (SessionState == SessionStatusType.Connected)
+                                                if (SessionState == SessionStatusType.Connected && !PendingClose)
                                                 {
                                                     // Client has been disconnected. Popup the balloon message.
                                                     NotifyIcon.ShowBalloonTip(
@@ -360,6 +369,16 @@ namespace eduVPN.Views.Windows
         {
             if (DoClose)
             {
+                var activeSession = (DataContext as ViewModels.Windows.ConnectWizard)?.ConnectionPage.ActiveSession;
+                if (activeSession != null && activeSession.Disconnect.CanExecute(false))
+                {
+                    // Don't close yet. Instruct session monitor to close after session is done disconnecting.
+                    e.Cancel = true;
+                    PendingClose = true;
+                    activeSession.Disconnect.Execute(false);
+                    return;
+                }
+
                 // Hide tray icon when closed.
                 NotifyIcon.Visible = false;
 
