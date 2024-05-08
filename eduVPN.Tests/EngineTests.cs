@@ -56,13 +56,13 @@ namespace eduVPN.Tests
         public void AddServerTest()
         {
             using (var cookie = new Engine.Cookie())
-                Assert.ThrowsException<Exception>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
+                Assert.ThrowsException<Exception>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", null));
             Engine.Register();
             using (var ct = new CancellationTokenSource())
             using (var cookie = new Engine.CancellationTokenCookie(ct.Token))
                 try
                 {
-                    Assert.ThrowsException<Exception>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
+                    Assert.ThrowsException<Exception>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", null));
                     int callbackCounter = 0;
                     Engine.Callback += (object sender, Engine.CallbackEventArgs e) =>
                     {
@@ -85,7 +85,7 @@ namespace eduVPN.Tests
                         }
                         e.Handled = true;
                     };
-                    Assert.ThrowsException<OperationCanceledException>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", false));
+                    Assert.ThrowsException<OperationCanceledException>(() => Engine.AddServer(cookie, ServerType.Own, "https://vpn.tuxed.net", null));
                     Assert.AreEqual(3, callbackCounter);
                 }
                 finally

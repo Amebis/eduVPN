@@ -379,6 +379,12 @@ namespace eduVPN.ViewModels.Windows
             };
 
             bool migrate = (Properties.Settings.Default.SettingsVersion & 0x2) == 0;
+            var oauthStart = new Dictionary<string, DateTimeOffset>();
+#pragma warning disable 0612 // This section contains legacy settings conversion.
+            if (migrate && Properties.Settings.Default.GetPreviousVersion("AccessTokenCache") is Xml.AccessTokenDictionary accessTokenCache)
+                foreach (var token in accessTokenCache)
+                    oauthStart[token.Key] = token.Value.Authorized;
+#pragma warning restore 0612
 
             ICollection<Uri> iaSrvList = new Xml.UriList();
             string siOrgId = null;
@@ -462,7 +468,8 @@ namespace eduVPN.ViewModels.Windows
                                     foreach (var srv in iaSrvList)
                                     {
                                         Abort.Token.ThrowIfCancellationRequested();
-                                        try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, true); }
+                                        var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.Now;
+                                        try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, start); }
                                         catch (OperationCanceledException) { throw; }
                                         catch { }
                                     }
@@ -482,16 +489,7 @@ namespace eduVPN.ViewModels.Windows
                                 {
                                     try
                                     {
-                                        Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, true);
-                                        if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
-                                        {
-                                            if (serverList.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(uri)).Value is SecureInternetServer srv)
-                                            {
-                                                Engine.SetSecureInternetLocation(siOrgId, srv.Country.Code);
-                                                if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
-                                                    Properties.Settings.Default.LastSelectedServer = siOrgId;
-                                            }
-                                        }
+                                        var start = DateTimeOffset.Now;
 
                                         // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
                                         lock (Properties.Settings.Default.AccessTokenCache2)
@@ -503,9 +501,21 @@ namespace eduVPN.ViewModels.Windows
                                                     obj.Value.SecureInternetBase != null &&
                                                     Properties.Settings.Default.AccessTokenCache2.TryGetValue(obj.Value.SecureInternetBase.AbsoluteUri, out var value))
                                                 {
+                                                    oauthStart.TryGetValue(obj.Value.SecureInternetBase.AbsoluteUri, out start);
                                                     Properties.Settings.Default.AccessTokenCache2[orgId.AbsoluteUri] = value;
                                                     Properties.Settings.Default.AccessTokenCache2.Remove(obj.Value.SecureInternetBase.AbsoluteUri);
                                                 }
+                                            }
+                                        }
+
+                                        Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, start);
+                                        if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
+                                        {
+                                            if (serverList.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(uri)).Value is SecureInternetServer srv)
+                                            {
+                                                Engine.SetSecureInternetLocation(siOrgId, srv.Country.Code);
+                                                if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
+                                                    Properties.Settings.Default.LastSelectedServer = siOrgId;
                                             }
                                         }
                                     }
@@ -516,7 +526,8 @@ namespace eduVPN.ViewModels.Windows
                                 foreach (var srv in ownSrvList)
                                 {
                                     Abort.Token.ThrowIfCancellationRequested();
-                                    try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, true); }
+                                    var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.Now;
+                                    try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, start); }
                                     catch (OperationCanceledException) { throw; }
                                     catch { }
                                 }
@@ -724,7 +735,7 @@ namespace eduVPN.ViewModels.Windows
                 using (OperationInProgress = new Engine.CancellationTokenCookie(Abort.Token))
                     (server, config, expiration) = await Task.Run(() =>
                     {
-                        Engine.AddServer(OperationInProgress, server.ServerType, server.Id, false);
+                        Engine.AddServer(OperationInProgress, server.ServerType, server.Id, null);
                         var cfg = Engine.GetConfig(OperationInProgress, server.ServerType, server.Id, Properties.Settings.Default.PreferTCP, false);
                         var srv = Engine.CurrentServer();
                         var exp = Engine.ExpiryTimes();

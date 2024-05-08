@@ -101,7 +101,7 @@ namespace eduVPN
             /// <param name="ManagedObj">The managed object to be destroyed.</param>
             /// <exception cref="NotImplementedException">Not implemented</exception>
             public void CleanUpManagedData(object ManagedObj)
-            {}
+            { }
 
             /// <summary>
             /// Returns the size of the native data to be marshaled.
@@ -664,7 +664,7 @@ namespace eduVPN
             IntPtr c,
             /*[MarshalAs(UnmanagedType.I4)]*/ ServerType type,
             [MarshalAs(UnmanagedType.LPUTF8Str)] string id,
-            int ni);
+            IntPtr ot);
 
         /// <summary>
         /// Adds server
@@ -672,12 +672,23 @@ namespace eduVPN
         /// <param name="cookie">eduvpn-common operation cookie</param>
         /// <param name="type">Server type</param>
         /// <param name="id">Server base URL/ID</param>
-        /// <param name="quiet">Should adding skip OAuth?</param>
+        /// <param name="oauthStart">Time when OAuth was performed when adding server non-interactively. null when adding interactively.</param>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static void AddServer(Cookie cookie, ServerType type, string id, bool quiet)
+        public static void AddServer(Cookie cookie, ServerType type, string id, DateTimeOffset? oauthStart)
         {
-            ThrowOnError(_AddServer(cookie.Handle, type, id, quiet ? 1 : 0));
+            if (oauthStart.HasValue)
+            {
+                var ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(long)));
+                try
+                {
+                    Marshal.WriteInt64(ptr, oauthStart.Value.ToUnixTimeSeconds());
+                    ThrowOnError(_AddServer(cookie.Handle, type, id, ptr));
+                }
+                finally { Marshal.FreeCoTaskMem(ptr); }
+            }
+            else
+                ThrowOnError(_AddServer(cookie.Handle, type, id, IntPtr.Zero));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "RemoveServer", CallingConvention = CallingConvention.Cdecl)]

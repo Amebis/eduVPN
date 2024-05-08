@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.19...HEAD)
 
+- Authorization time migration from 3.x client settings fixed
+- eduvpn-common updated to 8149dc00bf3ef2cc015b41a2414adfc464baf35a
 - Translations updated
 - Fixes: #241
 
