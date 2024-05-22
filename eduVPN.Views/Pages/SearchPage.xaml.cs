@@ -100,7 +100,10 @@ namespace eduVPN.Views.Pages
         {
             if (e.Key == Key.Enter ||
                 e.Key == Key.Space)
+            {
+                ((ListBoxItem)sender).IsSelected = true;
                 InstituteAccessServers_SelectItem(sender, e);
+            }
         }
 
         /// <summary>
@@ -129,7 +132,10 @@ namespace eduVPN.Views.Pages
         {
             if (e.Key == Key.Enter ||
                 e.Key == Key.Space)
+            {
+                ((ListBoxItem)sender).IsSelected = true;
                 Organizations_SelectItem(sender, e);
+            }
         }
 
         /// <summary>
@@ -158,7 +164,10 @@ namespace eduVPN.Views.Pages
         {
             if (e.Key == Key.Enter ||
                 e.Key == Key.Space)
+            {
+                ((ListBoxItem)sender).IsSelected = true;
                 OwnServers_SelectItem(sender, e);
+            }
         }
 
         #endregion
