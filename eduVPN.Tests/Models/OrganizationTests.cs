@@ -71,7 +71,6 @@ namespace eduVPN.Models.Tests
             Thread.CurrentThread.CurrentUICulture = culture;
 
             var list = new List<Organization>();
-            var idx = new Dictionary<string, HashSet<Organization>>(StringComparer.InvariantCultureIgnoreCase);
 
             var el1 = new Organization(new Organization.Json
             {
@@ -87,8 +86,6 @@ namespace eduVPN.Models.Tests
                 },
             });
             list.Add(el1);
-            idx.IndexName(el1);
-            idx.IndexKeywords(el1);
             Assert.AreEqual("SURFnet bv", el1.ToString());
             Assert.IsTrue(el1.LocalizedKeywordSets["nl"].Contains("surf"));
 
@@ -103,20 +100,8 @@ namespace eduVPN.Models.Tests
                 keyword_list = "ARNES",
             });
             list.Add(el2);
-            idx.IndexName(el2);
-            idx.IndexKeywords(el2);
             Assert.AreEqual("Academic and Research Network of Slovenia", el2.ToString());
             Assert.IsTrue(el2.LocalizedKeywordSets[""].Contains("ARNES"));
-
-            // Index tests
-            Assert.IsTrue(idx["SURFnet"].Contains(el1));
-            Assert.IsFalse(idx["SURFnet"].Contains(el2));
-            Assert.IsTrue(idx["kon"].Contains(el1));
-            Assert.IsFalse(idx["kon"].Contains(el2));
-            Assert.IsFalse(idx["mreža"].Contains(el1));
-            Assert.IsTrue(idx["mreža"].Contains(el2));
-            Assert.IsFalse(idx["rne"].Contains(el1));
-            Assert.IsTrue(idx["rne"].Contains(el2));
         }
     }
 }

@@ -839,7 +839,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "DiscoServers", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPtr _DiscoServers(IntPtr c);
+        static extern CGoPtrPtr _DiscoServers(IntPtr c, [MarshalAs(UnmanagedType.LPUTF8Str)] string search);
 
         /// <summary>
         /// Gets the servers list from the discovery server.
@@ -848,12 +848,13 @@ namespace eduVPN
         /// </summary>
         /// <returns>Server list</returns>
         /// <param name="cookie">eduvpn-common operation cookie</param>
+        /// <param name="search">Search string for filtering the list. It checks for keywords and display name case insensitive as a substring matching. If search is empty it returns ALL servers currently known in common, including secure internet servers that do not have a display name set.</param>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static ServerDictionary DiscoServers(Cookie cookie)
+        public static ServerDictionary DiscoServers(Cookie cookie, string search = "")
         {
             var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
-            var r = _DiscoServers(cookie.Handle);
+            var r = _DiscoServers(cookie.Handle, string.IsNullOrEmpty(search) ? "" : search);
             try
             {
                 if (r.r1 == IntPtr.Zero)
@@ -870,7 +871,7 @@ namespace eduVPN
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "DiscoOrganizations", CallingConvention = CallingConvention.Cdecl)]
-        static extern CGoPtrPtr _DiscoOrganizations(IntPtr c);
+        static extern CGoPtrPtr _DiscoOrganizations(IntPtr c, [MarshalAs(UnmanagedType.LPUTF8Str)] string search);
 
         /// <summary>
         /// Gets the organizations list from the discovery server.
@@ -878,13 +879,14 @@ namespace eduVPN
         /// This takes into account the frequency of updates, see: https://github.com/eduvpn/documentation/blob/v3/SERVER_DISCOVERY.md#organization-list.
         /// </summary>
         /// <param name="cookie">eduvpn-common operation cookie</param>
+        /// <param name="search">Search string for filtering the list. It checks for keywords and display name case insensitive as a substring matching. If search is empty it returns ALL organizations currently known in common.</param>
         /// <returns>JSON object</returns>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static OrganizationDictionary DiscoOrganizations(Cookie cookie)
+        public static OrganizationDictionary DiscoOrganizations(Cookie cookie, string search = "")
         {
             var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
-            var r = _DiscoOrganizations(cookie.Handle);
+            var r = _DiscoOrganizations(cookie.Handle, string.IsNullOrEmpty(search) ? "" : search);
             try
             {
                 if (r.r1 == IntPtr.Zero)

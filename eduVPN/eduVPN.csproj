@@ -86,7 +86,6 @@
     <Compile Include="Properties\IRegistrySerializable.cs" />
     <Compile Include="Properties\SettingsEx.cs" />
     <Compile Include="CGo.cs" />
-    <Compile Include="System\Collections\Generic\Extensions.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\ObservableCollectionEx.cs" />
     <Compile Include="Models\Organization.cs" />
