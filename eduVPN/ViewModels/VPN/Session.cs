@@ -440,9 +440,13 @@ namespace eduVPN.ViewModels.VPN
                         else
                         {
                             // The eduVPN server is always the first usable IP in the subnet by convention.
-#pragma warning disable CS0618 // Type or member is obsolete
-                            gateway = new IPAddress((int)tunnelAddress.Address & (int)unicast.IPv4Mask.Address | IPAddress.HostToNetworkOrder(1)).ToString();
-#pragma warning restore CS0618
+                            var addressBytes = tunnelAddress.GetAddressBytes();
+                            var unicastMaskBytes = unicast.IPv4Mask.GetAddressBytes();
+                            var gatewayOffset = new byte[4] { 0, 0, 0, 1 };
+                            var gatewayBytes = new byte[4];
+                            for (int i = 0; i < 4; ++i)
+                                gatewayBytes[i] = (byte)(addressBytes[i] & unicastMaskBytes[i] | gatewayOffset[i]);
+                            gateway = new IPAddress(gatewayBytes).ToString();
                         }
                         using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
                             try
