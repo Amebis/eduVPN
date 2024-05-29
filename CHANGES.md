@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.19...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.20...HEAD)
+
+
+## [3.255.20](https://github.com/Amebis/eduVPN/compare/3.255.19...3.255.20) (2024-05-29)
 
 - Switch to eduvpn-common provided server and organization searching
 - Authorization time migration from 3.x client settings fixed
