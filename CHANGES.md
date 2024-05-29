@@ -4,7 +4,7 @@
 
 - Switch to eduvpn-common provided server and organization searching
 - Authorization time migration from 3.x client settings fixed
-- eduvpn-common updated to 4e7d42986b333147bbc89508c3ebeb9cc289374d and merged 7b6c4cce34fa34bba262f794c6702011f4edc0e3
+- eduvpn-common updated to 0cac5b215621ec835ac182682caa56e18e5a12c7 with 7b6c4cce34fa34bba262f794c6702011f4edc0e3 merged
 - Translations updated
 - Fixes: #241, #244
 
