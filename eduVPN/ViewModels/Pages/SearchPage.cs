@@ -273,7 +273,18 @@ namespace eduVPN.ViewModels.Pages
                     ServerDictionary dict;
                     using (var cookie = new Engine.CancellationTokenCookie(ct))
                         dict = Engine.DiscoServers(cookie, Query);
-                    var orderedServerHits = new ObservableCollection<InstituteAccessServer>(dict.Select(el => el.Value as InstituteAccessServer).Where(srv => srv != null));
+                    var orderedServerHits = new ObservableCollection<InstituteAccessServer>();
+                    foreach (var el in dict)
+                    {
+                        if (!(el.Value is InstituteAccessServer srv))
+                            continue;
+                        if (orderedServerHits.Count >= 20)
+                        {
+                            orderedServerHits.Add(new MoreHitsInstituteAccessServer());
+                            break;
+                        }
+                        orderedServerHits.Add(srv);
+                    }
                     ct.ThrowIfCancellationRequested();
                     Wizard.TryInvoke((Action)(() =>
                     {
@@ -297,7 +308,16 @@ namespace eduVPN.ViewModels.Pages
                         OrganizationDictionary dict;
                         using (var cookie = new Engine.CancellationTokenCookie(ct))
                             dict = Engine.DiscoOrganizations(cookie, Query);
-                        var orderedOrganizationHits = new ObservableCollection<Organization>(dict.Select(el => el.Value));
+                        var orderedOrganizationHits = new ObservableCollection<Organization>();
+                        foreach (var el in dict)
+                        {
+                            if (orderedOrganizationHits.Count >= 20)
+                            {
+                                orderedOrganizationHits.Add(new MoreHitsOrganization());
+                                break;
+                            }
+                            orderedOrganizationHits.Add(el.Value);
+                        }
                         ct.ThrowIfCancellationRequested();
                         Wizard.TryInvoke((Action)(() =>
                         {
