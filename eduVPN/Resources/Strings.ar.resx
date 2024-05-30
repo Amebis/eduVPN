@@ -223,7 +223,7 @@
     <value>توجد جلسات مستخدمين أخرى على هذا الحاسوب. سيؤدي الاتصال بالشبكة الخاصة الافتراضية الآن إلى توفيرها لجميع المستخدمين الآخرين أيضا. سننتظر خروجهم أولاً اذا...</value>
   </data>
   <data name="TooManyResults" xml:space="preserve">
-    <value>...and so on</value>
+    <value>... الى غير ذلك</value>
     <comment>This text is displayed at the end of the list when there are too many items.</comment>
   </data>
 </root>

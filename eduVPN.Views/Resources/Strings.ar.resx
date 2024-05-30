@@ -408,11 +408,11 @@
     <value>مـعلومات اكثر</value>
   </data>
   <data name="SystemTrayMenuConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded: {0}</value>
+    <value>حمل: {0}</value>
     <comment>{0}=number of bytes, kilobytes, megabytes downloaded</comment>
   </data>
   <data name="SystemTrayMenuConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded: {0}</value>
+    <value>رفع: {0}</value>
     <comment>{0}=number of bytes, kilobytes, megabytes uploaded</comment>
   </data>
 </root>

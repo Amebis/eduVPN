@@ -223,7 +223,7 @@
     <value>Auf diesem Computer gibt es andere Benutzersitzungen. Wenn jetzt eine VPN-Verbindung hergestellt würde, hätten auch andere Benutzer Netzwerkzugang. Warten Sie, bis die anderen Benutzer sich zuerst abgemeldet haben...</value>
   </data>
   <data name="TooManyResults" xml:space="preserve">
-    <value>...and so on</value>
+    <value>... und so weiter</value>
     <comment>This text is displayed at the end of the list when there are too many items.</comment>
   </data>
 </root>
