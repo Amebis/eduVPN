@@ -395,23 +395,23 @@ Even geduld aub... </value>
     <value>Wachten...</value>
   </data>
   <data name="AuthorizationPageNote" xml:space="preserve">
-    <value>If your browser did not open for some reason, or you closed the website by accident, here is the URL you may copy&amp;paste into a trusted browser on this computer, and complete the client authorization there:</value>
+    <value>Als uw browser niet is geopend of als u de website per ongeluk hebt gesloten, is hier de URL die u kunt kopiëren en plakken in een vertrouwde browser om de autorisatie van de client daar voltooien:</value>
   </data>
   <data name="ButtonCopyUriTitle" xml:space="preserve">
-    <value>_Copy URI</value>
+    <value>_kopieer URI</value>
   </data>
   <data name="SessionStatusTypeTesting" xml:space="preserve">
-    <value>Testing...</value>
+    <value>Aan het testen...</value>
   </data>
   <data name="AuthorizationPageMoreInfoLabel" xml:space="preserve">
-    <value>More _info</value>
+    <value>Meer _informatie</value>
   </data>
   <data name="SystemTrayMenuConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded: {0}</value>
+    <value>Gedownload: {0}</value>
     <comment>{0}=number of bytes, kilobytes, megabytes downloaded</comment>
   </data>
   <data name="SystemTrayMenuConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded: {0}</value>
+    <value>Geupload: {0}</value>
     <comment>{0}=number of bytes, kilobytes, megabytes uploaded</comment>
   </data>
 </root>

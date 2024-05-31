@@ -396,23 +396,23 @@ Veuillez patienter...</value>
     <value>En attente...</value>
   </data>
   <data name="AuthorizationPageNote" xml:space="preserve">
-    <value>If your browser did not open for some reason, or you closed the website by accident, here is the URL you may copy&amp;paste into a trusted browser on this computer, and complete the client authorization there:</value>
+    <value>Si votre navigateur ne s'est pas ouvert pour une raison quelconque et que vous avez fermé le site web par erreur, voici l'URL que vous pouvez copier et coller dans un navigateur sur cet ordinateur pour terminer l'autorisation du client :</value>
   </data>
   <data name="ButtonCopyUriTitle" xml:space="preserve">
-    <value>_Copy URI</value>
+    <value>_Copier URI</value>
   </data>
   <data name="SessionStatusTypeTesting" xml:space="preserve">
-    <value>Testing...</value>
+    <value>Test en cours...</value>
   </data>
   <data name="AuthorizationPageMoreInfoLabel" xml:space="preserve">
-    <value>More _info</value>
+    <value>Plus _d'informations</value>
   </data>
   <data name="SystemTrayMenuConnectionInfoBytesIn" xml:space="preserve">
-    <value>Downloaded: {0}</value>
+    <value>Téléchargé :{0}</value>
     <comment>{0}=number of bytes, kilobytes, megabytes downloaded</comment>
   </data>
   <data name="SystemTrayMenuConnectionInfoBytesOut" xml:space="preserve">
-    <value>Uploaded: {0}</value>
+    <value>Envoyé : {0}</value>
     <comment>{0}=number of bytes, kilobytes, megabytes uploaded</comment>
   </data>
 </root>

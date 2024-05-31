@@ -222,7 +222,7 @@
     <value>Er zijn andere gebruikerssessies op deze computer. Het tot stand brengen van een VPN -verbinding zou nu ook netwerktoegang voor deze andere gebruikers bieden. Wacht tot de andere gebruikers uitloggen..</value>
   </data>
   <data name="TooManyResults" xml:space="preserve">
-    <value>...and so on</value>
+    <value>...en zo verder</value>
     <comment>This text is displayed at the end of the list when there are too many items.</comment>
   </data>
 </root>

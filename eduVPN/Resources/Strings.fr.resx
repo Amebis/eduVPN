@@ -152,7 +152,7 @@
     <value>Sortie en cours...</value>
   </data>
   <data name="OpenVPNStateTypeFatalError" xml:space="preserve">
-    <value>OpenVPN à remonté une erreur fatale.</value>
+    <value>OpenVPN a remonté une erreur fatale.</value>
   </data>
   <data name="OpenVPNStateTypeGettingConfiguration" xml:space="preserve">
     <value>Téléchargement des options de configuration du serveur... </value>
@@ -204,13 +204,13 @@
     <value>La clé publique Minisign n'est pas fiable.</value>
   </data>
   <data name="ErrorInvalidHostname" xml:space="preserve">
-    <value>Nom d'hôte invalide: les noms d'hôte contiennent des lettres, des chiffres, des tirets et des points.  </value>
+    <value>Nom d'hôte invalide : les noms d'hôte contiennent des lettres, des chiffres, des tirets et des points.  </value>
   </data>
   <data name="ErrorWireGuardTunnelManagerService" xml:space="preserve">
     <value>Échec du Service Tunnel Manager.</value>
   </data>
   <data name="WarningDefaultGatewayIsVPN" xml:space="preserve">
-    <value>Votre ordinateur utilise déjà un tunnel VPN pour le trafic de données par défaut. Il est peu probable qu'un seconde connexion VPN fonctionne.</value>
+    <value>Votre ordinateur utilise déjà un tunnel VPN pour le trafic de données par défaut. Il est peu probable qu'une seconde connexion VPN fonctionne.</value>
   </data>
   <data name="WarningWindowsUpdatesStalled" xml:space="preserve">
     <value>Votre ordinateur n'a pas installé les mises à jour Windows récemment. Veuillez vérifier les mises à jour et/ou installer une version plus récente et supportée de Windows.
@@ -223,7 +223,7 @@ Votre organisation peut décider à l'avenir d'interdire les connexions provenan
     <value>Il y a d'autres sessions utilisateur sur cet ordinateur. L'établissement d'une connexion VPN à cet instant donnerait aussi accès au réseau aux autres utilisateurs. En attente de la déconnexion des autres utilisateurs...</value>
   </data>
   <data name="TooManyResults" xml:space="preserve">
-    <value>...and so on</value>
+    <value>... et ainsi de suite</value>
     <comment>This text is displayed at the end of the list when there are too many items.</comment>
   </data>
 </root>
