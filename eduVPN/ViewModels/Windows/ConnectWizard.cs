@@ -698,7 +698,7 @@ namespace eduVPN.ViewModels.Windows
             }
             catch
             {
-                if (Properties.Settings.Default.LastSelectedServer == server.Id)
+                if (startup)
                 {
                     AutoReconnectFailed?.Invoke(this, new AutoReconnectFailedEventArgs(server, server));
                     Properties.Settings.Default.LastSelectedServer = null;
