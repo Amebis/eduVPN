@@ -291,6 +291,7 @@ namespace eduVPN.ViewModels.VPN
                                         }));
                                     }
                                     catch (OperationCanceledException) { throw; }
+                                    catch (eduWireGuard.ManagerService.ManagerServiceException) { throw; }
                                     catch {
                                         // Ignore tunnel status update failures. Immediately after resume from sleep,
                                         // GetTunnelConfig() is sometimes throwing with ERROR_FILE_NOT_FOUND (2).
