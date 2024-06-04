@@ -598,7 +598,6 @@ namespace eduVPN.ViewModels.Windows
                                     Connect(srv, Properties.Settings.Default.PreferTCP, true);
                             }
                         }));
-                        e.Handled = true;
                     }
                     break;
 
@@ -610,7 +609,6 @@ namespace eduVPN.ViewModels.Windows
                             SelectSecureInternetCountryPage.SetSecureInternetCountries(data.Countries);
                             CurrentPage = SelectSecureInternetCountryPage;
                         }));
-                        e.Handled = true;
                     }
                     break;
 
@@ -623,7 +621,6 @@ namespace eduVPN.ViewModels.Windows
                             AuthorizationPage.Uri = uri;
                             CurrentPage = AuthorizationPage;
                         }));
-                        e.Handled = true;
                         break;
                     }
 
@@ -635,26 +632,20 @@ namespace eduVPN.ViewModels.Windows
                             ConnectionPage.SetProfiles(data.Profiles);
                             CurrentPage = ConnectionPage;
                         }));
-                        e.Handled = true;
                     }
                     break;
 
                 case Engine.State.Disconnected:
                     TryInvoke((Action)(() => CurrentPage = ConnectionPage));
-                    e.Handled = true;
                     break;
 
                 case Engine.State.AddingServer:
                 case Engine.State.GettingConfig:
                     TryInvoke((Action)(() => CurrentPage = PleaseWaitPage));
-                    e.Handled = true;
-                    break;
-
-                default:
-                    // Silence "WARNING - transition not completed..." in the log.
-                    e.Handled = true;
                     break;
             }
+            // Silence "WARNING - transition not completed..." in the log.
+            e.Handled = true;
         }
 
         static private void Engine_GetToken(object sender, Engine.GetTokenEventArgs e)
