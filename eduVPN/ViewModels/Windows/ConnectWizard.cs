@@ -635,10 +635,15 @@ namespace eduVPN.ViewModels.Windows
                     }
                     break;
 
+                case Engine.State.GotConfig:
+                case Engine.State.Connecting:
+                case Engine.State.Connected:
+                case Engine.State.Disconnecting:
                 case Engine.State.Disconnected:
                     TryInvoke((Action)(() => CurrentPage = ConnectionPage));
                     break;
 
+                case Engine.State.Deregistered:
                 case Engine.State.AddingServer:
                 case Engine.State.GettingConfig:
                     TryInvoke((Action)(() => CurrentPage = PleaseWaitPage));
@@ -705,7 +710,6 @@ namespace eduVPN.ViewModels.Windows
             finally { OperationInProgress = null; }
             ConnectionPage.Server = server;
             ConnectionPage.ActivateSession(config, expiration);
-            CurrentPage = ConnectionPage;
         }
 
         /// <summary>
@@ -736,7 +740,6 @@ namespace eduVPN.ViewModels.Windows
             finally { OperationInProgress = null; }
             ConnectionPage.Server = server;
             ConnectionPage.ActivateSession(config, expiration);
-            CurrentPage = ConnectionPage;
         }
 
         /// <summary>
@@ -779,7 +782,6 @@ namespace eduVPN.ViewModels.Windows
             finally { OperationInProgress = null; }
             ConnectionPage.Server = server;
             ConnectionPage.ActivateSession(config, expiration);
-            CurrentPage = ConnectionPage;
         }
 
         /// <summary>

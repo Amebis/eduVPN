@@ -224,7 +224,6 @@ namespace eduVPN.ViewModels.Pages
                                 catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
                                 finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
                             }).Start();
-                            Wizard.CurrentPage = Wizard.HomePage;
                         },
                         () => ActiveSession == null);
                 return _NavigateBack;
