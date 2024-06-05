@@ -907,23 +907,43 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Width="15" Height="15">
                             <Canvas
-                                x:Name="Checkmark"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Width="10" Height="10"
-                                Visibility="Hidden">
+                                Width="10" Height="10">
                                 <Canvas.RenderTransform>
                                     <TransformGroup>
                                         <RotateTransform Angle="45" CenterX="5" CenterY="5"/>
                                     </TransformGroup>
                                 </Canvas.RenderTransform>
-                                <Polyline
-                                    Stroke="{TemplateBinding Foreground}"
-                                    StrokeThickness="2"
-                                    StrokeStartLineCap="Round"
-                                    StrokeEndLineCap="Round"
-                                    StrokeLineJoin="Round"
-                                    Points="2 9 6 9 6 0"/>
+                                <Canvas
+                                    x:Name="Checkmark"
+                                    Visibility="Hidden">
+                                    <Polyline
+                                        Stroke="{TemplateBinding Foreground}"
+                                        StrokeThickness="2"
+                                        StrokeStartLineCap="Round"
+                                        StrokeEndLineCap="Round"
+                                        StrokeLineJoin="Round"
+                                        Points="2 9 6 9 6 0"/>
+                                </Canvas>
+                                <Canvas
+                                    x:Name="Xmark"
+                                    Visibility="Hidden">
+                                    <Polyline
+                                        Stroke="{TemplateBinding Foreground}"
+                                        StrokeThickness="2"
+                                        StrokeStartLineCap="Round"
+                                        StrokeEndLineCap="Round"
+                                        StrokeLineJoin="Round"
+                                        Points="4.5 9 4.5 0"/>
+                                    <Polyline
+                                        Stroke="{TemplateBinding Foreground}"
+                                        StrokeThickness="2"
+                                        StrokeStartLineCap="Round"
+                                        StrokeEndLineCap="Round"
+                                        StrokeLineJoin="Round"
+                                        Points="0 4.5 9 4.5"/>
+                                </Canvas>
                             </Canvas>
                         </Border>
                         <ContentPresenter
@@ -935,6 +955,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Checkmark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="Xmark" Property="Visibility" Value="Visible"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
