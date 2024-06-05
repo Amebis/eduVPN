@@ -180,7 +180,7 @@ namespace eduVPN.ViewModels.VPN
                     Interface iface;
                     using (var reader = new StringReader(Config.VPNConfig))
                         iface = new Interface(reader);
-                    switch (Properties.SettingsEx.Default.WireGuardKillSwitch)
+                    switch (Properties.Settings.Default.WireGuardKillSwitch2)
                     {
                         case WireGuardKillSwitchMode.Enforce:
                             foreach (var peer in iface.Peers)

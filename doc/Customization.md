@@ -77,11 +77,11 @@ Use in combination with `OpenVPNRemoveOptions` setting to override the OpenVPN o
 
 ### `WireGuardKillSwitch` (`REG_DWORD`)
 
-When used as the default gateway, WireGuard has optional firewall rules to block non-tunnel traffic (aka "kill-switch"). This registry setting allows preserving, enforcing or removing the kill-switch at run-time. When registry value is absent, the setting provided by eduVPN server is kept as-is.
+When used as the default gateway, WireGuard has optional firewall rules to block non-tunnel traffic (aka "kill-switch"). This registry setting allows user control, enforcing or removing the kill-switch at run-time. When registry value is absent, user may control the setting.
 
 Value  | Behavior
 -------|----------
-0      | Keep the setting provided by eduVPN server (Default)
+0      | Allow user to control the setting (Default)
 1      | Enforce kill-switch on any default gateway profile
 2      | Remove kill-switch from any default gateway profile
 

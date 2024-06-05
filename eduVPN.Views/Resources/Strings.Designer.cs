@@ -723,6 +723,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Block traffic outside VPN.
+        /// </summary>
+        public static string SettingsPageWireGuardKillSwitchLabel {
+            get {
+                return ResourceManager.GetString("SettingsPageWireGuardKillSwitchLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} requires reauthorization..
         /// </summary>
         public static string SystemTrayBalloonAutoReconnectFailedMessage2 {

@@ -6,6 +6,7 @@
 */
 
 using eduVPN.Models;
+using eduVPN.ViewModels.VPN;
 using eduVPN.ViewModels.Windows;
 using System;
 using System.ComponentModel;
@@ -24,6 +25,26 @@ namespace eduVPN.Properties
         /// Was client started at user sign-on?
         /// </summary>
         public bool IsSignon { get; set; }
+
+        /// <summary>
+        /// WireGuard kill-switch override
+        /// </summary>
+        [UserScopedSetting()]
+        [SettingsDescription("WireGuard kill-switch override")]
+        [DefaultSettingValue("Enforce")]
+        public WireGuardKillSwitchMode WireGuardKillSwitch2
+        {
+            get
+            {
+                if (SettingsEx.Default.WireGuardKillSwitch != WireGuardKillSwitchMode.Preserve)
+                    return SettingsEx.Default.WireGuardKillSwitch;
+                return (WireGuardKillSwitchMode)this["WireGuardKillSwitch2"];
+            }
+            set
+            {
+                this["WireGuardKillSwitch2"] = value;
+            }
+        }
 
         /// <summary>
         /// Institute access settings (v1)

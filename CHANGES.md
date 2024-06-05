@@ -4,6 +4,7 @@
 
 - eduvpn-common updated to 2.0 3d47c63005ad962951080370a647914ab7c34e94
 - Graceful disconnect on user sign-out or system restart/shutdown
+- Allow user to control WireGuard kill-switch unless enforced by device admin
 
 
 ## [3.255.21](https://github.com/Amebis/eduVPN/compare/3.255.20...3.255.21) (2024-05-30)

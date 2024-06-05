@@ -13,7 +13,7 @@ namespace eduVPN.ViewModels.VPN
     public enum WireGuardKillSwitchMode
     {
         /// <summary>
-        /// Keep the kill-switch as provisioned by server.
+        /// Keep the kill-switch as configured downstream.
         /// </summary>
         Preserve = 0,
 
