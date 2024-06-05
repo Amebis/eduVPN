@@ -229,11 +229,13 @@ namespace eduVPN.Views.Windows
             NotifyIcon.Click += NotifyIcon_Click;
             NotifyIcon.BalloonTipClicked += NotifyIcon_BalloonTipClicked;
 
-            // Bind to "ConnectionPage.ActiveSession.StateDescription" and "ConnectionPage.ActiveSession.State" property to keep tray icon up-to-date.
+            // Bind to "ConnectionPage.ActiveSession" property to keep the UI up-to-date.
             viewModel.ConnectionPage.PropertyChanged += (object sender, PropertyChangedEventArgs e2) =>
             {
                 if (e2.PropertyName == nameof(viewModel.ConnectionPage.ActiveSession))
                 {
+                    var activeSession = viewModel.ConnectionPage.ActiveSession;
+
                     // Active session changed: sync the tray icon.
                     NotifyIcon.Text = TrayIconToolTipText;
                     NotifyIcon.Icon = TrayIcon;
@@ -241,57 +243,64 @@ namespace eduVPN.Views.Windows
                     // Active session changed: sync the tray menu checkboxes.
                     foreach (var item in (Resources["SystemTrayMenu"] as ContextMenu)?.Items)
                         if (item is MenuItem menuItem && menuItem.DataContext is Server server)
-                            menuItem.IsChecked = viewModel.ConnectionPage.ActiveSession != null && viewModel.ConnectionPage.ActiveSession.Server.Equals(server);
+                            menuItem.IsChecked = activeSession != null && activeSession.Server.Equals(server);
 
-                    if (viewModel.ConnectionPage.ActiveSession == null && PendingServerConnect != null)
+                    if (activeSession == null && PendingServerConnect != null)
                     {
                         Servers_Connect(PendingServerConnect);
                         PendingServerConnect = null;
                     }
 
-                    if (viewModel.ConnectionPage.ActiveSession == null && PendingClose)
+                    if (activeSession == null && PendingClose)
                         Close();
 
-                    if (viewModel.ConnectionPage.ActiveSession != null)
+                    if (activeSession != null)
                     {
                         // Initialize VPN session state.
-                        SessionState = viewModel.ConnectionPage.ActiveSession.State;
+                        SessionState = activeSession.State;
 
-                        viewModel.ConnectionPage.ActiveSession.WarnExpiration += (object sender2, EventArgs e3) =>
+                        activeSession.WarnExpiration += (object sender2, EventArgs e3) =>
                         {
+                            // Is this still the active session?
+                            var session = sender2 as Session;
+                            if (session == null || session != viewModel.ConnectionPage.ActiveSession)
+                                return;
+
                             if (!PendingClose)
                                 NotifyIcon.ShowBalloonTip(
                                     1000 * 60 * 5,
-                                    string.Format(Strings.SystemTrayBalloonRenewSessionTitle, viewModel.ConnectionPage.ActiveSession.Server),
-                                    string.Format(Strings.SystemTrayBalloonRenewSessionMessage, viewModel.ConnectionPage.ActiveSession.ValidTo.ToLocalTime().ToString("f")),
+                                    string.Format(Strings.SystemTrayBalloonRenewSessionTitle, session.Server),
+                                    string.Format(Strings.SystemTrayBalloonRenewSessionMessage, session.ValidTo.ToLocalTime().ToString("f")),
                                     System.Windows.Forms.ToolTipIcon.Info);
                         };
 
                         // Bind to the session for property changes.
-                        viewModel.ConnectionPage.ActiveSession.PropertyChanged += (object sender3, PropertyChangedEventArgs e3) =>
+                        activeSession.PropertyChanged += (object sender3, PropertyChangedEventArgs e3) =>
                         {
-                            if (viewModel.ConnectionPage.ActiveSession != sender3)
+                            // Is this still the active session?
+                            var session = sender3 as Session;
+                            if (session == null || session != viewModel.ConnectionPage.ActiveSession)
                                 return;
 
                             switch (e3.PropertyName)
                             {
-                                case nameof(viewModel.ConnectionPage.ActiveSession.Profile):
-                                case nameof(viewModel.ConnectionPage.ActiveSession.StateDescription):
+                                case nameof(session.Profile):
+                                case nameof(session.StateDescription):
                                     NotifyIcon.Text = TrayIconToolTipText;
                                     break;
 
-                                case nameof(viewModel.ConnectionPage.ActiveSession.State):
+                                case nameof(session.State):
                                     {
                                         NotifyIcon.Icon = TrayIcon;
 
-                                        switch (viewModel.ConnectionPage.ActiveSession.State)
+                                        switch (session.State)
                                         {
                                             case SessionStatusType.Connected:
                                                 // Client connected. Popup the balloon message.
                                                 NotifyIcon.ShowBalloonTip(
                                                     1000 * 5,
-                                                    string.Format(Strings.SystemTrayBalloonConnectedTitle, viewModel.ConnectionPage.ActiveSession.Profile),
-                                                    string.Format(Strings.SystemTrayBalloonConnectedMessage, viewModel.ConnectionPage.ActiveSession.TunnelAddress, viewModel.ConnectionPage.ActiveSession.IPv6TunnelAddress),
+                                                    string.Format(Strings.SystemTrayBalloonConnectedTitle, session.Profile),
+                                                    string.Format(Strings.SystemTrayBalloonConnectedMessage, session.TunnelAddress, session.IPv6TunnelAddress),
                                                     System.Windows.Forms.ToolTipIcon.Info);
                                                 break;
 
@@ -309,7 +318,7 @@ namespace eduVPN.Views.Windows
                                         }
 
                                         // Save VPN session state.
-                                        SessionState = viewModel.ConnectionPage.ActiveSession.State;
+                                        SessionState = session.State;
                                     }
                                     break;
                             }
