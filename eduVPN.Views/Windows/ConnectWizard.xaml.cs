@@ -470,7 +470,7 @@ namespace eduVPN.Views.Windows
         /// <param name="sender">Event sender (ignored)</param>
         /// <param name="e">Event arguments (ignored)</param>
         /// <remarks>Occurs when a <see cref="MenuItem"/> is clicked.</remarks>
-        private void Open_Click(object sender, RoutedEventArgs e)
+        public void Open_Click(object sender, RoutedEventArgs e)
         {
             // (Re)activate window.
             if (WindowState == WindowState.Minimized)

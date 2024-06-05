@@ -104,23 +104,27 @@ namespace eduVPN.Views
         /// <inheritdoc/>
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
         {
-            // If there is an active VPN session, do a standard app quit and deny session ending so we can do the /disconnect notification.
             var mainWindow = MainWindow as Windows.ConnectWizard;
-            var activeSession = (mainWindow?.DataContext as ViewModels.Windows.ConnectWizard)?.ConnectionPage.ActiveSession;
+            var activeSession = (mainWindow.DataContext as ViewModels.Windows.ConnectWizard).ConnectionPage.ActiveSession;
             if (activeSession != null)
             {
+                // If our app has no window open, it will get killed. Restore the main window first, then do a standard app quit.
+                mainWindow.Open_Click(this, null);
                 mainWindow.Exit_Click(this, null);
-                if (e != null)
-                    e.Cancel = true;
+
+                // Deny session ending so we can complete the /disconnect notification.
+                e.Cancel = true;
             }
+            else
+            {
+                base.OnSessionEnding(e);
 
-            base.OnSessionEnding(e);
+                // Save settings on logout.
+                Views.Properties.Settings.Default.Save();
+                eduVPN.Properties.Settings.Default.Save();
 
-            // Save settings on logout.
-            Views.Properties.Settings.Default.Save();
-            eduVPN.Properties.Settings.Default.Save();
-
-            StandardOutputTracer.Dispose();
+                StandardOutputTracer.Dispose();
+            }
         }
 
         /// <inheritdoc/>
