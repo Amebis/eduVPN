@@ -539,7 +539,7 @@ namespace eduVPN
             if (obj is Dictionary<string, object> obj2 && obj2.TryGetValue("message", out var obj3))
             {
                 var message = obj3.ParseLocalized<string>();
-                if (message["en"].EndsWith(": context canceled"))
+                if (message["en"].EndsWith(": context canceled."))
                     return new OperationCanceledException();
                 return new Exception(message.GetLocalized(obj3 as string));
             }
@@ -709,7 +709,7 @@ namespace eduVPN
             if (e != null)
             {
                 var ex = ConvertException(e);
-                if (!ex.Message.EndsWith(": server does not exist"))
+                if (!ex.Message.EndsWith(": server does not exist."))
                     throw ex;
             }
         }
