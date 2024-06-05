@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.21...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.22...HEAD)
+
+
+## [3.255.22](https://github.com/Amebis/eduVPN/compare/3.255.21...3.255.22) (2024-06-05)
 
 - eduvpn-common updated to 2.0 3d47c63005ad962951080370a647914ab7c34e94
 - Graceful disconnect on user sign-out or system restart/shutdown
