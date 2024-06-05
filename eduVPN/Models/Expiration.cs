@@ -62,15 +62,29 @@ namespace eduVPN.Models
         /// <param name="json">JSON object</param>
         public Expiration(Json json)
         {
-            StartedAt = DateTimeOffset.FromUnixTimeSeconds(json.start_time);
-            EndAt = DateTimeOffset.FromUnixTimeSeconds(json.end_time);
-            ButtonAt = DateTimeOffset.FromUnixTimeSeconds(json.button_time);
-            CountdownAt = DateTimeOffset.FromUnixTimeSeconds(json.countdown_time);
+            StartedAt = FromUnixTimeSeconds(json.start_time);
+            EndAt = FromUnixTimeSeconds(json.end_time);
+            ButtonAt = FromUnixTimeSeconds(json.button_time);
+            CountdownAt = FromUnixTimeSeconds(json.countdown_time);
             NotificationAt = json.notification_times != null ? json.notification_times
                 .Where(value => json.start_time <= value && value <= json.end_time - 5)
-                .Select(value => DateTimeOffset.FromUnixTimeSeconds(value))
+                .Select(value => FromUnixTimeSeconds(value))
                 .ToList() :
                 new List<DateTimeOffset>();
+        }
+
+        /// <summary>
+        /// Converts Unix timestamp to DateTimeOffset.
+        /// </summary>
+        /// <note>Values outside of -62135596800 and 253402300799 Unix timestamps (inclusive) may not be represented by DateTimeOffset and are converted to DateTimeOffset.MinValue and DateTimeOffset.MaxValue respectively.</note>
+        /// <param name="unixTime">Unix timestamp</param>
+        /// <returns>A DateTimeOffset representation of Unix timestamp</returns>
+        DateTimeOffset FromUnixTimeSeconds(long unixTime)
+        {
+            return
+                unixTime < -62135596800 ? DateTimeOffset.MinValue :
+                unixTime > 253402300799 ? DateTimeOffset.MaxValue :
+                    DateTimeOffset.FromUnixTimeSeconds(unixTime);
         }
 
         #endregion
