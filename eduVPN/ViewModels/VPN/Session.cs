@@ -626,8 +626,10 @@ namespace eduVPN.ViewModels.VPN
                     }
                     finally
                     {
-                        // Cleanup session in eduvpn-common to have the /disconnect call *before* attempting to reconnect.
                         Engine.SetState(Engine.State.Disconnected);
+
+                        // Cleanup session in eduvpn-common to have the /disconnect call *before* attempting to reconnect.
+                        Trace.TraceInformation("Tunnel cleanup");
                         using (var operationInProgress = new Engine.CancellationTokenCookie(Window.Abort.Token))
                             try { Engine.Cleanup(operationInProgress); } catch { }
 

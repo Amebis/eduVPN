@@ -355,6 +355,7 @@ namespace eduVPN.ViewModels.Windows
         /// </summary>
         public ConnectWizard()
         {
+            Trace.TraceInformation("Registering eduvpn-common engine");
             Engine.Callback += Engine_Callback;
             Engine.SetToken += Engine_SetToken;
             Engine.GetToken += Engine_GetToken;
@@ -830,6 +831,7 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (disposing)
                 {
+                    Trace.TraceInformation("Deregistering eduvpn-common engine");
                     Engine.Deregister();
                     Engine.Callback -= Engine_Callback;
                     Engine.SetToken -= Engine_SetToken;
