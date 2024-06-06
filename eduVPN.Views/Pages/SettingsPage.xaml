@@ -73,20 +73,6 @@
             Grid.Row="3"
             Margin="7"
             Style="{StaticResource SeparatorStyle}">
-            <CheckBox
-                Margin="0,7"
-                VerticalContentAlignment="Center"
-                IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=WireGuardKillSwitch2, Converter={StaticResource WireGuardKillSwitchToggleConverter}}"
-                IsEnabled="{Binding Source={x:Static prop:SettingsEx.Default}, Path=WireGuardKillSwitch, Converter={StaticResource WireGuardKillSwitch2EnableConverter}}"
-                AutomationProperties.Name="{Binding Source={x:Static res:Strings.SettingsPageWireGuardKillSwitchLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
-                <AccessText Text="{x:Static res:Strings.SettingsPageWireGuardKillSwitchLabel}"/>
-            </CheckBox>
-        </Border>
-
-        <Border
-            Grid.Row="4"
-            Margin="7"
-            Style="{StaticResource SeparatorStyle}">
             <Grid
                 Margin="0,7">
                 <Grid.ColumnDefinitions>
@@ -106,6 +92,34 @@
                     Command="{Binding Wizard.ConnectionPage.ActiveSession.ShowLog}">
                     <AccessText Text="{x:Static res:Strings.SettingsPageViewLogTitle}"/>
                 </Button>
+            </Grid>
+        </Border>
+
+        <Border
+            Grid.Row="4"
+            Margin="7"
+            Style="{StaticResource SeparatorStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Margin="0,7,0,5"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MicroHeadingStyle}"
+                    Text="WireGuard"/>
+
+                <CheckBox
+                    Grid.Row="1"
+                    Margin="0,7"
+                    VerticalContentAlignment="Center"
+                    IsChecked="{Binding Source={x:Static prop:Settings.Default}, Path=WireGuardKillSwitch2, Converter={StaticResource WireGuardKillSwitchToggleConverter}}"
+                    IsEnabled="{Binding Source={x:Static prop:SettingsEx.Default}, Path=WireGuardKillSwitch, Converter={StaticResource WireGuardKillSwitch2EnableConverter}}"
+                    AutomationProperties.Name="{Binding Source={x:Static res:Strings.SettingsPageWireGuardKillSwitchLabel}, Converter={StaticResource RemoveAccessKeyConverter}}">
+                    <AccessText Text="{x:Static res:Strings.SettingsPageWireGuardKillSwitchLabel}"/>
+                </CheckBox>
             </Grid>
         </Border>
     </Grid>
