@@ -23,7 +23,7 @@ namespace eduOAuth.Tests
         public void AccessTokenSerializationTest()
         {
             AccessToken
-                token1 = new BearerToken(Global.AccessTokenObj, DateTimeOffset.Now),
+                token1 = new BearerToken(Global.AccessTokenObj, DateTimeOffset.UtcNow),
                 token2 = AccessToken.FromBase64String(token1.ToBase64String());
             Assert.AreEqual(token1, token2);
             Assert.IsTrue(token1.Authorized == token2.Authorized);
@@ -41,7 +41,7 @@ namespace eduOAuth.Tests
             var request = new Mock<HttpWebRequest>();
             request.Setup(obj => obj.GetResponse()).Returns(response.Object);
 
-            var now = DateTimeOffset.Now;
+            var now = DateTimeOffset.UtcNow;
             AccessToken
                 token1 = new BearerToken(Global.AccessTokenObj, now),
                 token2 = AccessToken.FromAuthorizationServerResponse(request.Object, now);
@@ -62,7 +62,7 @@ namespace eduOAuth.Tests
             var request = new Mock<HttpWebRequest>();
             request.Setup(obj => obj.GetResponse()).Throws(new WebException("Test Exception", null, WebExceptionStatus.Success, response.Object));
 
-            Assert.ThrowsException<AccessTokenException>(() => AccessToken.FromAuthorizationServerResponse(request.Object, DateTimeOffset.Now));
+            Assert.ThrowsException<AccessTokenException>(() => AccessToken.FromAuthorizationServerResponse(request.Object, DateTimeOffset.UtcNow));
         }
 
         [TestMethod()]
@@ -83,7 +83,7 @@ namespace eduOAuth.Tests
             request.Setup(obj => obj.GetResponse()).Returns(response.Object);
 
             AccessToken
-                token1 = new BearerToken(Global.AccessTokenObj, DateTimeOffset.Now),
+                token1 = new BearerToken(Global.AccessTokenObj, DateTimeOffset.UtcNow),
                 token2 = token1.RefreshToken(request.Object, "org.eduvpn.app.windows", new NetworkCredential("username", "password"));
             var request_param = HttpUtility.ParseQueryString(Encoding.ASCII.GetString(request_buffer, 0, (int)request.Object.ContentLength));
             Assert.AreEqual("refresh_token", request_param["grant_type"]);

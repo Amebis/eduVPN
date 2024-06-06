@@ -209,7 +209,7 @@ namespace eduVPN.ViewModels.Pages
                     {
                         if (new Version(Properties.Settings.Default.SelfUpdateLastVersion) == AvailableVersion &&
                             (Properties.Settings.Default.SelfUpdateLastReminder == DateTimeOffset.MaxValue ||
-                            (DateTimeOffset.Now - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
+                            (DateTimeOffset.UtcNow - Properties.Settings.Default.SelfUpdateLastReminder).TotalDays < 3))
                         {
                             // We already prompted user for this version.
                             // Either user opted not to be reminded of this version update again,
@@ -240,7 +240,7 @@ namespace eduVPN.ViewModels.Pages
                         if (Wizard.NavigateTo.CanExecute(this))
                         {
                             Properties.Settings.Default.SelfUpdateLastVersion = AvailableVersion.ToString();
-                            Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.Now;
+                            Properties.Settings.Default.SelfUpdateLastReminder = DateTimeOffset.UtcNow;
                             Wizard.NavigateTo.Execute(this);
                         }
                         ErrorMessage = null;

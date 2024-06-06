@@ -480,7 +480,7 @@ namespace eduOAuth
             // Get expiration date.
             Expires =
                 json.expires_at.HasValue ? DateTimeOffset.FromUnixTimeSeconds(json.expires_at.Value) :
-                json.expires_in.HasValue ? DateTimeOffset.Now.AddSeconds(json.expires_in.Value) : DateTimeOffset.MaxValue;
+                json.expires_in.HasValue ? DateTimeOffset.UtcNow.AddSeconds(json.expires_in.Value) : DateTimeOffset.MaxValue;
 
             // Get refresh token.
             if (json.refresh_token != null)

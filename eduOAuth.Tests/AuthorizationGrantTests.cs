@@ -59,7 +59,7 @@ namespace eduOAuth.Tests
             request.Setup(obj => obj.GetResponse()).Returns(response.Object);
 
             AccessToken
-                token1 = new BearerToken(Global.AccessTokenObj, DateTimeOffset.Now),
+                token1 = new BearerToken(Global.AccessTokenObj, DateTimeOffset.UtcNow),
                 token2 = ag.ProcessResponse(new NameValueCollection() { { "state", query["state"] }, { "code", "1234567890" } }, request.Object, new NetworkCredential("", "password").SecurePassword);
             var request_param = HttpUtility.ParseQueryString(Encoding.ASCII.GetString(request_buffer, 0, (int)request.Object.ContentLength));
             Assert.AreEqual("authorization_code", request_param["grant_type"]);

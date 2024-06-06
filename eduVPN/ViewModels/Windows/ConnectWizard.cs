@@ -469,7 +469,7 @@ namespace eduVPN.ViewModels.Windows
                                     foreach (var srv in iaSrvList)
                                     {
                                         Abort.Token.ThrowIfCancellationRequested();
-                                        var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.Now;
+                                        var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
                                         try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, start); }
                                         catch (OperationCanceledException) { throw; }
                                         catch { }
@@ -490,7 +490,7 @@ namespace eduVPN.ViewModels.Windows
                                 {
                                     try
                                     {
-                                        var start = DateTimeOffset.Now;
+                                        var start = DateTimeOffset.UtcNow;
 
                                         // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
                                         lock (Properties.Settings.Default.AccessTokenCache2)
@@ -527,7 +527,7 @@ namespace eduVPN.ViewModels.Windows
                                 foreach (var srv in ownSrvList)
                                 {
                                     Abort.Token.ThrowIfCancellationRequested();
-                                    var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.Now;
+                                    var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
                                     try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, start); }
                                     catch (OperationCanceledException) { throw; }
                                     catch { }

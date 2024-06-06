@@ -269,7 +269,7 @@ namespace eduVPN.ViewModels.VPN
         {
             get
             {
-                var now = DateTimeOffset.Now;
+                var now = DateTimeOffset.UtcNow;
                 return
                     Expiration != null &&
                     Expiration.CountdownAt <= now &&
@@ -286,7 +286,7 @@ namespace eduVPN.ViewModels.VPN
             {
                 var v = ValidTo;
                 return v != DateTimeOffset.MaxValue ?
-                    v - DateTimeOffset.Now :
+                    v - DateTimeOffset.UtcNow :
                     TimeSpan.MaxValue;
             }
         }
@@ -303,7 +303,7 @@ namespace eduVPN.ViewModels.VPN
         {
             get
             {
-                var now = DateTimeOffset.Now;
+                var now = DateTimeOffset.UtcNow;
 #if DEBUG
                 DateTimeOffset from = ValidFrom, to = ValidTo;
                 return
@@ -403,7 +403,7 @@ namespace eduVPN.ViewModels.VPN
                 // Disconnect session when expired.
                 if ((e.PropertyName == nameof(State) || e.PropertyName == nameof(ExpirationTime)) &&
                     (State == SessionStatusType.Waiting || State == SessionStatusType.Initializing || State == SessionStatusType.Connecting || State == SessionStatusType.Testing || State == SessionStatusType.Connected) &&
-                    ValidTo <= DateTimeOffset.Now)
+                    ValidTo <= DateTimeOffset.UtcNow)
                 {
                     TerminationReason = TerminationReason.Expired;
                     if (Disconnect.CanExecute(false))
@@ -497,7 +497,7 @@ namespace eduVPN.ViewModels.VPN
         {
             // It is important to start updating the timers, to allow session self-disconnection on expiration
             // even if the session is waiting for other users to sign out.
-            var sessionExpirationWarning = DateTimeOffset.Now;
+            var sessionExpirationWarning = DateTimeOffset.UtcNow;
             var propertyUpdater = new DispatcherTimer(
                 new TimeSpan(0, 0, 0, 1),
                 DispatcherPriority.Normal,
@@ -507,7 +507,7 @@ namespace eduVPN.ViewModels.VPN
                     RaisePropertyChanged(nameof(ShowExpirationTime));
                     RaisePropertyChanged(nameof(ExpirationTime));
                     RaisePropertyChanged(nameof(OfferRenewal));
-                    var now = DateTimeOffset.Now;
+                    var now = DateTimeOffset.UtcNow;
                     var x = Expiration.NotificationAt.FirstOrDefault(t => sessionExpirationWarning < t && t <= now);
                     if (x != default)
                     {
