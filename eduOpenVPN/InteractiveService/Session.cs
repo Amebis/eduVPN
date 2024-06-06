@@ -80,7 +80,7 @@ namespace eduOpenVPN.InteractiveService
                 Stream.Write(msgStream.GetBuffer(), 0, (int)msgStream.Length, ct);
             }
 
-            // Read and analyse status.
+            // Read and analyze status.
             var statusTask = ReadStatusAsync();
             try { statusTask.Wait(ct); }
             catch (OperationCanceledException) { throw; }

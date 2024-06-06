@@ -32,7 +32,7 @@ namespace eduOpenVPN.Management
             #region Fields
 
             /// <summary>
-            /// Event to wait for command completition.
+            /// Event to wait for command completion.
             /// </summary>
             public EventWaitHandle Finished = new EventWaitHandle(false, EventResetMode.ManualReset);
 
@@ -434,7 +434,7 @@ namespace eduOpenVPN.Management
             {
                 if (Credentials != null)
                 {
-                    // Save authentication token. OpenVPN accepts it as the password on reauthentications.
+                    // Save authentication token. OpenVPN accepts it as the password on re-authentications.
                     Credentials.SecurePassword = e.Token;
                 }
             };

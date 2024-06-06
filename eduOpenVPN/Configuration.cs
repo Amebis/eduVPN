@@ -44,7 +44,7 @@ namespace eduOpenVPN
             var state = ParseParamsState.Initial;
             var backslash = false;
             char inChar, outChar;
-            var parm = "";
+            var param = "";
 
             do
             {
@@ -96,9 +96,9 @@ namespace eduOpenVPN
 
                     if (state == ParseParamsState.Done)
                     {
-                        ret.Add(parm);
+                        ret.Add(param);
                         state = ParseParamsState.Initial;
-                        parm = "";
+                        param = "";
                     }
 
                     if (backslash && outChar != default)
@@ -111,7 +111,7 @@ namespace eduOpenVPN
 
                 // Store parameter character.
                 if (outChar != default)
-                    parm += outChar;
+                    param += outChar;
             }
             while (offset++ < endOffset);
 

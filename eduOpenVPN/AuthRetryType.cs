@@ -19,13 +19,13 @@ namespace eduOpenVPN
         None = 0,
 
         /// <summary>
-        /// Client will retry the connection without requerying for an --auth-user-pass username/password. Use this option for unattended clients.
+        /// Client will retry the connection without re-querying for an --auth-user-pass username/password. Use this option for unattended clients.
         /// </summary>
         [ParameterValue("nointeract")]
         NoInteract,
 
         /// <summary>
-        /// Client will requery for an --auth-user-pass username/password and/or private key password before attempting a reconnection.
+        /// Client will re-query for an --auth-user-pass username/password and/or private key password before attempting a reconnection.
         /// </summary>
         [ParameterValue("interact")]
         Interact,
