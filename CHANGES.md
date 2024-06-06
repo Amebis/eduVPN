@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.22...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/3.255.23...HEAD)
+
+
+## [3.255.23](https://github.com/Amebis/eduVPN/compare/3.255.22...3.255.23) (2024-06-06)
 
 - GUI refinements
 - Switch to release self-update channel
