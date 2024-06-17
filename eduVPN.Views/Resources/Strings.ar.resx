@@ -402,7 +402,9 @@
     <value>نسخ الرابط</value>
   </data>
   <data name="SessionStatusTypeTesting" xml:space="preserve">
-    <value>تجريب...</value>
+    <value>جارٍ الاتصال ...</value>
+    <comment>A state where WireGuard tunnel is activated, but the traffic is not confirmed yet.
+Was "Testing..." but got a user complaint what this means. GUI doesn't provide enough space for explicit explanation. Other OS eduVPN clients don't report this state. But, Windows client still needs this state internally. So, just merging the state description with "Connecting..." state should do.</comment>
   </data>
   <data name="AuthorizationPageMoreInfoLabel" xml:space="preserve">
     <value>مـعلومات اكثر</value>
