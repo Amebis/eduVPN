@@ -416,6 +416,6 @@ Bitte warten...</value>
     <comment>{0}=number of bytes, kilobytes, megabytes uploaded</comment>
   </data>
   <data name="SettingsPageWireGuardKillSwitchLabel" xml:space="preserve">
-    <value>_Block traffic outside VPN</value>
+    <value>_Blockiere Datenverkehr außerhalb von VPN</value>
   </data>
 </root>
