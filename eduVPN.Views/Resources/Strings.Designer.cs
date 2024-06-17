@@ -640,7 +640,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Testing....
+        ///   Looks up a localized string similar to Connecting....
         /// </summary>
         public static string SessionStatusTypeTesting {
             get {
