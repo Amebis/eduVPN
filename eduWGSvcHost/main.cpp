@@ -309,7 +309,6 @@ static DWORD WINAPI client_thread(_In_ LPVOID lpThreadParameter)
 {
 	DWORD ret;
 	wstring tunnel_name;
-	driver::adapter tunnel_adapter;
 	try {
 		file pipe(lpThreadParameter);
 		event read_complete(CreateEventW(NULL, TRUE, FALSE, NULL));
@@ -394,7 +393,6 @@ static DWORD WINAPI client_thread(_In_ LPVOID lpThreadParameter)
 				case message_code::deactivate_tunnel: {
 					if (tunnel_name.empty())
 						throw logic_error("Tunnel is not active");
-					tunnel_adapter.free();
 					deactivate_tunnel(tunnel_name.c_str(), true);
 					tunnel_name.clear();
 					break;
@@ -403,11 +401,9 @@ static DWORD WINAPI client_thread(_In_ LPVOID lpThreadParameter)
 				case message_code::get_tunnel_config: {
 					if (tunnel_name.empty())
 						throw logic_error("Tunnel is not active");
-					if (!tunnel_adapter) {
-						tunnel_adapter = driver::WireGuardOpenAdapter(tunnel_name.c_str());
-						if (!tunnel_adapter)
-							throw winstd::win_runtime_error("WireGuardOpenAdapter failed");
-					}
+					driver::adapter tunnel_adapter(driver::WireGuardOpenAdapter(tunnel_name.c_str()));
+					if (!tunnel_adapter)
+						throw winstd::win_runtime_error("WireGuardOpenAdapter failed");
 
 					tunnel_adapter.get_configuration(tunnel_config);
 					auto* cfg = reinterpret_cast<WIREGUARD_INTERFACE*>(tunnel_config.data());
@@ -477,7 +473,6 @@ static DWORD WINAPI client_thread(_In_ LPVOID lpThreadParameter)
 		ret = 1;
 	}
 
-	tunnel_adapter.free();
 	if (!tunnel_name.empty())
 		deactivate_tunnel(tunnel_name.c_str(), false);
 

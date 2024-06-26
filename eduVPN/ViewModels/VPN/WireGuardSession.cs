@@ -115,7 +115,8 @@ namespace eduVPN.ViewModels.VPN
             {
                 if (_ShowLog == null)
                     _ShowLog = new DelegateCommand(
-                        () => {
+                        () =>
+                        {
                             if (Process.Start(LogPath) == null)
                                 throw new Exception(string.Format("Failed to open {0}", LogPath));
                         },
@@ -291,15 +292,12 @@ namespace eduVPN.ViewModels.VPN
                                         }));
                                     }
                                     catch (OperationCanceledException) { throw; }
-                                    catch (eduWireGuard.ManagerService.ManagerServiceException) { throw; }
-                                    catch {
-                                        // Ignore tunnel status update failures. Immediately after resume from sleep,
-                                        // GetTunnelConfig() is sometimes throwing with ERROR_FILE_NOT_FOUND (2).
-                                    }
+                                    catch { } // Ignore tunnel status update failures.
                                     millisecondTimeout = Math.Min(millisecondTimeout + 100, 5 * 1000);
                                 } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(millisecondTimeout));
                             }
-                            finally {
+                            finally
+                            {
                                 Engine.SetState(Engine.State.Disconnecting);
                                 Wizard.TryInvoke((Action)(() =>
                                 {
