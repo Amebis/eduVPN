@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.0...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1...HEAD)
+
+
+## [4.1](https://github.com/Amebis/eduVPN/compare/4.0...4.1) (2024-06-26)
 
 - eduvpn-common updated to 2.0.2 4962d0e2d37e93af20c8afdae6f59d4656f272f3
 - GUI refinements
