@@ -23,7 +23,7 @@ namespace eduWireGuard.ManagerService
         #region Constants
 
         /// <summary>
-        /// Maximum permissable WireGuard tunnel name length
+        /// Maximum permissible WireGuard tunnel name length
         /// </summary>
         public const int MaximumTunnelNameLength = 32;
 
@@ -83,7 +83,7 @@ namespace eduWireGuard.ManagerService
                 Stream.Write(msgStream.GetBuffer(), 0, (int)msgStream.Length, ct);
             }
 
-            // Read and analyse status.
+            // Read and analyze status.
             var status = ReadStatus(ct);
             if (!status.Success)
                 throw new ManagerServiceException(status.Win32Error, status.Message);
@@ -104,7 +104,7 @@ namespace eduWireGuard.ManagerService
                 Stream.Write(msgStream.GetBuffer(), 0, (int)msgStream.Length, ct);
             }
 
-            // Read and analyse status.
+            // Read and analyze status.
             var status = ReadStatus(ct);
             if (!status.Success)
                 throw new ManagerServiceException(status.Win32Error, status.Message);
@@ -125,7 +125,7 @@ namespace eduWireGuard.ManagerService
                 Stream.Write(msgStream.GetBuffer(), 0, (int)msgStream.Length, ct);
             }
 
-            // Read and analyse response.
+            // Read and analyze response.
             var data = new byte[1048576]; // Limit to 1MiB
             var count = Stream.Read(data, 0, data.Length, ct);
             try
