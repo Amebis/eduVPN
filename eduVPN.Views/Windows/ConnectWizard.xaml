@@ -78,7 +78,7 @@
                 IsEnabled="False"
                 Visibility="{Binding ConnectionPage.ActiveSession, Converter={StaticResource NullInverseVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <MenuItem.Header>
-                    <TextBlock Text="{Binding ConnectionPage.ActiveSession.ExpirationTime, Mode=OneWay, Converter={StaticResource TimeSpanToHumanReadableConverter}}"/>
+                    <TextBlock Text="{Binding ConnectionPage.ActiveSession.ExpirationTime, Mode=OneWay, Converter={StaticResource TimeSpanToHumanReadableConverter}, StringFormat={x:Static res:Strings.SystemTrayMenuConnectionInfoValidFor}}"/>
                 </MenuItem.Header>
             </MenuItem>
             <MenuItem

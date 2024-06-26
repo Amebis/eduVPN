@@ -831,6 +831,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Valid for: {0}.
+        /// </summary>
+        public static string SystemTrayMenuConnectionInfoValidFor {
+            get {
+                return ResourceManager.GetString("SystemTrayMenuConnectionInfoValidFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E_xit.
         /// </summary>
         public static string SystemTrayMenuExit {
