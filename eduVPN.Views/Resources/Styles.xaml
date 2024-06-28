@@ -92,7 +92,11 @@
     </Style>
 
     <Style x:Key="ActionControlStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource ControlStyle}">
-        <Setter Property="Cursor" Value="Hand"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="HeadingControlStyle" TargetType="{x:Type Control}">
@@ -449,7 +453,6 @@
     <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource ListBoxStyle}"/>
 
     <Style x:Key="ClickableListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">
-        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -477,6 +480,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="PassiveListBoxItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">
