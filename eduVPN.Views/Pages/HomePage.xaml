@@ -103,10 +103,12 @@
         </CollectionViewSource>
 
         <Style x:Key="InstituteAccessServersStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
+            <Setter Property="IsEnabled" Value="{Binding Path=Delisted, Converter={StaticResource BooleanInverseConverter}}"/>
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="InstituteAccessServers_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="InstituteAccessServers_PreviewKeyDown"/>
         </Style>
         <Style x:Key="SecureInternetServersStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ClickableListBoxItemStyle}">
+            <Setter Property="IsEnabled" Value="{Binding Path=Delisted, Converter={StaticResource BooleanInverseConverter}}"/>
             <EventSetter Event="PreviewMouseLeftButtonUp" Handler="SecureInternetServers_SelectItem"/>
             <EventSetter Event="PreviewKeyDown" Handler="SecureInternetServers_PreviewKeyDown"/>
         </Style>

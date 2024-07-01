@@ -1171,8 +1171,7 @@
     -->
 
     <DataTemplate DataType="{x:Type models:InstituteAccessServer}">
-        <Grid
-            Opacity="{Binding Path=Delisted, Converter={StaticResource BooleanInverseOpacityConverter}}">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -1192,8 +1191,7 @@
     -->
 
     <DataTemplate DataType="{x:Type models:SecureInternetServer}">
-        <Grid
-            Opacity="{Binding Path=Delisted, Converter={StaticResource BooleanInverseOpacityConverter}}">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition/>

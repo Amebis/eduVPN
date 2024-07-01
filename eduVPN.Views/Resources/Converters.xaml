@@ -10,12 +10,11 @@
     xmlns:conv="clr-namespace:eduVPN.Converters"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <conv:BooleanOpacityConverter x:Key="BooleanInverseOpacityConverter">
-        <conv:BooleanOpacityConverter.Invert>
+    <conv:BooleanConverter x:Key="BooleanInverseConverter">
+        <conv:BooleanConverter.Invert>
             <sys:Boolean>True</sys:Boolean>
-        </conv:BooleanOpacityConverter.Invert>
-    </conv:BooleanOpacityConverter>
-    <conv:BooleanOpacityConverter x:Key="BooleanOpacityConverter"/>
+        </conv:BooleanConverter.Invert>
+    </conv:BooleanConverter>
     <conv:BooleanVisibilityConverter x:Key="BooleanInverseVisibilityConverter">
         <conv:BooleanVisibilityConverter.Invert>
             <sys:Boolean>True</sys:Boolean>

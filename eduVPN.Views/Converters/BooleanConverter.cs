@@ -12,9 +12,9 @@ using System.Windows.Data;
 namespace eduVPN.Converters
 {
     /// <summary>
-    /// Returns <see cref="1.0"/> if the value is <c>true</c> (<c>0.25</c> when Invert is true); or <see cref="0.25"/> otherwise.
+    /// Returns <c>true</c> if the value is <c>true</c> (<c>false</c> when Invert is true); or <c>false</c> otherwise.
     /// </summary>
-    public class BooleanOpacityConverter : InvertableConverter, IValueConverter
+    public class BooleanConverter : InvertableConverter, IValueConverter
     {
         #region Methods
 
@@ -28,7 +28,7 @@ namespace eduVPN.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is bool b && !Invert == b ? 1.0 : 0.25;
+            return value is bool b && !Invert == b;
         }
 
         /// <summary>
