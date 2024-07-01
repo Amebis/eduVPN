@@ -118,7 +118,7 @@
         <Property Id="OLDOPENVPNINSTALLED" Secure="yes"/>
         <Upgrade Id="{CFE55281-AE4B-42A8-A1C3-76E94A733341}">
             <UpgradeVersion
-                Maximum="2.4.4.1.1"
+                Maximum="2.4.4.1"
                 Property="OLDOPENVPNINSTALLED"
                 IncludeMaximum="yes"
                 MigrateFeatures="no"
