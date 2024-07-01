@@ -387,6 +387,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please contact your organization&apos;s IT department..
+        /// </summary>
+        public static string HomePageServerDelisted {
+            get {
+                return ResourceManager.GetString("HomePageServerDelisted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Institute Access.
         /// </summary>
         public static string InstituteAccessLabel {

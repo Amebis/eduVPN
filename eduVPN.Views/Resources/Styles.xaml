@@ -1171,9 +1171,19 @@
     -->
 
     <DataTemplate DataType="{x:Type models:InstituteAccessServer}">
-        <TextBlock
-            Opacity="{Binding Path=Delisted, Converter={StaticResource BooleanInverseOpacityConverter}}"
-            Text="{Binding}"/>
+        <Grid
+            Opacity="{Binding Path=Delisted, Converter={StaticResource BooleanInverseOpacityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding}"/>
+            <TextBlock
+                Grid.Row="1"
+                Visibility="{Binding Path=Delisted, Converter={StaticResource BooleanVisibilityConverter}}"
+                Style="{StaticResource FineprintNoteStyle}"
+                Text="{x:Static res:Strings.HomePageServerDelisted}"/>
+        </Grid>
     </DataTemplate>
 
 
@@ -1188,6 +1198,10 @@
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Image
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -1197,6 +1211,12 @@
                 Grid.Column="1"
                 Margin="7,0,0,0"
                 Text="{Binding Country}"/>
+            <TextBlock
+                Grid.ColumnSpan="2"
+                Grid.Row="1"
+                Visibility="{Binding Path=Delisted, Converter={StaticResource BooleanVisibilityConverter}}"
+                Style="{StaticResource FineprintNoteStyle}"
+                Text="{x:Static res:Strings.HomePageServerDelisted}"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
