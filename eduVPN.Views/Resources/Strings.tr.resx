@@ -423,7 +423,7 @@ Was "Testing..." but got a user complaint what this means. GUI doesn't provide e
     <comment>{0}=time in days, hours, minutes and finally seconds</comment>
   </data>
   <data name="HomePageServerDelisted" xml:space="preserve">
-    <value>Please contact your organization's IT department.</value>
+    <value>No longer available: please contact your organization's IT department.</value>
     <comment>Displayed next to servers that has been delisted from discovery.</comment>
   </data>
 </root>
