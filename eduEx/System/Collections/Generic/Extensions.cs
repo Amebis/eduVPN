@@ -5,7 +5,6 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using System.Linq;
 using System.Threading;
 
 namespace System.Collections.Generic
@@ -82,19 +81,6 @@ namespace System.Collections.Generic
                 return v;
 
             return fallback;
-        }
-
-        /// <summary>
-        /// Removes multiple elements from the dictionary
-        /// </summary>
-        /// <typeparam name="TKey">The type of the keys in the dictionary</typeparam>
-        /// <typeparam name="TValue">The type of the values in the dictionary</typeparam>
-        /// <param name="i">Dictionary to remove elements from</param>
-        /// <param name="predicate">Function that returns true for elements to delete or false to keep</param>
-        public static void RemoveAll<TKey, TValue>(this IDictionary<TKey, TValue> i, Func<TValue, bool> predicate)
-        {
-            foreach (var key in i.Keys.Where(k => predicate(i[k])).ToList())
-                i.Remove(key);
         }
     }
 }
