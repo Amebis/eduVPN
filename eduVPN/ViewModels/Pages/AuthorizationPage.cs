@@ -25,7 +25,8 @@ namespace eduVPN.ViewModels.Pages
         public string Uri
         {
             get => _Uri;
-            set {
+            set
+            {
                 if (SetProperty(ref _Uri, value))
                     _CopyUri?.RaiseCanExecuteChanged();
             }
