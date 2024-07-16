@@ -189,6 +189,9 @@ namespace eduVPN
             /*[MarshalAs(UnmanagedType.I4)]*/ State newstate,
             [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))] byte[] data);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        delegate void RefreshList();
+
         /// <summary>
         /// Callback event arguments
         /// </summary>
@@ -510,9 +513,14 @@ namespace eduVPN
         #region Properties
 
         /// <summary>
-        /// Occurs on engine events
+        /// Occurs on engine FSM transitions
         /// </summary>
         public static event EventHandler<CallbackEventArgs> Callback;
+
+        /// <summary>
+        /// Occurs on engine server list refresh
+        /// </summary>
+        public static event EventHandler RefreshServerList;
 
         /// <summary>
         /// Occurs on token get
@@ -573,6 +581,15 @@ namespace eduVPN
             StateCB stateCallback,
             int debug);
 
+        static readonly RefreshList OnRefreshList = new RefreshList(() =>
+        {
+            RefreshServerList?.Invoke(null, new EventArgs());
+        });
+
+        [DllImport("eduvpn_common.dll", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(CGoToManagedByteArrayMarshaller))]
+        static extern byte[] DiscoveryStartup(RefreshList refresh);
+
         static readonly TokenGetter OnGetToken = new TokenGetter((string serverId, ServerType serverType, IntPtr outBuf, UIntPtr len) =>
         {
             var args = new GetTokenEventArgs(serverId, serverType);
@@ -612,6 +629,7 @@ namespace eduVPN
                 Path.GetDirectoryName(Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)),
                 OnEngineStateChanged, 1));
             ThrowOnError(SetTokenHandler(OnGetToken, OnSetToken));
+            ThrowOnError(DiscoveryStartup(OnRefreshList));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "Deregister", CallingConvention = CallingConvention.Cdecl)]

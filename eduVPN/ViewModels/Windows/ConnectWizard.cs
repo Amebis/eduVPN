@@ -357,6 +357,7 @@ namespace eduVPN.ViewModels.Windows
         {
             Trace.TraceInformation("Registering eduvpn-common engine");
             Engine.Callback += Engine_Callback;
+            Engine.RefreshServerList += Engine_RefreshServerList;
             Engine.SetToken += Engine_SetToken;
             Engine.GetToken += Engine_GetToken;
             Engine.Register();
@@ -652,6 +653,13 @@ namespace eduVPN.ViewModels.Windows
             }
             // Silence "WARNING - transition not completed..." in the log.
             e.Handled = true;
+        }
+
+        private void Engine_RefreshServerList(object sender, EventArgs e)
+        {
+            Trace.TraceInformation("eduvpn-common refresh server list");
+            var json = Engine.ServerList();
+            TryInvoke((Action)(() => HomePage.LoadServers(json)));
         }
 
         static private void Engine_GetToken(object sender, Engine.GetTokenEventArgs e)
