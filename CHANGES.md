@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.1...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.2...HEAD)
+
+
+## [4.1.2](https://github.com/Amebis/eduVPN/compare/4.1.1...4.1.2) (2024-07-17)
 
 - eduvpn-common updated to discovery-improvements ab95a24dcf2404899543638149b0a44a5d2720a3
 
