@@ -402,9 +402,10 @@ namespace eduVPN.ViewModels.Windows
                 {
                     Trace.TraceInformation("Migrating Institute Access servers {0}", string.Join(", ", instituteAccessServers));
                     foreach (var srv in instituteAccessServers)
-                        iaSrvList.Add(srv);
+                        if (iaSrvList.FirstOrDefault(uri => uri.AbsoluteUri == srv.AbsoluteUri) == null)
+                            iaSrvList.Add(srv);
                 }
-                // Skip servers that are already on our Institute Access list. Maybe server discovery won't be required at all.
+                // Skip servers that are already on our Institute Access list.
                 foreach (var u in iaSrvList.Where(uri => HomePage.InstituteAccessServers.FirstOrDefault(srv => srv.Id == uri.AbsoluteUri) != null).ToList())
                     iaSrvList.Remove(u);
 
@@ -417,7 +418,7 @@ namespace eduVPN.ViewModels.Windows
                     Trace.TraceInformation("Migrating Secure Internet organization {0}", secureInternetOrganization);
                     siOrgId = secureInternetOrganization;
                 }
-                // Skip organization that is already set for Secure Internet. Maybe organization discovery won't be required at all.
+                // Skip organization if Secure Internet is set to it already.
                 if (HomePage.SecureInternetServers.FirstOrDefault(srv => srv.Id == siOrgId) != null ||
                     siOrgId == "" && HomePage.SecureInternetServers.Count == 0)
                     siOrgId = null;
@@ -445,26 +446,14 @@ namespace eduVPN.ViewModels.Windows
                             using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
                             {
                                 Task<ServerDictionary> serverDiscovery = null;
-                                if (iaSrvList.Count > 0 || siOrgId != "" && siOrgId != null)
-                                    serverDiscovery = Task.Run(() => Engine.DiscoServers(cookie));
                                 Task<OrganizationDictionary> orgDiscovery = null;
                                 if (siOrgId != "" && siOrgId != null)
+                                {
+                                    serverDiscovery = Task.Run(() => Engine.DiscoServers(cookie));
                                     orgDiscovery = Task.Run(() => Engine.DiscoOrganizations(cookie));
-
-                                //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow settings import
-
-                                ServerDictionary serverList = null;
-                                if (serverDiscovery != null)
-                                {
-                                    serverDiscovery.Wait(Abort.Token);
-                                    serverList = serverDiscovery.Result;
                                 }
-                                OrganizationDictionary orgList = null;
-                                if (orgDiscovery != null)
-                                {
-                                    orgDiscovery.Wait(Abort.Token);
-                                    orgList = orgDiscovery.Result;
-                                }
+
+                                //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow discovery
 
                                 if (iaSrvList.Count > 0)
                                     foreach (var srv in iaSrvList)
@@ -496,7 +485,8 @@ namespace eduVPN.ViewModels.Windows
                                         // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
                                         lock (Properties.Settings.Default.AccessTokenCache2)
                                         {
-                                            foreach (var obj in orgList)
+                                            orgDiscovery.Wait(Abort.Token);
+                                            foreach (var obj in orgDiscovery.Result)
                                             {
                                                 Abort.Token.ThrowIfCancellationRequested();
                                                 if (Uri.TryCreate(obj.Value.Id, UriKind.Absolute, out var orgId) && orgId.AbsoluteUri == siOrgId &&
@@ -513,7 +503,8 @@ namespace eduVPN.ViewModels.Windows
                                         Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, start);
                                         if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
                                         {
-                                            if (serverList.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(uri)).Value is SecureInternetServer srv)
+                                            serverDiscovery.Wait(Abort.Token);
+                                            if (serverDiscovery.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(uri)).Value is SecureInternetServer srv)
                                             {
                                                 Engine.SetSecureInternetLocation(siOrgId, srv.Country.Code);
                                                 if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
