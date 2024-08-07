@@ -418,14 +418,14 @@ Was "Testing..." but got a user complaint what this means. GUI doesn't provide e
     <comment>{0}=number of bytes, kilobytes, megabytes uploaded</comment>
   </data>
   <data name="SettingsPageWireGuardKillSwitchLabel" xml:space="preserve">
-    <value>_Block traffic outside VPN</value>
+    <value>_Blokker trafikk utenfor VPN</value>
   </data>
   <data name="SystemTrayMenuConnectionInfoValidFor" xml:space="preserve">
     <value>Gyldig i: {0}</value>
     <comment>{0}=time in days, hours, minutes and finally seconds</comment>
   </data>
   <data name="HomePageServerDelisted" xml:space="preserve">
-    <value>No longer available: please contact your organization's IT department.</value>
+    <value>Ikke lenger tilgjengelig: kontakt din organisasjons IT-avdeling.</value>
     <comment>Displayed next to servers that has been delisted from discovery.</comment>
   </data>
 </root>
