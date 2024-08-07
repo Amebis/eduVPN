@@ -455,6 +455,8 @@ namespace eduVPN.ViewModels.Windows
 
                                 //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow discovery
 
+                                Exception ex = null;
+
                                 if (iaSrvList.Count > 0)
                                     foreach (var srv in iaSrvList)
                                     {
@@ -462,7 +464,7 @@ namespace eduVPN.ViewModels.Windows
                                         var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
                                         try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, start); }
                                         catch (OperationCanceledException) { throw; }
-                                        catch { }
+                                        catch (Exception ex2) { ex = ex ?? ex2; }
                                     }
 
                                 if (siOrgId == "")
@@ -473,7 +475,7 @@ namespace eduVPN.ViewModels.Windows
                                         var srv = new SecureInternetServer(json.secure_internet_server);
                                         try { Engine.RemoveServer(ServerType.SecureInternet, srv.Id); }
                                         catch (OperationCanceledException) { throw; }
-                                        catch { }
+                                        catch (Exception ex2) { ex = ex ?? ex2; }
                                     }
                                 }
                                 else if (siOrgId != null)
@@ -513,7 +515,7 @@ namespace eduVPN.ViewModels.Windows
                                         }
                                     }
                                     catch (OperationCanceledException) { throw; }
-                                    catch { }
+                                    catch (Exception ex2) { ex = ex ?? ex2; }
                                 }
 
                                 foreach (var srv in ownSrvList)
@@ -522,8 +524,11 @@ namespace eduVPN.ViewModels.Windows
                                     var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
                                     try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, start); }
                                     catch (OperationCanceledException) { throw; }
-                                    catch { }
+                                    catch (Exception ex2) { ex = ex ?? ex2; }
                                 }
+
+                                if (ex != null)
+                                    throw ex;
                             }
 
                             // Don't set SettingsVersion flag if user cancelled and we missed it somehow.

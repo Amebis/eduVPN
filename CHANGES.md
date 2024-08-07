@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.2...HEAD)
 
 - GUI refinements
+- Fixes: #247
 
 
 ## [4.1.2](https://github.com/Amebis/eduVPN/compare/4.1.1...4.1.2) (2024-07-17)
