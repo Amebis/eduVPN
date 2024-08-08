@@ -388,27 +388,23 @@ namespace eduVPN.ViewModels.Windows
                     oauthStart[token.Key] = token.Value.Authorized;
 #pragma warning restore 0612
 
-            ICollection<Uri> iaSrvList = new Xml.UriList();
-            string siOrgId = null;
+            ICollection<Uri> srvList = Properties.SettingsEx.Default.InstituteAccessServers;
+            if (srvList != null)
+                Trace.TraceInformation("Adding preconfigured Institute Access/Own servers {0}", string.Join(", ", srvList));
+            else
+                srvList = new Xml.UriList();
 
+            if (Properties.Settings.Default.Discovery && migrate && Properties.Settings.Default.GetPreviousVersion("InstituteAccessServers") is Xml.UriList instituteAccessServers)
+            {
+                Trace.TraceInformation("Migrating Institute Access servers {0}", string.Join(", ", instituteAccessServers));
+                foreach (var srv in instituteAccessServers)
+                    if (srvList.FirstOrDefault(uri => uri.AbsoluteUri == srv.AbsoluteUri) == null)
+                        srvList.Add(srv);
+            }
+
+            string siOrgId = null;
             if (Properties.Settings.Default.Discovery)
             {
-                iaSrvList = Properties.SettingsEx.Default.InstituteAccessServers;
-                if (iaSrvList != null)
-                    Trace.TraceInformation("Adding preconfigured Institute Access servers {0}", string.Join(", ", iaSrvList));
-                else
-                    iaSrvList = new Xml.UriList();
-                if (migrate && Properties.Settings.Default.GetPreviousVersion("InstituteAccessServers") is Xml.UriList instituteAccessServers)
-                {
-                    Trace.TraceInformation("Migrating Institute Access servers {0}", string.Join(", ", instituteAccessServers));
-                    foreach (var srv in instituteAccessServers)
-                        if (iaSrvList.FirstOrDefault(uri => uri.AbsoluteUri == srv.AbsoluteUri) == null)
-                            iaSrvList.Add(srv);
-                }
-                // Skip servers that are already on our Institute Access list.
-                foreach (var u in iaSrvList.Where(uri => HomePage.InstituteAccessServers.FirstOrDefault(srv => srv.Id == uri.AbsoluteUri) != null).ToList())
-                    iaSrvList.Remove(u);
-
                 siOrgId = Properties.SettingsEx.Default.SecureInternetOrganization;
                 if (siOrgId != null)
                     Trace.TraceInformation("Using preconfigured Secure Internet organization {0}", siOrgId);
@@ -424,19 +420,15 @@ namespace eduVPN.ViewModels.Windows
                     siOrgId = null;
             }
 
-            var ownSrvList = new Xml.UriList();
             if (migrate && Properties.Settings.Default.GetPreviousVersion("OwnServers") is Xml.UriList ownServers)
             {
                 Trace.TraceInformation("Migrating own servers {0}", string.Join(", ", ownServers));
                 foreach (var srv in ownServers)
-                    ownSrvList.Add(srv);
+                    if (srvList.FirstOrDefault(uri => uri.AbsoluteUri == srv.AbsoluteUri) == null)
+                        srvList.Add(srv);
             }
-            foreach (var u in ownSrvList.Where(uri => HomePage.OwnServers.FirstOrDefault(srv => srv.Id == uri.AbsoluteUri) != null).ToList())
-                ownSrvList.Remove(u);
 
-            if (iaSrvList.Count > 0 ||
-                siOrgId != null ||
-                ownSrvList.Count > 0)
+            if (srvList.Count > 0 || siOrgId != null)
             {
                 CurrentPage = PleaseWaitPage;
                 actions.Add(new KeyValuePair<Action, int>(() =>
@@ -446,26 +438,34 @@ namespace eduVPN.ViewModels.Windows
                             using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
                             {
                                 Task<ServerDictionary> serverDiscovery = null;
+                                if (srvList.Count > 0 || siOrgId != "" && siOrgId != null)
+                                    serverDiscovery = Task.Run(() => Engine.DiscoServers(cookie));
                                 Task<OrganizationDictionary> orgDiscovery = null;
                                 if (siOrgId != "" && siOrgId != null)
-                                {
-                                    serverDiscovery = Task.Run(() => Engine.DiscoServers(cookie));
                                     orgDiscovery = Task.Run(() => Engine.DiscoOrganizations(cookie));
-                                }
 
                                 //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow discovery
 
                                 Exception ex = null;
 
-                                if (iaSrvList.Count > 0)
-                                    foreach (var srv in iaSrvList)
+                                if (srvList.Count > 0)
+                                {
+                                    serverDiscovery.Wait(Abort.Token);
+                                    foreach (var srv in srvList)
                                     {
                                         Abort.Token.ThrowIfCancellationRequested();
+                                        var isInstituteAccess = serverDiscovery.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(srv)).Value != null;
                                         var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
-                                        try { Engine.AddServer(cookie, ServerType.InstituteAccess, srv.AbsoluteUri, start); }
+                                        try
+                                        {
+                                            Engine.AddServer(cookie, isInstituteAccess ? ServerType.InstituteAccess : ServerType.Own, srv.AbsoluteUri, start);
+                                            try { Engine.RemoveServer(isInstituteAccess ? ServerType.Own : ServerType.InstituteAccess, srv.AbsoluteUri); }
+                                            catch { }
+                                        }
                                         catch (OperationCanceledException) { throw; }
                                         catch (Exception ex2) { ex = ex ?? ex2; }
                                     }
+                                }
 
                                 if (siOrgId == "")
                                 {
@@ -514,15 +514,6 @@ namespace eduVPN.ViewModels.Windows
                                             }
                                         }
                                     }
-                                    catch (OperationCanceledException) { throw; }
-                                    catch (Exception ex2) { ex = ex ?? ex2; }
-                                }
-
-                                foreach (var srv in ownSrvList)
-                                {
-                                    Abort.Token.ThrowIfCancellationRequested();
-                                    var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
-                                    try { Engine.AddServer(cookie, ServerType.Own, srv.AbsoluteUri, start); }
                                     catch (OperationCanceledException) { throw; }
                                     catch (Exception ex2) { ex = ex ?? ex2; }
                                 }

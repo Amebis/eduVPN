@@ -26,7 +26,11 @@ To override specific setting, add a value described in this chapter to the `HKEY
 
 ### `InstituteAccessServers` (`REG_MULTI_SZ`)
 
-`InstituteAccessServers` allows preconfiguring the client with Institute Access server(s). May contain any number of eduVPN server base URLs (e.g. `https://demo.eduvpn.nl/`). The servers on this list cannot be removed by user. However, user may add additional Institute Access servers.
+`InstituteAccessServers` allows preconfiguring the client with Institute Access and/or Other server(s). May contain any number of eduVPN server base URLs (e.g. `https://demo.eduvpn.nl/`). The servers on this list cannot be removed by user. However, user may add additional servers.
+
+Servers listed in the eduVPN discovery infrastructure will be shown under Institute Access section, others under Other Servers in the client UI.
+
+This registry value can also be used to preconfigure servers in Let's Connect! and govVPN clients which have no discovery. The name of the registry value remains for backward compatibility.
 
 
 ### `SecureInternetOrganization` (`REG_SZ`)

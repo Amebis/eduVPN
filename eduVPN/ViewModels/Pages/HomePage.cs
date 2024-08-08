@@ -262,7 +262,15 @@ namespace eduVPN.ViewModels.Pages
                             SelectedOwnServer = null;
                             Wizard.CurrentPage = Wizard.StartingPage;
                         },
-                        () => SelectedOwnServer != null);
+                        () =>
+                        {
+                            if (SelectedOwnServer == null)
+                                return false;
+                            var precfgList = Properties.SettingsEx.Default.InstituteAccessServers;
+                            if (precfgList != null && precfgList.Contains(new Uri(SelectedOwnServer.Id)))
+                                return false;
+                            return true;
+                        });
                 return _ForgetOwnServer;
             }
         }
