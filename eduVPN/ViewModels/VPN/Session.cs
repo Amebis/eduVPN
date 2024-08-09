@@ -434,7 +434,7 @@ namespace eduVPN.ViewModels.VPN
                 var gateway = new IPAddress(gatewayBytes).ToString();
                 for (; ; )
                 {
-                    if (SessionAndWindowInProgress.Token.WaitHandle.WaitOne(1000))
+                    if (SessionAndWindowInProgress.Token.WaitHandle.WaitOne(250))
                         return;
                     foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
                         .Where(n =>
