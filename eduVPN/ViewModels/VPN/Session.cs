@@ -422,17 +422,21 @@ namespace eduVPN.ViewModels.VPN
                 var tunnelAddress = TunnelAddress;
                 if (tunnelAddress == null)
                     return;
-                foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
-                    .Where(n =>
-                        n.OperationalStatus == OperationalStatus.Up &&
-                        n.NetworkInterfaceType != NetworkInterfaceType.Loopback))
+                for (; ; )
                 {
-                    if (SessionAndWindowInProgress.IsCancellationRequested)
+                    if (SessionAndWindowInProgress.Token.WaitHandle.WaitOne(1000))
                         return;
-                    var props = iface.GetIPProperties();
-                    var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress));
-                    if (unicast != null)
+                    foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                        .Where(n =>
+                            n.OperationalStatus == OperationalStatus.Up &&
+                            n.NetworkInterfaceType != NetworkInterfaceType.Loopback))
                     {
+                        if (SessionAndWindowInProgress.IsCancellationRequested)
+                            return;
+                        var props = iface.GetIPProperties();
+                        var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress));
+                        if (unicast == null)
+                            continue;
                         var gw = props.GatewayAddresses.FirstOrDefault(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork);
                         string gateway;
                         if (gw != null && !gw.Address.Equals(IPAddress.Any))
@@ -454,20 +458,22 @@ namespace eduVPN.ViewModels.VPN
                                 //throw new Exception("test"); // Mock traffic failure for testing.
                                 if (Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu))
                                 {
+                                    if (!Config.ShouldFailover)
+                                        throw new Exception(Resources.Strings.WarningNoTrafficDetected);
                                     Wizard.TryInvoke((Action)(() =>
                                     {
-                                        if (Config.ShouldFailover)
-                                        {
-                                            TerminationReason = TerminationReason.TunnelFailover;
-                                            if (Disconnect.CanExecute(false))
-                                                Disconnect.Execute(false);
-                                        }
-                                        else
-                                            Wizard.Error = new Exception(Resources.Strings.WarningNoTrafficDetected);
+                                        TerminationReason = TerminationReason.TunnelFailover;
+                                        if (Disconnect.CanExecute(false))
+                                            Disconnect.Execute(false);
                                     }));
                                 }
                                 else
-                                    Wizard.TryInvoke((Action)(() => State = SessionStatusType.Connected));
+                                    Wizard.TryInvoke((Action)(() =>
+                                    {
+                                        Wizard.Error = null;
+                                        State = SessionStatusType.Connected;
+                                    }));
+                                return;
                             }
                             catch (OperationCanceledException) { return; }
                             catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
