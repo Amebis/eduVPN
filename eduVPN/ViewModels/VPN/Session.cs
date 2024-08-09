@@ -420,9 +420,18 @@ namespace eduVPN.ViewModels.VPN
             // We shouldn't react to every TunnelAddress setting.
             TunnelFailoverTest = new Thread(new ThreadStart(() =>
             {
-                var tunnelAddress = TunnelAddress?.Address;
-                if (tunnelAddress == null)
+                if (TunnelAddress?.Address == null)
                     return;
+                var tunnelAddress = TunnelAddress;
+                if (tunnelAddress.Address.AddressFamily != AddressFamily.InterNetwork)
+                    return;
+                // The eduVPN server is always the first usable IP in the subnet by convention.
+                var addressBytes = tunnelAddress.Address.GetAddressBytes();
+                var address = (uint)addressBytes[0] << 24 | (uint)addressBytes[1] << 16 | (uint)addressBytes[2] << 8 | addressBytes[3];
+                var mask = 0xFFFFFFFF << (32-tunnelAddress.CIDR);
+                var gw = (address & mask) | 0x1;
+                var gatewayBytes = new byte[4] { (byte)((gw & 0xff000000) >> 24), (byte)((gw & 0xff0000) >> 16), (byte)((gw & 0xff00) >> 8), (byte)(gw & 0xff) };
+                var gateway = new IPAddress(gatewayBytes).ToString();
                 for (; ; )
                 {
                     if (SessionAndWindowInProgress.Token.WaitHandle.WaitOne(1000))
@@ -435,24 +444,9 @@ namespace eduVPN.ViewModels.VPN
                         if (SessionAndWindowInProgress.IsCancellationRequested)
                             return;
                         var props = iface.GetIPProperties();
-                        var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress));
+                        var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress.Address));
                         if (unicast == null)
                             continue;
-                        var gw = props.GatewayAddresses.FirstOrDefault(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork);
-                        string gateway;
-                        if (gw != null && !gw.Address.Equals(IPAddress.Any))
-                            gateway = gw.Address.ToString();
-                        else
-                        {
-                            // The eduVPN server is always the first usable IP in the subnet by convention.
-                            var addressBytes = tunnelAddress.GetAddressBytes();
-                            var unicastMaskBytes = unicast.IPv4Mask.GetAddressBytes();
-                            var gatewayOffset = new byte[4] { 0, 0, 0, 1 };
-                            var gatewayBytes = new byte[4];
-                            for (int i = 0; i < 4; ++i)
-                                gatewayBytes[i] = (byte)(addressBytes[i] & unicastMaskBytes[i] | gatewayOffset[i]);
-                            gateway = new IPAddress(gatewayBytes).ToString();
-                        }
                         using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
                             try
                             {
