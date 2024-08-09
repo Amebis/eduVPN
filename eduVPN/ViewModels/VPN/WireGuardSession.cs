@@ -17,7 +17,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
@@ -247,15 +246,15 @@ namespace eduVPN.ViewModels.VPN
                         catch (Exception ex) { throw new AggregateException(Resources.Strings.ErrorWireGuardTunnelManagerService, ex); }
                         try
                         {
-                            IPAddress tunnelAddress = null, ipv6TunnelAddress = null;
+                            IPPrefix tunnelAddress = null, ipv6TunnelAddress = null;
                             foreach (var a in iface.Addresses)
                                 switch (a.Address.AddressFamily)
                                 {
                                     case AddressFamily.InterNetwork:
-                                        tunnelAddress = a.Address;
+                                        tunnelAddress = a;
                                         break;
                                     case AddressFamily.InterNetworkV6:
-                                        ipv6TunnelAddress = a.Address;
+                                        ipv6TunnelAddress = a;
                                         break;
                                 }
 

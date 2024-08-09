@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx;
 using eduOpenVPN;
 using eduOpenVPN.Management;
 using eduVPN.Models;
@@ -364,11 +365,13 @@ namespace eduVPN.ViewModels.VPN
                                         Renew?.RaiseCanExecuteChanged();
                                         Wizard.TaskCount--;
                                     }));
-                                    try {
+                                    try
+                                    {
                                         Engine.SetState(Engine.State.Connected);
                                         ManagementSession.Monitor.Join();
                                     }
-                                    finally {
+                                    finally
+                                    {
                                         Engine.SetState(Engine.State.Disconnecting);
                                         Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                                     }
@@ -500,8 +503,8 @@ namespace eduVPN.ViewModels.VPN
             Wizard.TryInvoke((Action)(() =>
             {
                 StateDescription = msg;
-                TunnelAddress = e.Tunnel;
-                IPv6TunnelAddress = e.IPv6Tunnel;
+                TunnelAddress = e.Tunnel != null ? new IPPrefix(e.Tunnel, 32) : null;
+                IPv6TunnelAddress = e.IPv6Tunnel != null ? new IPPrefix(e.IPv6Tunnel, 128) : null;
 
                 // Set State property last, as the whole world is listening on this property to monitor connectivity changes.
                 // It is important that we have IP addresses and other info already set before rising PropertyChanged event for State.

@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx;
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using Microsoft.Win32;
@@ -164,27 +165,27 @@ namespace eduVPN.ViewModels.VPN
         /// TUN/TAP local IPv4 address
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public IPAddress TunnelAddress
+        public IPPrefix TunnelAddress
         {
             get => _TunnelAddress;
             protected set => SetProperty(ref _TunnelAddress, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IPAddress _TunnelAddress;
+        private IPPrefix _TunnelAddress;
 
         /// <summary>
         /// TUN/TAP local IPv6 address
         /// </summary>
         /// <remarks><c>null</c> when not connected</remarks>
-        public IPAddress IPv6TunnelAddress
+        public IPPrefix IPv6TunnelAddress
         {
             get => _IPv6TunnelAddress;
             protected set => SetProperty(ref _IPv6TunnelAddress, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IPAddress _IPv6TunnelAddress;
+        private IPPrefix _IPv6TunnelAddress;
 
         /// <summary>
         /// Running time connected
@@ -419,7 +420,7 @@ namespace eduVPN.ViewModels.VPN
             // We shouldn't react to every TunnelAddress setting.
             TunnelFailoverTest = new Thread(new ThreadStart(() =>
             {
-                var tunnelAddress = TunnelAddress;
+                var tunnelAddress = TunnelAddress?.Address;
                 if (tunnelAddress == null)
                     return;
                 for (; ; )
