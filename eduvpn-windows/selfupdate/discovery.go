@@ -33,6 +33,7 @@ func discoverAvailable(client *http.Client, url string, allowedSigners []Trusted
 	if err != nil {
 		return nil, fmt.Errorf("error creating '%s' request: %w", url, err)
 	}
+	req.Header.Set("User-Agent", userAgent)
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error downloading '%s': %w", url, err)
@@ -52,6 +53,7 @@ func discoverAvailable(client *http.Client, url string, allowedSigners []Trusted
 		if err != nil {
 			return nil, fmt.Errorf("error creating '%s' signature request: %w", url, err)
 		}
+		reqSig.Header.Set("User-Agent", userAgent)
 		respSig, err := client.Do(reqSig)
 		if err != nil {
 			return nil, fmt.Errorf("error downloading '%s' signature: %w", url, err)

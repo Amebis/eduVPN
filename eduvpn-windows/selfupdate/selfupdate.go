@@ -35,10 +35,7 @@ func Check(url string, allowedSigners []TrustedSigner, productId string, ctx con
 	}
 	discovery := make(chan resultDiscovery)
 	go func() {
-		tr := &http.Transport{}
-		tr.RegisterProtocol("file", http.NewFileTransport(http.Dir("/")))
-		client := &http.Client{Transport: tr}
-		pkg, err := discoverAvailable(client, url, allowedSigners, ctx, progress.Noop())
+		pkg, err := discoverAvailable(makeClient(), url, allowedSigners, ctx, progress.Noop())
 		discovery <- resultDiscovery{pkg, err}
 	}()
 
@@ -89,9 +86,7 @@ func (w *mywriter) Write(p []byte) (int, error) {
 // downloadInstaller downloads a file from first available urls, checks its SHA256 hash, and saves it into specified folder.
 // The file returned is kept open for writing and should be closed by caller.
 func downloadInstaller(folder string, urls []string, hash *Hash, ctx context.Context, progress progress.ProgressIndicator) (filename string, file *os.File, err error) {
-	tr := &http.Transport{}
-	tr.RegisterProtocol("file", http.NewFileTransport(http.Dir("/")))
-	client := &http.Client{Transport: tr}
+	client := makeClient()
 	for _, u := range urls {
 		select {
 		case <-ctx.Done():
@@ -106,6 +101,7 @@ func downloadInstaller(folder string, urls []string, hash *Hash, ctx context.Con
 		if err != nil {
 			continue
 		}
+		req.Header.Set("User-Agent", userAgent)
 		var resp *http.Response
 		resp, err = client.Do(req)
 		if err != nil {

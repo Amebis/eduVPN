@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.2...HEAD)
 
 - eduvpn-common updated to 2.1.0 f3c04d56ca67c2ff0b08bf75cc51ea8be14c84b9
+- Self-update upgraded to deliver User-Agent with client and Windows versions
 - GUI refinements
 - Fixes: #247
 
