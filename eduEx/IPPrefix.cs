@@ -1,5 +1,5 @@
 ﻿/*
-    eduWireGuard - WireGuard Tunnel Manager Library for eduVPN
+    eduVPN - VPN for education and research
 
     Copyright: 2022-2024 The Commons Conservancy
     SPDX-License-Identifier: GPL-3.0+
@@ -10,7 +10,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
-namespace eduWireGuard
+namespace eduEx
 {
     /// <summary>
     /// IP address with CIDR

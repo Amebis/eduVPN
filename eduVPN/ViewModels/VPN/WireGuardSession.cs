@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx;
 using eduVPN.Models;
 using eduVPN.ViewModels.Windows;
 using eduWireGuard;

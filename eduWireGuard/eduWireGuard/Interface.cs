@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -349,14 +350,16 @@ namespace eduWireGuard
             return new Endpoint(host, port);
         }
 
-        private static ushort ParseMTU(string s) {
+        private static ushort ParseMTU(string s)
+        {
             var m = long.Parse(s);
             if (m < 576 || m > 65535)
                 throw new ArgumentException("Invalid MTU: " + s);
             return (ushort)m;
         }
 
-        private static ushort ParsePort(string s) {
+        private static ushort ParsePort(string s)
+        {
             var m = long.Parse(s);
             if (m < 0 || m > 65535)
                 throw new ArgumentException("Invalid port: " + s);
@@ -423,7 +426,7 @@ namespace eduWireGuard
                 if (ListenPort > 0)
                     output.WriteLine(string.Format("ListenPort = {0}", ListenPort));
 
-	            if (Addresses != null && Addresses.Count > 0)
+                if (Addresses != null && Addresses.Count > 0)
                     output.WriteLine(string.Format("Address = {0}", string.Join(", ", Addresses.Select(addr => addr.ToString()))));
 
                 if (DNS != null && DNS.Count > 0 || DNSSearch != null && DNSSearch.Count > 0)
@@ -436,21 +439,22 @@ namespace eduWireGuard
                     output.WriteLine(string.Format("DNS = {0}", string.Join(", ", addrStrings)));
                 }
 
-	            if (MTU > 0)
+                if (MTU > 0)
                     output.WriteLine(string.Format("MTU = {0}", MTU));
 
                 if (!string.IsNullOrEmpty(PreUp))
                     output.WriteLine(string.Format("PreUp = {0}", PreUp));
-	            if (!string.IsNullOrEmpty(PostUp))
+                if (!string.IsNullOrEmpty(PostUp))
                     output.WriteLine(string.Format("PostUp = {0}", PostUp));
-	            if (!string.IsNullOrEmpty(PreDown))
+                if (!string.IsNullOrEmpty(PreDown))
                     output.WriteLine(string.Format("PreDown = {0}", PreDown));
-	            if (!string.IsNullOrEmpty(PostDown))
+                if (!string.IsNullOrEmpty(PostDown))
                     output.WriteLine(string.Format("PostDown = {0}", PostDown));
                 if (TableOff)
                     output.WriteLine("Table = off");
 
-	            foreach (var peer in Peers) {
+                foreach (var peer in Peers)
+                {
                     output.WriteLine("");
                     output.WriteLine("[Peer]");
 
@@ -459,18 +463,18 @@ namespace eduWireGuard
                     if (peer.PresharedKey != null && !peer.PresharedKey.IsZero())
                         output.WriteLine(string.Format("PresharedKey = {0}", peer.PresharedKey.ToString()));
 
-		            if (peer.AllowedIPs != null && peer.AllowedIPs.Count > 0)
+                    if (peer.AllowedIPs != null && peer.AllowedIPs.Count > 0)
                         output.WriteLine(string.Format("AllowedIPs = {0}", string.Join(", ", peer.AllowedIPs.Select(addr => addr.ToString()))));
 
-		            if (peer.Endpoint != null && !peer.Endpoint.IsEmpty())
+                    if (peer.Endpoint != null && !peer.Endpoint.IsEmpty())
                         output.WriteLine(string.Format("Endpoint = {0}", peer.Endpoint.ToString()));
 
-		            if (peer.PersistentKeepalive > 0)
+                    if (peer.PersistentKeepalive > 0)
                         output.WriteLine(string.Format("PersistentKeepalive = {0}", peer.PersistentKeepalive));
 
                     if (peer.ProxyEndpoint != null)
                         output.WriteLine(string.Format("ProxyEndpoint = {0}", peer.ProxyEndpoint.AbsoluteUri));
-	            }
+                }
                 return output.ToString();
             }
         }
