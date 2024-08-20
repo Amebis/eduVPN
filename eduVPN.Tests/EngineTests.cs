@@ -5,9 +5,11 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx;
 using eduVPN.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Net;
 using System.Threading;
 
 namespace eduVPN.Tests
@@ -244,7 +246,7 @@ namespace eduVPN.Tests
                     Exception exception = null;
                     var t = new Thread(() =>
                     {
-                        try { dropped = Engine.StartFailover(cookie, "172.217.19.100", 1450); } catch (Exception ex) { exception = ex; }
+                        try { dropped = Engine.StartFailover(cookie, IPAddress.Parse("172.217.19.100"), 1450); } catch (Exception ex) { exception = ex; }
                     });
                     t.Start();
                     for (int i = 0; i < 50; i++)
@@ -259,12 +261,32 @@ namespace eduVPN.Tests
                     rx = tx = 0;
                     t = new Thread(() =>
                     {
-                        try { dropped = Engine.StartFailover(cookie, "172.217.19.100", 5000); } catch (Exception ex) { exception = ex; }
+                        try { dropped = Engine.StartFailover(cookie, IPAddress.Parse("172.217.19.100"), 5000); } catch (Exception ex) { exception = ex; }
                     });
                     t.Start();
                     t.Join();
                     Assert.AreEqual(null, exception);
                     Assert.AreEqual(true, dropped);
+            }
+            finally
+            {
+                Engine.Deregister();
+            }
+        }
+
+        [TestMethod()]
+        public void CalculateGatewayTest()
+        {
+            Engine.Register();
+            try
+            {
+                Assert.AreEqual(IPAddress.Parse("1.2.3.1"), Engine.CalculateGateway(IPPrefix.Parse("1.2.3.4/24")));
+                Assert.AreEqual(IPAddress.Parse("1.2.3.201"), Engine.CalculateGateway(IPPrefix.Parse("1.2.3.200/30")));
+                Assert.ThrowsException<Exception>(() => Engine.CalculateGateway(IPPrefix.Parse("1.2.3.4/32")));
+
+                Assert.AreEqual(IPAddress.Parse("::1"), Engine.CalculateGateway(IPPrefix.Parse("::1/127")));
+                Assert.AreEqual(IPAddress.Parse("fe80:cd00:0:0cde::1"), Engine.CalculateGateway(IPPrefix.Parse("fe80:cd00:0:0cde:1257:0:211e:729c/64")));
+                Assert.ThrowsException<Exception>(() => Engine.CalculateGateway(IPPrefix.Parse("::1/128")));
             }
             finally
             {

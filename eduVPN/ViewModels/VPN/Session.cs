@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -425,13 +424,7 @@ namespace eduVPN.ViewModels.VPN
                 var tunnelAddress = TunnelAddress;
                 if (tunnelAddress.Address.AddressFamily != AddressFamily.InterNetwork)
                     return;
-                // The eduVPN server is always the first usable IP in the subnet by convention.
-                var addressBytes = tunnelAddress.Address.GetAddressBytes();
-                var address = (uint)addressBytes[0] << 24 | (uint)addressBytes[1] << 16 | (uint)addressBytes[2] << 8 | addressBytes[3];
-                var mask = 0xFFFFFFFF << (32-tunnelAddress.CIDR);
-                var gw = (address & mask) | 0x1;
-                var gatewayBytes = new byte[4] { (byte)((gw & 0xff000000) >> 24), (byte)((gw & 0xff0000) >> 16), (byte)((gw & 0xff00) >> 8), (byte)(gw & 0xff) };
-                var gateway = new IPAddress(gatewayBytes).ToString();
+                var gateway = Engine.CalculateGateway(tunnelAddress);
                 for (; ; )
                 {
                     if (SessionAndWindowInProgress.Token.WaitHandle.WaitOne(250))

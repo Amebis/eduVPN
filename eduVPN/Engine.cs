@@ -5,12 +5,14 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
+using eduEx;
 using eduVPN.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -978,10 +980,10 @@ namespace eduVPN
         /// <returns>true if all packets were dropped; false if at least some RX traffic detected</returns>
         /// <exception cref="OperationCanceledException">Call cancelled</exception>
         /// <exception cref="Exception">Call failed</exception>
-        public static bool StartFailover(Cookie cookie, string gateway, int mtu)
+        public static bool StartFailover(Cookie cookie, IPAddress gateway, int mtu)
         {
             var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
-            var r = _StartFailover(cookie.Handle, gateway, mtu, OnRxBytesRead);
+            var r = _StartFailover(cookie.Handle, gateway.ToString(), mtu, OnRxBytesRead);
             try
             {
                 // Don't throw when at least some RX traffic detected.
@@ -1033,6 +1035,32 @@ namespace eduVPN
             }
             finally
             {
+                m.CleanUpNativeData(r.r1);
+            }
+        }
+
+        [DllImport("eduvpn_common.dll", EntryPoint = "CalculateGateway", CallingConvention = CallingConvention.Cdecl)]
+        static extern CGoPtrPtr _CalculateGateway([MarshalAs(UnmanagedType.LPUTF8Str)] string subnet);
+
+        /// <summary>
+        /// Calculates the gateway for a subnet, it can take IPv4 or IPv6 networks with CIDR notation as inputs and returns the gateway address.
+        /// </summary>
+        /// <param name="tunnelAddress">Tunnel IP address and subnet in CIDR notation.</param>
+        /// <returns>Gateway address</returns>
+        /// <exception cref="Exception">Call failed</exception>
+        public static IPAddress CalculateGateway(IPPrefix tunnelAddress)
+        {
+            var m = CGoToManagedByteArrayMarshaller.GetInstance(null);
+            var r = _CalculateGateway(tunnelAddress.ToString());
+            try
+            {
+                if (r.r1 == IntPtr.Zero)
+                    return IPAddress.Parse(Encoding.UTF8.GetString((byte[])m.MarshalNativeToManaged(r.r0)));
+                throw ConvertException((byte[])m.MarshalNativeToManaged(r.r1));
+            }
+            finally
+            {
+                m.CleanUpNativeData(r.r0);
                 m.CleanUpNativeData(r.r1);
             }
         }

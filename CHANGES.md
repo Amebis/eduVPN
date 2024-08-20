@@ -4,6 +4,7 @@
 
 - OpenVPN updated to 2.5.11-20240814
     - openvpn 2.5.11 6fb2a2560845e15da8918c114fe020b4a06b3cef
+- eduvpn-common updated to 2.1.0 572ce6109006b1285baaa06f4bf0e7deb5ad7528
 - Let's Connect! and govVPN client startup fixed
 
 
