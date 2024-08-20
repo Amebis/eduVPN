@@ -419,54 +419,62 @@ namespace eduVPN.ViewModels.VPN
             // We shouldn't react to every TunnelAddress setting.
             TunnelFailoverTest = new Thread(new ThreadStart(() =>
             {
-                if (TunnelAddress?.Address == null)
-                    return;
-                var tunnelAddress = TunnelAddress;
-                if (tunnelAddress.Address.AddressFamily != AddressFamily.InterNetwork)
-                    return;
-                var gateway = Engine.CalculateGateway(tunnelAddress);
-                for (; ; )
+                Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
+                try
                 {
-                    if (SessionAndWindowInProgress.Token.WaitHandle.WaitOne(250))
-                        return;
-                    foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
-                        .Where(n =>
-                            n.OperationalStatus == OperationalStatus.Up &&
-                            n.NetworkInterfaceType != NetworkInterfaceType.Loopback))
+                    do
                     {
-                        if (SessionAndWindowInProgress.IsCancellationRequested)
-                            return;
-                        var props = iface.GetIPProperties();
-                        var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress.Address));
-                        if (unicast == null)
+                        IPPrefix tunnelAddress = null;
+                        Wizard.TryInvoke((Action)(() =>
+                        {
+                            if (TunnelAddress?.Address != null && TunnelAddress.Address.AddressFamily == AddressFamily.InterNetwork)
+                                tunnelAddress = TunnelAddress;
+                        }));
+                        if (tunnelAddress == null)
                             continue;
-                        using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
-                            try
-                            {
-                                //throw new Exception("test"); // Mock traffic failure for testing.
-                                if (Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu))
-                                {
-                                    if (!Config.ShouldFailover)
-                                        throw new Exception(Resources.Strings.WarningNoTrafficDetected);
-                                    Wizard.TryInvoke((Action)(() =>
-                                    {
-                                        TerminationReason = TerminationReason.TunnelFailover;
-                                        if (Disconnect.CanExecute(false))
-                                            Disconnect.Execute(false);
-                                    }));
-                                }
-                                else
-                                    Wizard.TryInvoke((Action)(() =>
-                                    {
-                                        Wizard.Error = null;
-                                        State = SessionStatusType.Connected;
-                                    }));
+                        var gateway = Engine.CalculateGateway(tunnelAddress);
+                        foreach (var iface in NetworkInterface.GetAllNetworkInterfaces()
+                            .Where(n =>
+                                n.OperationalStatus == OperationalStatus.Up &&
+                                n.NetworkInterfaceType != NetworkInterfaceType.Loopback))
+                        {
+                            if (SessionAndWindowInProgress.IsCancellationRequested)
                                 return;
-                            }
-                            catch (OperationCanceledException) { return; }
-                            catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
-                    }
+                            var props = iface.GetIPProperties();
+                            var unicast = props.UnicastAddresses.FirstOrDefault(ip => ip.Address.Equals(tunnelAddress.Address));
+                            if (unicast == null)
+                                continue;
+                            using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
+                                try
+                                {
+                                    //throw new Exception("test"); // Mock traffic failure for testing.
+                                    if (Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu))
+                                    {
+                                        if (!Config.ShouldFailover)
+                                            throw new Exception(Resources.Strings.WarningNoTrafficDetected);
+                                        Wizard.TryInvoke((Action)(() =>
+                                        {
+                                            TerminationReason = TerminationReason.TunnelFailover;
+                                            if (Disconnect.CanExecute(false))
+                                                Disconnect.Execute(false);
+                                        }));
+                                    }
+                                    else
+                                        Wizard.TryInvoke((Action)(() =>
+                                        {
+                                            Wizard.Error = null;
+                                            State = SessionStatusType.Connected;
+                                        }));
+                                    return;
+                                }
+                                catch (OperationCanceledException) { return; }
+                                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
+                        }
+                    } while (!SessionAndWindowInProgress.Token.WaitHandle.WaitOne(250));
                 }
+                catch (OperationCanceledException) { }
+                catch (Exception ex) { Wizard.TryInvoke((Action)(() => Wizard.Error = ex)); }
+                finally { Wizard.TryInvoke((Action)(() => Wizard.TaskCount--)); }
             }));
 
             Engine.ReportTraffic += Engine_ReportTraffic;
