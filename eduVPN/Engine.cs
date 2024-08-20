@@ -629,7 +629,8 @@ namespace eduVPN
                 Path.GetDirectoryName(Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)),
                 OnEngineStateChanged, 1));
             ThrowOnError(SetTokenHandler(OnGetToken, OnSetToken));
-            ThrowOnError(DiscoveryStartup(OnRefreshList));
+            if (Properties.Settings.Default.Discovery)
+                ThrowOnError(DiscoveryStartup(OnRefreshList));
         }
 
         [DllImport("eduvpn_common.dll", EntryPoint = "Deregister", CallingConvention = CallingConvention.Cdecl)]

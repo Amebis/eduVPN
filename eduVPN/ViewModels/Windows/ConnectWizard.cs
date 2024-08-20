@@ -438,10 +438,10 @@ namespace eduVPN.ViewModels.Windows
                             using (var cookie = new Engine.CancellationTokenCookie(Abort.Token))
                             {
                                 Task<ServerDictionary> serverDiscovery = null;
-                                if (srvList.Count > 0 || siOrgId != "" && siOrgId != null)
+                                if (Properties.Settings.Default.Discovery && (srvList.Count > 0 || siOrgId != "" && siOrgId != null))
                                     serverDiscovery = Task.Run(() => Engine.DiscoServers(cookie));
                                 Task<OrganizationDictionary> orgDiscovery = null;
-                                if (siOrgId != "" && siOrgId != null)
+                                if (Properties.Settings.Default.Discovery && siOrgId != "" && siOrgId != null)
                                     orgDiscovery = Task.Run(() => Engine.DiscoOrganizations(cookie));
 
                                 //Abort.Token.WaitHandle.WaitOne(5000); // Mock slow discovery
@@ -450,11 +450,11 @@ namespace eduVPN.ViewModels.Windows
 
                                 if (srvList.Count > 0)
                                 {
-                                    serverDiscovery.Wait(Abort.Token);
+                                    serverDiscovery?.Wait(Abort.Token);
                                     foreach (var srv in srvList)
                                     {
                                         Abort.Token.ThrowIfCancellationRequested();
-                                        var isInstituteAccess = serverDiscovery.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(srv)).Value != null;
+                                        var isInstituteAccess = serverDiscovery?.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(srv)).Value != null;
                                         var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
                                         try
                                         {
@@ -487,8 +487,8 @@ namespace eduVPN.ViewModels.Windows
                                         // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
                                         lock (Properties.Settings.Default.AccessTokenCache2)
                                         {
-                                            orgDiscovery.Wait(Abort.Token);
-                                            foreach (var obj in orgDiscovery.Result)
+                                            orgDiscovery?.Wait(Abort.Token);
+                                            foreach (var obj in orgDiscovery?.Result)
                                             {
                                                 Abort.Token.ThrowIfCancellationRequested();
                                                 if (Uri.TryCreate(obj.Value.Id, UriKind.Absolute, out var orgId) && orgId.AbsoluteUri == siOrgId &&
@@ -505,8 +505,8 @@ namespace eduVPN.ViewModels.Windows
                                         Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, start);
                                         if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
                                         {
-                                            serverDiscovery.Wait(Abort.Token);
-                                            if (serverDiscovery.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(uri)).Value is SecureInternetServer srv)
+                                            serverDiscovery?.Wait(Abort.Token);
+                                            if (serverDiscovery?.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(uri)).Value is SecureInternetServer srv)
                                             {
                                                 Engine.SetSecureInternetLocation(siOrgId, srv.Country.Code);
                                                 if (Properties.Settings.Default.LastSelectedServer == uri.AbsoluteUri)
