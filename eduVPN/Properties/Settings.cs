@@ -5,9 +5,7 @@
     SPDX-License-Identifier: GPL-3.0+
 */
 
-using eduVPN.Models;
 using eduVPN.ViewModels.VPN;
-using eduVPN.ViewModels.Windows;
 using System;
 using System.ComponentModel;
 using System.Configuration;
@@ -142,21 +140,6 @@ namespace eduVPN.Properties
             set { this["OwnServers"] = value; }
         }
 
-        /// <summary>
-        /// Access token cache
-        /// </summary>
-        [UserScopedSetting()]
-        [Obsolete]
-        [NoSettingsVersionUpgrade]
-        public Xml.AccessTokenDictionary AccessTokenCache
-        {
-            get
-            {
-                return (Xml.AccessTokenDictionary)this["AccessTokenCache"];
-            }
-            set { this["AccessTokenCache"] = value; }
-        }
-
         #endregion
 
         #region Methods
@@ -208,19 +191,6 @@ namespace eduVPN.Properties
                     Default.PreferTCP = openVPNpreferTCP;
                 else if (Default.GetPreviousVersion(nameof(OpenVPNForceTCP)) is bool openVPNForceTCP)
                     Default.PreferTCP = openVPNForceTCP;
-
-                // Migrate OAuth tokens
-                if (Default.GetPreviousVersion(nameof(AccessTokenCache)) is Xml.AccessTokenDictionary accessTokenCache)
-                    foreach (var token in accessTokenCache)
-                        try
-                        {
-                            ConnectWizard.Engine_SetToken(null, new Engine.SetTokenEventArgs(
-                                token.Key,
-                                ServerType.Unknown,
-                                token.Value.ToJSON()));
-                            token.Value.Dispose();
-                        }
-                        catch { }
 
 #pragma warning restore 0612
             }
