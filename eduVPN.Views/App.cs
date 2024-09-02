@@ -109,6 +109,8 @@ namespace eduVPN.Views
         /// <inheritdoc/>
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
         {
+            Trace.TraceInformation("User session is ending");
+
             var mainWindow = MainWindow as Windows.ConnectWizard;
             var activeSession = (mainWindow.DataContext as ViewModels.Windows.ConnectWizard).ConnectionPage.ActiveSession;
             if (activeSession != null)
@@ -122,14 +124,12 @@ namespace eduVPN.Views
             }
             else
             {
-                base.OnSessionEnding(e);
-
                 // Save settings on logout.
                 Trace.TraceInformation("Saving user settings on session ending");
                 Views.Properties.Settings.Default.Save();
                 eduVPN.Properties.Settings.Default.Save();
 
-                StandardOutputTracer.Dispose();
+                base.OnSessionEnding(e); // The .NET Framework will terminate our App in this call.
             }
         }
 
@@ -137,11 +137,6 @@ namespace eduVPN.Views
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-
-            // Save settings on exit.
-            Trace.TraceInformation("Saving user settings on client exit");
-            Views.Properties.Settings.Default.Save();
-            eduVPN.Properties.Settings.Default.Save();
 
             StandardOutputTracer.Dispose();
         }

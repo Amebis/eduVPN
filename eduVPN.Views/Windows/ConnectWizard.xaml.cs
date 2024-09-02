@@ -393,6 +393,11 @@ namespace eduVPN.Views.Windows
 
                 // Save window position on closing.
                 Window_Save(sender, e);
+
+                // Save settings on close.
+                Trace.TraceInformation("Saving user settings on window close");
+                Properties.Settings.Default.Save();
+                eduVPN.Properties.Settings.Default.Save();
             }
             else
             {
