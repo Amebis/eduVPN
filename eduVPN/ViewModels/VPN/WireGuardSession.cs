@@ -277,13 +277,10 @@ namespace eduVPN.ViewModels.VPN
                                     {
                                         var cfg = managerSession.GetTunnelConfig(SessionAndWindowInProgress.Token);
                                         ulong rxBytes = 0, txBytes = 0;
-                                        DateTimeOffset lastHandshake = DateTimeOffset.MinValue;
                                         foreach (var peer in cfg.Peers)
                                         {
                                             rxBytes += peer.RxBytes;
                                             txBytes += peer.TxBytes;
-                                            if (lastHandshake < peer.LastHandshake)
-                                                lastHandshake = peer.LastHandshake;
                                         }
                                         Wizard.TryInvoke((Action)(() =>
                                         {
