@@ -653,17 +653,27 @@ namespace eduVPN.ViewModels.Windows
         {
             lock (Properties.Settings.Default.AccessTokenCache2)
                 if (Properties.Settings.Default.AccessTokenCache2.TryGetValue(e.Id, out var value))
+                {
+                    Trace.TraceInformation("Getting OAuth token for {0}", e.Id);
                     e.Token = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(value), Entropy, DataProtectionScope.CurrentUser));
+                } else
+                    Trace.TraceInformation("No OAuth token for {0}", e.Id);
         }
 
         static public void Engine_SetToken(object sender, Engine.SetTokenEventArgs e)
         {
             lock (Properties.Settings.Default.AccessTokenCache2)
                 if (e.Token != null)
+                {
+                    Trace.TraceInformation("Setting OAuth token for {0}", e.Id);
                     Properties.Settings.Default.AccessTokenCache2[e.Id] =
                         Convert.ToBase64String(ProtectedData.Protect(Encoding.UTF8.GetBytes(e.Token), Entropy, DataProtectionScope.CurrentUser));
+                }
                 else
+                {
+                    Trace.TraceInformation("Clearing OAuth token for {0}", e.Id);
                     Properties.Settings.Default.AccessTokenCache2.Remove(e.Id);
+                }
         }
 
         /// <summary>

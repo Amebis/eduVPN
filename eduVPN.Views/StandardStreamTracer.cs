@@ -101,6 +101,7 @@ namespace eduVPN.Views
                     SetStdHandle(/*STD_OUTPUT_HANDLE*/-11, OriginalOutputHandle);
                     SetStdHandle(/*STD_ERROR_HANDLE*/-12, OriginalErrorHandle);
                     WriteHandle.Close();
+                    Trace.TraceInformation("Stream tracer stopped");
                 }
                 disposedValue = true;
             }

@@ -45,6 +45,8 @@ namespace eduVPN.ViewModels.Windows
             {
                 if (SetProperty(ref _Error, value))
                 {
+                    if (_Error != null)
+                        Trace.TraceError(_Error.ToString());
                     _DismissError?.RaiseCanExecuteChanged();
                     _CopyError?.RaiseCanExecuteChanged();
                 }

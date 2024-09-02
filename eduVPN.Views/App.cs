@@ -9,6 +9,7 @@ using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -89,7 +90,11 @@ namespace eduVPN.Views
                 timer.Elapsed += (object sender, ElapsedEventArgs e2) =>
                 {
                     if (!Dispatcher.HasShutdownStarted)
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => settings.Save()));
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() =>
+                        {
+                            Trace.TraceInformation("Saving user settings after change");
+                            settings.Save();
+                        }));
                 };
                 settings.PropertyChanged += (object sender, System.ComponentModel.PropertyChangedEventArgs e2) =>
                 {
@@ -120,6 +125,7 @@ namespace eduVPN.Views
                 base.OnSessionEnding(e);
 
                 // Save settings on logout.
+                Trace.TraceInformation("Saving user settings on session ending");
                 Views.Properties.Settings.Default.Save();
                 eduVPN.Properties.Settings.Default.Save();
 
@@ -133,6 +139,7 @@ namespace eduVPN.Views
             base.OnExit(e);
 
             // Save settings on exit.
+            Trace.TraceInformation("Saving user settings on client exit");
             Views.Properties.Settings.Default.Save();
             eduVPN.Properties.Settings.Default.Save();
 
