@@ -387,8 +387,8 @@ namespace eduVPN.ViewModels.VPN
                                     StateDescription = Resources.Strings.OpenVPNStateTypeExiting;
                                     TunnelAddress = null;
                                     IPv6TunnelAddress = null;
-                                    RxBytes = null;
-                                    TxBytes = null;
+                                    RxBytes = 0;
+                                    TxBytes = 0;
                                 }));
 
                                 // Wait for openvpn.exe to finish. Maximum 30s.

@@ -205,28 +205,28 @@ namespace eduVPN.ViewModels.VPN
         /// <summary>
         /// Number of bytes that have been received from the server
         /// </summary>
-        /// <remarks><c>null</c> when not connected</remarks>
-        public ulong? RxBytes
+        /// <remarks>0 when not connected</remarks>
+        public ulong RxBytes
         {
-            get => _BytesIn;
-            protected set => SetProperty(ref _BytesIn, value);
+            get => _RxBytes;
+            protected set => SetProperty(ref _RxBytes, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ulong? _BytesIn;
+        private ulong _RxBytes;
 
         /// <summary>
         /// Number of bytes that have been sent to the server
         /// </summary>
-        /// <remarks><c>null</c> when not connected</remarks>
-        public ulong? TxBytes
+        /// <remarks>0 when not connected</remarks>
+        public ulong TxBytes
         {
-            get => _BytesOut;
-            protected set => SetProperty(ref _BytesOut, value);
+            get => _TxBytes;
+            protected set => SetProperty(ref _TxBytes, value);
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ulong? _BytesOut;
+        private ulong _TxBytes;
 
         /// <summary>
         /// Session expiry times
@@ -486,10 +486,8 @@ namespace eduVPN.ViewModels.VPN
 
         private void Engine_ReportTraffic(object sender, Engine.ReportTrafficEventArgs e)
         {
-            if (RxBytes != null)
-                e.RxBytes += (long)RxBytes;
-            if (TxBytes != null)
-                e.TxBytes += (long)TxBytes;
+            e.RxBytes += (long)RxBytes;
+            e.TxBytes += (long)TxBytes;
         }
 
         /// <summary>

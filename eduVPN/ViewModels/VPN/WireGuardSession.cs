@@ -317,8 +317,8 @@ namespace eduVPN.ViewModels.VPN
                         // Cleanup status properties.
                         TunnelAddress = null;
                         IPv6TunnelAddress = null;
-                        RxBytes = null;
-                        TxBytes = null;
+                        RxBytes = 0;
+                        TxBytes = 0;
                     }));
                 }
             }
