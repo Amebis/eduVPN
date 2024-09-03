@@ -18,7 +18,7 @@ var userAgent string
 
 func init() {
 	maj, min, rev := windows.RtlGetNtVersionNumbers()
-	userAgent = fmt.Sprintf("eduvpn-windows/4.1.4 Windows/%d.%d.%d", maj, min, rev)
+	userAgent = fmt.Sprintf("eduvpn-windows/4.1.5 Windows/%d.%d.%d", maj, min, rev)
 }
 
 func makeClient() *http.Client {
