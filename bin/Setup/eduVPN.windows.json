@@ -1,5 +1,5 @@
 {"arguments": "/install",
-"uri": [ "https://github.com/Amebis/eduVPN/releases/download/4.1.4/eduVPNClient_4.1.4.exe" ],
-"version": "4.1.4",
+"uri": [ "https://github.com/Amebis/eduVPN/releases/download/4.1.5/eduVPNClient_4.1.5.exe" ],
+"version": "4.1.5",
 "changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
-"hash-sha256": "0e4f15cda012443b08d059259cf63d7e3ae28a3a5e55ddc560b3ac972e2852d6"}
+"hash-sha256": "d5a5b988fdca978bf6592c94b3c8ded9a32a95bfcc0aedab84f65df5d1326266"}
