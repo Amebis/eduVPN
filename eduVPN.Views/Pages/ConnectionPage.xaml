@@ -104,6 +104,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock
@@ -145,6 +146,17 @@
                 Command="{Binding ActiveSession.Renew}"
                 Visibility="{Binding ActiveSession.OfferRenewal, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
                 <AccessText Text="{x:Static res:Strings.ConnectionPageSessionRenew}"/>
+            </Button>
+
+            <Button
+                x:Name="Failover"
+                Grid.Row="3"
+                Margin="0,5,0,0"
+                HorizontalAlignment="Center"
+                AutomationProperties.Name="{Binding Source={x:Static res:Strings.ConnectionPageSessionFailover}, Converter={StaticResource RemoveAccessKeyConverter}}"
+                Command="{Binding ActiveSession.Failover}"
+                Visibility="{Binding ActiveSession.OfferFailover, Converter={StaticResource BooleanVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}">
+                <AccessText Text="{x:Static res:Strings.ConnectionPageSessionFailover}"/>
             </Button>
         </Grid>
 

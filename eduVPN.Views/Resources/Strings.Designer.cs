@@ -315,6 +315,15 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Retry using _TCP.
+        /// </summary>
+        public static string ConnectionPageSessionFailover {
+            get {
+                return ResourceManager.GetString("ConnectionPageSessionFailover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Renew Session.
         /// </summary>
         public static string ConnectionPageSessionRenew {
@@ -387,7 +396,7 @@ namespace eduVPN.Views.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please contact your organization&apos;s IT department..
+        ///   Looks up a localized string similar to No longer available: please contact your organization&apos;s IT department..
         /// </summary>
         public static string HomePageServerDelisted {
             get {

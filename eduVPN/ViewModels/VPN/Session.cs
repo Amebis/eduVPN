@@ -20,6 +20,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Timers;
 using System.Windows.Threading;
 
 namespace eduVPN.ViewModels.VPN
@@ -127,6 +128,8 @@ namespace eduVPN.ViewModels.VPN
                             RaisePropertyChanged(nameof(ConnectedTime));
                             break;
                     }
+                    RaisePropertyChanged(nameof(OfferFailover));
+                    _Failover?.RaiseCanExecuteChanged();
                     _Renew?.RaiseCanExecuteChanged();
                 }
 
@@ -345,6 +348,43 @@ namespace eduVPN.ViewModels.VPN
         private DelegateCommand _Renew;
 
         /// <summary>
+        /// Should UI offer TCP failover button?
+        /// </summary>
+        public bool OfferFailover
+        {
+            get => Config.ShouldFailover && State == SessionStatusType.Testing && _OfferFailover;
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool _OfferFailover = false;
+
+        /// <summary>
+        /// Renews and restarts the session
+        /// </summary>
+        public DelegateCommand Failover
+        {
+            get
+            {
+                if (_Failover == null)
+                {
+                    _Failover = new DelegateCommand(
+                        () =>
+                        {
+                            TerminationReason = TerminationReason.TunnelFailover;
+                            State = SessionStatusType.Disconnecting;
+                            SessionInProgress.Cancel();
+                            _Disconnect?.RaiseCanExecuteChanged();
+                        },
+                        () => TerminationReason != TerminationReason.TunnelFailover && Config.ShouldFailover && State == SessionStatusType.Testing);
+                }
+                return _Failover;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DelegateCommand _Failover;
+
+        /// <summary>
         /// Disconnect command
         /// </summary>
         public DelegateCommand<bool?> Disconnect
@@ -422,6 +462,13 @@ namespace eduVPN.ViewModels.VPN
                 Wizard.TryInvoke((Action)(() => Wizard.TaskCount++));
                 try
                 {
+                    var timer = new System.Timers.Timer(2 * 1000) { AutoReset = false };
+                    timer.Elapsed += (object sender, ElapsedEventArgs e2) =>
+                    {
+                        _OfferFailover = true;
+                        Wizard.TryInvoke((Action)(() => RaisePropertyChanged(nameof(OfferFailover))));
+                    };
+                    timer.Start();
                     do
                     {
                         IPPrefix tunnelAddress = null;
@@ -447,24 +494,35 @@ namespace eduVPN.ViewModels.VPN
                             using (var operationInProgress = new Engine.CancellationTokenCookie(SessionAndWindowInProgress.Token))
                                 try
                                 {
-                                    //throw new Exception("test"); // Mock traffic failure for testing.
-                                    if (Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu))
+                                    //SessionAndWindowInProgress.Token.WaitHandle.WaitOne(30000); // Mock slow online detection test.
+                                    //throw new Exception("test"); // Mock online detection test failure.
+                                    bool online = !Engine.StartFailover(operationInProgress, gateway, props.GetIPv4Properties().Mtu);
+                                    Wizard.TryInvoke((Action)(() =>
                                     {
-                                        if (!Config.ShouldFailover)
-                                            throw new Exception(Resources.Strings.WarningNoTrafficDetected);
-                                        Wizard.TryInvoke((Action)(() =>
+                                        if (online)
                                         {
-                                            TerminationReason = TerminationReason.TunnelFailover;
-                                            if (Disconnect.CanExecute(false))
-                                                Disconnect.Execute(false);
-                                        }));
-                                    }
-                                    else
-                                        Wizard.TryInvoke((Action)(() =>
-                                        {
+                                            // The online detection test succeeded.
                                             Wizard.Error = null;
                                             State = SessionStatusType.Connected;
-                                        }));
+                                        }
+                                        else
+                                        {
+                                            if (Config.ShouldFailover)
+                                            {
+                                                // Failover to TCP.
+                                                Wizard.Error = null;
+                                                TerminationReason = TerminationReason.TunnelFailover;
+                                                if (Disconnect.CanExecute(false))
+                                                    Disconnect.Execute(false);
+                                            }
+                                            else
+                                            {
+                                                // Report no traffic detected. Advisory-only. Nevertheless, show the green "Connected" status.
+                                                Wizard.Error = new Exception(Resources.Strings.WarningNoTrafficDetected);
+                                                State = SessionStatusType.Connected;
+                                            }
+                                        }
+                                    }));
                                     return;
                                 }
                                 catch (OperationCanceledException) { return; }
@@ -507,6 +565,7 @@ namespace eduVPN.ViewModels.VPN
                     RaisePropertyChanged(nameof(ShowExpirationTime));
                     RaisePropertyChanged(nameof(ExpirationTime));
                     RaisePropertyChanged(nameof(OfferRenewal));
+                    RaisePropertyChanged(nameof(OfferFailover));
                     var now = DateTimeOffset.UtcNow;
                     var x = Expiration.NotificationAt.FirstOrDefault(t => sessionExpirationWarning < t && t <= now);
                     if (x != default)

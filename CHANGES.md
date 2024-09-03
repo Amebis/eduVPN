@@ -2,6 +2,7 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.4...HEAD)
 
+- Allow user to skip WireGuard tunnel connectivity test
 - Fixes: #249
 
 
