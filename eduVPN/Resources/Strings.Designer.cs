@@ -178,6 +178,24 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} key is missing. Please reinstall the application..
+        /// </summary>
+        internal static string ErrorRegistryKeyMissing {
+            get {
+                return ResourceManager.GetString("ErrorRegistryKeyMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} value is missing. Please reinstall the application..
+        /// </summary>
+        internal static string ErrorRegistryValueMissing {
+            get {
+                return ResourceManager.GetString("ErrorRegistryValueMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minisign public key is not supported..
         /// </summary>
         internal static string ErrorUnsupportedMinisignPublicKey {

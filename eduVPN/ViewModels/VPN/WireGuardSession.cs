@@ -81,10 +81,16 @@ namespace eduVPN.ViewModels.VPN
                     {
                         using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                         {
-                            using (var key = hklmKey.OpenSubKey("SYSTEM\\CurrentControlSet\\Services\\eduWGManager" + Properties.Settings.Default.WireGuardTunnelManagerServiceInstance, false))
+                            var subkeyPath = "SYSTEM\\CurrentControlSet\\Services\\eduWGManager" + Properties.Settings.Default.WireGuardTunnelManagerServiceInstance;
+                            using (var key = hklmKey.OpenSubKey(subkeyPath, false))
                             {
+                                if (key == null)
+                                    throw new Exception(string.Format(Resources.Strings.ErrorRegistryKeyMissing, "HKLM\\" + subkeyPath));
+                                var imagePath = key.GetValue("ImagePath");
+                                if (imagePath == null)
+                                    throw new Exception(string.Format(Resources.Strings.ErrorRegistryValueMissing, "HKLM\\" + subkeyPath + "\\ImagePath"));
                                 var path = Path.Combine(
-                                    Path.GetDirectoryName(CommandLineToArgs(key.GetValue("ImagePath").ToString())[0].TrimEnd()),
+                                    Path.GetDirectoryName(CommandLineToArgs(imagePath.ToString())[0].TrimEnd()),
                                     "config");
                                 if (!Directory.Exists(path))
                                     throw new FileNotFoundException();

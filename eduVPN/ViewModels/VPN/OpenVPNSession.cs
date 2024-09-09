@@ -67,9 +67,15 @@ namespace eduVPN.ViewModels.VPN
                     {
                         using (var hklmKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                         {
-                            using (var key = hklmKey.OpenSubKey("SOFTWARE\\OpenVPN" + Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance, false))
+                            var subkeyPath = "SOFTWARE\\OpenVPN" + Properties.SettingsEx.Default.OpenVPNInteractiveServiceInstance;
+                            using (var key = hklmKey.OpenSubKey(subkeyPath, false))
                             {
-                                var path = key.GetValue("config_dir").ToString().TrimEnd();
+                                if (key == null)
+                                    throw new Exception(string.Format(Resources.Strings.ErrorRegistryKeyMissing, "HKLM\\" + subkeyPath));
+                                var configDir = key.GetValue("config_dir");
+                                if (configDir == null)
+                                    throw new Exception(string.Format(Resources.Strings.ErrorRegistryValueMissing, "HKLM\\" + subkeyPath + "\\config_dir"));
+                                var path = configDir.ToString().TrimEnd();
                                 if (!Directory.Exists(path))
                                     throw new FileNotFoundException();
                                 _WorkingFolder = path;
