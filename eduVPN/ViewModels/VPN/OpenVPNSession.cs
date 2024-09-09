@@ -208,16 +208,10 @@ namespace eduVPN.ViewModels.VPN
                                                                 inlineTerm = "</" + o + ">";
                                                                 inlineRemove = openVPNRemoveOptions.Contains(o);
                                                                 if (inlineRemove)
-                                                                {
-                                                                    sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
                                                                     line = "# " + line;
-                                                                }
                                                             }
                                                             else if (openVPNRemoveOptions.Contains(option[0]))
-                                                            {
-                                                                sw.WriteLine("# Commented by OpenVPNRemoveOptions setting:");
                                                                 line = "# " + line;
-                                                            }
                                                         }
                                                     }
                                                 }
@@ -243,12 +237,7 @@ namespace eduVPN.ViewModels.VPN
                                     }
                                 }
                                 else
-                                    sw.Write(Config.VPNConfig);
-
-                                // Append eduVPN Client specific configuration directives.
-                                sw.WriteLine();
-                                sw.WriteLine();
-                                sw.WriteLine("# eduVPN Client for Windows");
+                                    sw.WriteLine(Config.VPNConfig);
 
                                 // Introduce ourself (to OpenVPN server).
                                 var assembly = Assembly.GetExecutingAssembly();
@@ -317,12 +306,7 @@ namespace eduVPN.ViewModels.VPN
 
                                 var openVPNAddOptions = Properties.SettingsEx.Default.OpenVPNAddOptions;
                                 if (!string.IsNullOrWhiteSpace(openVPNAddOptions))
-                                {
-                                    sw.WriteLine();
-                                    sw.WriteLine();
-                                    sw.WriteLine("# Added by OpenVPNAddOptions setting:");
                                     sw.WriteLine(openVPNAddOptions);
-                                }
                             }
                             ovpn = fs.ToArray();
                         }
