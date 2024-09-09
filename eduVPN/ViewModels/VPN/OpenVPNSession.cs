@@ -347,7 +347,10 @@ namespace eduVPN.ViewModels.VPN
                             {
                                 // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
                                 var mgmtClientTask = mgmtServer.AcceptTcpClientAsync();
-                                try { mgmtClientTask.Wait(30000, SessionAndWindowInProgress.Token); }
+                                try {
+                                    if (!mgmtClientTask.Wait(30000, SessionAndWindowInProgress.Token))
+                                        throw new Exception(Resources.Strings.ErrorOpenVPNExeProcess);
+                                }
                                 catch (AggregateException ex) { throw ex.InnerException; }
                                 var mgmtClient = mgmtClientTask.Result;
                                 try

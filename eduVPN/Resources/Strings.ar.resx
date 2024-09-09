@@ -232,4 +232,7 @@
   <data name="ErrorRegistryValueMissing" xml:space="preserve">
     <value>{0} value is missing. Please reinstall the application.</value>
   </data>
+  <data name="ErrorOpenVPNExeProcess" xml:space="preserve">
+    <value>The openvpn.exe process did not start. This might be a result of corrupt configuration or a broken installation.</value>
+  </data>
 </root>

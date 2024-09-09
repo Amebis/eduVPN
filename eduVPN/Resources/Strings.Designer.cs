@@ -160,6 +160,15 @@ namespace eduVPN.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The openvpn.exe process did not start. This might be a result of corrupt configuration or a broken installation..
+        /// </summary>
+        internal static string ErrorOpenVPNExeProcess {
+            get {
+                return ResourceManager.GetString("ErrorOpenVPNExeProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading of profile configuration failed..
         /// </summary>
         internal static string ErrorProfileConfigLoad {
