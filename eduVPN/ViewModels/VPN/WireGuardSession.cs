@@ -184,12 +184,14 @@ namespace eduVPN.ViewModels.VPN
                 propertyUpdater.Start();
                 try
                 {
+                    Trace.TraceInformation("Preparing WireGuard configuration");
                     Interface iface;
                     using (var reader = new StringReader(Config.VPNConfig))
                         iface = new Interface(reader);
                     switch (Properties.Settings.Default.WireGuardKillSwitch2)
                     {
                         case WireGuardKillSwitchMode.Enforce:
+                            Trace.TraceInformation("Enforcing WireGuard kill-switch");
                             foreach (var peer in iface.Peers)
                             {
                                 IEnumerable<IPPrefix> allowedIPs = peer.AllowedIPs;
@@ -212,6 +214,7 @@ namespace eduVPN.ViewModels.VPN
                             break;
 
                         case WireGuardKillSwitchMode.Remove:
+                            Trace.TraceInformation("Removing WireGuard kill-switch");
                             foreach (var peer in iface.Peers)
                             {
                                 var addr2 = new List<IPPrefix>();
@@ -264,6 +267,7 @@ namespace eduVPN.ViewModels.VPN
                                         break;
                                 }
 
+                            Trace.TraceInformation("WireGuard tunnel activated");
                             Wizard.TryInvoke((Action)(() =>
                             {
                                 TunnelAddress = tunnelAddress;

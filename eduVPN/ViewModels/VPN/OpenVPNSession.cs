@@ -161,6 +161,7 @@ namespace eduVPN.ViewModels.VPN
                 try
                 {
                     // Start OpenVPN management interface on IPv4 loopack interface (any TCP free port).
+                    Trace.TraceInformation("Starting OpenVPN management interface on {0}", IPAddress.Loopback);
                     var mgmtServer = new TcpListener(IPAddress.Loopback, 0);
                     mgmtServer.Start();
                     try
@@ -170,6 +171,7 @@ namespace eduVPN.ViewModels.VPN
                         var mgmtPassword = Membership.GeneratePassword(16, 6);
 
                         // Prepare OpenVPN configuration.
+                        Trace.TraceInformation("Preparing OpenVPN configuration");
                         using (var fs = new MemoryStream())
                         {
                             using (var sw = new StreamWriter(fs))
@@ -330,6 +332,7 @@ namespace eduVPN.ViewModels.VPN
                             try
                             {
                                 // Wait and accept the openvpn.exe on our management interface (--management-client parameter).
+                                Trace.TraceInformation("Waiting for openvpn.exe process");
                                 var mgmtClientTask = mgmtServer.AcceptTcpClientAsync();
                                 try {
                                     if (!mgmtClientTask.Wait(30000, SessionAndWindowInProgress.Token))
@@ -340,6 +343,7 @@ namespace eduVPN.ViewModels.VPN
                                 try
                                 {
                                     // Create and start the management session.
+                                    Trace.TraceInformation("Starting OpenVPN management session");
                                     ManagementSession = new eduOpenVPN.Management.Session();
                                     ManagementSession.ByteCountReported += ManagementSession_ByteCountReported;
                                     ManagementSession.FatalErrorReported += ManagementSession_FatalErrorReported;
@@ -348,6 +352,7 @@ namespace eduVPN.ViewModels.VPN
                                     ManagementSession.Start(mgmtClient.GetStream(), mgmtPassword, SessionAndWindowInProgress.Token);
 
                                     // Initialize session and release openvpn.exe to get started.
+                                    Trace.TraceInformation("Releasing OpenVPN");
                                     ManagementSession.SetVersion(3, SessionAndWindowInProgress.Token);
                                     ManagementSession.ReplayAndEnableState(SessionAndWindowInProgress.Token);
                                     ManagementSession.ReplayAndEnableEcho(SessionAndWindowInProgress.Token);
@@ -361,6 +366,7 @@ namespace eduVPN.ViewModels.VPN
                                     }));
                                     try
                                     {
+                                        Trace.TraceInformation("OpenVPN connected");
                                         Engine.SetState(Engine.State.Connected);
                                         ManagementSession.Monitor.Join();
                                     }

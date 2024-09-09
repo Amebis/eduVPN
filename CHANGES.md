@@ -1,6 +1,10 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.5...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.6...HEAD)
+
+## [4.1.6](https://github.com/Amebis/eduVPN/compare/4.1.5...4.1.6) (2024-09-09)
+
+- Additional session setup logging
 
 
 ## [4.1.5](https://github.com/Amebis/eduVPN/compare/4.1.4...4.1.5) (2024-09-03)
