@@ -675,6 +675,19 @@ namespace eduVPN.ViewModels.VPN
                                 }
                             }
 
+                            if (Config == null)
+                                throw new Exception("Configuration is not available");
+                            if (Config.VPNConfig == null)
+                                throw new Exception("OpenVPN configuration is not available");
+                            if (Server == null)
+                                throw new Exception("Server is not available");
+                            if (Server.Id == null)
+                                throw new Exception("Server ID is not available");
+                            if (Profile == null)
+                                throw new Exception("Profile is not available");
+                            if (Profile.Id == null)
+                                throw new Exception("Profile ID is not available");
+
                             // Finally!
                             Run();
                         }
