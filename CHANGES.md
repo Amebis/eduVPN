@@ -4,6 +4,7 @@
 
 - False-positive foreign user session detection fixed
 - Auto-reconnect for preconfigured Institute Access/Own servers fixed
+- Translations updated
 
 
 ## [4.1.6](https://github.com/Amebis/eduVPN/compare/4.1.5...4.1.6) (2024-09-09)
