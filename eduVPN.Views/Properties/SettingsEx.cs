@@ -19,18 +19,10 @@ namespace eduVPN.Views.Properties
         /// <summary>
         /// Default settings
         /// </summary>
-        public static SettingsEx Default { get; } = ((SettingsEx)Synchronized(new SettingsEx()));
+        public static SettingsEx Default { get; } = (SettingsEx)Synchronized(new SettingsEx());
 
         /// <see cref="Settings.ProcessRenderMode"/>
-        public RenderMode ProcessRenderMode
-        {
-            get
-            {
-                if (GetValue(nameof(ProcessRenderMode), out uint value))
-                    return (RenderMode)value;
-                return Settings.Default.ProcessRenderMode;
-            }
-        }
+        public RenderMode ProcessRenderMode => GetValue(nameof(ProcessRenderMode), out uint value) ? (RenderMode)value : Settings.Default.ProcessRenderMode;
 
         /// <summary>
         /// Start application on user sign-on
@@ -53,10 +45,7 @@ namespace eduVPN.Views.Properties
         /// <summary>
         /// May user change StartOnSignon?
         /// </summary>
-        public bool IsStartOnSignonModifiable
-        {
-            get => !GetValue(nameof(StartOnSignon), out bool value);
-        }
+        public bool IsStartOnSignonModifiable => !GetValue(nameof(StartOnSignon), out bool value);
 
         #endregion
     }
