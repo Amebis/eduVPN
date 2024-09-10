@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.6...HEAD)
 
+- False-positive foreign user session detection fixed
+
+
 ## [4.1.6](https://github.com/Amebis/eduVPN/compare/4.1.5...4.1.6) (2024-09-09)
 
 - Additional session setup logging

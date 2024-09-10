@@ -115,7 +115,7 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 						return 0
 					}
 					sessionName, err := wtsapi32.SessionName(wtsapi32.WTS_CURRENT_SERVER, sessionId)
-					if err == nil && strings.EqualFold(sessionName, servicesSessionName) && strings.EqualFold(sessionName, consoleSessionName) {
+					if err == nil && (strings.EqualFold(sessionName, servicesSessionName) || strings.EqualFold(sessionName, consoleSessionName)) {
 						log.Println("Ignoring system/own session by name")
 						return 0
 					}
