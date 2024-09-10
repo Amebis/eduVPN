@@ -171,7 +171,7 @@ namespace eduVPN.ViewModels.VPN
                         var mgmtPassword = Membership.GeneratePassword(16, 6);
 
                         // Prepare OpenVPN configuration.
-                        Trace.TraceInformation("Preparing OpenVPN configuration");
+                        Trace.TraceInformation("Preparing OpenVPN configuration {0}", ConnectionId);
                         using (var fs = new MemoryStream())
                         {
                             using (var sw = new StreamWriter(fs))
@@ -179,6 +179,7 @@ namespace eduVPN.ViewModels.VPN
                                 if (Properties.SettingsEx.Default.OpenVPNRemoveOptions is StringCollection openVPNRemoveOptions)
                                 {
                                     // Remove options on the OpenVPNRemoveOptions list on the fly.
+                                    Trace.TraceInformation("Removing {0} from OpenVPN configuration {1}", string.Join(", ", openVPNRemoveOptions), ConnectionId);
                                     using (var sr = new StringReader(Config.VPNConfig))
                                     {
                                         string inlineTerm = null;
@@ -290,6 +291,7 @@ namespace eduVPN.ViewModels.VPN
                                     hash.Hash[9], // clock_seq_low
                                     hash.Hash[10], hash.Hash[11], hash.Hash[12], hash.Hash[13], hash.Hash[14], hash.Hash[15]); // node[0-5]
                                 sw.Write("dev-node {" + guid + "}\n");
+                                Trace.TraceInformation("OpenVPN configuration {0} dev-node is {1}", ConnectionId, guid);
 
 #if DEBUG
                                 // Renegotiate data channel every 5 minutes in debug versions.
@@ -308,7 +310,10 @@ namespace eduVPN.ViewModels.VPN
 
                                 var openVPNAddOptions = Properties.SettingsEx.Default.OpenVPNAddOptions;
                                 if (!string.IsNullOrWhiteSpace(openVPNAddOptions))
+                                {
+                                    Trace.TraceInformation("Adding {0} to OpenVPN configuration {1}", openVPNAddOptions.Replace(Environment.NewLine, ", "), ConnectionId);
                                     sw.WriteLine(openVPNAddOptions);
+                                }
                             }
                             ovpn = fs.ToArray();
                         }
