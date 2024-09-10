@@ -116,7 +116,7 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 					}
 					sessionName, err := wtsapi32.SessionName(wtsapi32.WTS_CURRENT_SERVER, sessionId)
 					if err == nil && (strings.EqualFold(sessionName, servicesSessionName) || strings.EqualFold(sessionName, consoleSessionName)) {
-						log.Println("Ignoring system/own session by name")
+						log.Println("Ignoring system session")
 						return 0
 					}
 					sessionUsername, sessionDomain, err := wtsapi32.SessionUsername(wtsapi32.WTS_CURRENT_SERVER, sessionId)
@@ -195,10 +195,16 @@ func InitMonitor(notify Notify, data any) (monitor *Monitor, err error) {
 		currentSession := sessions[sessionId]
 		for _, session := range sessions {
 			log.Printf("Session: %+v\n", session)
-			if session.SessionId == sessionId ||
-				strings.EqualFold(session.SessionName, servicesSessionName) || strings.EqualFold(session.SessionName, consoleSessionName) ||
-				strings.EqualFold(session.UserName, currentSession.UserName) && strings.EqualFold(session.DomainName, currentSession.DomainName) {
-				log.Println("Ignoring system/own session")
+			if session.SessionId == sessionId {
+				log.Println("Ignoring own session by ID")
+				continue
+			}
+			if strings.EqualFold(session.SessionName, servicesSessionName) || strings.EqualFold(session.SessionName, consoleSessionName) {
+				log.Println("Ignoring system session")
+				continue
+			}
+			if strings.EqualFold(session.UserName, currentSession.UserName) && strings.EqualFold(session.DomainName, currentSession.DomainName) {
+				log.Println("Ignoring own session by domain\\username")
 				continue
 			}
 			log.Println("Notifying listener")
