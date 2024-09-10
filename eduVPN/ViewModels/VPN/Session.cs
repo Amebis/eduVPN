@@ -274,7 +274,6 @@ namespace eduVPN.ViewModels.VPN
             {
                 var now = DateTimeOffset.UtcNow;
                 return
-                    Expiration != null &&
                     Expiration.CountdownAt <= now &&
                     now <= ValidTo;
             }

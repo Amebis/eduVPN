@@ -244,9 +244,12 @@ namespace eduVPN.ViewModels.VPN
 
                                 // Introduce ourself (to OpenVPN server).
                                 var assembly = Assembly.GetExecutingAssembly();
-                                var assemblyTitleAttribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
-                                var assemblyVersion = assembly?.GetName()?.Version;
-                                sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
+                                if (assembly != null)
+                                {
+                                    var assemblyTitleAttribute = Attribute.GetCustomAttributes(assembly, typeof(AssemblyTitleAttribute)).SingleOrDefault() as AssemblyTitleAttribute;
+                                    var assemblyVersion = assembly.GetName()?.Version;
+                                    sw.WriteLine("setenv IV_GUI_VER " + eduOpenVPN.Configuration.EscapeParamValue(assemblyTitleAttribute?.Title + " " + assemblyVersion?.ToString()));
+                                }
 
                                 // Configure log file (relative to WorkingFolder).
                                 sw.WriteLine("log-append " + eduOpenVPN.Configuration.EscapeParamValue(ConnectionId + ".txt"));
@@ -298,7 +301,8 @@ namespace eduVPN.ViewModels.VPN
                                 sw.WriteLine("reneg-sec 300");
 #endif
 
-                                if (Environment.OSVersion.Version < new Version(6, 2))
+                                var osVersion = Environment.OSVersion?.Version;
+                                if (osVersion == null || osVersion < new Version(6, 2))
                                 {
                                     // Windows 7 is using tiny 8kB send/receive socket buffers by default.
                                     // Increase to 64kB which is default from Windows 8 on.
