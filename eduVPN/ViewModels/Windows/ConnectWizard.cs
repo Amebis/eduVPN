@@ -414,7 +414,7 @@ namespace eduVPN.ViewModels.Windows
                     Trace.TraceInformation("Migrating Secure Internet organization {0}", secureInternetOrganization);
                     siOrgId = secureInternetOrganization;
                 }
-                // Skip organization if Secure Internet is set to it already.
+                // Skip organization if Secure Internet is set to it already. Otherwise, eduvpn-common will reset its internal properties loosing OAuth time, last selected profile etc.
                 if (HomePage.SecureInternetServers.FirstOrDefault(srv => srv.Id == siOrgId) != null ||
                     siOrgId == "" && HomePage.SecureInternetServers.Count == 0)
                     siOrgId = null;
@@ -428,7 +428,7 @@ namespace eduVPN.ViewModels.Windows
                         srvList.Add(srv);
             }
 
-            if (srvList.Count > 0 || siOrgId != null)
+            if (srvList.Count > 0 || siOrgId != null || Properties.Settings.Default.LastSelectedServer != null)
             {
                 CurrentPage = PleaseWaitPage;
                 actions.Add(new KeyValuePair<Action, int>(() =>
@@ -455,11 +455,18 @@ namespace eduVPN.ViewModels.Windows
                                     {
                                         Abort.Token.ThrowIfCancellationRequested();
                                         var isInstituteAccess = serverDiscovery?.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(srv)).Value != null;
-                                        var start = oauthStart.TryGetValue(srv.AbsoluteUri, out var value) ? value : DateTimeOffset.UtcNow;
+                                        var id = srv.AbsoluteUri;
+                                        var start = oauthStart.TryGetValue(id, out var value) ? value : DateTimeOffset.UtcNow;
                                         try
                                         {
-                                            Engine.AddServer(cookie, isInstituteAccess ? ServerType.InstituteAccess : ServerType.Own, srv.AbsoluteUri, start);
-                                            try { Engine.RemoveServer(isInstituteAccess ? ServerType.Own : ServerType.InstituteAccess, srv.AbsoluteUri); }
+                                            // Only add server if it doesn't exist on the list already. Otherwise, eduvpn-common will reset its internal properties loosing OAuth time, last selected profile etc.
+                                            TryInvoke((Action)(() =>
+                                            {
+                                                if (isInstituteAccess && HomePage.InstituteAccessServers.FirstOrDefault(s => s.Id == id) == null ||
+                                                    !isInstituteAccess && HomePage.OwnServers.FirstOrDefault(s => s.Id == id) == null)
+                                                    Engine.AddServer(cookie, isInstituteAccess ? ServerType.InstituteAccess : ServerType.Own, id, start);
+                                            }));
+                                            try { Engine.RemoveServer(isInstituteAccess ? ServerType.Own : ServerType.InstituteAccess, id); }
                                             catch { }
                                         }
                                         catch (OperationCanceledException) { throw; }
@@ -529,7 +536,30 @@ namespace eduVPN.ViewModels.Windows
                         finally
                         {
                             // eduvpn-common does not do callback after servers are added. Do the bookkeeping manually.
-                            Engine_Callback(this, new Engine.CallbackEventArgs(Engine.State.Deregistered, Engine.State.Main, null));
+                            var json = Engine.ServerList();
+                            TryInvoke((Action)(() =>
+                            {
+                                HomePage.LoadServers(json);
+                                CurrentPage = StartingPage;
+                            }));
+                        }
+
+                        {
+                            // Auto re-connect to the previously connected server.
+                            var id = Properties.Settings.Default.LastSelectedServer;
+                            if (id != null)
+                                TryInvoke((Action)(() =>
+                                {
+                                    if (ConnectionPage.Server == null)
+                                    {
+                                        Server srv =
+                                            HomePage.InstituteAccessServers.FirstOrDefault(s => !s.Delisted && s.Id == id) ??
+                                            HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Id == id) ??
+                                            HomePage.OwnServers.FirstOrDefault(s => s.Id == id);
+                                        if (srv != null)
+                                            Connect(srv, Properties.Settings.Default.PreferTCP, true);
+                                    }
+                                }));
                         }
                     }, 0)); // No repeat
             }
@@ -576,16 +606,6 @@ namespace eduVPN.ViewModels.Windows
                         {
                             HomePage.LoadServers(json);
                             CurrentPage = StartingPage;
-                            if (ConnectionPage.Server == null)
-                            {
-                                var id = Properties.Settings.Default.LastSelectedServer;
-                                Server srv =
-                                    HomePage.InstituteAccessServers.FirstOrDefault(s => !s.Delisted && s.Id == id) ??
-                                    HomePage.SecureInternetServers.FirstOrDefault(s => !s.Delisted && s.Id == id) ??
-                                    HomePage.OwnServers.FirstOrDefault(s => s.Id == id);
-                                if (srv != null)
-                                    Connect(srv, Properties.Settings.Default.PreferTCP, true);
-                            }
                         }));
                     }
                     break;
@@ -656,7 +676,8 @@ namespace eduVPN.ViewModels.Windows
                 {
                     Trace.TraceInformation("Getting OAuth token for {0}", e.Id);
                     e.Token = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(value), Entropy, DataProtectionScope.CurrentUser));
-                } else
+                }
+                else
                     Trace.TraceInformation("No OAuth token for {0}", e.Id);
         }
 
