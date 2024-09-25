@@ -227,12 +227,12 @@
     <comment>This text is displayed at the end of the list when there are too many items.</comment>
   </data>
   <data name="ErrorRegistryKeyMissing" xml:space="preserve">
-    <value>{0} key is missing. Please reinstall the application.</value>
+    <value>{0}Der Schlüssel fehlt. Bitte installieren Sie die Anwendung erneut.</value>
   </data>
   <data name="ErrorRegistryValueMissing" xml:space="preserve">
-    <value>{0} value is missing. Please reinstall the application.</value>
+    <value>{0}Wert fehlt. Bitte installieren Sie die Anwendung erneut.</value>
   </data>
   <data name="ErrorOpenVPNExeProcess" xml:space="preserve">
-    <value>The openvpn.exe process did not start. This might be a result of corrupt configuration or a broken installation.</value>
+    <value>Der openvpn.exe-Prozess wurde nicht gestartet. Dies könnte auf eine beschädigte Konfiguration oder eine fehlerhafte Installation zurückzuführen sein.</value>
   </data>
 </root>
