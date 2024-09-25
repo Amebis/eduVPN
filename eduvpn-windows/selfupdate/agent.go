@@ -24,12 +24,8 @@ func init() {
 		winVer = "11"
 	} else if maj > 6 {
 		winVer = "10"
-	} else if maj == 6 && min >= 3 {
-		winVer = "8.1"
 	} else if maj == 6 && min >= 2 {
 		winVer = "8"
-	} else if maj == 6 && min >= 1 && rev >= 7601 {
-		winVer = "7sp1"
 	} else if maj == 6 && min >= 1 {
 		winVer = "7"
 	}
