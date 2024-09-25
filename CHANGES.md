@@ -1,6 +1,9 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.1.7...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.2...HEAD)
+
+
+## [4.2](https://github.com/Amebis/eduVPN/compare/4.1.7...4.2) (2024-09-25)
 
 - Translations updated
 - User-Agent Windows version in Self-update requests simplified
