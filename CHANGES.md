@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.2...HEAD)
 
+- WireGuard updated to e70799b1440690e7d4140bffc7c73baf903c7b54
+
 
 ## [4.2](https://github.com/Amebis/eduVPN/compare/4.1.7...4.2) (2024-09-25)
 
