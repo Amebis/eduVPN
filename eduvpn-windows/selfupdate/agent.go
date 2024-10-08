@@ -16,7 +16,7 @@ import (
 var userAgent string
 
 func init() {
-	userAgent = "eduvpn-windows/4.2"
+	userAgent = "eduvpn-windows/4.2.1"
 
 	maj, min, rev := windows.RtlGetNtVersionNumbers()
 	var winVer string
