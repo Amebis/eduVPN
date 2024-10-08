@@ -416,9 +416,6 @@
             <Component Id="System.ValueTuple.dll" Guid="{3E155270-E425-4CFA-BA$(var.ClientId)-7317A8C12339}">
                 <File Source="$(var.TargetDirClient)System.ValueTuple.dll"/>
             </Component>
-            <Component Id="VCRUNTIME140.dll" Guid="{6B7E12B7-C8CB-4E94-A0$(var.ClientId)-F3FC616FC7D3}">
-                <File Source="$(var.VCRedistDir)VCRUNTIME140$(var.VCRedistSuffix).dll"/>
-            </Component>
             <Component Id="eduEx.dll" Guid="{36A66334-6B59-48A1-8B$(var.ClientId)-512FE8F3EE6A}">
                 <File Source="$(var.TargetDirClient)eduEx.dll"/>
             </Component>
@@ -546,7 +543,6 @@
             <ComponentRef Id="System.Runtime.CompilerServices.Unsafe.dll"/>
             <ComponentRef Id="System.Threading.Tasks.Extensions.dll"/>
             <ComponentRef Id="System.ValueTuple.dll"/>
-            <ComponentRef Id="VCRUNTIME140.dll"/>
             <ComponentRef Id="eduEx.dll"/>
             <ComponentRef Id="eduOAuth.dll"/>
             <ComponentRef Id="eduOpenVPN.dll"/>
