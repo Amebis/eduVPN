@@ -183,8 +183,10 @@ SetupSign \
 SetupSignMSI \
 SetupSignBoot \
 SetupSignExe :
-!IFDEF MANIFESTCERTIFICATETHUMBPRINT
+!IF DEFINED(MANIFESTCERTIFICATETHUMBPRINT)
 	signtool.exe sign /sha1 "$(MANIFESTCERTIFICATETHUMBPRINT)" /fd sha256 /tr "$(MANIFESTTIMESTAMPRFC3161URL)" /td sha256 $**
+!ELSEIF EXISTS("$(APPDATA)\Microsoft.Trusted.Signing.Client.json")
+	signtool.exe sign /dlib "$(USERPROFILE)\.nuget\packages\microsoft.trusted.signing.client\1.0.53\bin\x64\Azure.CodeSigning.Dlib.dll" /dmdf "$(APPDATA)\Microsoft.Trusted.Signing.Client.json" /fd sha256 /tr "http://timestamp.acs.microsoft.com" /td sha256 $**
 !ENDIF
 
 BuildOpenVPN :: SignOpenVPN
