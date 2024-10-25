@@ -1,10 +1,14 @@
 ﻿# Changelog
 
-## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.2...HEAD)
+## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.2.1...HEAD)
+
+
+## [4.2.1](https://github.com/Amebis/eduVPN/compare/4.2...4.2.1) (2024-10-25)
 
 - WireGuard updated to e70799b1440690e7d4140bffc7c73baf903c7b54
 - eduvpn-common updated to 2.1.0 bca773c49f0c2e66b5c26a59b8bb772520afb9bd
 - Use proxy environment settings in Self-update requests
+- Support for Windows 7 discontinued
 
 
 ## [4.2](https://github.com/Amebis/eduVPN/compare/4.1.7...4.2) (2024-09-25)
