@@ -26,7 +26,7 @@ func getUpdate(ctx context.Context, progress progress.ProgressIndicator) (pkg *P
 		PublicKey:     k,
 		AlgorithmMask: PrehashedAlgorithm,
 	}}
-	tr := &http.Transport{}
+	tr := http.DefaultTransport.(*http.Transport).Clone()
 	tr.RegisterProtocol("file", http.NewFileTransport(http.Dir("..\\..\\bin\\Setup")))
 	client := &http.Client{Transport: tr}
 	pkg, err = discoverAvailable(client, "file:///eduVPN.windows.json", signers, ctx, progress)

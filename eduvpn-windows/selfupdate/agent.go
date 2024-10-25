@@ -35,8 +35,7 @@ func init() {
 }
 
 func makeClient() *http.Client {
-	tr := &http.Transport{}
-	tr.RegisterProtocol("file", http.NewFileTransport(http.Dir("/")))
+	tr := http.DefaultTransport.(*http.Transport).Clone()
 	return &http.Client{
 		Transport: tr,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {

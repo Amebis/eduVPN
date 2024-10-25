@@ -34,7 +34,7 @@ func TestDiscovery(t *testing.T) {
 		})
 	}
 
-	tr := &http.Transport{}
+	tr := http.DefaultTransport.(*http.Transport).Clone()
 	tr.RegisterProtocol("file", http.NewFileTransport(http.Dir("..\\..\\bin\\Setup")))
 	client := &http.Client{Transport: tr}
 	ctx := context.Background()
