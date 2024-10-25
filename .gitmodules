@@ -1,16 +1,16 @@
 [submodule "openvpn"]
 	path = openvpn
-	url = https://github.com/Amebis/openvpn.git
+	url = https://codeberg.org/Amebis/OpenVPN.git
 	branch = release/2.5
 [submodule "WinStd"]
 	path = WinStd
 	url = https://github.com/Amebis/WinStd.git
 [submodule "wireguard-windows"]
 	path = wireguard-windows
-	url = https://github.com/Amebis/wireguard-windows.git
+	url = https://codeberg.org/Amebis/wireguard-windows.git
 [submodule "eduvpn-common"]
 	path = eduvpn-common
 	url = https://github.com/Amebis/eduvpn-common.git
 [submodule "lxn-win"]
 	path = lxn-win
-	url = https://github.com/Amebis/lxn-win.git
+	url = https://codeberg.org/Amebis/lxn-win.git
