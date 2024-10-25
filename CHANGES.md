@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.2...HEAD)
 
 - WireGuard updated to e70799b1440690e7d4140bffc7c73baf903c7b54
+- eduvpn-common updated to 2.1.0 bca773c49f0c2e66b5c26a59b8bb772520afb9bd
 - Use proxy environment settings in Self-update requests
 
 
