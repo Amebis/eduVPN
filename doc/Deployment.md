@@ -1,7 +1,7 @@
 # Deployment of eduVPN Clients for Windows
 
 
-This document describes deploying the eduVPN, Let's Connect! and govVPN Clients for Windows only. For eduVPN server setup see [eduVPN Documentation](https://github.com/eduvpn/documentation).
+This document describes deploying the eduVPN, Let's Connect! and govVPN Clients for Windows only. For eduVPN server setup see [eduVPN Documentation](https://codeberg.org/eduVPN/documentation).
 
 eduVPN, Let's Connect! and govVPN clients are the same client targeted for a different audience. While their UI is different, the setup is identical. Therefore, the remainder of this document will reference "eduVPN" only for readability. For Let's Connect! and govVPN use case, the "eduVPN" in paths and filenames translates to "LetsConnect" and "govVPN" respectively.
 

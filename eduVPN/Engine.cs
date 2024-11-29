@@ -865,7 +865,7 @@ namespace eduVPN
         /// <summary>
         /// Gets the servers list from the discovery server.
         /// In case of error, a previous version of the list is returned if there is any.
-        /// This takes into account the frequency of updates, see: https://github.com/eduvpn/documentation/blob/v3/SERVER_DISCOVERY.md#server-list.
+        /// This takes into account the frequency of updates, see: https://codeberg.org/eduVPN/documentation/blob/v3/SERVER_DISCOVERY.md#server-list.
         /// </summary>
         /// <returns>Server list</returns>
         /// <param name="cookie">eduvpn-common operation cookie</param>
@@ -897,7 +897,7 @@ namespace eduVPN
         /// <summary>
         /// Gets the organizations list from the discovery server.
         /// In case of error, a previous version of the list is returned if there is any.
-        /// This takes into account the frequency of updates, see: https://github.com/eduvpn/documentation/blob/v3/SERVER_DISCOVERY.md#organization-list.
+        /// This takes into account the frequency of updates, see: https://codeberg.org/eduVPN/documentation/blob/v3/SERVER_DISCOVERY.md#organization-list.
         /// </summary>
         /// <param name="cookie">eduvpn-common operation cookie</param>
         /// <param name="search">Search string for filtering the list. It checks for keywords and display name case insensitive as a substring matching. If search is empty it returns ALL organizations currently known in common.</param>
