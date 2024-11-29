@@ -623,8 +623,8 @@ namespace eduVPN.ViewModels.Windows
 
                 case Engine.State.OAuthStarted:
                     {
-                        var uri = Encoding.UTF8.GetString(e.Data);
-                        Process.Start(uri);
+                        var uri = new Uri(Encoding.UTF8.GetString(e.Data));
+                        Process.Start(uri.AbsoluteUri);
                         TryInvoke((Action)(() =>
                         {
                             AuthorizationPage.Uri = uri;

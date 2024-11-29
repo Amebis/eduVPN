@@ -7,6 +7,7 @@
 
 using eduVPN.ViewModels.Windows;
 using Prism.Commands;
+using System;
 using System.Diagnostics;
 using System.Windows;
 
@@ -22,7 +23,7 @@ namespace eduVPN.ViewModels.Pages
         /// <summary>
         /// OAuth authorization URI
         /// </summary>
-        public string Uri
+        public Uri Uri
         {
             get => _Uri;
             set
@@ -33,7 +34,7 @@ namespace eduVPN.ViewModels.Pages
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _Uri;
+        private Uri _Uri;
 
         /// <summary>
         /// Copies OAuth authorization URI to the clipboard
@@ -44,8 +45,8 @@ namespace eduVPN.ViewModels.Pages
             {
                 if (_CopyUri == null)
                     _CopyUri = new DelegateCommand(
-                        () => Clipboard.SetDataObject(Uri),
-                        () => !string.IsNullOrEmpty(Uri));
+                        () => Clipboard.SetDataObject(Uri.AbsoluteUri),
+                        () => Uri != null);
                 return _CopyUri;
             }
         }
