@@ -381,12 +381,6 @@ namespace eduVPN.ViewModels.Windows
             };
 
             bool migrate = (Properties.Settings.Default.SettingsVersion & 0x2) == 0;
-            var oauthStart = new Dictionary<string, DateTimeOffset>();
-#pragma warning disable 0612 // This section contains legacy settings conversion.
-            if (migrate && Properties.Settings.Default.GetPreviousVersion("AccessTokenCache") is Xml.AccessTokenDictionary accessTokenCache)
-                foreach (var token in accessTokenCache)
-                    oauthStart[token.Key] = token.Value.Authorized;
-#pragma warning restore 0612
 
             ICollection<Uri> srvList = Properties.SettingsEx.Default.InstituteAccessServers;
             if (srvList != null)
@@ -456,7 +450,6 @@ namespace eduVPN.ViewModels.Windows
                                         Abort.Token.ThrowIfCancellationRequested();
                                         var isInstituteAccess = serverDiscovery?.Result.FirstOrDefault(obj => new Uri(obj.Value.Id).Equals(srv)).Value != null;
                                         var id = srv.AbsoluteUri;
-                                        var start = oauthStart.TryGetValue(id, out var value) ? value : DateTimeOffset.UtcNow;
                                         try
                                         {
                                             // Only add server if it doesn't exist on the list already. Otherwise, eduvpn-common will reset its internal properties loosing OAuth time, last selected profile etc.
@@ -464,7 +457,7 @@ namespace eduVPN.ViewModels.Windows
                                             {
                                                 if (isInstituteAccess && HomePage.InstituteAccessServers.FirstOrDefault(s => s.Id == id) == null ||
                                                     !isInstituteAccess && HomePage.OwnServers.FirstOrDefault(s => s.Id == id) == null)
-                                                    Engine.AddServer(cookie, isInstituteAccess ? ServerType.InstituteAccess : ServerType.Own, id, start);
+                                                    Engine.AddServer(cookie, isInstituteAccess ? ServerType.InstituteAccess : ServerType.Own, id, DateTimeOffset.UtcNow);
                                             }));
                                             try { Engine.RemoveServer(isInstituteAccess ? ServerType.Own : ServerType.InstituteAccess, id); }
                                             catch { }
@@ -489,8 +482,6 @@ namespace eduVPN.ViewModels.Windows
                                 {
                                     try
                                     {
-                                        var start = DateTimeOffset.UtcNow;
-
                                         // Rekey all OAuth tokens to use organization ID instead of authenticating server base URI as the key.
                                         lock (Properties.Settings.Default.AccessTokenCache2)
                                         {
@@ -502,14 +493,13 @@ namespace eduVPN.ViewModels.Windows
                                                     obj.Value.SecureInternetBase != null &&
                                                     Properties.Settings.Default.AccessTokenCache2.TryGetValue(obj.Value.SecureInternetBase.AbsoluteUri, out var value))
                                                 {
-                                                    oauthStart.TryGetValue(obj.Value.SecureInternetBase.AbsoluteUri, out start);
                                                     Properties.Settings.Default.AccessTokenCache2[orgId.AbsoluteUri] = value;
                                                     Properties.Settings.Default.AccessTokenCache2.Remove(obj.Value.SecureInternetBase.AbsoluteUri);
                                                 }
                                             }
                                         }
 
-                                        Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, start);
+                                        Engine.AddServer(cookie, ServerType.SecureInternet, siOrgId, DateTimeOffset.UtcNow);
                                         if (Properties.Settings.Default.GetPreviousVersion("SecureInternetConnectingServer") is Uri uri)
                                         {
                                             serverDiscovery?.Wait(Abort.Token);

@@ -214,7 +214,6 @@ SetupSign \
 !ENDIF
 Sign : \
 	"bin\$(CFG)\$(PLAT)\eduEx.dll" \
-	"bin\$(CFG)\$(PLAT)\eduOAuth.dll" \
 	"bin\$(CFG)\$(PLAT)\eduOpenVPN.dll" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.dll" \
 	"bin\$(CFG)\$(PLAT)\eduVPN.Client.exe" \

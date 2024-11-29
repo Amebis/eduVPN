@@ -5,6 +5,7 @@
 - OpenVPN updated to 2.5.11-20241129
     - openvpn 2.5.11 98e70e7351af37506df47d879342ee48c2f601c4
 - eduvpn-common updated to 2.1.0 ef06ec24d3ee3af5d4c210db49744e635f34d1db
+- Support for v3.x OAuth token migration removed
 
 
 ## [4.2.1](https://github.com/Amebis/eduVPN/compare/4.2...4.2.1) (2024-10-25)

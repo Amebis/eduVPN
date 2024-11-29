@@ -80,7 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.ar.resx" />
-    <EmbeddedResource Include="Resources\Strings.de.resx" />
+    <EmbeddedResource Include="Resources\Strings.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.es.resx" />
     <EmbeddedResource Include="Resources\Strings.es-ES.resx" />
     <EmbeddedResource Include="Resources\Strings.resx">

@@ -419,9 +419,6 @@
             <Component Id="eduEx.dll" Guid="{36A66334-6B59-48A1-8B$(var.ClientId)-512FE8F3EE6A}">
                 <File Source="$(var.TargetDirClient)eduEx.dll"/>
             </Component>
-            <Component Id="eduOAuth.dll" Guid="{9DA24812-54AC-4D76-BB$(var.ClientId)-BBEF15776AE0}">
-                <File Source="$(var.TargetDirClient)eduOAuth.dll"/>
-            </Component>
             <Component Id="eduOpenVPN.dll" Guid="{3D0AF961-809D-479E-BE$(var.ClientId)-ED6457A8519A}">
                 <File Source="$(var.TargetDirClient)eduOpenVPN.dll"/>
             </Component>
@@ -544,7 +541,6 @@
             <ComponentRef Id="System.Threading.Tasks.Extensions.dll"/>
             <ComponentRef Id="System.ValueTuple.dll"/>
             <ComponentRef Id="eduEx.dll"/>
-            <ComponentRef Id="eduOAuth.dll"/>
             <ComponentRef Id="eduOpenVPN.dll"/>
             <ComponentRef Id="eduWireGuard.dll"/>
             <ComponentRef Id="eduvpn_common.dll"/>
