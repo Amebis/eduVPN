@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/Amebis/eduVPN/compare/4.2.1...HEAD)
 
+- OpenVPN updated to 2.5.11-20241129
+    - openvpn 2.5.11 98e70e7351af37506df47d879342ee48c2f601c4
+
 
 ## [4.2.1](https://github.com/Amebis/eduVPN/compare/4.2...4.2.1) (2024-10-25)
 
