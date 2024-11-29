@@ -4,7 +4,7 @@
 	branch = release/2.5
 [submodule "WinStd"]
 	path = WinStd
-	url = https://github.com/Amebis/WinStd.git
+	url = https://codeberg.org/Amebis/WinStd.git
 [submodule "wireguard-windows"]
 	path = wireguard-windows
 	url = https://codeberg.org/Amebis/wireguard-windows.git
