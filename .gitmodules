@@ -10,7 +10,8 @@
 	url = https://codeberg.org/Amebis/wireguard-windows.git
 [submodule "eduvpn-common"]
 	path = eduvpn-common
-	url = https://github.com/Amebis/eduvpn-common.git
+	url = https://codeberg.org/eduVPN/eduvpn-common.git
+	branch = main
 [submodule "lxn-win"]
 	path = lxn-win
 	url = https://codeberg.org/Amebis/lxn-win.git
