@@ -43,6 +43,7 @@
 2. Install [vcpkg](https://vcpkg.io/).
    - `git clone https://github.com/Microsoft/vcpkg.git C:\ProgramData\SDK\vcpkg`
       The path used is only an example. If you decide to install to `C:\Program Files` or any other path that requires elevation to make folder modifications, you must grant user account, used to build eduVPN, read and write permissions to vcpkg folder. Otherwise, all build targets will require elevation too. vcpkg builds inside this folder and then copies .h/.lib/.dll files to your eduVPN working tree in the vcpkg_installed folders. To avoid vcpkg access-denied issues on building, it is easiest to install vcpkg somewhere in your user home folder.
+      Note: Building pkcs11-helper package requires a vcpkg path without spaces.
    - Bootstrap with `C:\ProgramData\SDK\vcpkg\bootstrap-vcpkg -disableMetrics`
    - Integrate into MSBuild/Visual Studio with `C:\ProgramData\SDK\vcpkg\vcpkg integrate install`
    - You must keep vcpkg up-to-date manually:
