@@ -1,5 +1,5 @@
 {"arguments": "/install",
-"uri": [ "https://github.com/Amebis/eduVPN/releases/download/3.3.7/govVPNClient_3.3.7.exe" ],
-"version": "3.3.7",
-"changelog_uri": "https://github.com/Amebis/eduVPN/blob/master/CHANGES.md",
-"hash-sha256": "ac302cf9cf7de91aca2a9322a0821836846d15ef0354132463bff8cf5a55cf04"}
+"uri": [ "https://cdn.govvpn.nl/windows/govVPNClient_4.2.exe" ],
+"version": "4.2",
+"changelog_uri": "https://codeberg.org/eduVPN/windows/src/tag/4.2/CHANGES.md",
+"hash-sha256": "33ff7142efa114d79127eee0d4edac442f52958be740f55997cfb77838a04c6b"}
